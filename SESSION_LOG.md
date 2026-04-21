@@ -153,3 +153,9 @@ anomalies:
 - Chat counter gap: memory said `next=47`, previous logged chat was 44, Chat 45 was the rrc discovery, Chat 46 has no log entry. No reconstruction attempted for 46 — either non-GIS work or a counter skip. Flagged in WIP_OPEN recent-sessions table.
 - No build, no deploy, no data refresh this chat. Prod state unchanged from Chat 44 close.
 - Tool-call budget used for documentation + file staging only. Net new capability: state-layer persistence decoupled from Project Knowledge 12.7 MB cap.
+
+
+## [48] 2026-04-21 21:43 — GitHub sync initialized — repo live at 10thMuses/lrp-tx-gis
+
+outcome: one-time `github init.` trigger executed. Cloned empty `github.com/10thMuses/lrp-tx-gis.git` into `/home/claude/repo/`, copied all `/mnt/project/` contents except `CREDENTIALS.md` (14 tracked files: 8 .md + 2 build toolchain + 1 layers.yaml + 2 combined_* data files + .gitignore), added `.gitignore` (CREDENTIALS.md, dist/, *.pmtiles, __pycache__, .venv, tmp*, .DS_Store, /mnt/user-data/), committed, pushed to `origin/main`. Commit: `7f8ca54 Chat 48: GitHub sync init — mirror /mnt/project/ (post-Hanwha, 22 layers)`. Verified: (1) CREDENTIALS.md excluded from working tree and index; (2) actual PAT value (`github_pat_11B6VWBKY0dk…` prefix) NOT in git history (only documentation strings matching the `GITHUB_PAT=` pattern appear in PROJECT_INSTRUCTIONS.md — intended); (3) .gitignore rule tested by staging a copy of CREDENTIALS.md — correctly ignored. Authority layer is now live: from Chat 49 forward, every GIS chat opens with `git clone` per PROJECT_INSTRUCTIONS.md §GitHub sync and closes with `git add/commit/push`. `/mnt/project/` remains only as read-only fallback if GitHub unreachable at session open.
+anomalies: none. Tool-call budget: 5 bash + 2 view = 7 calls, within 6–12 envelope for non-build maintenance chat.
