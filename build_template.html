@@ -1,0 +1,614 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Texas Energy GIS — Land Resource Partners</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css" />
+<script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
+<script src="https://unpkg.com/pmtiles@4.3.0/dist/pmtiles.js"></script>
+<script src="https://unpkg.com/@turf/turf@7/turf.min.js"></script>
+<style>
+  :root {
+    --bg: #f8fafc;
+    --panel: #ffffff;
+    --border: #e2e8f0;
+    --text: #0f172a;
+    --muted: #64748b;
+    --accent: #0f172a;
+    --hover: #f1f5f9;
+    --amber: #f59e0b;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; height: 100%; font-family: 'Inter', system-ui, -apple-system, sans-serif; font-size: 14px; color: var(--text); background: var(--bg); }
+  body { display: grid; grid-template-rows: 48px 1fr; grid-template-columns: 300px 1fr; grid-template-areas: "topbar topbar" "sidebar map"; height: 100vh; overflow: hidden; }
+  .topbar { grid-area: topbar; display: flex; align-items: center; gap: 16px; padding: 0 16px; background: var(--panel); border-bottom: 1px solid var(--border); }
+  .brand { font-weight: 700; letter-spacing: -0.01em; }
+  .brand .dot { color: var(--amber); }
+  .title { color: var(--muted); font-size: 13px; font-weight: 500; }
+  .topbar .spacer { flex: 1; }
+  .topbar button { background: transparent; border: 1px solid var(--border); color: var(--text); padding: 6px 12px; border-radius: 6px; font: inherit; font-size: 12px; cursor: pointer; }
+  .topbar button:hover { background: var(--hover); }
+  .topbar button.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .sidebar { grid-area: sidebar; background: var(--panel); border-right: 1px solid var(--border); overflow-y: auto; padding: 12px 0; }
+  .group { padding: 0 16px 12px; }
+  .group h3 { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin: 16px 0 8px; }
+  .layer { display: flex; align-items: center; gap: 10px; padding: 5px 0; cursor: pointer; user-select: none; }
+  .layer input[type=checkbox] { accent-color: #0f172a; cursor: pointer; }
+  .layer .swatch { display: inline-block; width: 10px; height: 10px; border-radius: 2px; border: 1px solid rgba(0,0,0,0.1); flex-shrink: 0; }
+  .layer .swatch.line { height: 3px; border-radius: 1px; width: 14px; }
+  .layer .swatch.fill { opacity: 0.85; }
+  .layer .label { font-size: 13px; flex: 1; }
+  .layer .count { font-size: 11px; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .basemap-picker { padding: 12px 16px; border-top: 1px solid var(--border); margin-top: 12px; }
+  .basemap-picker h3 { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin: 0 0 8px; }
+  .basemap-picker select { width: 100%; padding: 6px 8px; border: 1px solid var(--border); border-radius: 6px; font: inherit; font-size: 12px; background: #fff; }
+  .footer { padding: 12px 16px; color: var(--muted); font-size: 11px; border-top: 1px solid var(--border); margin-top: 12px; }
+  .map-wrap { grid-area: map; position: relative; }
+  #map { position: absolute; inset: 0; }
+  .coord { position: absolute; bottom: 8px; left: 8px; background: rgba(255,255,255,0.9); border: 1px solid var(--border); padding: 3px 8px; border-radius: 4px; font-size: 11px; font-variant-numeric: tabular-nums; color: var(--muted); z-index: 2; }
+  .measure-readout { position: absolute; top: 8px; left: 8px; background: rgba(255,255,255,0.95); border: 1px solid var(--border); padding: 8px 12px; border-radius: 6px; font-size: 12px; color: var(--text); z-index: 2; box-shadow: 0 2px 8px rgba(0,0,0,0.08); display: none; min-width: 180px; }
+  .measure-readout.active { display: block; }
+  .measure-readout .mk { color: var(--muted); font-size: 10px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .measure-readout .mv { font-weight: 600; font-variant-numeric: tabular-nums; }
+  .measure-readout .hint { color: var(--muted); font-size: 10px; margin-top: 4px; }
+  .maplibregl-popup-content { font-family: inherit; font-size: 12px; padding: 10px 12px; border-radius: 6px; }
+  .maplibregl-popup-content table { border-collapse: collapse; }
+  .maplibregl-popup-content td { padding: 2px 6px 2px 0; vertical-align: top; }
+  .maplibregl-popup-content td.k { color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: 0.04em; }
+  .maplibregl-popup-content td.v { font-variant-numeric: tabular-nums; }
+  .maplibregl-popup-content .src { font-size: 10px; color: var(--muted); margin-top: 6px; padding-top: 6px; border-top: 1px solid var(--border); }
+  .maplibregl-popup-content .title { font-weight: 600; font-size: 13px; margin-bottom: 4px; color: var(--text); }
+  .maplibregl-popup-content .planned-badge { display: inline-block; background: var(--amber); color: #fff; font-size: 10px; font-weight: 700; letter-spacing: 0.06em; padding: 1px 6px; border-radius: 3px; margin-right: 6px; text-transform: uppercase; }
+
+  .print-header { display: none; }
+  .print-footer { display: none; }
+
+  @media print {
+    @page { size: landscape; margin: 0.4in; }
+    body { display: block; overflow: visible; height: auto; background: #fff; }
+    .sidebar, .topbar, .coord, .measure-readout { display: none !important; }
+    .map-wrap { position: relative; height: 7.1in; width: 10.3in; page-break-inside: avoid; }
+    #map { position: absolute; inset: 0; }
+    .print-header { display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; border-bottom: 2px solid #0f172a; margin-bottom: 10px; }
+    .print-header .pbrand { font-size: 18px; font-weight: 700; color: #0f172a; }
+    .print-header .pbrand .pdot { color: var(--amber); }
+    .print-header .pmeta { font-size: 11px; color: #334155; text-align: right; line-height: 1.4; }
+    .print-footer { display: block; margin-top: 8px; padding-top: 6px; border-top: 1px solid #94a3b8; font-size: 9px; color: #64748b; }
+    .maplibregl-ctrl-attrib, .maplibregl-ctrl-fullscreen, .maplibregl-ctrl-zoom-in, .maplibregl-ctrl-zoom-out { display: none !important; }
+    .maplibregl-ctrl-scale { border: 1px solid #000 !important; background: rgba(255,255,255,0.9) !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="print-header">
+  <div class="pbrand">LRP<span class="pdot">.</span> &nbsp;Texas Energy GIS</div>
+  <div class="pmeta">
+    <div><strong>Land Resource Partners</strong></div>
+    <div id="print-date"></div>
+  </div>
+</div>
+
+<div class="topbar">
+  <div class="brand">LRP<span class="dot">.</span></div>
+  <div class="title">Texas Energy GIS</div>
+  <div class="spacer"></div>
+  <button id="btn-measure" title="Measure distance &amp; area">Measure</button>
+  <button id="btn-share" title="Copy shareable URL">Share view</button>
+  <button id="btn-print" title="Print / PDF (landscape)">Print / PDF</button>
+</div>
+
+<aside class="sidebar">
+  <div id="layer-groups"></div>
+  <div class="basemap-picker">
+    <h3>Basemap</h3>
+    <select id="basemap-select">
+      <option value="carto_light">Carto Light</option>
+      <option value="esri_streets">Esri Streets</option>
+      <option value="esri_imagery">Esri World Imagery</option>
+      <option value="openfreemap">OpenFreeMap</option>
+      <option value="naip">NAIP aerial</option>
+    </select>
+  </div>
+  <div class="footer">
+    <div><strong>Land Resource Partners</strong></div>
+    <div id="footer-updated">Built —</div>
+    <div style="margin-top:6px;">Sources attributed in each popup.</div>
+  </div>
+</aside>
+
+<div class="map-wrap">
+  <div id="map"></div>
+  <div class="coord" id="coord">—</div>
+  <div class="measure-readout" id="measure-readout">
+    <div><span class="mk">Distance</span> &nbsp;<span class="mv" id="m-dist">0.00 mi</span></div>
+    <div><span class="mk">Area</span> &nbsp;<span class="mv" id="m-area">— ac</span></div>
+    <div class="hint">Click to add points · double-click to close polygon · Measure again to clear</div>
+  </div>
+</div>
+
+<div class="print-footer">Map prepared by Land Resource Partners · Sources: ERCOT TPIT, EIA-860, USWTDB, TWDB, RRC, HIFLD, TIGER, BTS, OSM, USGS, TCAD</div>
+
+<script>
+const LAYERS = /*__LAYERS__*/;
+
+const ICON_MAP = {
+  solar: '\u2600\uFE0F',
+  wind: '\uD83C\uDF2C\uFE0F',
+  eia860_battery: '\uD83D\uDD0B',
+  eia860_plants: '\uD83D\uDD25',
+  wells: '\uD83D\uDCA7',
+};
+
+const BASEMAPS = {
+  carto_light: {
+    kind: 'raster',
+    tiles: ['https://a.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png', 'https://b.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png', 'https://c.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png'],
+    attribution: '© OpenStreetMap contributors © CARTO',
+  },
+  esri_streets: {
+    kind: 'raster',
+    tiles: ['https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}'],
+    attribution: 'Tiles © Esri',
+  },
+  esri_imagery: {
+    kind: 'raster',
+    tiles: ['https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'],
+    attribution: 'Tiles © Esri, DigitalGlobe, Earthstar',
+  },
+  openfreemap: {
+    kind: 'style',
+    url: 'https://tiles.openfreemap.org/styles/liberty',
+  },
+  naip: {
+    kind: 'raster',
+    tiles: ['https://imagery.nationalmap.gov/arcgis/rest/services/USGSNAIPPlus/ImageServer/tile/{z}/{y}/{x}'],
+    attribution: 'USDA NAIP · USGS',
+  },
+};
+
+function rasterStyle(b) {
+  return {
+    version: 8,
+    sources: { basemap: { type: 'raster', tiles: b.tiles, tileSize: 256, attribution: b.attribution } },
+    layers: [{ id: 'basemap', type: 'raster', source: 'basemap' }],
+  };
+}
+
+function parseHash() {
+  const h = (location.hash || '').replace(/^#/, '');
+  const out = {};
+  h.split('&').filter(Boolean).forEach(kv => {
+    const [k, v] = kv.split('=');
+    if (k && v !== undefined) out[k] = decodeURIComponent(v);
+  });
+  return out;
+}
+function writeHash(state) {
+  const parts = [];
+  if (state.lat !== undefined) parts.push(`lat=${state.lat.toFixed(4)}`);
+  if (state.lon !== undefined) parts.push(`lon=${state.lon.toFixed(4)}`);
+  if (state.zoom !== undefined) parts.push(`zoom=${state.zoom.toFixed(2)}`);
+  if (state.layers) parts.push(`layers=${encodeURIComponent(state.layers)}`);
+  if (state.base) parts.push(`base=${state.base}`);
+  history.replaceState(null, '', '#' + parts.join('&'));
+}
+
+const initHash = parseHash();
+const initCenter = [parseFloat(initHash.lon) || -102.0, parseFloat(initHash.lat) || 31.3];
+const initZoom = parseFloat(initHash.zoom) || 6.2;
+const initBase = BASEMAPS[initHash.base] ? initHash.base : 'carto_light';
+const initLayersCsv = initHash.layers;
+
+const protocol = new pmtiles.Protocol();
+maplibregl.addProtocol('pmtiles', protocol.tile);
+
+const map = new maplibregl.Map({
+  container: 'map',
+  style: rasterStyle(BASEMAPS.carto_light),
+  center: initCenter,
+  zoom: initZoom,
+  minZoom: 3,
+  maxZoom: 18,
+  attributionControl: false,
+});
+map.addControl(new maplibregl.AttributionControl({ compact: true }), 'bottom-right');
+map.addControl(new maplibregl.NavigationControl({ showCompass: true, visualizePitch: false }), 'top-right');
+map.addControl(new maplibregl.ScaleControl({ unit: 'imperial', maxWidth: 160 }), 'bottom-right');
+map.addControl(new maplibregl.FullscreenControl(), 'top-right');
+
+function layerPaint(L) {
+  if (L.geom === 'point') {
+    return {
+      'circle-radius': L.radius || 3,
+      'circle-color': L.color,
+      'circle-stroke-width': 0.5,
+      'circle-stroke-color': '#ffffff',
+      'circle-opacity': 0.85,
+    };
+  }
+  if (L.geom === 'line') {
+    return { 'line-color': L.color, 'line-width': 1.5, 'line-opacity': 0.85 };
+  }
+  if (L.geom === 'fill') {
+    return { 'fill-color': L.color, 'fill-opacity': L.fill_opacity || 0.25, 'fill-outline-color': L.color };
+  }
+  if (L.geom === 'label') {
+    return {
+      'text-color': L.color || '#0f172a',
+      'text-halo-color': '#ffffff',
+      'text-halo-width': 2,
+    };
+  }
+  return {};
+}
+function layerType(L) {
+  if (L.geom === 'fill') return 'fill';
+  if (L.geom === 'line') return 'line';
+  if (L.geom === 'label') return 'symbol';
+  return 'circle';
+}
+
+function addLayer(L) {
+  const srcId = `src_${L.id}`;
+  const lyrId = `lyr_${L.id}`;
+  if (!map.getSource(srcId)) {
+    map.addSource(srcId, {
+      type: 'vector',
+      url: `pmtiles://tiles/${L.id}.pmtiles`,
+      attribution: 'LRP',
+    });
+  }
+  if (!map.getLayer(lyrId)) {
+    const lyr = {
+      id: lyrId,
+      type: layerType(L),
+      source: srcId,
+      'source-layer': L.id,
+      minzoom: L.min_zoom || 0,
+      paint: layerPaint(L),
+      layout: { visibility: L.default_on ? 'visible' : 'none' },
+    };
+    if (L.geom === 'label') {
+      lyr.layout = Object.assign({}, lyr.layout, {
+        'text-field': ['get', 'name'],
+        'text-font': ['Open Sans Bold', 'Arial Unicode MS Bold'],
+        'text-size': 13,
+        'text-anchor': 'top',
+        'text-offset': [0, 0.4],
+        'text-allow-overlap': false,
+      });
+    }
+    map.addLayer(lyr);
+    if (L.geom === 'fill') {
+      map.addLayer({
+        id: `${lyrId}__outline`,
+        type: 'line',
+        source: srcId,
+        'source-layer': L.id,
+        minzoom: L.min_zoom || 0,
+        paint: { 'line-color': L.color, 'line-width': 1.5, 'line-opacity': 0.9 },
+        layout: { visibility: L.default_on ? 'visible' : 'none' },
+      });
+    }
+    if (L.geom === 'point' && ICON_MAP[L.id]) {
+      map.addLayer({
+        id: `${lyrId}__icon`,
+        type: 'symbol',
+        source: srcId,
+        'source-layer': L.id,
+        minzoom: 9,
+        layout: {
+          'text-field': ICON_MAP[L.id],
+          'text-font': ['Open Sans Regular', 'Arial Unicode MS Regular'],
+          'text-size': 16,
+          'text-allow-overlap': true,
+          'text-ignore-placement': true,
+          visibility: L.default_on ? 'visible' : 'none',
+        },
+        paint: {
+          'text-halo-color': '#ffffff',
+          'text-halo-width': 2,
+        },
+      });
+    }
+  }
+}
+
+function setLayerVisibility(L, visible) {
+  const v = visible ? 'visible' : 'none';
+  try { map.setLayoutProperty(`lyr_${L.id}`, 'visibility', v); } catch (e) {}
+  if (L.geom === 'fill') {
+    try { map.setLayoutProperty(`lyr_${L.id}__outline`, 'visibility', v); } catch (e) {}
+  }
+  if (L.geom === 'point' && ICON_MAP[L.id]) {
+    try { map.setLayoutProperty(`lyr_${L.id}__icon`, 'visibility', v); } catch (e) {}
+  }
+}
+
+function ercotQueuePopupHtml(props) {
+  const title = props.name || 'ERCOT queue project';
+  const mw = (props.mw !== undefined && props.mw !== null && props.mw !== '')
+    ? `${Number(props.mw).toLocaleString()} MW` : '';
+  const fuel = props.fuel || props.technology || '';
+  const commissioned = props.commissioned || '';
+  const funnel = props.funnel_stage || '';
+  const county = props.county || '';
+  const zone = props.zone || '';
+  const entity = props.entity || '';
+  const rows = [
+    ['MW', mw],
+    ['Fuel', fuel],
+    ['Expected commission', commissioned],
+    ['Funnel stage', funnel],
+    ['County', county],
+    ['ERCOT zone', zone],
+    ['Interconnection entity', entity],
+  ].filter(([, v]) => v !== '' && v !== undefined && v !== null)
+    .map(([k, v]) => `<tr><td class="k">${k}</td><td class="v">${escapeHtml(String(v))}</td></tr>`)
+    .join('');
+  return `<div class="title">${escapeHtml(title)}</div>
+    <table>${rows}</table>
+    <div class="src">${escapeHtml(props.source || 'ERCOT GIR queue')}${props.source_date ? ' · ' + escapeHtml(props.source_date) : ''}</div>`;
+}
+
+function plannedUpgradePopupHtml(L, props) {
+  const baseTitle = props.name || props.project || L.label;
+  const kv = props.voltage || props.kv || props.V || '';
+  const completion = props.expected_completion || props.completion || props.commissioned || '';
+  const project = props.project || '';
+  const operator = props.operator || '';
+  const rows = [
+    ['kV', kv],
+    ['Expected completion', completion],
+    ['Project', project],
+    ['Operator', operator],
+  ].filter(([, v]) => v !== '' && v !== undefined && v !== null)
+    .map(([k, v]) => `<tr><td class="k">${k}</td><td class="v">${escapeHtml(String(v))}</td></tr>`)
+    .join('');
+  return `<div class="title"><span class="planned-badge">PLANNED UPGRADE</span>${escapeHtml(baseTitle)}</div>
+    <table>${rows}</table>
+    <div class="src">${escapeHtml(props.source || 'ERCOT TPIT')}${props.source_date ? ' · ' + escapeHtml(props.source_date) : ''}</div>`;
+}
+
+function featurePopupHtml(L, props) {
+  if (L.id === 'ercot_queue') return ercotQueuePopupHtml(props);
+  if (L.id === 'tpit_subs' || L.id === 'tpit_lines') return plannedUpgradePopupHtml(L, props);
+  const src = props.source || '';
+  const srcDate = props.source_date || '';
+  const title = props.name || props.Name || props.NAME || L.label;
+  const rows = (L.popup || []).map(k => {
+    const v = props[k];
+    if (v === undefined || v === null || v === '') return '';
+    const valStr = typeof v === 'number' ? (Number.isInteger(v) ? v : v.toFixed(2)) : String(v);
+    return `<tr><td class="k">${k}</td><td class="v">${escapeHtml(valStr)}</td></tr>`;
+  }).join('');
+  return `<div class="title">${escapeHtml(title)}</div>
+    <table>${rows}</table>
+    <div class="src">${escapeHtml(src)}${srcDate ? ' · ' + escapeHtml(srcDate) : ''}</div>`;
+}
+function escapeHtml(s) { return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]); }
+
+function wirePopups() {
+  LAYERS.forEach(L => {
+    const lyrId = `lyr_${L.id}`;
+    map.on('click', lyrId, e => {
+      if (measureActive) return;
+      if (!e.features || !e.features.length) return;
+      const f = e.features[0];
+      new maplibregl.Popup({ maxWidth: '300px' })
+        .setLngLat(e.lngLat)
+        .setHTML(featurePopupHtml(L, f.properties || {}))
+        .addTo(map);
+    });
+    map.on('mouseenter', lyrId, () => { if (!measureActive) map.getCanvas().style.cursor = 'pointer'; });
+    map.on('mouseleave', lyrId, () => { if (!measureActive) map.getCanvas().style.cursor = ''; });
+  });
+}
+
+const GROUP_ORDER = ['Land & Deal', 'Water & Regulatory', 'Generation', 'Transmission & Grid', 'Pipelines', 'Projects', 'Reference'];
+
+function renderSidebar(activeSet) {
+  const grouped = {};
+  LAYERS.forEach(L => {
+    (grouped[L.group] = grouped[L.group] || []).push(L);
+  });
+  const container = document.getElementById('layer-groups');
+  container.innerHTML = '';
+  GROUP_ORDER.forEach(g => {
+    if (!grouped[g]) return;
+    const div = document.createElement('div');
+    div.className = 'group';
+    div.innerHTML = `<h3>${g}</h3>` + grouped[g].map(L => {
+      const on = activeSet.has(L.id);
+      const swCls = L.geom === 'line' ? 'swatch line' : (L.geom === 'fill' ? 'swatch fill' : 'swatch');
+      return `<label class="layer" data-id="${L.id}">
+        <input type="checkbox" ${on ? 'checked' : ''} />
+        <span class="${swCls}" style="background:${L.color}"></span>
+        <span class="label">${L.label}</span>
+        <span class="count">${(L.features || 0).toLocaleString()}</span>
+      </label>`;
+    }).join('');
+    container.appendChild(div);
+  });
+  container.querySelectorAll('label.layer input').forEach(cb => {
+    cb.addEventListener('change', e => {
+      const id = cb.closest('label').dataset.id;
+      const L = LAYERS.find(x => x.id === id);
+      setLayerVisibility(L, cb.checked);
+      syncHash();
+    });
+  });
+}
+
+function activeLayerIds() {
+  return LAYERS.filter(L => {
+    try { return map.getLayoutProperty(`lyr_${L.id}`, 'visibility') !== 'none'; } catch (e) { return false; }
+  }).map(L => L.id);
+}
+
+function syncHash() {
+  const c = map.getCenter();
+  writeHash({ lat: c.lat, lon: c.lng, zoom: map.getZoom(), layers: activeLayerIds().join(','), base: currentBase });
+}
+
+let currentBase = initBase;
+function applyBasemap(id) {
+  const b = BASEMAPS[id];
+  if (!b) return;
+  const active = activeLayerIds();
+  const center = map.getCenter(); const zoom = map.getZoom();
+  currentBase = id;
+  if (b.kind === 'style') {
+    map.setStyle(b.url, { diff: false });
+  } else {
+    map.setStyle(rasterStyle(b));
+  }
+  map.once('styledata', () => {
+    LAYERS.forEach(addLayer);
+    LAYERS.forEach(L => setLayerVisibility(L, active.includes(L.id)));
+    wirePopups();
+    ensureMeasureLayers();
+  });
+  map.setCenter(center); map.setZoom(zoom);
+  syncHash();
+}
+const bmSelect = document.getElementById('basemap-select');
+bmSelect.value = initBase;
+bmSelect.addEventListener('change', () => applyBasemap(bmSelect.value));
+
+document.getElementById('btn-share').addEventListener('click', async () => {
+  syncHash();
+  try {
+    await navigator.clipboard.writeText(location.href);
+    const btn = document.getElementById('btn-share');
+    const orig = btn.textContent; btn.textContent = 'Copied ✓';
+    setTimeout(() => btn.textContent = orig, 1400);
+  } catch (e) { prompt('Copy URL:', location.href); }
+});
+
+document.getElementById('btn-print').addEventListener('click', () => {
+  const now = new Date();
+  document.getElementById('print-date').textContent = now.toLocaleDateString('en-US', { year:'numeric', month:'long', day:'numeric' });
+  setTimeout(() => window.print(), 50);
+});
+
+let measureActive = false;
+const measurePoints = [];
+const measureBtn = document.getElementById('btn-measure');
+const measureReadout = document.getElementById('measure-readout');
+
+function ensureMeasureLayers() {
+  if (!map.getSource('measure-src')) {
+    map.addSource('measure-src', { type: 'geojson', data: { type: 'FeatureCollection', features: [] } });
+    map.addLayer({
+      id: 'measure-fill', type: 'fill', source: 'measure-src',
+      paint: { 'fill-color': '#f59e0b', 'fill-opacity': 0.15 },
+      filter: ['==', '$type', 'Polygon'],
+    });
+    map.addLayer({
+      id: 'measure-line', type: 'line', source: 'measure-src',
+      paint: { 'line-color': '#f59e0b', 'line-width': 2, 'line-dasharray': [2, 1] },
+      filter: ['!=', '$type', 'Point'],
+    });
+    map.addLayer({
+      id: 'measure-pts', type: 'circle', source: 'measure-src',
+      paint: { 'circle-radius': 4, 'circle-color': '#0f172a', 'circle-stroke-color': '#fff', 'circle-stroke-width': 2 },
+      filter: ['==', '$type', 'Point'],
+    });
+  }
+}
+
+function updateMeasureReadout() {
+  let dist = 0, area = 0;
+  if (measurePoints.length >= 2) {
+    const line = turf.lineString(measurePoints);
+    dist = turf.length(line, { units: 'miles' });
+  }
+  if (measurePoints.length >= 3) {
+    const ring = measurePoints.concat([measurePoints[0]]);
+    const poly = turf.polygon([ring]);
+    const sqm = turf.area(poly);
+    area = sqm / 4046.8564224;
+  }
+  document.getElementById('m-dist').textContent = `${dist.toFixed(2)} mi`;
+  document.getElementById('m-area').textContent = measurePoints.length >= 3 ? `${area.toLocaleString(undefined,{maximumFractionDigits:1})} ac` : '— ac';
+}
+
+function renderMeasure() {
+  const feats = [];
+  measurePoints.forEach(p => feats.push({ type:'Feature', geometry:{ type:'Point', coordinates: p }, properties:{} }));
+  if (measurePoints.length >= 2) {
+    feats.push({ type:'Feature', geometry:{ type:'LineString', coordinates: measurePoints }, properties:{} });
+  }
+  if (measurePoints.length >= 3) {
+    const ring = measurePoints.concat([measurePoints[0]]);
+    feats.push({ type:'Feature', geometry:{ type:'Polygon', coordinates:[ring] }, properties:{} });
+  }
+  const src = map.getSource('measure-src');
+  if (src) src.setData({ type:'FeatureCollection', features: feats });
+  updateMeasureReadout();
+}
+
+function clearMeasure() {
+  measurePoints.length = 0;
+  renderMeasure();
+}
+
+measureBtn.addEventListener('click', () => {
+  measureActive = !measureActive;
+  if (measureActive) {
+    measureBtn.classList.add('active');
+    measureReadout.classList.add('active');
+    map.getCanvas().style.cursor = 'crosshair';
+    clearMeasure();
+  } else {
+    measureBtn.classList.remove('active');
+    measureReadout.classList.remove('active');
+    map.getCanvas().style.cursor = '';
+    clearMeasure();
+  }
+});
+
+map.on('click', e => {
+  if (!measureActive) return;
+  measurePoints.push([e.lngLat.lng, e.lngLat.lat]);
+  renderMeasure();
+});
+map.on('dblclick', e => {
+  if (!measureActive) return;
+  e.preventDefault();
+  if (measurePoints.length > 1) measurePoints.pop();
+  renderMeasure();
+});
+
+map.on('load', () => {
+  ensureMeasureLayers();
+  LAYERS.forEach(addLayer);
+  if (initLayersCsv !== undefined) {
+    const want = new Set(initLayersCsv.split(',').filter(Boolean));
+    LAYERS.forEach(L => setLayerVisibility(L, want.has(L.id)));
+    renderSidebar(want);
+  } else {
+    const want = new Set(LAYERS.filter(L => L.default_on).map(L => L.id));
+    renderSidebar(want);
+  }
+  wirePopups();
+  map.on('moveend', syncHash);
+  syncHash();
+  const now = new Date().toISOString().slice(0, 10);
+  document.getElementById('footer-updated').textContent = `Built ${now}`;
+  if (initBase !== 'carto_light') applyBasemap(initBase);
+});
+
+map.on('mousemove', e => {
+  document.getElementById('coord').textContent = `${e.lngLat.lat.toFixed(4)}, ${e.lngLat.lng.toFixed(4)}`;
+});
+map.on('mouseout', () => { document.getElementById('coord').textContent = '—'; });
+</script>
+</body>
+</html>

@@ -1,0 +1,323 @@
+layers:
+- id: counties
+  file: combined_geoms.geojson
+  geom: line
+  group: Reference
+  label: Counties (outline)
+  color: '#64748b'
+  default_on: true
+  popup:
+  - NAME
+  tippecanoe:
+  - -zg
+  - --coalesce-densest-as-needed
+  - --simplification=8
+- id: cities
+  file: combined_points.csv
+  geom: point
+  group: Reference
+  label: Cities
+  color: '#1e293b'
+  default_on: true
+  popup:
+  - name
+  radius: 4
+  tippecanoe:
+  - -zg
+- id: caramba_north
+  file: combined_geoms.geojson
+  geom: fill
+  group: Land & Deal
+  label: Caramba North (1,681 ac)
+  color: '#78350f'
+  fill_opacity: 0.25
+  default_on: true
+  popup:
+  - Name
+  - arableLandSize
+  - cropType
+  tippecanoe:
+  - -zg
+- id: caramba_south
+  file: combined_geoms.geojson
+  geom: fill
+  group: Land & Deal
+  label: Caramba South (2,450 ac)
+  color: '#92400e'
+  fill_opacity: 0.25
+  default_on: true
+  popup:
+  - Name
+  - arableLandSize
+  - cropType
+  tippecanoe:
+  - -zg
+- id: mpgcd_zone1
+  file: combined_geoms.geojson
+  geom: fill
+  group: Water & Regulatory
+  label: MPGCD Zone 1 (approx.)
+  color: '#8b5cf6'
+  fill_opacity: 0.15
+  default_on: true
+  popup:
+  - NAME
+  - ZONE
+  - ACCURACY
+  - note
+  tippecanoe:
+  - -zg
+- id: aquifers
+  file: combined_geoms.geojson
+  geom: fill
+  group: Water & Regulatory
+  label: Aquifers (TWDB)
+  color: '#a855f7'
+  fill_opacity: 0.15
+  default_on: false
+  popup:
+  - name
+  - source
+  - source_date
+  tippecanoe:
+  - -zg
+- id: wells
+  file: combined_points.csv
+  geom: point
+  group: Water & Regulatory
+  label: TWDB wells
+  color: '#a855f7'
+  default_on: false
+  min_zoom: 6
+  radius: 2.5
+  popup:
+  - county
+  - depth_ft
+  - use
+  - aquifer
+  tippecanoe:
+  - -zg
+  - -r1
+  - --drop-densest-as-needed
+  - --extend-zooms-if-still-dropping
+- id: eia860_plants
+  file: combined_points.csv
+  geom: point
+  group: Generation
+  label: EIA-860 plants
+  color: '#f59e0b'
+  default_on: false
+  radius: 4
+  popup:
+  - name
+  - plant_code
+  - county
+  - sector
+  tippecanoe:
+  - -zg
+- id: eia860_battery
+  file: combined_points.csv
+  geom: point
+  group: Generation
+  label: Battery storage (EIA-860)
+  color: '#dc2626'
+  default_on: false
+  radius: 4
+  popup:
+  - name
+  - plant_code
+  - county
+  - technology
+  - capacity
+  tippecanoe:
+  - -zg
+- id: wind
+  file: combined_points.csv
+  geom: point
+  group: Generation
+  label: Wind turbines (USWTDB)
+  color: '#84cc16'
+  default_on: false
+  min_zoom: 7
+  radius: 2
+  popup:
+  - project
+  - manu
+  - model
+  - cap_kw
+  - year
+  - county
+  tippecanoe:
+  - -zg
+  - -r1
+  - --drop-densest-as-needed
+  - --extend-zooms-if-still-dropping
+- id: solar
+  file: combined_points.csv
+  geom: point
+  group: Generation
+  label: Solar plants (EIA-860)
+  color: '#eab308'
+  default_on: false
+  radius: 4
+  popup:
+  - name
+  - plant_code
+  - county
+  - capacity_mw
+  tippecanoe:
+  - -zg
+- id: transmission
+  file: combined_geoms.geojson
+  geom: line
+  group: Transmission & Grid
+  label: "Transmission \u2265100 kV"
+  color: '#0ea5e9'
+  default_on: false
+  popup:
+  - V
+  - O
+  tippecanoe:
+  - -zg
+  - --simplification=8
+  - --coalesce-densest-as-needed
+- id: substations
+  file: combined_points.csv
+  geom: point
+  group: Transmission & Grid
+  label: Substations (OSM)
+  color: '#0369a1'
+  default_on: false
+  min_zoom: 7
+  radius: 3
+  popup:
+  - name
+  - operator
+  - voltage
+  tippecanoe:
+  - -zg
+  - --drop-densest-as-needed
+- id: tpit_subs
+  file: combined_points.csv
+  geom: point
+  group: Transmission & Grid
+  label: TPIT substations (ERCOT)
+  color: '#075985'
+  default_on: false
+  min_zoom: 6
+  radius: 3.5
+  popup:
+  - name
+  - operator
+  - voltage
+  tippecanoe:
+  - -zg
+- id: tpit_lines
+  file: combined_geoms.geojson
+  geom: line
+  group: Transmission & Grid
+  label: TPIT project lines (ERCOT)
+  color: '#38bdf8'
+  default_on: false
+  popup:
+  - name
+  - source
+  tippecanoe:
+  - -zg
+  - --simplification=8
+- id: ercot_queue
+  file: combined_points.csv
+  geom: point
+  group: Projects
+  label: ERCOT GIR queue
+  color: '#ec4899'
+  default_on: false
+  radius: 5
+  popup:
+  - name
+  - mw
+  - fuel
+  - commissioned
+  - funnel_stage
+  - county
+  - zone
+  - entity
+  tippecanoe:
+  - -zg
+- id: parcels_pecos
+  prebuilt: true
+  geom: fill
+  group: Land & Deal
+  label: Pecos County parcels
+  color: '#78350f'
+  fill_opacity: 0.15
+  default_on: false
+  min_zoom: 11
+  popup:
+  - owner
+  - situs
+  - acres
+  - legal_desc
+  - land_use
+  - prop_id
+- id: labels_hubs
+  file: combined_geoms.geojson
+  geom: label
+  group: Reference
+  label: Natural gas hubs
+  color: '#0f172a'
+  default_on: true
+  min_zoom: 5
+  popup:
+  - name
+  tippecanoe:
+  - -Z0
+  - -z14
+- id: rrc_pipelines
+  prebuilt: true
+  geom: line
+  group: Pipelines
+  label: "RRC pipelines (\u226520\" transmission)"
+  color: '#64748b'
+  default_on: false
+  popup:
+  - operator
+  - system
+  - commodity
+  - diameter_in
+  - source_date
+- id: tiger_highways
+  prebuilt: true
+  geom: line
+  group: Reference
+  label: Highways (Interstate + US)
+  color: '#f59e0b'
+  default_on: true
+  popup:
+  - name
+  - rttyp
+- id: bts_rail
+  prebuilt: true
+  geom: line
+  group: Reference
+  label: Rail (main lines)
+  color: '#475569'
+  default_on: false
+  popup:
+  - owner
+  - subdivision
+  - net
+- id: water_mains_approx
+  file: combined_geoms.geojson
+  geom: line
+  group: Water & Regulatory
+  label: Water mains (approximate)
+  color: '#06b6d4'
+  default_on: false
+  popup:
+  - name
+  - operator
+  - note
+  - accuracy
+  tippecanoe:
+  - -zg

@@ -1,0 +1,20 @@
+# Secrets — live only in Project Knowledge at /mnt/project/CREDENTIALS.md
+CREDENTIALS.md
+
+# Build artifacts
+dist/
+*.pmtiles
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Scratch / tmp
+tmp*/
+*.tmp
+.DS_Store
+
+# Local user-data mounts
+/mnt/user-data/
