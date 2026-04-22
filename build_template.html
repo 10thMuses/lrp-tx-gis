@@ -154,13 +154,7 @@
 <script>
 const LAYERS = /*__LAYERS__*/;
 
-const ICON_MAP = {
-  solar: '\u2600\uFE0F',
-  wind: '\uD83C\uDF2C\uFE0F',
-  eia860_battery: '\uD83D\uDD0B',
-  eia860_plants: '\uD83D\uDD25',
-  wells: '\uD83D\uDCA7',
-};
+const ICON_MAP = { solar: 'solar', wind: 'wind', eia860_battery: 'battery', eia860_plants: 'plant', wells: 'well' };
 
 const FIELD_LABELS = {
   name: 'Name', NAME: 'Name', Name: 'Name',
@@ -219,6 +213,7 @@ function rasterStyle(b) {
   return {
     version: 8,
     glyphs: 'https://tiles.openfreemap.org/fonts/{fontstack}/{range}.pbf',
+    sprite: '/sprite/sprite',
     sources: { basemap: { type: 'raster', tiles: b.tiles, tileSize: 256, attribution: b.attribution } },
     layers: [{ id: 'basemap', type: 'raster', source: 'basemap' }],
   };
@@ -364,17 +359,13 @@ function addLayer(L) {
         'source-layer': L.id,
         minzoom: 9,
         layout: {
-          'text-field': ICON_MAP[L.id],
-          'text-font': ['Open Sans Regular', 'Arial Unicode MS Regular'],
-          'text-size': 16,
-          'text-allow-overlap': true,
-          'text-ignore-placement': true,
+          'icon-image': ICON_MAP[L.id],
+          'icon-size': 0.6,
+          'icon-allow-overlap': true,
+          'icon-ignore-placement': true,
           visibility: L.default_on ? 'visible' : 'none',
         },
-        paint: {
-          'text-halo-color': '#ffffff',
-          'text-halo-width': 2,
-        },
+        paint: {},
       });
     }
   }
