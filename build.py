@@ -47,6 +47,10 @@ COMBINED_GJ = 'combined_geoms.geojson'
 NUMERIC_KEYS = {'mw', 'capacity', 'capacity_mw', 'cap_kw', 'depth_ft',
                 'year', 'plant_code', 'osm_id', 'acres'}
 
+# Filter UI: cap distinct values for a categorical filter. Above this, the
+# field is auto-demoted to text (substring match) so the UI stays usable.
+CATEGORICAL_CAP = 100
+
 
 def fnum(v):
     try:
@@ -341,12 +345,100 @@ def build_layer(layer, report, split_stats):
 
 # ---------- HTML + NETLIFY ----------
 
-def render_html(layers_config, layer_stats):
+def compute_filter_stats(layers_config, split_dir):
+    """Second pass over split ndjson to compute per-layer filter stats for
+    any layer declaring `filterable_fields`. Returns:
+        {layer_id: {field_name: {type, label, min?, max?, values?}}}
+    Categorical fields exceeding CATEGORICAL_CAP distinct values are
+    demoted to type='text' (values omitted).
+    """
+    result = {}
+    for L in layers_config['layers']:
+        spec = L.get('filterable_fields') or []
+        if not spec:
+            continue
+        lid = L['id']
+        nd = split_dir / f'{lid}.ndjson'
+        if not nd.exists():
+            continue
+        # Per-field accumulators
+        numeric = {}   # field -> [min, max]
+        distinct = {}  # field -> set of string values
+        declared = {}  # field -> (type, label)
+        for s in spec:
+            f = s['field']
+            declared[f] = (s.get('type', 'text'), s.get('label', f))
+            if s.get('type') == 'numeric':
+                numeric[f] = [float('inf'), float('-inf')]
+            elif s.get('type') == 'categorical':
+                distinct[f] = set()
+            # text: nothing to accumulate
+        # Stream
+        with open(nd, 'r', encoding='utf-8') as fin:
+            for line in fin:
+                try:
+                    feat = json.loads(line)
+                except Exception:
+                    continue
+                props = feat.get('properties') or {}
+                for f in numeric:
+                    v = props.get(f)
+                    if v is None or v == '':
+                        continue
+                    num = fnum(v) if not isinstance(v, (int, float)) else v
+                    if num is None:
+                        continue
+                    if num < numeric[f][0]: numeric[f][0] = num
+                    if num > numeric[f][1]: numeric[f][1] = num
+                for f in distinct:
+                    v = props.get(f)
+                    if v is None or v == '':
+                        continue
+                    if len(distinct[f]) >= CATEGORICAL_CAP + 1:
+                        continue  # already over cap, no point collecting more
+                    distinct[f].add(str(v))
+        # Assemble per-layer output
+        out = {}
+        for f, (typ, label) in declared.items():
+            entry = {'field': f, 'type': typ, 'label': label}
+            if typ == 'numeric' and f in numeric:
+                mn, mx = numeric[f]
+                if mn <= mx:
+                    entry['min'] = round(mn, 4)
+                    entry['max'] = round(mx, 4)
+                else:
+                    # No data — skip this field
+                    continue
+            elif typ == 'categorical' and f in distinct:
+                vals = distinct[f]
+                if len(vals) == 0:
+                    continue
+                if len(vals) > CATEGORICAL_CAP:
+                    # Demote to text
+                    entry['type'] = 'text'
+                else:
+                    entry['values'] = sorted(vals)
+            # text: no extra
+            out[f] = entry
+        if out:
+            result[lid] = out
+    return result
+
+
+def render_html(layers_config, layer_stats, filter_stats=None):
+    filter_stats = filter_stats or {}
     stats_by_id = {s['id']: s for s in layer_stats if s}
     clean = []
     for L in layers_config['layers']:
         if L['id'] not in stats_by_id:
             continue
+        # Resolve filterable_fields against computed stats (preserve yaml order)
+        ff = []
+        fstats = filter_stats.get(L['id'], {})
+        for s in (L.get('filterable_fields') or []):
+            entry = fstats.get(s['field'])
+            if entry is not None:
+                ff.append(entry)
         clean.append({
             'id': L['id'],
             'label': L['label'],
@@ -359,6 +451,7 @@ def render_html(layers_config, layer_stats):
             'radius': L.get('radius', 3),
             'fill_opacity': L.get('fill_opacity', 0.25),
             'features': stats_by_id[L['id']]['features'],
+            'filterable_fields': ff,
         })
     registry_json = json.dumps(clean, separators=(',', ':'))
     tpl = TEMPLATE_FILE.read_text()
@@ -555,7 +648,8 @@ def main():
         if s:
             stats.append(s)
 
-    render_html(cfg, stats)
+    filter_stats = compute_filter_stats(cfg, SPLIT_DIR)
+    render_html(cfg, stats, filter_stats)
     write_netlify_config()
 
     print('\nBUILD REPORT')
