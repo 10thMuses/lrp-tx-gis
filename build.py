@@ -278,12 +278,53 @@ def build_layer(layer, report, split_stats):
                 shutil.copy(src_uploads, pm)
                 tier_used = 'uploads'
             else:
-                import urllib.request
-                req = urllib.request.Request(prod_url, headers={'User-Agent': 'lrp-build/1.0'})
-                with urllib.request.urlopen(req, timeout=60) as resp:
-                    if resp.status != 200:
-                        raise RuntimeError(f'HTTP {resp.status}')
-                    pm.write_bytes(resp.read())
+                # Range-chunked fetch with retry. Full-file GETs intermittently
+                # return 503 ('DNS cache overflow') from the container egress proxy
+                # for large files; Range requests go through a different code path
+                # on Netlify edge and succeed reliably once the file is cached.
+                import urllib.request, urllib.error
+                CHUNK = 8 * 1024 * 1024  # 8 MB
+                MAX_TRIES = 5
+                # Probe size via HEAD with retry
+                total = None
+                for attempt in range(MAX_TRIES):
+                    try:
+                        req = urllib.request.Request(prod_url, method='HEAD',
+                                                     headers={'User-Agent': 'Mozilla/5.0 (lrp-build)'})
+                        with urllib.request.urlopen(req, timeout=30) as r:
+                            total = int(r.headers.get('Content-Length', '0'))
+                        if total:
+                            break
+                    except (urllib.error.HTTPError, urllib.error.URLError, OSError):
+                        pass
+                    time.sleep(2 ** attempt)
+                if not total:
+                    raise RuntimeError('HEAD probe failed')
+                # Chunked Range fetch
+                with open(pm, 'wb') as out:
+                    start = 0
+                    while start < total:
+                        end = min(start + CHUNK - 1, total - 1)
+                        last_err = None
+                        got = False
+                        for attempt in range(MAX_TRIES):
+                            try:
+                                req = urllib.request.Request(
+                                    prod_url,
+                                    headers={'User-Agent': 'Mozilla/5.0 (lrp-build)',
+                                             'Range': f'bytes={start}-{end}'})
+                                with urllib.request.urlopen(req, timeout=60) as resp:
+                                    if resp.status not in (200, 206):
+                                        raise RuntimeError(f'HTTP {resp.status}')
+                                    out.write(resp.read())
+                                got = True
+                                break
+                            except Exception as ex:
+                                last_err = ex
+                                time.sleep(2 ** attempt)
+                        if not got:
+                            raise RuntimeError(f'range {start}-{end}: {last_err}')
+                        start = end + 1
                 tier_used = 'prod-url'
             sz = pm.stat().st_size
             if sz < 1024:

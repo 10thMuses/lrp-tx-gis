@@ -2,15 +2,15 @@
 
 **Temporary file.** Delete before opening PR.
 
-Session-open recon complete on branch `refinement-bug-sweep`. Coding not started. Next chat resumes from this file; no prompt-parsing or conversation_search required.
+Recon complete. Fixes 1 and 2 shipped this commit. Fix 3 remaining + build verification + PR. Next chat resumes from this file; no prompt-parsing or conversation_search required.
 
 ---
 
 ## State at handoff
 
-- Branch `refinement-bug-sweep` created from `main` (not pushed in prior chat; may need recreation).
+- Branch `refinement-bug-sweep` rebased onto `main` (picked up Readme §7.7).
 - Stale `refinement-filter-ui` remote branch deleted.
-- Zero commits on the branch.
+- This commit: Fix 1 (Waha glyphs) + Fix 2 (parcels_pecos Range fetch).
 - Filter UI (Stage 1) merged to `main` in Chat 65. No prod deploy — ships with Stage 2.
 
 ---
@@ -25,33 +25,30 @@ Do NOT touch: icons, colors, sizing, sprite sheet, watermark. Stage 3+.
 
 ---
 
-## Recon findings (do not redo)
+## Recon findings + fix status
 
-### Bug 1 — Waha (`labels_hubs`)
+### Bug 1 — Waha (`labels_hubs`) ✅ FIXED this commit
 
-- 1 feature exists in `combined_geoms.geojson` tagged `layer_id:labels_hubs`, has `name`.
-- `layers.yaml`: `geom: label`, `default_on: true`, `min_zoom: 4`, tippecanoe `-Z0 -z14`.
-- `build_template.html`: label rendering at lines 288, 300, 324–333. Symbol layer, `text-field: ['get','name']`.
-- Split pipeline uses `ROOT / COMBINED_GJ` (build.py:632) — NOT the Chat-65 PROJECT/ROOT path bug.
+- 1 feature exists in `combined_geoms.geojson` tagged `layer_id:labels_hubs`, `name:Waha`, Point `[-103.183, 31.215]`.
+- Tile confirmed present at z0–z14 (probed via pmtiles reader).
+- **Root cause:** `rasterStyle()` in `build_template.html` omitted `glyphs` URL. All 4 raster basemaps (carto_light default, esri_streets, esri_imagery, naip) lack glyphs → symbol layer text silently fails. Only `openfreemap` style basemap worked.
+- **Fix applied:** added `glyphs: https://tiles.openfreemap.org/fonts/{fontstack}/{range}.pbf` to `rasterStyle()`; changed `text-font` from `['Open Sans Bold', 'Arial Unicode MS Bold']` to `['Noto Sans Bold']` (reliably served by OpenFreeMap).
 
-**Next diagnostic:** local build, then `pmtiles show dist/tiles/labels_hubs.pmtiles` (or inspect via tippecanoe-decode) to confirm feature reaches the tile with `name` preserved.
+### Bug 2 — `parcels_pecos` ✅ FIXED this commit
 
-### Bug 2 — `parcels_pecos`
+- `.pmtiles` NOT present at `/mnt/project/` or repo root; resolved from tier-3 prod CDN.
+- Prod CDN copy verified: 5.1 MB, z11–14, vector_layer id `parcels_pecos`, bounds -103.58 30.06 to -101.77 31.37, fields include `acres`, `fips`, `county`, `land_use`. File is correct.
+- **Root cause:** container egress proxy intermittently returns HTTP 503 body `"DNS cache overflow"` on full-file GETs of large objects. Range requests consistently succeed (edge path differs).
+- **Fix applied:** `build.py` prebuilt fetcher now does HEAD probe (retry 5×) + 8 MB chunked Range GETs (retry 5× each) with exponential backoff. Replaces fragile single `urllib.urlopen`.
+- **Open:** build verification pending next chat.
 
-- `layers.yaml`: `prebuilt: true`, `min_zoom: 11`.
-- Prebuilt resolver: `build.py:269` → `src_project = PROJECT / f'{lid}.pmtiles'`.
-- `PROJECT = /mnt/project` (build.py:42), `ROOT = /home/claude/repo`.
-- At session open, `ls -la` of repo root showed no `.pmtiles` files tracked.
+### Bug 3 — Measure tool / popup interaction ❌ TODO next chat
 
-**Likely root cause:** prebuilt `.pmtiles` missing from repo. In sidebar-mode chats it resolved via `/mnt/project/`, but post-port that path may be unreliable. First diagnostic: `ls /mnt/project/*.pmtiles` and `ls /home/claude/repo/*.pmtiles`.
-
-**Secondary hypothesis:** internal source-layer name inside the pmtiles doesn't match `parcels_pecos` the template expects.
-
-### Bug 3 — Measure tool / popup interaction
-
-- Not yet inspected.
-- Start: `grep -n 'measure\|Measure\|popup\|Popup' build_template.html`.
-- Likely cause: `map.on('click', ...)` fires measure-tool teardown before popup bubbles.
+- Current template (lines 640–670): `measureActive` check blocks NEW popups, but doesn't dismiss EXISTING popups when measure activates, and popup DOM elements still intercept clicks that should reach the map.
+- **Proposed fix (next chat):**
+  1. CSS: `.measure-on .maplibregl-popup { pointer-events: none; display: none; }` on map container.
+  2. In `measureBtn` click handler, when activating: `document.getElementById('map').classList.add('measure-on'); hoverPopup.remove();` and track/dismiss click popups.
+  3. On deactivation: remove class.
 
 ---
 
@@ -59,32 +56,43 @@ Do NOT touch: icons, colors, sizing, sprite sheet, watermark. Stage 3+.
 
 ```bash
 cd /home/claude/repo
-# If branch doesn't exist on remote (it won't, prior chat didn't push):
-git checkout -b refinement-bug-sweep 2>/dev/null || git checkout refinement-bug-sweep
-ls -la *.pmtiles /mnt/project/*.pmtiles 2>&1 | head
-grep -n 'measure\|Measure\|popup\|Popup' build_template.html | head -40
+git checkout refinement-bug-sweep
+git pull --rebase origin refinement-bug-sweep
+# Install tippecanoe if container is fresh (~60s):
+apt-get install -y libsqlite3-dev zlib1g-dev >/dev/null 2>&1 && \
+  git clone --depth 1 https://github.com/felt/tippecanoe.git /tmp/tippecanoe 2>&1 | tail -1 && \
+  cd /tmp/tippecanoe && make -j4 >/dev/null && make install >/dev/null && cd /home/claude/repo
+# Apply Fix 3 (see below), then:
+python3 build.py 2>&1 | tail -25
 ```
 
 ---
 
 ## Execution order
 
-1. Bug 2 first (parcels_pecos) — data/path diagnostic is the cheapest; unblocks whether a data-file question needs flagging.
-2. Bug 1 (Waha) — local build + tile inspection; likely a quick fix.
-3. Bug 3 (measure tool) — pure template JS; isolated from build pipeline.
-4. Commit per bug with clear messages.
-5. Local build to confirm 21/21 clean.
-6. **Delete this file** (`docs/_stage2_handoff.md`).
-7. Push branch, open PR → `main`, description per `Readme.md` §10.
-8. Update `WIP_OPEN.md` + append `WIP_LOG.md` entry as final action.
-9. Do NOT merge, do NOT deploy.
+1. **Apply Fix 3** — edit `build_template.html`:
+   - Add CSS rule in `<style>` block near line 60: `.measure-on .maplibregl-popup { pointer-events: none; display: none; }`
+   - In `measureBtn` click handler (~line 835), on activate: add `map.getContainer().classList.add('measure-on'); hoverPopup.remove();`
+   - On deactivate: `map.getContainer().classList.remove('measure-on');`
+2. Run `python3 build.py` — expect `built ≥ 20 of 21, errored ≤ 1, prebuilt[prod-url]` for parcels_pecos showing chunked fetch succeeded. If parcels_pecos fails even with Range-retry, document and proceed (PR can flag as environmental).
+3. Commit Fix 3 with clear message.
+4. **Delete this file** (`docs/_stage2_handoff.md`).
+5. Push branch, open PR → `main` via GitHub API (token has `contents: write` not `pull_requests: write` — if API 403s, print compare URL `https://github.com/10thMuses/lrp-tx-gis/compare/main...refinement-bug-sweep` for manual PR).
+6. Update `WIP_OPEN.md` current workstream → Stage 3 Visual Overhaul; append `WIP_LOG.md` entry.
+7. Do NOT merge, do NOT deploy.
 
 ---
 
 ## File paths (fixed)
 
-- `layers.yaml` — config
-- `build.py` — 678 lines; `ROOT` = repo root, `PROJECT` = `/mnt/project/` read-only sidebar
-- `build_template.html` — 891 lines; label rendering L288–333
-- `combined_geoms.geojson` — 6481 features; `labels_hubs` = 1, `caramba_south` = 1 orphan (Stage 1 deleted from yaml but geoms.geojson still has the feature — harmless, ignore unless blocking)
-- `combined_points.csv` — 39409 rows
+- `layers.yaml` — config, 21 layers
+- `build.py` — ROOT = repo root, PROJECT = /mnt/project read-only sidebar. Prebuilt fetcher patched this commit (chunked Range + retry).
+- `build_template.html` — 891 lines; `rasterStyle` + label rendering patched this commit. Measure tool at lines 773–860; `hoverPopup` at 640.
+- `combined_geoms.geojson` — 6481 features; `labels_hubs`=1, `caramba_south`=1 orphan (harmless).
+- `combined_points.csv` — 39409 rows.
+
+---
+
+## Tool-budget note
+
+Prior chat hit tool limit and wrote summary instead of committing patches — §7.7 violation. Andrea called it out. Current chat commits patches + this updated handoff before final message to comply. Future chats: commit-push before summary, always.

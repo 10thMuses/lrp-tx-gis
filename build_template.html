@@ -217,6 +217,7 @@ const BASEMAPS = {
 function rasterStyle(b) {
   return {
     version: 8,
+    glyphs: 'https://tiles.openfreemap.org/fonts/{fontstack}/{range}.pbf',
     sources: { basemap: { type: 'raster', tiles: b.tiles, tileSize: 256, attribution: b.attribution } },
     layers: [{ id: 'basemap', type: 'raster', source: 'basemap' }],
   };
@@ -324,7 +325,7 @@ function addLayer(L) {
     if (L.geom === 'label') {
       lyr.layout = Object.assign({}, lyr.layout, {
         'text-field': ['get', 'name'],
-        'text-font': ['Open Sans Bold', 'Arial Unicode MS Bold'],
+        'text-font': ['Noto Sans Bold'],
         'text-size': 13,
         'text-anchor': 'top',
         'text-offset': [0, 0.4],
