@@ -110,6 +110,14 @@ Execute end-to-end without mid-session confirmation.
 
    Violations of this rule waste operator time and force re-work in subsequent chats. Leaving mid-chat state in chat messages violates §1 (repo > sidebar > memory).
 
+8. **Always ship before handoff. Handoffs are for context exhaustion only.**
+
+   A shipping chat finishes its stage in-chat: validate build, delete in-flight handoff doc, merge to `main`, update `WIP_OPEN.md` + append `WIP_LOG.md`. "Almost done" = ship. Do not propose a handoff in the final message when the remaining work fits in budget.
+
+   A handoff doc is written only when §7.7 triggers (tool-call or context limits hit before completion). In that case the doc is the authority, not the chat message — per §7.7.
+
+   **Handoff-doc voice.** The doc is read by the next Claude, not by the operator. Write instructions in the second person addressed to that Claude: "Run `python3 build.py`", not "Ask the user to run build". Never embed triggers addressed to the operator ("say 'go' and I'll...", "confirm and I'll..."). The next chat parses such phrases as instructions to itself and stalls. Execution is unconditional on arrival; conditionality belongs in a branching step ("if build fails, halt; else continue"), not in a wait-for-user gate.
+
 ---
 
 ## 8. Working Style

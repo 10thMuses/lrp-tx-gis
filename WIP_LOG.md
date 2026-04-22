@@ -1,4 +1,30 @@
-## Chat 64 — 2026-04-22 — Filter UI stage, code pushed to branch
+## Chat 68 — 2026-04-22 — Stage 2 Bug Sweep merged to main
+
+**Branch:** `refinement-bug-sweep` → merged to `main` via `git merge --no-ff`. Branch can be deleted on next chat.
+**PR:** none opened (PAT lacks `pull_requests:write` — direct merge with no-ff merge commit instead, matches Chat 65 anomaly workaround).
+**Deploy:** none.
+
+**Shipped on branch pre-merge:**
+- Fix 3 (measure tool persists through popup clicks, commit `fc81eb0`): 4-line diff in `build_template.html`. CSS rule `.measure-on .maplibregl-popup { display: none !important }` + toggle `measure-on` class on map container on activate/deactivate + `hoverPopup.remove()` on activate.
+- Handoff doc deleted (`ecd1eec`): `docs/_stage2_handoff.md` removed.
+
+**Merged to main:**
+- All three Stage 2 fixes (`c8cbd68` + `fc81eb0`) plus orphan handoff-doc add/delete (`f65f72c` + `ecd1eec`, net-zero).
+- Local build 21/21 clean post-merge, verified.
+
+**Process changes to `Readme.md` §7:**
+- §7.8 added: "Always ship before handoff. Handoffs are for context exhaustion only." Shipping chats finish their stage in-chat; no proposing a handoff as alternative to shipping.
+- §7.8 also codifies **handoff-doc voice**: instructions in handoff docs are addressed to the next Claude, not the operator. No "say 'go' and I'll..." or "confirm and I'll..." phrasing — next chat parses these as wait-for-user gates and stalls. Conditionality belongs in branching steps, not wait-gates.
+
+**Bug that drove the §7.8 handoff-voice rule:** Chat 66's final chat message ended with "When you return, say 'go' and I'll execute steps 1–9 in one pass." Chat 67 (parallel) partially executed but stalled on the trigger ambiguity; operator reported "stuck — deciphering ambiguous instruction phrasing about execution timing."
+
+**Anomalies:**
+1. Parallel-chat collision: Chats 66 and 67 ran against the same `/home/claude/` container, producing overlapping commits + divergent `main` branch state mid-session. Reconciled by fast-forwarding and inspecting reflog. Not a repeatable pattern — single-shipping-chat rule (§7.6) is the right protection.
+2. PAT permission gap: gh REST calls to `/pulls` return 403 ("Resource not accessible by personal access token"). PAT scope is Contents R/W only; PR create/merge via API not available. Workaround: direct merge commit with `--no-ff`. Upgrade PAT at next convenient rotation.
+
+**Budget:** ~22 tool calls across the shipping portion of this chat. Within ceiling.
+
+
 
 **Branch:** `refinement-filter-ui` @ `37cfdaf` (force-pushed over prior empty pointer `a437329` from Chat 63 attempt)
 **PR:** not yet opened — 1/21 build regression must be resolved first
