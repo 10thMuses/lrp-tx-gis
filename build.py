@@ -34,7 +34,10 @@ from pathlib import Path
 
 import yaml
 
+from build_sprite import build_sprite_sheet
+
 ROOT = Path(__file__).parent
+SPRITE_SRC = Path(__file__).parent / 'sprite'
 TEMPLATE_FILE = ROOT / 'build_template.html'
 TMP = Path('/tmp/gis_build')
 SPLIT_DIR = TMP / 'split'
@@ -663,6 +666,15 @@ def main():
     if SPLIT_DIR.exists():
         shutil.rmtree(SPLIT_DIR)
     SPLIT_DIR.mkdir(parents=True, exist_ok=True)
+
+    # Regenerate sprite into repo-root sprite/ (committed) and mirror to DIST
+    # so Netlify serves /sprite/sprite* alongside tiles.
+    n_icons = build_sprite_sheet(SPRITE_SRC)
+    dist_sprite = DIST / 'sprite'
+    if dist_sprite.exists():
+        shutil.rmtree(dist_sprite)
+    shutil.copytree(SPRITE_SRC, dist_sprite)
+    print(f'Sprite: {n_icons} icons @ 1x + 2x → {SPRITE_SRC}/ + {dist_sprite}/')
 
     with open(ROOT / 'layers.yaml') as f:
         cfg = yaml.safe_load(f)
