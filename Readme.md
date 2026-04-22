@@ -118,6 +118,14 @@ Execute end-to-end without mid-session confirmation.
 
    **Handoff-doc voice.** The doc is read by the next Claude, not by the operator. Write instructions in the second person addressed to that Claude: "Run `python3 build.py`", not "Ask the user to run build". Never embed triggers addressed to the operator ("say 'go' and I'll...", "confirm and I'll..."). The next chat parses such phrases as instructions to itself and stalls. Execution is unconditional on arrival; conditionality belongs in a branching step ("if build fails, halt; else continue"), not in a wait-for-user gate.
 
+9. **Push-on-commit. Never leave unpushed commits in the container.**
+
+   Every `git commit` is followed by `git push` in the same bash call or the next one. Unpushed commits die on container reset — same outcome as if the work was never done. Batching pushes for the end of a chat is a §7.7 violation dressed up as efficiency.
+
+   **Operational trigger.** The commit-push pair is a single atomic unit. Do not begin the next edit, tool call, or sub-task until the push has returned success. If push fails (non-fast-forward, auth, network), resolve before continuing — do not queue more commits on top.
+
+   **Applies to all branches.** Feature branches, `main`, handoff doc commits — all pushed on creation. The only acceptable unpushed state is the few seconds between `git commit` and the immediately following `git push`.
+
 ---
 
 ## 8. Working Style
