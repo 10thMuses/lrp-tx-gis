@@ -100,5 +100,4 @@ Failure at any gate halts the chat. Never advance with a failing gate.
 
 ## Deferred / future cleanup
 
-- `ENVIRONMENT.md` contains stale language about `/mnt/project/` being the single sync touchpoint; post-GitHub-sync, the clone-push bracket is the actual mechanism. Refresh out of scope for this protocol port; revisit opportunistically.
-- `GIS_SPEC.md` §12–§18 session protocol overlaps with `Readme.md` §7. Not resolved in this port (blast radius too high for a scope expansion). Single source of truth is `Readme.md`; `GIS_SPEC.md` sections remain as historical context.
+*(None open. ENVIRONMENT.md deleted 2026-04-22 Chat 70; GIS_SPEC §12–18 consolidated same chat.)*

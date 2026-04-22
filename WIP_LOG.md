@@ -1,3 +1,29 @@
+## Chat 70 — 2026-04-22 — Token-efficiency doc-only sweep
+
+**Classification:** doc-only, LOW blast radius. No code, no build, no deploy.
+
+**Driver:** cross-project protocol advisory + prior-response sidebar audit. Merged priority list: ship structural cuts now, instruct next chat on behavioral cuts + operator-side sidebar purge.
+
+**Shipped:**
+- Deleted from repo: `COMMANDS.md` (8.5 KB, triggers optional per settled.md), `ENVIRONMENT.md` (3.6 KB, stale per principles.md §103), `HANWHA_SPRINT_closed.md` (archive, belongs in git history).
+- `GIS_SPEC.md`: cut §12–18 (lines 256–496, 241 lines of session-protocol content duplicating `Readme.md` §7 + `docs/principles.md` §2). Replaced with pointer. File: 570 → 324 lines.
+- `WIP_OPEN.md`: trimmed recent-sessions table from 13 → 3 rows, removed "Refinement sequence queue" block (duplicated `docs/refinement-sequence.md`), compressed prod-status. File: 90 → 64 lines.
+- `docs/principles.md`: closed both "Deferred / future cleanup" items (ENVIRONMENT.md + GIS_SPEC §12–18) — both shipped this chat.
+- `Readme.md` §13: removed `COMMANDS.md` reference.
+- `userMemories.recent_updates`: pruned stale Chat 54/Chat 64 bloat; retained only load-bearing pointers. (Executed via `memory_user_edits`.)
+
+**Not shipped this chat (deferred):**
+- Sidebar purge of `/mnt/project/` — Claude cannot write to `/mnt/project/`. Requires operator action via claude.ai project-knowledge UI. Ask issued in chat body (single ask, qualifies under Readme §2 acceptable-asks #1: irreversible structural change to project config).
+- `docs/refinement-sequence.md` split into stub + per-stage files — deferred; current file is 12 KB and loaded only when refinement-sequence chat runs. Revisit if a chat not touching refinement still pulls it.
+
+**Scope discipline note:** prior response framed GIS_SPEC consolidation as "higher blast radius, do in separate chat." Reassessed: deletion of sections entirely covered by canonical docs, with pointer replacement, is LOW. Shipped.
+
+**Budget:** doc-only commit, 5 tool calls (view principles + inventory bash + surgery bash + log+commit bash + memory edit). Within §11 doc-only budget (2–6).
+
+**Next-chat trigger:** `resume visual overhaul` (unchanged). Stage 3 branch still pending.
+
+---
+
 ## Chat 69 — 2026-04-22 — Stage 3 Visual Overhaul recon + branch push
 
 **Branch:** `refinement-visual-overhaul` cut from `main` post-Stage-2-merge. Pushed to origin. No code commits; recon only.

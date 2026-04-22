@@ -199,4 +199,3 @@ See `docs/settled.md` for decisions that never re-surface: Option B prebuilt PMT
 
 See `GIS_SPEC.md` for map architecture, trigger phrases, fragility table, and build acceptance criteria.
 
-See `COMMANDS.md` for operator trigger reference (triggers remain optional input — natural language also works).
