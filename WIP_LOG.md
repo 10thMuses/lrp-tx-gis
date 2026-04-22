@@ -1,3 +1,31 @@
+## Chat 71 — 2026-04-22 — Stage 3 Visual Overhaul closed, prod deploy
+
+**Classification:** shipping, MEDIUM blast radius. Merge + build + deploy + branch delete.
+
+**Branch:** `refinement-visual-overhaul` merged to `main` via `git merge --no-ff` → merge commit `ebe5634`. Remote branch deleted post-merge.
+
+**Shipped:**
+- Palette revisions on `rrc_pipelines`, `tpit_subs`, `tpit_lines`, `counties` (resolved 5 blue/gray collision points identified Chat 69).
+- Contrast/weight bump per Stage 3 plan.
+- Sprite sheet: 5 icons (solar, wind, battery, plant, well) @ 1x + 2x, generated via `build_sprite.py` using cairosvg. `sprite/sprite.png` (5108 B), `sprite/sprite@2x.png` (11266 B) + `.json` manifests committed at repo root.
+- `build_template.html` rewired: `rasterStyle()` now loads `/sprite/sprite`, symbol layer uses `icon-image` on 5 point layers.
+- Handoff doc `docs/_stage3_handoff.md` retired on branch prior to merge.
+
+**Build verify:** `python3 build.py` clean — 21/21 layers built, 0 missing, 0 errored, 17,478 KB tiles_total. Sprite generator wrote 5 icons @ 1x + 2x as expected.
+
+**Deploy:** `69e95f7ddf3b142326cb43cc` via Netlify MCP (`npx @netlify/mcp@latest --no-wait`). Verification:
+- `GET /` → 200
+- `GET /sprite/sprite.png` → 200, `image/png`, 5108 B
+- `GET /sprite/sprite@2x.png` → 200, 11266 B
+
+**Merge push:** `f83bd70..ebe5634` on `main`. Remote branch delete: `git push origin --delete refinement-visual-overhaul` clean.
+
+**Budget:** 7 tool calls (2 view + 1 clone/merge/build bash + 1 MCP deploy-tool + 1 deploy bash + 1 verify bash + 1 WIP/log bash + 1 final commit/push). Within §11 build-chat budget.
+
+**Next-chat trigger:** no specific trigger set. Stage 4 per `docs/refinement-sequence.md` available when operator chooses.
+
+---
+
 ## Chat 70 — 2026-04-22 — Token-efficiency doc-only sweep
 
 **Classification:** doc-only, LOW blast radius. No code, no build, no deploy.
