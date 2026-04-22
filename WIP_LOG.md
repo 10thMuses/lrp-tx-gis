@@ -218,3 +218,22 @@ pending operator actions:
 1. Publish deploy `69e8e002c4782d80d2949109` via https://app.netlify.com/projects/lrp-tx-gis/deploys/69e8e002c4782d80d2949109 → "Publish deploy" button.
 2. Unlock auto-publishing on Deploys list page.
 
+
+## [48] 2026-04-21 — GitHub sync GO-LIVE — repo initialized, session bracket active
+
+outcome: `github init.` executed. Repo `github.com/10thMuses/lrp-tx-gis` initialized with flat layout mirroring `/mnt/project/`, 14 tracked files. `CREDENTIALS.md` gitignored, PAT not in history. Working dir `/home/claude/repo/` established. Session-open (clone) + session-close (commit + push) bracket active for all subsequent shipping chats. `/mnt/project/` demoted to read-only fallback per `PROJECT_INSTRUCTIONS.md` authority hierarchy. Historical anchor — preserved as WIP_LOG entry retroactively during Chat 62 protocol port.
+anomalies: original Chat 48 close-out did not produce its own SESSION_LOG entry at the time. Entry reconstructed from memory for continuity.
+
+---
+
+## [61] 2026-04-22 — Cross-project protocol consultation
+
+outcome: 10M-project Claude was consulted on whether to port its operating protocol to the GIS project. Initial GIS-side analysis (Chat 61 close) found cognitive-briefing overhead already low due to trigger phrases and master-prompt convention, but identified five touchpoints the existing setup retained: (1) `CURRENT TASK:` / `UPCOMING TASKS:` framing as labor every chat open, (2) trigger-vs-conversational invocation as operator decision, (3) semantic overlap across `PROJECT_INSTRUCTIONS.md` / `SESSION_LOG.md` / `GIS_SPEC.md` / `COMMANDS.md` / `ENVIRONMENT.md`, (4) userMemories churn and recency bias, (5) mid-chat handoffs requiring operator re-state on resume. 10M Claude produced a self-contained 8-phase advisory recommending full port. Consultation closed; port queued for Chat 62. Historical anchor.
+anomalies: none.
+
+---
+
+## [62] 2026-04-22 — 10M operating-protocol port executed
+
+outcome: doc-only port executed end-to-end per 10M advisory. Created `Readme.md` (13-section operating protocol), `docs/settled.md` (permanent decisions), `docs/principles.md` (engineering patterns). Renamed `SESSION_LOG.md` → `WIP_LOG.md` (this file). Deprecated `README.md` and `PROJECT_INSTRUCTIONS.md` — content absorbed. Restructured `WIP_OPEN.md` top to current-workstream-first convention. Single `main` commit. Preserved: Chat 48 clone-push bracket, `/mnt/project/CREDENTIALS.md` gitignore pattern, Option B prebuilt PMTiles, flat data layout, single-`layers.yaml` config, tool-call budgets, trigger phrases (now optional input shape). Operator-facing change: `CURRENT TASK:` / `UPCOMING TASKS:` framing retired; natural-language prompts route correctly. Zero operator asks mid-port after mapping-table approval.
+anomalies: Chats 48–61 not all logged in real time. Chat 48 and Chat 61 reconstructed retroactively above as historical anchors. Gap between Chat 47 (last real-time entry) and Chat 62 not fully reconstructed; memory retains summary across the gap (22 layers live, TCEQ reactivated Chat 56, rrc_wells_permian excluded Chat 53).
