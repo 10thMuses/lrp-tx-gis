@@ -6,13 +6,15 @@ Active state. Read at session open. Updated at close-out of every shipping chat.
 
 ## Current workstream
 
-**Stage 2 — Bug Sweep.** Filter UI (Stage 1) merged to `main` via PR from `refinement-filter-ui`; no prod deploy yet (filter UI ships alongside bug-sweep fixes per refinement sequence, unless operator triggers earlier).
+**Stage 2 — Bug Sweep, IN PROGRESS on branch `refinement-bug-sweep`.** Fixes 1–2 committed (`c8cbd68`), Fix 3 + build verify + PR pending.
 
-**Next-chat trigger:** `open bug sweep` or `start stage 2`. Scope per `docs/refinement-sequence.md` §Stage 2:
-- Waha hub icon/labeling verification
-- `parcels_pecos` zoom/visibility behavior
-- Measure-tool interaction with popups (click-through suppression)
-- Cosmetic prebuilt feature-count 0s in sidebar (deferred-probe fix if budget permits)
+- Bug 1 (Waha label) — FIXED. Root cause: `rasterStyle()` omitted `glyphs` URL, symbol layers had no font glyphs on 4 raster basemaps. Added OpenFreeMap glyphs URL + `text-font: ['Noto Sans Bold']`.
+- Bug 2 (parcels_pecos tier-3 fetch 503) — FIXED. Container egress proxy intermittently returns HTTP 503 ("DNS cache overflow") on full-file GETs. Replaced `urllib.urlopen` with HEAD probe + 8 MB chunked Range GETs + 5-try exponential backoff.
+- Bug 3 (measure tool / popup click-through) — TODO next chat. Spec in `docs/_stage2_handoff.md` on branch.
+
+**Next-chat trigger:** `resume bug sweep — fix 3 + ship`
+
+Filter UI (Stage 1) merged to `main` this morning; no prod deploy yet (filter UI ships alongside bug-sweep fixes per refinement sequence).
 
 No pending deploys. Prod remains on Chat 58's TPIT-rename deploy (`69e8e002c4782d80d2949109`) or its successor — verify at session open.
 
@@ -32,6 +34,8 @@ No pending deploys. Prod remains on Chat 58's TPIT-rename deploy (`69e8e002c4782
 | 63 | 2026-04-22 | **Filter UI stage — recon + design, no code.** Budget spent on data profiles + schema design. Branch `refinement-filter-ui` not pushed; handoff in chat body. Resume next chat. |
 | 64 | 2026-04-22 | **Filter UI Stage 1 code shipped to branch.** `refinement-filter-ui` pushed (commit `a437329`). yaml + build.py (`compute_filter_stats`) + template (`FILTER_STATE`, `buildFilterExpression`, `renderFilterPanel`, `ensureLazyStats`) edits. 21 layers (caramba_south deleted), 12 with `filterable_fields`. Popup copy-lock applied. Local build 20/20 OK (`county_labels` errored — deferred). PR + WIP update deferred. |
 | 65 | 2026-04-22 | **Filter UI Stage 1 closed.** Root-cause `county_labels` failure: `build.py` split pass read `PROJECT / COMBINED_GJ` (stale sidebar) instead of `ROOT / COMBINED_GJ` (repo canonical). Two-line fix committed (`f829bb6`). Local build 21/21 OK. PR opened + merged to `main`. No prod deploy (ships with Stage 2 Bug Sweep). |
+| 66 | 2026-04-22 | **Bug sweep recon + §7.7 Readme rule.** Branch `refinement-bug-sweep` cut from `main`. Handoff doc `docs/_stage2_handoff.md` committed with 3-bug scope + recon. Added Readme §7.7 (mid-chat handoff on context exhaustion) on `main` (`9fd44b0`). |
+| 67 | 2026-04-22 | **Stage 2 fixes 1+2 shipped to branch.** Fix 1: added `glyphs` URL to `rasterStyle()` + `text-font: ['Noto Sans Bold']` (Waha label now renders on raster basemaps). Fix 2: `build.py` prebuilt fetcher rewritten with HEAD probe + chunked Range GETs + exponential backoff (parcels_pecos tier-3 resilient to container egress 503). Branch @ `c8cbd68`. Also: Readme §7.7 rewritten to "progress over summary — continuous commit, minimum chat message" (`dbb86d8`). Fix 3 (measure/popup) + build verify + PR pending next chat. |
 
 Full per-session detail in `WIP_LOG.md`.
 
