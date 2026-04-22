@@ -628,8 +628,8 @@ def main():
 
     # One-pass split of combined files (if present)
     split_stats = {}
-    cc = PROJECT / COMBINED_CSV
-    cg = PROJECT / COMBINED_GJ
+    cc = ROOT / COMBINED_CSV
+    cg = ROOT / COMBINED_GJ
     if cc.exists():
         print(f'Splitting {COMBINED_CSV} ...')
         s = split_combined_csv(cc, SPLIT_DIR)
