@@ -38,20 +38,6 @@ layers:
   - cropType
   tippecanoe:
   - -zg
-- id: caramba_south
-  file: combined_geoms.geojson
-  geom: fill
-  group: Land & Deal
-  label: Caramba South (2,450 ac)
-  color: '#92400e'
-  fill_opacity: 0.25
-  default_on: true
-  popup:
-  - Name
-  - arableLandSize
-  - cropType
-  tippecanoe:
-  - -zg
 - id: mpgcd_zone1
   file: combined_geoms.geojson
   geom: fill
@@ -77,10 +63,16 @@ layers:
   min_zoom: 6
   radius: 2.5
   popup:
+  - name
   - county
   - depth_ft
   - use
   - aquifer
+  filterable_fields:
+  - {field: depth_ft, type: numeric, label: Depth (ft)}
+  - {field: aquifer, type: categorical, label: Aquifer}
+  - {field: use, type: categorical, label: Use}
+  - {field: county, type: categorical, label: County}
   tippecanoe:
   - -zg
   - -r1
@@ -99,6 +91,10 @@ layers:
   - plant_code
   - county
   - sector
+  filterable_fields:
+  - {field: sector, type: categorical, label: Sector}
+  - {field: county, type: text, label: County}
+  - {field: name, type: text, label: Plant name}
   tippecanoe:
   - -zg
 - id: eia860_battery
@@ -115,6 +111,11 @@ layers:
   - county
   - technology
   - capacity
+  filterable_fields:
+  - {field: capacity, type: numeric, label: Capacity (MW)}
+  - {field: technology, type: categorical, label: Technology}
+  - {field: county, type: text, label: County}
+  - {field: name, type: text, label: Plant name}
   tippecanoe:
   - -zg
 - id: wind
@@ -133,6 +134,12 @@ layers:
   - cap_kw
   - year
   - county
+  filterable_fields:
+  - {field: cap_kw, type: numeric, label: Turbine capacity (kW)}
+  - {field: year, type: numeric, label: Year online}
+  - {field: manu, type: categorical, label: Manufacturer}
+  - {field: project, type: text, label: Project}
+  - {field: county, type: text, label: County}
   tippecanoe:
   - -zg
   - -r1
@@ -151,6 +158,10 @@ layers:
   - plant_code
   - county
   - capacity_mw
+  filterable_fields:
+  - {field: capacity_mw, type: numeric, label: Capacity (MW)}
+  - {field: county, type: text, label: County}
+  - {field: name, type: text, label: Plant name}
   tippecanoe:
   - -zg
 - id: transmission
@@ -163,6 +174,9 @@ layers:
   popup:
   - V
   - O
+  filterable_fields:
+  - {field: V, type: numeric, label: Voltage (kV)}
+  - {field: O, type: text, label: Operator}
   tippecanoe:
   - -zg
   - --simplification=8
@@ -180,6 +194,10 @@ layers:
   - name
   - operator
   - voltage
+  filterable_fields:
+  - {field: voltage, type: numeric, label: Voltage (V)}
+  - {field: operator, type: text, label: Operator}
+  - {field: name, type: text, label: Name}
   tippecanoe:
   - -zg
   - --drop-densest-as-needed
@@ -194,8 +212,12 @@ layers:
   radius: 3.5
   popup:
   - name
-  - operator
   - voltage
+  - operator
+  filterable_fields:
+  - {field: voltage, type: numeric, label: Voltage (V)}
+  - {field: operator, type: categorical, label: Operator}
+  - {field: name, type: text, label: Name}
   tippecanoe:
   - -zg
 - id: tpit_lines
@@ -208,6 +230,8 @@ layers:
   popup:
   - name
   - source
+  filterable_fields:
+  - {field: name, type: text, label: Name}
   tippecanoe:
   - -zg
   - --simplification=8
@@ -223,11 +247,26 @@ layers:
   - name
   - mw
   - fuel
+  - technology
   - commissioned
+  - under_construction
   - funnel_stage
   - county
   - zone
   - entity
+  - inr
+  - poi
+  filterable_fields:
+  - {field: mw, type: numeric, label: MW}
+  - {field: fuel, type: categorical, label: Fuel}
+  - {field: technology, type: categorical, label: Technology}
+  - {field: zone, type: categorical, label: ERCOT zone}
+  - {field: funnel_stage, type: categorical, label: Funnel stage}
+  - {field: commissioned, type: categorical, label: Commissioned}
+  - {field: under_construction, type: categorical, label: Under construction}
+  - {field: county, type: text, label: County}
+  - {field: entity, type: text, label: Developer}
+  - {field: name, type: text, label: Project}
   tippecanoe:
   - -zg
 - id: parcels_pecos
@@ -253,7 +292,7 @@ layers:
   label: Natural gas hubs
   color: '#0f172a'
   default_on: true
-  min_zoom: 5
+  min_zoom: 4
   popup:
   - name
   tippecanoe:
@@ -266,7 +305,7 @@ layers:
   label: County labels
   color: '#475569'
   default_on: false
-  min_zoom: 6
+  min_zoom: 5
   popup:
   - name
   tippecanoe:

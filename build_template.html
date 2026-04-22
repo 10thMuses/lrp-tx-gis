@@ -64,6 +64,23 @@
   .maplibregl-popup-content .title { font-weight: 600; font-size: 13px; margin-bottom: 4px; color: var(--text); }
   .maplibregl-popup-content .planned-badge { display: inline-block; background: var(--amber); color: #fff; font-size: 10px; font-weight: 700; letter-spacing: 0.06em; padding: 1px 6px; border-radius: 3px; margin-right: 6px; text-transform: uppercase; }
 
+  .layer-filters { display: none; padding: 6px 0 8px 22px; margin-left: 4px; border-left: 2px solid var(--border); }
+  .layer-filters.open { display: block; }
+  .filter-field { margin: 4px 0; }
+  .filter-field-label { display: block; color: var(--muted); font-size: 10px; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 2px; }
+  .filter-range { display: flex; gap: 4px; align-items: center; }
+  .filter-range input { width: 60px; padding: 3px 5px; border: 1px solid var(--border); border-radius: 4px; font: inherit; font-size: 11px; }
+  .filter-multi { max-height: 96px; overflow-y: auto; border: 1px solid var(--border); border-radius: 4px; padding: 3px 6px; background: #fff; }
+  .filter-multi label { display: block; font-size: 11px; padding: 1px 0; cursor: pointer; user-select: none; }
+  .filter-multi input { margin-right: 4px; }
+  .filter-text { width: 100%; padding: 3px 5px; border: 1px solid var(--border); border-radius: 4px; font: inherit; font-size: 11px; }
+  .filter-clear-row { margin-top: 6px; text-align: right; }
+  .filter-clear { font-size: 10px; color: var(--muted); cursor: pointer; text-decoration: underline; }
+  .filter-clear:hover { color: var(--accent); }
+  .layer-meta { font-size: 10px; color: var(--muted); margin-top: 2px; margin-left: 26px; display: none; }
+  .layer-meta.on { display: block; }
+  .layer-meta .active-count { color: var(--accent); font-weight: 600; }
+
   .print-header { display: none; }
   .print-footer { display: none; }
 
@@ -221,6 +238,7 @@ function writeHash(state) {
   if (state.zoom !== undefined) parts.push(`zoom=${state.zoom.toFixed(2)}`);
   if (state.layers) parts.push(`layers=${encodeURIComponent(state.layers)}`);
   if (state.base) parts.push(`base=${state.base}`);
+  if (state.filters) parts.push(`filters=${encodeURIComponent(state.filters)}`);
   history.replaceState(null, '', '#' + parts.join('&'));
 }
 
@@ -229,6 +247,10 @@ const initCenter = [parseFloat(initHash.lon) || -102.0, parseFloat(initHash.lat)
 const initZoom = parseFloat(initHash.zoom) || 6.2;
 const initBase = BASEMAPS[initHash.base] ? initHash.base : 'carto_light';
 const initLayersCsv = initHash.layers;
+let filterState = {};
+if (initHash.filters) {
+  try { filterState = JSON.parse(initHash.filters) || {}; } catch (e) { filterState = {}; }
+}
 
 const protocol = new pmtiles.Protocol();
 maplibregl.addProtocol('pmtiles', protocol.tile);
@@ -370,6 +392,188 @@ function setLayerVisibility(L, visible) {
   }
 }
 
+// ---------- FILTER UI ----------
+
+function layerHasFilters(L) {
+  return Array.isArray(L.filterable_fields) && L.filterable_fields.length > 0;
+}
+
+function buildFilterExpr(L) {
+  const state = filterState[L.id];
+  if (!state) return null;
+  const parts = [];
+  (L.filterable_fields || []).forEach(f => {
+    const v = state[f.field];
+    if (v === undefined || v === null) return;
+    if (f.type === 'numeric') {
+      if (v.min === undefined && v.max === undefined) return;
+      const clauses = [['has', f.field]];
+      if (v.min !== undefined && v.min !== '') clauses.push(['>=', ['to-number', ['get', f.field], NaN], Number(v.min)]);
+      if (v.max !== undefined && v.max !== '') clauses.push(['<=', ['to-number', ['get', f.field], NaN], Number(v.max)]);
+      if (clauses.length > 1) parts.push(['all'].concat(clauses));
+    } else if (f.type === 'categorical') {
+      if (!Array.isArray(v) || v.length === 0) return;
+      if (Array.isArray(f.values) && v.length >= f.values.length) return;
+      parts.push(['all', ['has', f.field], ['in', ['get', f.field], ['literal', v]]]);
+    } else if (f.type === 'text') {
+      if (typeof v !== 'string' || v.trim() === '') return;
+      const q = v.trim().toLowerCase();
+      parts.push(['all', ['has', f.field], ['in', q, ['downcase', ['to-string', ['get', f.field]]]]]);
+    }
+  });
+  if (parts.length === 0) return null;
+  if (parts.length === 1) return parts[0];
+  return ['all'].concat(parts);
+}
+
+function applyLayerFilter(L) {
+  const expr = buildFilterExpr(L);
+  try { map.setFilter(`lyr_${L.id}`, expr); } catch (e) {}
+  if (L.geom === 'fill') { try { map.setFilter(`lyr_${L.id}__outline`, expr); } catch (e) {} }
+  if (L.geom === 'line') { try { map.setFilter(`lyr_${L.id}__casing`, expr); } catch (e) {} }
+  if (L.geom === 'point' && ICON_MAP[L.id]) { try { map.setFilter(`lyr_${L.id}__icon`, expr); } catch (e) {} }
+  updateActiveCount(L);
+}
+
+function isLayerFiltered(L) {
+  const state = filterState[L.id];
+  if (!state) return false;
+  return (L.filterable_fields || []).some(f => {
+    const v = state[f.field];
+    if (v === undefined || v === null) return false;
+    if (f.type === 'numeric') return (v.min !== undefined && v.min !== '') || (v.max !== undefined && v.max !== '');
+    if (f.type === 'categorical') return Array.isArray(v) && v.length > 0 && (!Array.isArray(f.values) || v.length < f.values.length);
+    if (f.type === 'text') return typeof v === 'string' && v.trim() !== '';
+    return false;
+  });
+}
+
+function updateActiveCount(L) {
+  const metaEl = document.querySelector(`.layer-meta[data-layer-id="${L.id}"]`);
+  if (!metaEl) return;
+  if (!isLayerFiltered(L)) {
+    metaEl.classList.remove('on');
+    metaEl.innerHTML = '';
+    return;
+  }
+  // Count rendered features on-screen post-filter.
+  let n = 0;
+  try {
+    n = map.queryRenderedFeatures({ layers: [`lyr_${L.id}`] }).length;
+  } catch (e) { n = 0; }
+  metaEl.classList.add('on');
+  metaEl.innerHTML = `<span class="active-count">${n.toLocaleString()}</span> visible · filtered`;
+}
+
+function filterFieldControlHtml(lid, f) {
+  const state = (filterState[lid] || {})[f.field];
+  if (f.type === 'numeric') {
+    const curMin = state && state.min !== undefined && state.min !== '' ? state.min : '';
+    const curMax = state && state.max !== undefined && state.max !== '' ? state.max : '';
+    const rng = (f.min !== undefined && f.max !== undefined) ? `(${f.min}–${f.max})` : '';
+    return `<div class="filter-field" data-field="${f.field}" data-type="numeric">
+      <span class="filter-field-label">${escapeHtml(f.label)} ${rng}</span>
+      <div class="filter-range">
+        <input type="number" placeholder="min" value="${curMin}" data-bound="min" step="any">
+        <input type="number" placeholder="max" value="${curMax}" data-bound="max" step="any">
+      </div>
+    </div>`;
+  }
+  if (f.type === 'categorical') {
+    const vals = f.values || [];
+    const selected = new Set(Array.isArray(state) ? state : []);
+    const lis = vals.map(v => `<label><input type="checkbox" value="${escapeHtml(v)}" ${selected.has(v) ? 'checked' : ''}> ${escapeHtml(v)}</label>`).join('');
+    return `<div class="filter-field" data-field="${f.field}" data-type="categorical">
+      <span class="filter-field-label">${escapeHtml(f.label)} (${vals.length})</span>
+      <div class="filter-multi">${lis}</div>
+    </div>`;
+  }
+  // text
+  const curV = typeof state === 'string' ? state : '';
+  return `<div class="filter-field" data-field="${f.field}" data-type="text">
+    <span class="filter-field-label">${escapeHtml(f.label)}</span>
+    <input class="filter-text" type="text" placeholder="contains…" value="${escapeHtml(curV)}">
+  </div>`;
+}
+
+function renderLayerFilterPanel(L) {
+  if (!layerHasFilters(L)) return '';
+  const fields = L.filterable_fields.map(f => filterFieldControlHtml(L.id, f)).join('');
+  return `<div class="layer-filters" data-layer-id="${L.id}">
+    ${fields}
+    <div class="filter-clear-row"><span class="filter-clear" data-clear="${L.id}">Clear filters</span></div>
+  </div>
+  <div class="layer-meta" data-layer-id="${L.id}"></div>`;
+}
+
+function bindFilterPanel(panel) {
+  const lid = panel.dataset.layerId;
+  const L = LAYERS.find(x => x.id === lid);
+  if (!L) return;
+  panel.querySelectorAll('.filter-field').forEach(fieldEl => {
+    const fname = fieldEl.dataset.field;
+    const ftype = fieldEl.dataset.type;
+    if (ftype === 'numeric') {
+      fieldEl.querySelectorAll('input[type=number]').forEach(inp => {
+        inp.addEventListener('input', () => {
+          filterState[lid] = filterState[lid] || {};
+          filterState[lid][fname] = filterState[lid][fname] || {};
+          const bound = inp.dataset.bound;
+          filterState[lid][fname][bound] = inp.value;
+          applyLayerFilter(L);
+          syncHash();
+        });
+      });
+    } else if (ftype === 'categorical') {
+      fieldEl.querySelectorAll('input[type=checkbox]').forEach(cb => {
+        cb.addEventListener('change', () => {
+          filterState[lid] = filterState[lid] || {};
+          const current = new Set(Array.isArray(filterState[lid][fname]) ? filterState[lid][fname] : []);
+          if (cb.checked) current.add(cb.value); else current.delete(cb.value);
+          filterState[lid][fname] = Array.from(current);
+          applyLayerFilter(L);
+          syncHash();
+        });
+      });
+    } else if (ftype === 'text') {
+      const inp = fieldEl.querySelector('input.filter-text');
+      if (inp) {
+        let timer = null;
+        inp.addEventListener('input', () => {
+          filterState[lid] = filterState[lid] || {};
+          filterState[lid][fname] = inp.value;
+          clearTimeout(timer);
+          timer = setTimeout(() => { applyLayerFilter(L); syncHash(); }, 250);
+        });
+      }
+    }
+  });
+  const clearEl = panel.querySelector('.filter-clear');
+  if (clearEl) {
+    clearEl.addEventListener('click', () => clearLayerFilters(L));
+  }
+}
+
+function clearLayerFilters(L) {
+  delete filterState[L.id];
+  applyLayerFilter(L);
+  const panel = document.querySelector(`.layer-filters[data-layer-id="${L.id}"]`);
+  if (panel) {
+    // Rewrite controls to reset values
+    const fields = L.filterable_fields.map(f => filterFieldControlHtml(L.id, f)).join('');
+    panel.innerHTML = fields + `<div class="filter-clear-row"><span class="filter-clear" data-clear="${L.id}">Clear filters</span></div>`;
+    bindFilterPanel(panel);
+  }
+  syncHash();
+}
+
+function setFilterPanelVisible(lid, visible) {
+  const panel = document.querySelector(`.layer-filters[data-layer-id="${lid}"]`);
+  if (panel) panel.classList.toggle('open', visible);
+  const meta = document.querySelector(`.layer-meta[data-layer-id="${lid}"]`);
+  if (meta && !visible) meta.classList.remove('on');
+}
+
 function ercotQueuePopupHtml(props) {
   const title = props.name || 'ERCOT queue project';
   const mw = (props.mw !== undefined && props.mw !== null && props.mw !== '')
@@ -481,12 +685,13 @@ function renderSidebar(activeSet) {
     div.innerHTML = `<h3>${g}</h3>` + grouped[g].map(L => {
       const on = activeSet.has(L.id);
       const swCls = L.geom === 'line' ? 'swatch line' : (L.geom === 'fill' ? 'swatch fill' : 'swatch');
+      const panel = renderLayerFilterPanel(L);
       return `<label class="layer" data-id="${L.id}">
         <input type="checkbox" ${on ? 'checked' : ''} />
         <span class="${swCls}" style="background:${L.color}"></span>
         <span class="label">${L.label}</span>
         <span class="count">${(L.features || 0).toLocaleString()}</span>
-      </label>`;
+      </label>${panel}`;
     }).join('');
     container.appendChild(div);
   });
@@ -495,9 +700,15 @@ function renderSidebar(activeSet) {
       const id = cb.closest('label').dataset.id;
       const L = LAYERS.find(x => x.id === id);
       setLayerVisibility(L, cb.checked);
+      setFilterPanelVisible(id, cb.checked);
       syncHash();
     });
   });
+  container.querySelectorAll('.layer-filters').forEach(panel => bindFilterPanel(panel));
+  // Open panels for currently-active layers
+  activeSet.forEach(id => setFilterPanelVisible(id, true));
+  // Seed active counts for layers already filtered at load
+  LAYERS.forEach(L => { if (activeSet.has(L.id) && isLayerFiltered(L)) updateActiveCount(L); });
 }
 
 function activeLayerIds() {
@@ -508,7 +719,13 @@ function activeLayerIds() {
 
 function syncHash() {
   const c = map.getCenter();
-  writeHash({ lat: c.lat, lon: c.lng, zoom: map.getZoom(), layers: activeLayerIds().join(','), base: currentBase });
+  const activeFilters = {};
+  Object.keys(filterState).forEach(lid => {
+    const L = LAYERS.find(x => x.id === lid);
+    if (L && isLayerFiltered(L)) activeFilters[lid] = filterState[lid];
+  });
+  const filtersStr = Object.keys(activeFilters).length > 0 ? JSON.stringify(activeFilters) : undefined;
+  writeHash({ lat: c.lat, lon: c.lng, zoom: map.getZoom(), layers: activeLayerIds().join(','), base: currentBase, filters: filtersStr });
 }
 
 let currentBase = initBase;
@@ -526,6 +743,7 @@ function applyBasemap(id) {
   map.once('styledata', () => {
     LAYERS.forEach(addLayer);
     LAYERS.forEach(L => setLayerVisibility(L, active.includes(L.id)));
+    LAYERS.forEach(L => { if (filterState[L.id]) applyLayerFilter(L); });
     wirePopups();
     ensureMeasureLayers();
   });
@@ -652,8 +870,12 @@ map.on('load', () => {
     const want = new Set(LAYERS.filter(L => L.default_on).map(L => L.id));
     renderSidebar(want);
   }
+  // Replay any filters loaded from hash
+  LAYERS.forEach(L => { if (filterState[L.id]) applyLayerFilter(L); });
   wirePopups();
   map.on('moveend', syncHash);
+  // Refresh active-count labels after tiles render post-move
+  map.on('idle', () => { LAYERS.forEach(L => { if (isLayerFiltered(L)) updateActiveCount(L); }); });
   syncHash();
   const now = new Date().toISOString().slice(0, 10);
   document.getElementById('footer-updated').textContent = `Built ${now}`;

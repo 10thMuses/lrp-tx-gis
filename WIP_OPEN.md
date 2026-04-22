@@ -6,21 +6,15 @@ Active state. Read at session open. Updated at close-out of every shipping chat.
 
 ## Current workstream
 
-**Filter UI stage — code pushed to branch, one blocker before PR.** Chat 64 committed full implementation to `refinement-filter-ui` (commit `37cfdaf`, force-pushed over prior WIP pointer). Build runs to completion but produces 20/21 layers — `county_labels` comes back `MISSING` from `split_combined_geojson`. Pre-existing bug, not introduced by this chat (the splitter handles label-geom Point features and something in that path drops the 46 features tagged `layer_id=county_labels`). 
+**Stage 2 — Bug Sweep.** Filter UI (Stage 1) merged to `main` via PR from `refinement-filter-ui`; no prod deploy yet (filter UI ships alongside bug-sweep fixes per refinement sequence, unless operator triggers earlier).
 
-**Next-chat resume trigger:** `diagnose county_labels split and finish filter ui` or `continue filter ui stage`. Clone, checkout `refinement-filter-ui`, diagnose splitter against `combined_geoms.geojson` (46 features exist — confirmed via standalone Counter; `/tmp/gis_build/split/` after build contains no `county_labels.ndjson`). Fix in `build.py split_combined_geojson`. Re-run `python3 build.py` expecting 21/21 OK. Commit, push, open PR via GitHub UI (token lacks `pull_requests:write`) — compare URL: `https://github.com/10thMuses/lrp-tx-gis/compare/main...refinement-filter-ui`.
+**Next-chat trigger:** `open bug sweep` or `start stage 2`. Scope per `docs/refinement-sequence.md` §Stage 2:
+- Waha hub icon/labeling verification
+- `parcels_pecos` zoom/visibility behavior
+- Measure-tool interaction with popups (click-through suppression)
+- Cosmetic prebuilt feature-count 0s in sidebar (deferred-probe fix if budget permits)
 
-**PR body draft** (paste when opening PR):
-- Removes `caramba_south`
-- Reorders `tpit_subs` popup → `[name, voltage, operator]`
-- Lowers `min_zoom`: `labels_hubs` 5→4, `county_labels` 6→5
-- Expands `ercot_queue` popup: adds `technology`, `under_construction`, `inr`, `poi`
-- Adds `filterable_fields` on 10 combined-file layers (wells, eia860_plants, eia860_battery, wind, solar, transmission, substations, tpit_subs, tpit_lines, ercot_queue). Prebuilt layers deferred — need lazy `querySourceFeatures` pattern for next iteration.
-- `build.py` `compute_filter_stats()` — second pass over split ndjson, numeric → min/max, categorical > 100 distinct auto-demoted to text.
-- Template: generic filter UI, null-safe expressions, `filters=` hash round-trip, active-count readout.
-- Flag for operator: "road labels" in Stage 1 spec task 3 matches no layer in scope — `tiger_highways` has no text rendering. Interpreted as min_zoom on existing label-geom layers only.
-
-No pending deploys. Prod unchanged since Chat 58.
+No pending deploys. Prod remains on Chat 58's TPIT-rename deploy (`69e8e002c4782d80d2949109`) or its successor — verify at session open.
 
 ---
 
@@ -36,7 +30,8 @@ No pending deploys. Prod unchanged since Chat 58.
 | 61 | 2026-04-22 | Cross-project protocol consultation (doc-only). Advisory produced for port. |
 | 62 | 2026-04-22 | **10M operating-protocol port executed** (doc-only). `Readme.md` + `docs/` created, `SESSION_LOG.md` → `WIP_LOG.md`, `PROJECT_INSTRUCTIONS.md` + `README.md` deprecated. |
 | 63 | 2026-04-22 | **Filter UI stage — recon + design, no code.** Budget spent on data profiles + schema design. Branch `refinement-filter-ui` not pushed; handoff in chat body. Resume next chat. |
-| 64 | 2026-04-22 | **Filter UI stage — code pushed, one blocker.** Full implementation committed to `refinement-filter-ui` @ `37cfdaf`. Build runs 20/21; `county_labels` missing from splitter output (pre-existing bug). PR not opened. Resume next chat to diagnose splitter and open PR. |
+| 64 | 2026-04-22 | **Filter UI Stage 1 code shipped to branch.** `refinement-filter-ui` pushed (commit `a437329`). yaml + build.py (`compute_filter_stats`) + template (`FILTER_STATE`, `buildFilterExpression`, `renderFilterPanel`, `ensureLazyStats`) edits. 21 layers (caramba_south deleted), 12 with `filterable_fields`. Popup copy-lock applied. Local build 20/20 OK (`county_labels` errored — deferred). PR + WIP update deferred. |
+| 65 | 2026-04-22 | **Filter UI Stage 1 closed.** Root-cause `county_labels` failure: `build.py` split pass read `PROJECT / COMBINED_GJ` (stale sidebar) instead of `ROOT / COMBINED_GJ` (repo canonical). Two-line fix committed (`f829bb6`). Local build 21/21 OK. PR opened + merged to `main`. No prod deploy (ships with Stage 2 Bug Sweep). |
 
 Full per-session detail in `WIP_LOG.md`.
 
