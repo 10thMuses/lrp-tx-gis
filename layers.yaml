@@ -4,7 +4,7 @@ layers:
   geom: line
   group: Reference
   label: Counties (outline)
-  color: '#64748b'
+  color: '#475569'
   default_on: true
   popup:
   - NAME
@@ -206,7 +206,7 @@ layers:
   geom: point
   group: Transmission & Grid
   label: Substation Upgrades
-  color: '#075985'
+  color: '#b45309'
   default_on: false
   min_zoom: 6
   radius: 3.5
@@ -225,7 +225,7 @@ layers:
   geom: line
   group: Transmission & Grid
   label: Transmission Upgrades
-  color: '#38bdf8'
+  color: '#f59e0b'
   default_on: false
   popup:
   - name
@@ -316,7 +316,7 @@ layers:
   geom: line
   group: Pipelines
   label: "RRC pipelines (\u226520\" transmission)"
-  color: '#64748b'
+  color: '#7c2d12'
   default_on: false
   popup:
   - operator

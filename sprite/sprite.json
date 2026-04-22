@@ -1,0 +1,37 @@
+{
+  "solar": {
+    "x": 0,
+    "y": 0,
+    "width": 48,
+    "height": 48,
+    "pixelRatio": 1
+  },
+  "wind": {
+    "x": 48,
+    "y": 0,
+    "width": 48,
+    "height": 48,
+    "pixelRatio": 1
+  },
+  "battery": {
+    "x": 96,
+    "y": 0,
+    "width": 48,
+    "height": 48,
+    "pixelRatio": 1
+  },
+  "plant": {
+    "x": 144,
+    "y": 0,
+    "width": 48,
+    "height": 48,
+    "pixelRatio": 1
+  },
+  "well": {
+    "x": 192,
+    "y": 0,
+    "width": 48,
+    "height": 48,
+    "pixelRatio": 1
+  }
+}
