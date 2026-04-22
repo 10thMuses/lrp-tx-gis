@@ -6,19 +6,21 @@ Active state. Read at session open. Updated at close-out of every shipping chat.
 
 ## Current workstream
 
-**Filter UI stage — recon + design complete, zero code committed.** Chat 63 burned budget on recon (data profiles for all 11 combined-file layers + 13 geom layers) and locked the design. Branch `refinement-filter-ui` created locally but NOT pushed; no commits exist. Next chat resumes at code-write phase.
+**Filter UI stage — code pushed to branch, one blocker before PR.** Chat 64 committed full implementation to `refinement-filter-ui` (commit `37cfdaf`, force-pushed over prior WIP pointer). Build runs to completion but produces 20/21 layers — `county_labels` comes back `MISSING` from `split_combined_geojson`. Pre-existing bug, not introduced by this chat (the splitter handles label-geom Point features and something in that path drops the 46 features tagged `layer_id=county_labels`). 
 
-**Next-chat resume trigger:** `continue filter ui stage` or `resume filter ui`. First action: `conversation_search` on "filter ui" keywords — full handoff (yaml edits, filterable_fields tables, build.py changes, template JS patterns, PR body) is in Chat 63 body per `Readme.md` §10.
+**Next-chat resume trigger:** `diagnose county_labels split and finish filter ui` or `continue filter ui stage`. Clone, checkout `refinement-filter-ui`, diagnose splitter against `combined_geoms.geojson` (46 features exist — confirmed via standalone Counter; `/tmp/gis_build/split/` after build contains no `county_labels.ndjson`). Fix in `build.py split_combined_geojson`. Re-run `python3 build.py` expecting 21/21 OK. Commit, push, open PR via GitHub UI (token lacks `pull_requests:write`) — compare URL: `https://github.com/10thMuses/lrp-tx-gis/compare/main...refinement-filter-ui`.
 
-**Condensed design summary** (full detail in Chat 63 handoff):
+**PR body draft** (paste when opening PR):
+- Removes `caramba_south`
+- Reorders `tpit_subs` popup → `[name, voltage, operator]`
+- Lowers `min_zoom`: `labels_hubs` 5→4, `county_labels` 6→5
+- Expands `ercot_queue` popup: adds `technology`, `under_construction`, `inr`, `poi`
+- Adds `filterable_fields` on 10 combined-file layers (wells, eia860_plants, eia860_battery, wind, solar, transmission, substations, tpit_subs, tpit_lines, ercot_queue). Prebuilt layers deferred — need lazy `querySourceFeatures` pattern for next iteration.
+- `build.py` `compute_filter_stats()` — second pass over split ndjson, numeric → min/max, categorical > 100 distinct auto-demoted to text.
+- Template: generic filter UI, null-safe expressions, `filters=` hash round-trip, active-count readout.
+- Flag for operator: "road labels" in Stage 1 spec task 3 matches no layer in scope — `tiger_highways` has no text rendering. Interpreted as min_zoom on existing label-geom layers only.
 
-- `layers.yaml`: delete `caramba_south`; reorder `tpit_subs` popup → `[name, voltage, operator]`; lower `min_zoom` on `labels_hubs` (5→4) and `county_labels` (6→5); expand popup lists per layer (whitelist — do NOT auto-include `caramba_north` internal metadata); add new `filterable_fields: [{field, type, label?}]` key per filter-eligible layer.
-- `build.py`: in split pass, track per-field stats for declared `filterable_fields` (numeric → min/max; categorical → sorted distinct capped at 100 else fall back to text); embed in `render_html` registry.
-- `build_template.html`: collapsible per-layer filter panel in sidebar; numeric=range inputs, categorical=multi-select, text=contains; apply via `map.setFilter` on `lyr_<id>` + `__casing`/`__outline`/`__icon` companions; null-safe expressions wrapped in `['has', field]`; hash round-trip via new `filters=` key; prebuilt layers populate values lazily via `querySourceFeatures` on first open.
-- Verify: `python3 build.py` exits 0, layer count drops from 22 → 21 (caramba_south gone).
-- PR to main with body including: open question on "road labels" (no such layer exists — interpreted as lowering min_zoom on existing label-geom layers; flagged for confirmation).
-
-No pending deploys. Prod is on Chat 58's TPIT-rename deploy (`69e8e002c4782d80d2949109`) or its successor — verify at next session open.
+No pending deploys. Prod unchanged since Chat 58.
 
 ---
 
@@ -34,6 +36,7 @@ No pending deploys. Prod is on Chat 58's TPIT-rename deploy (`69e8e002c4782d80d2
 | 61 | 2026-04-22 | Cross-project protocol consultation (doc-only). Advisory produced for port. |
 | 62 | 2026-04-22 | **10M operating-protocol port executed** (doc-only). `Readme.md` + `docs/` created, `SESSION_LOG.md` → `WIP_LOG.md`, `PROJECT_INSTRUCTIONS.md` + `README.md` deprecated. |
 | 63 | 2026-04-22 | **Filter UI stage — recon + design, no code.** Budget spent on data profiles + schema design. Branch `refinement-filter-ui` not pushed; handoff in chat body. Resume next chat. |
+| 64 | 2026-04-22 | **Filter UI stage — code pushed, one blocker.** Full implementation committed to `refinement-filter-ui` @ `37cfdaf`. Build runs 20/21; `county_labels` missing from splitter output (pre-existing bug). PR not opened. Resume next chat to diagnose splitter and open PR. |
 
 Full per-session detail in `WIP_LOG.md`.
 

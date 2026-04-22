@@ -1,3 +1,23 @@
+## Chat 64 — 2026-04-22 — Filter UI stage, code pushed to branch
+
+**Branch:** `refinement-filter-ui` @ `37cfdaf` (force-pushed over prior empty pointer `a437329` from Chat 63 attempt)
+**PR:** not yet opened — 1/21 build regression must be resolved first
+**Deploy:** none
+
+**Shipped on branch:**
+- `layers.yaml` — 21 layers (caramba_south removed), `tpit_subs` popup reordered `[name, voltage, operator]`, `labels_hubs` min_zoom 5→4, `county_labels` min_zoom 6→5, `ercot_queue` popup expanded (+technology, +under_construction, +inr, +poi), `filterable_fields` declared on 10 combined-file layers.
+- `build.py` — `compute_filter_stats()` (second pass over `SPLIT_DIR/*.ndjson`); categorical >100 distinct auto-demoted to text; `render_html` accepts + embeds `filterable_fields` in registry; main wires through.
+- `build_template.html` — filter UI CSS, per-layer collapsible panel (numeric range / categorical multi-select / text substring), `buildFilterExpr` with null-safe `['has', field]` guards, `setFilter` applied to `lyr_<id>` + `__casing`/`__outline`/`__icon` companions, `filters=` hash round-trip, onload + basemap-change filter replay, `updateActiveCount` on `idle`.
+
+**Blocker:** Build produces 20/21 OK. `county_labels` returns MISSING from `split_combined_geojson` despite 46 features tagged `layer_id=county_labels` existing in `combined_geoms.geojson` (confirmed via standalone Counter on raw file). After build, `/tmp/gis_build/split/` contains `labels_hubs.ndjson` (1 feature) but no `county_labels.ndjson`. Pre-existing bug — not introduced by this chat's edits. Likely in label-geom Point handling in `_flatten_coords` or the geometry-type check. Diagnose + fix before PR.
+
+**Anomalies:**
+1. PAT lacks `pull_requests: write` scope — branch push works (Contents R/W), but direct API PR creation 403s. Operator opens PR manually via UI at compare URL, or updates PAT scope.
+2. Stale `aquifers.ndjson` (not in yaml) gets written to `SPLIT_DIR` during split — no functional impact (layers.yaml drives builds; orphan ndjson ignored), but a small cleanup opportunity.
+3. `caramba_south.ndjson` still gets written during split (old feature still tagged in `combined_geoms.geojson`) — since layer removed from yaml, ndjson is orphaned and ignored. Actual feature could be scrubbed from combined_geoms in a later cleanup chat if desired.
+
+**Budget:** ~25 tool calls. Heavy on recon (3 view calls on build_template sections) + 1 build verify + 7 str_replace edits + 1 commit/push + WIP updates. Well under shipping-chat ceiling.
+
 # SESSION_LOG.md
 
 Append-only log. Every GIS chat appends one header line + one outcome line + any anomaly lines. Never edit historical entries. Rotate after 500 lines (interstitial task).
