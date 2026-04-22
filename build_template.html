@@ -52,6 +52,7 @@
   .coord { position: absolute; bottom: 8px; left: 8px; background: rgba(255,255,255,0.9); border: 1px solid var(--border); padding: 3px 8px; border-radius: 4px; font-size: 11px; font-variant-numeric: tabular-nums; color: var(--muted); z-index: 2; }
   .measure-readout { position: absolute; top: 8px; left: 8px; background: rgba(255,255,255,0.95); border: 1px solid var(--border); padding: 8px 12px; border-radius: 6px; font-size: 12px; color: var(--text); z-index: 2; box-shadow: 0 2px 8px rgba(0,0,0,0.08); display: none; min-width: 180px; }
   .measure-readout.active { display: block; }
+  .measure-on .maplibregl-popup { display: none !important; }
   .measure-readout .mk { color: var(--muted); font-size: 10px; text-transform: uppercase; letter-spacing: 0.05em; }
   .measure-readout .mv { font-weight: 600; font-variant-numeric: tabular-nums; }
   .measure-readout .hint { color: var(--muted); font-size: 10px; margin-top: 4px; }
@@ -838,11 +839,14 @@ measureBtn.addEventListener('click', () => {
   if (measureActive) {
     measureBtn.classList.add('active');
     measureReadout.classList.add('active');
+    map.getContainer().classList.add('measure-on');
+    hoverPopup.remove();
     map.getCanvas().style.cursor = 'crosshair';
     clearMeasure();
   } else {
     measureBtn.classList.remove('active');
     measureReadout.classList.remove('active');
+    map.getContainer().classList.remove('measure-on');
     map.getCanvas().style.cursor = '';
     clearMeasure();
   }
