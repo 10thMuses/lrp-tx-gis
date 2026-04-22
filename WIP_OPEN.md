@@ -18,6 +18,7 @@ Active state. Read at session open. Updated at close-out of every chat.
 | 48 | 2026-04-21 | **GitHub sync live.** Repo `github.com/10thMuses/lrp-tx-gis`, initial push of 14 tracked files, CREDENTIALS.md gitignored. |
 | 51 | 2026-04-21 | Hanwha polish patch authored in-session (FIELD_LABELS + hover popups + line casings + county_labels add, aquifers drop); build/deploy not landed — container reset before close. |
 | 52 | 2026-04-21 | **Hanwha polish landed.** 22/22 clean, deployId `69e82c344f3101e36a99b60e`, patches reconstructed and applied idempotently. aquifers dropped, county_labels live at 25KB/46 features. |
+| 53 | 2026-04-21 | rrc_wells_permian fetch **HALTED** pre-download — MFT endpoint is GoAnywhere AJAX-only (no direct URL); Andrea elected to exclude RRC oil/gas wells from scope for now. No build, no deploy. |
 
 ---
 
@@ -42,7 +43,7 @@ Active state. Read at session open. Updated at close-out of every chat.
 ## Open backlog
 
 **Deferred sources — manual-CSV pattern:**
-- `rrc_wells_permian` — path resolved Chat 45: bulk-CSV via `mft.rrc.texas.gov`. Next chat on this source = fetch + stage.
+- ~~`rrc_wells_permian`~~ — **EXCLUDED from scope as of Chat 53** (Andrea decision). MFT `mft.rrc.texas.gov` path is GoAnywhere/PrimeFaces AJAX-only (no direct-URL download); reopening would require either manual browser-downloads of 12 county shapezips or a PrimeFaces session-downloader implementation. Revisit only on explicit re-scope.
 - `tceq_gas_turbines` — CRPUB scrape + Census geocoder. **Scope: fossil/emissions only** (gas-fired peakers and emission-permitted combustion sources); not renewables.
 - `tceq_nsr_pending` — same pattern. Scope: fossil/emissions only.
 - `tceq_pbr` — same. Scope: fossil/emissions only.
