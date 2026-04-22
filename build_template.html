@@ -274,15 +274,15 @@ map.addControl(new maplibregl.FullscreenControl(), 'top-right');
 function layerPaint(L) {
   if (L.geom === 'point') {
     return {
-      'circle-radius': L.radius || 3,
+      'circle-radius': L.radius || 4,
       'circle-color': L.color,
-      'circle-stroke-width': 0.5,
+      'circle-stroke-width': 1.2,
       'circle-stroke-color': '#ffffff',
-      'circle-opacity': 0.85,
+      'circle-opacity': 0.9,
     };
   }
   if (L.geom === 'line') {
-    return { 'line-color': L.color, 'line-width': 1.5, 'line-opacity': 0.85 };
+    return { 'line-color': L.color, 'line-width': 2, 'line-opacity': 0.9 };
   }
   if (L.geom === 'fill') {
     return { 'fill-color': L.color, 'fill-opacity': L.fill_opacity || 0.25, 'fill-outline-color': L.color };
@@ -340,7 +340,7 @@ function addLayer(L) {
         source: srcId,
         'source-layer': L.id,
         minzoom: L.min_zoom || 0,
-        paint: { 'line-color': '#ffffff', 'line-width': 3.5, 'line-opacity': 0.85 },
+        paint: { 'line-color': '#ffffff', 'line-width': 4.5, 'line-opacity': 0.85 },
         layout: { visibility: L.default_on ? 'visible' : 'none', 'line-cap': 'round', 'line-join': 'round' },
       });
     }
@@ -352,7 +352,7 @@ function addLayer(L) {
         source: srcId,
         'source-layer': L.id,
         minzoom: L.min_zoom || 0,
-        paint: { 'line-color': L.color, 'line-width': 1.5, 'line-opacity': 0.9 },
+        paint: { 'line-color': L.color, 'line-width': 2, 'line-opacity': 1.0 },
         layout: { visibility: L.default_on ? 'visible' : 'none' },
       });
     }
