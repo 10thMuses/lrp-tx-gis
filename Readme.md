@@ -96,7 +96,19 @@ Execute end-to-end without mid-session confirmation.
 4. Doc / meta session → prepend to `WIP_LOG.md`, no chat number required.
 5. No chat labeling in responses (no "Chat N:" prefix in chat replies; logs still carry chat numbers).
 6. One shipping chat at a time.
-7. **Mid-chat handoff on context exhaustion.** If a shipping chat hits tool-call or context limits before completion, Claude's final action is to commit an in-flight handoff file to the active branch at `docs/_<stage-slug>_handoff.md`. The file captures: state at handoff, scope boundary, recon findings already complete (so next chat does not redo), first commands for next chat, execution order, file paths. Commit and push before the final chat message. Next chat reads the file on clone and resumes without depending on prompt phrasing, conversation_search, or memory. File is deleted on the same branch before PR opens. This rule is non-negotiable: leaving mid-chat state in chat messages violates §1 (repo > sidebar > memory).
+7. **Progress over summary. Commit continuously, not at the end.**
+
+   Shipping chats commit and push every completed unit of work the moment it's done — each fix, each file patched, each logical milestone. Not batched for a final push. Not saved up for a summary message.
+
+   **Budget rule.** Reserve ~20% of tool budget for the close-out commit-push-handoff sequence. When ~75% of budget is consumed, stop starting new sub-tasks. Ship what's complete, commit in-flight state to `docs/_<stage-slug>_handoff.md` on the active branch, push, then send the final chat message.
+
+   **Handoff doc is authoritative, not the chat message.** The doc on the branch carries state at handoff, scope boundary, recon findings (so next chat does not redo), first commands for next chat, execution order, file paths. Next chat reads the file on clone and resumes without conversation_search, prompt parsing, or memory.
+
+   **Final chat message is minimum viable.** One line of what shipped with commit hash, one line with the next-chat trigger. No tables. No bullet recaps. No "what's done / what's outstanding" summaries. The branch is the truth; the message is a pointer.
+
+   **Handoff doc is deleted** on the branch before the PR opens.
+
+   Violations of this rule waste operator time and force re-work in subsequent chats. Leaving mid-chat state in chat messages violates §1 (repo > sidebar > memory).
 
 ---
 
