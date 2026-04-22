@@ -1,4 +1,31 @@
-## Chat 68 — 2026-04-22 — Stage 2 Bug Sweep merged to main
+## Chat 69 — 2026-04-22 — Stage 3 Visual Overhaul recon + branch push
+
+**Branch:** `refinement-visual-overhaul` cut from `main` post-Stage-2-merge. Pushed to origin. No code commits; recon only.
+
+**Handoff:** `docs/_stage3_handoff.md` committed at `b25db48`. Content per §7.8 voice rules (second-person to next Claude, unconditional execution on arrival). Sections: recon findings (current palette table + render hook line numbers + existing defaults), 8-step execution plan (palette → contrast bump → sprite gen → template wire → build verify → commit cadence → PR → WIP close), budget expectations, boundary flags.
+
+**Recon output embedded in handoff:**
+- Five blue/gray collision points identified in current palette (counties ↔ rrc_pipelines; transmission/substations/tpit_subs/tpit_lines all in blue family).
+- Render hooks located: `layerPaint()` at `build_template.html:274`; `ICON_MAP` emoji approach at `:157`; symbol layer branch at `:359`.
+- Stage scope confirmed: `docs/refinement-sequence.md` §91–111.
+
+**Palette resolution planned (not yet committed):**
+- `rrc_pipelines` `#64748b` → `#7c2d12` (fossil industrial, away from grid blues)
+- `tpit_subs` `#075985` → `#b45309` (planned-upgrade amber family, dark)
+- `tpit_lines` `#38bdf8` → `#f59e0b` (amber, matches "Planned" badge)
+- `counties` `#64748b` → `#475569` (darker slate reference outline)
+
+**Sprite sheet approach planned:**
+- 5 icons: solar, wind, battery, plant, well — SVG generated inline in build.py, rasterized via cairosvg (fallback: Pillow primitives), composited to `sprite/sprite.png` + `sprite.json` + `@2x` variants at repo root (not under `dist/` to avoid gitignore issues).
+- Template wire: `rasterStyle()` gains `sprite: '/sprite/sprite'`; symbol layer switches from `text-field` to `icon-image`.
+
+**Deploy:** none.
+
+**Next-chat trigger:** `resume visual overhaul` or `continue stage 3`.
+
+---
+
+
 
 **Branch:** `refinement-bug-sweep` → merged to `main` via `git merge --no-ff`. Branch can be deleted on next chat.
 **PR:** none opened (PAT lacks `pull_requests:write` — direct merge with no-ff merge commit instead, matches Chat 65 anomaly workaround).
