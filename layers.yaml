@@ -187,7 +187,7 @@ layers:
   file: combined_points.csv
   geom: point
   group: Transmission & Grid
-  label: TPIT substations (ERCOT)
+  label: Substation Upgrades
   color: '#075985'
   default_on: false
   min_zoom: 6
@@ -202,7 +202,7 @@ layers:
   file: combined_geoms.geojson
   geom: line
   group: Transmission & Grid
-  label: TPIT project lines (ERCOT)
+  label: Transmission Upgrades
   color: '#38bdf8'
   default_on: false
   popup:

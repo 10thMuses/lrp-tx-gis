@@ -78,3 +78,25 @@ Active state. Read at session open. Updated at close-out of every chat.
 - Cap check mandatory at handoff-write time (§15 Rule 3, chat-36 failure mode).
 - CDN warm-up window: curl HEAD may 503 for ~45–75s post-deploy — wait and retry before escalating.
 - **Polish-sprint reconstruction pattern (Chat 52):** when a prior chat claims "file already edited on disk" for /mnt/project artifacts, verify via diff against the last-pushed GitHub state before trusting the claim. In-session edits to /mnt/project do not persist across container resets; only GitHub does.
+
+---
+
+## Chat 58 close (2026-04-22)
+
+**Prod state:** Deploy `69e8e002c4782d80d2949109` built `ready` but `published_at=null`. Awaiting operator manual publish + auto-publish unlock. If unpublished, prod continues serving rolled-back Yesterday 12:36 PM deploy (pre-TPIT-rename, pre-Chat-55).
+
+**Shipped this chat:** TPIT label rename (`tpit_subs` → "Substation Upgrades", `tpit_lines` → "Transmission Upgrades"). Layer IDs unchanged — all downstream references stable.
+
+**Dropped from scope:** Chat 55 operator/owner field refresh for eia860_plants / eia860_battery / solar / wind. Operator decision mid-Chat-58 — field was illustrative; generic filter UI (Chat 59 queued) provides the actual leverage.
+
+**Queue (unchanged from Chat 57 close, next-number re-mapped):**
+- Chat 59: Lockdown + generic filter UI. `filterable_fields` yaml per-layer (date/category/numeric/text), sidebar filter controls, monthly-granularity slider, popup copy-disable, `_headers` CORS verify. Frontend-only build.
+- Chat 60: TCEQ refresh (tceq_nsr / tceq_pbr / tceq_gas_turbines) via CRPUB scrape + Census geocoder, 12 Permian counties.
+- Chat 61: Merge TCEQ into combined_points.csv + add 3 layers under new "Permits" sidebar group (purple family, distinct from water). Filterable fields declared per layer.
+
+**Platform lessons (Chat 58):**
+- Netlify edge "DNS cache overflow" 503 is platform-side and persists through raw deploy permalink. Manual republish of a prior ready deploy is the recovery path — MCP has no op for this.
+- Auto-publish lock surfaces the UI Publish button. Remember to unlock after manual republish cycle.
+- Netlify CLI deploy timeout ("Service Unavailable" polling status) — ignore CLI, check MCP `get-deploy-for-site` for truth.
+- `/home/claude/` is NOT persistent across chats. Uncommitted edits = lost. Push as final bash every chat.
+
