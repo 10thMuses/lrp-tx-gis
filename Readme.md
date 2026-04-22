@@ -126,6 +126,14 @@ Execute end-to-end without mid-session confirmation.
 
    **Applies to all branches.** Feature branches, `main`, handoff doc commits — all pushed on creation. The only acceptable unpushed state is the few seconds between `git commit` and the immediately following `git push`.
 
+10. **Stage sizing. A stage fits one chat.**
+
+    A shipping chat ships one stage end-to-end: execute, build verify, PR open (or merge for direct-to-main work), `WIP_OPEN.md` + `WIP_LOG.md` updates. Typical max: ~4 commits plus one build plus one PR.
+
+    If execution reveals the stage won't fit, **the handoff doc is the re-scoping signal, not a routine resume mechanism.** When a stage needs a second chat to finish, that's a scope miss — the remaining work is carved out as its own sub-stage (new entry in `docs/refinement-sequence.md` or equivalent) rather than continuing under the same stage name across N chats. A stage resumed via handoff once is acceptable; a stage resumed twice means the original scope was two stages pretending to be one.
+
+    **Scoping check before starting.** Count commits the stage will produce. Count file rewrites. Count verification gates. Five+ commits or three+ distinct subsystems = split before starting, not after.
+
 ---
 
 ## 8. Working Style
@@ -145,6 +153,7 @@ Operator delegates autonomously. Execute end-to-end. Direct, factual, concise. D
    - High (schema change, credential rotation, destructive migration) → full acceptance protocol per `GIS_SPEC.md`
 5. **One WIP pull per session, one WIP write per session.**
 6. **Git Data API tree commit** for doc-only edits (no clone). **Clone-edit-push bracket** for anything requiring files on disk (tippecanoe, PMTiles build, multi-file coordinated rewrite).
+7. **Trust handoff recon.** When resuming from a handoff doc on a branch, treat its recon section as authoritative. Line numbers, file structures, function locations, state descriptions documented there — do not re-verify. Open files with targeted view-ranges matching the handoff's stated line numbers; do not open the file first to confirm the numbers still hold. The prior chat paid that cost and encoded the result. Re-verification burns budget the handoff was written specifically to save.
 
 ---
 
