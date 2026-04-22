@@ -96,6 +96,7 @@ Execute end-to-end without mid-session confirmation.
 4. Doc / meta session → prepend to `WIP_LOG.md`, no chat number required.
 5. No chat labeling in responses (no "Chat N:" prefix in chat replies; logs still carry chat numbers).
 6. One shipping chat at a time.
+7. **Mid-chat handoff on context exhaustion.** If a shipping chat hits tool-call or context limits before completion, Claude's final action is to commit an in-flight handoff file to the active branch at `docs/_<stage-slug>_handoff.md`. The file captures: state at handoff, scope boundary, recon findings already complete (so next chat does not redo), first commands for next chat, execution order, file paths. Commit and push before the final chat message. Next chat reads the file on clone and resumes without depending on prompt phrasing, conversation_search, or memory. File is deleted on the same branch before PR opens. This rule is non-negotiable: leaving mid-chat state in chat messages violates §1 (repo > sidebar > memory).
 
 ---
 
