@@ -85,7 +85,7 @@ layers:
   label: Power Plants (EIA-860)
   color: '#f59e0b'
   default_on: false
-  radius: 4
+  radius: 6
   popup:
   - name
   - plant_code
