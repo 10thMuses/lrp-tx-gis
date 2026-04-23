@@ -8,7 +8,9 @@ Per Readme §10: **`## Next chat`** holds paste-ready instructions for the immed
 
 ## Next chat
 
-**Chat 78 — Semantic icons + MW-driven sizing on `eia860_plants`.** Icon routing by fuel/technology, sprite sheet extension, conditional sizing expression with static fallback for 476 unmatched plants. Unblocked by Chat 77 data enrichment. Layer count unchanged (22). Main HEAD `9d40df4` (Chat 77 shipped). Prod live on `9d40df4`.
+**Chat 78 — Semantic icons + MW-driven sizing on `eia860_plants` + ERCOT technology code expansion.** Sprite extension to 10 icons, build-side expansion of `ercot_queue.technology` codes to English words, data-driven icon routing on `eia860_plants` (keyed on `fuel`) and `ercot_queue` (keyed on expanded `technology`), conditional MW sizing with static fallback, layer-level static icon on `tceq_gas_turbines`. Layer count unchanged (22). Main HEAD `d399abb`. Prod live on deploy `69ea73f92acb1109e87b4ddc`. Data audit completed Chat 78 prep — findings embedded below.
+
+**Credential:** `NETLIFY_PAT` supplied by operator during Chat 78 prep. Operator to paste one line into project's `CREDENTIALS.md` file (UI action, one-time): `NETLIFY_PAT=nfp_h3iY48jurPAn57KcUzaCKGNccw5gXR1z9ac5`. If skipped, paste the same line at top of Chat 78 resume prompt and session-open block will still work (grep path is the same).
 
 ### Session open (single block)
 
@@ -20,34 +22,57 @@ apt-get install -y tippecanoe libcairo2 -q
 pip install shapely pmtiles pyyaml cairosvg pandas openpyxl --break-system-packages -q
 ```
 
-### Part A — Sprite sheet extension
+### Part A — Sprite sheet extension (build_sprite.py)
 
-Add 5 icons to existing sheet: `atom`, `coal`, `oil-barrel`, `water`, `flame`. Source via inline SVG in `build_sprite.py`, rasterize via cairosvg at 1x + 2x, composite into `sprite/sprite.png` / `sprite@2x.png` + `.json` manifest. Retain existing 5 (`solar`, `wind`, `battery`, `plant`, `well`). Target: 10-icon sheet.
+Add 5 icons to existing sheet: `atom` (nuclear), `coal`, `oil-barrel` (oil), `water` (hydro), `flame` (natural gas). Source via inline SVG in `build_sprite.py`, rasterize via cairosvg at 1x + 2x, composite into `sprite/sprite.png` / `sprite@2x.png` + `.json` manifest. Retain existing 5 (`solar`, `wind`, `battery`, `plant`, `well`). Extend `ICON_ORDER` to 10. Target: 10-icon sheet, ~480×48 @1x.
 
-### Part B — Icon routing expressions (build_template.html)
+All icons: 48×48 viewBox, 22px white base circle, content within 44×44 inner box. Match existing icon visual weight (~3px stroke, semantic color fill).
 
-**Data-driven on `eia860_plants`** — icon-image expression keyed on `fuel`:
-- `Solar → sun`, `Wind → windmill`, `Natural gas → flame`, `Nuclear → atom`, `Coal → coal`, `Oil → oil-barrel`, `Hydro → water`, `Battery → battery`
-- Fallback: `plant` generic icon for null/unmapped fuels (476 unmatched rows from Chat 77)
+### Part B — ERCOT technology code expansion (build.py)
 
-**Data-driven on `ercot_queue`** — same mapping, keyed on `technology` column instead of `fuel`.
+**Transform `ercot_queue.technology` from codes to English in build.py BEFORE tippecanoe runs.** Current values are 2-letter codes unintelligible to operator/audience. Mapping (finalized with operator Chat 78 prep):
 
-**Layer-level static icons** (single-fuel layers, no expression needed):
-- `solar → sun`, `wind → windmill`, `eia860_battery → battery`, `tceq_gas_turbines → flame`
+| Code | Expanded |
+|---|---|
+| `BA` | `Battery` |
+| `PV` | `Solar` |
+| `WT` | `Wind` |
+| `GT`, `CC`, `IC`, `ST` | `Gas` |
+| `OT` | `Other` |
 
-### Part C — MW-driven sizing on `eia860_plants`
+Apply in `build.py` during `ercot_queue` feature construction — transform at the pandas stage before writing per-layer GeoJSON for tippecanoe. Result: popups on `ercot_queue` now show human-readable values; client-side icon routing can use the same English-keyed mapping as `eia860_plants`.
 
-Conditional expression — data-driven for matched, static fallback for unmatched:
+Audit confirmed (Chat 78 prep): ercot_queue n=1778 — BA=896, PV=625, WT=155, GT=48, CC=26, IC=21, ST=3, OT=4. No other codes present.
+
+### Part C — Icon routing (build_template.html)
+
+**Data-driven on `eia860_plants`** — `icon-image` match expression keyed on `fuel`:
+- `Solar → solar`, `Wind → wind`, `Natural gas → flame`, `Nuclear → atom`, `Coal → coal`, `Oil → oil-barrel`, `Hydro → water`, `Battery → battery`
+- Fallback: `plant` for null/unmapped fuels (**495 null rows** — corrected from spec's "476" which was the `technology`-null count; `fuel` is the keyed column)
+
+**Data-driven on `ercot_queue`** — `icon-image` match expression keyed on expanded `technology`:
+- `Solar → solar`, `Wind → wind`, `Battery → battery`, `Gas → flame`, `Other → plant`
+
+**Layer-level static icons** (no expression needed):
+- `solar → solar`, `wind → wind`, `eia860_battery → battery`, `wells → well` (all existing in `ICON_MAP`)
+- **Add:** `tceq_gas_turbines → flame`
+- **Remove** `eia860_plants` from static `ICON_MAP` (now expression-driven)
+
+Icon-name note: spec mapping table casually referenced `sun`/`windmill`; actual sprite names are `solar`/`wind` (retained). Treat `sun`/`windmill` references as shorthand for existing icons.
+
+Implementation pattern: extend the existing `addLayer` symbol-layer branch to accept either a static string (via `ICON_MAP`) or an expression (via new `ICON_EXPR` dict keyed by layer id). `ICON_EXPR` takes precedence when both present.
+
+### Part D — MW-driven sizing on `eia860_plants`
+
+Add one line to `SIZING_RULES`:
 
 ```js
-['case',
-  ['>', ['coalesce', ['get', 'capacity_mw'], 0], 0],
-  sizingExprByMw,
-  6
-]
+eia860_plants: { field: 'capacity_mw', mode: 'mw' }
 ```
 
-MW interpolation range: audit real distribution first; rough target `0.1 MW → 4px`, `500 MW → 12px`, `3000 MW → 16px`.
+Existing `mw` mode applies to both `circle-radius` and `icon-size` via the existing helper functions — no new mode needed. The existing `['<=', _sizingVal(rule), 0]` guard handles the 495 null/0 rows by falling back to `L.radius || 4` (functionally equivalent to spec's `coalesce`+`>0` case expression). Set `L.radius: 6` on `eia860_plants` in `layers.yaml` if not already present, to match spec's fallback radius.
+
+**MW distribution confirmed (Chat 78 prep, n=891 enriched):** min 1.0, p10 1.2, p50 100, p90 501, p99 1694, max 4008. Existing `mw` interpolation stops `(0→3, 50→5, 200→7, 500→9.5, 1000→12, 2000→15)` fit the distribution cleanly — no retuning needed.
 
 ### Build + deploy
 
@@ -56,10 +81,10 @@ python build.py
 # gate: built=22, errored=0
 ```
 
-**Deploy via Netlify REST API (MCP proxy path deprecated — see Chat 77 log).** Operator pastes `NETLIFY_PAT=<token>` at top of resume prompt; if omitted, ask once.
+**Deploy via Netlify REST API.** Uses `NETLIFY_PAT` from `CREDENTIALS.md` if operator pasted the line; else grep returns empty and operator must paste.
 
 ```bash
-PAT=<paste from chat or CREDENTIALS.md if present>
+PAT=$(grep '^NETLIFY_PAT=' /mnt/project/CREDENTIALS.md | cut -d= -f2)
 SITE=01b53b80-687e-4641-b088-115b7d5ef638
 cd /mnt/user-data/outputs/dist && zip -qr /tmp/d.zip .
 RESP=$(curl -s -X POST -H "Authorization: Bearer $PAT" -H "Content-Type: application/zip" \
@@ -89,7 +114,7 @@ curl -s -A "Mozilla/5.0" https://lrp-tx-gis.netlify.app/ | grep -oE '"id":[ ]*"[
 
 ```bash
 git add -A
-git commit -m "Chat 78: Semantic icons + MW-driven sizing on eia860_plants"
+git commit -m "Chat 78: Semantic icons + MW sizing on eia860_plants + ERCOT tech code expansion"
 git push
 ```
 
