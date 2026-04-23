@@ -1,4 +1,33 @@
-## Doc-only — 2026-04-23 — Abatement §9 decisions locked + UI POLISH v2 queued + Chat 78 descoped
+## Chat 78 — 2026-04-23 — MW-driven sizing on `eia860_plants` shipped
+
+**Classification:** shipping, LOW blast radius. Single SIZING_RULES entry + one `layers.yaml` fallback radius bump. No data changes, no schema changes, no new layer.
+
+**Scope:** Per WIP_OPEN.md §"MW-driven sizing" spec. Sprite/icon routing and ERCOT technology-code expansion cut from scope by operator 2026-04-23 (see prior doc-only entry). Chat 78 reduced to single-line patch.
+
+**Files changed:**
+
+| File | Change |
+|---|---|
+| `build_template.html` | Added `eia860_plants: { field: 'capacity_mw', mode: 'mw' }` line to `SIZING_RULES` const. |
+| `layers.yaml` | Bumped `eia860_plants.radius` from 4 → 6 (fallback for 476/1367 rows with null `capacity_mw`). |
+
+**Commit:** `f334601` on `main`. Push: `c102fa3..f334601`.
+
+**Deploy:** `69ea83a786cf7142db291f87` via Netlify REST API. `state=ready` confirmed via API.
+
+**Verification:**
+- Prod verified 22 layers + `eia860_plants` present in SIZING_RULES during deploy window (pre-close-out).
+- Close-out root 200 re-curl blocked by container egress proxy returning 503 "DNS cache overflow" on all `lrp-tx-gis.netlify.app` requests; Netlify API calls unaffected. Deferred re-verification to Chat 79 session-open. Not a prod issue — egress proxy state, not CDN state.
+
+**MW distribution (Chat 78 prep, n=891):** min 1.0, p10 1.2, p50 100, p90 501, p99 1694, max 4008. Existing `mw` interpolation stops `(0→3, 50→5, 200→7, 500→9.5, 1000→12, 2000→15)` fit cleanly — no retuning.
+
+**Container reset during close-out:** Initial uncommitted edits in `/home/claude/repo/` lost on reset; re-cloned main, re-applied both edits from WIP_OPEN.md spec, committed, pushed. No drift vs deployed build — spec → source → deploy is deterministic single-line change.
+
+**Next chat trigger:** `Resume.` → Chat 79 (UI POLISH v2).
+
+---
+
+
 
 **Classification:** doc-only / meta session. No code, no build, no deploy. Per `Readme.md` §7 rule 4.
 
