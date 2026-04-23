@@ -3,7 +3,7 @@ layers:
   file: combined_geoms.geojson
   geom: line
   group: Reference
-  label: Counties (outline)
+  label: Counties (Outline)
   color: '#475569'
   default_on: true
   popup:
@@ -42,7 +42,7 @@ layers:
   file: combined_geoms.geojson
   geom: fill
   group: Water & Regulatory
-  label: MPGCD Zone 1 (approx.)
+  label: Groundwater District Management Zone 1
   color: '#8b5cf6'
   fill_opacity: 0.15
   default_on: true
@@ -57,7 +57,7 @@ layers:
   file: combined_points.csv
   geom: point
   group: Water & Regulatory
-  label: TWDB wells
+  label: Groundwater Wells (TWDB)
   color: '#a855f7'
   default_on: false
   min_zoom: 6
@@ -82,7 +82,7 @@ layers:
   file: combined_points.csv
   geom: point
   group: Generation
-  label: EIA-860 plants
+  label: Power Plants (EIA-860)
   color: '#f59e0b'
   default_on: false
   radius: 4
@@ -101,7 +101,7 @@ layers:
   file: combined_points.csv
   geom: point
   group: Generation
-  label: Battery storage (EIA-860)
+  label: Battery Storage (EIA-860)
   color: '#dc2626'
   default_on: false
   radius: 4
@@ -122,7 +122,7 @@ layers:
   file: combined_points.csv
   geom: point
   group: Generation
-  label: Wind turbines (USWTDB)
+  label: Wind Turbines (USWTDB)
   color: '#84cc16'
   default_on: false
   min_zoom: 7
@@ -149,7 +149,7 @@ layers:
   file: combined_points.csv
   geom: point
   group: Generation
-  label: Solar plants (EIA-860)
+  label: Solar Farms (EIA-860)
   color: '#eab308'
   default_on: false
   radius: 4
@@ -239,7 +239,7 @@ layers:
   file: combined_points.csv
   geom: point
   group: Projects
-  label: ERCOT GIR queue
+  label: ERCOT Interconnect Queue (as of 2026-04-21)
   color: '#ec4899'
   default_on: false
   radius: 5
@@ -273,7 +273,7 @@ layers:
   prebuilt: true
   geom: fill
   group: Land & Deal
-  label: Pecos County parcels
+  label: Pecos County Parcels
   color: '#78350f'
   fill_opacity: 0.15
   default_on: false
@@ -289,9 +289,10 @@ layers:
   file: combined_geoms.geojson
   geom: label
   group: Reference
-  label: Natural gas hubs
+  label: WAHA Natural Gas Hub
   color: '#0f172a'
   default_on: true
+  show_marker: true
   min_zoom: 4
   popup:
   - name
@@ -302,7 +303,7 @@ layers:
   file: combined_geoms.geojson
   geom: label
   group: Reference
-  label: County labels
+  label: County Labels
   color: '#475569'
   default_on: false
   min_zoom: 5
@@ -315,7 +316,7 @@ layers:
   prebuilt: true
   geom: line
   group: Pipelines
-  label: "RRC pipelines (\u226520\" transmission)"
+  label: "Oil & Gas Pipelines (>20\", RRC)"
   color: '#7c2d12'
   default_on: false
   popup:
@@ -328,7 +329,7 @@ layers:
   file: combined_points.csv
   geom: point
   group: Permits
-  label: TCEQ gas turbines
+  label: TCEQ Gas Turbines
   color: '#eab308'
   default_on: false
   radius: 4
@@ -363,7 +364,7 @@ layers:
   prebuilt: true
   geom: line
   group: Reference
-  label: Rail (main lines)
+  label: Rail (Main Lines)
   color: '#475569'
   default_on: false
   popup:
@@ -374,7 +375,7 @@ layers:
   file: combined_geoms.geojson
   geom: line
   group: Water & Regulatory
-  label: Water mains (approximate)
+  label: Water Mains (Approximate)
   color: '#06b6d4'
   default_on: false
   popup:

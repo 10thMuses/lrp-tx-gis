@@ -72,7 +72,12 @@
   .filter-field-label { display: block; color: var(--muted); font-size: 10px; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 2px; }
   .filter-range { display: flex; gap: 4px; align-items: center; }
   .filter-range input { width: 60px; padding: 3px 5px; border: 1px solid var(--border); border-radius: 4px; font: inherit; font-size: 11px; }
-  .filter-multi { max-height: 96px; overflow-y: auto; border: 1px solid var(--border); border-radius: 4px; padding: 3px 6px; background: #fff; }
+  .filter-multi { border: 1px solid var(--border); border-radius: 4px; background: #fff; }
+  .filter-multi > summary { cursor: pointer; padding: 3px 6px; font-size: 11px; user-select: none; list-style: none; }
+  .filter-multi > summary::-webkit-details-marker { display: none; }
+  .filter-multi > summary::before { content: "▸"; display: inline-block; width: 10px; color: var(--muted); }
+  .filter-multi[open] > summary::before { content: "▾"; }
+  .filter-multi > .filter-multi-body { max-height: 96px; overflow-y: auto; padding: 3px 6px; border-top: 1px solid var(--border); }
   .filter-multi label { display: block; font-size: 11px; padding: 1px 0; cursor: pointer; user-select: none; }
   .filter-multi input { margin-right: 4px; }
   .filter-text { width: 100%; padding: 3px 5px; border: 1px solid var(--border); border-radius: 4px; font: inherit; font-size: 11px; }
@@ -401,6 +406,22 @@ function addLayer(L) {
         layout: { visibility: L.default_on ? 'visible' : 'none' },
       });
     }
+    if (L.geom === 'label' && L.show_marker) {
+      map.addLayer({
+        id: `${lyrId}__marker`,
+        type: 'circle',
+        source: srcId,
+        'source-layer': L.id,
+        minzoom: L.min_zoom || 0,
+        paint: {
+          'circle-radius': 6,
+          'circle-color': L.color,
+          'circle-stroke-width': 2,
+          'circle-stroke-color': '#ffffff',
+        },
+        layout: { visibility: L.default_on ? 'visible' : 'none' },
+      }, lyrId);
+    }
     if (L.geom === 'point' && ICON_MAP[L.id]) {
       map.addLayer({
         id: `${lyrId}__icon`,
@@ -432,6 +453,9 @@ function setLayerVisibility(L, visible) {
   }
   if (L.geom === 'point' && ICON_MAP[L.id]) {
     try { map.setLayoutProperty(`lyr_${L.id}__icon`, 'visibility', v); } catch (e) {}
+  }
+  if (L.geom === 'label' && L.show_marker) {
+    try { map.setLayoutProperty(`lyr_${L.id}__marker`, 'visibility', v); } catch (e) {}
   }
 }
 
@@ -475,6 +499,7 @@ function applyLayerFilter(L) {
   if (L.geom === 'fill') { try { map.setFilter(`lyr_${L.id}__outline`, expr); } catch (e) {} }
   if (L.geom === 'line') { try { map.setFilter(`lyr_${L.id}__casing`, expr); } catch (e) {} }
   if (L.geom === 'point' && ICON_MAP[L.id]) { try { map.setFilter(`lyr_${L.id}__icon`, expr); } catch (e) {} }
+  if (L.geom === 'label' && L.show_marker) { try { map.setFilter(`lyr_${L.id}__marker`, expr); } catch (e) {} }
   updateActiveCount(L);
 }
 
@@ -526,9 +551,13 @@ function filterFieldControlHtml(lid, f) {
     const vals = f.values || [];
     const selected = new Set(Array.isArray(state) ? state : []);
     const lis = vals.map(v => `<label><input type="checkbox" value="${escapeHtml(v)}" ${selected.has(v) ? 'checked' : ''}> ${escapeHtml(v)}</label>`).join('');
+    const selCount = selected.size;
+    const summaryTxt = selCount > 0 ? `${escapeHtml(f.label)} — ${selCount} selected` : `${escapeHtml(f.label)} (${vals.length})`;
     return `<div class="filter-field" data-field="${f.field}" data-type="categorical">
-      <span class="filter-field-label">${escapeHtml(f.label)} (${vals.length})</span>
-      <div class="filter-multi">${lis}</div>
+      <details class="filter-multi"${selCount > 0 ? ' open' : ''}>
+        <summary>${summaryTxt}</summary>
+        <div class="filter-multi-body">${lis}</div>
+      </details>
     </div>`;
   }
   // text
@@ -712,7 +741,7 @@ function wirePopups() {
   });
 }
 
-const GROUP_ORDER = ['Land & Deal', 'Water & Regulatory', 'Generation', 'Transmission & Grid', 'Pipelines', 'Permits', 'Projects', 'Reference'];
+const GROUP_ORDER = ['Land & Deal', 'Generation', 'Transmission & Grid', 'Pipelines', 'Permits', 'Projects', 'Reference', 'Water & Regulatory'];
 
 function renderSidebar(activeSet) {
   const grouped = {};
