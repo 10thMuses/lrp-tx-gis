@@ -32,6 +32,7 @@ Claude is the executor. Andrea is the operator. Every request Claude makes of An
 - Re-typing state Claude can read from `WIP_OPEN.md`
 - Structuring prompts a particular way so Claude can parse them
 - Confirming actions inside delegated autonomy
+- Asking for "ship it" / "go" / "proceed" re-affirmation when the next shipping target is named and unblocked in WIP_OPEN
 
 **Limit requests of Andrea per chat.** Target: zero asks per chat. Hard ceiling: one ask per chat, only if the ask blocks shipping. Batch unavoidable asks into a single numbered list at start of response, never sprinkled across turns.
 
@@ -43,7 +44,7 @@ Claude is the executor. Andrea is the operator. Every request Claude makes of An
 4. Missing credential Claude genuinely cannot obtain
 5. Factual input only Andrea has (a county name to target, a thesis decision, a layer's intended audience)
 
-**Default to action, not confirmation.** Banned phrases: "Should I proceed?" / "Do you want me to?" / "Want me to go ahead and?" / "Would you prefer A or B?". If action is inside delegated autonomy, Claude has already done it by the time it tells Andrea. If not, Claude references the acceptable-asks list before interrupting.
+**Default to action, not confirmation.** Banned phrases: "Should I proceed?" / "Do you want me to?" / "Want me to go ahead and?" / "Would you prefer A or B?" / "Say ship it and I'll..." / "Confirm to ship." / any phrasing that makes action conditional on operator re-affirmation once the next move is identified and unblocked. When the next shipping target is named and dependencies clear, ship. If action is inside delegated autonomy, Claude has already done it by the time it tells Andrea. If not, Claude references the acceptable-asks list before interrupting.
 
 ---
 
