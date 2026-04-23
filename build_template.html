@@ -56,6 +56,7 @@
   .measure-readout .mk { color: var(--muted); font-size: 10px; text-transform: uppercase; letter-spacing: 0.05em; }
   .measure-readout .mv { font-weight: 600; font-variant-numeric: tabular-nums; }
   .measure-readout .hint { color: var(--muted); font-size: 10px; margin-top: 4px; }
+  .watermark { position: absolute; bottom: 42px; right: 8px; z-index: 3; pointer-events: none; font-size: 11px; font-weight: 700; letter-spacing: 0.18em; color: rgba(220, 38, 38, 0.78); background: rgba(255, 255, 255, 0.85); padding: 4px 10px; border: 1px solid rgba(220, 38, 38, 0.32); border-radius: 3px; text-transform: uppercase; font-variant-numeric: tabular-nums; }
   .maplibregl-popup-content { font-family: inherit; font-size: 12px; padding: 10px 12px; border-radius: 6px; }
   .maplibregl-popup-content table { border-collapse: collapse; }
   .maplibregl-popup-content td { padding: 2px 6px 2px 0; vertical-align: top; }
@@ -98,6 +99,7 @@
     .print-footer { display: block; margin-top: 8px; padding-top: 6px; border-top: 1px solid #94a3b8; font-size: 9px; color: #64748b; }
     .maplibregl-ctrl-attrib, .maplibregl-ctrl-fullscreen, .maplibregl-ctrl-zoom-in, .maplibregl-ctrl-zoom-out { display: none !important; }
     .maplibregl-ctrl-scale { border: 1px solid #000 !important; background: rgba(255,255,255,0.9) !important; }
+    .watermark { bottom: 12px !important; right: 12px !important; background: rgba(255,255,255,0.92) !important; color: rgba(220, 38, 38, 0.85) !important; }
   }
 </style>
 </head>
@@ -147,6 +149,7 @@
     <div><span class="mk">Area</span> &nbsp;<span class="mv" id="m-area">— ac</span></div>
     <div class="hint">Click to add points · double-click to close polygon · Measure again to clear</div>
   </div>
+  <div class="watermark" id="watermark">CONFIDENTIAL — <span id="wm-date"></span></div>
 </div>
 
 <div class="print-footer">Map prepared by Land Resource Partners · Sources: ERCOT TPIT, EIA-860, USWTDB, TWDB, RRC, HIFLD, TIGER, BTS, OSM, USGS, TCAD</div>
@@ -266,10 +269,57 @@ map.addControl(new maplibregl.NavigationControl({ showCompass: true, visualizePi
 map.addControl(new maplibregl.ScaleControl({ unit: 'imperial', maxWidth: 160 }), 'bottom-right');
 map.addControl(new maplibregl.FullscreenControl(), 'top-right');
 
+// ---------- SIZING (data-driven by MW / kV) ----------
+// Layers without clean sizing field fall back to L.radius / static width.
+// Audit gaps (no clean field present): eia860_plants (capacity_mw blank 1367/1367), transmission (no voltage in geoms).
+const SIZING_RULES = {
+  ercot_queue:    { field: 'mw',          mode: 'mw' },
+  solar:          { field: 'capacity_mw', mode: 'mw' },
+  eia860_battery: { field: 'capacity',    mode: 'mw' },
+  wind:           { field: 'cap_kw',      mode: 'kw' },
+  substations:    { field: 'voltage',     mode: 'kv' },
+  tpit_subs:      { field: 'voltage',     mode: 'kv' },
+  tpit_lines:     { field: 'voltage',     mode: 'kv_line' },
+};
+function _sizingVal(rule) {
+  const base = ['to-number', ['get', rule.field], 0];
+  return rule.mode === 'kw' ? ['/', base, 1000] : base;
+}
+function sizingRadiusExpr(L) {
+  const rule = SIZING_RULES[L.id];
+  const fb = L.radius || 4;
+  if (!rule) return fb;
+  if (rule.mode === 'mw' || rule.mode === 'kw') {
+    return ['case', ['<=', _sizingVal(rule), 0], fb,
+      ['interpolate', ['linear'], _sizingVal(rule),
+        0, 3, 50, 5, 200, 7, 500, 9.5, 1000, 12, 2000, 15]];
+  }
+  if (rule.mode === 'kv') {
+    return ['case', ['<=', _sizingVal(rule), 0], fb,
+      ['interpolate', ['linear'], _sizingVal(rule),
+        0, 3, 69, 4, 138, 6, 230, 8, 345, 11, 500, 14]];
+  }
+  return fb;
+}
+function sizingLineWidthExpr(L) {
+  const rule = SIZING_RULES[L.id];
+  if (!rule || rule.mode !== 'kv_line') return 2;
+  return ['case', ['<=', _sizingVal(rule), 0], 2,
+    ['interpolate', ['linear'], _sizingVal(rule),
+      0, 1.5, 69, 2, 138, 2.5, 230, 3, 345, 3.5, 500, 4]];
+}
+function sizingIconSizeExpr(L) {
+  const rule = SIZING_RULES[L.id];
+  if (!rule || (rule.mode !== 'mw' && rule.mode !== 'kw')) return 0.6;
+  return ['case', ['<=', _sizingVal(rule), 0], 0.55,
+    ['interpolate', ['linear'], _sizingVal(rule),
+      0, 0.45, 50, 0.55, 200, 0.70, 500, 0.85, 1000, 1.0, 2000, 1.2]];
+}
+
 function layerPaint(L) {
   if (L.geom === 'point') {
     return {
-      'circle-radius': L.radius || 4,
+      'circle-radius': sizingRadiusExpr(L),
       'circle-color': L.color,
       'circle-stroke-width': 1.2,
       'circle-stroke-color': '#ffffff',
@@ -277,7 +327,7 @@ function layerPaint(L) {
     };
   }
   if (L.geom === 'line') {
-    return { 'line-color': L.color, 'line-width': 2, 'line-opacity': 0.9 };
+    return { 'line-color': L.color, 'line-width': sizingLineWidthExpr(L), 'line-opacity': 0.9 };
   }
   if (L.geom === 'fill') {
     return { 'fill-color': L.color, 'fill-opacity': L.fill_opacity || 0.25, 'fill-outline-color': L.color };
@@ -360,7 +410,7 @@ function addLayer(L) {
         minzoom: 9,
         layout: {
           'icon-image': ICON_MAP[L.id],
-          'icon-size': 0.6,
+          'icon-size': sizingIconSizeExpr(L),
           'icon-allow-overlap': true,
           'icon-ignore-placement': true,
           visibility: L.default_on ? 'visible' : 'none',
@@ -875,6 +925,8 @@ map.on('load', () => {
   syncHash();
   const now = new Date().toISOString().slice(0, 10);
   document.getElementById('footer-updated').textContent = `Built ${now}`;
+  document.getElementById('wm-date').textContent = now;
+  document.getElementById('print-date').textContent = `Printed ${now}`;
   if (initBase !== 'carto_light') applyBasemap(initBase);
 });
 
