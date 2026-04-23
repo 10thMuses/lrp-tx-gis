@@ -50,9 +50,12 @@ COMBINED_GJ = 'combined_geoms.geojson'
 NUMERIC_KEYS = {'mw', 'capacity', 'capacity_mw', 'cap_kw', 'depth_ft',
                 'year', 'plant_code', 'osm_id', 'acres'}
 
-# Filter UI: cap distinct values for a categorical filter. Above this, the
-# field is auto-demoted to text (substring match) so the UI stays usable.
-CATEGORICAL_CAP = 100
+# Filter UI: cap distinct values for a categorical (or text) filter. Above this,
+# the field is auto-demoted to plain text (substring match) so the UI stays
+# usable. Raised from 100 → 2000 for UI POLISH v2: text fields now render as
+# searchable multi-select dropdowns, so we want values populated whenever
+# feasible (plant names, operators, projects).
+CATEGORICAL_CAP = 2000
 
 
 def fnum(v):
@@ -416,7 +419,12 @@ def compute_filter_stats(layers_config, split_dir):
                 numeric[f] = [float('inf'), float('-inf')]
             elif s.get('type') == 'categorical':
                 distinct[f] = set()
-            # text: nothing to accumulate
+            elif s.get('type') == 'text':
+                # UI POLISH v2: text fields auto-populate as searchable
+                # multi-select dropdowns when distinct count fits under cap.
+                # Collect values same as categorical; fall back to plain text
+                # input only when distinct > CATEGORICAL_CAP.
+                distinct[f] = set()
         # Stream
         with open(nd, 'r', encoding='utf-8') as fin:
             for line in fin:
@@ -462,7 +470,16 @@ def compute_filter_stats(layers_config, split_dir):
                     entry['type'] = 'text'
                 else:
                     entry['values'] = sorted(vals)
-            # text: no extra
+            elif typ == 'text' and f in distinct:
+                # UI POLISH v2: promote to categorical (multi-select dropdown)
+                # when distinct values fit under cap; else keep as plain text.
+                vals = distinct[f]
+                if len(vals) == 0:
+                    continue
+                if len(vals) <= CATEGORICAL_CAP:
+                    entry['type'] = 'categorical'
+                    entry['values'] = sorted(vals)
+                # else: keep as text, no values (template shows plain input)
             out[f] = entry
         if out:
             result[lid] = out
@@ -490,6 +507,7 @@ def render_html(layers_config, layer_stats, filter_stats=None):
             'geom': L['geom'],
             'color': L['color'],
             'default_on': L.get('default_on', False),
+            'sidebar_omit': L.get('sidebar_omit', False),
             'popup': L.get('popup', []),
             'min_zoom': L.get('min_zoom', 0),
             'radius': L.get('radius', 3),
