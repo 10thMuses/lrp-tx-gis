@@ -65,3 +65,17 @@ Append only. Do not rewrite history. If a decision is overturned, strike it thro
 **One chat = one operation.** Build, refresh, add-layer, doc update — each is a separate chat. Sequential operation is architecturally correct for this workload.
 
 **Trigger phrases optional.** `build.`, `refresh X.`, `add layer...` remain valid shipping-classifier inputs. Natural-language shipping prompts also route correctly. Operator picks whichever is faster to type.
+
+---
+
+## Data sources
+
+**EIA-860 capacity lives in the Generator sheet, not the Plant sheet.** `2___Plant_Y<year>.xlsx` contains plant metadata only (location, utility, status, no capacity). Nameplate capacity, Technology, Prime Mover, and Energy Source are in `3_1_Generator_Y<year>.xlsx` at generator level. To populate plant-level capacity: group generators by `Plant Code`, filter `Status == 'OP'`, sum `Nameplate Capacity (MW)`. Mode of `Technology` and `Energy Source 1` give plant-level fuel/tech labels. With EIA-860 2024 release, this join covers **891/1,367 of our `eia860_plants` rows (65.2%)**, total 178,542 MW. Coverage scales with release vintage (2023 gave 58.7%). The remaining ~35% are retired, sub-threshold, or post-2024 additions. Discovered Chat 74.
+
+**EIA-860 annual zip fetch requires `Referer` header.** Direct `curl` to `https://www.eia.gov/electricity/data/eia860/xls/eia860<YYYY>.zip` returns HTTP 503 (18-byte body). With `-H 'Referer: https://www.eia.gov/electricity/data/eia860/'` and `-A 'Mozilla/5.0'`, same URL returns 200 + full zip. Archive-path URLs (`/archive/xls/`) return 200 without the header but serve older vintages only. Current-release URLs require the Referer. Confirmed Chat 74 with 2024 release (22 MB zip).
+
+**EIA-860M monthly is HTML-only landing page.** URL pattern `eia.gov/electricity/data/eia860m/` returns a landing page, not a zip. Use annual releases for bulk capacity/technology/fuel data. Monthly releases are not a drop-in replacement. Previously confirmed in GIS_SPEC.md; re-confirmed Chat 74.
+
+**`combined_points.csv` capacity is fragmented across four columns by source layer.** `eia860_battery.capacity` (MW), `ercot_queue.mw` (MW), `solar.capacity_mw` (MW), `wind.cap_kw` (kilowatts, needs /1000), `tceq_gas_turbines.capacity_mw` (MW). No single canonical column covers all generation layers. Single-column queries (filters, MW-driven icon sizing, fleet totals) require coalescing into `capacity_mw` with wind unit-conversion. Original source columns retained in CSV for provenance; popups/filters shifted to `capacity_mw` after coalesce. Audit established Chat 74; execution pending.
+
+**User-uploaded `combined_points.csv` (2026-04-23) is equivalent to repo pre-TCEQ state.** Row count identical per layer (39,409 rows, 9 layers). Column population rates identical. 31 rows differ by `(lat, lon)` key but are the same entities (matched 31/31 on `name` for tpit_subs, `osm_id` for wind, `plant_code` for eia860_plants) — difference is float serialization only (`32.5028` vs `32.502800`, `28` vs `28.0`). No new data to merge. Repo version remains canonical. Decision: no merge; enhancement opportunity is the capacity coalesce and EIA-860 Generator-sheet join, not row-level merging from uploaded file.
