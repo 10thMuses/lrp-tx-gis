@@ -1,3 +1,34 @@
+## Doc-only — 2026-04-23 — Abatement §9 decisions locked + UI POLISH v2 queued + Chat 78 descoped
+
+**Classification:** doc-only / meta session. No code, no build, no deploy. Per `Readme.md` §7 rule 4.
+
+**Files changed:**
+
+| File | Change |
+|---|---|
+| `docs/refinement-abatement-spec.md` | Appended §11 "Approved BUILD scope" — operator answers to all 8 §9 questions. BUILD unblocked. |
+| `docs/refinement-sequence.md` | Inserted new stage "UI POLISH v2" before ABATEMENT DISCOVERY. ABATEMENT BUILD stage gains approved-scope pointer. |
+| `WIP_OPEN.md` | Chat 78 scope reduced to MW-sizing only (icons + ERCOT-code-expansion cut by operator). Sprint queue: Chat 79 = UI POLISH v2, Chat 80+ = ABATEMENT BUILD. |
+
+**§11 approved decisions:**
+
+1. Layer scope: both standalone + facility annotation (single-pass fuzzy join only, no iterative refinement)
+2. Counties: all 23, sequencing Trans-Pecos → Permian-core → peripheral
+3. PDFs: skip (estimated 5–8 counties drop out)
+4. Backfill: 2025 + 2026 filings only
+5. Comptroller Ch. 312 spreadsheet: include (manual quarterly download by operator)
+6. Dedup: `(county, applicant_normalized, reinvestment_zone)`, sighting-date array, status = latest
+7. GitHub Actions cadence: weekly
+8. Alerting: out of scope for BUILD
+
+**UI POLISH v2 scope (Chat 79):** dropdown + multi-select filters with auto-populated values; default open state (caramba_north, counties, county_labels, cities, waha ON + esri_imagery + Caramba zoom); ercot_queue fuel-type color split; hide parcels_pecos.
+
+**Chat 78 descoped:** operator cut sprite/icon routing and ERCOT technology-code expansion. Remaining Chat 78 work = single-line `SIZING_RULES` addition for `eia860_plants` + `L.radius: 6` in `layers.yaml` if missing.
+
+**Next-chat trigger:** `Resume.` → Chat 78 (MW-driven sizing on `eia860_plants`).
+
+---
+
 ## Chat 77 — 2026-04-23 — EIA-860 enrichment + capacity_mw coalesce + deploy path migration
 
 **Classification:** shipping, MEDIUM blast radius. Data-pipeline refresh (`combined_points.csv`) + yaml popups + template sizing expressions. No schema changes. Build + deploy + close-out.

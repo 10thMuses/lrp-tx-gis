@@ -2,15 +2,11 @@
 
 Active state. Read at session open. Updated at close-out of every shipping chat.
 
-Per Readme §10: **`## Next chat`** holds paste-ready instructions for the immediately-next shipping chat (rewritten every close-out). **`## Sprint queue`** holds the forward plan for chats beyond that (updated as plans firm up or change). Operator's per-chat prompt collapses to `Resume.` — all state needed is here.
+Per Readme §10: **`## Next chat
 
----
+**Chat 78 — MW-driven sizing on `eia860_plants`.** Sprite/icon routing and ERCOT technology-code expansion cut from scope by operator 2026-04-23. Single change: add `capacity_mw`-driven sizing expression with fallback for the ~495 plants where `fuel`/`capacity_mw` are null. Layer count unchanged (22). Main HEAD `c4ba863`. Prod live on deploy `69ea73f92acb1109e87b4ddc`.
 
-## Next chat
-
-**Chat 78 — Semantic icons + MW-driven sizing on `eia860_plants` + ERCOT technology code expansion.** Sprite extension to 10 icons, build-side expansion of `ercot_queue.technology` codes to English words, data-driven icon routing on `eia860_plants` (keyed on `fuel`) and `ercot_queue` (keyed on expanded `technology`), conditional MW sizing with static fallback, layer-level static icon on `tceq_gas_turbines`. Layer count unchanged (22). Main HEAD `d399abb`. Prod live on deploy `69ea73f92acb1109e87b4ddc`. Data audit completed Chat 78 prep — findings embedded below.
-
-**Credential:** `NETLIFY_PAT` supplied by operator during Chat 78 prep. Operator to paste one line into project's `CREDENTIALS.md` file (UI action, one-time): `NETLIFY_PAT=nfp_h3iY48jurPAn57KcUzaCKGNccw5gXR1z9ac5`. If skipped, paste the same line at top of Chat 78 resume prompt and session-open block will still work (grep path is the same).
+**Credential:** `NETLIFY_PAT=nfp_h3iY48jurPAn57KcUzaCKGNccw5gXR1z9ac5` (supplied by operator Chat 78 prep). Operator to paste into project's `CREDENTIALS.md` when UI edit path becomes available; until then, paste the same line at top of resume prompt so session-open `grep` path works.
 
 ### Session open (single block)
 
@@ -22,89 +18,38 @@ apt-get install -y tippecanoe libcairo2 -q
 pip install shapely pmtiles pyyaml cairosvg pandas openpyxl --break-system-packages -q
 ```
 
-### Part A — Sprite sheet extension (build_sprite.py)
+### MW-driven sizing on `eia860_plants`
 
-Add 5 icons to existing sheet: `atom` (nuclear), `coal`, `oil-barrel` (oil), `water` (hydro), `flame` (natural gas). Source via inline SVG in `build_sprite.py`, rasterize via cairosvg at 1x + 2x, composite into `sprite/sprite.png` / `sprite@2x.png` + `.json` manifest. Retain existing 5 (`solar`, `wind`, `battery`, `plant`, `well`). Extend `ICON_ORDER` to 10. Target: 10-icon sheet, ~480×48 @1x.
-
-All icons: 48×48 viewBox, 22px white base circle, content within 44×44 inner box. Match existing icon visual weight (~3px stroke, semantic color fill).
-
-### Part B — ERCOT technology code expansion (build.py)
-
-**Transform `ercot_queue.technology` from codes to English in build.py BEFORE tippecanoe runs.** Current values are 2-letter codes unintelligible to operator/audience. Mapping (finalized with operator Chat 78 prep):
-
-| Code | Expanded |
-|---|---|
-| `BA` | `Battery` |
-| `PV` | `Solar` |
-| `WT` | `Wind` |
-| `GT`, `CC`, `IC`, `ST` | `Gas` |
-| `OT` | `Other` |
-
-Apply in `build.py` during `ercot_queue` feature construction — transform at the pandas stage before writing per-layer GeoJSON for tippecanoe. Result: popups on `ercot_queue` now show human-readable values; client-side icon routing can use the same English-keyed mapping as `eia860_plants`.
-
-Audit confirmed (Chat 78 prep): ercot_queue n=1778 — BA=896, PV=625, WT=155, GT=48, CC=26, IC=21, ST=3, OT=4. No other codes present.
-
-### Part C — Icon routing (build_template.html)
-
-**Data-driven on `eia860_plants`** — `icon-image` match expression keyed on `fuel`:
-- `Solar → solar`, `Wind → wind`, `Natural gas → flame`, `Nuclear → atom`, `Coal → coal`, `Oil → oil-barrel`, `Hydro → water`, `Battery → battery`
-- Fallback: `plant` for null/unmapped fuels (**495 null rows** — corrected from spec's "476" which was the `technology`-null count; `fuel` is the keyed column)
-
-**Data-driven on `ercot_queue`** — `icon-image` match expression keyed on expanded `technology`:
-- `Solar → solar`, `Wind → wind`, `Battery → battery`, `Gas → flame`, `Other → plant`
-
-**Layer-level static icons** (no expression needed):
-- `solar → solar`, `wind → wind`, `eia860_battery → battery`, `wells → well` (all existing in `ICON_MAP`)
-- **Add:** `tceq_gas_turbines → flame`
-- **Remove** `eia860_plants` from static `ICON_MAP` (now expression-driven)
-
-Icon-name note: spec mapping table casually referenced `sun`/`windmill`; actual sprite names are `solar`/`wind` (retained). Treat `sun`/`windmill` references as shorthand for existing icons.
-
-Implementation pattern: extend the existing `addLayer` symbol-layer branch to accept either a static string (via `ICON_MAP`) or an expression (via new `ICON_EXPR` dict keyed by layer id). `ICON_EXPR` takes precedence when both present.
-
-### Part D — MW-driven sizing on `eia860_plants`
-
-Add one line to `SIZING_RULES`:
+Add one line to `SIZING_RULES` in `build_template.html`:
 
 ```js
 eia860_plants: { field: 'capacity_mw', mode: 'mw' }
 ```
 
-Existing `mw` mode applies to both `circle-radius` and `icon-size` via the existing helper functions — no new mode needed. The existing `['<=', _sizingVal(rule), 0]` guard handles the 495 null/0 rows by falling back to `L.radius || 4` (functionally equivalent to spec's `coalesce`+`>0` case expression). Set `L.radius: 6` on `eia860_plants` in `layers.yaml` if not already present, to match spec's fallback radius.
+Existing `mw` mode applies to both `circle-radius` and `icon-size` via existing helper functions — no new mode needed. The existing `['<=', _sizingVal(rule), 0]` guard handles null/0 rows by falling back to `L.radius || 4` (functionally equivalent to spec's `coalesce`+`>0` case expression). Set `L.radius: 6` on `eia860_plants` in `layers.yaml` if not already present, to match spec's fallback radius.
 
-**MW distribution confirmed (Chat 78 prep, n=891 enriched):** min 1.0, p10 1.2, p50 100, p90 501, p99 1694, max 4008. Existing `mw` interpolation stops `(0→3, 50→5, 200→7, 500→9.5, 1000→12, 2000→15)` fit the distribution cleanly — no retuning needed.
+**MW distribution confirmed (Chat 78 prep, n=891 enriched):** min 1.0, p10 1.2, p50 100, p90 501, p99 1694, max 4008. Existing `mw` interpolation stops `(0→3, 50→5, 200→7, 500→9.5, 1000→12, 2000→15)` fit cleanly — no retuning needed.
 
 ### Build + deploy
 
 ```bash
 python build.py
 # gate: built=22, errored=0
-```
 
-**Deploy via Netlify REST API.** Uses `NETLIFY_PAT` from `CREDENTIALS.md` if operator pasted the line; else grep returns empty and operator must paste.
-
-```bash
 PAT=$(grep '^NETLIFY_PAT=' /mnt/project/CREDENTIALS.md | cut -d= -f2)
 SITE=01b53b80-687e-4641-b088-115b7d5ef638
 cd /mnt/user-data/outputs/dist && zip -qr /tmp/d.zip .
 RESP=$(curl -s -X POST -H "Authorization: Bearer $PAT" -H "Content-Type: application/zip" \
   --data-binary @/tmp/d.zip "https://api.netlify.com/api/v1/sites/$SITE/deploys")
 DEPLOY_ID=$(echo "$RESP" | python3 -c "import sys,json;print(json.load(sys.stdin)['id'])")
-echo "deployId: $DEPLOY_ID"
 
-# Poll until ready
-i=0; while [ $i -lt 30 ]; do
-  i=$((i+1))
+# Poll until ready, then sleep 90 for CDN warmup
+i=0; while [ $i -lt 30 ]; do i=$((i+1))
   STATE=$(curl -s -H "Authorization: Bearer $PAT" \
     "https://api.netlify.com/api/v1/sites/$SITE/deploys/$DEPLOY_ID" \
     | python3 -c "import sys,json;print(json.load(sys.stdin).get('state','?'))")
-  echo "$i: $STATE"
-  [ "$STATE" = "ready" ] && break
-  [ "$STATE" = "error" ] && break
-  sleep 6
+  [ "$STATE" = "ready" ] && break; [ "$STATE" = "error" ] && break; sleep 6
 done
-
-# Verify prod after CDN warmup (~90s observed in Chat 77 — longer than prior 45s norm)
 sleep 90
 curl -sI -A "Mozilla/5.0" https://lrp-tx-gis.netlify.app/ | head -3
 curl -s -A "Mozilla/5.0" https://lrp-tx-gis.netlify.app/ | grep -oE '"id":[ ]*"[a-z0-9_]+"' | sort -u | wc -l  # expect 22
@@ -114,21 +59,27 @@ curl -s -A "Mozilla/5.0" https://lrp-tx-gis.netlify.app/ | grep -oE '"id":[ ]*"[
 
 ```bash
 git add -A
-git commit -m "Chat 78: Semantic icons + MW sizing on eia860_plants + ERCOT tech code expansion"
+git commit -m "Chat 78: MW-driven sizing on eia860_plants"
 git push
 ```
 
-Update `WIP_OPEN.md` `## Next chat` (promote Chat 79 or new priority). Append `WIP_LOG.md` entry for Chat 78.
+Update `WIP_OPEN.md` `## Next chat` → promote Chat 79 (UI POLISH v2). Append `WIP_LOG.md` entry for Chat 78.
 
 ---
 
 ## Sprint queue
 
-### Chat 79+ — Tax abatement scraper (refinement item #5)
+### Chat 79 — UI POLISH v2
 
-**Spec:** `docs/refinement-abatement-spec.md` (committed 2026-04-23). Regulatory context, leading-indicator hierarchy, keyword taxonomy, `extract_applicant()` regex with both `re.I` + `\b` fixes, field catalog, schema Options A/B, county adapter status (2 validated, 3 stubbed, 18 TODO), 4 live hits, 8 BUILD-gate open questions.
+**Spec:** `docs/refinement-sequence.md` §"Stage: UI POLISH v2". Bundle of four live-UI tweaks: (1) filter inputs → dropdowns with auto-populate + multi-select; (2) default open state (caramba_north / counties / county_labels / cities / waha ON, `esri_imagery` basemap, zoom to Caramba); (3) `ercot_queue` fuel-type color split (gas / solar / wind / battery / other); (4) hide `parcels_pecos` layer.
 
-**Stage split:** DISCOVERY is doc-only and effectively closed by the spec commit. BUILD gated on operator sign-off against spec §9. Independent track — slots anywhere after Chat 75b; not blocked by UI / EIA-860 / icon sprints.
+**Dependencies:** none. Operates on `build_template.html` + `layers.yaml` only.
+
+### Chat 80+ — Tax abatement BUILD
+
+**Approved scope:** `docs/refinement-abatement-spec.md` §12 (locked 2026-04-23). Both standalone layer + facility annotation; all 23 counties with Trans-Pecos → Permian-core → peripheral sequencing; PDFs skipped; 2025+2026 filings only; Comptroller Ch. 312 spreadsheet manual-quarterly ingest; dedup by `(county, applicant_normalized, reinvestment_zone)`; weekly GitHub Actions; alerting deferred.
+
+**Stage split:** DISCOVERY closed (spec committed). BUILD unblocked. Independent track — not blocked by Chat 78 or Chat 79.
 
 ---
 

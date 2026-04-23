@@ -196,3 +196,24 @@ Assuming Option A / 5-county Phase 1 / `pdfminer.six`:
 
 - **Local Development Agreements Database (Ch. 380/381/312 union)** — not materially better than commissioners-court scrape for leading-indicator value, JS-gated anyway.
 - **TCEQ NSR diesel-genset permits** — already tracked in `docs/settled.md`; separate data-center backup-power intelligence surface, not an abatement signal.
+
+
+---
+
+## 12. Approved BUILD scope (locked 2026-04-23)
+
+Operator decisions on §9 open questions. Supersedes §9 and §10 recommendations where they conflict.
+
+1. **Layer scope:** Both. Standalone layer for display + toggle AND annotate matched facilities (`eia860_plants`, `ercot_queue`, `solar`, `wind`, `eia860_battery`, future `dc_sites`) with `abatement_*` fields in popup. Join step must be tool-budget-disciplined — single fuzzy-match pass over applicant name + county + approx coords, no iterative refinement.
+2. **County coverage:** All 23. Scrape sequencing by regional priority:
+   - Trans-Pecos first: Brewster, Culberson, Hudspeth, Jeff Davis, Pecos, Presidio, Reeves, Terrell
+   - Permian-core second: Andrews, Ector, Glasscock, Loving, Martin, Midland, Ward, Winkler
+   - Peripheral third: Crane, Crockett, Irion, Reagan, Schleicher, Sutton, Upton
+3. **PDF parsing:** Skip. Counties with only scanned/PDF-only publishing drop out of scope; flag in BUILD deliverable. Estimated ~5–8 counties affected.
+4. **Historical backfill:** Filings 2025 + 2026 only. No Wayback crawl, no Open Records requests. Backfill can extend in a future chat if the dataset proves useful.
+5. **Comptroller Ch. 312 spreadsheet:** Include. Operator downloads quarterly (manual, ~20 min). Serves as authoritative statewide baseline + backstop for any county scrape failure.
+6. **Dedup key:** `(county, applicant_normalized, reinvestment_zone)`. Preserve sighting dates as array. Status = latest.
+7. **GitHub Actions cadence:** Weekly.
+8. **Alerting:** Out of scope for BUILD.
+
+BUILD is unblocked. Queued per `WIP_OPEN.md` sprint queue.

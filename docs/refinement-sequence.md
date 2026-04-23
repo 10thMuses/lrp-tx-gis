@@ -134,6 +134,26 @@ Deliverables: PR with sizing expressions and watermark implementation.
 
 ---
 
+### Stage: UI POLISH v2
+
+**Branch:** `refinement-ui-polish-v2`
+**Depends on:** nothing (live-UI layer only)
+**Blocks:** nothing
+
+Tasks:
+
+1. **Filter UI — dropdowns with auto-populate + multi-select.** All text-input filters replaced with dropdowns populated from unique values present in each layer's data. Categorical fields: multi-select. Numeric/date fields: range pickers (unchanged). No free-text entry.
+2. **Default map open state.**
+   - Layers ON by default: `caramba_north`, `counties` (outline), `county_labels`, `cities`, `waha`
+   - Basemap: `esri_imagery` (satellite)
+   - Initial viewport: zoomed to Caramba / project area (exact lat/lon/zoom set in build step)
+3. **ercot_queue — fuel-type color split.** Currently single-color. Split by technology code: gas (GT/CC/IC/ST → gas color), solar (PV → solar color), wind (WT → wind color), battery (BA → battery color), other (OT → neutral). Colors consistent with other layers' conventions for the same fuels.
+4. **Hide `parcels_pecos` layer.** Default-off and remove from sidebar, or gate behind a hidden flag. Data file stays in repo for future re-enable.
+
+Deliverables: PR with UI changes. No data-pipeline changes.
+
+---
+
 ### Stage: ABATEMENT DISCOVERY (parallel-safe after FILTER UI)
 
 **Spec:** `docs/refinement-abatement-spec.md` — authoritative. Regulatory corrections (Ch. 313 expired, JETI excludes renewables, Ch. 312+381 are active mechanisms), keyword taxonomy, regex, field catalog, schema options, county adapter status, live hits, BUILD-gate open questions. Task list below is historical scope only.
@@ -161,6 +181,8 @@ Deliverables: Markdown doc in PR with field catalog, schema proposal, example re
 ---
 
 ### Stage: ABATEMENT BUILD
+
+**Approved scope:** `docs/refinement-abatement-spec.md` §12 (locked 2026-04-23).
 
 **Branch:** `refinement-abatement-build`
 **Depends on:** ABATEMENT DISCOVERY approved AND SIZING + WATERMARK merged
