@@ -150,6 +150,9 @@ Full per-session detail in `WIP_LOG.md`.
 **Permanently excluded / settled:**
 - `rrc_wells_permian`, `tceq_pws`, `tceq_pbr`, `tceq_nsr_pending` — see `docs/settled.md` §"Scoped-out data sources" and §"Data sources".
 
+**UI/UX backlog (unscheduled):**
+- **Mobile-friendly map.** Responsive breakpoints for sidebar (collapsible drawer on narrow viewports), touch-friendly control sizing, pinch-zoom/pan tuning for MapLibre, measure tool + print-to-PDF usability on mobile, popup sizing on small screens. Scope TBD — candidate for promotion into `docs/refinement-sequence.md` as a standalone stage (branch `refinement-mobile`) before Chat 77/78 sprint wraps.
+
 **Other (non-GIS):**
 - Grid Wire Vol. 7.
 - Tier 2 water availability assessments, cluster intelligence sheets, Excel returns model.
