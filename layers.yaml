@@ -324,6 +324,31 @@ layers:
   - commodity
   - diameter_in
   - source_date
+- id: tceq_gas_turbines
+  file: combined_points.csv
+  geom: point
+  group: Permits
+  label: TCEQ gas turbines
+  color: '#eab308'
+  default_on: false
+  radius: 4
+  popup:
+  - name
+  - entity
+  - county
+  - capacity_mw
+  - manu
+  - model
+  - commissioned
+  - plant_code
+  filterable_fields:
+  - {field: county, type: categorical, label: County}
+  - {field: entity, type: categorical, label: Company}
+  - {field: commissioned, type: text, label: Date Filed}
+  - {field: manu, type: categorical, label: Manufacturer}
+  tippecanoe:
+  - -Z0
+  - -z14
 - id: tiger_highways
   prebuilt: true
   geom: line
