@@ -91,6 +91,9 @@ layers:
   - plant_code
   - county
   - sector
+  - capacity_mw
+  - technology
+  - fuel
   filterable_fields:
   - {field: sector, type: categorical, label: Sector}
   - {field: county, type: text, label: County}
@@ -110,6 +113,7 @@ layers:
   - plant_code
   - county
   - technology
+  - capacity_mw
   - capacity
   filterable_fields:
   - {field: capacity, type: numeric, label: Capacity (MW)}
@@ -131,6 +135,7 @@ layers:
   - project
   - manu
   - model
+  - capacity_mw
   - cap_kw
   - year
   - county
@@ -245,7 +250,7 @@ layers:
   radius: 5
   popup:
   - name
-  - mw
+  - capacity_mw
   - fuel
   - technology
   - commissioned

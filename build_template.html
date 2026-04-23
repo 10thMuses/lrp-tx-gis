@@ -276,12 +276,12 @@ map.addControl(new maplibregl.FullscreenControl(), 'top-right');
 
 // ---------- SIZING (data-driven by MW / kV) ----------
 // Layers without clean sizing field fall back to L.radius / static width.
-// Audit gaps (no clean field present): eia860_plants (capacity_mw blank 1367/1367), transmission (no voltage in geoms).
+// Audit gaps (no clean field present): eia860_plants capacity_mw populated for 891/1367 (static fallback for 476 unmatched); transmission (no voltage in geoms).
 const SIZING_RULES = {
-  ercot_queue:    { field: 'mw',          mode: 'mw' },
+  ercot_queue:    { field: 'capacity_mw', mode: 'mw' },
   solar:          { field: 'capacity_mw', mode: 'mw' },
-  eia860_battery: { field: 'capacity',    mode: 'mw' },
-  wind:           { field: 'cap_kw',      mode: 'kw' },
+  eia860_battery: { field: 'capacity_mw', mode: 'mw' },
+  wind:           { field: 'capacity_mw', mode: 'mw_small' },
   substations:    { field: 'voltage',     mode: 'kv' },
   tpit_subs:      { field: 'voltage',     mode: 'kv' },
   tpit_lines:     { field: 'voltage',     mode: 'kv_line' },
@@ -299,6 +299,11 @@ function sizingRadiusExpr(L) {
       ['interpolate', ['linear'], _sizingVal(rule),
         0, 3, 50, 5, 200, 7, 500, 9.5, 1000, 12, 2000, 15]];
   }
+  if (rule.mode === 'mw_small') {
+    return ['case', ['<=', _sizingVal(rule), 0], fb,
+      ['interpolate', ['linear'], _sizingVal(rule),
+        0, 3, 1, 6, 2, 9, 3, 12, 5, 15]];
+  }
   if (rule.mode === 'kv') {
     return ['case', ['<=', _sizingVal(rule), 0], fb,
       ['interpolate', ['linear'], _sizingVal(rule),
@@ -315,10 +320,18 @@ function sizingLineWidthExpr(L) {
 }
 function sizingIconSizeExpr(L) {
   const rule = SIZING_RULES[L.id];
-  if (!rule || (rule.mode !== 'mw' && rule.mode !== 'kw')) return 0.6;
-  return ['case', ['<=', _sizingVal(rule), 0], 0.55,
-    ['interpolate', ['linear'], _sizingVal(rule),
-      0, 0.45, 50, 0.55, 200, 0.70, 500, 0.85, 1000, 1.0, 2000, 1.2]];
+  if (!rule) return 0.6;
+  if (rule.mode === 'mw' || rule.mode === 'kw') {
+    return ['case', ['<=', _sizingVal(rule), 0], 0.55,
+      ['interpolate', ['linear'], _sizingVal(rule),
+        0, 0.45, 50, 0.55, 200, 0.70, 500, 0.85, 1000, 1.0, 2000, 1.2]];
+  }
+  if (rule.mode === 'mw_small') {
+    return ['case', ['<=', _sizingVal(rule), 0], 0.5,
+      ['interpolate', ['linear'], _sizingVal(rule),
+        0, 0.45, 1, 0.6, 2, 0.75, 3, 0.9, 5, 1.1]];
+  }
+  return 0.6;
 }
 
 function layerPaint(L) {
@@ -648,8 +661,11 @@ function setFilterPanelVisible(lid, visible) {
 
 function ercotQueuePopupHtml(props) {
   const title = props.name || 'ERCOT queue project';
-  const mw = (props.mw !== undefined && props.mw !== null && props.mw !== '')
-    ? `${Number(props.mw).toLocaleString()} MW` : '';
+  const mwVal = (props.capacity_mw !== undefined && props.capacity_mw !== null && props.capacity_mw !== '')
+    ? props.capacity_mw
+    : props.mw;
+  const mw = (mwVal !== undefined && mwVal !== null && mwVal !== '')
+    ? `${Number(mwVal).toLocaleString()} MW` : '';
   const fuel = props.fuel || props.technology || '';
   const commissioned = props.commissioned || '';
   const funnel = props.funnel_stage || '';
