@@ -8,7 +8,7 @@ Per Readme §10: **`## Next chat`** holds paste-ready instructions for the immed
 
 ## Next chat
 
-**Chat 77 — EIA-860 enrichment + capacity coalesce.** Data-pipeline refresh. Populates `capacity_mw`/`technology`/`fuel` on `eia860_plants` (891/1367 rows, 65.2%) from EIA-860 Form 2024, and unifies capacity column naming across all generation layers. `layers.yaml` popup additions. Layer count unchanged (22). Main HEAD `a379539` (Chat 76 UI polish shipped). Prod live on `a379539`.
+**Chat 78 — Semantic icons + MW-driven sizing on `eia860_plants`.** Icon routing by fuel/technology, sprite sheet extension, conditional sizing expression with static fallback for 476 unmatched plants. Unblocked by Chat 77 data enrichment. Layer count unchanged (22). Main HEAD `9d40df4` (Chat 77 shipped). Prod live on `9d40df4`.
 
 ### Session open (single block)
 
@@ -20,44 +20,34 @@ apt-get install -y tippecanoe libcairo2 -q
 pip install shapely pmtiles pyyaml cairosvg pandas openpyxl --break-system-packages -q
 ```
 
-### Part A — `eia860_plants` enrichment
+### Part A — Sprite sheet extension
 
-```bash
-curl -sL -A 'Mozilla/5.0' \
-  -H 'Referer: https://www.eia.gov/electricity/data/eia860/' \
-  -o /tmp/eia860_2024.zip \
-  'https://www.eia.gov/electricity/data/eia860/xls/eia8602024.zip'
-unzip -p /tmp/eia860_2024.zip '3_1_Generator_Y2024.xlsx' > /tmp/gen.xlsx
+Add 5 icons to existing sheet: `atom`, `coal`, `oil-barrel`, `water`, `flame`. Source via inline SVG in `build_sprite.py`, rasterize via cairosvg at 1x + 2x, composite into `sprite/sprite.png` / `sprite@2x.png` + `.json` manifest. Retain existing 5 (`solar`, `wind`, `battery`, `plant`, `well`). Target: 10-icon sheet.
+
+### Part B — Icon routing expressions (build_template.html)
+
+**Data-driven on `eia860_plants`** — icon-image expression keyed on `fuel`:
+- `Solar → sun`, `Wind → windmill`, `Natural gas → flame`, `Nuclear → atom`, `Coal → coal`, `Oil → oil-barrel`, `Hydro → water`, `Battery → battery`
+- Fallback: `plant` generic icon for null/unmapped fuels (476 unmatched rows from Chat 77)
+
+**Data-driven on `ercot_queue`** — same mapping, keyed on `technology` column instead of `fuel`.
+
+**Layer-level static icons** (single-fuel layers, no expression needed):
+- `solar → sun`, `wind → windmill`, `eia860_battery → battery`, `tceq_gas_turbines → flame`
+
+### Part C — MW-driven sizing on `eia860_plants`
+
+Conditional expression — data-driven for matched, static fallback for unmatched:
+
+```js
+['case',
+  ['>', ['coalesce', ['get', 'capacity_mw'], 0], 0],
+  sizingExprByMw,
+  6
+]
 ```
 
-- `pd.read_excel('/tmp/gen.xlsx', sheet_name='Operable', skiprows=1)` — verify sheet name on first read, fall back to first sheet.
-- Filter `Status == 'OP'`.
-- Groupby `Plant Code`:
-  - `capacity_mw = sum(Nameplate Capacity (MW))`
-  - `technology = mode(Technology)`
-  - `fuel_code = mode(Energy Source 1)`
-- Fuel code map: `NG→Natural gas, WAT→Hydro, NUC→Nuclear, SUB/BIT/LIG→Coal, DFO→Oil, SUN→Solar, WND→Wind, MWH→Battery`. Unknown codes → null (don't invent).
-- Left-join on `plant_code` for `layer_id == 'eia860_plants'` rows in `combined_points.csv`. Write back to same file.
-
-### Part B — capacity column coalesce (all layers)
-
-| Layer | Source col | Transform |
-|---|---|---|
-| `eia860_battery` | `capacity` | → `capacity_mw` (already MW) |
-| `ercot_queue` | `mw` | → `capacity_mw` |
-| `wind` | `cap_kw` | `/ 1000` → `capacity_mw` |
-| `solar`, `tceq_gas_turbines` | already `capacity_mw` | — |
-
-Retain source columns for provenance (don't drop `mw`, `cap_kw`, `capacity`). Update `layers.yaml` popups:
-- `ercot_queue`: swap popup field `mw` → `capacity_mw`
-- `eia860_battery`, `wind`: add `capacity_mw`
-- `eia860_plants`: add `capacity_mw`, `technology`, `fuel`
-
-**Expected coverage post-enrichment:** `eia860_plants` 891/1367, `eia860_battery` 133/133, `ercot_queue` 1708/1778, `solar` 180/180, `wind` 19269/19464, `tceq_gas_turbines` 6/6. Total ~22,187 rows.
-
-### Sizing re-audit
-
-Confirm `SIZING_RULES` in `build_template.html` still correct after field renames. `ercot_queue` sizing expression currently reads `mw` — must swap to `capacity_mw`. `wind` sizing reads `cap_kw` — swap to `capacity_mw` (and rescale: 3→15px maps to new MW range ~0–5 instead of 0–5000).
+MW interpolation range: audit real distribution first; rough target `0.1 MW → 4px`, `500 MW → 12px`, `3000 MW → 16px`.
 
 ### Build + deploy
 
@@ -66,29 +56,48 @@ python build.py
 # gate: built=22, errored=0
 ```
 
-Netlify MCP from `/mnt/user-data/outputs/dist/`. Sleep 45. Curl verify with real UA (`-A "Mozilla/5.0"`).
+**Deploy via Netlify REST API (MCP proxy path deprecated — see Chat 77 log).** Operator pastes `NETLIFY_PAT=<token>` at top of resume prompt; if omitted, ask once.
+
+```bash
+PAT=<paste from chat or CREDENTIALS.md if present>
+SITE=01b53b80-687e-4641-b088-115b7d5ef638
+cd /mnt/user-data/outputs/dist && zip -qr /tmp/d.zip .
+RESP=$(curl -s -X POST -H "Authorization: Bearer $PAT" -H "Content-Type: application/zip" \
+  --data-binary @/tmp/d.zip "https://api.netlify.com/api/v1/sites/$SITE/deploys")
+DEPLOY_ID=$(echo "$RESP" | python3 -c "import sys,json;print(json.load(sys.stdin)['id'])")
+echo "deployId: $DEPLOY_ID"
+
+# Poll until ready
+i=0; while [ $i -lt 30 ]; do
+  i=$((i+1))
+  STATE=$(curl -s -H "Authorization: Bearer $PAT" \
+    "https://api.netlify.com/api/v1/sites/$SITE/deploys/$DEPLOY_ID" \
+    | python3 -c "import sys,json;print(json.load(sys.stdin).get('state','?'))")
+  echo "$i: $STATE"
+  [ "$STATE" = "ready" ] && break
+  [ "$STATE" = "error" ] && break
+  sleep 6
+done
+
+# Verify prod after CDN warmup (~90s observed in Chat 77 — longer than prior 45s norm)
+sleep 90
+curl -sI -A "Mozilla/5.0" https://lrp-tx-gis.netlify.app/ | head -3
+curl -s -A "Mozilla/5.0" https://lrp-tx-gis.netlify.app/ | grep -oE '"id":[ ]*"[a-z0-9_]+"' | sort -u | wc -l  # expect 22
+```
 
 ### Commit + push + close-out
 
 ```bash
 git add -A
-git commit -m "Chat 77: EIA-860 enrichment (891/1367 plants) + capacity_mw coalesce"
+git commit -m "Chat 78: Semantic icons + MW-driven sizing on eia860_plants"
 git push
 ```
 
-Update `WIP_OPEN.md` `## Next chat` to Chat 78 (promote from `## Sprint queue`). Append `WIP_LOG.md` entry for Chat 77. Capture Netlify `deployId` from MCP call for the Prod status block.
+Update `WIP_OPEN.md` `## Next chat` (promote Chat 79 or new priority). Append `WIP_LOG.md` entry for Chat 78.
 
 ---
 
 ## Sprint queue
-
-### Chat 78 — Semantic icons (unblocked by Chat 77)
-
-- Icon routing by `fuel` field on `eia860_plants` (data-driven icon-image expression: Solar→sun, Wind→windmill, Natural gas→flame, Nuclear→atom, Coal→coal, Oil→oil-barrel, Hydro→water, Battery→battery).
-- Icon routing by `technology` field on `ercot_queue` (same mapping, technology-keyed).
-- Layer-level icon for single-fuel layers: `solar`→sun, `wind`→windmill, `eia860_battery`→battery, `tceq_gas_turbines`→flame.
-- Sprite sheet extension: audit existing 5 icons, add missing (atom, coal, oil-barrel, water, flame) via `build_sprite.py` + cairosvg. Commit `sprite/sprite.png` + `@2x` + `.json` manifests.
-- MW-driven sizing re-audit: `eia860_plants` now has MW for 891/1367 → data-driven sizing on those, static fallback for 476 unmatched (expression: `['case', ['>', ['get','capacity_mw'], 0], sizingExpr, static]`).
 
 ### Chat 79+ — Tax abatement scraper (refinement item #5)
 
@@ -100,9 +109,9 @@ Update `WIP_OPEN.md` `## Next chat` to Chat 78 (promote from `## Sprint queue`).
 
 ## Current workstream
 
-UI polish complete and in prod (Chat 76). 22 layers live with title-cased labels, collapsible filter dropdowns, WAHA circle marker, reordered sidebar groups.
+Data enrichment complete and in prod (Chat 77). EIA-860 matched 891/1367 plants with capacity/technology/fuel; capacity column unified to `capacity_mw` across all generation layers; sizing expressions on `ercot_queue` and `wind` swapped to unified field.
 
-Next: EIA-860 enrichment (Chat 77), semantic icons (Chat 78 after 77), tax abatement scraper (Chat 79+, independent track).
+Next: semantic icons + MW-driven plant sizing (Chat 78), tax abatement scraper (Chat 79+, independent track).
 
 ---
 
@@ -110,15 +119,15 @@ Next: EIA-860 enrichment (Chat 77), semantic icons (Chat 78 after 77), tax abate
 
 | Chat | Date | Outcome |
 |---:|---|---|
-| 69 | 2026-04-22 | Stage 3 Visual Overhaul — recon only. |
 | 70 | 2026-04-22 | Token-efficiency sweep (doc-only). |
 | 71 | 2026-04-22 | Stage 3 closed + Stage 4 SIZING+WATERMARK shipped. Merges `ebe5634` + `026eff2`. Prod `69e96a36`. |
 | 72 | 2026-04-23 | TCEQ REFRESH recon + data pull. 6 records geocoded. `tceq_pws`/`tceq_pbr`/`tceq_nsr_pending` scoped out. |
 | 73 | 2026-04-23 | TCEQ refresh branch merged to main — `ea7e39d`. |
 | 74 | 2026-04-23 | TCEQ data/config + EIA-860 research committed — `4292bf2`, `3aada1c`. Build deferred. |
 | 75 | 2026-04-23 | Abatement discovery spec + multi-chat refinement rules — `92d25c72`. TCEQ built locally clean. Stopped pre-deploy. |
-| 75b | 2026-04-23 | **TCEQ SHIP complete.** Deploy `69ea32c7d3733641c9a1bb7c`. 21→22 layers. Readme §2 ban-ship-it rule `939ff16`. Close-out docs landed in same chat. |
-| 76 | 2026-04-23 | **UI polish shipped.** 10 label/layout tweaks — `a379539`. Live on prod. Close-out docs landed in follow-up chat. |
+| 75b | 2026-04-23 | **TCEQ SHIP complete.** Deploy `69ea32c7d3733641c9a1bb7c`. 21→22 layers. Readme §2 ban-ship-it rule `939ff16`. |
+| 76 | 2026-04-23 | **UI polish shipped.** 10 label/layout tweaks — `a379539`. Live on prod. |
+| 77 | 2026-04-23 | **EIA-860 enrichment shipped.** 891/1367 plants enriched + `capacity_mw` coalesce — commit `9d40df4`, deploy `69ea73f92acb1109e87b4ddc`. Deploy path migrated to Netlify REST API + `NETLIFY_PAT` after MCP proxy 503s blocked two deploy attempts. |
 
 Full per-session detail in `WIP_LOG.md`.
 
@@ -127,14 +136,16 @@ Full per-session detail in `WIP_LOG.md`.
 ## Prod status
 
 - URL: https://lrp-tx-gis.netlify.app — **requires real User-Agent on curl** (default `curl/x.y.z` UA returns 503; use `-A "Mozilla/5.0"`). See `docs/settled.md` §Data sources.
-- Last published deploy: live on commit `a379539` (Chat 76 UI polish). Netlify `deployId` not captured in-session; Netlify API requires auth to retrieve.
-- Main HEAD: `a379539`.
+- Last published deploy: `69ea73f92acb1109e87b4ddc` on commit `9d40df4` (Chat 77).
+- Main HEAD: `9d40df4`.
 - Auto-publish: unlocked.
-- Layer set: 22 built clean. All labels title-cased with vintage-tagged ERCOT queue; filter dropdowns collapsible; WAHA hub has circle marker; `Water & Regulatory` at bottom of sidebar.
+- **Deploy path:** Netlify REST API via `NETLIFY_PAT`. Netlify MCP proxy returned 503 on two consecutive chats (77 + resume) despite Netlify platform being fully operational on `netlifystatus.com`. MCP proxy path effectively deprecated for this site; REST API is canonical going forward. See Chat 77 entry in `WIP_LOG.md` for failure detail.
+- Layer set: 22 built clean. All 10 Chat 76 label/layout tweaks + Chat 77 popup additions (`capacity_mw`, `technology`, `fuel` on `eia860_plants`; `capacity_mw` on `ercot_queue` / `eia860_battery` / `wind`).
 - Prebuilt PMTiles (4): parcels_pecos 4.98 MB, rrc_pipelines 4.73 MB, tiger_highways 3.11 MB, bts_rail 2.16 MB.
-- Sprite sheet: 5 icons @ 1x + 2x at `/sprite/sprite.png` + `sprite@2x.png`.
-- Data-driven sizing live: `ercot_queue`, `solar`, `eia860_battery`, `wind` (MW), `substations`, `tpit_subs`, `tpit_lines` (kV). **Note:** Chat 77 will rename source fields to `capacity_mw`; sizing expressions in `build_template.html` must swap `mw`→`capacity_mw` and `cap_kw`→`capacity_mw` same chat.
-- Sizing gaps (static fallback): `eia860_plants` (capacity_mw blank 1367/1367 — Chat 77 fixes 891 of them), `transmission` (no voltage in geoms).
+- Sprite sheet: 5 icons @ 1x + 2x at `/sprite/sprite.png` + `sprite@2x.png`. Chat 78 extends to 10 icons.
+- Data-driven sizing live: `ercot_queue` (`capacity_mw`), `solar` (`capacity_mw`), `eia860_battery` (`capacity_mw`), `wind` (`capacity_mw`), `substations`, `tpit_subs`, `tpit_lines` (kV).
+- Sizing gaps (static fallback): `eia860_plants` (476/1367 still blank post-Chat-77 — Chat 78 adds conditional expression), `transmission` (no voltage in geoms).
+- **CDN warmup timing:** Chat 77 observed ~90s for edges to clear 503 after deploy `state=ready`. Prior norm was 45s. Standard post-deploy `sleep 90` recommended going forward.
 
 ---
 
@@ -142,16 +153,19 @@ Full per-session detail in `WIP_LOG.md`.
 
 **Standing watch item:** TCEQ diesel-genset NSR permits live only in CRPUB (not in `turbine-lst.xlsx`). Gap for data-center backup-power intelligence if that becomes a use case. Revisit only if TCEQ publishes bulk feed or operator authorizes CRPUB scrape.
 
-**Data-pipeline gaps (non-blocking, addressed by queued chats):**
-- `eia860_plants` capacity_mw / technology / fuel — Chat 77.
+**Data-pipeline gaps (non-blocking):**
+- `eia860_plants`: 476/1367 rows still blank on `capacity_mw`/`technology`/`fuel` post-Chat-77. EIA-860 Form 2024 matched 891/1367; remainder are plants not in EIA-860 (small / retired / not utility-scale). Chat 78 handles UI via conditional sizing + fallback icon.
 - `combined_points.csv` blank `operator` / `commissioned` on EIA point layers — filter UI provides leverage; out of scope unless prioritized.
 - Cosmetic: prebuilt PMTiles feature counts show 0 in sidebar. Low priority.
+
+**Infrastructure:**
+- **Netlify MCP proxy blocker:** Proxy-based deploy path (`npx @netlify/mcp@latest --proxy-path`) returning 503 on upload despite platform operational. Migrated to REST API for Chat 77. Watch: if REST API begins failing similarly, check MCP proxy again in case it has recovered, then escalate to Netlify support if neither works.
 
 **Permanently excluded / settled:**
 - `rrc_wells_permian`, `tceq_pws`, `tceq_pbr`, `tceq_nsr_pending` — see `docs/settled.md` §"Scoped-out data sources" and §"Data sources".
 
 **UI/UX backlog (unscheduled):**
-- **Mobile-friendly map.** Responsive breakpoints for sidebar (collapsible drawer on narrow viewports), touch-friendly control sizing, pinch-zoom/pan tuning for MapLibre, measure tool + print-to-PDF usability on mobile, popup sizing on small screens. Scope TBD — candidate for promotion into `docs/refinement-sequence.md` as a standalone stage (branch `refinement-mobile`) before Chat 77/78 sprint wraps.
+- **Mobile-friendly map.** Responsive breakpoints for sidebar (collapsible drawer on narrow viewports), touch-friendly control sizing, pinch-zoom/pan tuning for MapLibre, measure tool + print-to-PDF usability on mobile, popup sizing on small screens. Scope TBD — candidate for promotion into `docs/refinement-sequence.md` as a standalone stage after Chat 78.
 
 **Other (non-GIS):**
 - Grid Wire Vol. 7.

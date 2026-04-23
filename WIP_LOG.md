@@ -1,3 +1,44 @@
+## Chat 77 — 2026-04-23 — EIA-860 enrichment + capacity_mw coalesce + deploy path migration
+
+**Classification:** shipping, MEDIUM blast radius. Data-pipeline refresh (`combined_points.csv`) + yaml popups + template sizing expressions. No schema changes. Build + deploy + close-out.
+
+**Commit:** `9d40df4` on `main`. Parent `a379539` (Chat 76 UI polish).
+
+**Shipped:**
+
+| Area | Change |
+|---|---|
+| `combined_points.csv` | EIA-860 Form 2024 join on `plant_code` — 891/1367 plants (65.2%) gained `capacity_mw` + `technology` + `fuel`. Fuel code map: NG→Natural gas, WAT→Hydro, NUC→Nuclear, SUB/BIT/LIG→Coal, DFO→Oil, SUN→Solar, WND→Wind, MWH→Battery. Unknowns nulled (not invented). |
+| `combined_points.csv` | Capacity column coalesce: `eia860_battery.capacity → capacity_mw`; `ercot_queue.mw → capacity_mw`; `wind.cap_kw / 1000 → capacity_mw`; `solar` + `tceq_gas_turbines` already on `capacity_mw`. Source columns retained for provenance. |
+| `layers.yaml` | Popup additions: `eia860_plants` adds `capacity_mw` + `technology` + `fuel`; `ercot_queue` swaps `mw` → `capacity_mw`; `eia860_battery` + `wind` add `capacity_mw`. |
+| `build_template.html` | Sizing expressions updated: `ercot_queue` sizing field `mw` → `capacity_mw`; `wind` sizing field `cap_kw` → `capacity_mw` with MW-range rescale (0–5 MW instead of 0–5000 kW). |
+
+**Expected-vs-actual coverage post-enrichment:** `eia860_plants` 891/1367 ✓, `eia860_battery` 133/133 ✓, `ercot_queue` 1708/1778, `solar` 180/180, `wind` 19269/19464, `tceq_gas_turbines` 6/6. Total ~22,187 rows with capacity data.
+
+**Build verify:** `python build.py` → `built=22, missing=0, errored=0, tiles_total=17529 KB`. All 22 layers clean.
+
+**Deploy:** `69ea73f92acb1109e87b4ddc` — via **Netlify REST API + `NETLIFY_PAT`** (not MCP proxy). Deploy state reached `ready` on first poll (~6s). Prod verified post-warmup (~90s): HTTP/2 200, 22 layer IDs in HTML, 17 `capacity_mw` popup references, tile + sprite spot-checks all 200.
+
+**Anomalies — Netlify MCP proxy 503 (blocker):**
+
+1. **First attempt (Chat 77 shipping chat):** `npx @netlify/mcp@latest --proxy-path <url>` returned 503 on `zipAndBuild`. Netlify MCP surfaces this as `Error: Failed to deploy site: 503 Service Unavailable` from `netlify-mcp.js:540`. Chat 77 closed with commit pushed but deploy blocked.
+2. **Second attempt (resume chat):** Pulled fresh proxy URL via `Netlify:netlify-deploy-services-updater` MCP call. Same 503, same call site. `netlifystatus.com` showed all systems operational — failure is in the MCP proxy service (`netlify-mcp.netlify.app`), which is a separate Netlify-hosted app not covered by the main status page.
+3. **Resolution:** Migrated deploy path to Netlify REST API. Operator generated PAT at `app.netlify.com/user/applications/personal` (description: "Claude GIS deploys"), pasted into chat context. Deploy via `curl -X POST -H "Authorization: Bearer $PAT" -H "Content-Type: application/zip" --data-binary @/tmp/d.zip https://api.netlify.com/api/v1/sites/$SITE/deploys`. Succeeded first try. CDN warmup took ~90s (vs. 45s prior norm) before edge 503s cleared.
+
+**Process change:** Netlify REST API is now canonical deploy path for this site. `WIP_OPEN.md` "Prod status" block updated to note this. Future chats' `## Next chat` spec references REST API with PAT pulled from `CREDENTIALS.md` (when present) or pasted at top of resume prompt.
+
+**Credentials state:** Project knowledge file `CREDENTIALS.md` is not editable in current Claude UI (no edit or delete affordance). `NETLIFY_PAT` could not be added to the file during this chat — operator pasted token directly into chat context instead. Going forward either (a) operator pastes token into each chat resume prompt, or (b) CREDENTIALS.md edit path becomes available and token gets committed there.
+
+**npm cache corruption (incidental):** First MCP retry attempt in resume chat hit `npm error ENOENT` on `@netlify/zip-it-and-ship-it` — tarball corruption mid-install. Cleared `/home/claude/.npm/_npx` + `_cacache`; second attempt made it past npm install to the actual 503. Not a recurring concern once REST API is adopted.
+
+**Diff size:** data columns repopulated across 21k+ rows in `combined_points.csv`; ~6 lines in `layers.yaml`; ~4 lines in `build_template.html` sizing expressions. Net commit delta modest at line level but data content meaningful.
+
+**Close-out note:** Close-out docs (this entry + WIP_OPEN rewrite) landed in the resume chat, not the shipping chat, because the shipping chat stopped at the MCP 503 blocker before writing close-out.
+
+**Next-chat trigger:** `Resume.` → Chat 78 (semantic icons + MW-driven sizing). Spec in `WIP_OPEN.md` `## Next chat`.
+
+---
+
 ## Chat 76 — 2026-04-23 — UI polish — 10 label/layout tweaks shipped
 
 **Classification:** shipping, LOW blast radius. Yaml + template only — no data pipeline, no new layers, no schema changes. Build + deploy + close-out.
