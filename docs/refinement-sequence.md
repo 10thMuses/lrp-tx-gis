@@ -136,6 +136,8 @@ Deliverables: PR with sizing expressions and watermark implementation.
 
 ### Stage: ABATEMENT DISCOVERY (parallel-safe after FILTER UI)
 
+**Spec:** `docs/refinement-abatement-spec.md` — authoritative. Regulatory corrections (Ch. 313 expired, JETI excludes renewables, Ch. 312+381 are active mechanisms), keyword taxonomy, regex, field catalog, schema options, county adapter status, live hits, BUILD-gate open questions. Task list below is historical scope only.
+
 **Branch:** `refinement-abatement-discovery`
 **Depends on:** FILTER UI merged
 **Blocks:** ABATEMENT BUILD

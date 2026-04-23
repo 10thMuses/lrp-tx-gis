@@ -121,41 +121,9 @@ Build, deploy, commit, push. Layer count unchanged (22).
 
 ### Chat 79+ — Tax abatement scraper (refinement item #5)
 
-Partial work from concurrent Chat 74 research track — **NOT committed.** Reconstruct from this spec.
+**Spec:** `docs/refinement-abatement-spec.md` (committed 2026-04-23). Regulatory context, leading-indicator hierarchy, keyword taxonomy, `extract_applicant()` regex with both `re.I` + `\b` fixes, field catalog, schema Options A/B, county adapter status (2 validated, 3 stubbed, 18 TODO), 4 live hits, 8 BUILD-gate open questions.
 
-**Architecture:**
-- Per-county adapter pattern. 2/5 tested: Pecos (WordPress), Reeves (CivicEngage). 3 stubbed (Ward, Culberson, Ector) — URL patterns unverified.
-- Keyword taxonomies ready: `KW_ABATEMENT`, `KW_PROJECT_RENEWABLE`, `KW_PROJECT_DC`, `KW_PROJECT_GAS`, `KW_DEVELOPERS`, `KW_LOADS`.
-- Tested helpers: `classify()`, `extract_zone()`, `extract_capacity()`, `parse_meeting_date()`.
-- **Known bug:** `extract_applicant()` missing `flags=re.I` in both regex searches.
-
-**Live hits confirmed during discovery:**
-
-| County | Hit | Date |
-|---|---|---|
-| Pecos | Longfellow Renewable Energy Reinvestment Zone | 1/13/2025 |
-| Pecos | Poolside Inc. Ch. 312 abatement (AI compute, not solar) | 11/10/2025 agenda |
-| Pecos | Apex Clean Energy donation signal | 11/10/2025 |
-| Reeves | Pecos Power Plant LLC — 226 MW natgas recips, $150–200M | 6/13/2025 notice |
-
-**Settled regulatory context (do not re-litigate):**
-- Ch. 313 expired 12/31/2022
-- Ch. 403 / JETI Act (eff 1/1/2024) explicitly excludes renewables
-- Active abatement mechanisms for renewables: Ch. 312 + Ch. 381
-- Leading-indicator hierarchy: lease signing (private) → ERCOT queue → reinvestment zone creation (commissioners court) → abatement application + 30-day notice → executed → Comptroller Ch. 312 filing
-- Commissioners court agendas = real leading signal
-- Comptroller Ch. 312 DB: JS-loaded (static fetch fails) + multi-month lag — not usable as primary source
-
-**Chat 79 tasks:**
-1. Reconstruct `scripts/scrape_abatements.py` from this spec
-2. Apply `re.I` fix to `extract_applicant()`
-3. Verify Ward, Culberson, Ector agenda URL patterns
-4. Commit script + add `.github/workflows/abatement-scrape.yml` (weekly cron)
-5. Run full 5-county scan, commit first CSV to `data/abatements/`
-6. Close refinement item #5 discovery phase in `WIP_OPEN.md`
-7. Layer build (geocode RZs + applicant parcels → `tax_abatements` layer) = separate future chat
-
-Independent track — can slot anywhere after Chat 75; not blocked by TCEQ / EIA-860 / UI sprints.
+**Stage split:** DISCOVERY is doc-only and effectively closed by the spec commit. BUILD gated on operator sign-off against spec §9. Independent track — slots anywhere after Chat 75; not blocked by TCEQ / EIA-860 / UI sprints.
 
 ---
 

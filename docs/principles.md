@@ -98,6 +98,24 @@ Failure at any gate halts the chat. Never advance with a failing gate.
 
 ---
 
+---
+
+## 7. Multi-Chat Refinement Patterns
+
+Applies to stages in `docs/refinement-sequence.md` that run under structured DISCOVERY → BUILD sequences.
+
+**Two-stage approval gate.** Stages labeled DISCOVERY ship a committed spec doc at `docs/refinement-<slug>-spec.md` and pause for operator sign-off before the matching BUILD stage. Approval is recorded implicitly by the operator prompt initiating the BUILD chat; no separate sign-off artifact is required. The spec file carries field catalogs, schema options, open questions, and scope-outs.
+
+**Discovery chats commit spec files; they do not push handoff docs forward.** Readme §10 treats handoffs as in-chat close-out text. A parallel discovery chat that produced investigative notes on a separate track lands those notes as a committed `docs/refinement-<slug>-spec.md` in the next shipping or doc-only chat. The spec file then replaces conversation-history state for all downstream chats. Attached handoff docs are input, not persistent state — file them.
+
+**Branch naming for refinement stages:** `refinement-<slug>-discovery` and `refinement-<slug>-build`. Direct-to-main commits remain the default for routine chats; branch + PR workflow applies only to structured refinement sequences where approval gates matter.
+
+**Parallel-safe stages can run concurrently with any in-flight shipping track.** Discovery work is doc-only. The shipping track owns all writes to `WIP_OPEN.md` and `WIP_LOG.md`. Parallel discovery must not update those files — it commits spec files only, and the next shipping chat picks up the reference.
+
+**Shipping-chat budget isolation is soft, not hard.** A shipping chat carrying doc-only tail work retains discretion to split at the ship point into an immediate `<N>b` doc-only close-out if remaining budget looks tight mid-chat. The ship itself (build + deploy + commit + push) is the hard priority; doc edits follow. Pre-litigating the split in the `## Next chat` block is discouraged — leave the call to the executing chat based on actual consumption.
+
+---
+
 ## Deferred / future cleanup
 
 *(None open. ENVIRONMENT.md deleted 2026-04-22 Chat 70; GIS_SPEC §12–18 consolidated same chat.)*
