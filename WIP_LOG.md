@@ -1,3 +1,44 @@
+## Chat 76 — 2026-04-23 — UI polish — 10 label/layout tweaks shipped
+
+**Classification:** shipping, LOW blast radius. Yaml + template only — no data pipeline, no new layers, no schema changes. Build + deploy + close-out.
+
+**Commit:** `a379539` on `main`. Parent `8da2b0f` (Chat 75b close-out).
+
+**Shipped (10 of 11; #4 deferred to Chat 78 per plan):**
+
+| # | Change | File |
+|---:|---|---|
+| 1 | Sidebar multi-select filters → collapsible `<details>` dropdowns with live selection count in summary (e.g. `County (12)` / `County — 3 selected`). CSS + `filterFieldControlHtml()` refactor. | `build_template.html` |
+| 2 | Title-case all multi-word layer labels. | `layers.yaml` |
+| 3 | `"Solar plants (EIA-860)"` → `"Solar Farms (EIA-860)"`. | `layers.yaml` |
+| 4 | **DEFERRED to Chat 78** — semantic icons by fuel/technology. Requires EIA-860 enrichment (Chat 77). | — |
+| 5 | `"EIA-860 plants"` → `"Power Plants (EIA-860)"`. | `layers.yaml` |
+| 6 | `GROUP_ORDER` reordered: `Water & Regulatory` moved to end (after `Reference`). | `build_template.html` |
+| 7 | `"Natural gas hub"` → `"WAHA Natural Gas Hub"`; `show_marker: true` on `labels_hubs` (label layer) renders a circle marker via new `${id}__marker` circle sublayer wired through `addLayer()` + `setLayerVisibility()` + `applyLayerFilter()`. | `layers.yaml` + `build_template.html` |
+| 8 | `"ERCOT GIR queue"` → `"ERCOT Interconnect Queue (as of 2026-04-21)"`. Vintage from ERCOT xlsx source date. | `layers.yaml` |
+| 9 | `"TWDB wells"` → `"Groundwater Wells (TWDB)"`. | `layers.yaml` |
+| 10 | `"MPGCD Zone 1 (approx.)"` → `"Groundwater District Management Zone 1"`. | `layers.yaml` |
+| 11 | `"RRC pipelines (≥20\" transmission)"` → `Oil & Gas Pipelines (>20\", RRC)`. | `layers.yaml` |
+
+**Template additions for `geom: label` + `show_marker`:**
+- `addLayer()`: new `${id}__marker` circle sublayer (radius 6, fill = layer color, white 2px stroke) inserted below the label symbol layer.
+- `setLayerVisibility()`: marker toggle wired alongside existing icon handling.
+- `applyLayerFilter()`: marker filter wired.
+
+**Handoff doc removed:** `docs/_chat76_handoff.md` (210 lines) — specs folded into commit message and this log entry.
+
+**Build verify:** deferred per commit authorship. Deploy gate verified post-fact via live HTML parse: `layer count = 22`, all 10 renamed labels present, `GROUP_ORDER` ends `…Reference, Water & Regulatory`, `WAHA Natural Gas Hub` live.
+
+**Deploy:** commit shipped to prod; specific Netlify `deployId` not captured in-session (Netlify MCP deploy call made outside chat-level close-out). Prod commit reference: `a379539`. Live verification via `curl -s -A "Mozilla/5.0" https://lrp-tx-gis.netlify.app/` confirms all tweaks in served HTML.
+
+**Diff size:** `+49 / -229` (net `-180` lines — handoff doc deletion dominates). Actual tweak delta: `build_template.html +37 / -4`, `layers.yaml +~15 / -15` (renames).
+
+**Close-out note:** Close-out docs (this WIP_LOG entry + WIP_OPEN rewrite) landed in a follow-up chat, not in the shipping commit. `WIP_OPEN.md` `## Next chat` had remained at Chat 76 until Chat 77 opened; state reconciled then.
+
+**Next-chat trigger:** `Resume.` → Chat 77 (EIA-860 enrichment). Spec already in `WIP_OPEN.md` `## Next chat`.
+
+---
+
 ## Chat 71 (part 2) — 2026-04-22 — Stage 4 SIZING + WATERMARK shipped
 
 **Classification:** shipping, MEDIUM blast radius. Template-only change (no yaml, no data). Branch + build + deploy + merge.
