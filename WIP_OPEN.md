@@ -8,7 +8,7 @@ Per Readme §10: **`## Next chat`** holds paste-ready instructions for the immed
 
 ## Next chat
 
-**Chat 75 — TCEQ SHIP.** Main HEAD `3aada1c`. Prod unchanged since Chat 71 (`69e96a36`). Chat 73 merged TCEQ branch (`ea7e39d`); Chat 74 landed TCEQ data/config (`4292bf2`) + EIA-860 research notes (`3aada1c`) but deferred build. Chat 75 = build, deploy, ship + three short doc edits.
+**Chat 75b — TCEQ SHIP (deploy + close-out).** Main HEAD `92d25c72`. Prod unchanged since Chat 71 (`69e96a36`, 21 layers). Chat 75 landed abatement-discovery spec + multi-chat rules (`92d25c72`) and rebuilt locally clean (22 layers, `errored=0`, `tceq_gas_turbines=6`) then stopped pre-deploy per operator direction. Chat 75b rebuilds in fresh container, deploys, and lands close-out docs.
 
 ### Session open (single block)
 
@@ -20,46 +20,42 @@ grep -c '^tceq_gas_turbines,' combined_points.csv   # expect 6
 grep -c 'Permits' layers.yaml build_template.html   # both 1
 ```
 
-Side task post-ship: `build.py` now imports `build_sprite.py` which requires `cairosvg`. Add `cairosvg` to Readme session-open install list.
-
 ### Build
 
 ```bash
 python build.py
 ```
 
-Gate: 22 layers, `errored=0`, `tceq_gas_turbines feature_count=6`.
+Gate: 22 layers, `errored=0`, `tceq_gas_turbines feature_count=6` (confirmed clean in Chat 75 — re-verify in fresh container).
 
 ### Deploy
 
-Netlify MCP from `/mnt/user-data/outputs/dist/`. Sleep 45. Curl 200.
+Netlify MCP from `/mnt/user-data/outputs/dist/`. Sleep 45. Curl 200 on prod URL. Layer spot-check: one `tceq_gas_turbines` tile endpoint.
 
-### Doc edits
+### Doc edits (post-deploy)
 
-1. **`docs/settled.md`** — append under "Data sources":
+1. **`docs/settled.md`** — append under `## Data sources`:
 
    ```
-   ### TCEQ sources closed 2026-04-23
-   - tceq_pws: dropped (HTTP 400, operator decision)
-   - tceq_pbr: scoped out (CRPUB HTML-scrape, RRC-MFT analog preferred)
-   - Nominatim fallback accepted for Census zero-match (1.1s throttle)
+   **TCEQ sources closed 2026-04-23.** `tceq_pws` dropped (HTTP 400 on original endpoint, operator decision). `tceq_pbr` scoped out (CRPUB HTML-scrape, same failure class as RRC MFT — see scoped-out block). `tceq_nsr_pending` scoped out for same reason. Nominatim fallback accepted for Census geocoder zero-match (1.1s throttle).
    ```
 
-2. **`WIP_OPEN.md`** — rewrite `## Next chat` with Chat 76 UI-polish instructions (see Sprint queue §Chat 76); update `## Prod status` deploy ID + layer count `21 → 22`; remove `tceq_pws`/`tceq_pbr` from `## Open backlog` (now settled); append row to `## Recent sessions`.
+2. **`WIP_OPEN.md`** — rewrite `## Next chat` to Chat 76 UI-polish (spec already in `## Sprint queue` §Chat 76, copy forward). Update `## Prod status`: new deploy ID, layer count `21 → 22`. Remove `tceq_pws`, `tceq_pbr`, `tceq_nsr_pending` from `## Open backlog` (now settled). Append rows to `## Recent sessions` for Chats 73, 74, 75, 75b.
 
-3. **`WIP_LOG.md`** — append entries for Chats 73, 74, 75 with SHAs + deploy ID + layer delta.
+3. **`WIP_LOG.md`** — append entries for Chats 73 (TCEQ branch merge), 74 (TCEQ data/config + EIA-860 research), 75 (abatement spec + rules + TCEQ build, no deploy), 75b (TCEQ deploy + close-out). Each with SHA + deploy ID where applicable.
 
 ### Commit + push
 
 ```bash
 git add -A
-git commit -m "Chat 75: ship TCEQ gas turbines (21→22 layers)"
+git commit -m "Chat 75b: ship TCEQ gas turbines (21→22 layers) + close-out docs"
 git push
 ```
 
-### Budget escape
+### Budget note
 
-If build/deploy consumes budget: ship TCEQ, commit, push, STOP. Roll doc edits (1–3) into a Chat 75b doc-only close-out. Do NOT attempt UI-polish (Chat 76) or EIA-860 (Chat 77) in this chat.
+Chat 75 split off to preserve budget headroom for deploy + docs. Deploy is the priority — if docs consume budget, ship deploy + commit + push first, split docs to a 75c doc-only close-out. Do NOT attempt Chat 76 (UI polish) or Chat 77 (EIA-860) in this chat.
+
 
 ---
 
