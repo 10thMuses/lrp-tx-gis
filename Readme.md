@@ -159,7 +159,16 @@ Operator delegates autonomously. Execute end-to-end. Direct, factual, concise. D
 
 ## 10. Handoff Discipline
 
-Handoff content is written directly into chat at close-out, not as attachment, not as file, not as project sidebar upload. Next chat's first tool call is `conversation_search` against keywords from current prompt. Operator never downloads or re-uploads handoff docs. If a chat "locks" a taxonomy or config, the file ships that same chat, not the next.
+Forward-looking handoff lives in `WIP_OPEN.md`, not in chat text and not in conversation history. Two blocks carry it:
+
+- `## Next chat` — paste-ready instructions for the immediately-next shipping chat: session-open commands, build/deploy steps, doc edits with exact text, commit message, tool-budget escape hatch. Rewritten in full at every close-out.
+- `## Sprint queue` — forward plan for chats N+2 and beyond. Updated as plans firm up or change. Survives multiple close-outs.
+
+Operator's per-chat prompt can be one word (`Resume.`, `Continue.`, a trigger phrase). All state needed is in `WIP_OPEN.md`. Never ask operator to paste prior-chat content, re-upload a handoff doc, or restate what just shipped. `conversation_search` is not part of normal session open — the repo carries state.
+
+If a chat "locks" a taxonomy or config, the file ships that same chat, not the next.
+
+Rule: if the next chat's first action isn't discoverable from `WIP_OPEN.md` alone, the prior chat's close-out failed. Close-out budget must reserve capacity for the `WIP_OPEN.md` rewrite; never ship without it.
 
 ---
 
