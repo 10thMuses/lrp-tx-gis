@@ -6,7 +6,7 @@
 
 | File | Change |
 |---|---|
-| `docs/refinement-abatement-spec.md` | Appended §11 "Approved BUILD scope" — operator answers to all 8 §9 questions. BUILD unblocked. |
+| `docs/refinement-abatement-spec.md` | Appended §12 "Approved BUILD scope" — operator answers to all 8 §9 questions. BUILD unblocked. |
 | `docs/refinement-sequence.md` | Inserted new stage "UI POLISH v2" before ABATEMENT DISCOVERY. ABATEMENT BUILD stage gains approved-scope pointer. |
 | `WIP_OPEN.md` | Chat 78 scope reduced to MW-sizing only (icons + ERCOT-code-expansion cut by operator). Sprint queue: Chat 79 = UI POLISH v2, Chat 80+ = ABATEMENT BUILD. |
 
