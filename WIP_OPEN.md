@@ -8,83 +8,63 @@ Per Readme §10: **`## Next chat`** holds paste-ready instructions for the immed
 
 ## Next chat
 
-**Chat 75b — TCEQ SHIP (deploy + close-out).** Main HEAD `92d25c72`. Prod unchanged since Chat 71 (`69e96a36`, 21 layers). Chat 75 landed abatement-discovery spec + multi-chat rules (`92d25c72`) and rebuilt locally clean (22 layers, `errored=0`, `tceq_gas_turbines=6`) then stopped pre-deploy per operator direction. Chat 75b rebuilds in fresh container, deploys, and lands close-out docs.
+**Chat 76 — UI polish (data-independent).** 10 labeling/layout tweaks. Item 4 defers to Chat 78 (requires EIA-860 enrichment from Chat 77). All tweaks are yaml/template only — no data pipeline changes, no new layers, no schema changes. Main HEAD `939ff16` (Readme §2 ban-ship-it rule shipped Chat 75b). Prod `69ea32c7d3733641c9a1bb7c`, 22 layers.
 
 ### Session open (single block)
 
 ```bash
-cd /home/claude && git clone https://github_pat_<see CREDENTIALS.md>@github.com/10thMuses/lrp-tx-gis.git && cd lrp-tx-gis
+PAT=$(grep '^GITHUB_PAT=' /mnt/project/CREDENTIALS.md | cut -d= -f2)
+cd /home/claude && rm -rf repo 2>/dev/null; git clone -q https://x-access-token:${PAT}@github.com/10thMuses/lrp-tx-gis.git repo && cd repo
+git config user.email "claude@lrp.local" && git config user.name "Claude (LRP GIS)"
 apt-get install -y tippecanoe libcairo2 -q
 pip install shapely pmtiles pyyaml cairosvg --break-system-packages -q
-grep -c '^tceq_gas_turbines,' combined_points.csv   # expect 6
-grep -c 'Permits' layers.yaml build_template.html   # both 1
 ```
 
-### Build
+### Tweaks (yaml + template)
+
+1. Sidebar filters → dropdown checkboxes (collapse vertical footprint).
+2. Title-case all multi-word layer labels.
+3. `"Solar Plants"` → `"Solar Farms"`.
+4. **DEFER to Chat 78** — semantic icons keyed to fuel/technology; requires EIA-860 enrichment.
+5. `"EIA-860 plants"` → `"Power Plants (EIA-860)"`.
+6. Water & Regulatory group → bottom of sidebar (after Reference).
+7. `"Natural gas hub"` → `"WAHA Natural Gas Hub"` + circle marker on point.
+8. `"ERCOT GIR queue"` → `"ERCOT Interconnect Queue (as of <source date>)"` — vintage from ERCOT xlsx timestamp.
+9. `"TWDB wells"` → `"Groundwater Wells (TWDB)"`.
+10. `"MPGCD Management Zone"` → `"Groundwater District Management Zone 1"`.
+11. `"RRC pipelines (≥20\" transmission)"` → `Oil & Gas Pipelines (>20", RRC)`.
+
+### Build + deploy
 
 ```bash
 python build.py
+# gate: built=22, errored=0
 ```
 
-Gate: 22 layers, `errored=0`, `tceq_gas_turbines feature_count=6` (confirmed clean in Chat 75 — re-verify in fresh container).
+Netlify MCP from `/mnt/user-data/outputs/dist/`. Sleep 45. Curl verify with real UA (`-A "Mozilla/5.0"`) — default curl UA returns 503 per `docs/settled.md`.
 
-### Deploy
-
-Netlify MCP from `/mnt/user-data/outputs/dist/`. Sleep 45. Curl 200 on prod URL. Layer spot-check: one `tceq_gas_turbines` tile endpoint.
-
-### Doc edits (post-deploy)
-
-1. **`docs/settled.md`** — append under `## Data sources`:
-
-   ```
-   **TCEQ sources closed 2026-04-23.** `tceq_pws` dropped (HTTP 400 on original endpoint, operator decision). `tceq_pbr` scoped out (CRPUB HTML-scrape, same failure class as RRC MFT — see scoped-out block). `tceq_nsr_pending` scoped out for same reason. Nominatim fallback accepted for Census geocoder zero-match (1.1s throttle).
-   ```
-
-2. **`WIP_OPEN.md`** — rewrite `## Next chat` to Chat 76 UI-polish (spec already in `## Sprint queue` §Chat 76, copy forward). Update `## Prod status`: new deploy ID, layer count `21 → 22`. Remove `tceq_pws`, `tceq_pbr`, `tceq_nsr_pending` from `## Open backlog` (now settled). Append rows to `## Recent sessions` for Chats 73, 74, 75, 75b.
-
-3. **`WIP_LOG.md`** — append entries for Chats 73 (TCEQ branch merge), 74 (TCEQ data/config + EIA-860 research), 75 (abatement spec + rules + TCEQ build, no deploy), 75b (TCEQ deploy + close-out). Each with SHA + deploy ID where applicable.
-
-### Commit + push
+### Commit + push + close-out
 
 ```bash
 git add -A
-git commit -m "Chat 75b: ship TCEQ gas turbines (21→22 layers) + close-out docs"
+git commit -m "Chat 76: UI polish — 10 label/layout tweaks (item 4 deferred to Chat 78)"
 git push
 ```
 
-### Budget note
-
-Chat 75 split off to preserve budget headroom for deploy + docs. Deploy is the priority — if docs consume budget, ship deploy + commit + push first, split docs to a 75c doc-only close-out. Do NOT attempt Chat 76 (UI polish) or Chat 77 (EIA-860) in this chat.
-
+Update `WIP_OPEN.md` `## Next chat` to Chat 77 (EIA-860 enrichment — spec already in `## Sprint queue` §Chat 77, copy forward). Append `WIP_LOG.md` entry for Chat 76.
 
 ---
 
 ## Sprint queue
-
-### Chat 76 — UI polish (data-independent)
-
-10 labeling/layout tweaks. Item 4 blocks on Chat 77 — defer to Chat 78.
-
-1. Sidebar filters → dropdown checkboxes (collapse vertical footprint)
-2. Title-case all multi-word layer labels
-3. "Solar Plants" → "Solar Farms"
-4. **DEFER to Chat 78** — semantic icons keyed to fuel/technology; requires EIA-860 enrichment
-5. "EIA-860 plants" → "Power Plants (EIA-860)"
-6. Water & Regulatory group → bottom of sidebar (after Reference)
-7. "Natural gas hub" → "WAHA Natural Gas Hub" + circle marker on point
-8. "ERCOT GIR queue" → "ERCOT Interconnect Queue (as of <source date>)" — vintage from ERCOT xlsx timestamp
-9. "TWDB wells" → "Groundwater Wells (TWDB)"
-10. "MPGCD Management Zone" → "Groundwater District Management Zone 1"
-11. "RRC pipelines (≥20\" transmission)" → `Oil & Gas Pipelines (>20", RRC)`
 
 ### Chat 77 — EIA-860 enrichment + capacity coalesce
 
 **Part A — `eia860_plants` enrichment.** Populates 891/1367 rows (65.2%); 476 stay blank.
 
 ```bash
-curl -sL -A 'Mozilla/5.0' \
-  -H 'Referer: https://www.eia.gov/electricity/data/eia860/' \
-  -o eia860_2024.zip \
+curl -sL -A 'Mozilla/5.0' \\
+  -H 'Referer: https://www.eia.gov/electricity/data/eia860/' \\
+  -o eia860_2024.zip \\
   'https://www.eia.gov/electricity/data/eia860/xls/eia8602024.zip'
 ```
 
@@ -119,15 +99,15 @@ Build, deploy, commit, push. Layer count unchanged (22).
 
 **Spec:** `docs/refinement-abatement-spec.md` (committed 2026-04-23). Regulatory context, leading-indicator hierarchy, keyword taxonomy, `extract_applicant()` regex with both `re.I` + `\b` fixes, field catalog, schema Options A/B, county adapter status (2 validated, 3 stubbed, 18 TODO), 4 live hits, 8 BUILD-gate open questions.
 
-**Stage split:** DISCOVERY is doc-only and effectively closed by the spec commit. BUILD gated on operator sign-off against spec §9. Independent track — slots anywhere after Chat 75; not blocked by TCEQ / EIA-860 / UI sprints.
+**Stage split:** DISCOVERY is doc-only and effectively closed by the spec commit. BUILD gated on operator sign-off against spec §9. Independent track — slots anywhere after Chat 75b; not blocked by UI / EIA-860 / icon sprints.
 
 ---
 
 ## Current workstream
 
-TCEQ MERGE in flight across Chats 72–75. Chat 72 pulled bulk data (`turbine-lst.xlsx` v2026.4.3, 6 rows, 23-county West TX, Received ≥ 2020, 6/6 geocoded via Nominatim fallback). Chat 73 merged refresh branch to main (`ea7e39d`). Chat 74 appended data to `combined_points.csv`, added layer to `layers.yaml` under new "Permits" group + EIA-860 research — deferred build on budget. Chat 75 ships.
+TCEQ MERGE complete and in prod (Chats 72–75b). `tceq_gas_turbines` layer live under "Permits" sidebar group with 6 features across 23-county West-TX scope. 22 layers total. Prod deployId `69ea32c7d3733641c9a1bb7c`.
 
-Parallel-safe after Chat 75: UI polish (Chat 76), EIA-860 enrichment (Chat 77), abatement scraper (Chat 79+).
+Next: UI polish (Chat 76), EIA-860 enrichment (Chat 77), semantic icons (Chat 78 after 77), tax abatement scraper (Chat 79+, independent track).
 
 ---
 
@@ -141,6 +121,8 @@ Parallel-safe after Chat 75: UI polish (Chat 76), EIA-860 enrichment (Chat 77), 
 | 72 | 2026-04-23 | TCEQ REFRESH recon + data pull. 6 records geocoded. `tceq_pws`/`tceq_pbr`/`tceq_nsr_pending` scoped out. |
 | 73 | 2026-04-23 | TCEQ refresh branch merged to main — `ea7e39d`. |
 | 74 | 2026-04-23 | TCEQ data/config + EIA-860 research committed — `4292bf2`, `3aada1c`. Build deferred. |
+| 75 | 2026-04-23 | Abatement discovery spec + multi-chat refinement rules — `92d25c72`. TCEQ built locally clean. Stopped pre-deploy. |
+| 75b | 2026-04-23 | **TCEQ SHIP complete.** Deploy `69ea32c7d3733641c9a1bb7c`. 21→22 layers. Readme §2 ban-ship-it rule `939ff16`. Close-out docs landed in same chat. |
 
 Full per-session detail in `WIP_LOG.md`.
 
@@ -148,11 +130,11 @@ Full per-session detail in `WIP_LOG.md`.
 
 ## Prod status
 
-- URL: https://lrp-tx-gis.netlify.app
-- Last published deploy: `69e96a36b4de5c3af264ab27` (Chat 71, Stage 4 Sizing + Watermark). **Unchanged across Chats 72–74.**
-- Main HEAD: `3aada1c`.
+- URL: https://lrp-tx-gis.netlify.app — **requires real User-Agent on curl** (default `curl/x.y.z` UA returns 503; use `-A "Mozilla/5.0"`). See `docs/settled.md` §Data sources.
+- Last published deploy: `69ea32c7d3733641c9a1bb7c` (Chat 75b, TCEQ gas turbines).
+- Main HEAD: `939ff16`.
 - Auto-publish: unlocked.
-- Layer set: 21 built clean at last deploy. TCEQ data + config on main but unbuilt → Chat 75 brings to 22.
+- Layer set: 22 built clean. `tceq_gas_turbines` (6 features) live under "Permits" sidebar group.
 - Prebuilt PMTiles (4): parcels_pecos 4.98 MB, rrc_pipelines 4.73 MB, tiger_highways 3.11 MB, bts_rail 2.16 MB.
 - Sprite sheet: 5 icons @ 1x + 2x at `/sprite/sprite.png` + `sprite@2x.png`.
 - Data-driven sizing live: `ercot_queue`, `solar`, `eia860_battery`, `wind` (MW), `substations`, `tpit_subs`, `tpit_lines` (kV).
@@ -164,17 +146,13 @@ Full per-session detail in `WIP_LOG.md`.
 
 **Standing watch item:** TCEQ diesel-genset NSR permits live only in CRPUB (not in `turbine-lst.xlsx`). Gap for data-center backup-power intelligence if that becomes a use case. Revisit only if TCEQ publishes bulk feed or operator authorizes CRPUB scrape.
 
-**Deferred sources (indefinite):**
-- `tceq_nsr_pending` — no bulk source; CRPUB HTML-scrape authorization declined.
-
 **Data-pipeline gaps (non-blocking, addressed by queued chats):**
 - `eia860_plants` capacity_mw / technology / fuel — Chat 77.
 - `combined_points.csv` blank `operator` / `commissioned` on EIA point layers — filter UI provides leverage; out of scope unless prioritized.
 - Cosmetic: prebuilt PMTiles feature counts show 0 in sidebar. Low priority.
 
-**Permanently excluded:**
-- `rrc_wells_permian` — see `docs/settled.md` §"Scoped-out data sources".
-- `tceq_pws`, `tceq_pbr` — entries land in `docs/settled.md` as part of Chat 75 close-out.
+**Permanently excluded / settled:**
+- `rrc_wells_permian`, `tceq_pws`, `tceq_pbr`, `tceq_nsr_pending` — see `docs/settled.md` §"Scoped-out data sources" and §"Data sources".
 
 **Other (non-GIS):**
 - Grid Wire Vol. 7.
