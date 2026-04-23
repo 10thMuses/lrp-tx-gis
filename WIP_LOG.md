@@ -1,3 +1,62 @@
+## Chat 71 (part 2) — 2026-04-22 — Stage 4 SIZING + WATERMARK shipped
+
+**Classification:** shipping, MEDIUM blast radius. Template-only change (no yaml, no data). Branch + build + deploy + merge.
+
+**Branch:** `refinement-sizing-watermark` from `main` (`2f18ea8`). Commit `c202428`. Merged via `--no-ff` → merge commit `026eff2`. Remote branch delete pending next session-cleanup (kept for traceability this session).
+
+**Shipped in `build_template.html`:**
+- `SIZING_RULES` lookup + helpers (`sizingRadiusExpr`, `sizingLineWidthExpr`, `sizingIconSizeExpr`) with MapLibre `interpolate` expressions.
+- **MW scaling (circle-radius 3→15px, icon-size 0.45→1.2):** `ercot_queue` (field `mw`), `solar` (`capacity_mw`), `eia860_battery` (`capacity`), `wind` (`cap_kw` ÷ 1000).
+- **kV scaling:** `substations`, `tpit_subs` (circle-radius 3→14); `tpit_lines` (line-width 1.5→4).
+- Wired into `layerPaint()` for `circle-radius` + `line-width`, and symbol layer for `icon-size`.
+- Watermark: `<div class="watermark">CONFIDENTIAL — <span id="wm-date">YYYY-MM-DD</span></div>`, bottom-right, 78% red on white pill, cleared above scale+attribution stack. Date populated in `map.on('load')`.
+- Print CSS repositions watermark to corner when sidebar/topbar hidden. Also wired `print-date` (previously hardcoded-empty) with build date.
+
+**Sizing gaps flagged (not guessed):**
+- `eia860_plants` 1367 rows, 0 with non-zero `capacity_mw` / `mw` / `capacity` — no data-driven sizing; static radius.
+- `transmission` geoms have no `voltage` field in sample — no data-driven sizing; static width 2.
+- `tpit_subs` only 78/141 have voltage; `substations` 1137/1637. Fallback expression uses `L.radius` when value is 0.
+
+**Data audit** (from `combined_points.csv`):
+
+| layer | total | mw | capacity | capacity_mw | cap_kw | voltage |
+|---|---:|---:|---:|---:|---:|---:|
+| ercot_queue | 1778 | **1702** | — | — | — | — |
+| solar | 180 | — | — | **180** | — | — |
+| wind | 19464 | — | — | — | **19267** | — |
+| eia860_battery | 133 | — | **133** | — | — | — |
+| substations | 1637 | — | — | — | — | **1137** |
+| tpit_subs | 141 | — | — | — | — | **78** |
+| eia860_plants | 1367 | 0 | 0 | 0 | 0 | — |
+
+**Build verify:** `python3 build.py` clean — 21/21 layers, 0 missing, 0 errored, 17,478 KB tiles_total. Template output confirmed: `class="watermark"` ×1, `SIZING_RULES` ×4, `sizingRadiusExpr` ×2.
+
+**Deploy:** `69e96a36b4de5c3af264ab27` via Netlify MCP (first attempt failed with 500 upstream, retried with fresh proxy token → succeeded). Verification:
+- `GET /` → 200
+- Served HTML contains `class="watermark"` + `SIZING_RULES` (confirmed via `curl | grep -c`)
+- `GET /sprite/sprite.png` → 200 (Stage 3 artifacts intact)
+
+**Merge push:** `2f18ea8..026eff2` on `main`.
+
+**Budget:** 8 additional tool calls for Stage 4 (1 refinement-seq view + 1 field audit + 2 template views + 1 patch+build + 1 MCP deploy-call + 1 deploy+verify + 1 WIP+log). Combined chat total: ~21 tool calls.
+
+**Scope note — TCEQ REFRESH deferred:**
+
+Operator requested "do gis for 3 and then stage 4" this chat. Stage 4 shipped. TCEQ REFRESH (item 3) NOT attempted. Reasons: (a) `tceq_pws` carries pre-existing "scope-confirm needed" flag from prior chat, (b) CRPUB scrape complexity is unbounded discovery, (c) §7.6 rule "one shipping chat at a time" already strained by dual close-out (Stage 3 merge + Stage 4 ship).
+
+**TCEQ scope ask for next chat (batched per §2):**
+
+1. **`tceq_pws` in or out?** Original endpoint returns HTTP 400. Options: (a) drop entirely, (b) retry with new endpoint discovery, (c) operator supplies CSV.
+2. **Data acquisition approach for `tceq_gas_turbines` / `tceq_nsr_pending` / `tceq_pbr`?** CRPUB (TCEQ Central Registry Public) is ASP.NET PostBack-heavy; scrape is possible but session-state fragile. Alternatives: TCEQ bulk air-permit downloads (if exist), operator-provided CSVs from CRPUB UI.
+3. **Geographic scope?** 23-county West Texas (matching abatement scope) or statewide?
+4. **Time/status filters?** All permits vs. active only vs. date-filed ≥ 2020?
+
+Without these inputs, TCEQ REFRESH cannot ship cleanly.
+
+**Next-chat trigger:** `start tceq refresh` (after answering the 4 scope questions above) OR `start abatement discovery` (parallel-safe, requires no additional scope).
+
+---
+
 ## Chat 71 — 2026-04-22 — Stage 3 Visual Overhaul closed, prod deploy
 
 **Classification:** shipping, MEDIUM blast radius. Merge + build + deploy + branch delete.
