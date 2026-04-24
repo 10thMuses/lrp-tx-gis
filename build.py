@@ -57,6 +57,124 @@ NUMERIC_KEYS = {'mw', 'capacity', 'capacity_mw', 'cap_kw', 'depth_ft',
 # feasible (plant names, operators, projects).
 CATEGORICAL_CAP = 2000
 
+# Tax-abatement annotation (Chat 85). Target layers whose rows receive
+# `abatement_*` properties when their name/entity/operator/project fuzzy-matches
+# a tax_abatements applicant in the same county. Single pass, no iterative
+# refinement. Status values `zone_creation` / `relationship_signal` are excluded
+# from the join — they are not true abatement applicants.
+ABATEMENT_TARGET_LAYERS = frozenset({
+    'eia860_plants', 'ercot_queue', 'solar', 'wind', 'eia860_battery',
+})
+
+# Corporate-suffix pattern for applicant-name normalization.
+import re as _re
+_CORP_SUFFIX = _re.compile(
+    r'\b(l\.?l\.?c\.?|inc\.?|lp|ltd|corp|corporation|company|co\.?|l\.?p\.?)\b',
+    _re.IGNORECASE,
+)
+_NONWORD = _re.compile(r'[^a-z0-9]+')
+
+
+def _normalize_applicant(s):
+    """Lowercase, drop corporate suffixes, drop punctuation, collapse whitespace."""
+    if not s:
+        return ''
+    s = str(s).lower()
+    s = _CORP_SUFFIX.sub(' ', s)
+    s = _NONWORD.sub(' ', s)
+    return ' '.join(s.split())
+
+
+def _name_fuzzy_match(applicant_norm, candidate_strs):
+    """Token-set match: applicant tokens vs each candidate's normalized tokens.
+    Match criterion:
+      - single-token applicant: token must appear in candidate tokens
+      - multi-token applicant: subset match (either direction) OR ≥2 overlap
+    """
+    if not applicant_norm:
+        return False
+    atoks = set(applicant_norm.split())
+    if not atoks:
+        return False
+    for c in candidate_strs:
+        ctoks = set(_normalize_applicant(c).split())
+        if not ctoks:
+            continue
+        inter = atoks & ctoks
+        if not inter:
+            continue
+        if len(atoks) == 1:
+            if atoks <= ctoks:
+                return True
+            continue
+        if atoks <= ctoks or ctoks <= atoks:
+            return True
+        if len(inter) >= 2:
+            return True
+    return False
+
+
+def build_abatement_index(csv_path):
+    """Scan tax_abatements rows → list of (county_lower, applicant_norm, meta).
+    Skips zone_creation and relationship_signal rows (not applicants)."""
+    idx = []
+    if not csv_path.exists():
+        return idx
+    with open(csv_path, newline='', encoding='utf-8') as fin:
+        reader = csv.DictReader(fin)
+        for row in reader:
+            if row.get('layer_id') != 'tax_abatements':
+                continue
+            county = (row.get('county') or '').strip()
+            applicant = (row.get('operator') or row.get('name') or '').strip()
+            if not county or not applicant:
+                continue
+            fs_raw = row.get('funnel_stage') or ''
+            status = fs_raw.split('|', 1)[0] if fs_raw else ''
+            if status in ('zone_creation', 'relationship_signal'):
+                continue
+            idx.append((
+                county.lower(),
+                _normalize_applicant(applicant),
+                {
+                    'abatement_applicant': applicant,
+                    'abatement_meeting_date': row.get('commissioned') or '',
+                    'abatement_status': status,
+                    'abatement_project_type': row.get('technology') or '',
+                    'abatement_reinvestment_zone': row.get('project') or '',
+                    'abatement_flags': fs_raw,
+                    'abatement_agenda_url': row.get('poi') or '',
+                },
+            ))
+    return idx
+
+
+def _annotate_facility_with_abatement(lid, props, abate_index):
+    """If lid is a target facility layer AND props match an abatement entry by
+    (county, applicant-fuzzy-name), merge abatement_* fields into props. First
+    match wins; no iterative refinement. Returns props."""
+    if lid not in ABATEMENT_TARGET_LAYERS or not abate_index:
+        return props
+    county_l = str(props.get('county') or '').strip().lower()
+    if not county_l:
+        return props
+    candidates = []
+    for k in ('name', 'entity', 'operator', 'project'):
+        v = props.get(k)
+        if v:
+            candidates.append(v)
+    if not candidates:
+        return props
+    for abate_county, abate_applicant_norm, abate_meta in abate_index:
+        if abate_county != county_l:
+            continue
+        if _name_fuzzy_match(abate_applicant_norm, candidates):
+            for k, v in abate_meta.items():
+                if v:
+                    props[k] = v
+            return props
+    return props
+
 
 def fnum(v):
     try:
@@ -109,11 +227,16 @@ def _flatten_coords(coords):
 
 # ---------- COMBINED-FILE SPLITTER (one pass → per-layer NDGeoJSON) ----------
 
-def split_combined_csv(csv_path, out_dir):
+def split_combined_csv(csv_path, out_dir, abate_index=None):
     """Single pass through combined_points.csv → per-layer NDGeoJSON files
-    in out_dir. Returns {layer_id: (n_total, n_written)}."""
+    in out_dir. Returns {layer_id: (n_total, n_written)}.
+
+    If `abate_index` is provided, facility rows in ABATEMENT_TARGET_LAYERS
+    are annotated with abatement_* properties on match. tax_abatements rows
+    get a derived `status` property (first token of funnel_stage)."""
     stats = {}  # layer_id -> [total, written]
     handles = {}  # layer_id -> open file handle
+    annotated = 0  # count of facility rows annotated
     try:
         with open(csv_path, newline='', encoding='utf-8') as fin:
             reader = csv.DictReader(fin)
@@ -130,6 +253,17 @@ def split_combined_csv(csv_path, out_dir):
                 if not (-180 <= lon <= 180 and -90 <= lat <= 90):
                     continue
                 props = _coerce_row_props(row)
+                # Derive `status` for tax_abatements rows (funnel_stage first token)
+                if lid == 'tax_abatements':
+                    fs = props.get('funnel_stage')
+                    if fs:
+                        props['status'] = str(fs).split('|', 1)[0]
+                # Annotate facility rows with matched abatement fields
+                if abate_index and lid in ABATEMENT_TARGET_LAYERS:
+                    before = 'abatement_applicant' in props
+                    _annotate_facility_with_abatement(lid, props, abate_index)
+                    if not before and 'abatement_applicant' in props:
+                        annotated += 1
                 feat = {
                     'type': 'Feature',
                     'geometry': {'type': 'Point', 'coordinates': [lon, lat]},
@@ -145,6 +279,8 @@ def split_combined_csv(csv_path, out_dir):
     finally:
         for fh in handles.values():
             fh.close()
+    if abate_index:
+        print(f'  abatement annotations applied: {annotated}')
     return {k: tuple(v) for k, v in stats.items()}
 
 
@@ -701,9 +837,13 @@ def main():
     split_stats = {}
     cc = ROOT / COMBINED_CSV
     cg = ROOT / COMBINED_GJ
+    # Pre-scan tax_abatements rows for fuzzy-join annotation step.
+    abate_index = build_abatement_index(cc) if cc.exists() else []
+    if abate_index:
+        print(f'Abatement index: {len(abate_index)} applicants for fuzzy-join')
     if cc.exists():
         print(f'Splitting {COMBINED_CSV} ...')
-        s = split_combined_csv(cc, SPLIT_DIR)
+        s = split_combined_csv(cc, SPLIT_DIR, abate_index=abate_index)
         split_stats.update(s)
         print(f'  {sum(v[1] for v in s.values()):,} features across {len(s)} layers')
     if cg.exists():

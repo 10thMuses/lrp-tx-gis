@@ -404,6 +404,7 @@ layers:
   - operator
   - county
   - commissioned
+  - status
   - project
   - technology
   - capacity_mw
@@ -411,6 +412,7 @@ layers:
   filterable_fields:
   - {field: county, type: categorical, label: County}
   - {field: technology, type: categorical, label: Project Type}
+  - {field: status, type: categorical, label: Status}
   - {field: commissioned, type: text, label: Meeting Date}
   tippecanoe:
   - -Z0

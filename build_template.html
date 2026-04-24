@@ -736,8 +736,31 @@ function ercotQueuePopupHtml(props) {
     .map(([k, v]) => `<tr><td class="k">${FIELD_LABELS[k] || k}</td><td class="v">${escapeHtml(String(v))}</td></tr>`)
     .join('');
   return `<div class="title">${escapeHtml(title)}</div>
-    <table>${rows}</table>
+    <table>${rows}</table>${abatementAnnotationHtml(props)}
     <div class="src">${escapeHtml(props.source || 'ERCOT GIR queue')}${props.source_date ? ' · ' + escapeHtml(props.source_date) : ''}</div>`;
+}
+
+// Chat 85: annotation block shown on facility popups (eia860_plants, ercot_queue,
+// solar, wind, eia860_battery) when the facility was fuzzy-matched to a
+// tax_abatements row at build time. No output when unmatched.
+function abatementAnnotationHtml(props) {
+  if (!props || !props.abatement_applicant) return '';
+  const rows = [
+    ['Applicant', props.abatement_applicant],
+    ['Meeting date', props.abatement_meeting_date],
+    ['Status', props.abatement_status],
+    ['Project type', props.abatement_project_type],
+    ['Reinvestment zone', props.abatement_reinvestment_zone],
+    ['Flags', props.abatement_flags],
+  ].filter(([, v]) => v !== '' && v !== undefined && v !== null)
+    .map(([k, v]) => `<tr><td class="k">${k}</td><td class="v">${escapeHtml(String(v))}</td></tr>`)
+    .join('');
+  const url = props.abatement_agenda_url
+    ? `<div style="margin-top:4px;"><a href="${escapeHtml(props.abatement_agenda_url)}" target="_blank" rel="noopener" style="font-size:11px;color:#dc2626;">Agenda →</a></div>`
+    : '';
+  return `<div style="margin-top:8px;padding-top:6px;border-top:1px solid var(--border);">
+    <div style="font-size:10px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:#dc2626;margin-bottom:3px;">Tax Abatement Matched</div>
+    <table>${rows}</table>${url}</div>`;
 }
 
 function plannedUpgradePopupHtml(L, props) {
@@ -772,7 +795,7 @@ function featurePopupHtml(L, props) {
     return `<tr><td class="k">${k}</td><td class="v">${escapeHtml(valStr)}</td></tr>`;
   }).join('');
   return `<div class="title">${escapeHtml(title)}</div>
-    <table>${rows}</table>
+    <table>${rows}</table>${abatementAnnotationHtml(props)}
     <div class="src">${escapeHtml(src)}${srcDate ? ' · ' + escapeHtml(srcDate) : ''}</div>`;
 }
 function escapeHtml(s) { return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]); }
