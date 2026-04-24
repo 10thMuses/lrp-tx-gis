@@ -8,7 +8,7 @@ Per Readme §10: **`## Next chat`** = paste-ready for next shipping chat. **`## 
 
 ## Next chat
 
-**Chat 80 — ABATEMENT BUILD.** Spec: `docs/refinement-abatement-spec.md` §12 (locked 2026-04-23). Independent track — unblocked regardless of Chat 79 PR merge state (Chat 79 already deployed to prod; merge is git-history cleanup, not a functional gate). Branch: `refinement-abatement-build`. Scope per §12: both standalone layer + facility annotation; all 23 counties with Trans-Pecos → Permian-core → peripheral sequencing; PDFs skipped; 2025+2026 filings only; Comptroller Ch. 312 spreadsheet manual-quarterly ingest; dedup by `(county, applicant_normalized, reinvestment_zone)`; weekly GitHub Actions; alerting deferred. Main HEAD `f334601`. Prod live on deploy `69ea9d1b8b51ad96ce674f5d` (22 layers, UI POLISH v2 shipped).
+**Chat 80 — SIDEBAR COLLAPSE.** Spec: `docs/refinement-sequence.md` §"Stage: SIDEBAR COLLAPSE". Small live-UI change: collapsible left sidebar with `«` / `»` toggle, map resize on transition, URL-hash state persistence, mobile + desktop parity. Branch: `refinement-sidebar-collapse`. Depends on nothing — independent track regardless of Chat 79 PR merge state (Chat 79 already deployed to prod; merge is git-history cleanup, not a functional gate). No data-pipeline changes. Main HEAD `dc5aa16`. Prod live on deploy `69ea9d1b8b51ad96ce674f5d` (22 layers, UI POLISH v2 shipped).
 
 **Credential:** `NETLIFY_PAT=nfp_h3iY48jurPAn57KcUzaCKGNccw5gXR1z9ac5` and `GITHUB_PAT=...` supplied in `/mnt/project/CREDENTIALS.md`. If container is fresh and `CREDENTIALS.md` is missing them, operator pastes `NETLIFY_PAT=...` at top of resume prompt.
 
@@ -18,29 +18,31 @@ Per Readme §10: **`## Next chat`** = paste-ready for next shipping chat. **`## 
 PAT=$(grep '^GITHUB_PAT=' /mnt/project/CREDENTIALS.md | cut -d= -f2)
 cd /home/claude && rm -rf repo 2>/dev/null; git clone -q https://x-access-token:${PAT}@github.com/10thMuses/lrp-tx-gis.git repo && cd repo
 git config user.email "claude@lrp.local" && git config user.name "Claude (LRP GIS)"
-git fetch --all  # per Readme §10: check whether refinement-abatement-build already exists remotely with prior work
-git branch -a | grep refinement-abatement-build || true
-# if remote branch exists with commits beyond main: git checkout refinement-abatement-build && git log --oneline main..HEAD  → treat as authoritative
-# otherwise: git checkout -b refinement-abatement-build
+git fetch --all  # per Readme §10: check whether refinement-sidebar-collapse already exists remotely with prior work
+git branch -a | grep refinement-sidebar-collapse || true
+# if remote branch exists with commits beyond main: checkout and inspect (Readme §10)
+# else: git checkout -b refinement-sidebar-collapse
 apt-get install -y tippecanoe libcairo2 -q
-pip install shapely pmtiles pyyaml cairosvg pandas openpyxl requests beautifulsoup4 lxml --break-system-packages -q
+pip install shapely pmtiles pyyaml cairosvg pandas openpyxl --break-system-packages -q
 ```
 
-### ABATEMENT BUILD — task execution order
+### SIDEBAR COLLAPSE — task execution order
 
-Read `docs/refinement-abatement-spec.md` §§1–12 in full at session open. Key BUILD stages:
+Per `docs/refinement-sequence.md` §Stage: SIDEBAR COLLAPSE:
 
-1. **Comptroller Ch. 312 ingest.** Manual quarterly spreadsheet upload → parser → staging table. Dedup key per §12.
-2. **Commissioners-court agenda crawler.** Leading-indicator feed per §2. 23 counties, sequenced Trans-Pecos → Permian-core → peripheral. Weekly GitHub Actions cadence.
-3. **Applicant normalization.** Per §12 dedup key. Retain variants → canonical mapping table.
-4. **Layer + annotation.** New `abatements` point layer (sidebar + filters) + facility cross-reference annotation on `eia860_plants` / `ercot_queue` where applicant match confidence > threshold.
-5. **Acceptance gates.** Full 23-county cover on first commissioner-court crawl. Chat 77/78/79 deploy-verification pattern applies: `state=ready` + `sleep 90` + root-200 + marker-grep.
+1. **Toggle control.** Add toggle button anchored to sidebar's right edge (top-right corner). Renders `«` expanded, `»` collapsed. Minimum 44×44 px hit area for mobile.
+2. **Collapse behavior.** On toggle, sidebar slides out (`transform: translateX` or `width: 0`, ~200ms). Map container expands full-viewport width. `map.resize()` fires on transition end.
+3. **Expand behavior.** Reverse. Map resizes back. Sidebar retains prior scroll + filter state.
+4. **Mobile parity.** Same control, same chevron convention. Mobile sidebar overlays map; collapse returns full-screen map.
+5. **State persistence.** Sidebar open/collapsed state in URL hash alongside viewport state. Reload or share preserves collapsed view.
+
+Deliverables: `build_template.html` CSS + JS changes only. No `layers.yaml`, no data-pipeline, no `build.py` changes.
 
 ### Build + deploy (unchanged from Chat 79 pattern)
 
 ```bash
 python build.py
-# gate: built=22 (or 23 if abatements ships as standalone layer this chat), errored=0
+# gate: built=22, errored=0
 
 PAT=$(grep '^NETLIFY_PAT=' /mnt/project/CREDENTIALS.md | cut -d= -f2)
 SITE=01b53b80-687e-4641-b088-115b7d5ef638
@@ -66,7 +68,7 @@ Per `docs/refinement-sequence.md` §universal-rules: open PR against `main` with
 
 ```bash
 PAT=$(grep '^GITHUB_PAT=' /mnt/project/CREDENTIALS.md | cut -d= -f2)
-git push "https://x-access-token:${PAT}@github.com/10thMuses/lrp-tx-gis.git" refinement-abatement-build
+git push "https://x-access-token:${PAT}@github.com/10thMuses/lrp-tx-gis.git" refinement-sidebar-collapse
 ```
 
 **Known constraint (carried from Chat 79):** the `GITHUB_PAT` currently in `CREDENTIALS.md` lacks PR-creation scope — returns `403 Resource not accessible by personal access token`. Branch push works; PR must be opened by operator via GitHub UI. Revisit PAT scopes if persistent blocker.
@@ -77,9 +79,11 @@ Update `WIP_OPEN.md` `## Next chat` → promote next stage. Append `WIP_LOG.md` 
 
 ## Sprint queue
 
-### Chat 81+ — Chat 79 PR merge (operator) + any follow-on UI tweaks
+### Chat 81+ — Chat 79 PR merge (operator) + Tax abatement BUILD
 
 Chat 79 PR (`refinement-ui-polish-v2` → `main`) remains open pending operator merge. No functional dependency — prod already reflects branch via deploy `69ea9d1b8b51ad96ce674f5d`. Merge is git-history cleanup only.
+
+**Tax abatement BUILD.** Approved scope: `docs/refinement-abatement-spec.md` §12 (locked 2026-04-23). Both standalone layer + facility annotation; all 23 counties with Trans-Pecos → Permian-core → peripheral sequencing; PDFs skipped; 2025+2026 filings only; Comptroller Ch. 312 spreadsheet manual-quarterly ingest; dedup by `(county, applicant_normalized, reinvestment_zone)`; weekly GitHub Actions; alerting deferred. Stage split: DISCOVERY closed (spec committed). BUILD unblocked after SIDEBAR COLLAPSE merges. Independent track otherwise.
 
 ### Mobile-friendly map
 
@@ -91,7 +95,7 @@ UI/UX backlog item. Responsive breakpoints, touch-friendly controls, pinch-zoom 
 
 UI POLISH v2 shipped Chat 79 — four-task bundle (hide `parcels_pecos` from sidebar; default-ON set caramba_north/counties/county_labels/cities/waha + esri_imagery + Caramba viewport; `ercot_queue` color split by technology; searchable multi-select dropdown filters via `CATEGORICAL_CAP=2000`). Prod deploy `69ea9d1b8b51ad96ce674f5d` on branch commit `c8ff838`. PR `refinement-ui-polish-v2` → `main` pending operator merge.
 
-Next: ABATEMENT BUILD (Chat 80) on independent track.
+Next: SIDEBAR COLLAPSE (Chat 80) on independent track. ABATEMENT BUILD deferred to Chat 81+.
 
 ---
 
@@ -119,7 +123,7 @@ Full per-session detail in `WIP_LOG.md`.
 
 - URL: https://lrp-tx-gis.netlify.app — **requires real User-Agent on curl** (default `curl/x.y.z` UA returns 503; use `-A "Mozilla/5.0"`). See `docs/settled.md` §Data sources.
 - Last published deploy: `69ea9d1b8b51ad96ce674f5d` on branch commit `c8ff838` (Chat 79, branch `refinement-ui-polish-v2`).
-- Main HEAD: `f334601` (will advance to `c8ff838` after operator merges Chat 79 PR).
+- Main HEAD: `dc5aa16` (operator scheduled SIDEBAR COLLAPSE as Chat 80; will advance once Chat 79 PR merges).
 - Auto-publish: unlocked.
 - **Deploy path:** Netlify REST API via `NETLIFY_PAT`. MCP proxy path deprecated for this site.
 - Layer set: 22 built clean.
@@ -149,6 +153,7 @@ Full per-session detail in `WIP_LOG.md`.
 - `rrc_wells_permian`, `tceq_pws`, `tceq_pbr`, `tceq_nsr_pending` — see `docs/settled.md` §"Scoped-out data sources" and §"Data sources".
 
 **UI/UX backlog (unscheduled):**
+- **Collapsible sidebar.** Promoted to Chat 80 SIDEBAR COLLAPSE stage (see `## Next chat`).
 - **Mobile-friendly map.** Responsive breakpoints, touch-friendly controls, pinch-zoom tuning, measure tool + print-to-PDF mobile usability, popup sizing. Candidate for promotion into `docs/refinement-sequence.md` after ABATEMENT BUILD.
 
 **Other (non-GIS):**

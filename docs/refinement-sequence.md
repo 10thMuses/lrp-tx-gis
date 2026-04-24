@@ -154,6 +154,24 @@ Deliverables: PR with UI changes. No data-pipeline changes.
 
 ---
 
+### Stage: SIDEBAR COLLAPSE
+
+**Branch:** `refinement-sidebar-collapse`
+**Depends on:** nothing (live-UI layer only)
+**Blocks:** nothing
+
+Tasks:
+
+1. **Toggle control.** Add a toggle button anchored to the sidebar's right edge (top-right corner of sidebar). Renders `«` when sidebar is expanded, `»` when collapsed. Accessible target size on mobile (minimum 44×44 px hit area).
+2. **Collapse behavior.** On toggle, sidebar slides out of view (negative `transform: translateX` or `width: 0` via CSS transition, ~200ms). Map container expands to full viewport width. MapLibre `map.resize()` fires on transition end so tiles reflow.
+3. **Expand behavior.** Reverse of collapse. Map resizes back. Sidebar contents retain prior scroll position and filter state.
+4. **Mobile parity.** Same control, same chevron convention. On mobile the sidebar overlays the map (rather than sitting adjacent), so collapse returns full-screen map.
+5. **State persistence.** Sidebar open/collapsed state serialized into URL hash alongside existing viewport state. Reloading or sharing the URL preserves the collapsed view.
+
+Deliverables: PR with `build_template.html` CSS + JS changes only. No `layers.yaml`, no data-pipeline, no build.py changes.
+
+---
+
 ### Stage: ABATEMENT DISCOVERY (parallel-safe after FILTER UI)
 
 **Spec:** `docs/refinement-abatement-spec.md` — authoritative. Regulatory corrections (Ch. 313 expired, JETI excludes renewables, Ch. 312+381 are active mechanisms), keyword taxonomy, regex, field catalog, schema options, county adapter status, live hits, BUILD-gate open questions. Task list below is historical scope only.
