@@ -19,11 +19,16 @@ Remaining tasks:
 
 1. Build (`python3 build.py`) — expect 24 layers clean.
 2. Deploy via Netlify MCP → CLI proxy (canonical path below).
-3. Verify: HTTP 200 + layer-id grep returning 24.
+3. Verify: HTTP 200 + layer-id grep returning 24. **If verification fails, halt. Do not merge or close out. Report and stop.** A bad build that reaches close-out silently consumes the sprint queue.
 4. Visual verification: tiger_highways thinner at z=8; Waha yellow ring visible; Caramba North green + "1,300 ac" label.
-5. Merge branch to main per amended-branch protocol (§Chat 85 lesson); delete branch.
-6. Rewrite this §Next chat to Chat 88 (ABATEMENT REFACTOR) brief; delete §Chat 87 from `docs/sprint-plan.md`.
-7. **Also in scope:** audit and clean up stranded branches `chat76-wip` and `refinement-tceq-refresh` on origin. Recover any salvageable work to a future-chat placeholder in §Sprint queue or delete if superseded.
+5. Merge branch to main per amended-branch protocol (§Chat 85 lesson: `git fetch origin refinement-chat87-styling` before `git merge`); delete branch.
+6. **Close-out (non-negotiable):**
+   - Open `docs/sprint-plan.md`, copy §Chat 88 section verbatim into `WIP_OPEN.md §Next chat` (replacing this Chat 87-resume block entirely).
+   - Delete §Chat 87 section from `docs/sprint-plan.md`.
+   - Update §Prod status with new deployId and bump layer count to 24.
+   - Commit to main: `"Chat 87 close-out"`.
+
+**Out of scope for this chat (deferred to next housekeeping chat):** stranded branches `chat76-wip` and `refinement-tceq-refresh` on origin. A placeholder entry for their cleanup has been added to §Sprint queue below under "STRANDED BRANCH CLEANUP" — do not touch them in this chat.
 
 Credential hygiene: `GITHUB_PAT` was leaked in a push-URL echo during Chat 87 edit session. Rotate before next chat runs and update `CREDENTIALS.md` on main. If rotation hasn't happened, the next chat should halt and flag before pushing.
 
@@ -188,6 +193,22 @@ Comanche Creek gas 107.0 + Big Canyon Wind 1,500.0).
 Challenges: rows with null `group` (handle as pass-through);
 popup rendering of breakdown list; no regression to data-driven icon
 sizing.
+
+### Chat — STRANDED BRANCH CLEANUP  *(deferred from Chat 87, surfaced 2026-04-24)*
+
+Two branches exist on origin without a clear paper trail: `chat76-wip`
+(HEAD `4d6ca08`) and `refinement-tceq-refresh` (HEAD `606b2771`). Neither
+is referenced in current `WIP_OPEN.md`, `WIP_LOG.md`, or
+`docs/sprint-plan.md`.
+
+Scope: diff each against current `main`; identify what's on the branch
+and whether it's still relevant; either promote salvageable work to a
+proper sprint-queue entry, rebase onto current main as a new branch, or
+delete. Do NOT merge without review — `refinement-tceq-refresh` was
+explicitly scoped out per `docs/settled.md`, so if its commits include
+tceq work, they should not land.
+
+One-shot housekeeping chat; should take 3-5 tool calls.
 
 ### Outstanding merges
 
