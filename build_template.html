@@ -792,7 +792,8 @@ function featurePopupHtml(L, props) {
     const v = props[k];
     if (v === undefined || v === null || v === '') return '';
     const valStr = typeof v === 'number' ? (Number.isInteger(v) ? v : v.toFixed(2)) : String(v);
-    return `<tr><td class="k">${k}</td><td class="v">${escapeHtml(valStr)}</td></tr>`;
+    const lbl = (L.popup_labels && L.popup_labels[k]) || k;
+    return `<tr><td class="k">${escapeHtml(lbl)}</td><td class="v">${escapeHtml(valStr)}</td></tr>`;
   }).join('');
   return `<div class="title">${escapeHtml(title)}</div>
     <table>${rows}</table>${abatementAnnotationHtml(props)}
@@ -854,7 +855,7 @@ function renderSidebar(activeSet) {
         ? 'background:linear-gradient(90deg,#f59e0b 0 20%,#eab308 20% 40%,#84cc16 40% 60%,#dc2626 60% 80%,#64748b 80% 100%)'
         : `background:${L.color}`;
       const panel = renderLayerFilterPanel(L);
-      return `<label class="layer" data-id="${L.id}">
+      return `<label class="layer" data-id="${L.id}"${L.description ? ` title="${escapeHtml(L.description)}"` : ''}>
         <input type="checkbox" ${on ? 'checked' : ''} />
         <span class="${swCls}" style="${swStyle}"></span>
         <span class="label">${L.label}</span>
