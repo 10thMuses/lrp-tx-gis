@@ -8,19 +8,11 @@ Per Readme §10: **`## Next chat`** = paste-ready for next shipping chat. **`## 
 
 ## Next chat
 
-**Chat 86 — ABATEMENT COUNTY EXPANSION (Trans-Pecos phase).** Chat 85 deployed tax_abatements annotation: fuzzy applicant→facility join, `status` derivation + filter, Matterhorn row. Prod has 9 tax_abatements features + 5 facility annotations. `refinement-abatement-annotate` merged to main, branch deleted from origin.
+**Chat 87 — STYLING + CARAMBA LABEL.** Full brief: `docs/sprint-plan.md` §Chat 87. Five UI-only edits, one deploy, one merge. No new data, no new scrapers.
 
-**This chat's scope (unblocked, ready to execute):**
+Scope summary: (1) `tiger_highways` thinner via `sizingLineWidthExpr` baseline patch + `line_width: 0.6` in `layers.yaml`; (2) new `waha_circle` yaml entry — yellow ring around WAHA hub; (3) Caramba North outline `#78350f` → `#2E7D32`; (4) Caramba North label `1,681 ac` → `1,300 ac`; (5) fix layer-count regex in this §Session open block (see below).
 
-Per spec §12.2 sequencing, Trans-Pecos phase: scrape commissioners-court agendas for **Brewster, Culberson, Hudspeth, Jeff Davis, Presidio, Terrell** (Pecos already done, Reeves adapter has regression flagged below). Generate `data/abatements/abatement_hits_<timestamp>.csv` with the same schema as `data/abatements/abatement_hits_20260424_092810.csv`. Merge new hits into `combined_points.csv` under layer_id=`tax_abatements` using the same column-mapping conventions (§Prod status).
-
-Sequencing: CivicEngage/CivicPlus adapters first (Brewster, Jeff Davis likely on CivicPlus), then bespoke county sites. PDF-only counties drop out per spec §12.3 — flag in close-out.
-
-**Re-verify Reeves CivicEngage adapter** (regression: 0 hits on first run Chat 82). Pecos Power Plant LLC Reeves abatement was hand-seeded from spec §8 — scraper must reproduce it or explain the miss.
-
-Estimate 3–5 counties per chat; 6 Trans-Pecos counties → 1–2 chats to complete this phase. Permian-core phase follows (Chat 87+).
-
-Expected counterfactual: most Trans-Pecos counties (very rural, low commercial activity) likely produce 0–2 hits per county. Success criterion is completeness, not hit volume.
+Expected layer count post-build: **24** (23 baseline + `waha_circle`).
 
 ### Session open (single block)
 
@@ -29,11 +21,11 @@ PAT=$(grep '^GITHUB_PAT=' /mnt/project/CREDENTIALS.md | cut -d= -f2)
 cd /home/claude && rm -rf repo 2>/dev/null
 git clone -q https://x-access-token:${PAT}@github.com/10thMuses/lrp-tx-gis.git repo && cd repo
 git config user.email "claude@lrp.local" && git config user.name "Claude (LRP GIS)"
-git checkout -b refinement-abatement-transpecos origin/main
+git checkout -b refinement-chat87-styling origin/main
 apt-get install -y tippecanoe libcairo2 -q
-pip install shapely pmtiles pyyaml cairosvg pandas requests beautifulsoup4 --break-system-packages -q
+pip install shapely pmtiles pyyaml cairosvg pandas --break-system-packages -q
 curl -sI -A "Mozilla/5.0" https://lrp-tx-gis.netlify.app/ | head -1
-curl -s -A "Mozilla/5.0" https://lrp-tx-gis.netlify.app/ | grep -oE '"id":[ ]*"[a-z0-9_]+"' | sort -u | wc -l   # expect 23
+curl -s -A "Mozilla/5.0" https://lrp-tx-gis.netlify.app/ | grep -oE '"id":"[a-z_][a-z0-9_]*"' | sort -u | wc -l   # expect 23
 ```
 
 ### Deploy pattern (CANONICAL)
@@ -44,31 +36,32 @@ curl -s -A "Mozilla/5.0" https://lrp-tx-gis.netlify.app/ | grep -oE '"id":[ ]*"[
 2. `cd /mnt/user-data/outputs/dist && npx -y @netlify/mcp@latest --site-id 01b53b80-687e-4641-b088-115b7d5ef638 --proxy-path "<URL>" --no-wait` → returns `{"deployId": "...", "buildId": "..."}`.
 3. Poll `Netlify:netlify-deploy-services-reader` `get-deploy-for-site` until `state=ready`.
 4. `sleep 45` for CDN warm-up (503 at 30s normal; 503 at 75s retry).
-5. `curl -sI -A "Mozilla/5.0" https://lrp-tx-gis.netlify.app/` → HTTP 200; layer count → 23.
+5. `curl -sI -A "Mozilla/5.0" https://lrp-tx-gis.netlify.app/` → HTTP 200; layer count → 24.
 
 Proxy URL is single-use. On 503 upload error, request a fresh URL from the updater.
 
 ### Close-out (NON-NEGOTIABLE, per Readme §10)
 
-Simplified 3-action rule, plus **amendment discipline** (Chat 85 lesson):
+Per Readme §10 "Sprint-plan doc" rule: close-out re-reads downstream briefs in `docs/sprint-plan.md` (§Chat 88–91); edits any whose assumptions changed; promotes Chat 88 brief to §Next chat; deletes Chat 87 section from sprint-plan.md.
 
 ```bash
 PAT=$(grep '^GITHUB_PAT=' /mnt/project/CREDENTIALS.md | cut -d= -f2)
-# If any edits were made AFTER the initial branch push (matcher tightening,
-# bug fixes found during build audit), amend and force-push FIRST before merge:
+# If branch was amended post-push (bug fix during build audit):
 git commit --amend --no-edit
-git fetch origin <branch>   # refresh local ref before force-push
-git push --force "https://x-access-token:${PAT}@github.com/10thMuses/lrp-tx-gis.git" <branch>
-# Then merge:
+git fetch origin refinement-chat87-styling
+git push --force "https://x-access-token:${PAT}@github.com/10thMuses/lrp-tx-gis.git" refinement-chat87-styling
+# Merge:
 git checkout main && git pull --rebase origin main
-git fetch origin <branch>   # CRITICAL: refresh local ref to pick up amendment
-git merge --no-ff origin/<branch> -m "Merge <branch> (Chat 86): <summary>"
-# Rewrite WIP_OPEN.md §Next chat → Chat 87 per §Sprint queue; update §Prod status
-git commit -am "Chat 86 close-out" && git push
-git push --delete origin <branch>
+git fetch origin refinement-chat87-styling
+git merge --no-ff origin/refinement-chat87-styling -m "Merge refinement-chat87-styling (Chat 87): tiger_highways thinner + waha_circle + caramba green + caramba label"
+# Rewrite WIP_OPEN.md §Next chat → Chat 88 brief (full paste-ready, from sprint-plan.md §Chat 88)
+# Edit docs/sprint-plan.md: delete §Chat 87 section; re-read §Chat 88–91 and edit if Chat 87 changed assumptions
+# Update §Prod status
+git commit -am "Chat 87 close-out" && git push
+git push --delete origin refinement-chat87-styling
 ```
 
-**Chat 85 lesson (merge-freshness):** amending a branch after initial push requires a `git fetch origin <branch>` before `git merge` — otherwise merge pulls the stale local-tracking ref and the amendment is silently lost. Same silent-regression class as Chat 84's sidebar-collapse.
+**Chat 85 lesson (merge-freshness):** amending a branch after initial push requires a `git fetch origin <branch>` before `git merge` — otherwise merge pulls the stale local-tracking ref and the amendment is silently lost.
 
 **Merge to main.** `GITHUB_PAT` can push to main directly. No PR step needed.
 
@@ -76,15 +69,31 @@ git push --delete origin <branch>
 
 ## Sprint queue
 
-Ordered by operator priority. N+2 and beyond.
+Ordered by operator priority. N+2 and beyond. Multi-chat active sprint detail lives in `docs/sprint-plan.md`; one-paragraph pointers below.
 
-### Chat 87+ — ABATEMENT COUNTY EXPANSION (Permian-core + peripheral)
+### Chat 88 — ABATEMENT REFACTOR
 
-Per spec §12.2 sequencing (Trans-Pecos in Chat 86). Remaining order:
-Permian-core (Andrews, Ector, Glasscock, Loving, Martin, Midland, Ward,
-Winkler) → peripheral (Crane, Crockett, Irion, Reagan, Schleicher, Sutton,
-Upton). PDF-only counties dropped per §12.3 and flagged. Estimate 3–5
-counties per chat — 4–6 chats to complete after Trans-Pecos.
+Schema refactor on existing 9-row tax_abatements layer. Label rename to "Property Tax Abatements (Ch.312 / LDAD, new or expansion)"; drop meeting-date filter; add 8 new column mappings (mw→project MW, capacity→capex, zone→abatement term, use→schedule, year→announcement year, entity→developer, cap_kw→jobs, sector→taxing entities); rewrite popup order + filter UI; back-populate existing 9 rows. No new data. Layer count unchanged at 24. Full brief: `docs/sprint-plan.md` §Chat 88.
+
+### Chat 89 — ABATEMENT TRANS-PECOS EXPANSION
+
+Scrape Brewster, Culberson, Hudspeth, Jeff Davis, Presidio, Terrell. Gas + renewable filter. Single-pass; 0-hit counties flagged. Reeves deferred to Chat 91. Uses Chat 88's schema (not Chat 85's). Layer count unchanged at 24. Full brief: `docs/sprint-plan.md` §Chat 89.
+
+### Chat 90 — FCC FIBER COVERAGE
+
+New `fcc_fiber_coverage` layer. FCC BDC Texas CSV, FTTP filter (technology_code=50, low_latency=1), H3 res 8 aggregation across 23 counties, 3-bin choropleth on max_down_mbps, cyan palette, default OFF. Layer count 24 → 25. Full brief: `docs/sprint-plan.md` §Chat 90.
+
+### Chat 91 — BEAD FIBER PLANNED + REEVES RE-VERIFY
+
+Conditional `bead_fiber_planned` layer (TX Comptroller BEAD map primary; NTIA fallbacks; 30-min ship rule). Plus Reeves CivicEngage adapter re-verify. Layer count 25 → 26 if BEAD ships, 25 if dropped. Closes the active sprint — `docs/sprint-plan.md` deleted at close-out. Full brief: `docs/sprint-plan.md` §Chat 91.
+
+### Chat 92+ — ABATEMENT PERMIAN-CORE + PERIPHERAL
+
+Permian-core (Andrews, Ector, Glasscock, Loving, Martin, Midland, Ward, Winkler) → peripheral (Crane, Crockett, Irion, Reagan, Schleicher, Sutton, Upton). PDF-only counties dropped per spec §12.3. 4–6 chats. Reeves-shared-CMS counties pick up whatever the Chat 91 adapter re-verify yields. Promoted to `docs/sprint-plan.md` when it enters the active 5-chat window.
+
+### Chat — POWER PLANT DATA REFRESH + POPUP REDESIGN
+
+Re-pull EIA-860 (plants, battery) + USWTDB (wind) to fill blank operator/commissioned/technology/fuel/capacity_mw. Rewrite popup templates for `eia860_plants`, `eia860_battery`, `solar`, `wind`, `ercot_queue`: DROP sector; ADD commissioned/COD date, operator, capacity_mw, fuel/technology. Filter UI reflects same fields (drop sector filter). Promoted to `docs/sprint-plan.md` when it enters active window.
 
 ### Chat — COMPTROLLER LDAD SCRAPE (was: manual XLSX)
 

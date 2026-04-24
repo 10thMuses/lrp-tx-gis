@@ -198,6 +198,12 @@ Feature branch is deleted from origin same-chat. No "Outstanding PR merges" accu
 
 **No history logs, no session tables, no recap sections.** Backward-looking audit trails that no one reads are gratuitous overhead. `WIP_LOG.md` is frozen (no new entries) as of Chat 83a. `## Recent sessions` and `## Current workstream` sections are removed from `WIP_OPEN.md`. Git history carries the audit trail if it's ever needed.
 
+**Sprint-plan doc (added Chat 86).** When forward planning spans more than two chats with per-chat detail longer than ~10 lines each, briefs live in `docs/sprint-plan.md`, not inline in `WIP_OPEN.md §Sprint queue`. `§Next chat` continues to carry the immediately-next chat's full brief inline (paste-ready). `§Sprint queue` carries one-paragraph summaries with pointers into the sprint-plan doc.
+
+Every shipping close-out re-reads the downstream briefs in `docs/sprint-plan.md`. If the just-completed work changed any downstream assumption — file layout, dependency version, layer count baseline, new regression, schema change, deprecated source — the close-out edits the affected briefs before committing. A close-out that pushes a stale downstream brief forward is the same silent-regression class as Chat 85's stale-ref merge.
+
+At the last chat in a sprint-plan, `docs/sprint-plan.md` is deleted as part of close-out. A new one may be created for the next 5-chat window whenever forward planning justifies it again.
+
 ---
 
 ## 11. Tool-Call Budgets
