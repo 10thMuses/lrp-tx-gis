@@ -8,9 +8,117 @@ Per Readme §10: **`## Next chat`** = paste-ready for next shipping chat. **`## 
 
 ## Next chat
 
-**Chat 80 — SIDEBAR COLLAPSE.** Spec: `docs/refinement-sequence.md` §"Stage: SIDEBAR COLLAPSE". Small live-UI change: collapsible left sidebar with `«` / `»` toggle, map resize on transition, URL-hash state persistence, mobile + desktop parity. Branch: `refinement-sidebar-collapse`. Depends on nothing — independent track regardless of Chat 79 PR merge state (Chat 79 already deployed to prod; merge is git-history cleanup, not a functional gate). No data-pipeline changes. Main HEAD `dc5aa16`. Prod live on deploy `69ea9d1b8b51ad96ce674f5d` (22 layers, UI POLISH v2 shipped).
+**Chat 81 — SIDEBAR COLLAPSE (RESUME, token-limit paused).** Chat 80 committed 6 of 9 edits to branch `refinement-sidebar-collapse` (commit `bdc1fb6`, pushed) then hit token limit before wiring JS behavior. Main HEAD `1320167` (Chat 79 PR was merged — WIP_OPEN's prior `dc5aa16` reference was stale). Prod live on deploy `69ea9d1b8b51ad96ce674f5d` (22 layers). Branch is NOT yet deployable — toggle button is DOM-present but inert.
 
-**Credential:** `NETLIFY_PAT=nfp_h3iY48jurPAn57KcUzaCKGNccw5gXR1z9ac5` and `GITHUB_PAT=...` supplied in `/mnt/project/CREDENTIALS.md`. If container is fresh and `CREDENTIALS.md` is missing them, operator pastes `NETLIFY_PAT=...` at top of resume prompt.
+**What Chat 80 shipped to the branch (`build_template.html` only):**
+- CSS: `body` grid transition 220ms + `body.sb-collapsed { grid-template-columns: 0 1fr }`
+- CSS: `.sidebar` gets `overflow-x: hidden` + `min-width: 0`; collapsed state removes right border
+- CSS: `.sb-toggle` button (44×44, `position: absolute; top: 8px; left: 8px; z-index: 4` inside `.map-wrap`)
+- CSS: `@media (max-width: 720px)` — sidebar becomes `position: absolute` overlay, `transform: translateX` on collapse, toggle button shifts to `left: calc(280px + 8px)` when expanded
+- CSS: `.sb-toggle` hidden during print
+- HTML: `<button id="sb-toggle" class="sb-toggle" type="button" aria-label="Toggle sidebar" aria-expanded="true" title="Toggle sidebar">«</button>` inserted inside `.map-wrap` after `#map`
+- JS: `writeHash` now accepts and serializes `state.sb` as `sb=1`
+
+**What Chat 81 must finish on `refinement-sidebar-collapse`:**
+
+Edit A — init state (after line ~260, right after the `if (initHash.filters) { ... }` block):
+```js
+let sidebarCollapsed = initHash.sb === '1';
+if (sidebarCollapsed) document.body.classList.add('sb-collapsed');
+```
+Apply BEFORE `new maplibregl.Map(...)` so the map container has correct initial width.
+
+Edit B — `syncHash` (around line 854), add `sb` to the `writeHash` call:
+```js
+writeHash({ lat: c.lat, lon: c.lng, zoom: map.getZoom(), layers: activeLayerIds().join(','), base: currentBase, filters: filtersStr, sb: sidebarCollapsed ? '1' : undefined });
+```
+
+Edit C — toggle click handler (add after `btn-print` wiring, ~line 897):
+```js
+const sbToggle = document.getElementById('sb-toggle');
+function updateSbChevron() {
+  sbToggle.textContent = sidebarCollapsed ? '»' : '«';
+  sbToggle.setAttribute('aria-expanded', sidebarCollapsed ? 'false' : 'true');
+}
+updateSbChevron();
+sbToggle.addEventListener('click', () => {
+  sidebarCollapsed = !sidebarCollapsed;
+  document.body.classList.toggle('sb-collapsed', sidebarCollapsed);
+  updateSbChevron();
+  // Fire resize on transitionend; fallback timeout in case transitionend doesn't fire.
+  let done = false;
+  const finish = () => { if (done) return; done = true; map.resize(); syncHash(); };
+  const onEnd = (e) => {
+    if (e.target !== document.body) return;
+    if (e.propertyName && e.propertyName.indexOf('grid-template-columns') === -1 && e.propertyName.indexOf('transform') === -1) return;
+    document.body.removeEventListener('transitionend', onEnd);
+    finish();
+  };
+  document.body.addEventListener('transitionend', onEnd);
+  setTimeout(finish, 260);
+});
+```
+
+Note: on mobile the transition is on `.sidebar` (transform), not on `body`. The fallback `setTimeout(260)` covers that path since the mobile listener won't fire on body. Acceptable — `map.resize()` is idempotent.
+
+### Session open (Chat 81)
+
+```bash
+PAT=$(grep '^GITHUB_PAT=' /mnt/project/CREDENTIALS.md | cut -d= -f2)
+cd /home/claude && rm -rf repo 2>/dev/null; git clone -q https://x-access-token:${PAT}@github.com/10thMuses/lrp-tx-gis.git repo && cd repo
+git config user.email "claude@lrp.local" && git config user.name "Claude (LRP GIS)"
+git fetch --all
+git checkout refinement-sidebar-collapse   # branch exists remotely at commit bdc1fb6
+git log --oneline -3   # confirm HEAD = bdc1fb6
+apt-get install -y tippecanoe libcairo2 -q
+pip install shapely pmtiles pyyaml cairosvg pandas openpyxl --break-system-packages -q
+```
+
+### Verification (Chat 81, after build + deploy)
+
+1. Load prod URL — sidebar visible, `«` button at top-left corner of map (8px inside).
+2. Click `«` — sidebar slides out 220ms, map reflows full-width, button becomes `»` at left:8px of full-width map.
+3. Click `»` — reverses; sidebar scroll position + filter state retained.
+4. URL hash updates to include `sb=1` when collapsed.
+5. Reload with `#sb=1` — sidebar loads collapsed.
+6. Mobile (≤720px viewport): sidebar overlays map as 280px drawer with shadow; collapse slides it off-screen left, toggle snaps to left:8px.
+7. Print — toggle hidden, sidebar hidden, map fills page.
+
+### Build + deploy (standard pattern)
+
+```bash
+python build.py
+# gate: built=22, errored=0
+
+PAT=$(grep '^NETLIFY_PAT=' /mnt/project/CREDENTIALS.md | cut -d= -f2)
+SITE=01b53b80-687e-4641-b088-115b7d5ef638
+cd /mnt/user-data/outputs/dist && zip -qr /tmp/d.zip .
+RESP=$(curl -s -X POST -H "Authorization: Bearer $PAT" -H "Content-Type: application/zip" \
+  --data-binary @/tmp/d.zip "https://api.netlify.com/api/v1/sites/$SITE/deploys")
+DEPLOY_ID=$(echo "$RESP" | python3 -c "import sys,json;print(json.load(sys.stdin)['id'])")
+
+i=0; while [ $i -lt 30 ]; do i=$((i+1))
+  STATE=$(curl -s -H "Authorization: Bearer $PAT" \
+    "https://api.netlify.com/api/v1/sites/$SITE/deploys/$DEPLOY_ID" \
+    | python3 -c "import sys,json;print(json.load(sys.stdin).get('state','?'))")
+  [ "$STATE" = "ready" ] && break; [ "$STATE" = "error" ] && break; sleep 6
+done
+sleep 90
+curl -sI -A "Mozilla/5.0" https://lrp-tx-gis.netlify.app/ | head -3
+curl -s -A "Mozilla/5.0" https://lrp-tx-gis.netlify.app/ | grep -oE '"id":[ ]*"[a-z0-9_]+"' | sort -u | wc -l
+# expect: HTTP/2 200, 22 layers
+```
+
+### PR + close-out
+
+```bash
+PAT=$(grep '^GITHUB_PAT=' /mnt/project/CREDENTIALS.md | cut -d= -f2)
+git push "https://x-access-token:${PAT}@github.com/10thMuses/lrp-tx-gis.git" refinement-sidebar-collapse
+```
+
+Operator opens PR via GitHub UI (PAT scope still lacks PR-create). Update `WIP_OPEN.md` `## Next chat` → promote ABATEMENT BUILD (Chat 82). Append `WIP_LOG.md` entries for Chat 80 (partial, paused) and Chat 81 (resume + ship).
+
+**Credential:** `NETLIFY_PAT=nfp_h3iY48jurPAn57KcUzaCKGNccw5gXR1z9ac5` and `GITHUB_PAT=...` supplied in `/mnt/project/CREDENTIALS.md`.
 
 ### Session open (single block)
 
