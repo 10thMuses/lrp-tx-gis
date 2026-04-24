@@ -183,6 +183,17 @@ Rule: if the next chat's first action isn't discoverable from `WIP_OPEN.md` alon
 
 All three are non-optional, even when the feature itself fails to ship, even when a blocker prevented deploy, even when the chat ran short. A chat that ships the feature but skips close-out is a failure, not a partial success — the next chat starts from a broken state and burns tokens reconstructing what just happened. If close-out cannot fit in the remaining budget, stop shipping and do close-out only.
 
+**Merging feature branches (added Chat 84a).** Feature branches merge directly to `main` by Claude — not by operator through the GitHub UI. `GITHUB_PAT` lacks PR-creation API scope but has push-to-main scope, so the PR step was always a detour. Standard sequence after deploy + verify:
+
+```bash
+git checkout main && git pull --rebase origin main
+git merge --no-ff origin/<feature-branch> -m "Merge <feature-branch> into main — <layer/feature> (deploy <id>)"
+git push origin main
+git push origin --delete <feature-branch>
+```
+
+Feature branch is deleted from origin same-chat. No "Outstanding PR merges" accumulation. No operator action required for merges. The "operator merge" / "open PR via GitHub UI" pattern from Chats 79–83 is obsolete.
+
 **No history logs, no session tables, no recap sections.** Backward-looking audit trails that no one reads are gratuitous overhead. `WIP_LOG.md` is frozen (no new entries) as of Chat 83a. `## Recent sessions` and `## Current workstream` sections are removed from `WIP_OPEN.md`. Git history carries the audit trail if it's ever needed.
 
 ---

@@ -8,7 +8,7 @@ Per Readme §10: **`## Next chat`** = paste-ready for next shipping chat. **`## 
 
 ## Next chat
 
-**Chat 85 — ABATEMENT ANNOTATION + FILTER UI.** Chat 84 deployed the `tax_abatements` layer (8 features, 23 layers live). Branch `refinement-abatement-build` at origin HEAD `e536846`, awaiting operator PR merge.
+**Chat 85 — ABATEMENT ANNOTATION + FILTER UI.** Chat 84 deployed the `tax_abatements` layer (8 features, 23 layers live) and merged `refinement-abatement-build` into `main`. Feature branch deleted from origin.
 
 **This chat's scope (unblocked, ready to execute):**
 
@@ -29,8 +29,6 @@ pip install shapely pmtiles pyyaml cairosvg pandas --break-system-packages -q
 curl -sI -A "Mozilla/5.0" https://lrp-tx-gis.netlify.app/ | head -1
 curl -s -A "Mozilla/5.0" https://lrp-tx-gis.netlify.app/ | grep -oE '"id":[ ]*"[a-z0-9_]+"' | sort -u | wc -l   # expect 23
 ```
-
-Open `refinement-abatement-annotate` as a fresh branch off main (operator will have merged `refinement-abatement-build` before this chat opens). If operator has not yet merged, branch off `refinement-abatement-build` instead and note in close-out.
 
 ### Deploy pattern (CANONICAL)
 
@@ -57,7 +55,7 @@ git commit -am "Chat 85 close-out" && git push
 
 No `WIP_LOG.md` append. No `## Recent sessions` row. Both sections removed Chat 83a.
 
-**`GITHUB_PAT` lacks PR-creation scope** — branch push works; operator opens PR via GitHub UI.
+**Merge to main.** `GITHUB_PAT` can push to main directly. Merge feature branch locally via `git merge --no-ff origin/<branch>` and push, then `git push --delete origin <branch>` to clean up. No PR step needed. (Per Chat 84a: prior "operator merge" rule is obsolete — PAT lacked PR-creation scope, not merge-to-main capability.)
 
 ---
 
@@ -75,11 +73,12 @@ Per spec §12.2 sequencing: Trans-Pecos (Brewster, Culberson, Hudspeth, Jeff Dav
 
 UI/UX stage. Responsive breakpoints, touch-friendly controls, pinch-zoom tuning, measure tool + print-to-PDF mobile usability, popup sizing. Candidate for promotion into `docs/refinement-sequence.md`.
 
-### Outstanding PR merges (operator)
+### Outstanding merges (operator)
 
 - `refinement-ui-polish-v2` → `main` (Chat 79). Prod reflects via deploy `69ea9d1b8b51ad96ce674f5d`. Cleanup only.
 - `refinement-sidebar-collapse` → `main` (Chat 81). Prod reflects via deploy `69eaf518997b708751d871bf`. Cleanup only.
-- `refinement-abatement-build` → `main` (Chats 82–84). **Deployed Chat 84 via `69eb6ae6583299e28d48965e`. Ready for merge.**
+
+(Note Chat 84a: `refinement-abatement-build` was merged directly to `main` by Claude via PAT push — no operator step required. Direct-merge pattern now standard; see §Close-out above. The two entries above are residual and can be cleaned up by operator or folded into a future Claude direct-merge.)
 
 ### Operator data ask (spec §12.5, non-blocking)
 
@@ -91,7 +90,7 @@ Comptroller Ch. 312 abatement registry spreadsheet — manual quarterly download
 
 - URL: https://lrp-tx-gis.netlify.app — requires real User-Agent on curl (`-A "Mozilla/5.0"`).
 - Last published deploy: `69eb6ae6583299e28d48965e` (Chat 84, `refinement-abatement-build`, 2026-04-24). State=ready, CDN-verified, 23 layer ids live.
-- Main HEAD does not yet include `refinement-abatement-build`. Operator PR merge pending.
+- Main HEAD includes `refinement-abatement-build` as of Chat 84a (merge commit `78754f6`). Feature branch deleted from origin.
 - Auto-publish: unlocked.
 - **Deploy path: Netlify MCP → CLI proxy.** REST-API dead.
 - Layer set: **23 built clean** (advanced from 22 with `tax_abatements` Chat 84).
