@@ -93,8 +93,8 @@ Execute end-to-end without mid-session confirmation.
 
 1. Directed prompt with state + task → execute, no WIP pull.
 2. Undirected or "morning briefing" → read `WIP_OPEN.md` once.
-3. Shipping session → update `WIP_OPEN.md` as final action; append entry to `WIP_LOG.md`.
-4. Doc / meta session → prepend to `WIP_LOG.md`, no chat number required.
+3. Shipping session → update `WIP_OPEN.md` as final action.
+4. Doc / meta session → commit changes directly; no chat-level log.
 5. No chat labeling in responses (no "Chat N:" prefix in chat replies; logs still carry chat numbers).
 6. One shipping chat at a time.
 7. **Progress over summary. Commit continuously, not at the end.**
@@ -113,7 +113,7 @@ Execute end-to-end without mid-session confirmation.
 
 8. **Always ship before handoff. Handoffs are for context exhaustion only.**
 
-   A shipping chat finishes its stage in-chat: validate build, delete in-flight handoff doc, merge to `main`, update `WIP_OPEN.md` + append `WIP_LOG.md`. "Almost done" = ship. Do not propose a handoff in the final message when the remaining work fits in budget.
+   A shipping chat finishes its stage in-chat: validate build, delete in-flight handoff doc, merge to `main`, update `WIP_OPEN.md`. "Almost done" = ship. Do not propose a handoff in the final message when the remaining work fits in budget.
 
    A handoff doc is written only when §7.7 triggers (tool-call or context limits hit before completion). In that case the doc is the authority, not the chat message — per §7.7.
 
@@ -129,7 +129,7 @@ Execute end-to-end without mid-session confirmation.
 
 10. **Stage sizing. A stage fits one chat.**
 
-    A shipping chat ships one stage end-to-end: execute, build verify, PR open (or merge for direct-to-main work), `WIP_OPEN.md` + `WIP_LOG.md` updates. Typical max: ~4 commits plus one build plus one PR.
+    A shipping chat ships one stage end-to-end: execute, build verify, PR open (or merge for direct-to-main work), `WIP_OPEN.md` update. Typical max: ~4 commits plus one build plus one PR.
 
     If execution reveals the stage won't fit, **the handoff doc is the re-scoping signal, not a routine resume mechanism.** When a stage needs a second chat to finish, that's a scope miss — the remaining work is carved out as its own sub-stage (new entry in `docs/refinement-sequence.md` or equivalent) rather than continuing under the same stage name across N chats. A stage resumed via handoff once is acceptable; a stage resumed twice means the original scope was two stages pretending to be one.
 
@@ -173,14 +173,15 @@ Rule: if the next chat's first action isn't discoverable from `WIP_OPEN.md` alon
 
 **Session-open branch-ahead rule (added Chat 79).** At session open, if the remote branch named in `## Next chat` already has commits beyond `main`, treat those commits as authoritative prior work. Inspect (`git log --oneline main..HEAD`, view changed files) before editing. Never force-push or reconstruct a fresh branch state without reading the remote first. Rationale: prior-session work that completed but wasn't recorded in `WIP_OPEN.md` still exists on the branch; stale memory or partial handoff can trigger a reconstruction that would overwrite better work. Caught once in Chat 79 via `git fetch` rejection; codified here.
 
-**Close-out discipline (added Chat 81).** Stop active feature work at ~65% of the token budget. The remaining ~35% is reserved for blocker recovery plus four non-optional close-out actions, in order:
+**Close-out discipline (added Chat 81, simplified Chat 83a).** Stop active feature work at ~65% of the token budget. The remaining ~35% is reserved for blocker recovery plus three non-optional close-out actions, in order:
 
 1. **Push feature branch to origin.** Preserves work across container reset. Uncommitted edits in `/home/claude/` are lost on reset; only origin-pushed commits persist.
 2. **Rewrite `WIP_OPEN.md` §Next chat.** Must reflect what actually shipped, what actually didn't, and what the next chat's first action is. A stale `## Next chat` forces the next session to do recovery work before it can do new work.
-3. **Prepend `WIP_LOG.md`** with an entry for this chat (deploy id, branch commit, scope delivered, any mid-chat rule changes).
-4. **Commit `WIP_OPEN.md` + `WIP_LOG.md` to `main` and push.**
+3. **Commit `WIP_OPEN.md` to `main` and push.**
 
-All four are non-optional, even when the feature itself fails to ship, even when a blocker prevented deploy, even when the chat ran short. A chat that ships the feature but skips close-out is a failure, not a partial success — the next chat starts from a broken state and burns tokens reconstructing what just happened. If close-out cannot fit in the remaining budget, stop shipping and do close-out only. Codified after Chat 81 shipped SIDEBAR COLLAPSE to prod but left all four close-out actions undone until mid-chat operator correction.
+All three are non-optional, even when the feature itself fails to ship, even when a blocker prevented deploy, even when the chat ran short. A chat that ships the feature but skips close-out is a failure, not a partial success — the next chat starts from a broken state and burns tokens reconstructing what just happened. If close-out cannot fit in the remaining budget, stop shipping and do close-out only.
+
+**No history logs, no session tables, no recap sections.** Backward-looking audit trails that no one reads are gratuitous overhead. `WIP_LOG.md` is frozen (no new entries) as of Chat 83a. `## Recent sessions` and `## Current workstream` sections are removed from `WIP_OPEN.md`. Git history carries the audit trail if it's ever needed.
 
 ---
 

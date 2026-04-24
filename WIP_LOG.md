@@ -1,3 +1,9 @@
+# WIP_LOG.md — FROZEN
+
+Frozen 2026-04-24 per Chat 83a simplification (Readme §10). New chats do not append here. Historical entries preserved below for git-blame lookups only. See Readme §10 for current close-out rules.
+
+---
+
 ## Chat 82 — 2026-04-24 — ABATEMENT BUILD partial: scraper shipped; layer ship split to Chat 83
 
 **Classification:** shipping, MEDIUM blast radius (new subsystem: commissioners-court scraper + new data directory). No `layers.yaml` or `build.py` changes this chat. No deploy.

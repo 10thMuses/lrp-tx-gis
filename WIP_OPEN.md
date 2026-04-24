@@ -20,7 +20,7 @@ Per Readme §10: **`## Next chat`** = paste-ready for next shipping chat. **`## 
 6. Run `python3 build.py`. Expect 23 layers built clean.
 7. Deploy via Netlify MCP proxy (canonical path — see below).
 8. Verify: curl HTTP 200, layer count = 23.
-9. Close-out per §10 (push, WIP_OPEN rewrite, WIP_LOG prepend, main push).
+9. Close-out per §10 (push, WIP_OPEN rewrite, main push).
 
 ### 23 county centroids (for geocoding fallback, lon/lat pairs)
 
@@ -82,7 +82,6 @@ git push "https://x-access-token:${PAT}@github.com/10thMuses/lrp-tx-gis.git" ref
 
 Then on `main`:
 - Rewrite `## Next chat` → Chat 84 promotion.
-- Prepend `WIP_LOG.md` entry for Chat 83.
 - `git commit -am "Chat 83 close-out" && git push`
 
 **Token-budget rule (Readme §10):** stop active work at ~65%. Reserve ~35% for close-out.
@@ -123,40 +122,11 @@ Comptroller Ch. 312 abatement registry spreadsheet — manual quarterly download
 
 ---
 
-## Current workstream
-
-ABATEMENT BUILD in progress across Chats 82–83. Chat 82 shipped scraper infrastructure + real data extraction (9 Pecos hits with AI-DC and BESS signal). Chat 83 completes the layer ship (transform + yaml + build + deploy). Chat 84 extends to facility annotation + filter UI. Chat 85 expands to 21 remaining county adapters. Chat 86 adds weekly cron.
-
-Stage split rationale: original §12-scoped BUILD comprised 5+ distinct subsystems (scraper, transform/geocode, yaml/build/deploy, annotation, filter UI, workflow) — per Readme §7.10 split before continuing. Scraper was the first splittable unit and closed out cleanly.
-
----
-
-## Recent sessions
-
-| Chat | Date | Outcome |
-|---:|---|---|
-| 72 | 2026-04-23 | TCEQ REFRESH recon + data pull. 6 records geocoded. |
-| 73 | 2026-04-23 | TCEQ refresh branch merged to main — `ea7e39d`. |
-| 74 | 2026-04-23 | TCEQ data/config + EIA-860 research committed — `4292bf2`, `3aada1c`. |
-| 75 | 2026-04-23 | Abatement discovery spec + multi-chat refinement rules — `92d25c72`. |
-| 75b | 2026-04-23 | **TCEQ SHIP complete.** Deploy `69ea32c7d3733641c9a1bb7c`. 21→22 layers. |
-| 76 | 2026-04-23 | **UI polish shipped.** 10 label/layout tweaks — `a379539`. |
-| 77 | 2026-04-23 | **EIA-860 enrichment shipped.** 891/1367 plants enriched — `9d40df4`, deploy `69ea73f92acb1109e87b4ddc`. |
-| 78 | 2026-04-23 | **MW-driven sizing shipped.** `f334601`, deploy `69ea83a786cf7142db291f87`. |
-| 79 | 2026-04-23 | **UI POLISH v2 shipped.** Branch commit `c8ff838`, deploy `69ea9d1b8b51ad96ce674f5d`. PR pending. |
-| 80 | 2026-04-24 | SIDEBAR COLLAPSE partial — CSS/HTML/hash only. Branch commit `bdc1fb6`. Token-paused. |
-| 81 | 2026-04-24 | **SIDEBAR COLLAPSE shipped.** Branch commit `6d356cd`, deploy `69eaf518997b708751d871bf`. Readme §10 close-out discipline codified. |
-| 82 | 2026-04-24 | **ABATEMENT BUILD partial: scraper shipped.** Branch commit `c4e71ef`. `scripts/scrape_abatements.py` + 9 Pecos hits (CoreWeave, Poolside, Silver Basin Digital, Greasewood II BESS, Bighorn Ridge Solar, Matterhorn). Reeves returned 0 (URL re-verify). 2 post-run regex tightenings. Stage split per §7.10: layer ship → Chat 83. NOT deployed. |
-
-Full per-session detail in `WIP_LOG.md`.
-
----
-
 ## Prod status
 
 - URL: https://lrp-tx-gis.netlify.app — requires real User-Agent on curl (`-A "Mozilla/5.0"`).
 - Last published deploy: `69eaf518997b708751d871bf` on branch commit `6d356cd` (Chat 81, `refinement-sidebar-collapse`). **Chat 82 did not deploy.**
-- Main HEAD will advance with Chat 82 close-out (this rewrite + WIP_LOG prepend).
+- Main HEAD will advance with Chat 82 close-out (this rewrite).
 - Auto-publish: unlocked.
 - **Deploy path: Netlify MCP → CLI proxy.** REST-API dead.
 - Layer set: **22 built clean** (Chat 83 will advance to 23 with `tax_abatements`).
