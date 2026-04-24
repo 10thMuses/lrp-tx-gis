@@ -58,6 +58,7 @@ cd /home/claude && rm -rf repo 2>/dev/null
 git clone -q https://x-access-token:${PAT}@github.com/10thMuses/lrp-tx-gis.git repo && cd repo
 git config user.email "claude@lrp.local" && git config user.name "Claude (LRP GIS)"
 git checkout -b refinement-chat88-abatement-refactor
+git push -u origin refinement-chat88-abatement-refactor   # principles §5: branch on origin before first edit
 apt-get install -y tippecanoe libcairo2 -q
 pip install shapely pmtiles pyyaml cairosvg pandas --break-system-packages -q
 curl -sI -A "Mozilla/5.0" https://lrp-tx-gis.netlify.app/ | head -1

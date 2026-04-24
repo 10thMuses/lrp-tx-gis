@@ -86,6 +86,8 @@ Failure at any gate halts the chat. Never advance with a failing gate.
 
 **No PR workflow for routine chats.** Direct main-branch commit. PR workflow applies only when explicitly scoped (e.g., a structured refinement sequence).
 
+**Push empty branch at session open (added Chat 88).** Session-open block includes `git push -u origin <branch>` immediately after `git checkout -b <branch>`. The branch exists on origin before any file edit. This converts Readme §7.9 ("push-on-commit") from aspirational to mechanical: every subsequent commit has an upstream already set, one-call `git push` works without `-u` flag debates. Originates from Chat 88 failure mode — a multi-file refactor completed all local edits but never pushed because the close-out budget ran out before the branch's first push.
+
 ---
 
 ## 6. Credential Hygiene
