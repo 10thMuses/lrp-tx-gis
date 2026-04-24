@@ -76,11 +76,9 @@ curl -s -A "Mozilla/5.0" https://lrp-tx-gis.netlify.app/ | grep -oE '"id":"[a-z_
 
 Proxy URL is single-use. On 503 upload error, request a fresh URL from the updater.
 
-### Pre-flight: Netlify edge status check
+### Pre-flight
 
-Chat 87 deploy succeeded cleanly but post-deploy curl verification returned HTTP 503 `DNS cache overflow` across the entire Netlify edge (`netlify.com` itself also 503) from 16:07Z onward, 2+ hours continuous. This was a Netlify infrastructure outage, not our build. Chat 87 close-out proceeded without live verification per operator direction.
-
-**At Chat 88 session-open, first check edge is up** before starting work: `curl -sI https://www.netlify.com/ | head -1` — if 503, halt and flag. If 200, proceed. Also verify Chat 87 deploy actually serves correctly: `curl -s https://lrp-tx-gis.netlify.app/ | grep -oE '"id":"[a-z_][a-z0-9_]*"' | sort -u | wc -l` → expect 24. If count mismatches, flag before building anything new (the last recorded good state is deployId `69eb952306288390a3d6a3c0`).
+Chat 87 bug-fix deploy `69ebb64823c1c470e0c6f0b1` (2026-04-24 18:28Z) is CDN-verified live with 24 layer ids and all 4 styling edits confirmed. Standard session-open curl check at top of this block suffices.
 
 ### Close-out (NON-NEGOTIABLE, per Readme §10)
 
@@ -240,8 +238,10 @@ Historical notes:
 ## Prod status
 
 - URL: https://lrp-tx-gis.netlify.app — requires real User-Agent on curl (`-A "Mozilla/5.0"`).
-- Last published deploy: `69eb952306288390a3d6a3c0` (Chat 87, 2026-04-24 16:07:08Z). State=ready, Netlify API confirmed all files uploaded + 1 redirect + 2 header rules processed, 0 errors. **CDN verification was NOT completed this chat**: `netlify.com` itself + our site + deploy permalink all returned HTTP 503 `DNS cache overflow` continuously from 16:07Z through 18:21Z+ (2hr 14min) — Netlify-wide edge outage, not our deploy. Chat 87 close-out proceeded without live-curl verification per operator direction. First curl after edge recovery should return HTTP 200 + 24 layer ids. Supersedes `69eb7bccd5cbc81ee84c32c0`.
-- Main HEAD includes `refinement-chat87-styling` (merged Chat 87, commit `7005f67`). Branch deleted from origin.
+- Last published deploy: `69ebb64823c1c470e0c6f0b1` (Chat 87 bugfix, 2026-04-24 18:28:29Z). Supersedes `69eb952306288390a3d6a3c0`. State=ready. **CDN-verified**: HTTP 200, 24 layer ids live, all 4 Chat 87 styling edits confirmed in served HTML (`tiger_highways` `line_width: 0.6`; `waha_circle` present; `caramba_north` color `#2E7D32` + label `Caramba North (1,300 ac)`).
+- **Chat 87 bug caught at post-close-out verification (2026-04-24 18:26Z):** Initial deploy `69eb952306288390a3d6a3c0` (16:07Z) shipped only 3 of 4 Chat 87 styling edits. `tiger_highways line_width: 0.6` was dead on prod because `build.py render_html()` layer-dict serializer (line 633–647) did not emit `line_width` — template `sizingLineWidthExpr` on line 338 read `undefined ?? 2` and every line layer rendered at width 2 regardless of `layers.yaml` value. Fix: added `'line_width': L.get('line_width', 2)` to the serializer dict. Redeployed as `69ebb64823c1c470e0c6f0b1`. This bug predates Chat 87 (every line layer was always rendered at width 2); Chat 87 was the first chat to set `line_width` in yaml and thus first to surface it.
+- **Process lesson:** Chat 87 close-out initially proceeded without live-site verification due to concurrent Netlify-wide edge outage (16:07Z–18:22Z, `DNS cache overflow` site-wide). Operator override accepted the risk. Post-recovery verification then caught the bug. The halt rule in `WIP_OPEN.md §Next chat` ("if verification fails, halt") exists precisely to prevent this. Future chats: if CDN verification is blocked by infrastructure, override is permissible but the next chat's first act must be post-hoc live verification. Do not consider a close-out complete until served HTML has been grepped.
+- Main HEAD includes `refinement-chat87-styling` (merged Chat 87, commit `7005f67`) + Chat 87 bugfix commit. Branch deleted from origin.
 - Auto-publish: unlocked.
 - **Deploy path: Netlify MCP → CLI proxy.** REST-API dead.
 - Layer set: **24 built clean** (23 baseline + `waha_circle` added Chat 87).

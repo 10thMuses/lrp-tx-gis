@@ -642,6 +642,7 @@ def render_html(layers_config, layer_stats, filter_stats=None):
             'min_zoom': L.get('min_zoom', 0),
             'radius': L.get('radius', 3),
             'fill_opacity': L.get('fill_opacity', 0.25),
+            'line_width': L.get('line_width', 2),
             'features': stats_by_id[L['id']]['features'],
             'filterable_fields': ff,
         })
