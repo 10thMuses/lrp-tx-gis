@@ -171,6 +171,8 @@ If a chat "locks" a taxonomy or config, the file ships that same chat, not the n
 
 Rule: if the next chat's first action isn't discoverable from `WIP_OPEN.md` alone, the prior chat's close-out failed. Close-out budget must reserve capacity for the `WIP_OPEN.md` rewrite; never ship without it.
 
+**Session-open branch-ahead rule (added Chat 79).** At session open, if the remote branch named in `## Next chat` already has commits beyond `main`, treat those commits as authoritative prior work. Inspect (`git log --oneline main..HEAD`, view changed files) before editing. Never force-push or reconstruct a fresh branch state without reading the remote first. Rationale: prior-session work that completed but wasn't recorded in `WIP_OPEN.md` still exists on the branch; stale memory or partial handoff can trigger a reconstruction that would overwrite better work. Caught once in Chat 79 via `git fetch` rejection; codified here.
+
 ---
 
 ## 11. Tool-Call Budgets

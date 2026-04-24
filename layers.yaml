@@ -45,7 +45,7 @@ layers:
   label: Groundwater District Management Zone 1
   color: '#8b5cf6'
   fill_opacity: 0.15
-  default_on: true
+  default_on: false
   popup:
   - NAME
   - ZONE
@@ -282,6 +282,7 @@ layers:
   color: '#78350f'
   fill_opacity: 0.15
   default_on: false
+  sidebar_omit: true
   min_zoom: 11
   popup:
   - owner
@@ -310,7 +311,7 @@ layers:
   group: Reference
   label: County Labels
   color: '#475569'
-  default_on: false
+  default_on: true
   min_zoom: 5
   popup:
   - name
@@ -361,7 +362,7 @@ layers:
   group: Reference
   label: Highways (Interstate + US)
   color: '#f59e0b'
-  default_on: true
+  default_on: false
   popup:
   - name
   - rttyp
