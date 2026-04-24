@@ -8,13 +8,19 @@ Per Readme §10: **`## Next chat`** = paste-ready for next shipping chat. **`## 
 
 ## Next chat
 
-**Chat 85 — ABATEMENT ANNOTATION + FILTER UI.** Chat 84 deployed the `tax_abatements` layer (8 features, 23 layers live) and merged `refinement-abatement-build` into `main`. Feature branch deleted from origin.
+**Chat 86 — ABATEMENT COUNTY EXPANSION (Trans-Pecos phase).** Chat 85 deployed tax_abatements annotation: fuzzy applicant→facility join, `status` derivation + filter, Matterhorn row. Prod has 9 tax_abatements features + 5 facility annotations. `refinement-abatement-annotate` merged to main, branch deleted from origin.
 
 **This chat's scope (unblocked, ready to execute):**
 
-Per spec §12.1 (locked): join `tax_abatements` hits to `eia860_plants`, `ercot_queue`, `solar`, `wind`, `eia860_battery`, and future `dc_sites` by fuzzy applicant name + county + approximate coordinates. Single pass, no iterative refinement. Surface matched `abatement_*` fields in popups of the matched facilities. Add filter UI controls for `technology` / `commissioned` / `status` on the `tax_abatements` layer.
+Per spec §12.2 sequencing, Trans-Pecos phase: scrape commissioners-court agendas for **Brewster, Culberson, Hudspeth, Jeff Davis, Presidio, Terrell** (Pecos already done, Reeves adapter has regression flagged below). Generate `data/abatements/abatement_hits_<timestamp>.csv` with the same schema as `data/abatements/abatement_hits_20260424_092810.csv`. Merge new hits into `combined_points.csv` under layer_id=`tax_abatements` using the same column-mapping conventions (§Prod status).
 
-Re-include the Matterhorn row skipped Chat 83 (no meeting date captured — resolve via agenda PDF re-scrape or operator-provided date). Account for column-mapping caveats in §Prod status below when writing join keys and filter predicates.
+Sequencing: CivicEngage/CivicPlus adapters first (Brewster, Jeff Davis likely on CivicPlus), then bespoke county sites. PDF-only counties drop out per spec §12.3 — flag in close-out.
+
+**Re-verify Reeves CivicEngage adapter** (regression: 0 hits on first run Chat 82). Pecos Power Plant LLC Reeves abatement was hand-seeded from spec §8 — scraper must reproduce it or explain the miss.
+
+Estimate 3–5 counties per chat; 6 Trans-Pecos counties → 1–2 chats to complete this phase. Permian-core phase follows (Chat 87+).
+
+Expected counterfactual: most Trans-Pecos counties (very rural, low commercial activity) likely produce 0–2 hits per county. Success criterion is completeness, not hit volume.
 
 ### Session open (single block)
 
@@ -23,9 +29,9 @@ PAT=$(grep '^GITHUB_PAT=' /mnt/project/CREDENTIALS.md | cut -d= -f2)
 cd /home/claude && rm -rf repo 2>/dev/null
 git clone -q https://x-access-token:${PAT}@github.com/10thMuses/lrp-tx-gis.git repo && cd repo
 git config user.email "claude@lrp.local" && git config user.name "Claude (LRP GIS)"
-git checkout -b refinement-abatement-annotate origin/main
+git checkout -b refinement-abatement-transpecos origin/main
 apt-get install -y tippecanoe libcairo2 -q
-pip install shapely pmtiles pyyaml cairosvg pandas --break-system-packages -q
+pip install shapely pmtiles pyyaml cairosvg pandas requests beautifulsoup4 --break-system-packages -q
 curl -sI -A "Mozilla/5.0" https://lrp-tx-gis.netlify.app/ | head -1
 curl -s -A "Mozilla/5.0" https://lrp-tx-gis.netlify.app/ | grep -oE '"id":[ ]*"[a-z0-9_]+"' | sort -u | wc -l   # expect 23
 ```
@@ -40,22 +46,31 @@ curl -s -A "Mozilla/5.0" https://lrp-tx-gis.netlify.app/ | grep -oE '"id":[ ]*"[
 4. `sleep 45` for CDN warm-up (503 at 30s normal; 503 at 75s retry).
 5. `curl -sI -A "Mozilla/5.0" https://lrp-tx-gis.netlify.app/` → HTTP 200; layer count → 23.
 
+Proxy URL is single-use. On 503 upload error, request a fresh URL from the updater.
+
 ### Close-out (NON-NEGOTIABLE, per Readme §10)
 
-Simplified 3-action rule:
+Simplified 3-action rule, plus **amendment discipline** (Chat 85 lesson):
 
 ```bash
 PAT=$(grep '^GITHUB_PAT=' /mnt/project/CREDENTIALS.md | cut -d= -f2)
-git push "https://x-access-token:${PAT}@github.com/10thMuses/lrp-tx-gis.git" refinement-abatement-annotate
-# then on main:
+# If any edits were made AFTER the initial branch push (matcher tightening,
+# bug fixes found during build audit), amend and force-push FIRST before merge:
+git commit --amend --no-edit
+git fetch origin <branch>   # refresh local ref before force-push
+git push --force "https://x-access-token:${PAT}@github.com/10thMuses/lrp-tx-gis.git" <branch>
+# Then merge:
 git checkout main && git pull --rebase origin main
-# rewrite WIP_OPEN.md §Next chat → Chat 86 per §Sprint queue; update §Prod status
-git commit -am "Chat 85 close-out" && git push
+git fetch origin <branch>   # CRITICAL: refresh local ref to pick up amendment
+git merge --no-ff origin/<branch> -m "Merge <branch> (Chat 86): <summary>"
+# Rewrite WIP_OPEN.md §Next chat → Chat 87 per §Sprint queue; update §Prod status
+git commit -am "Chat 86 close-out" && git push
+git push --delete origin <branch>
 ```
 
-No `WIP_LOG.md` append. No `## Recent sessions` row. Both sections removed Chat 83a.
+**Chat 85 lesson (merge-freshness):** amending a branch after initial push requires a `git fetch origin <branch>` before `git merge` — otherwise merge pulls the stale local-tracking ref and the amendment is silently lost. Same silent-regression class as Chat 84's sidebar-collapse.
 
-**Merge to main.** `GITHUB_PAT` can push to main directly. Merge feature branch locally via `git merge --no-ff origin/<branch>` and push, then `git push --delete origin <branch>` to clean up. No PR step needed. (Per Chat 84a: prior "operator merge" rule is obsolete — PAT lacked PR-creation scope, not merge-to-main capability.)
+**Merge to main.** `GITHUB_PAT` can push to main directly. No PR step needed.
 
 ---
 
@@ -63,27 +78,13 @@ No `WIP_LOG.md` append. No `## Recent sessions` row. Both sections removed Chat 
 
 Ordered by operator priority. N+2 and beyond.
 
-### Chat 85 — ABATEMENT ANNOTATION + FILTER UI
+### Chat 87+ — ABATEMENT COUNTY EXPANSION (Permian-core + peripheral)
 
-Per spec §12.1 (locked). Fuzzy-join `tax_abatements` hits to
-`eia860_plants`, `ercot_queue`, `solar`, `wind`, `eia860_battery`,
-future `dc_sites` by applicant name + county + approx coords. Single
-pass, no iterative refinement. Add `abatement_*` fields to popups of
-matched facilities. Filter UI controls for `technology` / `commissioned`
-/ `status` on the `tax_abatements` layer.
-
-Challenges: fuzzy-match precision on LLC suffixes / DBA vs legal names;
-strict single-pass rule (no refinement loop).
-
-### Chat 86+ — ABATEMENT COUNTY EXPANSION (21 unverified adapters)
-
-Per spec §12.2 sequencing: Trans-Pecos (Brewster, Culberson, Hudspeth,
-Jeff Davis, Presidio, Terrell) → Permian-core (Andrews, Ector,
-Glasscock, Loving, Martin, Midland, Ward, Winkler) → peripheral (Crane,
-Crockett, Irion, Reagan, Schleicher, Sutton, Upton). PDF-only counties
-dropped per §12.3 and flagged. Estimate 3–5 counties per chat — 5–7
-chats to complete. Re-verify Reeves CivicEngage adapter (regression:
-0 hits on first run Chat 82).
+Per spec §12.2 sequencing (Trans-Pecos in Chat 86). Remaining order:
+Permian-core (Andrews, Ector, Glasscock, Loving, Martin, Midland, Ward,
+Winkler) → peripheral (Crane, Crockett, Irion, Reagan, Schleicher, Sutton,
+Upton). PDF-only counties dropped per §12.3 and flagged. Estimate 3–5
+counties per chat — 4–6 chats to complete after Trans-Pecos.
 
 ### Chat — COMPTROLLER LDAD SCRAPE (was: manual XLSX)
 
@@ -165,43 +166,46 @@ sizing.
 
 ### Outstanding merges
 
-None. All feature branches (`refinement-ui-polish-v2`,
-`refinement-sidebar-collapse`, `refinement-abatement-build`) merged
-and deleted from origin as of Chat 84a. Direct-merge pattern per
-Readme §10 supersedes prior operator-PR workflow.
+None. `refinement-abatement-annotate` merged and deleted from origin Chat 85.
 
-Historical note: `refinement-sidebar-collapse` commits had deployed to
-prod Chat 81 but were never merged to main, creating a silent
-regression on Chat 84's build (prod lost sidebar collapse feature
-transiently). Fixed Chat 84a via merge + redeploy `69eb707c56bb04f8c221f5af`.
-Lesson: every deployed branch must merge to main same-chat.
+Historical notes:
+- Chat 84: `refinement-sidebar-collapse` commits had deployed to prod Chat 81 but were never merged to main, creating a silent regression on Chat 84's build (prod lost sidebar collapse feature transiently). Fixed Chat 84a via merge + redeploy `69eb707c56bb04f8c221f5af`.
+- Chat 85: matcher tightening was amended onto the feature branch AFTER the initial merge, which picked up the pre-amendment local-tracking ref and silently dropped the fix. Resolved by re-applying tightening as a follow-up commit on main. Lesson codified in §Next chat close-out: `git fetch origin <branch>` before `git merge` when the branch was amended post-push.
+- Running principle: every deployed branch must merge to main same-chat; every post-push amendment must force-push and re-fetch before merge.
 
 ---
 
 ## Prod status
 
 - URL: https://lrp-tx-gis.netlify.app — requires real User-Agent on curl (`-A "Mozilla/5.0"`).
-- Last published deploy: `69eb707c56bb04f8c221f5af` (Chat 84a, 2026-04-24). State=ready, CDN-verified, 23 layer ids live, sidebar-collapse feature present. Supersedes `69eb6ae6583299e28d48965e` (Chat 84 abatement deploy — had abatement layer but silently regressed sidebar-collapse).
-- Main HEAD includes `refinement-abatement-build` + `refinement-sidebar-collapse` as of Chat 84a. All feature branches deleted from origin.
+- Last published deploy: `69eb7bccd5cbc81ee84c32c0` (Chat 85, 2026-04-24 14:18:57Z). State=ready, CDN-verified, 23 layer ids live, 9 tax_abatements features, 5 facility annotations (Tolivar ×2 in Reeves, Tierra Bonita BESS + Greasewood II LLC ×2 in Pecos). Supersedes `69eb707c56bb04f8c221f5af`.
+- Main HEAD includes `refinement-abatement-annotate` (merged Chat 85) + tightened-matcher follow-up commit. Branch deleted from origin.
 - Auto-publish: unlocked.
 - **Deploy path: Netlify MCP → CLI proxy.** REST-API dead.
-- Layer set: **23 built clean** (advanced from 22 with `tax_abatements` Chat 84).
+- Layer set: **23 built clean**.
 - Prebuilt PMTiles (4): `parcels_pecos` 4.98 MB, `rrc_pipelines` 4.73 MB, `tiger_highways` 3.11 MB, `bts_rail` 2.16 MB.
 - Sprite sheet: 5 icons @ 1x + 2x at `/sprite/sprite.png` + `sprite@2x.png`.
 - Data-driven sizing live: `ercot_queue`, `solar`, `eia860_plants`, `eia860_battery`, `wind`; `substations`, `tpit_subs`, `tpit_lines`.
 - UI state: sidebar collapsible (`#sb=1`); `parcels_pecos` sidebar-hidden; default-ON layers; default basemap = esri_imagery; default viewport = -102.9707/30.9112 z12.
 - Sizing gaps (static fallback): `eia860_plants` 476/1367 null; `transmission` no voltage.
-- **CDN warmup timing:** 45–75s post-deploy.
+- **CDN warmup timing:** 45–75s post-deploy. Proxy URL single-use — request fresh URL on 503.
 
-### Abatement layer notes (Chat 83–84)
+### Abatement layer notes (Chat 83–85)
 
-- 8 features live. All geocoded to **county centroid only** — no sub-county spatial precision. Do not represent as true point locations.
+- **9 features live** (8 Pecos-agenda rows + Matterhorn Express Pipeline LLC with meeting date 2022-07-25). All geocoded to **county centroid only** — no sub-county spatial precision. Do not represent as true point locations.
 - **Column-mapping caveats** (schema constraint — `combined_points.csv` has fixed columns):
   - `agenda_url` stored in the `poi` column.
-  - `flags` stored in the `funnel_stage` column.
-  - `applicant` stored in `operator`; `status` in `funnel_stage` (shares column with flags); `reinvestment_zone` in `project`; `project_type` in `technology`; `meeting_date` in `commissioned`.
+  - `flags` stored in the `funnel_stage` column. **`status` is derived at build time** as `funnel_stage.split('|')[0]` — present in popups + filter UI as its own field.
+  - `applicant` stored in `operator`; `reinvestment_zone` in `project`; `project_type` in `technology`; `meeting_date` in `commissioned`.
 - **Silver Basin Digital row** has `technology=abatement_other` (not a canonical project_type). Filter via `project=` (reinvestment zone) rather than `technology=` to isolate canonical project-type categories.
-- **Matterhorn row dropped Chat 83** — no meeting date captured. Re-include Chat 85 after agenda PDF re-scrape or operator-provided date.
+- **Filter UI** on tax_abatements: county, technology (project type), status, commissioned (meeting date).
+- **Facility annotation (Chat 85, spec §12.1):** build-time fuzzy join matches `tax_abatements` applicants to `eia860_plants`, `ercot_queue`, `solar`, `wind`, `eia860_battery` by `(county, applicant_norm subset-of or equals facility-name/entity/operator/project tokens)`. Zone_creation and relationship_signal rows skipped. Annotated facilities get `abatement_*` properties rendered in popup via `abatementAnnotationHtml()` helper. **5 annotations live:**
+  - `Tolivar Power Plant (TEF- Due Diligence)` (ercot_queue, Reeves) ← Pecos Power Plant LLC
+  - `Tolivar Power Plant Phase 2` (ercot_queue, Reeves) ← Pecos Power Plant LLC
+  - `Tierra Bonita BESS SLF` (ercot_queue, Pecos) ← Greasewood II BESS, LLC
+  - `Greasewood II LLC` (eia860_plants, Pecos) ← Greasewood II BESS, LLC (same-parent-family match)
+  - `Greasewood II LLC` (solar, Pecos) ← Greasewood II BESS, LLC (same-parent-family match)
+- **Match rule tightened mid-chat 85** — initial "≥2 token overlap" rule fired on generic tokens (`ii`, `bess`, `ridge`, `solar`) producing 3 false positives (Elk Ridge Solar, Longfellow BESS II, Sherbino II BESS SLF). Rule reduced to subset-match only.
 
 ---
 
@@ -213,7 +217,7 @@ Lesson: every deployed branch must merge to main same-chat.
 - `eia860_plants`: 476/1367 rows null `capacity_mw`/`technology`/`fuel`.
 - `combined_points.csv` blank `operator` / `commissioned` on EIA point layers.
 - Cosmetic: prebuilt PMTiles feature counts show 0 in sidebar.
-- Reeves CivicEngage adapter returned 0 rows on first run — URL pattern or selector needs re-verify Chat 83 or Chat 85.
+- Reeves CivicEngage adapter returned 0 rows on first run — URL pattern or selector needs re-verify Chat 86 (Pecos Power Plant LLC Reeves row remains hand-seeded from spec §8).
 
 **Infrastructure:**
 - `NETLIFY_PAT=` absent from `CREDENTIALS.md`. Netlify MCP proxy path canonical.

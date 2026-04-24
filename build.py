@@ -87,9 +87,12 @@ def _normalize_applicant(s):
 
 def _name_fuzzy_match(applicant_norm, candidate_strs):
     """Token-set match: applicant tokens vs each candidate's normalized tokens.
-    Match criterion:
-      - single-token applicant: token must appear in candidate tokens
-      - multi-token applicant: subset match (either direction) OR ≥2 overlap
+    Strict subset-match rule — one side's non-empty token set must be fully
+    contained in the other's. This catches legal-entity matches (e.g.
+    `pecos power plant` == `pecos power plant`) but rejects generic-token
+    coincidences (`ii`+`bess` overlap between unrelated projects).
+    The earlier `≥2 token overlap` fallback was removed Chat 85 after producing
+    3 false positives (Elk Ridge Solar, Longfellow BESS II, Sherbino II BESS SLF).
     """
     if not applicant_norm:
         return False
@@ -100,16 +103,7 @@ def _name_fuzzy_match(applicant_norm, candidate_strs):
         ctoks = set(_normalize_applicant(c).split())
         if not ctoks:
             continue
-        inter = atoks & ctoks
-        if not inter:
-            continue
-        if len(atoks) == 1:
-            if atoks <= ctoks:
-                return True
-            continue
         if atoks <= ctoks or ctoks <= atoks:
-            return True
-        if len(inter) >= 2:
             return True
     return False
 
