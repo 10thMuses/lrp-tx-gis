@@ -86,7 +86,13 @@ Failure at any gate halts the chat. Never advance with a failing gate.
 
 **No PR workflow for routine chats.** Direct main-branch commit. PR workflow applies only when explicitly scoped (e.g., a structured refinement sequence).
 
-**Push empty branch at session open (added Chat 88).** Session-open block includes `git push -u origin <branch>` immediately after `git checkout -b <branch>`. The branch exists on origin before any file edit. This converts Readme §7.9 ("push-on-commit") from aspirational to mechanical: every subsequent commit has an upstream already set, one-call `git push` works without `-u` flag debates. Originates from Chat 88 failure mode — a multi-file refactor completed all local edits but never pushed because the close-out budget ran out before the branch's first push.
+**Canonical session-open script (added Chat 88).** Every shipping chat's `## Next chat` session-open block invokes `bash scripts/session-open.sh <branch-name>` rather than inlining git commands. The script mechanically enforces three rules that prior chats repeatedly skipped:
+
+- Readme §10 branch-ahead check — fetch origin, check out remote branch if it exists rather than reconstructing locally.
+- Readme §9.7 trust-handoff-recon — detect and print `docs/_<slug>_handoff.md` if present, so executor cannot proceed without reading.
+- principles §5 push-empty-branch — if no remote branch exists, push immediately so upstream tracking is set before the first edit.
+
+Originates from a Chat 88 failure mode: two consecutive sessions skipped branch-ahead and handoff-doc checks at session open because the inlined bash block in WIP_OPEN.md omitted them. Making the procedure a single script call removes the opportunity to omit steps. Future `## Next chat` blocks MUST use the script; inlined session-open bash is deprecated.
 
 ---
 
