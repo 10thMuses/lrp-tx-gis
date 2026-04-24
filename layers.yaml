@@ -28,8 +28,8 @@ layers:
   file: combined_geoms.geojson
   geom: fill
   group: Land & Deal
-  label: Caramba North (1,681 ac)
-  color: '#78350f'
+  label: Caramba North (1,300 ac)
+  color: '#2E7D32'
   fill_opacity: 0.25
   default_on: true
   popup:
@@ -291,6 +291,22 @@ layers:
   - legal_desc
   - land_use
   - prop_id
+- id: waha_circle
+  file: combined_geoms.geojson
+  geom: point
+  group: Reference
+  label: Waha Hub Ring
+  color: '#FFD400'
+  circle_radius: 14
+  stroke_color: '#FFD400'
+  stroke_width: 2
+  fill_opacity: 0
+  default_on: true
+  popup:
+  - name
+  tippecanoe:
+  - -Z0
+  - -z14
 - id: labels_hubs
   file: combined_geoms.geojson
   geom: label
@@ -362,6 +378,7 @@ layers:
   group: Reference
   label: Highways (Interstate + US)
   color: '#f59e0b'
+  line_width: 0.6
   default_on: false
   popup:
   - name
