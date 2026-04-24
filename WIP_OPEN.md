@@ -8,9 +8,24 @@ Per Readme §10: **`## Next chat`** = paste-ready for next shipping chat. **`## 
 
 ## Next chat
 
-**Chat 87 — STYLING + CARAMBA LABEL.** Full brief: `docs/sprint-plan.md` §Chat 87. Five UI-only edits, one deploy, one merge. No new data, no new scrapers.
+**Chat 87 (resume) — FINISH STYLING + CARAMBA LABEL.** All pre-build edits shipped to branch `refinement-chat87-styling` as commit `c81ebb5` (pushed 2026-04-24). **Do NOT create a new branch. Do NOT re-execute the edits.** Checkout the existing branch and proceed to build + deploy + merge.
 
-Scope summary: (1) `tiger_highways` thinner via `sizingLineWidthExpr` baseline patch + `line_width: 0.6` in `layers.yaml`; (2) new `waha_circle` yaml entry — yellow ring around WAHA hub; (3) Caramba North outline `#78350f` → `#2E7D32`; (4) Caramba North label `1,681 ac` → `1,300 ac`; (5) fix layer-count regex in this §Session open block (see below).
+Pre-build state on branch:
+- `layers.yaml`: `waha_circle` inserted before `labels_hubs`; `tiger_highways` has `line_width: 0.6`; `caramba_north` is green (`#2E7D32`) + label `1,300 ac`.
+- `build_template.html`: `sizingLineWidthExpr` baseline reads `L.line_width ?? 2`; `layerPaint()` point block reads optional `circle_radius` / `stroke_color` / `stroke_width` / `fill_opacity`.
+- `combined_geoms.geojson`: Waha feature duplicated with `layer_id: 'waha_circle'` (1 feature).
+
+Remaining tasks:
+
+1. Build (`python3 build.py`) — expect 24 layers clean.
+2. Deploy via Netlify MCP → CLI proxy (canonical path below).
+3. Verify: HTTP 200 + layer-id grep returning 24.
+4. Visual verification: tiger_highways thinner at z=8; Waha yellow ring visible; Caramba North green + "1,300 ac" label.
+5. Merge branch to main per amended-branch protocol (§Chat 85 lesson); delete branch.
+6. Rewrite this §Next chat to Chat 88 (ABATEMENT REFACTOR) brief; delete §Chat 87 from `docs/sprint-plan.md`.
+7. **Also in scope:** audit and clean up stranded branches `chat76-wip` and `refinement-tceq-refresh` on origin. Recover any salvageable work to a future-chat placeholder in §Sprint queue or delete if superseded.
+
+Credential hygiene: `GITHUB_PAT` was leaked in a push-URL echo during Chat 87 edit session. Rotate before next chat runs and update `CREDENTIALS.md` on main. If rotation hasn't happened, the next chat should halt and flag before pushing.
 
 Expected layer count post-build: **24** (23 baseline + `waha_circle`).
 
@@ -21,11 +36,12 @@ PAT=$(grep '^GITHUB_PAT=' /mnt/project/CREDENTIALS.md | cut -d= -f2)
 cd /home/claude && rm -rf repo 2>/dev/null
 git clone -q https://x-access-token:${PAT}@github.com/10thMuses/lrp-tx-gis.git repo && cd repo
 git config user.email "claude@lrp.local" && git config user.name "Claude (LRP GIS)"
-git checkout -b refinement-chat87-styling origin/main
+git checkout refinement-chat87-styling   # EXISTING branch, do not recreate
+git log --oneline -3                      # verify HEAD is c81ebb5
 apt-get install -y tippecanoe libcairo2 -q
 pip install shapely pmtiles pyyaml cairosvg pandas --break-system-packages -q
 curl -sI -A "Mozilla/5.0" https://lrp-tx-gis.netlify.app/ | head -1
-curl -s -A "Mozilla/5.0" https://lrp-tx-gis.netlify.app/ | grep -oE '"id":"[a-z_][a-z0-9_]*"' | sort -u | wc -l   # expect 23
+curl -s -A "Mozilla/5.0" https://lrp-tx-gis.netlify.app/ | grep -oE '"id":"[a-z_][a-z0-9_]*"' | sort -u | wc -l   # expect 23 pre-deploy, 24 post-deploy
 ```
 
 ### Deploy pattern (CANONICAL)
