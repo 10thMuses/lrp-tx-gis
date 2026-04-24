@@ -275,6 +275,9 @@ if (initHash.filters) {
   try { filterState = JSON.parse(initHash.filters) || {}; } catch (e) { filterState = {}; }
 }
 
+let sidebarCollapsed = initHash.sb === '1';
+if (sidebarCollapsed) document.body.classList.add('sb-collapsed');
+
 const protocol = new pmtiles.Protocol();
 maplibregl.addProtocol('pmtiles', protocol.tile);
 
@@ -867,7 +870,7 @@ function syncHash() {
     if (L && isLayerFiltered(L)) activeFilters[lid] = filterState[lid];
   });
   const filtersStr = Object.keys(activeFilters).length > 0 ? JSON.stringify(activeFilters) : undefined;
-  writeHash({ lat: c.lat, lon: c.lng, zoom: map.getZoom(), layers: activeLayerIds().join(','), base: currentBase, filters: filtersStr });
+  writeHash({ lat: c.lat, lon: c.lng, zoom: map.getZoom(), layers: activeLayerIds().join(','), base: currentBase, filters: filtersStr, sb: sidebarCollapsed ? '1' : undefined });
 }
 
 let currentBase = initBase;
@@ -910,6 +913,28 @@ document.getElementById('btn-print').addEventListener('click', () => {
   const now = new Date();
   document.getElementById('print-date').textContent = now.toLocaleDateString('en-US', { year:'numeric', month:'long', day:'numeric' });
   setTimeout(() => window.print(), 50);
+});
+
+const sbToggle = document.getElementById('sb-toggle');
+function updateSbChevron() {
+  sbToggle.textContent = sidebarCollapsed ? '»' : '«';
+  sbToggle.setAttribute('aria-expanded', sidebarCollapsed ? 'false' : 'true');
+}
+updateSbChevron();
+sbToggle.addEventListener('click', () => {
+  sidebarCollapsed = !sidebarCollapsed;
+  document.body.classList.toggle('sb-collapsed', sidebarCollapsed);
+  updateSbChevron();
+  let done = false;
+  const finish = () => { if (done) return; done = true; map.resize(); syncHash(); };
+  const onEnd = (e) => {
+    if (e.target !== document.body) return;
+    if (e.propertyName && e.propertyName.indexOf('grid-template-columns') === -1 && e.propertyName.indexOf('transform') === -1) return;
+    document.body.removeEventListener('transitionend', onEnd);
+    finish();
+  };
+  document.body.addEventListener('transitionend', onEnd);
+  setTimeout(finish, 260);
 });
 
 let measureActive = false;
