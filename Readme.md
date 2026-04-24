@@ -173,6 +173,15 @@ Rule: if the next chat's first action isn't discoverable from `WIP_OPEN.md` alon
 
 **Session-open branch-ahead rule (added Chat 79).** At session open, if the remote branch named in `## Next chat` already has commits beyond `main`, treat those commits as authoritative prior work. Inspect (`git log --oneline main..HEAD`, view changed files) before editing. Never force-push or reconstruct a fresh branch state without reading the remote first. Rationale: prior-session work that completed but wasn't recorded in `WIP_OPEN.md` still exists on the branch; stale memory or partial handoff can trigger a reconstruction that would overwrite better work. Caught once in Chat 79 via `git fetch` rejection; codified here.
 
+**Close-out discipline (added Chat 81).** Stop active feature work at ~65% of the token budget. The remaining ~35% is reserved for blocker recovery plus four non-optional close-out actions, in order:
+
+1. **Push feature branch to origin.** Preserves work across container reset. Uncommitted edits in `/home/claude/` are lost on reset; only origin-pushed commits persist.
+2. **Rewrite `WIP_OPEN.md` §Next chat.** Must reflect what actually shipped, what actually didn't, and what the next chat's first action is. A stale `## Next chat` forces the next session to do recovery work before it can do new work.
+3. **Prepend `WIP_LOG.md`** with an entry for this chat (deploy id, branch commit, scope delivered, any mid-chat rule changes).
+4. **Commit `WIP_OPEN.md` + `WIP_LOG.md` to `main` and push.**
+
+All four are non-optional, even when the feature itself fails to ship, even when a blocker prevented deploy, even when the chat ran short. A chat that ships the feature but skips close-out is a failure, not a partial success — the next chat starts from a broken state and burns tokens reconstructing what just happened. If close-out cannot fit in the remaining budget, stop shipping and do close-out only. Codified after Chat 81 shipped SIDEBAR COLLAPSE to prod but left all four close-out actions undone until mid-chat operator correction.
+
 ---
 
 ## 11. Tool-Call Budgets

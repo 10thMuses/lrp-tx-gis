@@ -1,3 +1,59 @@
+## Chat 81 — 2026-04-24 — SIDEBAR COLLAPSE shipped (branch pending PR merge)
+
+**Classification:** shipping, LOW blast radius. Three JS edits to `build_template.html` on top of Chat 80's CSS+HTML. No data changes, no `layers.yaml` changes, no `build.py` changes.
+
+**Scope:** Resume from Chat 80 pause. Finish JS wiring of sidebar collapse toggle per WIP_OPEN.md §Next chat spec (Edits A/B/C).
+
+**Files changed:**
+
+| File | Change |
+|---|---|
+| `build_template.html` | Edit A: init `sidebarCollapsed` from `initHash.sb === '1'` and apply `sb-collapsed` body class before map construction. Edit B: `syncHash` now passes `sb: sidebarCollapsed ? '1' : undefined` to `writeHash`. Edit C: toggle click handler (`#sb-toggle`) flips `sb-collapsed` class, updates chevron, fires `map.resize()` + `syncHash()` on `transitionend` (body `grid-template-columns` or mobile `.sidebar` `transform`) with 260ms fallback setTimeout. |
+
+**Branch:** `refinement-sidebar-collapse`. Commits: `bdc1fb6` (Chat 80 CSS+HTML+writeHash) + `6d356cd` (Chat 81 JS wiring). Branch pushed.
+
+**Deploy:** `69eaf518997b708751d871bf` via Netlify MCP → CLI proxy. `state=ready` at ~20s. CDN warmup: 503 at 45s, 200 at 75s. Marker grep on live HTML returned `sb-toggle` + `sidebarCollapsed` both present; layer count 22.
+
+**Deploy path correction (reverses Chat 77 process change):** Chat 77 declared Netlify REST API as canonical deploy path after MCP proxy 503 incident. Chat 81 discovered `NETLIFY_PAT=` line is absent from `CREDENTIALS.md` — REST API call returned 401 "Access Denied: Missing access token". Reverted to Netlify MCP → CLI proxy path per `docs/settled.md` §Deploy. That path worked first try. REST API is dead for this site until/unless operator provisions a new Netlify PAT.
+
+**Close-out discipline added to Readme §10:** Mid-chat operator correction — Chat 81 initially shipped the feature to prod but skipped close-out (no branch push, no WIP_OPEN rewrite, no WIP_LOG append, no main push). Operator flagged as a recurring pattern across recent chats. Codified in Readme §10: stop active work at ~65% tokens; reserve ~35% for the four non-optional close-out actions (branch push, WIP_OPEN rewrite, WIP_LOG append, main commit+push). A chat that ships feature but skips close-out is a failure, not a partial success.
+
+**PR:** `refinement-sidebar-collapse` → `main` not yet opened. `GITHUB_PAT` in `CREDENTIALS.md` still lacks PR-creation scope (carried from Chat 79). Operator opens PR via GitHub UI.
+
+**Verification:**
+- Deploy state=ready confirmed via Netlify reader MCP tool.
+- Prod root 200 confirmed with `Mozilla/5.0` UA at ~75s post-ready.
+- Layer count 22 confirmed via `grep -oE '"id":[ ]*"[a-z0-9_]+"'` on live HTML.
+- Feature markers `sb-toggle` + `sidebarCollapsed` both present in live HTML.
+
+**Next chat trigger:** `Resume.` → Chat 82 ABATEMENT BUILD.
+
+---
+
+## Chat 80 — 2026-04-24 — SIDEBAR COLLAPSE partial (paused)
+
+**Classification:** shipping, LOW blast radius (intended). Did not complete — token limit hit before JS wiring.
+
+**Scope:** Per WIP_OPEN.md §"SIDEBAR COLLAPSE — task execution order" from Chat 79 close-out. Intended 9-edit bundle on `build_template.html`: CSS (4 edits), HTML (1), JS (4).
+
+**Files changed:**
+
+| File | Change |
+|---|---|
+| `build_template.html` | 6 of 9 intended edits: CSS body grid transition + `sb-collapsed` state; `.sidebar` overflow/min-width/border; `.sb-toggle` 44×44 button styles; `@media (max-width: 720px)` mobile overlay drawer; print hide; HTML toggle button inserted inside `.map-wrap` after `#map`; JS `writeHash` serialization of `state.sb` as `sb=1`. |
+
+**Branch:** `refinement-sidebar-collapse` created from `main`. Commit `bdc1fb6`, pushed.
+
+**Not completed:** Three JS edits (init `sidebarCollapsed` from hash before map construction; `syncHash` passes `sb`; toggle click handler with `map.resize()` on `transitionend`). Toggle button rendered in DOM but inert.
+
+**Deploy:** None. Branch not deployable.
+
+**Close-out:** Partial. `WIP_OPEN.md` §Next chat rewritten on main to Chat 81 RESUME spec with exact code blocks for remaining three JS edits, pushed as commit `0831052`. WIP_LOG entry deferred to Chat 81 (this entry).
+
+**Next chat trigger:** `Resume.` → Chat 81 finishes JS wiring on top of `bdc1fb6`.
+
+---
+
 ## Chat 79 — 2026-04-23 — UI POLISH v2 shipped (branch not yet merged)
 
 **Classification:** shipping, MEDIUM blast radius. Four simultaneous template/config changes on `build_template.html` + `layers.yaml` + `build.py`. No data changes.
