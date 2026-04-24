@@ -391,3 +391,27 @@ layers:
   - accuracy
   tippecanoe:
   - -zg
+- id: tax_abatements
+  file: combined_points.csv
+  geom: point
+  group: Permits
+  label: Tax Abatements
+  color: '#dc2626'
+  default_on: false
+  radius: 4
+  popup:
+  - name
+  - operator
+  - county
+  - commissioned
+  - project
+  - technology
+  - capacity_mw
+  - poi
+  filterable_fields:
+  - {field: county, type: categorical, label: County}
+  - {field: technology, type: categorical, label: Project Type}
+  - {field: commissioned, type: text, label: Meeting Date}
+  tippecanoe:
+  - -Z0
+  - -z14
