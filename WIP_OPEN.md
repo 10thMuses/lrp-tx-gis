@@ -61,36 +61,128 @@ No `WIP_LOG.md` append. No `## Recent sessions` row. Both sections removed Chat 
 
 ## Sprint queue
 
-### Chat 86 — ABATEMENT COUNTY EXPANSION (21 unverified adapters)
+Ordered by operator priority. N+2 and beyond.
 
-Per spec §12.2 sequencing: Trans-Pecos (Brewster, Culberson, Hudspeth, Jeff Davis, Presidio, Terrell) → Permian-core (Andrews, Ector, Glasscock, Loving, Martin, Midland, Ward, Winkler) → peripheral (Crane, Crockett, Irion, Reagan, Schleicher, Sutton, Upton). Per spec §12.3 PDF-only counties dropped; flag in deliverable. URL research + adapter write per county; estimate 3–5 counties per chat given adapter pattern overhead.
+### Chat 85 — ABATEMENT ANNOTATION + FILTER UI
 
-### Chat 87 — ABATEMENT WEEKLY CRON
+Per spec §12.1 (locked). Fuzzy-join `tax_abatements` hits to
+`eia860_plants`, `ercot_queue`, `solar`, `wind`, `eia860_battery`,
+future `dc_sites` by applicant name + county + approx coords. Single
+pass, no iterative refinement. Add `abatement_*` fields to popups of
+matched facilities. Filter UI controls for `technology` / `commissioned`
+/ `status` on the `tax_abatements` layer.
 
-`.github/workflows/abatement-scrape.yml`. Cron weekly Monday 06:00 UTC. Commit diff to `data/abatements/abatement_hits_latest.csv` + rolling history. Alerting deferred per §12.8.
+Challenges: fuzzy-match precision on LLC suffixes / DBA vs legal names;
+strict single-pass rule (no refinement loop).
 
-### Chat 88+ — Mobile-friendly map
+### Chat 86+ — ABATEMENT COUNTY EXPANSION (21 unverified adapters)
 
-UI/UX stage. Responsive breakpoints, touch-friendly controls, pinch-zoom tuning, measure tool + print-to-PDF mobile usability, popup sizing. Candidate for promotion into `docs/refinement-sequence.md`.
+Per spec §12.2 sequencing: Trans-Pecos (Brewster, Culberson, Hudspeth,
+Jeff Davis, Presidio, Terrell) → Permian-core (Andrews, Ector,
+Glasscock, Loving, Martin, Midland, Ward, Winkler) → peripheral (Crane,
+Crockett, Irion, Reagan, Schleicher, Sutton, Upton). PDF-only counties
+dropped per §12.3 and flagged. Estimate 3–5 counties per chat — 5–7
+chats to complete. Re-verify Reeves CivicEngage adapter (regression:
+0 hits on first run Chat 82).
 
-### Outstanding merges (operator)
+### Chat — COMPTROLLER LDAD SCRAPE (was: manual XLSX)
 
-- `refinement-ui-polish-v2` → `main` (Chat 79). Prod reflects via deploy `69ea9d1b8b51ad96ce674f5d`. Cleanup only.
-- `refinement-sidebar-collapse` → `main` (Chat 81). Prod reflects via deploy `69eaf518997b708751d871bf`. Cleanup only.
+Supersedes prior "operator manual XLSX download" ask. There is no bulk
+XLSX — Comptroller registry is JS-gated with per-record CSV only.
 
-(Note Chat 84a: `refinement-abatement-build` was merged directly to `main` by Claude via PAT push — no operator step required. Direct-merge pattern now standard; see §Close-out above. The two entries above are residual and can be cleaned up by operator or folded into a future Claude direct-merge.)
+Canonical source: https://comptroller.texas.gov/economy/development/search-tools/sb1340/search.php
+(SB 1340 unified Ch. 380/381/312 Local Development Agreement DB).
 
-### Operator data ask (spec §12.5, non-blocking)
+Blocked pending operator authorization for JS-rendered scrape
+(Selenium / Playwright pattern — same authorization class as CRPUB /
+RRC MFT). Until authorized: backstop only, not leading signal;
+commissioners-court agenda scrape remains primary.
 
-Comptroller Ch. 312 abatement registry spreadsheet — manual quarterly download from `comptroller.texas.gov`. Authoritative statewide baseline + backstop for county scrape failure. Can land Chat 86 or later. Drop in `/mnt/user-data/uploads/` when downloaded.
+### Chat — ABATEMENT WEEKLY CRON
+
+`.github/workflows/abatement-scrape.yml`. Cron weekly Monday 06:00 UTC.
+Commit diff to `data/abatements/abatement_hits_latest.csv` + rolling
+history. Alerting deferred per spec §12.8.
+
+Challenges: runner egress reliability on county CMS endpoints; silent
+drift if selectors break (no alerting in v1).
+
+### Chat — LEGEND ON PRINT / SHARE / PDF  *(new, surfaced 2026-04-24)*
+
+Current gap: print CSS at `build_template.html:96-110` hides `.sidebar`
+on `@media print`. The sidebar IS the legend; prints/PDFs ship without
+it. Share-URL flow also has no legend.
+
+Scope: inject a print-only legend element enumerating active layers
+(name + color swatch + symbol) into print header or footer. Fit within
+10.3"×7.1" landscape print area. Handle >15 active layers via
+multi-column or multi-page. Verify share-URL flow still reproduces
+layer state correctly.
+
+Challenges: active-layer enumeration at print time; style system must
+match main-map rendering (point vs line vs polygon); legend height
+budget.
+
+### Chat — DC RESEARCH → DC BUILD → DC AUTO-REFRESH (3-chat sub-sequence)
+
+Per `docs/refinement-sequence.md`. Research anchors: Longfellow/Poolside
+(Pecos), Stargate (Abilene), Project Matador/Fermi. Capture per-project:
+name, county, coords, MW, announcement date, completion date,
+owner/operator/developer, tenant, source, confidence level. Deliver
+structured data file → layer build → GitHub Actions weekly refresh with
+LLM-in-the-loop parser.
+
+Challenges: signal quality (announced vs rumored); coord precision when
+only county disclosed; LLM parser reliability for auto-refresh.
+
+### Chat — MOBILE-FRIENDLY MAP (UI/UX stage)
+
+Responsive breakpoints, touch-friendly controls, pinch-zoom tuning,
+measure tool + print-to-PDF mobile usability, popup sizing. Candidate
+for promotion into `docs/refinement-sequence.md`. Estimate 2–3 chats.
+
+Challenges: measure tool UX on touch; sidebar collapse behavior on
+narrow viewports; popup sizing with long field lists.
+
+### Chat — ERCOT QUEUE PROJECT AGGREGATION POPUP  *(new, low priority)*
+
+Current state: `ercot_queue` has 1,205 distinct project `group` keys
+(e.g., `LONGFELLOW__PECOS`); 394 groups have 2+ components. Popup today
+shows single-row data only.
+
+Scope: build-time aggregation in `build.py` — compute `group_total_mw`,
+`group_count`, and `group_breakdown` (list of name / fuel / MW per
+component) per group; inject into each row's properties. Popup template
+renders summary line (total MW, component count) + breakdown list.
+
+Verified test case — Longfellow__Pecos: 6 rows, 2,153.3 MW total
+(Solar I 178.2 + Solar II 207.4 + BESS I 55.0 + BESS II 105.8 +
+Comanche Creek gas 107.0 + Big Canyon Wind 1,500.0).
+
+Challenges: rows with null `group` (handle as pass-through);
+popup rendering of breakdown list; no regression to data-driven icon
+sizing.
+
+### Outstanding merges
+
+None. All feature branches (`refinement-ui-polish-v2`,
+`refinement-sidebar-collapse`, `refinement-abatement-build`) merged
+and deleted from origin as of Chat 84a. Direct-merge pattern per
+Readme §10 supersedes prior operator-PR workflow.
+
+Historical note: `refinement-sidebar-collapse` commits had deployed to
+prod Chat 81 but were never merged to main, creating a silent
+regression on Chat 84's build (prod lost sidebar collapse feature
+transiently). Fixed Chat 84a via merge + redeploy `69eb707c56bb04f8c221f5af`.
+Lesson: every deployed branch must merge to main same-chat.
 
 ---
 
 ## Prod status
 
 - URL: https://lrp-tx-gis.netlify.app — requires real User-Agent on curl (`-A "Mozilla/5.0"`).
-- Last published deploy: `69eb6ae6583299e28d48965e` (Chat 84, `refinement-abatement-build`, 2026-04-24). State=ready, CDN-verified, 23 layer ids live.
-- Main HEAD includes `refinement-abatement-build` as of Chat 84a (merge commit `78754f6`). Feature branch deleted from origin.
+- Last published deploy: `69eb707c56bb04f8c221f5af` (Chat 84a, 2026-04-24). State=ready, CDN-verified, 23 layer ids live, sidebar-collapse feature present. Supersedes `69eb6ae6583299e28d48965e` (Chat 84 abatement deploy — had abatement layer but silently regressed sidebar-collapse).
+- Main HEAD includes `refinement-abatement-build` + `refinement-sidebar-collapse` as of Chat 84a. All feature branches deleted from origin.
 - Auto-publish: unlocked.
 - **Deploy path: Netlify MCP → CLI proxy.** REST-API dead.
 - Layer set: **23 built clean** (advanced from 22 with `tax_abatements` Chat 84).

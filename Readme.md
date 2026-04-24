@@ -194,6 +194,8 @@ git push origin --delete <feature-branch>
 
 Feature branch is deleted from origin same-chat. No "Outstanding PR merges" accumulation. No operator action required for merges. The "operator merge" / "open PR via GitHub UI" pattern from Chats 79–83 is obsolete.
 
+**Deploy-without-merge is forbidden (added Chat 84a).** Any chat that deploys a feature must also merge the feature branch to `main` in the same chat. Deferring the merge creates a silent regression window: the next chat's build pulls from `main`, which lacks the deployed feature, and the next deploy reverts production. This happened Chat 81 → Chat 84: sidebar-collapse deployed but never merged; Chat 84's abatement deploy silently removed sidebar-collapse from prod. Caught and fixed Chat 84a. Rule: **deploy + merge + delete-branch are one atomic close-out unit.** Never end a shipping chat with a deployed-but-unmerged branch.
+
 **No history logs, no session tables, no recap sections.** Backward-looking audit trails that no one reads are gratuitous overhead. `WIP_LOG.md` is frozen (no new entries) as of Chat 83a. `## Recent sessions` and `## Current workstream` sections are removed from `WIP_OPEN.md`. Git history carries the audit trail if it's ever needed.
 
 ---
