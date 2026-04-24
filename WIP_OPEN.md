@@ -43,7 +43,11 @@ git clone -q https://x-access-token:${PAT}@github.com/10thMuses/lrp-tx-gis.git r
 git config user.email "claude@lrp.local" && git config user.name "Claude (LRP GIS)"
 git fetch origin refinement-chat88-abatement-refactor
 git checkout refinement-chat88-abatement-refactor    # existing remote branch; do NOT -b
-test $(git log --oneline main..HEAD | wc -l) -eq 5 || { echo "BRANCH DRIFT — expected 5 commits ahead of main; halt and diagnose"; exit 1; }
+# Readme §7.12 state reconciliation (non-negotiable):
+git log --oneline main..HEAD                          # expect 6 commits (5 Chat-88 + 1 handoff update)
+ls docs/_*_handoff.md 2>/dev/null || true             # expect docs/_chat88_handoff.md present
+# Mode: ≥1 commits + handoff doc present → compare. Doc §State updated 2026-04-24 to reflect shipped 1–6. Execution resumes at step 7.
+test $(git log --oneline main..HEAD | wc -l) -ge 5 || { echo "BRANCH DRIFT — expected ≥5 commits ahead of main; halt and diagnose per §7.12"; exit 1; }
 apt-get install -y tippecanoe libcairo2 -q
 pip install shapely pmtiles pyyaml cairosvg pandas --break-system-packages -q
 curl -sI -A "Mozilla/5.0" https://lrp-tx-gis.netlify.app/ | head -1

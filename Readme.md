@@ -135,6 +135,44 @@ Execute end-to-end without mid-session confirmation.
 
     **Scoping check before starting.** Count commits the stage will produce. Count file rewrites. Count verification gates. Five+ commits or three+ distinct subsystems = split before starting, not after.
 
+11. **Recon-only sessions are failures.**
+
+    A shipping chat that ends with zero non-handoff commits on `origin` has failed, regardless of what the handoff doc says. Recon is cheap; shipping is the output. A session that clones, reads files, documents findings in `docs/_<stage>_handoff.md`, and stops forces the next session to re-verify every line number and file location the recon already paid for — doubling cost and leaving the stage no closer to shipped.
+
+    **Rule.** Every shipping chat pushes ≥1 commit to `origin` that is not a handoff doc. A handoff doc is only acceptable when the same chat also shipped real edits, or as the §7.7 trigger artifact written after budget exhaustion mid-execution.
+
+    **If the stage won't fit the remaining budget** (discovered at session open via §7.10 scoping check, before recon burns tokens), the correct move is:
+
+    a. Edit `WIP_OPEN.md §Next chat` to name sub-stage A (this chat, scoped to fit) and sub-stage B (next chat).
+    b. Ship sub-stage A to the branch — at least one real commit.
+    c. Commit the `WIP_OPEN.md` split.
+
+    Not acceptable: write a "recon findings" handoff doc and stop. That is the pattern this rule exists to kill.
+
+    **Operator tell.** Any chat where the final chat message reads "shipped recon / handoff written / build+deploy in next chat" is a §7.11 violation. Next chat's first action is to confirm whether ≥1 non-handoff commit shipped; if not, promote this chat's `WIP_OPEN.md §Next chat` explicitly as a scope-miss recovery.
+
+12. **Session-open state reconciliation.**
+
+    First two commands of any shipping chat after clone, in order, before any other tool calls:
+
+    ```bash
+    git log --oneline main..HEAD              # commits on branch (0 or N)
+    ls docs/_*_handoff.md 2>/dev/null || true  # handoff docs on branch (absent or present)
+    ```
+
+    The output pair determines execution mode. Do not skip this check even when `WIP_OPEN.md §Next chat` states the mode explicitly — `WIP_OPEN` can lag the branch.
+
+    | Commits | Handoff doc | Execution mode |
+    |---|---|---|
+    | 0 | absent | New sprint per `WIP_OPEN §Next chat`. |
+    | ≥1 | absent | Resume per commit log. Branch is authoritative. |
+    | 0 | present | Resume per handoff doc. Doc is authoritative. |
+    | ≥1 | present | Compare. If doc says "no edits shipped" or describes step 1 of an execution plan but `git log` shows commits covering steps 1–N, **the doc is STALE**. First commit of the resume session updates the handoff doc to reflect actual branch state; subsequent commits continue execution from the first un-shipped step. |
+
+    **Stale-handoff heuristic.** Handoff docs written by recon-only sessions (§7.11 violations) almost always describe "step 1: create branch" as the next action. If the branch already exists on origin with commits, that step is complete. Do not re-create, do not re-push, do not halt — reconcile and continue.
+
+    This check is non-negotiable. Skipping it is how Chat 88 burned an entire session on recon that had already been done. It is ~2 tool calls and always pays for itself.
+
 ---
 
 ## 8. Working Style
