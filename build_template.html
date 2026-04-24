@@ -335,7 +335,7 @@ function sizingRadiusExpr(L) {
 }
 function sizingLineWidthExpr(L) {
   const rule = SIZING_RULES[L.id];
-  if (!rule || rule.mode !== 'kv_line') return 2;
+  if (!rule || rule.mode !== 'kv_line') return L.line_width ?? 2;
   return ['case', ['<=', _sizingVal(rule), 0], 2,
     ['interpolate', ['linear'], _sizingVal(rule),
       0, 1.5, 69, 2, 138, 2.5, 230, 3, 345, 3.5, 500, 4]];
@@ -374,11 +374,11 @@ function layerPaint(L) {
   if (L.geom === 'point') {
     const color = (L.id === 'ercot_queue') ? ercotQueueColorExpr() : L.color;
     return {
-      'circle-radius': sizingRadiusExpr(L),
+      'circle-radius': L.circle_radius ?? sizingRadiusExpr(L),
       'circle-color': color,
-      'circle-stroke-width': 1.2,
-      'circle-stroke-color': '#ffffff',
-      'circle-opacity': 0.9,
+      'circle-stroke-width': L.stroke_width ?? 1.2,
+      'circle-stroke-color': L.stroke_color ?? '#ffffff',
+      'circle-opacity': L.fill_opacity ?? 0.9,
     };
   }
   if (L.geom === 'line') {
