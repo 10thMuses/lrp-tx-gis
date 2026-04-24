@@ -1,3 +1,50 @@
+## Chat 82 — 2026-04-24 — ABATEMENT BUILD partial: scraper shipped; layer ship split to Chat 83
+
+**Classification:** shipping, MEDIUM blast radius (new subsystem: commissioners-court scraper + new data directory). No `layers.yaml` or `build.py` changes this chat. No deploy.
+
+**Scope:** Resume from WIP_OPEN `## Next chat` (Chat 82 ABATEMENT BUILD, locked spec §12). Original §12 scope comprised standalone layer + facility annotation + 23-county scraper + filter UI + weekly GH Actions — six distinct subsystems. Per Readme §7.10 stage-split rule (five+ commits OR three+ distinct subsystems = split before starting, not after), pre-execution scope check triggered split: Chat 82 = scraper only; Chat 83 = layer ship (transform + yaml + build + deploy); Chat 84 = facility annotation + filter UI; Chat 85 = 21-county expansion; Chat 86 = weekly cron.
+
+**Files changed:**
+
+| File | Change |
+|---|---|
+| `scripts/scrape_abatements.py` | New. 246 lines. Adapter pattern per spec §5. Keyword taxonomy (ABATE/RENEW/DC/GAS/DEVS/LOADS). Validated adapters: Pecos (WordPress paginated index at `/category/notices-announcements/commissioners-court-agendas/`) + Reeves (CivicEngage `/visitors/rc-news`). 21 remaining counties stubbed as `STUB_COUNTIES` constant. Both regex fixes applied (`re.I` + `\b` word boundary) per spec §5. Dedup key `(county, applicant_normalized, reinvestment_zone)` per spec §12.6. |
+| `data/abatements/abatement_hits_20260424_092810.csv` | New. 9 unique Pecos hits after dedup, 2025-10 → 2026-01. Applicants include CoreWeave LLC, Poolside Inc, Silver Basin Digital LLC, Greasewood II BESS LLC, Bighorn Ridge Solar LLC, Matterhorn Express Pipeline LLC. Reinvestment zones include Longfellow Renewable Energy, Greasewood, Selenite Springs. |
+
+**Intra-chat regex tightenings (2 post-run fixes on scraper):**
+
+1. `extract_zone()`: first-pass regex was `[A-Z][A-Za-z0-9 \-]+?` before `Reinvestment Zone` which greedily matched `located within the Longfellow Renewable Energy` instead of just the zone proper. Replaced with bounded token regex `(?:[A-Z][A-Za-z0-9]+(?:\s+[A-Z][A-Za-z0-9]+){0,4})` plus explicit rejection of boilerplate stems (`Thirty Day`, `Public Hearing`, `The`, `Proposed`, `Designating`, `Establishing`).
+2. `extract_capacity_or_usd()`: first pass captured Pecos agenda filing-fee boilerplate (`$1,000.00`) as project value. Added >$10,000 threshold for unsuffixed dollar amounts; suffixed amounts (million/billion/M/B) still accept any magnitude.
+3. `match_flags()` project_type logic: first pass misclassified Poolside and CoreWeave as `renewable` because their agenda items reference "Longfellow Renewable Energy Reinvestment Zone". Added override: if any `load:*` flag present AND current `project_type == 'renewable'`, promote to `data_center`. Operator intelligence value: the pattern is real — renewable-branded zones are hosting co-located AI/DC compute loads; the classification needs to reflect the actual load type, not the zone's branding.
+
+**Branch:** `refinement-abatement-build`. Single commit `c4e71ef`. Pushed.
+
+**Deploy:** None. Stage shipped scraper only; layer ship (and therefore deploy) is Chat 83 scope.
+
+**Reeves anomaly:** CivicEngage adapter returned 0 rows. Spec §4 marked Reeves as validated based on Chat 75 discovery (2025-06-13 Pecos Power Plant LLC 30-day notice). Either (a) notice has aged off visible archive, (b) CivicEngage index URL `/visitors/rc-news` restructured since discovery, or (c) selector `a[href*='/visitors/rc-news/']` doesn't match current HTML. Not blocking for Chat 83 — §7 confirmed hit can be added as seed row directly. Deep re-verify can land in Chat 85 as part of 21-county expansion.
+
+**Real intelligence captured:**
+
+- **Silver Basin Digital, LLC** — new DC applicant in Pecos County, 2025-12-08 reinvestment zone designation. Not in prior LRP counterparty tracking.
+- **CoreWeave, LLC** — 2026-01-12 Pecos abatement filing inside Longfellow Renewable Energy Reinvestment Zone (same zone housing Poolside). Co-location pattern confirmed.
+- **Greasewood II BESS, LLC** — 2025-12-08 Pecos BESS filing inside Greasewood Reinvestment Zone. Adds storage to the Pecos leading-indicator set.
+- **Bighorn Ridge Solar, LLC** — 2025-10-27 Pecos filing inside Selenite Springs Reinvestment Zone. Standalone solar, not hybrid.
+- **Matterhorn Express Pipeline LLC** — reinvestment zone notice in Pecos; midstream gas, not generation.
+- **Pattern: Pecos uses multiple named reinvestment zones** (Longfellow, Greasewood, Selenite Springs) as vehicles for stacking abatements across project types within a single county. Matches Chapter 312 county-level authority structure.
+
+**Close-out actions (per Readme §10, all four completed):**
+
+1. Branch `refinement-abatement-build` pushed to origin (HEAD `c4e71ef`).
+2. `WIP_OPEN.md` `## Next chat` rewritten to Chat 83 ABATEMENT SHIP with paste-ready scope, session-open block, deploy pattern, 23 county centroid list for geocoding fallback.
+3. This `WIP_LOG.md` entry prepended.
+4. `WIP_OPEN.md` + `WIP_LOG.md` commit to main and push — executed as final bash action.
+
+**Why stage-split before starting rather than attempting full §12 scope:**
+
+Pre-execution counting per Readme §7.10: scraper (≥2 commits, independent subsystem) + transform/geocode (1 commit, independent from scraper) + layers.yaml + build + deploy (3 commits, independent subsystem) + facility annotation join (≥1 commit, independent subsystem) + filter UI in build_template (1 commit, independent subsystem) + weekly GH Actions yaml (1 commit, independent subsystem). Six subsystems, 9+ commits minimum. Exceeds "5+ commits or 3+ subsystems = split" threshold by ~2×. Shipping all six in one chat would have guaranteed the §7.10 "stage resumed twice means original scope was two stages pretending to be one" failure mode. Pre-emptive split cost one chat message of framing; compressed original §12 scope into a 4–5 chat sequence with clean handoffs.
+
+**Chat 83 is fully unblocked** — scraper produces real data, 23 county centroids available, `tceq_gas_turbines` is a working template for the new layer entry, append path to `combined_points.csv` is well-established.
+
 ## Chat 81 — 2026-04-24 — SIDEBAR COLLAPSE shipped (branch pending PR merge)
 
 **Classification:** shipping, LOW blast radius. Three JS edits to `build_template.html` on top of Chat 80's CSS+HTML. No data changes, no `layers.yaml` changes, no `build.py` changes.
