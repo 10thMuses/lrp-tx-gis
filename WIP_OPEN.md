@@ -140,6 +140,7 @@ Full per-session detail in `WIP_LOG.md`.
 
 **UI/UX backlog (unscheduled):**
 - **Mobile-friendly map.** Responsive breakpoints, touch-friendly controls, pinch-zoom tuning, measure tool + print-to-PDF mobile usability, popup sizing. Candidate for promotion into `docs/refinement-sequence.md` after UI POLISH v2.
+- **Collapsible left sidebar.** Mobile + desktop. Toggle control indicated by double-left-chevron (`«`) when expanded, double-right-chevron (`»`) when collapsed. Expands map to full viewport width when collapsed. State persists in URL hash alongside existing hash state.
 
 **Other (non-GIS):**
 - Grid Wire Vol. 7.
