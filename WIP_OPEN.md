@@ -8,31 +8,47 @@ Per Readme §10: **`## Next chat`** = paste-ready for next shipping chat. **`## 
 
 ## Next chat
 
-**Chat 87 (resume) — FINISH STYLING + CARAMBA LABEL.** All pre-build edits shipped to branch `refinement-chat87-styling` as commit `c81ebb5` (pushed 2026-04-24). **Do NOT create a new branch. Do NOT re-execute the edits.** Checkout the existing branch and proceed to build + deploy + merge.
+**Chat 88 — ABATEMENT REFACTOR (no new data).** Schema refactor on the existing 9-row `tax_abatements` layer. No new scrapes this chat. No layer count change (stays at 24).
 
-Pre-build state on branch:
-- `layers.yaml`: `waha_circle` inserted before `labels_hubs`; `tiger_highways` has `line_width: 0.6`; `caramba_north` is green (`#2E7D32`) + label `1,300 ac`.
-- `build_template.html`: `sizingLineWidthExpr` baseline reads `L.line_width ?? 2`; `layerPaint()` point block reads optional `circle_radius` / `stroke_color` / `stroke_width` / `fill_opacity`.
-- `combined_geoms.geojson`: Waha feature duplicated with `layer_id: 'waha_circle'` (1 feature).
+### Tasks
 
-Remaining tasks:
+1. **Label rename.** `layers.yaml` tax_abatements `label: "Tax Abatements"` → `"Property Tax Abatements (Ch.312 / LDAD, new or expansion)"`. If sidebar truncation is ugly, keep concise version and add full text to popup header or tooltip.
 
-1. Build (`python3 build.py`) — expect 24 layers clean.
-2. Deploy via Netlify MCP → CLI proxy (canonical path below).
-3. Verify: HTTP 200 + layer-id grep returning 24. **If verification fails, halt. Do not merge or close out. Report and stop.** A bad build that reaches close-out silently consumes the sprint queue.
-4. Visual verification: tiger_highways thinner at z=8; Waha yellow ring visible; Caramba North green + "1,300 ac" label.
-5. Merge branch to main per amended-branch protocol (§Chat 85 lesson: `git fetch origin refinement-chat87-styling` before `git merge`); delete branch.
-6. **Close-out (non-negotiable):**
-   - Open `docs/sprint-plan.md`, copy §Chat 88 section verbatim into `WIP_OPEN.md §Next chat` (replacing this Chat 87-resume block entirely).
-   - Delete §Chat 87 section from `docs/sprint-plan.md`.
-   - Update §Prod status with new deployId and bump layer count to 24.
-   - Commit to main: `"Chat 87 close-out"`.
+2. **Sidebar tooltip / popup header.** Add description: "County-level property tax abatements for new or expanded facilities. Chapter 312 reinvestment zones and Local Development Agreements (HB 5 / SB 1340 successors to the sunsetted Ch.313)." Implementation: new `description` key in `layers.yaml` per-layer, template renders it as popup-header text or sidebar `title` attribute. Requires template patch — inspect existing popup builder before editing to avoid schema collision.
 
-**Out of scope for this chat (deferred to next housekeeping chat):** stranded branches `chat76-wip` and `refinement-tceq-refresh` on origin. A placeholder entry for their cleanup has been added to §Sprint queue below under "STRANDED BRANCH CLEANUP" — do not touch them in this chat.
+3. **Drop meeting-date filter.** Remove `{field: commissioned, type: text, label: Meeting Date}` from tax_abatements `filterable_fields`. Leave `commissioned` column populated (for back-compat with existing 9 rows) but not user-facing.
 
-Credential hygiene: `GITHUB_PAT` was leaked in a push-URL echo during Chat 87 edit session. Rotate before next chat runs and update `CREDENTIALS.md` on main. If rotation hasn't happened, the next chat should halt and flag before pushing.
+4. **Column remapping — new fields.** Additive to Chat 85 mapping; columns exist in CSV schema but were unpopulated.
 
-Expected layer count post-build: **24** (23 baseline + `waha_circle`).
+   | CSV column  | Abatement field          |
+   |-------------|--------------------------|
+   | `mw`        | project MW               |
+   | `capacity`  | capex ($M)               |
+   | `zone`      | abatement term (yrs)     |
+   | `use`       | abatement schedule       |
+   | `year`      | announcement year        |
+   | `entity`    | developer                |
+   | `cap_kw`    | jobs commitment          |
+   | `sector`    | taxing entities          |
+
+   Preserved Chat 85 mappings (unchanged): `poi`=agenda_url, `funnel_stage`=flags (status derived at build time), `operator`=applicant, `project`=reinvestment_zone, `technology`=project_type, `commissioned`=meeting_date.
+
+5. **Popup order.** name, operator, entity, county, technology, mw, capacity, zone, use, cap_kw, project, sector, status, poi. Update `layers.yaml` tax_abatements `popup` list accordingly.
+
+6. **Filter UI.** `filterable_fields`: technology, status only. Drop county, commissioned. No other filters.
+
+7. **Back-populate Chat 85's 9 rows** where spec data supports the new fields. Matterhorn row (meeting date 2022-07-25): recover `year` (announcement year) from the agenda PDF if possible. If not recoverable, skip and note in §Abatement layer notes.
+
+### Acceptance
+
+- Layer count: 24 (unchanged).
+- tax_abatements label, popup, filter UI reflect new schema.
+- 9 existing rows still render, with new fields populated where spec data available.
+- Build report `errored == 0`; dropped-features <5%.
+
+### Close-out
+
+Deploy → merge branch `refinement-chat88-abatement-refactor` → delete branch → promote Chat 89 brief to §Next chat → remove Chat 88 section from `docs/sprint-plan.md` → push.
 
 ### Session open (single block)
 
@@ -41,12 +57,11 @@ PAT=$(grep '^GITHUB_PAT=' /mnt/project/CREDENTIALS.md | cut -d= -f2)
 cd /home/claude && rm -rf repo 2>/dev/null
 git clone -q https://x-access-token:${PAT}@github.com/10thMuses/lrp-tx-gis.git repo && cd repo
 git config user.email "claude@lrp.local" && git config user.name "Claude (LRP GIS)"
-git checkout refinement-chat87-styling   # EXISTING branch, do not recreate
-git log --oneline -3                      # verify HEAD is c81ebb5
+git checkout -b refinement-chat88-abatement-refactor
 apt-get install -y tippecanoe libcairo2 -q
 pip install shapely pmtiles pyyaml cairosvg pandas --break-system-packages -q
 curl -sI -A "Mozilla/5.0" https://lrp-tx-gis.netlify.app/ | head -1
-curl -s -A "Mozilla/5.0" https://lrp-tx-gis.netlify.app/ | grep -oE '"id":"[a-z_][a-z0-9_]*"' | sort -u | wc -l   # expect 23 pre-deploy, 24 post-deploy
+curl -s -A "Mozilla/5.0" https://lrp-tx-gis.netlify.app/ | grep -oE '"id":"[a-z_][a-z0-9_]*"' | sort -u | wc -l   # expect 24
 ```
 
 ### Deploy pattern (CANONICAL)
@@ -61,30 +76,31 @@ curl -s -A "Mozilla/5.0" https://lrp-tx-gis.netlify.app/ | grep -oE '"id":"[a-z_
 
 Proxy URL is single-use. On 503 upload error, request a fresh URL from the updater.
 
+### Pre-flight: Netlify edge status check
+
+Chat 87 deploy succeeded cleanly but post-deploy curl verification returned HTTP 503 `DNS cache overflow` across the entire Netlify edge (`netlify.com` itself also 503) from 16:07Z onward, 2+ hours continuous. This was a Netlify infrastructure outage, not our build. Chat 87 close-out proceeded without live verification per operator direction.
+
+**At Chat 88 session-open, first check edge is up** before starting work: `curl -sI https://www.netlify.com/ | head -1` — if 503, halt and flag. If 200, proceed. Also verify Chat 87 deploy actually serves correctly: `curl -s https://lrp-tx-gis.netlify.app/ | grep -oE '"id":"[a-z_][a-z0-9_]*"' | sort -u | wc -l` → expect 24. If count mismatches, flag before building anything new (the last recorded good state is deployId `69eb952306288390a3d6a3c0`).
+
 ### Close-out (NON-NEGOTIABLE, per Readme §10)
 
-Per Readme §10 "Sprint-plan doc" rule: close-out re-reads downstream briefs in `docs/sprint-plan.md` (§Chat 88–91); edits any whose assumptions changed; promotes Chat 88 brief to §Next chat; deletes Chat 87 section from sprint-plan.md.
+Per Readme §10 "Sprint-plan doc" rule: close-out re-reads downstream briefs in `docs/sprint-plan.md` (§Chat 89–91); edits any whose assumptions changed; promotes Chat 89 brief to §Next chat; deletes Chat 88 section from sprint-plan.md.
 
 ```bash
 PAT=$(grep '^GITHUB_PAT=' /mnt/project/CREDENTIALS.md | cut -d= -f2)
-# If branch was amended post-push (bug fix during build audit):
-git commit --amend --no-edit
-git fetch origin refinement-chat87-styling
-git push --force "https://x-access-token:${PAT}@github.com/10thMuses/lrp-tx-gis.git" refinement-chat87-styling
-# Merge:
+git fetch origin refinement-chat88-abatement-refactor
 git checkout main && git pull --rebase origin main
-git fetch origin refinement-chat87-styling
-git merge --no-ff origin/refinement-chat87-styling -m "Merge refinement-chat87-styling (Chat 87): tiger_highways thinner + waha_circle + caramba green + caramba label"
-# Rewrite WIP_OPEN.md §Next chat → Chat 88 brief (full paste-ready, from sprint-plan.md §Chat 88)
-# Edit docs/sprint-plan.md: delete §Chat 87 section; re-read §Chat 88–91 and edit if Chat 87 changed assumptions
+git merge --no-ff origin/refinement-chat88-abatement-refactor -m "Merge refinement-chat88-abatement-refactor (Chat 88): tax_abatements schema refactor"
+# Rewrite WIP_OPEN.md §Next chat → Chat 89 brief (full paste-ready, from sprint-plan.md §Chat 89)
+# Edit docs/sprint-plan.md: delete §Chat 88 section; re-read §Chat 89–91 and edit if Chat 88 changed assumptions
 # Update §Prod status
-git commit -am "Chat 87 close-out" && git push
-git push --delete origin refinement-chat87-styling
+git commit -am "Chat 88 close-out" && git push
+git push --delete origin refinement-chat88-abatement-refactor
 ```
 
-**Chat 85 lesson (merge-freshness):** amending a branch after initial push requires a `git fetch origin <branch>` before `git merge` — otherwise merge pulls the stale local-tracking ref and the amendment is silently lost.
-
 **Merge to main.** `GITHUB_PAT` can push to main directly. No PR step needed.
+
+**Credential hygiene carry-forward:** `GITHUB_PAT` leak from Chat 87 edit session remains unrotated per operator override (Chat 87 resume, 2026-04-24). Rotation is still recommended but no longer a blocking condition; the exposed token will remain valid until 2027-04-21 or manual rotation. Flag again in Chat 88 close-out if still outstanding.
 
 ---
 
@@ -224,11 +240,13 @@ Historical notes:
 ## Prod status
 
 - URL: https://lrp-tx-gis.netlify.app — requires real User-Agent on curl (`-A "Mozilla/5.0"`).
-- Last published deploy: `69eb7bccd5cbc81ee84c32c0` (Chat 85, 2026-04-24 14:18:57Z). State=ready, CDN-verified, 23 layer ids live, 9 tax_abatements features, 5 facility annotations (Tolivar ×2 in Reeves, Tierra Bonita BESS + Greasewood II LLC ×2 in Pecos). Supersedes `69eb707c56bb04f8c221f5af`.
-- Main HEAD includes `refinement-abatement-annotate` (merged Chat 85) + tightened-matcher follow-up commit. Branch deleted from origin.
+- Last published deploy: `69eb952306288390a3d6a3c0` (Chat 87, 2026-04-24 16:07:08Z). State=ready, Netlify API confirmed all files uploaded + 1 redirect + 2 header rules processed, 0 errors. **CDN verification was NOT completed this chat**: `netlify.com` itself + our site + deploy permalink all returned HTTP 503 `DNS cache overflow` continuously from 16:07Z through 18:21Z+ (2hr 14min) — Netlify-wide edge outage, not our deploy. Chat 87 close-out proceeded without live-curl verification per operator direction. First curl after edge recovery should return HTTP 200 + 24 layer ids. Supersedes `69eb7bccd5cbc81ee84c32c0`.
+- Main HEAD includes `refinement-chat87-styling` (merged Chat 87, commit `7005f67`). Branch deleted from origin.
 - Auto-publish: unlocked.
 - **Deploy path: Netlify MCP → CLI proxy.** REST-API dead.
-- Layer set: **23 built clean**.
+- Layer set: **24 built clean** (23 baseline + `waha_circle` added Chat 87).
+- **Chat 87 styling edits live in build:** tiger_highways `line_width: 0.6` (thinner at z=8); `waha_circle` yellow ring (`#FFD400`, 1 feature) above Waha Hub; caramba_north green (`#2E7D32`) with label `Caramba North (1,300 ac)`; `build_template.html` `sizingLineWidthExpr` reads `L.line_width ?? 2`; `layerPaint()` point block honors optional `circle_radius` / `stroke_color` / `stroke_width` / `fill_opacity`.
+- **Credential hygiene (outstanding):** `GITHUB_PAT` leaked in push-URL echo during Chat 87 edit session. Operator override 2026-04-24 permitted Chat 87 resume to execute with leaked token; rotation still recommended, token valid until 2027-04-21.
 - Prebuilt PMTiles (4): `parcels_pecos` 4.98 MB, `rrc_pipelines` 4.73 MB, `tiger_highways` 3.11 MB, `bts_rail` 2.16 MB.
 - Sprite sheet: 5 icons @ 1x + 2x at `/sprite/sprite.png` + `sprite@2x.png`.
 - Data-driven sizing live: `ercot_queue`, `solar`, `eia860_plants`, `eia860_battery`, `wind`; `substations`, `tpit_subs`, `tpit_lines`.
