@@ -1,3 +1,32 @@
+## Chat 79 — 2026-04-23 — UI POLISH v2 shipped (branch not yet merged)
+
+**Classification:** shipping, MEDIUM blast radius. Four simultaneous template/config changes on `build_template.html` + `layers.yaml` + `build.py`. No data changes.
+
+**Scope:** Per WIP_OPEN.md (prior) §"UI POLISH v2 task execution order". All four tasks delivered.
+
+**Files changed:**
+
+| File | Change |
+|---|---|
+| `layers.yaml` | Added `sidebar_omit: true` on `parcels_pecos` (layer loads for map interactions; no sidebar entry). |
+| `build_template.html` | Added `ercotQueueColorExpr` function driving per-technology color on `ercot_queue` (gas/solar/wind/battery/other). Set initial viewport to `-102.9707 / 30.9112` z12, `esri_imagery` basemap, default-ON set = caramba_north / counties / county_labels / cities / waha. |
+| `build.py` | `CATEGORICAL_CAP=2000` auto-promotes text-input filters to `filter-multi-search` searchable multi-select dropdowns. |
+
+**Branch:** `refinement-ui-polish-v2`. Commits: `8be436c` (Chat 78 close-out) + `c8ff838` (Chat 79 feature bundle). Prior session produced `c8ff838` and pushed; this session preserved it (see Process note below).
+
+**Deploy:** `69ea9d1b8b51ad96ce674f5d` via Netlify REST API. Deployed by prior session, verified by this session. `state=ready`. Root returns HTTP 200 with `Mozilla/5.0` UA; marker-grep on live index.html returns 8 hits on `sidebar_omit|ercotQueueColorExpr|filter-multi-search|-102\.9707` (expected ≥4).
+
+**PR:** `refinement-ui-polish-v2` → `main` not yet opened. GitHub PAT in `CREDENTIALS.md` returns `403 Resource not accessible by personal access token` on `POST /repos/{owner}/{repo}/pulls`. Branch push scope works; PR-create scope does not. Operator opens PR via GitHub UI. PAT rescope added to Open backlog.
+
+**Process note (new close-out rule):** Session-open nearly force-pushed over `c8ff838` with a stale local reconstruction. Caught via `git fetch` showing remote HEAD ahead. New Readme §10 rule added: at session open, if the remote branch named in `## Next chat` already has commits beyond main, treat those commits as authoritative prior work and inspect before editing. Never force-push without first reading remote.
+
+**Verification:**
+- Prod root 200 confirmed with `Mozilla/5.0` UA.
+- Four-marker grep returned count 8 ≥ 4.
+- Deploy id in prior session's output matches Netlify API state for `69ea9d1b8b51ad96ce674f5d`.
+
+---
+
 ## Chat 78 — 2026-04-23 — MW-driven sizing on `eia860_plants` shipped
 
 **Classification:** shipping, LOW blast radius. Single SIZING_RULES entry + one `layers.yaml` fallback radius bump. No data changes, no schema changes, no new layer.
