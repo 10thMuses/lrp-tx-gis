@@ -83,6 +83,32 @@ Ordered by operator priority. N+2 and beyond. Multi-chat active sprint detail li
 
 Conditional `bead_fiber_planned` layer (TX Comptroller BEAD map primary; NTIA fallbacks; 30-min ship rule). Plus Reeves CivicEngage adapter re-verify. Layer count 25 → 26 if BEAD ships, 25 if dropped. Closes the active sprint — `docs/sprint-plan.md` deleted at close-out. Full brief: `docs/sprint-plan.md` §Chat 91.
 
+### FIELD EXPANSION + WELLS HIDE (operator ask 2026-04-24)
+
+Bundled layers.yaml maintenance chat. Priority: operator to decide — can run after Chat 91 or bumped ahead of Chat 90/91 (fiber work) if field-expansion work matters more for imminent Hanwha/buyer demos than fiber coverage. No layer-count change.
+
+**Scope:**
+
+1. **tceq_gas_turbines — expand refresh to extract all source XLSX fields.** Current `scripts/refresh_tceq_gas_turbines.py` captures 13 of the ~18 source columns. Extend extraction to include: full `received_date` (ISO, currently only `year` is captured), TCEQ `permit_no` (distinct from INR which is already in `plant_code`), `num_units`, permit `status` (issued / pending / renewed / modified). Map into unused `combined_points.csv` columns via the same overload pattern used for abatements (Chat 88 schema): `inr` = permit_no, `funnel_stage` = permit status, `zone` = received_date ISO, `project` = num_units. Add all existing + new populated fields to the `tceq_gas_turbines` popup and to `filterable_fields` (numeric filters on `mw`, `year`, categorical on `technology`, `manu`, `operator`, `county`, `funnel_stage`).
+
+2. **tax_abatements — popup/filter rename and field additions.** At display layer only (underlying Chat 88 schema stays locked):
+   - Rename `commissioned` popup+filter label from "Commissioned" → **"Approved date"**.
+   - Popup fields (in order): `name` (Applicant), `county`, `commissioned` (Approved date), `technology` (Project type), `mw` (Project MW), `capacity` (Capex $M), `use` (Abatement schedule), `sector` (Taxing entities), `project` (Reinvestment zone), `poi` (Agenda URL).
+   - `filterable_fields`: `county` (categorical), `technology` (categorical), `commissioned` (date range, labeled "Approved date"), `mw` (numeric), `capacity` (numeric).
+   - Do NOT add status to popup or filters (per operator ask).
+   - Technology filter set stays restricted to `natural_gas`, `gas_peaker`, `solar`, `wind`, `battery`, `renewable_other` (matches current scrape scope; no new data pull required).
+
+3. **wells — hide to reduce memory footprint.** Current state: `default_on: false`, `min_zoom: 6`, thousands of features statewide. Primary recommendation: raise `min_zoom: 10` (delays tile load until close zoom, keeps data available on demand). Fallback if memory concern persists: flag entry with `hidden: true` and skip sidebar render in `build_template.html`. Do not delete the PMTiles build — keep tiles on disk for future re-enable without a re-refresh.
+
+**Acceptance:**
+- Layer count unchanged.
+- `tceq_gas_turbines` popup and filter UI shows all populated source fields.
+- `tax_abatements` popup displays "Approved date" label; filter UI has 5 filters (county, technology, approved_date range, mw, capacity); no status anywhere.
+- `wells` not loaded below zoom 10 (or absent from sidebar if fallback chosen).
+- Build + deploy + CDN verification per standard protocol.
+
+**One chat. Fits in budget: refresh-script extension (~3 bash calls), single combined_points.csv merge, layers.yaml edits, one build-deploy-verify.**
+
 ### Chat 92+ — ABATEMENT PERMIAN-CORE + PERIPHERAL
 
 Permian-core (Andrews, Ector, Glasscock, Loving, Martin, Midland, Ward, Winkler) → peripheral (Crane, Crockett, Irion, Reagan, Schleicher, Sutton, Upton). PDF-only counties dropped per spec §12.3. 4–6 chats. Reeves-shared-CMS counties pick up whatever the Chat 91 adapter re-verify yields. Promoted to `docs/sprint-plan.md` when it enters the active 5-chat window.
