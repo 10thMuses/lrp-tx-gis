@@ -412,25 +412,44 @@ layers:
   file: combined_points.csv
   geom: point
   group: Permits
-  label: Tax Abatements
+  label: Property Tax Abatements (Ch.312 / LDAD, new or expansion)
+  description: 'County-level property tax abatements for new or expanded facilities. Chapter 312 reinvestment zones and Local Development Agreements (HB 5 / SB 1340 successors to the sunsetted Ch.313).'
   color: '#dc2626'
   default_on: false
   radius: 4
   popup:
   - name
   - operator
+  - entity
   - county
-  - commissioned
-  - status
-  - project
   - technology
-  - capacity_mw
+  - mw
+  - capacity
+  - zone
+  - use
+  - cap_kw
+  - project
+  - sector
+  - status
   - poi
+  popup_labels:
+    name: Project
+    operator: Applicant
+    entity: Developer
+    county: County
+    technology: Project type
+    mw: Project MW
+    capacity: Capex ($M)
+    zone: Abatement term (yrs)
+    use: Abatement schedule
+    cap_kw: Jobs commitment
+    project: Reinvestment zone
+    sector: Taxing entities
+    status: Status
+    poi: Agenda URL
   filterable_fields:
-  - {field: county, type: categorical, label: County}
   - {field: technology, type: categorical, label: Project Type}
   - {field: status, type: categorical, label: Status}
-  - {field: commissioned, type: text, label: Meeting Date}
   tippecanoe:
   - -Z0
   - -z14
