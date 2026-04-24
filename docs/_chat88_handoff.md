@@ -1,13 +1,18 @@
 # Chat 88 handoff — ABATEMENT REFACTOR
 
-Written by prior Chat (resume session) that consumed budget on recon only, no edits shipped. This doc is authoritative; do not re-verify line numbers or file structure. Apply edits directly.
+Originally written by prior recon-only session. **Updated 2026-04-24** after a second resume-session shipped tasks 1–6. This doc is authoritative; do not re-verify line numbers or file structure. Apply remaining edits directly.
 
-## State at handoff
+## State at handoff (UPDATED 2026-04-24)
 
-- Branch `refinement-chat88-abatement-refactor` exists locally on prior Claude's container only — has NOT been pushed. Next chat creates it fresh on clone.
-- No edits shipped to any file. Recon only.
+- Branch `refinement-chat88-abatement-refactor` on origin, **5 commits ahead of main**:
+  - `83c415c` preserve recon handoff (this doc)
+  - `66d0c31` tax_abatements yaml (label, description, popup+popup_labels, filterable_fields)
+  - `59d55e5` build.py render_html serializes description + popup_labels
+  - `babf641` build_template.html: sidebar tooltip + popup label override
+  - `78f76eb` 9-row back-population (Pecos Power Plant mw=226+capex=175; Matterhorn capex=50+year=2022)
 - Layer count baseline: 24. No change this chat.
 - Prod: `69ebb64823c1c470e0c6f0b1` (Chat 87 bugfix). Unchanged.
+- **Execution resumes at step 7 of the plan below.** Steps 1–6 are complete; re-reading them is only for context.
 
 ## Recon findings (authoritative, do not re-verify)
 
@@ -69,12 +74,14 @@ Other 7 rows: no back-populate data available.
 
 ## Execution plan (do these in order)
 
-1. **Session open:** clone fresh, create branch.
-2. **Verify CSV column alignment** for line 39471 (osm_id=226 anomaly). If columns drifted, halt and diagnose. If intentional data placement, move 226 to `mw` column.
-3. **Patch layers.yaml:411-436** — new label, add `description` key, reorder popup list, add `popup_labels` map, prune filterable_fields to technology + status.
-4. **Patch build.py** — add `'description': L.get('description', '')` and `'popup_labels': L.get('popup_labels', {})` to serializer dict at line 645.
-5. **Patch build_template.html** — popup label override at line 791, description header in popup, sidebar `title` attribute at line 857.
-6. **Edit combined_points.csv** — back-populate Pecos Power Plant LLC + Matterhorn only.
+Steps 1–6 are COMPLETE (shipped on branch per §State at handoff). Start at step 7.
+
+1. ~~**Session open:** clone fresh, create branch.~~ DONE — branch on origin.
+2. ~~**Verify CSV column alignment** for line 39471 (osm_id=226 anomaly). If columns drifted, halt and diagnose. If intentional data placement, move 226 to `mw` column.~~ DONE — CSV parses cleanly; `mw=226` correctly placed; earlier "osm_id=226" was awk miscount on quoted commas, not column drift.
+3. ~~**Patch layers.yaml:411-436** — new label, add `description` key, reorder popup list, add `popup_labels` map, prune filterable_fields to technology + status.~~ DONE in `66d0c31`.
+4. ~~**Patch build.py** — add `'description': L.get('description', '')` and `'popup_labels': L.get('popup_labels', {})` to serializer dict at line 645.~~ DONE in `59d55e5`.
+5. ~~**Patch build_template.html** — popup label override at line 791, description header in popup, sidebar `title` attribute at line 857.~~ DONE in `babf641`.
+6. ~~**Edit combined_points.csv** — back-populate Pecos Power Plant LLC + Matterhorn only.~~ DONE in `78f76eb`.
 7. **Build + deploy + verify** per `WIP_OPEN.md §Deploy pattern`. Expect 24 layers, `errored=0`.
 8. **Close-out** per `WIP_OPEN.md §Close-out`: merge branch, delete branch, promote Chat 89 brief, delete this handoff doc, push.
 
