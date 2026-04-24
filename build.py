@@ -639,6 +639,8 @@ def render_html(layers_config, layer_stats, filter_stats=None):
             'default_on': L.get('default_on', False),
             'sidebar_omit': L.get('sidebar_omit', False),
             'popup': L.get('popup', []),
+            'popup_labels': L.get('popup_labels', {}),
+            'description': L.get('description', ''),
             'min_zoom': L.get('min_zoom', 0),
             'radius': L.get('radius', 3),
             'fill_opacity': L.get('fill_opacity', 0.25),
