@@ -8,53 +8,25 @@ Per Readme §10: **`## Next chat`** = paste-ready for next shipping chat. **`## 
 
 ## Next chat
 
-**Chat 89 — ABATEMENT TRANS-PECOS EXPANSION.** New branch off current `main`. Single-pass county scrape of 6 Trans-Pecos counties; 0-hit counties logged and flagged, no retry. Uses Chat 88's schema (locked). No layer count change (stays at 24); `tax_abatements` feature count grows from 9 by whatever the 6 counties yield (counterfactual estimate: 0–10 hits total — rural, low-commercial; completeness is the criterion, not volume). Reeves deferred to Chat 91.
+**Chat 90 — FCC FIBER COVERAGE.** New branch off current `main`. Adds `fcc_fiber_coverage` as a new polygon/hex layer built from FCC Broadband Data Collection (BDC) fixed-availability CSV, filtered to FTTP and aggregated to H3 res-8 hexes across the 23-county Permian-focus footprint. Layer count 24 → 25.
 
-### Counties
+### Task
 
-Brewster, Culberson, Hudspeth, Jeff Davis, Presidio, Terrell. Reuse Chat 82–84 scraper framework: CivicEngage / CivicPlus adapters first, bespoke sites second. PDF-only counties drop per spec §12.3 and flag.
-
-### Technology filter
-
-Include only `natural_gas`, `gas_peaker`, `solar`, `wind`, `battery`, `renewable_other`. Exclude `data_center` (deferred to DC sub-sequence), industrial, other non-energy. Silver Basin Digital pattern (if encountered) stays under `technology=abatement_other`.
-
-### Schema (locked — Chat 88's new mapping)
-
-Per `combined_points.csv` fixed-column constraints per §Abatement layer notes:
-- `name` = project/applicant name
-- `operator` = applicant
-- `entity` = developer
-- `county` = county
-- `technology` = project type (canonical set above)
-- `mw` = project MW
-- `capacity` = capex ($M)
-- `zone` = abatement term (yrs)
-- `use` = abatement schedule
-- `year` = announcement year
-- `cap_kw` = jobs commitment
-- `sector` = taxing entities
-- `project` = reinvestment zone
-- `poi` = agenda URL
-- `funnel_stage` = flags (first segment = derived `status` at build time)
-- `commissioned` = meeting date (ISO)
-- `lat`/`lon` = county centroid only. Do NOT fabricate sub-county precision.
-
-### Tasks
-
-1. Run scraper framework against the 6 counties; pull raw hits.
-2. Apply technology filter; drop excluded categories; log drops.
-3. Project to Chat 88 schema; geocode to county centroid.
-4. Merge into `combined_points.csv` under `layer_id=tax_abatements`.
-5. Flag 0-hit counties in `§Abatement layer notes` with adapter-type noted (so future chats know whether selector regression is likely vs. genuinely zero).
-6. Build + deploy + verify.
+1. **Source.** FCC BDC Texas fixed-availability CSV, most recent as-of. Download: https://broadbandmap.fcc.gov/data-download/nationwide-data (By State → Texas → Fixed Broadband). Backup if UI blocks: ArcGIS Living Atlas "FCC Broadband Data Collection" hosted feature service.
+2. **Filter.** `technology_code=50` (FTTP), `low_latency=1`.
+3. **Spatial join.** BSL coords to 23-county TIGER polygons already in `combined_geoms.geojson`. Drop rows outside 23-county scope.
+4. **H3 aggregation.** `pip install h3 --break-system-packages`. Resolution 8 (~0.74 km²). If h3-py compile-fails, fallback: shapely hexbin at ~1 km pitch, same chat. Per hex compute: `fiber_provider_count`, `max_down_mbps`, `max_up_mbps`, `providers` (comma-delim, alphabetical, cap 5), `bsl_count`, `as_of_date`.
+5. **Render.** New yaml entry `fcc_fiber_coverage`. Geom=fill. 3-bin choropleth on `max_down_mbps`: ≥1000 / 100–999 / <100. Cyan palette. `default_on: false`. Popup: all six aggregate fields.
+6. **Friction budget.** CSV is 100+ MB. Use pandas chunked read. If h3 install fails, fall back to shapely hexbin same-chat — do not reschedule.
 
 ### Acceptance
 
-- Layer count: 24 (unchanged).
-- `tax_abatements` feature count ≥ 9 (9 baseline + ≥0 new hits).
-- 0-hit counties flagged in `§Abatement layer notes` with adapter-type.
-- Build report `errored == 0`; dropped-features <5%.
-- Live site returns HTTP 200 with 24 layer ids.
+- Layer count: 24 → 25.
+- `fcc_fiber_coverage` renders across 23 counties.
+- Popup shows all 6 aggregate fields.
+- Choropleth bins render visibly distinct.
+- Build report `errored == 0`.
+- Live site returns HTTP 200 with 25 layer ids.
 
 ### Session open
 
@@ -62,65 +34,50 @@ Per `combined_points.csv` fixed-column constraints per §Abatement layer notes:
 PAT=$(grep '^GITHUB_PAT=' /mnt/project/CREDENTIALS.md | cut -d= -f2)
 cd /home/claude && rm -rf repo 2>/dev/null
 git clone -q https://x-access-token:${PAT}@github.com/10thMuses/lrp-tx-gis.git repo && cd repo
-git config user.email "claude@lrp.local" && git config user.name "Claude (LRP GIS)"
-git checkout -b refinement-chat89-abatement-trans-pecos
-git push -u origin refinement-chat89-abatement-trans-pecos   # push empty branch per docs/principles.md §5
+bash scripts/session-open.sh refinement-chat90-fcc-fiber
 apt-get install -y tippecanoe libcairo2 -q
-pip install shapely pmtiles pyyaml cairosvg pandas --break-system-packages -q
-curl -sI -A "Mozilla/5.0" https://lrp-tx-gis.netlify.app/ | head -1
-curl -s -A "Mozilla/5.0" https://lrp-tx-gis.netlify.app/ | grep -oE '"id":"[a-z_][a-z0-9_]*"' | sort -u | wc -l   # expect 24
+pip install shapely pmtiles pyyaml cairosvg pandas h3 --break-system-packages -q
 ```
 
 ### Deploy pattern (CANONICAL)
 
-`NETLIFY_PAT=` absent from `CREDENTIALS.md`. REST-API deploy path is DEAD. Only working path is Netlify MCP → CLI proxy:
+Unchanged from Chat 88/89: Netlify MCP → CLI proxy. REST-API dead (no `NETLIFY_PAT`).
 
-1. Call `Netlify:netlify-deploy-services-updater` with `{operation: "deploy-site", params: {siteId: "01b53b80-687e-4641-b088-115b7d5ef638"}}` → returns single-use `--proxy-path` URL.
-2. `cd /mnt/user-data/outputs/dist && npx -y @netlify/mcp@latest --site-id 01b53b80-687e-4641-b088-115b7d5ef638 --proxy-path "<URL>" --no-wait` → returns `{"deployId": "...", "buildId": "..."}`.
-3. Poll `Netlify:netlify-deploy-services-reader` `get-deploy-for-site` until `state=ready`.
-4. `sleep 45` for CDN warm-up. CDN quirk: HEAD requests often return 503 even when GET returns 200 with full HTML; treat GET as source of truth.
-5. `curl -s -A "Mozilla/5.0" https://lrp-tx-gis.netlify.app/ | grep -oE '"id":"[a-z_][a-z0-9_]*"' | sort -u | wc -l` → 24.
+1. `Netlify:netlify-deploy-services-updater` `{operation: "deploy-site", params: {siteId: "01b53b80-687e-4641-b088-115b7d5ef638"}}` → single-use `--proxy-path` URL.
+2. `cd /mnt/user-data/outputs/dist && npx -y @netlify/mcp@latest --site-id 01b53b80-687e-4641-b088-115b7d5ef638 --proxy-path "<URL>" --no-wait` → `{"deployId":"...","buildId":"..."}`.
+3. Poll `get-deploy-for-site` until `state=ready`.
+4. `sleep 45` for CDN warm-up. HEAD may 503; GET is source of truth.
+5. `curl -s -A "Mozilla/5.0" https://lrp-tx-gis.netlify.app/ | grep -oE '"id":"[a-z_][a-z0-9_]*"' | sort -u | wc -l` → 25.
 
-Proxy URL is single-use. On 503 upload error, request a fresh URL from the updater.
+Proxy URL single-use. On 503 upload error, request fresh URL.
 
 ### Pre-flight
 
-Chat 88 merged to main via deploy `69ebcfbbe97514ce84df1591` (2026-04-24 20:17Z), CDN-verified with 24 layer ids + all 4 new popup labels (Abatement term, Jobs commitment, Taxing entities, Reinvestment zone) + new label string live in served HTML. Branch deleted from origin. No cleanup prerequisites. Start from clean `main`.
+Chat 89 closed doc-only (0 new hits, all 6 Trans-Pecos counties flagged; no build output diff, no redeploy). Last published deploy remains `69ebcfbbe97514ce84df1591` (Chat 88, 2026-04-24 20:17Z). Prod at 24 layers, HTTP 200. Chat 89 branch merged and deleted from origin. Start from clean `main`.
 
 ### Close-out (NON-NEGOTIABLE, per Readme §10)
 
-Per Readme §10 "Sprint-plan doc" rule: close-out re-reads downstream briefs in `docs/sprint-plan.md` (§Chat 90–91); edits any whose assumptions changed; promotes Chat 90 brief to §Next chat; deletes Chat 89 section from `docs/sprint-plan.md`.
+Per Readme §10 sprint-plan rule: re-read `docs/sprint-plan.md` §Chat 91; edit if Chat 90 changed assumptions (layer count baseline becomes 25); promote Chat 91 brief to §Next chat; delete Chat 90 section from `docs/sprint-plan.md`.
 
 ```bash
 PAT=$(grep '^GITHUB_PAT=' /mnt/project/CREDENTIALS.md | cut -d= -f2)
-git fetch origin refinement-chat89-abatement-trans-pecos
+git fetch origin refinement-chat90-fcc-fiber
 git checkout main && git pull --rebase origin main
-git merge --no-ff origin/refinement-chat89-abatement-trans-pecos -m "Merge refinement-chat89-abatement-trans-pecos (Chat 89): Trans-Pecos 6-county scrape"
-# Rewrite WIP_OPEN.md §Next chat → Chat 90 brief (full paste-ready, from sprint-plan.md §Chat 90)
-# Edit docs/sprint-plan.md: delete §Chat 89 section; re-read §Chat 90–91 and edit if Chat 89 changed assumptions
-# Update §Prod status with new deployId + tax_abatements count
-# Append WIP_LOG.md entry for Chat 89
-git commit -am "Chat 89 close-out" && git push
-git push --delete origin refinement-chat89-abatement-trans-pecos
+git merge --no-ff origin/refinement-chat90-fcc-fiber -m "Merge refinement-chat90-fcc-fiber (Chat 90): FCC fiber coverage H3 hex layer"
+# Rewrite WIP_OPEN.md §Next chat → Chat 91 brief (full paste-ready, from sprint-plan.md §Chat 91)
+# Edit docs/sprint-plan.md: delete §Chat 90 section; re-read §Chat 91 and edit if assumptions changed
+# Update §Prod status with new deployId + layer count = 25
+git commit -am "Chat 90 close-out" && git push
+git push --delete origin refinement-chat90-fcc-fiber
 ```
 
-**Merge to main.** `GITHUB_PAT` can push to main directly. No PR step needed.
-
-**Credential hygiene carry-forward:** `GITHUB_PAT` leak from Chat 87 edit session remains unrotated per operator override. Rotation recommended; token valid until 2027-04-21. Flag again in Chat 89 close-out if still outstanding.
+**Credential hygiene carry-forward:** `GITHUB_PAT` leak from Chat 87 remains unrotated per operator override. Token valid until 2027-04-21. Flag again in Chat 90 close-out if still outstanding.
 
 ---
 
 ## Sprint queue
 
 Ordered by operator priority. N+2 and beyond. Multi-chat active sprint detail lives in `docs/sprint-plan.md`; one-paragraph pointers below.
-
-### Chat 89 — ABATEMENT TRANS-PECOS EXPANSION
-
-Scrape Brewster, Culberson, Hudspeth, Jeff Davis, Presidio, Terrell. Gas + renewable filter. Single-pass; 0-hit counties flagged. Reeves deferred to Chat 91. Uses Chat 88's schema (not Chat 85's). Layer count unchanged at 24. Full brief: `docs/sprint-plan.md` §Chat 89.
-
-### Chat 90 — FCC FIBER COVERAGE
-
-New `fcc_fiber_coverage` layer. FCC BDC Texas CSV, FTTP filter (technology_code=50, low_latency=1), H3 res 8 aggregation across 23 counties, 3-bin choropleth on max_down_mbps, cyan palette, default OFF. Layer count 24 → 25. Full brief: `docs/sprint-plan.md` §Chat 90.
 
 ### Chat 91 — BEAD FIBER PLANNED + REEVES RE-VERIFY
 
@@ -241,6 +198,7 @@ Historical notes:
 
 ## Prod status
 
+- **Chat 89 closed doc-only 2026-04-24** — Trans-Pecos 6-county scrape: 0 new hits, all 6 flagged in §Abatement layer notes. No data change, no redeploy. Layer count unchanged at 24; `tax_abatements` unchanged at 9.
 - URL: https://lrp-tx-gis.netlify.app — requires real User-Agent on curl (`-A "Mozilla/5.0"`).
 - Last published deploy: `69ebcfbbe97514ce84df1591` (Chat 88 close-out, 2026-04-24 20:17:05Z). Supersedes `69ebb64823c1c470e0c6f0b1`. State=ready. **CDN-verified**: HTTP 200 (GET), 24 layer ids live, Chat 88 tax_abatements schema artifacts confirmed in served HTML: label `Property Tax Abatements (Ch.312 / LDAD, new or expansion)`, all 4 new popup_labels present (`Abatement term (yrs)`, `Jobs commitment`, `Taxing entities`, `Reinvestment zone`).
 - **CDN quirk (persistent, note for future chats):** HEAD requests to `https://lrp-tx-gis.netlify.app/` return 503 even when the site is serving healthy GET responses. Do not treat HEAD 503 as failure — grep GET output for layer-id count and schema markers.
@@ -277,6 +235,15 @@ Historical notes:
   - `Greasewood II LLC` (solar, Pecos) ← Greasewood II BESS, LLC (same-parent-family match)
 - **Match rule tightened mid-chat 85** — initial "≥2 token overlap" rule fired on generic tokens (`ii`, `bess`, `ridge`, `solar`) producing 3 false positives (Elk Ridge Solar, Longfellow BESS II, Sherbino II BESS SLF). Rule reduced to subset-match only.
 
+- **Chat 89 — Trans-Pecos 6-county scrape (2026-04-24):** All 6 counties (Brewster, Culberson, Hudspeth, Jeff Davis, Presidio, Terrell) run on Texas CIRA `state.tx.us` hosting platform (not CivicEngage/CivicPlus). Single-pass scrape yielded **0 new hits**. Adapter type + reason per county:
+  - **Brewster** `cira_state` — PDF archive at `/page/open/946/0/*.pdf`, 2023 vintage; no 2025/2026 HTML agendas. §12.3 drop+flag.
+  - **Culberson** `cira_state` — `/page/Commissioners.Court` (200) but no agenda archive published; `/page/culberson.agendas` → 403.
+  - **Hudspeth** `cira_state` — `/page/hudspeth.commissioner` (200) has 2 non-agenda PDFs; `/page/hudspeth.agendas` → 503.
+  - **Jeff Davis** `cira_state` — minutes archive at `/upload/page/6560/` but 2023 vintage only; no 2025/2026 material. §12.3 drop+flag.
+  - **Presidio** `cira_state` — 72 recent-year agenda PDFs at `/upload/page/4657/YYYY/*.pdf`. §12.3 drop+flag.
+  - **Terrell** `cira_state` — 73 recent-year minutes PDFs at `/upload/page/6319/`. §12.3 drop+flag.
+- **Selector regression NOT suspected** for any of the 6. All are genuine "PDF-only per §12.3" or "no HTML agenda archive." Revisit only if (a) any county migrates to CivicEngage/CivicPlus, or (b) operator authorizes a Texas-rural PDF OCR pipeline.
+- **Implication for Chat 92+ (Permian-core + peripheral):** CIRA state.tx.us platform is pervasive across rural TX counties; similar coverage gaps expected. A Texas-rural PDF OCR pipeline would unlock ~200 PDFs across Brewster/Jeff Davis/Presidio/Terrell alone; defer to its own sprint rather than blocking the Permian-core wave.
 ---
 
 ## Open backlog
