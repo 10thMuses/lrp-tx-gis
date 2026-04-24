@@ -8,36 +8,23 @@ Per Readme §10: **`## Next chat`** = paste-ready for next shipping chat. **`## 
 
 ## Next chat
 
-**Chat 88 — ABATEMENT REFACTOR (no new data).** Schema refactor on the existing 9-row `tax_abatements` layer. No new scrapes this chat. No layer count change (stays at 24).
+**Chat 88 — ABATEMENT REFACTOR (resume-existing-branch mode).** Schema refactor on 9-row `tax_abatements` layer. Tasks 1–6 shipped on branch `refinement-chat88-abatement-refactor` (5 commits ahead of `main`). Remaining: build + deploy + verify + close-out. No layer count change (stays at 24).
 
-### Tasks
+### State on branch (verified 2026-04-24, do not re-verify)
 
-1. **Label rename.** `layers.yaml` tax_abatements `label: "Tax Abatements"` → `"Property Tax Abatements (Ch.312 / LDAD, new or expansion)"`. If sidebar truncation is ugly, keep concise version and add full text to popup header or tooltip.
+Branch `refinement-chat88-abatement-refactor` on origin, 5 commits ahead of main:
+- `83c415c` — preserve prior-session recon handoff doc
+- `66d0c31` — tax_abatements yaml: label, description, popup+popup_labels, filterable_fields pruned
+- `59d55e5` — build.py render_html: serialize `description` + `popup_labels` into layer registry
+- `babf641` — build_template.html: sidebar label title from description, popup row label via popup_labels
+- `78f76eb` — tax_abatements 9-row back-population (Pecos Power Plant mw=226+capex=175; Matterhorn capex=50+year=2022)
 
-2. **Sidebar tooltip / popup header.** Add description: "County-level property tax abatements for new or expanded facilities. Chapter 312 reinvestment zones and Local Development Agreements (HB 5 / SB 1340 successors to the sunsetted Ch.313)." Implementation: new `description` key in `layers.yaml` per-layer, template renders it as popup-header text or sidebar `title` attribute. Requires template patch — inspect existing popup builder before editing to avoid schema collision.
+All file edits per `docs/_chat88_handoff.md` execution plan steps 1–6 are on the branch. Execution resumes at step 7.
 
-3. **Drop meeting-date filter.** Remove `{field: commissioned, type: text, label: Meeting Date}` from tax_abatements `filterable_fields`. Leave `commissioned` column populated (for back-compat with existing 9 rows) but not user-facing.
+### Remaining work
 
-4. **Column remapping — new fields.** Additive to Chat 85 mapping; columns exist in CSV schema but were unpopulated.
-
-   | CSV column  | Abatement field          |
-   |-------------|--------------------------|
-   | `mw`        | project MW               |
-   | `capacity`  | capex ($M)               |
-   | `zone`      | abatement term (yrs)     |
-   | `use`       | abatement schedule       |
-   | `year`      | announcement year        |
-   | `entity`    | developer                |
-   | `cap_kw`    | jobs commitment          |
-   | `sector`    | taxing entities          |
-
-   Preserved Chat 85 mappings (unchanged): `poi`=agenda_url, `funnel_stage`=flags (status derived at build time), `operator`=applicant, `project`=reinvestment_zone, `technology`=project_type, `commissioned`=meeting_date.
-
-5. **Popup order.** name, operator, entity, county, technology, mw, capacity, zone, use, cap_kw, project, sector, status, poi. Update `layers.yaml` tax_abatements `popup` list accordingly.
-
-6. **Filter UI.** `filterable_fields`: technology, status only. Drop county, commissioned. No other filters.
-
-7. **Back-populate Chat 85's 9 rows** where spec data supports the new fields. Matterhorn row (meeting date 2022-07-25): recover `year` (announcement year) from the agenda PDF if possible. If not recoverable, skip and note in §Abatement layer notes.
+7. **Build + deploy + verify** per §Deploy pattern below. Expect 24 layers, `errored=0`.
+8. **Close-out** per §Close-out below: merge branch to main, delete branch from origin, delete `docs/_chat88_handoff.md`, promote Chat 89 brief from `docs/sprint-plan.md` to §Next chat, remove Chat 88 section from `docs/sprint-plan.md`, push.
 
 ### Acceptance
 
@@ -45,24 +32,22 @@ Per Readme §10: **`## Next chat`** = paste-ready for next shipping chat. **`## 
 - tax_abatements label, popup, filter UI reflect new schema.
 - 9 existing rows still render, with new fields populated where spec data available.
 - Build report `errored == 0`; dropped-features <5%.
+- Live site returns HTTP 200 with 24 layer ids.
 
-### Close-out
-
-Deploy → merge branch `refinement-chat88-abatement-refactor` → delete branch → promote Chat 89 brief to §Next chat → remove Chat 88 section from `docs/sprint-plan.md` → push.
-
-### Session open (single block)
+### Session open (resume-existing-branch, single block)
 
 ```bash
 PAT=$(grep '^GITHUB_PAT=' /mnt/project/CREDENTIALS.md | cut -d= -f2)
 cd /home/claude && rm -rf repo 2>/dev/null
 git clone -q https://x-access-token:${PAT}@github.com/10thMuses/lrp-tx-gis.git repo && cd repo
 git config user.email "claude@lrp.local" && git config user.name "Claude (LRP GIS)"
-git checkout -b refinement-chat88-abatement-refactor
-git push -u origin refinement-chat88-abatement-refactor   # principles §5: branch on origin before first edit
+git fetch origin refinement-chat88-abatement-refactor
+git checkout refinement-chat88-abatement-refactor    # existing remote branch; do NOT -b
+test $(git log --oneline main..HEAD | wc -l) -eq 5 || { echo "BRANCH DRIFT — expected 5 commits ahead of main; halt and diagnose"; exit 1; }
 apt-get install -y tippecanoe libcairo2 -q
 pip install shapely pmtiles pyyaml cairosvg pandas --break-system-packages -q
 curl -sI -A "Mozilla/5.0" https://lrp-tx-gis.netlify.app/ | head -1
-curl -s -A "Mozilla/5.0" https://lrp-tx-gis.netlify.app/ | grep -oE '"id":"[a-z_][a-z0-9_]*"' | sort -u | wc -l   # expect 24
+curl -s -A "Mozilla/5.0" https://lrp-tx-gis.netlify.app/ | grep -oE '"id":"[a-z_][a-z0-9_]*"' | sort -u | wc -l   # expect 24 (pre-deploy baseline)
 ```
 
 ### Deploy pattern (CANONICAL)
@@ -79,7 +64,7 @@ Proxy URL is single-use. On 503 upload error, request a fresh URL from the updat
 
 ### Pre-flight
 
-Chat 87 bug-fix deploy `69ebb64823c1c470e0c6f0b1` (2026-04-24 18:28Z) is CDN-verified live with 24 layer ids and all 4 styling edits confirmed. Standard session-open curl check at top of this block suffices.
+Chat 87 bug-fix deploy `69ebb64823c1c470e0c6f0b1` (2026-04-24 18:28Z) is CDN-verified live with 24 layer ids and all 4 styling edits confirmed. Chat 88 branch `refinement-chat88-abatement-refactor` exists on origin with 5 commits ahead of main — do not re-create; `git checkout` existing ref per §Session open. Standard session-open curl check at top of this block suffices.
 
 ### Close-out (NON-NEGOTIABLE, per Readme §10)
 
