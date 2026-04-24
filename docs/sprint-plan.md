@@ -2,7 +2,7 @@
 
 Active multi-chat plan. Referenced from `WIP_OPEN.md` §Next chat + §Sprint queue.
 
-Covers Chat 87–91. When the last chat in this file ships, delete the file
+Covers Chat 90–91. When the last chat in this file ships, delete the file
 and start a new one. Chats beyond 91 (Permian-core abatement, power-plant
 refresh, DC sub-sequence, etc.) remain in `WIP_OPEN.md` §Sprint queue as
 short pointers until they enter the active 5-chat window.
@@ -24,52 +24,6 @@ one-paragraph summaries with pointers into this doc. On close-out, the
 executing chat deletes its own section here, promotes the next chat's
 full brief into `§Next chat`, and shortens the new §Sprint queue entry
 for the chat it just removed.
-
----
-
-## Chat 89 — ABATEMENT TRANS-PECOS EXPANSION
-
-County scraping wave. Single-pass; 0-hit counties logged and
-flagged, no retry.
-
-### Tasks
-
-1. **Scrape 6 Trans-Pecos counties:** Brewster, Culberson, Hudspeth,
-   Jeff Davis, Presidio, Terrell. Reuse Chat 82–84 scraper
-   framework (CivicEngage/CivicPlus adapters first, bespoke sites
-   second). PDF-only counties drop per spec §12.3 and flag.
-
-2. **Technology filter:** include only `natural_gas`, `gas_peaker`,
-   `solar`, `wind`, `battery`, `renewable_other`. Exclude
-   `data_center` (deferred to DC sub-sequence), industrial, other
-   non-energy. Silver Basin Digital stays under existing
-   `technology=abatement_other`.
-
-3. **Schema:** use Chat 88's new column mapping (not Chat 85's).
-   Mapping is locked by the time this chat runs.
-
-4. **Merge adapter outputs into `combined_points.csv`** under
-   `layer_id=tax_abatements`. Geocode to county centroid only — no
-   sub-county precision.
-
-5. **Reeves deferred.** Reeves is Permian-core, adapter regression
-   from Chat 82 still open. Handled in Chat 91 §Reeves re-verify,
-   not here.
-
-### Acceptance
-
-- Layer count: 24 (unchanged).
-- tax_abatements feature count grows from 9 by whatever 6 counties
-  yield. Counterfactual estimate: 0–10 hits total (rural,
-  low-commercial). Completeness is the criterion, not volume.
-- 0-hit counties flagged in `§Abatement layer notes` with
-  adapter-type noted (so future chats know whether selector
-  regression is likely).
-
-### Close-out
-
-Deploy → merge → delete branch → promote Chat 90 brief to §Next
-chat → remove Chat 89 section here → push.
 
 ---
 
