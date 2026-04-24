@@ -160,6 +160,8 @@ Operator delegates autonomously. Execute end-to-end. Direct, factual, concise. D
 
 ## 10. Handoff Discipline
 
+**STATE LIVES ONLY IN ORIGIN.** In-chat edits to `/home/claude/` and `/mnt/project/` evaporate on container reset. Every shipping chat MUST end with a commit + push to `origin/main`. No exceptions — not when the user interrupts, not when the chat feels "done" after deploy, not when budget feels tight. A chat that ships work and does not commit+push has lost the work. If a close-out action is skipped and the user has to prompt for it, that is a process failure, not a partial success. Treat commit+push as part of the work itself, not a post-script.
+
 Forward-looking handoff lives in `WIP_OPEN.md`, not in chat text and not in conversation history. Two blocks carry it:
 
 - `## Next chat` — paste-ready instructions for the immediately-next shipping chat: session-open commands, build/deploy steps, doc edits with exact text, commit message, tool-budget escape hatch. Rewritten in full at every close-out.

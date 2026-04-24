@@ -8,47 +8,13 @@ Per Readme §10: **`## Next chat`** = paste-ready for next shipping chat. **`## 
 
 ## Next chat
 
-**Chat 83 — ABATEMENT SHIP.** Chat 82 landed scraper + Pecos/Reeves adapters + 9 real Pecos hits on branch `refinement-abatement-build` (HEAD `c4e71ef`). NOT deployed — paused at ~55% budget before transform/yaml/build/deploy to preserve close-out headroom. Stage split per Readme §7.10: scraper = Chat 82, layer ship = Chat 83.
+**Chat 85 — ABATEMENT ANNOTATION + FILTER UI.** Chat 84 deployed the `tax_abatements` layer (8 features, 23 layers live). Branch `refinement-abatement-build` at origin HEAD `e536846`, awaiting operator PR merge.
 
 **This chat's scope (unblocked, ready to execute):**
 
-1. Re-run scraper with tightened regex: `python3 scripts/scrape_abatements.py data/abatements/` — verify zone/capacity/project_type fields clean up vs prior run.
-2. Add §7 seed rows not captured by scrape: 2025-01-13 Pecos Longfellow zone creation, 2025-06-13 Reeves Pecos Power Plant LLC (226 MW natgas, $150–200M, Enterprise Zone §312.2011), 2025-11-10 Pecos Apex Clean Energy donation (relationship signal, not a filing — include with `flags=relationship_signal`).
-3. Transform hits → `combined_points.csv` rows per spec §8 Option A mapping: `layer_id=tax_abatements`, `operator=applicant`, `funnel_stage=status`, `project=reinvestment_zone`, `technology=project_type`, `commissioned=meeting_date`. Geocode: county centroid fallback from `combined_geoms.geojson` county_labels (23 centroids confirmed available, listed below).
-4. Append rows to `combined_points.csv` (never full-file read — append only per §9.1).
-5. Add `tax_abatements` entry to `layers.yaml` after `water_mains_approx`. Template = `tceq_gas_turbines` pattern (no sprite icon, circle render). Color: `#dc2626` (red — distinct from existing categorical palette). `group: Permits`. `default_on: false`. Popup: name, operator, county, commissioned, project, technology, capacity_mw, agenda_url. Filterable: county (categorical), technology (categorical), commissioned (text/date).
-6. Run `python3 build.py`. Expect 23 layers built clean.
-7. Deploy via Netlify MCP proxy (canonical path — see below).
-8. Verify: curl HTTP 200, layer count = 23.
-9. Close-out per §10 (push, WIP_OPEN rewrite, main push).
+Per spec §12.1 (locked): join `tax_abatements` hits to `eia860_plants`, `ercot_queue`, `solar`, `wind`, `eia860_battery`, and future `dc_sites` by fuzzy applicant name + county + approximate coordinates. Single pass, no iterative refinement. Surface matched `abatement_*` fields in popups of the matched facilities. Add filter UI controls for `technology` / `commissioned` / `status` on the `tax_abatements` layer.
 
-### 23 county centroids (for geocoding fallback, lon/lat pairs)
-
-```
-Andrews    -102.636000, 32.304500
-Brewster   -103.084723, 29.816000
-Crane      -102.540085, 31.490500
-Crockett   -101.378010, 30.694000
-Culberson  -104.488588, 31.552500
-Ector      -102.543000, 31.876500
-Glasscock  -101.522000, 31.868500
-Hudspeth   -105.406975, 31.303000
-Irion      -100.981238, 31.305500
-Jeff Davis -104.130042, 30.931000
-Loving     -103.569579, 31.820500
-Martin     -101.951510, 32.304500
-Midland    -102.031250, 31.869000
-Pecos      -102.666594, 30.727000
-Presidio   -104.238482, 29.942500
-Reagan     -101.524747, 31.366000
-Reeves     -103.645106, 31.381500
-Schleicher -100.538514, 30.901500
-Sutton     -100.538000, 30.500000
-Terrell    -102.162869, 30.165000
-Upton      -102.042750, 31.364000
-Ward       -103.126510, 31.466000
-Winkler    -103.063837, 31.830500
-```
+Re-include the Matterhorn row skipped Chat 83 (no meeting date captured — resolve via agenda PDF re-scrape or operator-provided date). Account for column-mapping caveats in §Prod status below when writing join keys and filter predicates.
 
 ### Session open (single block)
 
@@ -57,56 +23,55 @@ PAT=$(grep '^GITHUB_PAT=' /mnt/project/CREDENTIALS.md | cut -d= -f2)
 cd /home/claude && rm -rf repo 2>/dev/null
 git clone -q https://x-access-token:${PAT}@github.com/10thMuses/lrp-tx-gis.git repo && cd repo
 git config user.email "claude@lrp.local" && git config user.name "Claude (LRP GIS)"
-git checkout refinement-abatement-build              # resume branch, not new
-git log --oneline main..HEAD                          # verify c4e71ef is HEAD
+git checkout -b refinement-abatement-annotate origin/main
 apt-get install -y tippecanoe libcairo2 -q
-pip install shapely pmtiles pyyaml cairosvg pandas beautifulsoup4 requests --break-system-packages -q
+pip install shapely pmtiles pyyaml cairosvg pandas --break-system-packages -q
+curl -sI -A "Mozilla/5.0" https://lrp-tx-gis.netlify.app/ | head -1
+curl -s -A "Mozilla/5.0" https://lrp-tx-gis.netlify.app/ | grep -oE '"id":[ ]*"[a-z0-9_]+"' | sort -u | wc -l   # expect 23
 ```
 
-### Deploy pattern (CANONICAL — confirmed Chat 81)
+Open `refinement-abatement-annotate` as a fresh branch off main (operator will have merged `refinement-abatement-build` before this chat opens). If operator has not yet merged, branch off `refinement-abatement-build` instead and note in close-out.
 
-`NETLIFY_PAT=` line removed from `CREDENTIALS.md`. **REST-API deploy path is DEAD.** Only working deploy path is Netlify MCP → CLI proxy:
+### Deploy pattern (CANONICAL)
 
-1. Call `Netlify:netlify-deploy-services-updater` MCP tool with `{operation: "deploy-site", params: {siteId: "01b53b80-687e-4641-b088-115b7d5ef638"}}` → returns `--proxy-path` URL (one-time token, single use).
-2. `cd /mnt/user-data/outputs/dist && npx -y @netlify/mcp@latest --site-id 01b53b80-687e-4641-b088-115b7d5ef638 --proxy-path "<URL>" --no-wait` — returns `{"deployId": "...", "buildId": "..."}` on stdout.
-3. Poll state via `Netlify:netlify-deploy-services-reader` `get-deploy-for-site` until `state=ready`.
+`NETLIFY_PAT=` absent from `CREDENTIALS.md`. REST-API deploy path is DEAD. Only working path is Netlify MCP → CLI proxy:
+
+1. Call `Netlify:netlify-deploy-services-updater` with `{operation: "deploy-site", params: {siteId: "01b53b80-687e-4641-b088-115b7d5ef638"}}` → returns single-use `--proxy-path` URL.
+2. `cd /mnt/user-data/outputs/dist && npx -y @netlify/mcp@latest --site-id 01b53b80-687e-4641-b088-115b7d5ef638 --proxy-path "<URL>" --no-wait` → returns `{"deployId": "...", "buildId": "..."}`.
+3. Poll `Netlify:netlify-deploy-services-reader` `get-deploy-for-site` until `state=ready`.
 4. `sleep 45` for CDN warm-up (503 at 30s normal; 503 at 75s retry).
-5. Curl-verify: `curl -sI -A "Mozilla/5.0" https://lrp-tx-gis.netlify.app/` → HTTP 200; layer count → 23.
+5. `curl -sI -A "Mozilla/5.0" https://lrp-tx-gis.netlify.app/` → HTTP 200; layer count → 23.
 
-### PR + close-out (NON-NEGOTIABLE)
+### Close-out (NON-NEGOTIABLE, per Readme §10)
+
+Simplified 3-action rule:
 
 ```bash
 PAT=$(grep '^GITHUB_PAT=' /mnt/project/CREDENTIALS.md | cut -d= -f2)
-git push "https://x-access-token:${PAT}@github.com/10thMuses/lrp-tx-gis.git" refinement-abatement-build
+git push "https://x-access-token:${PAT}@github.com/10thMuses/lrp-tx-gis.git" refinement-abatement-annotate
+# then on main:
+git checkout main && git pull --rebase origin main
+# rewrite WIP_OPEN.md §Next chat → Chat 86 per §Sprint queue; update §Prod status
+git commit -am "Chat 85 close-out" && git push
 ```
 
-Then on `main`:
-- Rewrite `## Next chat` → Chat 84 promotion.
-- `git commit -am "Chat 83 close-out" && git push`
+No `WIP_LOG.md` append. No `## Recent sessions` row. Both sections removed Chat 83a.
 
-**Token-budget rule (Readme §10):** stop active work at ~65%. Reserve ~35% for close-out.
-
-### Known constraint (carried from Chat 79)
-
-`GITHUB_PAT` lacks PR-creation scope — 403 on POST `/repos/.../pulls`. Branch push works; PR opened by operator via GitHub UI.
+**`GITHUB_PAT` lacks PR-creation scope** — branch push works; operator opens PR via GitHub UI.
 
 ---
 
 ## Sprint queue
 
-### Chat 84 — ABATEMENT ANNOTATION + FILTER UI
-
-From spec §12.1 (locked): join `tax_abatements` hits to `eia860_plants`, `ercot_queue`, `solar`, `wind`, `eia860_battery`, future `dc_sites` by fuzzy applicant name + county + approx coords. Single pass, no iterative refinement. Add `abatement_*` fields to popups of matched facilities. Also: filter UI controls for `technology` / `commissioned` / `status` on the tax_abatements layer.
-
-### Chat 85 — ABATEMENT COUNTY EXPANSION (21 unverified adapters)
+### Chat 86 — ABATEMENT COUNTY EXPANSION (21 unverified adapters)
 
 Per spec §12.2 sequencing: Trans-Pecos (Brewster, Culberson, Hudspeth, Jeff Davis, Presidio, Terrell) → Permian-core (Andrews, Ector, Glasscock, Loving, Martin, Midland, Ward, Winkler) → peripheral (Crane, Crockett, Irion, Reagan, Schleicher, Sutton, Upton). Per spec §12.3 PDF-only counties dropped; flag in deliverable. URL research + adapter write per county; estimate 3–5 counties per chat given adapter pattern overhead.
 
-### Chat 86 — ABATEMENT WEEKLY CRON
+### Chat 87 — ABATEMENT WEEKLY CRON
 
 `.github/workflows/abatement-scrape.yml`. Cron weekly Monday 06:00 UTC. Commit diff to `data/abatements/abatement_hits_latest.csv` + rolling history. Alerting deferred per §12.8.
 
-### Chat 87+ — Mobile-friendly map
+### Chat 88+ — Mobile-friendly map
 
 UI/UX stage. Responsive breakpoints, touch-friendly controls, pinch-zoom tuning, measure tool + print-to-PDF mobile usability, popup sizing. Candidate for promotion into `docs/refinement-sequence.md`.
 
@@ -114,28 +79,38 @@ UI/UX stage. Responsive breakpoints, touch-friendly controls, pinch-zoom tuning,
 
 - `refinement-ui-polish-v2` → `main` (Chat 79). Prod reflects via deploy `69ea9d1b8b51ad96ce674f5d`. Cleanup only.
 - `refinement-sidebar-collapse` → `main` (Chat 81). Prod reflects via deploy `69eaf518997b708751d871bf`. Cleanup only.
-- `refinement-abatement-build` → `main` (Chat 82 partial). Will be extended by Chat 83 before final merge. **Do not merge until Chat 83 ships layer.**
+- `refinement-abatement-build` → `main` (Chats 82–84). **Deployed Chat 84 via `69eb6ae6583299e28d48965e`. Ready for merge.**
 
 ### Operator data ask (spec §12.5, non-blocking)
 
-Comptroller Ch. 312 abatement registry spreadsheet — manual quarterly download from `comptroller.texas.gov`. Serves as authoritative statewide baseline + backstop for county scrape failure. Can land in Chat 84 or later. Drop in `/mnt/user-data/uploads/` when downloaded.
+Comptroller Ch. 312 abatement registry spreadsheet — manual quarterly download from `comptroller.texas.gov`. Authoritative statewide baseline + backstop for county scrape failure. Can land Chat 86 or later. Drop in `/mnt/user-data/uploads/` when downloaded.
 
 ---
 
 ## Prod status
 
 - URL: https://lrp-tx-gis.netlify.app — requires real User-Agent on curl (`-A "Mozilla/5.0"`).
-- Last published deploy: `69eaf518997b708751d871bf` on branch commit `6d356cd` (Chat 81, `refinement-sidebar-collapse`). **Chat 82 did not deploy.**
-- Main HEAD will advance with Chat 82 close-out (this rewrite).
+- Last published deploy: `69eb6ae6583299e28d48965e` (Chat 84, `refinement-abatement-build`, 2026-04-24). State=ready, CDN-verified, 23 layer ids live.
+- Main HEAD does not yet include `refinement-abatement-build`. Operator PR merge pending.
 - Auto-publish: unlocked.
 - **Deploy path: Netlify MCP → CLI proxy.** REST-API dead.
-- Layer set: **22 built clean** (Chat 83 will advance to 23 with `tax_abatements`).
+- Layer set: **23 built clean** (advanced from 22 with `tax_abatements` Chat 84).
 - Prebuilt PMTiles (4): `parcels_pecos` 4.98 MB, `rrc_pipelines` 4.73 MB, `tiger_highways` 3.11 MB, `bts_rail` 2.16 MB.
 - Sprite sheet: 5 icons @ 1x + 2x at `/sprite/sprite.png` + `sprite@2x.png`.
 - Data-driven sizing live: `ercot_queue`, `solar`, `eia860_plants`, `eia860_battery`, `wind`; `substations`, `tpit_subs`, `tpit_lines`.
 - UI state: sidebar collapsible (`#sb=1`); `parcels_pecos` sidebar-hidden; default-ON layers; default basemap = esri_imagery; default viewport = -102.9707/30.9112 z12.
 - Sizing gaps (static fallback): `eia860_plants` 476/1367 null; `transmission` no voltage.
 - **CDN warmup timing:** 45–75s post-deploy.
+
+### Abatement layer notes (Chat 83–84)
+
+- 8 features live. All geocoded to **county centroid only** — no sub-county spatial precision. Do not represent as true point locations.
+- **Column-mapping caveats** (schema constraint — `combined_points.csv` has fixed columns):
+  - `agenda_url` stored in the `poi` column.
+  - `flags` stored in the `funnel_stage` column.
+  - `applicant` stored in `operator`; `status` in `funnel_stage` (shares column with flags); `reinvestment_zone` in `project`; `project_type` in `technology`; `meeting_date` in `commissioned`.
+- **Silver Basin Digital row** has `technology=abatement_other` (not a canonical project_type). Filter via `project=` (reinvestment zone) rather than `technology=` to isolate canonical project-type categories.
+- **Matterhorn row dropped Chat 83** — no meeting date captured. Re-include Chat 85 after agenda PDF re-scrape or operator-provided date.
 
 ---
 
