@@ -65,13 +65,19 @@ git push "https://x-access-token:${PAT}@github.com/10thMuses/lrp-tx-gis.git" ref
 # open PR via gh CLI or GitHub API
 ```
 
-Update `WIP_OPEN.md` `## Next chat` → promote Chat 80 (ABATEMENT BUILD) after merge. Append `WIP_LOG.md` entry for Chat 79.
+Update `WIP_OPEN.md` `## Next chat` → promote Chat 80 (SIDEBAR COLLAPSE) after merge. Append `WIP_LOG.md` entry for Chat 79.
 
 ---
 
 ## Sprint queue
 
-### Chat 80+ — Tax abatement BUILD
+### Chat 80 — SIDEBAR COLLAPSE
+
+**Spec:** `docs/refinement-sequence.md` §"Stage: SIDEBAR COLLAPSE". Small live-UI change: collapsible left sidebar with `«` / `»` toggle, map resize on transition, URL-hash state persistence, mobile + desktop parity. Branch: `refinement-sidebar-collapse`. Depends on nothing — can run after UI POLISH v2 merges, or parallel if diff surface doesn't conflict.
+
+---
+
+### Chat 81+ — Tax abatement BUILD
 
 **Approved scope:** `docs/refinement-abatement-spec.md` §12 (locked 2026-04-23). Both standalone layer + facility annotation; all 23 counties with Trans-Pecos → Permian-core → peripheral sequencing; PDFs skipped; 2025+2026 filings only; Comptroller Ch. 312 spreadsheet manual-quarterly ingest; dedup by `(county, applicant_normalized, reinvestment_zone)`; weekly GitHub Actions; alerting deferred.
 
@@ -140,7 +146,6 @@ Full per-session detail in `WIP_LOG.md`.
 
 **UI/UX backlog (unscheduled):**
 - **Mobile-friendly map.** Responsive breakpoints, touch-friendly controls, pinch-zoom tuning, measure tool + print-to-PDF mobile usability, popup sizing. Candidate for promotion into `docs/refinement-sequence.md` after UI POLISH v2.
-- **Collapsible left sidebar.** Mobile + desktop. Toggle control indicated by double-left-chevron (`«`) when expanded, double-right-chevron (`»`) when collapsed. Expands map to full viewport width when collapsed. State persists in URL hash alongside existing hash state.
 
 **Other (non-GIS):**
 - Grid Wire Vol. 7.
