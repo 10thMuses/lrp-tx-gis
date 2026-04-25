@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+# Pre-commit hook. Opt in with:
+#   git config core.hooksPath scripts
+#
+# Enforces OPERATING.md §14 structural fixes:
+#   - Reject staged files >1MB unless ALLOW_LARGE=1.
+#   - Warn (do not reject) on staged paths outside the canonical set, so
+#     accidental working-directory clutter is visible before it lands.
+#
+# Override:
+#   ALLOW_LARGE=1 git commit ...
+
+set -euo pipefail
+
+LIMIT_BYTES=$((1024 * 1024))
+EXIT=0
+
+# Files staged for add/modify in this commit.
+mapfile -t FILES < <(git diff --cached --name-only --diff-filter=AM)
+[ "${#FILES[@]}" -eq 0 ] && exit 0
+
+# Canonical-paths regex (matches the actual repo top-level layout).
+CANONICAL='^(scripts/|data/|docs/|outputs/|sprite/|\.github/|\.gitignore$|build\.py$|build_sprite\.py$|build_template\.html$|layers\.yaml$|combined_geoms\.geojson$|combined_points\.csv$|fcc_fiber_coverage\.geojson$|OPERATING\.md$|ARCHITECTURE\.md$|WIP_OPEN\.md$|README\.md$)'
+
+for f in "${FILES[@]}"; do
+  if [ -f "$f" ]; then
+    SIZE=$(wc -c < "$f")
+    if [ "$SIZE" -gt "$LIMIT_BYTES" ] && [ "${ALLOW_LARGE:-0}" != "1" ]; then
+      echo "REJECT: $f is $((SIZE / 1024)) KB (>1024). Set ALLOW_LARGE=1 to override." >&2
+      EXIT=1
+    fi
+  fi
+  if ! [[ "$f" =~ $CANONICAL ]]; then
+    echo "WARN: $f staged outside canonical paths" >&2
+  fi
+done
+
+exit $EXIT
