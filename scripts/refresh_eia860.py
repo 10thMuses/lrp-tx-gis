@@ -64,7 +64,8 @@ SCHEMA = [
 PLANT_GLOB = "2___Plant_Y*.xlsx"
 GEN_GLOB = "3_1_Generator_Y*.xlsx"
 BATTERY_GLOBS = [
-    "3_3_Energy_Storage_Y*.xlsx",  # 2022+
+    "3_4_Energy_Storage_Y*.xlsx",  # 2024+ release (solar promoted to 3_3, storage shifted to 3_4)
+    "3_3_Energy_Storage_Y*.xlsx",  # 2022–2023
     "3_3_Battery_Y*.xlsx",         # legacy fallback
 ]
 

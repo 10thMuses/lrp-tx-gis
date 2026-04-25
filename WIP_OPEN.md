@@ -8,48 +8,50 @@ Per OPERATING.md §10: **`## Next chat`** = task spec for the immediately-next s
 
 ## Next chat
 
-**Chat 95 — POWER PLANT DATA REFRESH execution (data-only).** Run the refresh scripts authored in Chat 94 (`scripts/refresh_eia860.py`, `scripts/refresh_uswtdb.py`), merge into `combined_points.csv`, build, deploy to prod. Popup-template redesign remains in sprint queue per §6.13.
-
-Chat 94 authored both scripts but did not execute them (recon + script-write filled the budget). Scripts are on `main`; Chat 95 is execution-only.
+**Chat 96 — POWER PLANT POPUP REDESIGN (yaml-only).** Promoted from sprint queue. Rewrite popup + filter specs in `layers.yaml` for 5 layers — `eia860_plants`, `eia860_battery`, `solar`, `wind`, `ercot_queue` — to surface the `operator` / `commissioned` / `capacity_mw` data populated in Chat 95's refresh. No `build.py` or `build_template.html` edits.
 
 ### Task
 
-1. Single composite bash: `python scripts/refresh_eia860.py` (defaults to year=2024 — see Pre-flight if EIA-860 has shipped a 2025-data release) + `python scripts/refresh_uswtdb.py`. Both write to `outputs/refresh/`. Validate non-empty + bounded lat/lon per refresh-cycle protocol (OPERATING.md §8).
-2. One-line null-rate diff for each layer using a streaming awk over `combined_points.csv` (no `cat` per §6.1) — before vs. after on `operator`, `commissioned`, `technology`, `fuel`, `capacity_mw`. Target: meaningful drop on `eia860_plants` (currently 476/1367 null on capacity_mw / technology / fuel per Open backlog).
-3. `merge eia860_plants from outputs/refresh/eia860_plants_<date>.csv`, then same for `eia860_battery` and `wind`. Write updated `combined_points.csv` via atomic temp-file rename per §6.15.
-4. `build. deploy to prod.` Verify per §8 step 4 (curl with real UA, 25 layer ids in HTML, EIA point popups carry refreshed fields). Tile spot-check on one EIA point.
-5. Close-out per §5.
+1. Edit `layers.yaml` for each of the 5 layers. Per the field contract below: DROP `sector` from `popup` and `filterable_fields`; ADD `commissioned`, `operator`, `capacity_mw`, and `fuel` / `technology` where the source schema supports them.
+2. `build. deploy to prod.` Verify per §8 step 4 (curl real UA, 25 layer ids).
+3. Spot-check rendered popup HTML for one feature in each of the 5 layers (grep prod HTML for the popup template; tile data already verified Chat 95).
+4. Close-out per §5.
+
+### Field contract (per layer)
+
+| Layer            | popup fields                                                                | filterable_fields                                                                       |
+|------------------|------------------------------------------------------------------------------|------------------------------------------------------------------------------------------|
+| eia860_plants    | name, plant_code, county, operator, commissioned, capacity_mw, technology, fuel | county (cat), technology (cat), fuel (cat), capacity_mw (numeric), commissioned (date)   |
+| eia860_battery   | name, plant_code, county, operator, commissioned, capacity_mw, technology   | county (cat), technology (cat), capacity_mw (numeric), commissioned (date)              |
+| solar            | (existing fields, DROP sector, ADD commissioned + operator + capacity_mw if present in combined_points.csv) | county (cat), capacity_mw (numeric), commissioned (date)              |
+| wind             | name (project), county, commissioned, capacity_mw, manu, model              | county (cat), capacity_mw (numeric), commissioned (date), manu (cat)                    |
+| ercot_queue      | (existing core fields, DROP sector, ADD commissioned/COD, operator, capacity_mw / mw, fuel) | (existing) + capacity_mw or mw (numeric), commissioned (date)                            |
 
 ### Acceptance
 
-- `outputs/refresh/eia860_plants_<date>.csv`, `outputs/refresh/eia860_battery_<date>.csv`, `outputs/refresh/wind_<date>.csv` all present and non-empty.
-- `combined_points.csv` row count for `layer_id` in {`eia860_plants`, `eia860_battery`, `wind`} unchanged in shape (rows replaced via drop-and-append on `layer_id`, not appended on top).
-- `eia860_plants` null rate on `capacity_mw` drops below 35% of rows (vs. current 35%).
-- New deploy `state=ready`. Prod HTML grep returns 25 layer ids. `eia860_plants` popup_labels rendered with at least `capacity_mw`, `technology`, `fuel`, `operator`, `commissioned`.
-- Branch merged to main + deleted same chat per §6.12.
+- All 5 layers' popup spec in prod HTML omits `sector` and includes `commissioned` + `operator` (where source-schema supports — note USWTDB has no operator/technology/fuel for `wind`; popup may show `manu`/`model` instead per Chat 95 refresh schema).
+- `eia860_plants` popup spec includes at minimum: `operator`, `commissioned`, `capacity_mw`, `technology`, `fuel`.
+- `commissioned` filter ships as `date_range` if implemented (else `text` multi-select carryforward — see Open backlog UI/UX item; not blocker).
+- Build errored=0, layer count=25, deploy state=ready.
+- Branch merged + deleted same chat per §6.12.
 
 ### Branch
 
-`refinement-chat95-power-plant-refresh-exec`.
+`refinement-chat96-power-plant-popup-redesign`.
 
 ### Pre-flight
 
-- `scripts/refresh_eia860.py` and `scripts/refresh_uswtdb.py` exist on main as of Chat 94 (commit `8eb86ae`). Both syntax-validated; neither executed against live sources.
-- EIA-860 script defaults to `--year 2024` (the 2025-published release covering 2024 data). If EIA has since published a 2025-data release, run with `--year 2025`. Script tries both `/xls/` and `/archive/xls/` URL patterns; logs FETCH_FAILED and exits 1 cleanly if neither resolves.
-- EIA-860 script requires `openpyxl`. If absent in the build container, `pip install --break-system-packages openpyxl` first.
-- USWTDB API stable; no auth required. Script paginates with `case_id` cursor at 1000/page.
-- No `build.py` / `build_template.html` / `layers.yaml` edits required (data-only change).
-- Tool-call budget: shipping ceiling 12. Composite bash for both refreshes + null-diff (1), composite for merge + build (1), MCP deploy (2), poll/curl verify (1), close-out (1). Reserve 6 for blocker recovery (likely shapes: EIA URL shift, sheet-name pattern miss on a year boundary, USWTDB schema field rename).
+- Combined-data fields are populated as of Chat 95 (deploy `69ed43136147a9a6b3966ebd`). Post-merge null rates: eia860_plants operator 38/1367 (97% populated), commissioned 529/1367 (61%), capacity_mw 476/1367 (65%); eia860_battery operator 0/133, commissioned 10/133, capacity_mw 0/133; wind commissioned 100/19464 (99.5%), capacity_mw 197/19464 (99%) — operator/technology/fuel structurally blank for wind (USWTDB schema gap, not data freshness).
+- `date_range` filter type still not implemented in `build.py compute_filter_stats` / `build_template.html filterFieldControlHtml`. Carryforward from Chat 92 handoff. If `commissioned` ships as `text` multi-select for now, that's acceptable; spinning up `date_range` is a separate sprint item.
+- No data refresh; all data already on `main`. No external HTTP needed.
+- `cairosvg` and `openpyxl` may need install in the build container (`pip install --break-system-packages cairosvg openpyxl`); see Chat 95 for the gotcha (build.py imports `build_sprite` at module top and that hard-imports `cairosvg`).
+- Tool-call budget: 8. yaml edit (1 composite), build (1), deploy MCP + npx (2), poll (1), verify + spot-check (1), close-out (1). Reserve 2 for blocker recovery.
 
 ---
 
 ## Sprint queue
 
 Ordered by operator priority. N+2 and beyond. Detailed multi-step entries live in `docs/sprint-plan.md`.
-
-### POWER PLANT POPUP REDESIGN
-
-Follow-on to Chat 94 data refresh. Rewrite popup templates for `eia860_plants`, `eia860_battery`, `solar`, `wind`, `ercot_queue`: DROP `sector`; ADD `commissioned` / COD date, `operator`, `capacity_mw`, `fuel` / `technology`. Filter UI reflects same fields. Detail in `docs/sprint-plan.md`.
 
 ### ABATEMENT PERMIAN-CORE + PERIPHERAL
 
@@ -84,7 +86,7 @@ Responsive breakpoints, touch-friendly controls, pinch-zoom tuning, measure tool
 ## Prod status
 
 - Layer count: **25**
-- Last published deploy: `69ed2cdf4039c554a1316ad2` (Chat 92, 2026-04-25). State=ready. Carries §1 tceq_gas_turbines field expansion + §2 tax_abatements popup rename + §3 wells min_zoom 6→10. Reconciled to main in Chat 93 (merge `3a59a73`).
+- Last published deploy: `69ed43136147a9a6b3966ebd` (Chat 95, 2026-04-25). State=ready. Carries EIA-860 (2024-data) plants + battery refresh and full USWTDB wind refresh merged into `combined_points.csv`. Prod tile bytes verified match local build (`eia860_plants.pmtiles` 87061 B header md5 identical local↔prod).
 - URL: `https://lrp-tx-gis.netlify.app` — requires real User-Agent on curl (`-A "Mozilla/5.0"`).
 
 ---
@@ -92,8 +94,8 @@ Responsive breakpoints, touch-friendly controls, pinch-zoom tuning, measure tool
 ## Open backlog
 
 **Data-pipeline gaps** (non-blocking):
-- `eia860_plants`: 476/1367 rows null `capacity_mw` / `technology` / `fuel` — targeted by Chat 94
-- `combined_points.csv` blank `operator` / `commissioned` on EIA point layers — targeted by Chat 94
+- `eia860_plants`: 476/1367 rows still null `capacity_mw` (down from 529), 529/1367 null `commissioned`, 438/1367 null `technology`. EIA-860 source-side gaps; will not improve without alternate source.
+- `wind`: USWTDB schema has no `operator`, `technology`, or `fuel`; structural blanks (19464/19464). `commissioned` populated for 19364/19464 (down from 0); `manu` and `model` populated. Filling operator would require joining a project-layer source (e.g. EIA-860 wind plants) — separate sprint item if pursued.
 - Cosmetic: prebuilt PMTiles feature counts show 0 in sidebar
 - BEAD `bead_fiber_planned` layer (Chat 91 §1 dropped): BDO XLSX trio archived to `data/bead_bdo/` but contains no county or coords. Three unblock paths documented in `data/bead_bdo/README.md`
 

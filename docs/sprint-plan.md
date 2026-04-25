@@ -28,9 +28,9 @@ Permian-core (Andrews, Ector, Glasscock, Loving, Martin, Midland, Ward, Winkler)
 
 ---
 
-## POWER PLANT DATA REFRESH + POPUP REDESIGN
+## POWER PLANT POPUP REDESIGN
 
-Re-pull EIA-860 (plants, battery) + USWTDB (wind) to fill blank operator/commissioned/technology/fuel/capacity_mw. Rewrite popup templates for `eia860_plants`, `eia860_battery`, `solar`, `wind`, `ercot_queue`: DROP sector; ADD commissioned/COD date, operator, capacity_mw, fuel/technology. Filter UI reflects same fields.
+Detail moved to `WIP_OPEN.md` `## Next chat` (Chat 96) — field contract per layer is in the Next chat block. This section deletes when Chat 96 ships.
 
 ---
 
