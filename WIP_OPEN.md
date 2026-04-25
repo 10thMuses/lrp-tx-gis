@@ -8,27 +8,38 @@ Per OPERATING.md §10: **`## Next chat`** = task spec for the immediately-next s
 
 ## Next chat
 
-**Chat 92 resume — FIELD EXPANSION + WELLS HIDE.** Branch `refinement-chat92-field-expansion-wells` has §1 partial committed; complete §2 + §3, build, deploy, merge.
+**Chat 93 — CHAT 92 §6.12 RECONCILIATION.** No build, no deploy. Branch `refinement-chat92-field-expansion-wells` carries §1+§2+§3 commits already serving prod (deploy `69ed2cdf4039c554a1316ad2`), but Chat 92 deferred close-out per scope-creep flag — silent regression per §6.12. Reconcile branch state, resolve duplicate build.py work, merge to main, delete branch.
 
 ### Task
 
-1. **§2 `tax_abatements` popup/filter rename.** Display-layer only; Chat 88 schema stays locked. Rename `commissioned` label "Commissioned" → "Approved date". Popup field order + filter set per `docs/sprint-plan.md` FIELD EXPANSION §2. `layers.yaml` edit + popup template; no data file change.
-2. **§3 `wells` hide.** Raise `min_zoom: 10` in `layers.yaml`. Do NOT delete PMTiles. Fallback `hidden: true` if min_zoom alone insufficient.
-3. **Build + deploy to prod.** Net layer count stays at 25. Verify §1 (gas-turbine field expansion) renders + §2 popup + §3 wells hidden at default zoom.
+1. On `refinement-chat92-field-expansion-wells`: `git revert f343506 --no-edit`. Pushes a revert of the stale-format WIP_OPEN.md rewrite (was authored against pre-Audit-1 file structure). Post-revert the branch's WIP_OPEN.md matches merge-base, so the merge below carries no WIP_OPEN.md conflict. Push.
+2. Same branch: `git rm docs/_chat92-field-expansion-wells_handoff.md` per §10 (handoff doc deleted before merge). Commit `Chat 93: delete chat92 handoff doc per §10`. Push.
+3. Checkout main → `git pull --rebase origin main` → `git merge --no-ff origin/refinement-chat92-field-expansion-wells -m "Merge refinement-chat92-field-expansion-wells (Chat 93): Chat 92 deploy reconciliation (deploy 69ed2cdf4039c554a1316ad2)"`. **Conflict on `build.py`:** branch commit `9082542` adds local merge_csv/merge_geojson temp+rename fix; main's `b9f9553` (Audit-1b) is the canonical implementation. Accept main's version (`git checkout --ours build.py && git add build.py`). Continue merge. Push main.
+4. `git push origin --delete refinement-chat92-field-expansion-wells`.
+5. Update WIP_OPEN.md `## Next chat` for Chat 94 — pick top viable sprint queue item: ABATEMENT PERMIAN-CORE is blocked on Akamai egress, so next viable is POWER PLANT DATA REFRESH or DC RESEARCH. Operator may direct otherwise. Commit, push.
 
 ### Acceptance
 
-- §2: `tax_abatements` popup shows new field order; filter UI reflects the listed set.
-- §3: `wells` not visible until zoom 10.
-- `built=25 missing=0 errored=0` in build report; deploy state=ready; layer-id grep on prod returns expected count.
+- `git ls-remote origin refinement-chat92-field-expansion-wells` empty.
+- `git log origin/main -3` includes merge commit referencing `69ed2cdf4039c554a1316ad2`.
+- Prod unchanged — no curl needed (recon already verified, see Pre-flight).
+- Tool-call budget: doc-only ceiling 6. Single composite bash for steps 1–4; one create_file/str_replace + one bash for step 5.
 
 ### Branch
 
-`refinement-chat92-field-expansion-wells` — already on origin with §1 commit `8a396c2`.
+`refinement-chat92-field-expansion-wells` — 5 commits beyond merge-base `3950736`: §1 partial refresh+CSV (`8a396c2`), handoff doc (`3f16b81`), §1 merge + duplicate build.py fix (`9082542`), §1-§3 yaml (`38f8654`), stale-format close-out WIP_OPEN.md (`f343506`).
 
 ### Pre-flight
 
-Audit-3 cleanup (this chat) lifted FIELD EXPANSION detail into `docs/sprint-plan.md`, trimmed WIP_OPEN.md under 8KB, and rewrote sidebar pointer docs (`docs/sidebar/COMMANDS.md`, `docs/sidebar/ENVIRONMENT.md` — operator must re-upload to project knowledge from the Audit-3 bundle). Stranded branches `chat76-wip` and `refinement-tceq-refresh` already absent from origin at audit time (Audit-3 spec was based on stale audit). Handoff doc `docs/_chat92-field-expansion-wells_handoff.md` on the chat92 branch carries detailed §1 status and §2/§3 plan — read it first per §10 stale-handoff heuristic.
+Prior recon chat (this chat) verified prod via `curl -A "Mozilla/5.0" https://lrp-tx-gis.netlify.app/`:
+- 25 distinct layer ids in prod HTML ✓
+- `tceq_gas_turbines` popup_labels carries 12-field expansion (Mode, Number of CTs, Status, Received date, Issue date, Permit No.) ✓
+- `tax_abatements` popup_labels carries rename (Applicant, Approved date, Project type, Capex ($M)) ✓
+- `min_zoom:10` present in LAYERS payload — wells raised ✓
+
+Chat 92 deployed but never merged. `## Prod status` below already updated to reflect reality.
+
+**Branch divergence:** chat92 branch forked at `3950736` (pre-Audit-1). Main has had Audit-1, Audit-1b, Audit-2, Audit-3 since. Branch never touched any of the consolidated docs (Readme.md, GIS_SPEC.md, principles.md, settled.md, OPERATING.md, ARCHITECTURE.md) so three-way merge resolves all of those to main's version cleanly. Only `build.py` overlaps.
 
 ---
 
@@ -73,7 +84,7 @@ Responsive breakpoints, touch-friendly controls, pinch-zoom tuning, measure tool
 ## Prod status
 
 - Layer count: **25**
-- Last published deploy: `69ec91f62150e8257e82413d` (Chat 90 close-out, 2026-04-25). State=ready.
+- Last published deploy: `69ed2cdf4039c554a1316ad2` (Chat 92, 2026-04-25). State=ready. Carries §1 tceq_gas_turbines field expansion + §2 tax_abatements popup rename + §3 wells min_zoom 6→10. **Not yet reflected in main's git history** — see `## Next chat` Chat 93 reconciliation.
 - URL: `https://lrp-tx-gis.netlify.app` — requires real User-Agent on curl (`-A "Mozilla/5.0"`).
 
 ---
@@ -86,10 +97,16 @@ Responsive breakpoints, touch-friendly controls, pinch-zoom tuning, measure tool
 - Cosmetic: prebuilt PMTiles feature counts show 0 in sidebar
 - BEAD `bead_fiber_planned` layer (Chat 91 §1 dropped): BDO XLSX trio archived to `data/bead_bdo/` but contains no county or coords. Three unblock paths documented in `data/bead_bdo/README.md`
 
+**UI/UX:**
+- `date_range` filter type not implemented (carryforward from Chat 92 handoff). `tax_abatements` `commissioned` filter ships as `text` multi-select over distinct ISO dates — functional with 9 rows but not a true range slider. Touches `build.py compute_filter_stats` + `build_template.html filterFieldControlHtml` + matching predicate.
+
 **Infrastructure:**
 - `NETLIFY_PAT` absent from `CREDENTIALS.md`. Netlify MCP proxy path canonical
 - `GITHUB_PAT` can push branches, 403 on PR creation. Direct-merge-to-main is the protocol (OPERATING.md §9)
 - **Akamai datacenter-egress block on `reevescounty.org`** — cloud-runner / GitHub-Actions traffic 403s regardless of UA / TLS fingerprint. Hard prerequisite for the abatement-weekly-cron sprint item. Unblock options: residential-proxy egress (paid), Akamai allowlisting via Reeves County IT (low likelihood), search-API result pages
+
+**Process:**
+- Chat 92 violated §6.12 (deploy + merge atomic): published deploy `69ed2cdf4039c554a1316ad2` to prod but deferred close-out merge to next chat citing scope-creep. Reconciliation queued as Chat 93. Root cause: doc-restructure work appeared on a feature branch alongside the data-layer work, blowing past §6.13 stage-fits-one-chat. Preventive structural fix: pre-commit hook could reject doc-structure changes on `refinement-*` branches; lower-effort alternative is operator-side discipline at branch-naming time.
 
 **Outstanding credential hygiene:**
 - `GITHUB_PAT` leak from Chat 87 unrotated per operator override. Token valid until 2027-04-21
