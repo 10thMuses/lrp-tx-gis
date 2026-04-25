@@ -14,7 +14,7 @@ Append-only. One entry per refresh run.
 
 **Scope applied:**
 - Sheet: `Issued Turbine Air Permits` only (active authorizations)
-- Geographic: 23-county West Texas set per `docs/refinement-sequence.md` ABATEMENT DISCOVERY §4
+- Geographic: 23-county West Texas set per `docs/archive/refinement-sequence-2026-04.md` ABATEMENT DISCOVERY §4
 - Time: `Received` date year ≥ 2020 (strict; `Received` cells with renewal-text history parsed to earliest date)
 - Turbine-size: source dataset is pre-filtered to ≥20 MW electric output
 
@@ -40,7 +40,7 @@ Append-only. One entry per refresh run.
 
 **Not refreshed this run:**
 - `tceq_pws` — dropped permanently (operator, 2026-04-23)
-- `tceq_pbr` — scoped out permanently as CRPUB HTML-scrape analog to RRC-MFT precedent; see `docs/settled.md`
+- `tceq_pbr` — scoped out permanently as CRPUB HTML-scrape analog to RRC-MFT precedent; see `ARCHITECTURE.md §11`
 - `tceq_nsr_pending` — deferred to next chat for EPA FRS / data.texas.gov recon pass
 
 **Aggregate signal (23-county 2020+ gas-turbine permit wave):** 3,536 MW across 6 permits, of which one (Poolside LF Phase 2 DC Ops, Fort Stockton) is explicitly data-center branded. CPV Basic Ranch 1,320 MW combined-cycle+cogen at Barstow and Featherwood Capital 931 MW at Pecos/Reeves are the two largest; both non-utility developers.

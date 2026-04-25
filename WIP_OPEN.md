@@ -34,7 +34,7 @@ Per OPERATING.md §10: **`## Next chat`** = task spec for the immediately-next s
 
 ### Pre-flight
 
-Audit-1 (this chat) consolidated 6 docs (Readme + GIS_SPEC + principles + settled + 2 refinement-* archives) into OPERATING.md (305 lines) + ARCHITECTURE.md (262 lines). WIP_LOG.md archived. Cross-walk verification at `/mnt/user-data/outputs/audit-1/CROSS_WALK.md`. Branch `refinement-audit-1-doc-consolidation` merged.
+Audit-1 consolidated 6 docs (Readme + GIS_SPEC + principles + settled + 2 refinement-* archives) into OPERATING.md (305 lines) + ARCHITECTURE.md (262 lines). WIP_LOG.md archived. Cross-walk verification at `docs/archive/audit-1/CROSS_WALK.md`. Branches merged: `refinement-audit-1-doc-consolidation`, `refinement-audit-1-cleanup` (dangling-ref cleanup of session-open.sh, CHANGELOG.md, WIP_OPEN.md Pre-flight + persisted CROSS_WALK).
 
 ---
 
