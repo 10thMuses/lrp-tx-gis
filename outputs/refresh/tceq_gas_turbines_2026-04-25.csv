@@ -1,0 +1,23 @@
+layer_id,lat,lon,name,plant_code,county,technology,capacity,sector,inr,fuel,mw,zone,poi,entity,funnel_stage,group,under_construction,commissioned,capacity_mw,operator,voltage,osm_id,depth_ft,use,aquifer,project,manu,model,cap_kw,year
+tceq_gas_turbines,30.891901,-102.883662,Poolside LF Phase 2 DC Ops LLC (183235),183235,Pecos,Gas turbine SC,,,,natural_gas,332.28,2026-03-09,,Poolside LF Phase 2 DC Ops LLC,issued,,,2026-03-12,332.28,Poolside LF Phase 2 DC Ops LLC,,,,,,12,GE,TM2500 GEN 8 &  TM2500 PLUS,,2026
+tceq_gas_turbines,31.643189,-101.768241,"Accelerated Mobile Power, LLC (180294)",180294,Reagan,Gas turbine SC,,,,natural_gas,60,2025-05-27,,"Accelerated Mobile Power, LLC",issued,,,2025-10-30,60,"Accelerated Mobile Power, LLC",,,,,,4,Solar Turbines,Solar Titan 130-23001S Radial,,2025
+tceq_gas_turbines,31.589052,-102.886190,"Luminant Generation Company, LLC (178462)",178462,Ward,Gas turbine SC,,,,natural_gas,833,2024-12-03,,"Luminant Generation Company, LLC",issued,,,2025-09-24,833,"Luminant Generation Company, LLC",,,,,,2,GE,GE H-Class 7HA.03,,2024
+tceq_gas_turbines,31.425414,-103.495289,Featherwood Capital LLC (182541),182541,Reeves,Gas turbine SC,,,,natural_gas,931,2025-12-19,,Featherwood Capital LLC,issued,,,2026-01-08,931,Featherwood Capital LLC,,,,,,15,Siemens,Siemens SGT-800,,2025
+tceq_gas_turbines,31.632915,-101.839850,"Accelerated Mobile Power, LLC (179297)",179297,Upton,Gas turbine SC,,,,natural_gas,60,2025-03-03,,"Accelerated Mobile Power, LLC",issued,,,2025-08-12,60,"Accelerated Mobile Power, LLC",,,,,,4,Solar Turbines,Solar Titan 130-23001S Radial,,2025
+tceq_gas_turbines,31.461469,-103.394632,"CPV Basic Ranch Holdings, LLC (175063)",175063,Ward,Gas turbine CC + COG,,,,natural_gas,1320,2024-01-02,,"CPV Basic Ranch Holdings, LLC",issued,,,2024-11-25,1320,"CPV Basic Ranch Holdings, LLC",,,,,,2,GE,GE 7HA.03,,2024
+tceq_gas_turbines,31.981875,-102.615581,Ector County Energy Ctr (110423),110423,Ector,Gas turbine SC,,,,natural_gas,330,2024-01-31,,Ector County Energy Ctr,renewed,,,2024-06-13,330,Ector County Energy Ctr,,,,,,2,GE,GE 7FA.03,,2024
+tceq_gas_turbines,31.753405,-103.155830,Powersite LLC (135738),135738,Winkler,Gas turbine CC,,,,natural_gas,372,2024-10-24,,Powersite LLC,renewed,,,2024-11-12,372,Powersite LLC,,,,,,4,Rolls-Royce,R-R Trent 60,,2024
+tceq_gas_turbines,31.589052,-102.886190,Luminant Generation Company LLC (prev. TXU) (9659),9659,Ward,Gas turbine SC,,,,natural_gas,325,2024-10-03,,Luminant Generation Company LLC (prev. TXU),renewed,,,2025-08-13,325,Luminant Generation Company LLC (prev. TXU),,,,,,5,GE,GE 7EA,,2024
+tceq_gas_turbines,31.857900,-103.093215,Targa Genco LLC (182591),182591,Winkler,Gas turbine SC,,,,natural_gas,112,2025-12-30,,Targa Genco LLC,pending,,,,112,Targa Genco LLC,,,,,,7,Solar Turbines,Solar Titan 130 or Nova LT16,,2025
+tceq_gas_turbines,31.425414,-103.495289,Energy Forge One LLC (181895),181895,Reeves,"Gas turbine CC
+SC
+SC
+SC",,,,natural_gas,2869,2025-10-17,,Energy Forge One LLC,pending,,,,2869,Energy Forge One LLC,,,,,,"2
+3
+12
+29",GE,"GE 7HA.02
+GE 7HA.02
+Solar Titan T350
+Solar Titan T130",,2025
+tceq_gas_turbines,31.131540,-102.222329,West Royal Energy Center LLC (181944),181944,Upton,Gas turbine SC,,,,natural_gas,896,2025-10-23,,West Royal Energy Center LLC,pending,,,,896,West Royal Energy Center LLC,,,,,,4,GE,GE 7F.05,,2025
+tceq_gas_turbines,31.425414,-103.495289,NRG Wolf Bone Energy Center LLC (181059),181059,Reeves,Gas turbine CC,,,,natural_gas,1202,2025-08-07,,NRG Wolf Bone Energy Center LLC,pending,,,,1202,NRG Wolf Bone Energy Center LLC,,,,,,2,GE,GE 7HA.02,,2025
