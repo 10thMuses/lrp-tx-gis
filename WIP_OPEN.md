@@ -8,36 +8,38 @@ Per OPERATING.md §10: **`## Next chat`** = task spec for the immediately-next s
 
 ## Next chat
 
-**Chat 94 — POWER PLANT DATA REFRESH (data-only).** Re-pull EIA-860 (plants, battery) and USWTDB (wind) to fill blank `operator` / `commissioned` / `technology` / `fuel` / `capacity_mw` fields. Build, deploy to prod. Popup-template redesign deferred to Chat 95 per §6.13 (stage fits one chat).
+**Chat 95 — POWER PLANT DATA REFRESH execution (data-only).** Run the refresh scripts authored in Chat 94 (`scripts/refresh_eia860.py`, `scripts/refresh_uswtdb.py`), merge into `combined_points.csv`, build, deploy to prod. Popup-template redesign remains in sprint queue per §6.13.
 
-Selected because ABATEMENT PERMIAN-CORE remains blocked on Akamai egress (see Open backlog) and POWER PLANT REFRESH has no external blockers and a clean acceptance signal (null-rate drop on `eia860_plants` capacity_mw / technology / fuel).
+Chat 94 authored both scripts but did not execute them (recon + script-write filled the budget). Scripts are on `main`; Chat 95 is execution-only.
 
 ### Task
 
-1. `refresh eia860_plants, eia860_battery, wind.` — fetch EIA-860 (latest 2025 release at `eia.gov/electricity/data/eia860/`) and USWTDB (`eersc.usgs.gov/api/uswtdb/v1/turbines`). Validate non-empty + bounded lat/lon + required columns per refresh-cycle protocol (OPERATING.md §8). Write to `outputs/refresh/`.
-2. One-line null-rate diff for each layer: before vs. after on `operator`, `commissioned`, `technology`, `fuel`, `capacity_mw`. Goal: meaningful drop on `eia860_plants` (currently 476/1367 null on capacity_mw / technology / fuel per Open backlog).
-3. `merge eia860_plants from outputs/refresh/...`, then same for `eia860_battery` and `wind`. Write updated `combined_points.csv`.
+1. Single composite bash: `python scripts/refresh_eia860.py` (defaults to year=2024 — see Pre-flight if EIA-860 has shipped a 2025-data release) + `python scripts/refresh_uswtdb.py`. Both write to `outputs/refresh/`. Validate non-empty + bounded lat/lon per refresh-cycle protocol (OPERATING.md §8).
+2. One-line null-rate diff for each layer using a streaming awk over `combined_points.csv` (no `cat` per §6.1) — before vs. after on `operator`, `commissioned`, `technology`, `fuel`, `capacity_mw`. Target: meaningful drop on `eia860_plants` (currently 476/1367 null on capacity_mw / technology / fuel per Open backlog).
+3. `merge eia860_plants from outputs/refresh/eia860_plants_<date>.csv`, then same for `eia860_battery` and `wind`. Write updated `combined_points.csv` via atomic temp-file rename per §6.15.
 4. `build. deploy to prod.` Verify per §8 step 4 (curl with real UA, 25 layer ids in HTML, EIA point popups carry refreshed fields). Tile spot-check on one EIA point.
 5. Close-out per §5.
 
 ### Acceptance
 
 - `outputs/refresh/eia860_plants_<date>.csv`, `outputs/refresh/eia860_battery_<date>.csv`, `outputs/refresh/wind_<date>.csv` all present and non-empty.
-- `combined_points.csv` row count for `layer_id` in {`eia860_plants`, `eia860_battery`, `wind`} unchanged in shape (rows replaced 1:1 by `(latitude, longitude)` join key, not appended).
+- `combined_points.csv` row count for `layer_id` in {`eia860_plants`, `eia860_battery`, `wind`} unchanged in shape (rows replaced via drop-and-append on `layer_id`, not appended on top).
 - `eia860_plants` null rate on `capacity_mw` drops below 35% of rows (vs. current 35%).
 - New deploy `state=ready`. Prod HTML grep returns 25 layer ids. `eia860_plants` popup_labels rendered with at least `capacity_mw`, `technology`, `fuel`, `operator`, `commissioned`.
 - Branch merged to main + deleted same chat per §6.12.
 
 ### Branch
 
-`refinement-chat94-power-plant-refresh`.
+`refinement-chat95-power-plant-refresh-exec`.
 
 ### Pre-flight
 
-- Source URLs unchanged from prior pulls. If EIA-860 2025 release URL has shifted, update `scripts/refresh_eia860.py` headers and proceed.
-- USWTDB API stable; no auth required.
-- No build.py / build_template.html edits required (data-only change).
-- Tool-call budget: shipping ceiling 12. Composite bash for refresh + diff (1), composite for merge + build + deploy (1), MCP deploy (2), poll/curl verify (1), close-out (1). Reserve 6 for blocker recovery.
+- `scripts/refresh_eia860.py` and `scripts/refresh_uswtdb.py` exist on main as of Chat 94 (commit `8eb86ae`). Both syntax-validated; neither executed against live sources.
+- EIA-860 script defaults to `--year 2024` (the 2025-published release covering 2024 data). If EIA has since published a 2025-data release, run with `--year 2025`. Script tries both `/xls/` and `/archive/xls/` URL patterns; logs FETCH_FAILED and exits 1 cleanly if neither resolves.
+- EIA-860 script requires `openpyxl`. If absent in the build container, `pip install --break-system-packages openpyxl` first.
+- USWTDB API stable; no auth required. Script paginates with `case_id` cursor at 1000/page.
+- No `build.py` / `build_template.html` / `layers.yaml` edits required (data-only change).
+- Tool-call budget: shipping ceiling 12. Composite bash for both refreshes + null-diff (1), composite for merge + build (1), MCP deploy (2), poll/curl verify (1), close-out (1). Reserve 6 for blocker recovery (likely shapes: EIA URL shift, sheet-name pattern miss on a year boundary, USWTDB schema field rename).
 
 ---
 
