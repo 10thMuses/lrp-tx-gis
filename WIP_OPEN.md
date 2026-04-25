@@ -8,25 +8,25 @@ Per Readme §10: **`## Next chat`** = paste-ready for next shipping chat. **`## 
 
 ## Next chat
 
-**Chat 90 — FCC FIBER COVERAGE.** New branch off current `main`. Adds `fcc_fiber_coverage` as a new polygon/hex layer built from FCC Broadband Data Collection (BDC) fixed-availability CSV, filtered to FTTP and aggregated to H3 res-8 hexes across the 23-county Permian-focus footprint. Layer count 24 → 25.
+**Chat 91 — BEAD FIBER PLANNED + REEVES RE-VERIFY.** New branch off current `main`. Conditional `bead_fiber_planned` layer (TX Comptroller BDO BEAD primary, NTIA fallbacks, 30-min ship rule) plus Reeves CivicEngage adapter re-verify. Layer count 25 → 26 if BEAD ships, 25 if dropped. Closes the active sprint — `docs/sprint-plan.md` deleted at close-out.
 
 ### Task
 
-1. **Source.** FCC BDC Texas fixed-availability CSV, most recent as-of. Download: https://broadbandmap.fcc.gov/data-download/nationwide-data (By State → Texas → Fixed Broadband). Backup if UI blocks: ArcGIS Living Atlas "FCC Broadband Data Collection" hosted feature service.
-2. **Filter.** `technology_code=50` (FTTP), `low_latency=1`.
-3. **Spatial join.** BSL coords to 23-county TIGER polygons already in `combined_geoms.geojson`. Drop rows outside 23-county scope.
-4. **H3 aggregation.** `pip install h3 --break-system-packages`. Resolution 8 (~0.74 km²). If h3-py compile-fails, fallback: shapely hexbin at ~1 km pitch, same chat. Per hex compute: `fiber_provider_count`, `max_down_mbps`, `max_up_mbps`, `providers` (comma-delim, alphabetical, cap 5), `bsl_count`, `as_of_date`.
-5. **Render.** New yaml entry `fcc_fiber_coverage`. Geom=fill. 3-bin choropleth on `max_down_mbps`: ≥1000 / 100–999 / <100. Cyan palette. `default_on: false`. Popup: all six aggregate fields.
-6. **Friction budget.** CSV is 100+ MB. Use pandas chunked read. If h3 install fails, fall back to shapely hexbin same-chat — do not reschedule.
+1. **BEAD fiber planned layer (conditional).**
+   - Primary source: TX Comptroller BDO BEAD map / awards list (https://comptroller.texas.gov/programs/broadband/).
+   - Fallback 1: NTIA Middle Mile award list, Texas subset.
+   - Fallback 2: NTIA National Broadband Funding Map.
+   - Fields: `subgrantee`, `award_amount`, `county_list` or polygon, `announced_date`, `target_completion`, `technology`, speed commitment.
+   - Render: polygon if available, else county centroid. Cyan family, darker shade or dashed stroke to differentiate from Chat 90's `fcc_fiber_coverage` layer (already cyan).
+   - **Ship rule:** if no downloadable source in 30 min, drop the layer entirely, log failure mode in `§Open backlog`, proceed to §2 below. Do NOT re-budget the chat around it.
+2. **Reeves CivicEngage adapter re-verify.** Chat 82 regression: adapter returned 0 hits on first run; Pecos Power Plant LLC Reeves abatement was hand-seeded from spec §8. Re-run the adapter, confirm it reproduces the hand-seeded row. If still 0 hits, diagnose selector / URL pattern. If adapter works, run against all Permian-core counties that share the CivicEngage CMS (log which).
 
 ### Acceptance
 
-- Layer count: 24 → 25.
-- `fcc_fiber_coverage` renders across 23 counties.
-- Popup shows all 6 aggregate fields.
-- Choropleth bins render visibly distinct.
-- Build report `errored == 0`.
-- Live site returns HTTP 200 with 25 layer ids.
+- Layer count: 25 → 26 if §1 ships, 25 if §1 dropped.
+- If §1 ships: `bead_fiber_planned` renders across affected counties; popup shows all six fields; build report `errored == 0`; live site returns HTTP 200 with 26 layer ids.
+- Reeves adapter either reproduces the Pecos Power Plant LLC row OR produces a diagnostic note in `§Open backlog` identifying the failure mode (selector regression, URL pattern change, CMS migration).
+- `docs/sprint-plan.md` deleted at close-out (last chat in sprint).
 
 ### Session open
 
@@ -34,54 +34,53 @@ Per Readme §10: **`## Next chat`** = paste-ready for next shipping chat. **`## 
 PAT=$(grep '^GITHUB_PAT=' /mnt/project/CREDENTIALS.md | cut -d= -f2)
 cd /home/claude && rm -rf repo 2>/dev/null
 git clone -q https://x-access-token:${PAT}@github.com/10thMuses/lrp-tx-gis.git repo && cd repo
-bash scripts/session-open.sh refinement-chat90-fcc-fiber
+bash scripts/session-open.sh refinement-chat91-bead-fiber-reeves
 apt-get install -y tippecanoe libcairo2 -q
-pip install shapely pmtiles pyyaml cairosvg pandas h3 --break-system-packages -q
+pip install shapely pmtiles pyyaml cairosvg pandas requests --break-system-packages -q
 ```
 
 ### Deploy pattern (CANONICAL)
 
-Unchanged from Chat 88/89: Netlify MCP → CLI proxy. REST-API dead (no `NETLIFY_PAT`).
+Unchanged from Chat 88/89/90: Netlify MCP → CLI proxy. REST-API dead.
 
 1. `Netlify:netlify-deploy-services-updater` `{operation: "deploy-site", params: {siteId: "01b53b80-687e-4641-b088-115b7d5ef638"}}` → single-use `--proxy-path` URL.
 2. `cd /mnt/user-data/outputs/dist && npx -y @netlify/mcp@latest --site-id 01b53b80-687e-4641-b088-115b7d5ef638 --proxy-path "<URL>" --no-wait` → `{"deployId":"...","buildId":"..."}`.
 3. Poll `get-deploy-for-site` until `state=ready`.
 4. `sleep 45` for CDN warm-up. HEAD may 503; GET is source of truth.
-5. `curl -s -A "Mozilla/5.0" https://lrp-tx-gis.netlify.app/ | grep -oE '"id":"[a-z_][a-z0-9_]*"' | sort -u | wc -l` → 25.
+5. `curl -s -A "Mozilla/5.0" https://lrp-tx-gis.netlify.app/ | grep -oE '"id":"[a-z_][a-z0-9_]*"' | sort -u | wc -l` → 26 (or 25 if §1 dropped).
 
 Proxy URL single-use. On 503 upload error, request fresh URL.
 
 ### Pre-flight
 
-Chat 89 closed doc-only (0 new hits, all 6 Trans-Pecos counties flagged; no build output diff, no redeploy). Last published deploy remains `69ebcfbbe97514ce84df1591` (Chat 88, 2026-04-24 20:17Z). Prod at 24 layers, HTTP 200. Chat 89 branch merged and deleted from origin. Start from clean `main`.
+Chat 90 closed 2026-04-25: FCC fiber coverage H3 hex layer shipped to prod (deploy `69ec91f62150e8257e82413d`). Layer count 24 → 25. Branch `refinement-chat90-fcc-fiber` merged and deleted from origin. Start from clean `main`.
 
 ### Close-out (NON-NEGOTIABLE, per Readme §10)
 
-Per Readme §10 sprint-plan rule: re-read `docs/sprint-plan.md` §Chat 91; edit if Chat 90 changed assumptions (layer count baseline becomes 25); promote Chat 91 brief to §Next chat; delete Chat 90 section from `docs/sprint-plan.md`.
+Per Readme §10 sprint-plan rule: this is the last chat in the active sprint. Close-out deletes `docs/sprint-plan.md` and rewrites `WIP_OPEN.md §Next chat` from `§Sprint queue` (Chat 92 = Permian-core abatement wave, OR field-expansion + wells-hide if operator bumps it ahead — operator decides at close-out).
 
 ```bash
 PAT=$(grep '^GITHUB_PAT=' /mnt/project/CREDENTIALS.md | cut -d= -f2)
-git fetch origin refinement-chat90-fcc-fiber
+git fetch origin refinement-chat91-bead-fiber-reeves
 git checkout main && git pull --rebase origin main
-git merge --no-ff origin/refinement-chat90-fcc-fiber -m "Merge refinement-chat90-fcc-fiber (Chat 90): FCC fiber coverage H3 hex layer"
-# Rewrite WIP_OPEN.md §Next chat → Chat 91 brief (full paste-ready, from sprint-plan.md §Chat 91)
-# Edit docs/sprint-plan.md: delete §Chat 90 section; re-read §Chat 91 and edit if assumptions changed
-# Update §Prod status with new deployId + layer count = 25
-git commit -am "Chat 90 close-out" && git push
-git push --delete origin refinement-chat90-fcc-fiber
+git merge --no-ff origin/refinement-chat91-bead-fiber-reeves -m "Merge refinement-chat91-bead-fiber-reeves (Chat 91): BEAD planned fiber + Reeves adapter re-verify"
+# Rewrite WIP_OPEN.md §Next chat → next sprint-queue chat (Chat 92 Permian-core OR field-expansion, per operator)
+# Delete docs/sprint-plan.md
+# Update §Prod status with new deployId + layer count
+# Drop the just-promoted entry from §Sprint queue
+git rm docs/sprint-plan.md
+git commit -am "Chat 91 close-out"
+git push
+git push --delete origin refinement-chat91-bead-fiber-reeves
 ```
 
-**Credential hygiene carry-forward:** `GITHUB_PAT` leak from Chat 87 remains unrotated per operator override. Token valid until 2027-04-21. Flag again in Chat 90 close-out if still outstanding.
+**Credential hygiene carry-forward:** `GITHUB_PAT` leak from Chat 87 remains unrotated per operator override. Token valid until 2027-04-21. Flag again in Chat 91 close-out if still outstanding.
 
 ---
 
 ## Sprint queue
 
 Ordered by operator priority. N+2 and beyond. Multi-chat active sprint detail lives in `docs/sprint-plan.md`; one-paragraph pointers below.
-
-### Chat 91 — BEAD FIBER PLANNED + REEVES RE-VERIFY
-
-Conditional `bead_fiber_planned` layer (TX Comptroller BEAD map primary; NTIA fallbacks; 30-min ship rule). Plus Reeves CivicEngage adapter re-verify. Layer count 25 → 26 if BEAD ships, 25 if dropped. Closes the active sprint — `docs/sprint-plan.md` deleted at close-out. Full brief: `docs/sprint-plan.md` §Chat 91.
 
 ### FIELD EXPANSION + WELLS HIDE (operator ask 2026-04-24)
 
@@ -224,17 +223,18 @@ Historical notes:
 
 ## Prod status
 
-- **Chat 89 closed doc-only 2026-04-24** — Trans-Pecos 6-county scrape: 0 new hits, all 6 flagged in §Abatement layer notes. No data change, no redeploy. Layer count unchanged at 24; `tax_abatements` unchanged at 9.
+- **Chat 90 closed 2026-04-25** — FCC fiber coverage layer shipped: `fcc_fiber_coverage` H3 res-8 hexes built from FCC BDC fixed-availability CSV (FTTP filter, 23-county Permian-focus footprint). Layer count 24 → 25.
 - URL: https://lrp-tx-gis.netlify.app — requires real User-Agent on curl (`-A "Mozilla/5.0"`).
-- Last published deploy: `69ebcfbbe97514ce84df1591` (Chat 88 close-out, 2026-04-24 20:17:05Z). Supersedes `69ebb64823c1c470e0c6f0b1`. State=ready. **CDN-verified**: HTTP 200 (GET), 24 layer ids live, Chat 88 tax_abatements schema artifacts confirmed in served HTML: label `Property Tax Abatements (Ch.312 / LDAD, new or expansion)`, all 4 new popup_labels present (`Abatement term (yrs)`, `Jobs commitment`, `Taxing entities`, `Reinvestment zone`).
+- Last published deploy: `69ec91f62150e8257e82413d` (Chat 90 close-out, 2026-04-25). Supersedes `69ebcfbbe97514ce84df1591`. State=ready. Layer count 25 live. `fcc_fiber_coverage` renders as cyan choropleth on `max_down_mbps` (3 bins: ≥1000 / 100–999 / <100), `default_on: false`, popup shows all six aggregate fields.
+- Previous deploy: `69ebcfbbe97514ce84df1591` (Chat 88 close-out, 2026-04-24 20:17:05Z) — Chat 88 tax_abatements schema artifacts confirmed: label `Property Tax Abatements (Ch.312 / LDAD, new or expansion)`, all 4 new popup_labels present (`Abatement term (yrs)`, `Jobs commitment`, `Taxing entities`, `Reinvestment zone`).
 - **CDN quirk (persistent, note for future chats):** HEAD requests to `https://lrp-tx-gis.netlify.app/` return 503 even when the site is serving healthy GET responses. Do not treat HEAD 503 as failure — grep GET output for layer-id count and schema markers.
 - Previous deploy: `69ebb64823c1c470e0c6f0b1` (Chat 87 bugfix, 2026-04-24 18:28:29Z) — all 4 Chat 87 styling edits confirmed (`tiger_highways line_width: 0.6`, `waha_circle`, `caramba_north #2E7D32` + `Caramba North (1,300 ac)`).
 - **Chat 87 bug caught at post-close-out verification (2026-04-24 18:26Z):** Initial deploy `69eb952306288390a3d6a3c0` (16:07Z) shipped only 3 of 4 Chat 87 styling edits. `tiger_highways line_width: 0.6` was dead on prod because `build.py render_html()` layer-dict serializer (line 633–647) did not emit `line_width` — template `sizingLineWidthExpr` on line 338 read `undefined ?? 2` and every line layer rendered at width 2 regardless of `layers.yaml` value. Fix: added `'line_width': L.get('line_width', 2)` to the serializer dict. Redeployed as `69ebb64823c1c470e0c6f0b1`. This bug predates Chat 87 (every line layer was always rendered at width 2); Chat 87 was the first chat to set `line_width` in yaml and thus first to surface it.
 - **Process lesson:** Chat 87 close-out initially proceeded without live-site verification due to concurrent Netlify-wide edge outage (16:07Z–18:22Z, `DNS cache overflow` site-wide). Operator override accepted the risk. Post-recovery verification then caught the bug. The halt rule in `WIP_OPEN.md §Next chat` ("if verification fails, halt") exists precisely to prevent this. Future chats: if CDN verification is blocked by infrastructure, override is permissible but the next chat's first act must be post-hoc live verification. Do not consider a close-out complete until served HTML has been grepped.
-- Main HEAD includes Chat 88 merge commit (tax_abatements schema refactor). Branch `refinement-chat88-abatement-refactor` deleted from origin.
+- Main HEAD includes Chat 90 merge commit (FCC fiber coverage layer). Branch `refinement-chat90-fcc-fiber` deleted from origin.
 - Auto-publish: unlocked.
 - **Deploy path: Netlify MCP → CLI proxy.** REST-API dead.
-- Layer set: **24 built clean**. `tax_abatements` schema = Chat 88 mapping; 9 rows live, 5 abatement annotations apply to `eia860_plants`/`ercot_queue`/`solar` facilities.
+- Layer set: **25 built clean**. `tax_abatements` schema = Chat 88 mapping; 9 rows live, 5 abatement annotations apply to `eia860_plants`/`ercot_queue`/`solar` facilities. `fcc_fiber_coverage` is a polygon/hex layer (H3 res-8) added Chat 90.
 - **Chat 87 styling edits live in build:** tiger_highways `line_width: 0.6` (thinner at z=8); `waha_circle` yellow ring (`#FFD400`, 1 feature) above Waha Hub; caramba_north green (`#2E7D32`) with label `Caramba North (1,300 ac)`; `build_template.html` `sizingLineWidthExpr` reads `L.line_width ?? 2`; `layerPaint()` point block honors optional `circle_radius` / `stroke_color` / `stroke_width` / `fill_opacity`.
 - **Credential hygiene (outstanding):** `GITHUB_PAT` leaked in push-URL echo during Chat 87 edit session. Operator override 2026-04-24 permitted Chat 87 resume to execute with leaked token; rotation still recommended, token valid until 2027-04-21.
 - Prebuilt PMTiles (4): `parcels_pecos` 4.98 MB, `rrc_pipelines` 4.73 MB, `tiger_highways` 3.11 MB, `bts_rail` 2.16 MB.

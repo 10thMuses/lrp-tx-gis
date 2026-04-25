@@ -27,56 +27,6 @@ for the chat it just removed.
 
 ---
 
-## Chat 90 — FCC FIBER COVERAGE
-
-New layer. Ship-priority item from prior chat-86 brief.
-
-### Tasks
-
-1. **Source:** FCC BDC Texas fixed-availability CSV, most recent
-   as-of. Download: https://broadbandmap.fcc.gov/data-download/
-   nationwide-data (By State → Texas → Fixed Broadband). Backup
-   source if UI blocks download: ArcGIS Living Atlas "FCC Broadband
-   Data Collection" hosted feature service.
-
-2. **Filter:** `technology_code=50` (FTTP), `low_latency=1`.
-
-3. **Spatial join:** BSL coords to 23-county TIGER polygons already
-   in `combined_geoms.geojson`. Drop rows outside the 23-county
-   scope.
-
-4. **H3 aggregation.** `pip install h3 --break-system-packages`.
-   Resolution 8 (~0.74 km²). If h3-py compile-fails, fallback:
-   shapely hexbin at ~1 km pitch. Per hex, compute:
-   - `fiber_provider_count`
-   - `max_down_mbps`, `max_up_mbps`
-   - `providers` (comma-delim, alphabetical, cap 5)
-   - `bsl_count`
-   - `as_of_date`
-
-5. **Render.** New yaml entry `fcc_fiber_coverage`. Geom=fill.
-   3-bin choropleth on `max_down_mbps`: ≥1000 / 100–999 / <100.
-   Cyan palette. `default_on: false`. Popup: all six aggregate
-   fields.
-
-6. **Friction budget.** CSV is 100+ MB. Use pandas chunked read.
-   If h3 install fails, fall back to shapely hexbin same-chat, do
-   not reschedule.
-
-### Acceptance
-
-- Layer count: 24 → 25.
-- Fiber hex layer renders across 23 counties.
-- Popup shows aggregate fields.
-- Choropleth bins render visibly distinct.
-
-### Close-out
-
-Deploy → merge → delete branch → promote Chat 91 brief to §Next
-chat → remove Chat 90 section here → push.
-
----
-
 ## Chat 91 — BEAD FIBER PLANNED + REEVES ADAPTER RE-VERIFY
 
 Conditional new layer + deferred adapter fix.
