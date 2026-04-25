@@ -181,7 +181,9 @@ def fnum(v):
 
 
 def resolve_source(file_rel):
-    """Return absolute path in /mnt/project/ (flat) or subfolder fallback."""
+    """Return absolute path in /mnt/project/ (flat), subfolder fallback,
+    or repo ROOT (GitHub-as-canonical-source fallback for files not synced
+    into project knowledge — the canonical source is the cloned repo)."""
     flat = PROJECT / file_rel
     if flat.exists():
         return flat
@@ -193,7 +195,10 @@ def resolve_source(file_rel):
         alt = PROJECT / 'deal' / file_rel[len('deal_'):]
     else:
         alt = None
-    return alt if (alt and alt.exists()) else None
+    if alt and alt.exists():
+        return alt
+    repo_path = ROOT / file_rel
+    return repo_path if repo_path.exists() else None
 
 
 def _coerce_row_props(row):
@@ -645,6 +650,7 @@ def render_html(layers_config, layer_stats, filter_stats=None):
             'radius': L.get('radius', 3),
             'fill_opacity': L.get('fill_opacity', 0.25),
             'line_width': L.get('line_width', 2),
+            'color_steps': L.get('color_steps'),
             'features': stats_by_id[L['id']]['features'],
             'filterable_fields': ff,
         })
