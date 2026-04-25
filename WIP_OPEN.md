@@ -8,43 +8,38 @@ Per OPERATING.md §10: **`## Next chat`** = task spec for the immediately-next s
 
 ## Next chat
 
-**Audit-2 — OPERATIONAL SCRIPTS.** Doc-only commit chat. Encodes the procedural rules currently scattered across operator paste-buffers into reusable scripts. No layer changes; no deploy.
+**Audit-3 — STRANDED BRANCH CLEANUP + SIDEBAR HYGIENE.** Doc/repo housekeeping. No layer changes; no deploy.
 
 ### Task
 
-1. **`scripts/close-out.sh <branch> <deploy-id>`** — replaces the close-out bash block formerly pasted into `## Next chat`. Sequence: feature-branch push → checkout main → `git pull --rebase` → `git merge --no-ff origin/<branch>` with deploy-id in message → push main → `git push origin --delete <branch>`. Errors out if HEAD has zero non-handoff commits (enforces OPERATING.md §6 hard rule 14).
+1. **Resolve stranded origin branches.** `audit.sh` reports four. Delete the two abandoned: `chat76-wip` (1 commit, 80 behind main, last 2026-04-23) and `refinement-tceq-refresh` (0 ahead, 89 behind, scoped out per ARCHITECTURE.md §11). Leave `refinement-chat92-field-expansion-wells` (2 ahead, active sprint item) and the chat's own in-flight branch. `git push origin --delete chat76-wip refinement-tceq-refresh`.
 
-2. **`scripts/deploy.sh`** — replaces the Netlify-MCP + CLI-proxy + poll + verify sequence formerly pasted as "Deploy pattern (CANONICAL)". Calls Netlify MCP via the same JSON-RPC interface used in chat; polls `get-deploy-for-site` until `state=ready`; sleeps 45s; runs `curl -sI -A "Mozilla/5.0"` on root + one tile endpoint; greps `"id":"..."` count from served HTML. Returns deploy-id on stdout for piping into close-out.sh.
+2. **Sidebar pointer rewrite.** `/mnt/project/COMMANDS.md` and `/mnt/project/ENVIRONMENT.md` reference docs deleted in Audit-1 (`Readme.md`, `WIP_LOG.md`, `docs/principles.md`, `docs/settled.md`, `docs/refinement-sequence.md`, `GIS_SPEC.md`) and duplicate content now in OPERATING.md §5/§7/§10. Rewrite both as ~30-line pointer docs ("see OPERATING.md §X for trigger phrases / session protocol / etc."). Output bundle includes both for operator re-upload to project knowledge.
 
-3. **`scripts/ship.sh <branch>`** — atomic deploy+merge+delete-branch wrapper. Runs `deploy.sh`, captures deploy-id, runs `close-out.sh <branch> <deploy-id>`. Single command for OPERATING.md §6 hard rule 12 (deploy + merge atomicity).
+3. **WIP_OPEN.md size reduction.** `audit.sh` reports 9261B vs 8KB target. Per OPERATING.md §10, lift verbose Sprint queue entries (FIELD EXPANSION, ABATEMENT PERMIAN-CORE, POWER PLANT REFRESH, DC RESEARCH sub-sequence) into `docs/sprint-plan.md`. Keep only one-paragraph pointers in WIP_OPEN.md.
 
-4. **`scripts/audit.sh`** — telemetry per OPERATING.md §15. Reports OPERATING.md line count, count of session-open / close-out invocations in last 30 commits, stranded branches on origin (ls-remote diff vs `main` and `refinement-*` patterns from recent commits), WIP_OPEN.md byte size. Outputs human-readable summary to stdout.
-
-5. **Pre-commit hook** at `scripts/pre-commit` (operator opts in via `git config core.hooksPath scripts/`): rejects files >1MB unless on a `--allow-large` flag path; warns on staging files outside the explicit set.
+4. **Re-run `audit.sh`** at session close to confirm: stranded count ≤2, WIP_OPEN.md <8192B, OPERATING.md still 306 (separate fix; not in scope here), close-out conformance now 1/20+ (lags monotonically).
 
 ### Acceptance
 
-- All four scripts executable and committed.
-- `bash scripts/audit.sh` runs clean and prints a snapshot.
-- No production code, build pipeline, or layer changes.
+- `git ls-remote --heads origin` shows ≤2 non-main branches.
+- COMMANDS.md and ENVIRONMENT.md rewritten as pointers; bundle presented for operator re-upload.
+- WIP_OPEN.md <8192B (audit.sh OK on size).
+- `audit.sh` runs clean at close-out.
 
 ### Branch
 
-`refinement-audit-2-operational-scripts`
+`refinement-audit-3-cleanup`
 
 ### Pre-flight
 
-Audit-1 consolidated 6 docs (Readme + GIS_SPEC + principles + settled + 2 refinement-* archives) into OPERATING.md (305 lines) + ARCHITECTURE.md (262 lines). WIP_LOG.md archived. Cross-walk verification at `docs/archive/audit-1/CROSS_WALK.md`. Branches merged: `refinement-audit-1-doc-consolidation`, `refinement-audit-1-cleanup` (dangling-ref cleanup of session-open.sh, CHANGELOG.md, WIP_OPEN.md Pre-flight + persisted CROSS_WALK).
+Audit-2 added `close-out.sh`, `deploy.sh`, `ship.sh`, `audit.sh`, `pre-commit` under five per-unit commits on `refinement-audit-2-operational-scripts`, merged to main with deploy=none. `deploy.sh` is bash-complete but errors at `NETLIFY_PAT` lookup until Open-backlog item provisions the credential — canonical deploy path remains MCP-via-chat. `close-out.sh` enforces §6.14 (rejects merges with zero non-handoff commits) and accepts `none` as deploy-id sentinel for doc-only chats.
 
 ---
 
 ## Sprint queue
 
 Ordered by operator priority. N+2 and beyond.
-
-### Audit-3 — STRANDED BRANCH CLEANUP + SIDEBAR HYGIENE
-
-Doc/repo housekeeping. Resolve `chat76-wip` and `refinement-tceq-refresh` (latter explicitly scoped out per ARCHITECTURE.md §11). Update sidebar system prompt to remove stale references (ENVIRONMENT.md ghost, COMMANDS.md duplication of OPERATING.md §7 trigger phrases). Validate `audit.sh` telemetry output now that scripts exist.
 
 ### FIELD EXPANSION + WELLS HIDE
 
