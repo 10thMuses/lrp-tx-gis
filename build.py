@@ -701,7 +701,10 @@ def merge_csv(combined_path, refresh_path, layer_id, out_path):
     kept = 0
     removed = 0
     added = 0
-    with open(out_path, 'w', newline='', encoding='utf-8') as fout:
+    # §6 #15: write to temp path + atomic rename. If out_path == combined_path,
+    # opening out_path in 'w' before the source read would truncate it to zero.
+    tmp_path = str(out_path) + '.tmp'
+    with open(tmp_path, 'w', newline='', encoding='utf-8') as fout:
         writer = csv.DictWriter(fout, fieldnames=merged_header, extrasaction='ignore')
         writer.writeheader()
         # Pass 1: keep non-target rows from combined
@@ -720,6 +723,7 @@ def merge_csv(combined_path, refresh_path, layer_id, out_path):
                 row['layer_id'] = layer_id
                 writer.writerow(row)
                 added += 1
+    os.replace(tmp_path, out_path)
     return {'kept': kept, 'removed': removed, 'added': added,
             'columns': len(merged_header)}
 
@@ -754,8 +758,13 @@ def merge_geojson(combined_path, refresh_path, layer_id, out_path):
         added += 1
 
     out = {'type': 'FeatureCollection', 'features': keep_list}
-    with open(out_path, 'w', encoding='utf-8') as fout:
+    # §6 #15: symmetric guard. merge_geojson currently happens to be safe
+    # (full-load before write), but the rule mandates temp+rename for any
+    # read-modify-write helper to prevent regression.
+    tmp_path = str(out_path) + '.tmp'
+    with open(tmp_path, 'w', encoding='utf-8') as fout:
         json.dump(out, fout, separators=(',', ':'))
+    os.replace(tmp_path, out_path)
     return {'kept': kept, 'removed': removed, 'added': added,
             'total_features': len(keep_list)}
 

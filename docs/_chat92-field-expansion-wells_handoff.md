@@ -1,49 +1,29 @@
 # Chat 92 handoff — field expansion + wells hide
 
-**Status at handoff:** branch `refinement-chat92-field-expansion-wells` has §1 partial committed (refresh-script + 2026-04-25 CSV). §2 (tax_abatements popup rename) and §3 (wells min_zoom) not yet started. No build, no deploy, no merge to main.
+**Status at handoff:** branch `refinement-chat92-field-expansion-wells` has §1 fully merged into `combined_points.csv` AND a `build.py` fragility fix (§6 #15) committed. §1 popup yaml, §2 (tax_abatements popup rename) and §3 (wells min_zoom) not yet started. No build, no deploy, no merge to main.
 
-**Last commit:** `8a396c2` — "Chat 92 §1 partial: tceq_gas_turbines refresh-script field expansion + 2026-04-25 refresh output"
+**Last commits:**
+- `8a396c2` — Chat 92 §1 partial: refresh-script + 2026-04-25 CSV
+- (this commit) — §1 merge into combined_points.csv + merge_csv/merge_geojson temp+rename fix per §6 #15 + handoff rewrite
 
 ---
 
 ## What's done
 
-- Refresh script `scripts/refresh_tceq_gas_turbines.py` rewritten:
-  - Reads both Issued + Pending sheets (was Issued only).
-  - `funnel_stage` taxonomy: `issued` / `renewed` / `modified` / `pending`, derived from sheet name + Received-cell text prefix.
-  - Received-date ISO populated in `zone` (was year-only via `year` column; `year` still populated for backward compat).
-  - `num_units` populated in `project`.
-  - `plant_code` keeps Permit No. — **no INR mapping added** per Chat 92 confirmation (source has no separate INR column; only "Permit No.", PSD, GHG Permit No.; first is the TCEQ NSR permit number, the others are federal companion permits).
-- Refresh output committed: `outputs/refresh/tceq_gas_turbines_2026-04-25.csv`. 13 rows (was 6). Status breakdown: 6 issued, 3 renewed, 4 pending. 13/13 geocoded via Nominatim City+County+TX.
+- `scripts/refresh_tceq_gas_turbines.py` rewritten (Issued + Pending sheets, funnel_stage, ISO received-date in `zone`, num_units in `project`).
+- `outputs/refresh/tceq_gas_turbines_2026-04-25.csv` — 13 rows, 13/13 geocoded.
+- `combined_points.csv` merged: `tceq_gas_turbines` rows 6 → 13. Total rows 39,424 → 39,431. All 11 layers intact (verified by row-count audit pre + post). Columns 30 → 31.
+- `build.py` patched: `merge_csv` and `merge_geojson` now write to `<out>.tmp` then `os.replace`, eliminating the read-modify-write data-wipe bug that triggered on first attempted merge this chat. Symmetric guard on `merge_geojson` per §6 #15 even though it was incidentally safe.
 
 ---
 
 ## What's next (resume scope)
 
-### 1. Merge refreshed CSV into combined_points.csv
+### 1. layers.yaml edits — three layers in one pass
 
-`build.py merge` resolves source from `/mnt/project/combined_points.csv` (read-only) and writes output to `/mnt/user-data/outputs/`. Under the repo-as-source-of-truth model the repo-local file at `/home/claude/repo/combined_points.csv` is canonical. Bypass the CLI subcommand and call `merge_csv()` directly:
+#### `tceq_gas_turbines` (around lines 350–374)
 
-```python
-import sys
-sys.path.insert(0, '/home/claude/repo')
-from build import merge_csv
-r = merge_csv(
-    '/home/claude/repo/combined_points.csv',
-    '/home/claude/repo/outputs/refresh/tceq_gas_turbines_2026-04-25.csv',
-    'tceq_gas_turbines',
-    '/home/claude/repo/combined_points.csv'  # in-place
-)
-print(r)
-```
-
-Verify: pre-merge row count for layer_id=tceq_gas_turbines should be 6; post-merge should be 13. No other layer rows touched.
-
-### 2. layers.yaml edits
-
-#### `tceq_gas_turbines` (lines 350–374)
-
-Replace popup + filterable_fields. Order matters; preserve existing `id`, `file`, `geom`, `group`, `label`, `color`, `default_on`, `radius`, `tippecanoe`. New popup + popup_labels + filterable_fields:
+Replace `popup` and `filterable_fields`. Add `popup_labels` block. Order matters; preserve existing `id`, `file`, `geom`, `group`, `label`, `color`, `default_on`, `radius`, `tippecanoe`.
 
 ```yaml
   popup:
@@ -82,13 +62,9 @@ Replace popup + filterable_fields. Order matters; preserve existing `id`, `file`
   - {field: year, type: numeric, label: Received year}
 ```
 
-Spec asked for filters on `mw` (numeric) and `technology` (categorical). `mw` and `capacity_mw` hold the same value (project MW); used `capacity_mw` for the filter for consistency with EIA layers. `technology` value strings are e.g. "Gas turbine SC" / "Gas turbine CC" — the categorical filter populates from the data automatically.
+#### `tax_abatements` (around lines 411–455)
 
-#### `tax_abatements` (lines 411–455)
-
-Per Chat 92 spec §2, popup label rename + filter rebuild. **Schema stays locked** (Chat 88 mapping in combined_points.csv unchanged — these are display-layer-only edits).
-
-New popup + popup_labels + filterable_fields:
+Schema stays locked (Chat 88 mapping in combined_points.csv unchanged — display-layer only). Replace `popup` + `popup_labels` + `filterable_fields`:
 
 ```yaml
   popup:
@@ -121,53 +97,49 @@ New popup + popup_labels + filterable_fields:
   - {field: capacity, type: numeric, label: Capex ($M)}
 ```
 
-**Filter type gap (flag in close-out):** spec called for `commissioned` as a "date range" filter, but build system supports only `numeric` / `categorical` / `text`. Shipped as `text`, which auto-populates as multi-select dropdown of distinct ISO dates (functional with 9 rows; not a true range slider). Add to backlog: implement `date_range` filter type (touches `build.py compute_filter_stats` + `build_template.html` filterFieldControlHtml + matching predicate). Operator unblocked acceptance pre-emptively.
+Drops from popup: `operator`, `entity`, `zone`, `cap_kw`, `status`. Drops from filters: `status`. Per Chat 92 spec.
 
-Drop `entity`, `zone`, `cap_kw`, `status` from popup. Drop `status` from filters. Per spec: "no `status` in popup or filters."
+**Filter type gap (flag in close-out backlog):** spec asked for `commissioned` as date-range filter; build system supports only numeric / categorical / text. Shipped as `text` (multi-select dropdown of distinct ISO dates — functional with 9 rows; not a true range slider). Backlog: implement `date_range` filter type (touches `build.py compute_filter_stats` + `build_template.html filterFieldControlHtml` + matching predicate).
 
-#### `wells` (lines 56–80)
+#### `wells` (around lines 56–80)
 
-Single-line change: `min_zoom: 6` → `min_zoom: 10`. Do not touch tippecanoe flags or anything else. Memory-footprint primary fix. Fallback (`hidden: true`) only if memory still pressured after deploy; not anticipated.
+Single-line: `min_zoom: 6` → `min_zoom: 10`. Do not touch tippecanoe flags. Memory-footprint primary fix. Fallback `hidden: true` only if memory still pressured post-deploy; not anticipated.
 
-### 3. Build + deploy + verify
-
-Standard pattern from §Next chat / §Deploy pattern:
+### 2. Build + deploy + verify
 
 ```bash
 cd /home/claude/repo
 python3 build.py 2>&1 | tail -20
-# Verify build report shows 25 layers, errored=0
+# Verify final line: built=25 missing=0 errored=0
 ```
 
-Then Netlify MCP → CLI proxy → poll → 45s sleep → curl GET → grep for layer ids → expect 25.
+Then Netlify MCP `deploy-site` → CLI proxy → poll `state=ready` → 45s sleep → `curl -A "Mozilla/5.0"` GET on prod root + one tile → grep layer-id count = 25.
 
-### 4. Commit + close-out
+### 3. Commit + close-out
 
 Commit message stub:
 
 ```
-Chat 92 §2-§3: tax_abatements popup rename + wells min_zoom raise + tceq merge + deploy
+Chat 92 §1-§3: tceq popup expansion + tax_abatements popup rename + wells min_zoom raise + deploy
 
-- combined_points.csv: tceq_gas_turbines rows refreshed 6→13 (Pending sheet
-  added, status taxonomy populated, full received-date ISO + num_units
-  captured).
 - layers.yaml: tceq_gas_turbines popup expanded to 12 fields with new
-  popup_labels; filterable_fields rebuilt to 7 fields including funnel_stage
+  popup_labels block; filterable_fields rebuilt to 7 incl. funnel_stage
   status filter and numeric capacity_mw + year. tax_abatements popup
-  rename "Commissioned" → "Approved date"; popup field order matches
-  Chat 92 spec; filters rebuilt to 5 fields, status removed. wells
-  min_zoom 6 → 10 to reduce statewide memory footprint.
+  rename "Commissioned"→"Approved date"; popup field order matches Chat
+  92 spec (10 fields); filters rebuilt to 5, status removed. wells
+  min_zoom 6→10 to reduce statewide memory footprint.
 - Layer count unchanged (25). Deploy <id>.
 ```
 
-Then standard close-out per WIP_OPEN.md `## Next chat → ## Close-out` block (fetch / checkout main / merge --no-ff / rewrite WIP_OPEN.md / push / delete remote branch).
+Then `bash scripts/close-out.sh refinement-chat92-field-expansion-wells <deploy-id>`.
 
 ---
 
 ## Carryforward flags
 
-- **Filter type gap:** date_range filter type not implemented; `commissioned` filter on tax_abatements ships as text-multi-select. Add backlog entry in WIP_OPEN.md `## Open backlog` UI/UX section at close-out.
-- **GITHUB_PAT leak:** still unrotated per operator override; valid until 2027-04-21. Flag again at close-out.
+- **§6 #15 prose-rule was unenforced in code.** This chat hit the exact data-wipe pattern that rule describes. Now actually fixed in `build.py`. If a similar read-modify-write helper is added in future, the same guard pattern (temp path + `os.replace`) is required.
+- **Filter type gap:** `date_range` filter type not implemented; `commissioned` filter on tax_abatements ships as text-multi-select. Add backlog entry in WIP_OPEN.md `## Open backlog` UI/UX section at close-out.
+- **GITHUB_PAT leak (Chat 87):** still unrotated per operator override; valid until 2027-04-21.
 
 ---
 
@@ -182,4 +154,6 @@ apt-get install -y tippecanoe libcairo2 -q
 pip install shapely pmtiles pyyaml cairosvg pandas requests openpyxl --break-system-packages -q
 ```
 
-session-open.sh will detect the existing remote branch and check it out (Readme §10), then auto-print this handoff doc per §9.7.
+session-open.sh detects existing remote branch and checks it out per §10, then auto-prints this handoff.
+
+**Do not call merge_csv again.** §1 merge is already in `combined_points.csv` on this branch. Pre/post audit confirms 39,431 rows / 11 layers / tceq_gas_turbines=13.
