@@ -8,28 +8,21 @@ Per Readme §10: **`## Next chat`** = paste-ready for next shipping chat. **`## 
 
 ## Next chat
 
-**Chat 92 — FIELD EXPANSION + WELLS HIDE.** Bundled `layers.yaml` + refresh-script maintenance chat. No layer-count change (stays at 25). Fits one chat; no sprint-plan doc warranted.
+**Chat 93 — CHAT 92 MERGE + DOC RESTRUCTURE LAND.** Merge-only close-out. No build, no deploy. Chat 92 prod deploy `69ed2cdf4039c554a1316ad2` already published, verified, and serving.
 
 ### Task
 
-1. **`tceq_gas_turbines` — extend refresh to capture all source XLSX fields.** Current `scripts/refresh_tceq_gas_turbines.py` captures 13 of ~18 source columns. Add: full `received_date` (ISO; only `year` captured today), TCEQ `permit_no` (distinct from INR which is in `plant_code`), `num_units`, permit `status` (issued / pending / renewed / modified). Map into unused `combined_points.csv` columns via the abatement-style overload (Chat 88 schema): `inr` ← permit_no, `funnel_stage` ← permit status, `zone` ← received_date ISO, `project` ← num_units. Add new fields to popup + `filterable_fields` (numeric on `mw`, `year`; categorical on `technology`, `manu`, `operator`, `county`, `funnel_stage`).
-
-2. **`tax_abatements` — popup/filter rename + field additions (display layer only; Chat 88 schema stays locked).**
-   - Rename `commissioned` popup+filter label "Commissioned" → **"Approved date"**.
-   - Popup field order: `name` (Applicant), `county`, `commissioned` (Approved date), `technology` (Project type), `mw` (Project MW), `capacity` (Capex $M), `use` (Abatement schedule), `sector` (Taxing entities), `project` (Reinvestment zone), `poi` (Agenda URL).
-   - `filterable_fields`: `county` (categorical), `technology` (categorical), `commissioned` (date range, "Approved date"), `mw` (numeric), `capacity` (numeric).
-   - No `status` in popup or filters.
-   - Technology filter set: `natural_gas`, `gas_peaker`, `solar`, `wind`, `battery`, `renewable_other` (no new pull).
-
-3. **`wells` — hide to reduce memory footprint.** Current state: `default_on: false`, `min_zoom: 6`, thousands of statewide features. Primary: raise `min_zoom: 10`. Fallback if memory persists: flag entry with `hidden: true` and skip sidebar render in `build_template.html`. Do NOT delete PMTiles — keep on disk for future re-enable without re-refresh.
+1. Merge `refinement-chat92-field-expansion-wells` to main. Branch tip is 4 commits ahead of `origin/main`; tree carries Chat 92 §1-§3 work AND a doc restructure (Readme.md / GIS_SPEC.md / docs/principles.md / docs/settled.md / WIP_LOG.md added; ARCHITECTURE.md / OPERATING.md / docs/sidebar/ / scripts/{close-out,audit,deploy,ship,pre-commit} removed).
+2. **Resolve `build.py` conflict by taking main's version.** Both sides independently fixed merge_csv/merge_geojson temp+rename guard per §6 #15. Main's form (`Path.with_suffix()` + explicit cleanup) is functionally equivalent to branch's (`str(out_path) + '.tmp'`); main's already integrated into other paths. Use `git checkout --theirs build.py` after the merge halts on conflict, then `git add build.py`.
+3. Push main, delete origin branch.
+4. Rewrite this `## Next chat` block. Default candidate: POWER PLANT DATA REFRESH per sprint queue. Operator may redirect.
 
 ### Acceptance
 
-- Layer count unchanged (25).
-- `tceq_gas_turbines` popup + filter UI shows all populated source fields.
-- `tax_abatements` popup shows "Approved date" label; filter UI has 5 filters (county, technology, approved_date range, mw, capacity); no status anywhere.
-- `wells` not loaded below zoom 10 (or absent from sidebar if fallback chosen).
-- Build + deploy + CDN verification per standard protocol; live site returns HTTP 200 with 25 layer ids.
+- Main HEAD merge commit message references deploy `69ed2cdf4039c554a1316ad2`.
+- Main tree contains `Readme.md`, `GIS_SPEC.md`, `docs/principles.md`, `docs/settled.md`, `WIP_LOG.md`; lacks `ARCHITECTURE.md`, `OPERATING.md`, `docs/sidebar/`. Aligns with sidebar pointer docs (`/mnt/project/Commands.md`, `Environment.md`).
+- `refinement-chat92-field-expansion-wells` deleted from origin.
+- Prod unchanged at `69ed2cdf4039c554a1316ad2`. No re-deploy.
 
 ### Session open
 
@@ -37,43 +30,40 @@ Per Readme §10: **`## Next chat`** = paste-ready for next shipping chat. **`## 
 PAT=$(grep '^GITHUB_PAT=' /mnt/project/CREDENTIALS.md | cut -d= -f2)
 cd /home/claude && rm -rf repo 2>/dev/null
 git clone -q https://x-access-token:${PAT}@github.com/10thMuses/lrp-tx-gis.git repo && cd repo
-bash scripts/session-open.sh refinement-chat92-field-expansion-wells
-apt-get install -y tippecanoe libcairo2 -q
-pip install shapely pmtiles pyyaml cairosvg pandas requests openpyxl --break-system-packages -q
+git fetch origin refinement-chat92-field-expansion-wells
 ```
 
-### Deploy pattern (CANONICAL)
-
-Unchanged: Netlify MCP → CLI proxy. REST-API dead.
-
-1. `Netlify:netlify-deploy-services-updater` `{operation: "deploy-site", params: {siteId: "01b53b80-687e-4641-b088-115b7d5ef638"}}` → single-use `--proxy-path` URL.
-2. `cd /mnt/user-data/outputs/dist && npx -y @netlify/mcp@latest --site-id 01b53b80-687e-4641-b088-115b7d5ef638 --proxy-path "<URL>" --no-wait` → `{"deployId":"...","buildId":"..."}`.
-3. Poll `get-deploy-for-site` until `state=ready`.
-4. `sleep 45` for CDN warm-up. HEAD may 503; GET is source of truth.
-5. `curl -s -A "Mozilla/5.0" https://lrp-tx-gis.netlify.app/ | grep -oE '"id":"[a-z_][a-z0-9_]*"' | sort -u | wc -l` → 25.
-
-Proxy URL single-use. On 503 upload error, request fresh URL.
+No tippecanoe / python deps needed; merge-only chat.
 
 ### Pre-flight
 
-Chat 91 closed 2026-04-25: BEAD `bead_fiber_planned` layer dropped per 30-min ship rule (no downloadable footprint geometry — BDO XLSX trio archived to `data/bead_bdo/`); Reeves adapter URL migrated `co.reeves.tx.us` → `reevescounty.org` (old DNS dead; new domain Akamai-blocked from datacenter egress, so adapter cannot be verified from cloud runners). Layer count unchanged at 25. Branch `refinement-chat91-bead-fiber-reeves` merged and deleted. Start from clean `main`.
+Chat 92 §1-§3 fully shipped to prod 2026-04-25. Branch tip `38f8654`. Merge-base `3950736` had the new doc structure but main HEAD `1ded060` ("Audit-3 sidebar pointers + WIP_OPEN trim + sprint-plan lift") regressed it — merge restores what operator's sidebar pointers describe as canonical.
+
+`build.py` conflict expected and resolution prescribed (take main's, see Task §2). No other conflicts anticipated per pre-merge dry-run during Chat 92.
 
 ### Close-out (NON-NEGOTIABLE, per Readme §10)
 
 ```bash
 PAT=$(grep '^GITHUB_PAT=' /mnt/project/CREDENTIALS.md | cut -d= -f2)
-git fetch origin refinement-chat92-field-expansion-wells
 git checkout main && git pull --rebase origin main
-git merge --no-ff origin/refinement-chat92-field-expansion-wells -m "Merge refinement-chat92-field-expansion-wells (Chat 92): tceq_gas_turbines field expansion + tax_abatements popup rename + wells min_zoom raise (deploy <id>)"
-# Rewrite WIP_OPEN.md §Next chat → next sprint-queue chat (operator decides at close-out: Permian-core abatement, power-plant refresh, or DC sub-sequence)
-# Update §Prod status with new deployId
-# Drop the just-promoted entry from §Sprint queue
-git commit -am "Chat 92 close-out"
-git push
-git push --delete origin refinement-chat92-field-expansion-wells
+git merge --no-ff origin/refinement-chat92-field-expansion-wells \
+  -m "Merge refinement-chat92-field-expansion-wells (Chat 92): tceq_gas_turbines popup expansion + tax_abatements popup rename + wells min_zoom raise + doc restructure (deploy 69ed2cdf4039c554a1316ad2)"
+# On build.py conflict:
+#   git checkout --theirs build.py  (--theirs = main's version per Task §2)
+#   git add build.py
+#   git commit  (uses prepared merge message)
+# Rewrite WIP_OPEN.md §Next chat → Chat 94 (operator-priority)
+# §Prod status: leave at 69ed2cdf4039c554a1316ad2 (no new deploy this chat)
+git add WIP_OPEN.md && git commit -m "Chat 93 close-out: WIP_OPEN.md rewrite for Chat 94"
+git push origin main
+git push origin --delete refinement-chat92-field-expansion-wells
 ```
 
-**Credential hygiene carry-forward:** `GITHUB_PAT` leak from Chat 87 remains unrotated per operator override. Token valid until 2027-04-21. Flag again in Chat 92 close-out if still outstanding.
+**Carry-forward backlog additions** (already in `## Open backlog` — confirm at close-out):
+- `date_range` filter type implementation: touches `build.py compute_filter_stats` + `build_template.html filterFieldControlHtml` + matching predicate. `tax_abatements.commissioned` ships as `text` multi-select dropdown today.
+- Audit-3 regression investigation: why `1ded060` reverted Readme.md / GIS_SPEC.md / principles.md / settled.md when commit message describes only sidebar pointer / WIP trim / sprint-plan lift work.
+
+**Credential hygiene carry-forward:** `GITHUB_PAT` leak from Chat 87 unrotated per operator override. Token valid until 2027-04-21.
 
 ---
 
@@ -202,9 +192,11 @@ Historical notes:
 ## Prod status
 
 - **Chat 91 closed 2026-04-25** — No deploy. §1 BEAD `bead_fiber_planned` layer dropped per 30-min ship rule (no downloadable footprint geometry; BDO XLSX trio archived to `data/bead_bdo/` for future render-path work). §2 Reeves CivicEngage adapter URL migrated `co.reeves.tx.us` → `reevescounty.org` (old DNS dead); new domain is Akamai-protected and 403s all datacenter egress, so adapter fix is structurally correct but cannot be verified from cloud runners. Search-engine crawlers confirmed three live abatement entities on the new domain: August Draw Solar LLC, Energy Forge One LLC, Pecos Power Plant LLC. Branch `refinement-chat91-bead-fiber-reeves` merged and deleted. Layer count unchanged at 25.
+- **Chat 92 closed 2026-04-25** — `tceq_gas_turbines` popup expansion (8→12 fields, new popup_labels block, filterable_fields rebuilt 4→7 incl. funnel_stage Status filter); `tax_abatements` display-layer rename Commissioned→Approved date (popup 14→10 fields, filters 2→5); `wells` min_zoom 6→10. Layer count unchanged at 25.
 - **Chat 90 closed 2026-04-25** — FCC fiber coverage layer shipped: `fcc_fiber_coverage` H3 res-8 hexes built from FCC BDC fixed-availability CSV (FTTP filter, 23-county Permian-focus footprint). Layer count 24 → 25.
 - URL: https://lrp-tx-gis.netlify.app — requires real User-Agent on curl (`-A "Mozilla/5.0"`).
-- Last published deploy: `69ec91f62150e8257e82413d` (Chat 90 close-out, 2026-04-25). Supersedes `69ebcfbbe97514ce84df1591`. State=ready. Layer count 25 live. `fcc_fiber_coverage` renders as cyan choropleth on `max_down_mbps` (3 bins: ≥1000 / 100–999 / <100), `default_on: false`, popup shows all six aggregate fields.
+- Last published deploy: `69ed2cdf4039c554a1316ad2` (Chat 92 close-out, 2026-04-25). Supersedes `69ec91f62150e8257e82413d`. State=ready. Layer count 25 live. Verified via parsed `LAYERS=` JSON: `wells.min_zoom=10`, `tceq_gas_turbines` popup=12 fields, `tax_abatements` popup=10 with `commissioned` label="Approved date".
+- Previous deploy: `69ec91f62150e8257e82413d` (Chat 90 close-out, 2026-04-25). `fcc_fiber_coverage` renders as cyan choropleth on `max_down_mbps` (3 bins: ≥1000 / 100–999 / <100), `default_on: false`, popup shows all six aggregate fields.
 - Previous deploy: `69ebcfbbe97514ce84df1591` (Chat 88 close-out, 2026-04-24 20:17:05Z) — Chat 88 tax_abatements schema artifacts confirmed: label `Property Tax Abatements (Ch.312 / LDAD, new or expansion)`, all 4 new popup_labels present (`Abatement term (yrs)`, `Jobs commitment`, `Taxing entities`, `Reinvestment zone`).
 - **CDN quirk (persistent, note for future chats):** HEAD requests to `https://lrp-tx-gis.netlify.app/` return 503 even when the site is serving healthy GET responses. Do not treat HEAD 503 as failure — grep GET output for layer-id count and schema markers.
 - Previous deploy: `69ebb64823c1c470e0c6f0b1` (Chat 87 bugfix, 2026-04-24 18:28:29Z) — all 4 Chat 87 styling edits confirmed (`tiger_highways line_width: 0.6`, `waha_circle`, `caramba_north #2E7D32` + `Caramba North (1,300 ac)`).
@@ -254,6 +246,12 @@ Historical notes:
 ## Open backlog
 
 **Standing watch item:** TCEQ diesel-genset NSR permits live only in CRPUB. Revisit only if TCEQ publishes bulk feed or operator authorizes scrape.
+
+**UI/UX gaps:**
+- **`date_range` filter type not implemented** (carryforward Chat 92). Build system supports only categorical / numeric / text. `tax_abatements.commissioned` ships as `text` (multi-select dropdown of distinct ISO dates — functional with 9 rows, not a true range slider). Implementation touches `build.py compute_filter_stats` + `build_template.html filterFieldControlHtml` + matching predicate.
+
+**Doc-state anomaly (Chat 92 surfaced):**
+- `origin/main` HEAD `1ded060` ("Audit-3 sidebar pointers + WIP_OPEN trim + sprint-plan lift") regressed the doc restructure that was on merge-base `3950736` (removed Readme.md / GIS_SPEC.md / docs/principles.md / docs/settled.md / WIP_LOG.md, restored ARCHITECTURE.md / OPERATING.md / scripts/{close-out,audit,deploy,ship,pre-commit}). Effect did not match commit message scope. Chat 93 merge restores the new structure. Investigate root cause to prevent recurrence — likely candidates: merge onto stale base, accidental `git add -A` on a working tree with old files, or a force-push.
 
 **Data-pipeline gaps (non-blocking):**
 - `eia860_plants`: 476/1367 rows null `capacity_mw`/`technology`/`fuel`.
