@@ -200,8 +200,19 @@ def pecos_adapter(session: requests.Session) -> list[Hit]:
     return hits
 
 def reeves_adapter(session: requests.Session) -> list[Hit]:
+    """
+    Chat 91 update: domain migrated co.reeves.tx.us -> reevescounty.org.
+    Old DNS dead; new domain (same CivicEngage CMS, same URL pattern) is
+    Akamai bot-protected and 403s all datacenter egress regardless of UA
+    or header tuning. Adapter is structurally correct but cannot be
+    end-to-end verified from cloud runners — requires residential proxy
+    or whitelisted egress (search-engine crawlers retrieve content fine).
+    Confirmed live abatement notices on new domain via search results
+    Chat 91: August Draw Solar LLC, Energy Forge One LLC, Pecos Power
+    Plant LLC (the hand-seeded row) — all three are present.
+    """
     hits: list[Hit] = []
-    base = "https://www.co.reeves.tx.us/visitors/rc-news"
+    base = "https://www.reevescounty.org/visitors/rc-news"
     html = fetch(base, session)
     if not html: return hits
     soup = BeautifulSoup(html, "html.parser")
@@ -209,7 +220,7 @@ def reeves_adapter(session: requests.Session) -> list[Hit]:
     for a in soup.select("a[href]"):
         h = a.get("href") or ""
         if "/visitors/rc-news/" in h or "news/post/" in h.lower():
-            if h.startswith("/"): h = "https://www.co.reeves.tx.us" + h
+            if h.startswith("/"): h = "https://www.reevescounty.org" + h
             links.append(h)
     links = list(dict.fromkeys(links))
     for post in links[:40]:
