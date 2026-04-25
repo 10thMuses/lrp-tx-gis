@@ -8,25 +8,28 @@ Per Readme §10: **`## Next chat`** = paste-ready for next shipping chat. **`## 
 
 ## Next chat
 
-**Chat 91 — BEAD FIBER PLANNED + REEVES RE-VERIFY.** New branch off current `main`. Conditional `bead_fiber_planned` layer (TX Comptroller BDO BEAD primary, NTIA fallbacks, 30-min ship rule) plus Reeves CivicEngage adapter re-verify. Layer count 25 → 26 if BEAD ships, 25 if dropped. Closes the active sprint — `docs/sprint-plan.md` deleted at close-out.
+**Chat 92 — FIELD EXPANSION + WELLS HIDE.** Bundled `layers.yaml` + refresh-script maintenance chat. No layer-count change (stays at 25). Fits one chat; no sprint-plan doc warranted.
 
 ### Task
 
-1. **BEAD fiber planned layer (conditional).**
-   - Primary source: TX Comptroller BDO BEAD map / awards list (https://comptroller.texas.gov/programs/broadband/).
-   - Fallback 1: NTIA Middle Mile award list, Texas subset.
-   - Fallback 2: NTIA National Broadband Funding Map.
-   - Fields: `subgrantee`, `award_amount`, `county_list` or polygon, `announced_date`, `target_completion`, `technology`, speed commitment.
-   - Render: polygon if available, else county centroid. Cyan family, darker shade or dashed stroke to differentiate from Chat 90's `fcc_fiber_coverage` layer (already cyan).
-   - **Ship rule:** if no downloadable source in 30 min, drop the layer entirely, log failure mode in `§Open backlog`, proceed to §2 below. Do NOT re-budget the chat around it.
-2. **Reeves CivicEngage adapter re-verify.** Chat 82 regression: adapter returned 0 hits on first run; Pecos Power Plant LLC Reeves abatement was hand-seeded from spec §8. Re-run the adapter, confirm it reproduces the hand-seeded row. If still 0 hits, diagnose selector / URL pattern. If adapter works, run against all Permian-core counties that share the CivicEngage CMS (log which).
+1. **`tceq_gas_turbines` — extend refresh to capture all source XLSX fields.** Current `scripts/refresh_tceq_gas_turbines.py` captures 13 of ~18 source columns. Add: full `received_date` (ISO; only `year` captured today), TCEQ `permit_no` (distinct from INR which is in `plant_code`), `num_units`, permit `status` (issued / pending / renewed / modified). Map into unused `combined_points.csv` columns via the abatement-style overload (Chat 88 schema): `inr` ← permit_no, `funnel_stage` ← permit status, `zone` ← received_date ISO, `project` ← num_units. Add new fields to popup + `filterable_fields` (numeric on `mw`, `year`; categorical on `technology`, `manu`, `operator`, `county`, `funnel_stage`).
+
+2. **`tax_abatements` — popup/filter rename + field additions (display layer only; Chat 88 schema stays locked).**
+   - Rename `commissioned` popup+filter label "Commissioned" → **"Approved date"**.
+   - Popup field order: `name` (Applicant), `county`, `commissioned` (Approved date), `technology` (Project type), `mw` (Project MW), `capacity` (Capex $M), `use` (Abatement schedule), `sector` (Taxing entities), `project` (Reinvestment zone), `poi` (Agenda URL).
+   - `filterable_fields`: `county` (categorical), `technology` (categorical), `commissioned` (date range, "Approved date"), `mw` (numeric), `capacity` (numeric).
+   - No `status` in popup or filters.
+   - Technology filter set: `natural_gas`, `gas_peaker`, `solar`, `wind`, `battery`, `renewable_other` (no new pull).
+
+3. **`wells` — hide to reduce memory footprint.** Current state: `default_on: false`, `min_zoom: 6`, thousands of statewide features. Primary: raise `min_zoom: 10`. Fallback if memory persists: flag entry with `hidden: true` and skip sidebar render in `build_template.html`. Do NOT delete PMTiles — keep on disk for future re-enable without re-refresh.
 
 ### Acceptance
 
-- Layer count: 25 → 26 if §1 ships, 25 if §1 dropped.
-- If §1 ships: `bead_fiber_planned` renders across affected counties; popup shows all six fields; build report `errored == 0`; live site returns HTTP 200 with 26 layer ids.
-- Reeves adapter either reproduces the Pecos Power Plant LLC row OR produces a diagnostic note in `§Open backlog` identifying the failure mode (selector regression, URL pattern change, CMS migration).
-- `docs/sprint-plan.md` deleted at close-out (last chat in sprint).
+- Layer count unchanged (25).
+- `tceq_gas_turbines` popup + filter UI shows all populated source fields.
+- `tax_abatements` popup shows "Approved date" label; filter UI has 5 filters (county, technology, approved_date range, mw, capacity); no status anywhere.
+- `wells` not loaded below zoom 10 (or absent from sidebar if fallback chosen).
+- Build + deploy + CDN verification per standard protocol; live site returns HTTP 200 with 25 layer ids.
 
 ### Session open
 
@@ -34,47 +37,43 @@ Per Readme §10: **`## Next chat`** = paste-ready for next shipping chat. **`## 
 PAT=$(grep '^GITHUB_PAT=' /mnt/project/CREDENTIALS.md | cut -d= -f2)
 cd /home/claude && rm -rf repo 2>/dev/null
 git clone -q https://x-access-token:${PAT}@github.com/10thMuses/lrp-tx-gis.git repo && cd repo
-bash scripts/session-open.sh refinement-chat91-bead-fiber-reeves
+bash scripts/session-open.sh refinement-chat92-field-expansion-wells
 apt-get install -y tippecanoe libcairo2 -q
-pip install shapely pmtiles pyyaml cairosvg pandas requests --break-system-packages -q
+pip install shapely pmtiles pyyaml cairosvg pandas requests openpyxl --break-system-packages -q
 ```
 
 ### Deploy pattern (CANONICAL)
 
-Unchanged from Chat 88/89/90: Netlify MCP → CLI proxy. REST-API dead.
+Unchanged: Netlify MCP → CLI proxy. REST-API dead.
 
 1. `Netlify:netlify-deploy-services-updater` `{operation: "deploy-site", params: {siteId: "01b53b80-687e-4641-b088-115b7d5ef638"}}` → single-use `--proxy-path` URL.
 2. `cd /mnt/user-data/outputs/dist && npx -y @netlify/mcp@latest --site-id 01b53b80-687e-4641-b088-115b7d5ef638 --proxy-path "<URL>" --no-wait` → `{"deployId":"...","buildId":"..."}`.
 3. Poll `get-deploy-for-site` until `state=ready`.
 4. `sleep 45` for CDN warm-up. HEAD may 503; GET is source of truth.
-5. `curl -s -A "Mozilla/5.0" https://lrp-tx-gis.netlify.app/ | grep -oE '"id":"[a-z_][a-z0-9_]*"' | sort -u | wc -l` → 26 (or 25 if §1 dropped).
+5. `curl -s -A "Mozilla/5.0" https://lrp-tx-gis.netlify.app/ | grep -oE '"id":"[a-z_][a-z0-9_]*"' | sort -u | wc -l` → 25.
 
 Proxy URL single-use. On 503 upload error, request fresh URL.
 
 ### Pre-flight
 
-Chat 90 closed 2026-04-25: FCC fiber coverage H3 hex layer shipped to prod (deploy `69ec91f62150e8257e82413d`). Layer count 24 → 25. Branch `refinement-chat90-fcc-fiber` merged and deleted from origin. Start from clean `main`.
+Chat 91 closed 2026-04-25: BEAD `bead_fiber_planned` layer dropped per 30-min ship rule (no downloadable footprint geometry — BDO XLSX trio archived to `data/bead_bdo/`); Reeves adapter URL migrated `co.reeves.tx.us` → `reevescounty.org` (old DNS dead; new domain Akamai-blocked from datacenter egress, so adapter cannot be verified from cloud runners). Layer count unchanged at 25. Branch `refinement-chat91-bead-fiber-reeves` merged and deleted. Start from clean `main`.
 
 ### Close-out (NON-NEGOTIABLE, per Readme §10)
 
-Per Readme §10 sprint-plan rule: this is the last chat in the active sprint. Close-out deletes `docs/sprint-plan.md` and rewrites `WIP_OPEN.md §Next chat` from `§Sprint queue` (Chat 92 = Permian-core abatement wave, OR field-expansion + wells-hide if operator bumps it ahead — operator decides at close-out).
-
 ```bash
 PAT=$(grep '^GITHUB_PAT=' /mnt/project/CREDENTIALS.md | cut -d= -f2)
-git fetch origin refinement-chat91-bead-fiber-reeves
+git fetch origin refinement-chat92-field-expansion-wells
 git checkout main && git pull --rebase origin main
-git merge --no-ff origin/refinement-chat91-bead-fiber-reeves -m "Merge refinement-chat91-bead-fiber-reeves (Chat 91): BEAD planned fiber + Reeves adapter re-verify"
-# Rewrite WIP_OPEN.md §Next chat → next sprint-queue chat (Chat 92 Permian-core OR field-expansion, per operator)
-# Delete docs/sprint-plan.md
-# Update §Prod status with new deployId + layer count
+git merge --no-ff origin/refinement-chat92-field-expansion-wells -m "Merge refinement-chat92-field-expansion-wells (Chat 92): tceq_gas_turbines field expansion + tax_abatements popup rename + wells min_zoom raise (deploy <id>)"
+# Rewrite WIP_OPEN.md §Next chat → next sprint-queue chat (operator decides at close-out: Permian-core abatement, power-plant refresh, or DC sub-sequence)
+# Update §Prod status with new deployId
 # Drop the just-promoted entry from §Sprint queue
-git rm docs/sprint-plan.md
-git commit -am "Chat 91 close-out"
+git commit -am "Chat 92 close-out"
 git push
-git push --delete origin refinement-chat91-bead-fiber-reeves
+git push --delete origin refinement-chat92-field-expansion-wells
 ```
 
-**Credential hygiene carry-forward:** `GITHUB_PAT` leak from Chat 87 remains unrotated per operator override. Token valid until 2027-04-21. Flag again in Chat 91 close-out if still outstanding.
+**Credential hygiene carry-forward:** `GITHUB_PAT` leak from Chat 87 remains unrotated per operator override. Token valid until 2027-04-21. Flag again in Chat 92 close-out if still outstanding.
 
 ---
 
@@ -82,35 +81,9 @@ git push --delete origin refinement-chat91-bead-fiber-reeves
 
 Ordered by operator priority. N+2 and beyond. Multi-chat active sprint detail lives in `docs/sprint-plan.md`; one-paragraph pointers below.
 
-### FIELD EXPANSION + WELLS HIDE (operator ask 2026-04-24)
+### Chat 93+ — ABATEMENT PERMIAN-CORE + PERIPHERAL
 
-Bundled layers.yaml maintenance chat. Priority: operator to decide — can run after Chat 91 or bumped ahead of Chat 90/91 (fiber work) if field-expansion work matters more for imminent Hanwha/buyer demos than fiber coverage. No layer-count change.
-
-**Scope:**
-
-1. **tceq_gas_turbines — expand refresh to extract all source XLSX fields.** Current `scripts/refresh_tceq_gas_turbines.py` captures 13 of the ~18 source columns. Extend extraction to include: full `received_date` (ISO, currently only `year` is captured), TCEQ `permit_no` (distinct from INR which is already in `plant_code`), `num_units`, permit `status` (issued / pending / renewed / modified). Map into unused `combined_points.csv` columns via the same overload pattern used for abatements (Chat 88 schema): `inr` = permit_no, `funnel_stage` = permit status, `zone` = received_date ISO, `project` = num_units. Add all existing + new populated fields to the `tceq_gas_turbines` popup and to `filterable_fields` (numeric filters on `mw`, `year`, categorical on `technology`, `manu`, `operator`, `county`, `funnel_stage`).
-
-2. **tax_abatements — popup/filter rename and field additions.** At display layer only (underlying Chat 88 schema stays locked):
-   - Rename `commissioned` popup+filter label from "Commissioned" → **"Approved date"**.
-   - Popup fields (in order): `name` (Applicant), `county`, `commissioned` (Approved date), `technology` (Project type), `mw` (Project MW), `capacity` (Capex $M), `use` (Abatement schedule), `sector` (Taxing entities), `project` (Reinvestment zone), `poi` (Agenda URL).
-   - `filterable_fields`: `county` (categorical), `technology` (categorical), `commissioned` (date range, labeled "Approved date"), `mw` (numeric), `capacity` (numeric).
-   - Do NOT add status to popup or filters (per operator ask).
-   - Technology filter set stays restricted to `natural_gas`, `gas_peaker`, `solar`, `wind`, `battery`, `renewable_other` (matches current scrape scope; no new data pull required).
-
-3. **wells — hide to reduce memory footprint.** Current state: `default_on: false`, `min_zoom: 6`, thousands of features statewide. Primary recommendation: raise `min_zoom: 10` (delays tile load until close zoom, keeps data available on demand). Fallback if memory concern persists: flag entry with `hidden: true` and skip sidebar render in `build_template.html`. Do not delete the PMTiles build — keep tiles on disk for future re-enable without a re-refresh.
-
-**Acceptance:**
-- Layer count unchanged.
-- `tceq_gas_turbines` popup and filter UI shows all populated source fields.
-- `tax_abatements` popup displays "Approved date" label; filter UI has 5 filters (county, technology, approved_date range, mw, capacity); no status anywhere.
-- `wells` not loaded below zoom 10 (or absent from sidebar if fallback chosen).
-- Build + deploy + CDN verification per standard protocol.
-
-**One chat. Fits in budget: refresh-script extension (~3 bash calls), single combined_points.csv merge, layers.yaml edits, one build-deploy-verify.**
-
-### Chat 92+ — ABATEMENT PERMIAN-CORE + PERIPHERAL
-
-Permian-core (Andrews, Ector, Glasscock, Loving, Martin, Midland, Ward, Winkler) → peripheral (Crane, Crockett, Irion, Reagan, Schleicher, Sutton, Upton). PDF-only counties dropped per spec §12.3. 4–6 chats. Reeves-shared-CMS counties pick up whatever the Chat 91 adapter re-verify yields. Promoted to `docs/sprint-plan.md` when it enters the active 5-chat window.
+Permian-core (Andrews, Ector, Glasscock, Loving, Martin, Midland, Ward, Winkler) → peripheral (Crane, Crockett, Irion, Reagan, Schleicher, Sutton, Upton). PDF-only counties dropped per spec §12.3. 4–6 chats. **Constraint surfaced Chat 91:** any county on the same CivicEngage CMS hosting platform now used by Reeves (`reevescounty.org`) is Akamai bot-protected from datacenter egress — adapter URL fixes are correct but cannot be verified from cloud runners or GitHub Actions until residential proxy or whitelisted egress is provisioned. Promoted to `docs/sprint-plan.md` when it enters the active 5-chat window.
 
 ### Chat — POWER PLANT DATA REFRESH + POPUP REDESIGN
 
@@ -136,7 +109,12 @@ Commit diff to `data/abatements/abatement_hits_latest.csv` + rolling
 history. Alerting deferred per spec §12.8.
 
 Challenges: runner egress reliability on county CMS endpoints; silent
-drift if selectors break (no alerting in v1).
+drift if selectors break (no alerting in v1). **Hard prerequisite
+(surfaced Chat 91):** `reevescounty.org` (Akamai-protected, the
+post-migration host for the Reeves CivicEngage CMS) returns 403 to
+all GitHub-Actions egress regardless of UA / TLS fingerprint. Cron
+cannot ship until residential-proxy egress or Akamai allowlisting
+is provisioned, otherwise Reeves silently produces 0 hits forever.
 
 ### Chat — LEGEND ON PRINT / SHARE / PDF  *(new, surfaced 2026-04-24)*
 
@@ -223,6 +201,7 @@ Historical notes:
 
 ## Prod status
 
+- **Chat 91 closed 2026-04-25** — No deploy. §1 BEAD `bead_fiber_planned` layer dropped per 30-min ship rule (no downloadable footprint geometry; BDO XLSX trio archived to `data/bead_bdo/` for future render-path work). §2 Reeves CivicEngage adapter URL migrated `co.reeves.tx.us` → `reevescounty.org` (old DNS dead); new domain is Akamai-protected and 403s all datacenter egress, so adapter fix is structurally correct but cannot be verified from cloud runners. Search-engine crawlers confirmed three live abatement entities on the new domain: August Draw Solar LLC, Energy Forge One LLC, Pecos Power Plant LLC. Branch `refinement-chat91-bead-fiber-reeves` merged and deleted. Layer count unchanged at 25.
 - **Chat 90 closed 2026-04-25** — FCC fiber coverage layer shipped: `fcc_fiber_coverage` H3 res-8 hexes built from FCC BDC fixed-availability CSV (FTTP filter, 23-county Permian-focus footprint). Layer count 24 → 25.
 - URL: https://lrp-tx-gis.netlify.app — requires real User-Agent on curl (`-A "Mozilla/5.0"`).
 - Last published deploy: `69ec91f62150e8257e82413d` (Chat 90 close-out, 2026-04-25). Supersedes `69ebcfbbe97514ce84df1591`. State=ready. Layer count 25 live. `fcc_fiber_coverage` renders as cyan choropleth on `max_down_mbps` (3 bins: ≥1000 / 100–999 / <100), `default_on: false`, popup shows all six aggregate fields.
@@ -280,11 +259,13 @@ Historical notes:
 - `eia860_plants`: 476/1367 rows null `capacity_mw`/`technology`/`fuel`.
 - `combined_points.csv` blank `operator` / `commissioned` on EIA point layers.
 - Cosmetic: prebuilt PMTiles feature counts show 0 in sidebar.
-- Reeves CivicEngage adapter returned 0 rows on first run — URL pattern or selector needs re-verify Chat 86 (Pecos Power Plant LLC Reeves row remains hand-seeded from spec §8).
+- ~~Reeves CivicEngage adapter returned 0 rows on first run — URL pattern or selector needs re-verify~~ **RESOLVED Chat 91 (URL-side):** old domain `co.reeves.tx.us` dead; adapter migrated to `reevescounty.org`. New domain Akamai-protected; cloud-runner egress blocked, see infrastructure section below.
+- **BEAD `bead_fiber_planned` layer (Chat 91 §1 dropped):** TX Comptroller BDO XLSX trio (`subgrantees`, `deployment-projects`, `locations`) archived to `data/bead_bdo/` but contains no county or coordinates. `locations.xlsx` keys by FCC BSL ID without coords (geocoding requires the licensed FCC BSL Fabric). PAU/award map at `register.broadband.texas.gov` is JS-rendered SPA. NTIA NBAM project-level data is partner-login-gated. Three independent unblock paths documented in `data/bead_bdo/README.md`: (a) BDO Region 1–24 polygon shapefile + project-name region-suffix parser, (b) UEI → SAM.gov HQ geocode for awardee markers, (c) authorized headless-browser scrape of register.broadband.texas.gov vector tiles.
 
 **Infrastructure:**
 - `NETLIFY_PAT=` absent from `CREDENTIALS.md`. Netlify MCP proxy path canonical.
 - `GITHUB_PAT` can push branches, 403 on PR creation. Operator opens PRs via GitHub UI.
+- **Akamai datacenter-egress block on `reevescounty.org` (surfaced Chat 91).** Cloud-runner / GitHub-Actions traffic 403s regardless of UA, header set, or TLS fingerprint. Search-engine crawlers get through (web search confirmed live abatement notices on the new domain Chat 91: August Draw Solar LLC, Energy Forge One LLC, Pecos Power Plant LLC). Hard prerequisite for the abatement-weekly-cron sprint item; structurally affects any future county that migrates to the same CivicEngage hosting platform. Unblock options: residential-proxy egress (paid service), Akamai allowlisting via Reeves County IT (low likelihood), or selector-equivalent fetch via search-API result pages.
 
 **Permanently excluded / settled:**
 - `rrc_wells_permian`, `tceq_pws`, `tceq_pbr`, `tceq_nsr_pending` — see `docs/settled.md`.
