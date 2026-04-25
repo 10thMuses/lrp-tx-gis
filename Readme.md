@@ -101,6 +101,8 @@ Execute end-to-end without mid-session confirmation.
 
    Shipping chats commit and push every completed unit of work the moment it's done — each fix, each file patched, each logical milestone. Not batched for a final push. Not saved up for a summary message.
 
+   **Operational trigger (added Chat 91, after operator caught the omission twice).** After every file-modifying unit of work — a script patched, a data file added, a single layer's yaml edited — `git add <specific paths>` + `git commit` + `git push` before starting the next sub-task. Not "at logical milestones" — *every* unit. Removes the judgment call where Chat 91 shipped §1 and §2 to disk and only committed after operator prompts. The cost is one extra push per unit (seconds); the upside is that container reset, context exhaustion, or a forgotten close-out cannot lose work.
+
    **Budget rule.** Reserve ~20% of tool budget for the close-out commit-push-handoff sequence. When ~75% of budget is consumed, stop starting new sub-tasks. Ship what's complete, commit in-flight state to `docs/_<stage-slug>_handoff.md` on the active branch, push, then send the final chat message.
 
    **Handoff doc is authoritative, not the chat message.** The doc on the branch carries state at handoff, scope boundary, recon findings (so next chat does not redo), first commands for next chat, execution order, file paths. Next chat reads the file on clone and resumes without conversation_search, prompt parsing, or memory.
@@ -220,6 +222,8 @@ Rule: if the next chat's first action isn't discoverable from `WIP_OPEN.md` alon
 3. **Commit `WIP_OPEN.md` to `main` and push.**
 
 All three are non-optional, even when the feature itself fails to ship, even when a blocker prevented deploy, even when the chat ran short. A chat that ships the feature but skips close-out is a failure, not a partial success — the next chat starts from a broken state and burns tokens reconstructing what just happened. If close-out cannot fit in the remaining budget, stop shipping and do close-out only.
+
+**Never `git add -A` (added Chat 91, after operator caught a 7.6 MB transient blob committed to main).** Always stage explicit paths: `git add WIP_OPEN.md docs/sprint-plan.md scripts/foo.py`. Working-directory clutter from the chat — downloaded source files, scratch outputs, intermediate XLSX — is invisible to `git status` review when an `add -A` sweeps it in. Mistakes here pollute pack history forever; deletes from HEAD do not recover the bytes. The few extra characters of typing are the only cost of the explicit form.
 
 **Merging feature branches (added Chat 84a).** Feature branches merge directly to `main` by Claude — not by operator through the GitHub UI. `GITHUB_PAT` lacks PR-creation API scope but has push-to-main scope, so the PR step was always a detour. Standard sequence after deploy + verify:
 
