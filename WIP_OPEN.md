@@ -2,62 +2,47 @@
 
 Active state. Read at session open. Updated at close-out of every shipping chat.
 
-Per OPERATING.md §10: **`## Next chat`** = task spec for the immediately-next shipping chat. **`## Sprint queue`** = N+2 and beyond.
+Per OPERATING.md §10: **`## Next chat`** = task spec for the immediately-next shipping chat. **`## Sprint queue`** = N+2 and beyond. Multi-step sprint detail lives in `docs/sprint-plan.md` (deleted per item when shipped).
 
 ---
 
 ## Next chat
 
-**Audit-3 — STRANDED BRANCH CLEANUP + SIDEBAR HYGIENE.** Doc/repo housekeeping. No layer changes; no deploy.
+**Chat 92 resume — FIELD EXPANSION + WELLS HIDE.** Branch `refinement-chat92-field-expansion-wells` has §1 partial committed; complete §2 + §3, build, deploy, merge.
 
 ### Task
 
-1. **Resolve stranded origin branches.** `audit.sh` reports four. Delete the two abandoned: `chat76-wip` (1 commit, 80 behind main, last 2026-04-23) and `refinement-tceq-refresh` (0 ahead, 89 behind, scoped out per ARCHITECTURE.md §11). Leave `refinement-chat92-field-expansion-wells` (2 ahead, active sprint item) and the chat's own in-flight branch. `git push origin --delete chat76-wip refinement-tceq-refresh`.
-
-2. **Sidebar pointer rewrite.** `/mnt/project/COMMANDS.md` and `/mnt/project/ENVIRONMENT.md` reference docs deleted in Audit-1 (`Readme.md`, `WIP_LOG.md`, `docs/principles.md`, `docs/settled.md`, `docs/refinement-sequence.md`, `GIS_SPEC.md`) and duplicate content now in OPERATING.md §5/§7/§10. Rewrite both as ~30-line pointer docs ("see OPERATING.md §X for trigger phrases / session protocol / etc."). Output bundle includes both for operator re-upload to project knowledge.
-
-3. **WIP_OPEN.md size reduction.** `audit.sh` reports 9261B vs 8KB target. Per OPERATING.md §10, lift verbose Sprint queue entries (FIELD EXPANSION, ABATEMENT PERMIAN-CORE, POWER PLANT REFRESH, DC RESEARCH sub-sequence) into `docs/sprint-plan.md`. Keep only one-paragraph pointers in WIP_OPEN.md.
-
-4. **Re-run `audit.sh`** at session close to confirm: stranded count ≤2, WIP_OPEN.md <8192B, OPERATING.md still 306 (separate fix; not in scope here), close-out conformance now 1/20+ (lags monotonically).
+1. **§2 `tax_abatements` popup/filter rename.** Display-layer only; Chat 88 schema stays locked. Rename `commissioned` label "Commissioned" → "Approved date". Popup field order + filter set per `docs/sprint-plan.md` FIELD EXPANSION §2. `layers.yaml` edit + popup template; no data file change.
+2. **§3 `wells` hide.** Raise `min_zoom: 10` in `layers.yaml`. Do NOT delete PMTiles. Fallback `hidden: true` if min_zoom alone insufficient.
+3. **Build + deploy to prod.** Net layer count stays at 25. Verify §1 (gas-turbine field expansion) renders + §2 popup + §3 wells hidden at default zoom.
 
 ### Acceptance
 
-- `git ls-remote --heads origin` shows ≤2 non-main branches.
-- COMMANDS.md and ENVIRONMENT.md rewritten as pointers; bundle presented for operator re-upload.
-- WIP_OPEN.md <8192B (audit.sh OK on size).
-- `audit.sh` runs clean at close-out.
+- §2: `tax_abatements` popup shows new field order; filter UI reflects the listed set.
+- §3: `wells` not visible until zoom 10.
+- `built=25 missing=0 errored=0` in build report; deploy state=ready; layer-id grep on prod returns expected count.
 
 ### Branch
 
-`refinement-audit-3-cleanup`
+`refinement-chat92-field-expansion-wells` — already on origin with §1 commit `8a396c2`.
 
 ### Pre-flight
 
-Audit-2 added `close-out.sh`, `deploy.sh`, `ship.sh`, `audit.sh`, `pre-commit` under five per-unit commits on `refinement-audit-2-operational-scripts`, merged to main with deploy=none. `deploy.sh` is bash-complete but errors at `NETLIFY_PAT` lookup until Open-backlog item provisions the credential — canonical deploy path remains MCP-via-chat. `close-out.sh` enforces §6.14 (rejects merges with zero non-handoff commits) and accepts `none` as deploy-id sentinel for doc-only chats.
+Audit-3 cleanup (this chat) lifted FIELD EXPANSION detail into `docs/sprint-plan.md`, trimmed WIP_OPEN.md under 8KB, and rewrote sidebar pointer docs (`docs/sidebar/COMMANDS.md`, `docs/sidebar/ENVIRONMENT.md` — operator must re-upload to project knowledge from the Audit-3 bundle). Stranded branches `chat76-wip` and `refinement-tceq-refresh` already absent from origin at audit time (Audit-3 spec was based on stale audit). Handoff doc `docs/_chat92-field-expansion-wells_handoff.md` on the chat92 branch carries detailed §1 status and §2/§3 plan — read it first per §10 stale-handoff heuristic.
 
 ---
 
 ## Sprint queue
 
-Ordered by operator priority. N+2 and beyond.
-
-### FIELD EXPANSION + WELLS HIDE
-
-Bundled `layers.yaml` + refresh-script maintenance chat. No layer-count change (stays at 25). One chat.
-
-1. **`tceq_gas_turbines` extend refresh** — `scripts/refresh_tceq_gas_turbines.py` captures 13 of ~18 source columns. Add: full `received_date` (ISO; only `year` captured today), TCEQ `permit_no` (distinct from INR which is in `plant_code`), `num_units`, permit `status`. Map via abatement-style overload (ARCHITECTURE.md §4): `inr` ← permit_no, `funnel_stage` ← permit status, `zone` ← received_date ISO, `project` ← num_units. Add to popup + `filterable_fields` (numeric on `mw`, `year`; categorical on `technology`, `manu`, `operator`, `county`, `funnel_stage`).
-
-2. **`tax_abatements` popup/filter rename** — display layer only; Chat 88 schema stays locked. Rename `commissioned` label "Commissioned" → "Approved date". Popup field order: `name` (Applicant), `county`, `commissioned` (Approved date), `technology` (Project type), `mw` (Project MW), `capacity` (Capex $M), `use` (Abatement schedule), `sector` (Taxing entities), `project` (Reinvestment zone), `poi` (Agenda URL). `filterable_fields`: county, technology, commissioned (date range), mw, capacity. No status in popup or filters. Technology filter set: natural_gas, gas_peaker, solar, wind, battery, renewable_other.
-
-3. **`wells` hide** — current state: `default_on: false`, `min_zoom: 6`, thousands of statewide features. Primary: raise `min_zoom: 10`. Fallback: flag entry with `hidden: true` and skip sidebar render in `build_template.html`. Do NOT delete PMTiles.
+Ordered by operator priority. N+2 and beyond. Detailed multi-step entries live in `docs/sprint-plan.md`.
 
 ### ABATEMENT PERMIAN-CORE + PERIPHERAL
 
-Permian-core (Andrews, Ector, Glasscock, Loving, Martin, Midland, Ward, Winkler) → peripheral (Crane, Crockett, Irion, Reagan, Schleicher, Sutton, Upton). PDF-only counties dropped. 4–6 chats. **Constraint:** any county on the same CivicEngage CMS hosting platform now used by Reeves (`reevescounty.org`) is Akamai bot-protected from datacenter egress; adapter URL fixes are correct but cannot be verified from cloud runners until residential-proxy or whitelisted egress is provisioned.
+Permian-core (Andrews, Ector, Glasscock, Loving, Martin, Midland, Ward, Winkler) → peripheral (Crane, Crockett, Irion, Reagan, Schleicher, Sutton, Upton) county scrape sequence. 4–6 chats. **Hard constraint:** CivicEngage/Akamai bot-block on `reevescounty.org` extends to any county on the same CMS hosting platform — adapter fixes verifiable only after residential-proxy or whitelisted egress provisioned. Detail in `docs/sprint-plan.md`.
 
 ### POWER PLANT DATA REFRESH + POPUP REDESIGN
 
-Re-pull EIA-860 (plants, battery) + USWTDB (wind) to fill blank operator/commissioned/technology/fuel/capacity_mw. Rewrite popup templates for `eia860_plants`, `eia860_battery`, `solar`, `wind`, `ercot_queue`: DROP sector; ADD commissioned/COD date, operator, capacity_mw, fuel/technology. Filter UI reflects same fields.
+Re-pull EIA-860 (plants, battery) + USWTDB (wind) to fill blanks; rewrite popup templates for `eia860_plants`, `eia860_battery`, `solar`, `wind`, `ercot_queue` (drop sector; add COD/operator/capacity/fuel). Filter UI reflects same fields. Detail in `docs/sprint-plan.md`.
 
 ### COMPTROLLER LDAD SCRAPE
 
@@ -71,9 +56,9 @@ Supersedes prior "operator manual XLSX download" ask. There is no bulk XLSX. Can
 
 Print CSS at `build_template.html` hides `.sidebar` on `@media print`. Sidebar IS the legend; prints ship without it. Inject print-only legend element enumerating active layers (name + color swatch + symbol) into print header or footer. Fit within 10.3"×7.1" landscape. Handle >15 active layers via multi-column or multi-page.
 
-### DC RESEARCH → DC BUILD → DC AUTO-REFRESH (3-chat sub-sequence)
+### DC RESEARCH → DC BUILD → DC AUTO-REFRESH
 
-Research anchors: Longfellow/Poolside (Pecos), Stargate (Abilene), Project Matador/Fermi. Capture per-project: name, county, coords, MW, announcement date, completion date, owner/operator/developer, tenant, source, confidence level. Deliver structured data file → layer build → GitHub Actions weekly refresh with LLM-in-the-loop parser.
+3-chat sub-sequence. Research anchors: Longfellow/Poolside (Pecos), Stargate (Abilene), Project Matador/Fermi → structured data file → layer build → GitHub Actions weekly refresh with LLM-in-the-loop parser. Detail in `docs/sprint-plan.md`.
 
 ### MOBILE-FRIENDLY MAP
 
