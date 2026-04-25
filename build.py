@@ -20,7 +20,11 @@ SUBCOMMANDS:
   python3 build.py merge <layer_id> <refresh_file>
                                        — swap <layer_id> rows/features in the combined
                                          file with contents of <refresh_file>.
-                                         Output → /mnt/user-data/outputs/combined_*.{csv,geojson}
+                                         Writes back to the repo working-tree file
+                                         in place (ROOT/combined_*.{csv,geojson});
+                                         atomic temp+rename guards against partial
+                                         output. Operator commits the result via the
+                                         standard commit-every-unit flow.
 """
 
 import csv
@@ -682,7 +686,18 @@ def merge_csv(combined_path, refresh_path, layer_id, out_path):
     - If refresh lacks layer_id, it's injected with the target layer_id.
     - Output header is the union of existing combined header + refresh header,
       preserving existing column order and appending new columns at the end.
+
+    Safe for in-place writes (out_path == combined_path): writes to a sibling
+    temp file first, then atomic-renames over the destination only after both
+    read passes complete. Source is never truncated before being read.
+    Lineterminator forced to '\\n' (LF) to match the canonical repo source
+    format; csv default is '\\r\\n' which would produce a 39k-line spurious
+    diff against an LF source.
     """
+    out_path = Path(out_path)
+    combined_path = Path(combined_path)
+    refresh_path = Path(refresh_path)
+
     # Read combined header
     with open(combined_path, newline='', encoding='utf-8') as f:
         combined_header = next(csv.reader(f))
@@ -698,34 +713,64 @@ def merge_csv(combined_path, refresh_path, layer_id, out_path):
     if 'layer_id' not in merged_header:
         merged_header.insert(0, 'layer_id')
 
+    # Write to a sibling temp file, then atomic-rename. This makes
+    # in-place merges (out_path == combined_path) safe: the source is
+    # only opened for reading from the original path, and the destination
+    # is replaced atomically only after both passes complete.
+    tmp_path = out_path.with_suffix(out_path.suffix + '.tmp')
+
     kept = 0
     removed = 0
     added = 0
-    with open(out_path, 'w', newline='', encoding='utf-8') as fout:
-        writer = csv.DictWriter(fout, fieldnames=merged_header, extrasaction='ignore')
-        writer.writeheader()
-        # Pass 1: keep non-target rows from combined
-        with open(combined_path, newline='', encoding='utf-8') as fin:
-            reader = csv.DictReader(fin)
-            for row in reader:
-                if row.get('layer_id') == layer_id:
-                    removed += 1
-                    continue
-                writer.writerow(row)
-                kept += 1
-        # Pass 2: append refresh rows with layer_id tag
-        with open(refresh_path, newline='', encoding='utf-8') as fin:
-            reader = csv.DictReader(fin)
-            for row in reader:
-                row['layer_id'] = layer_id
-                writer.writerow(row)
-                added += 1
+    try:
+        with open(tmp_path, 'w', newline='', encoding='utf-8') as fout:
+            writer = csv.DictWriter(
+                fout,
+                fieldnames=merged_header,
+                extrasaction='ignore',
+                lineterminator='\n',
+            )
+            writer.writeheader()
+            # Pass 1: keep non-target rows from combined
+            with open(combined_path, newline='', encoding='utf-8') as fin:
+                reader = csv.DictReader(fin)
+                for row in reader:
+                    if row.get('layer_id') == layer_id:
+                        removed += 1
+                        continue
+                    writer.writerow(row)
+                    kept += 1
+            # Pass 2: append refresh rows with layer_id tag
+            with open(refresh_path, newline='', encoding='utf-8') as fin:
+                reader = csv.DictReader(fin)
+                for row in reader:
+                    row['layer_id'] = layer_id
+                    writer.writerow(row)
+                    added += 1
+        # Atomic rename only after both passes succeeded
+        os.replace(tmp_path, out_path)
+    except Exception:
+        # Clean up temp on failure; never leave partial output in place
+        try:
+            tmp_path.unlink()
+        except FileNotFoundError:
+            pass
+        raise
     return {'kept': kept, 'removed': removed, 'added': added,
             'columns': len(merged_header)}
 
 
 def merge_geojson(combined_path, refresh_path, layer_id, out_path):
-    """Swap layer_id features in combined_geoms.geojson with features from refresh GeoJSON."""
+    """Swap layer_id features in combined_geoms.geojson with features from refresh GeoJSON.
+
+    Safe for in-place writes (out_path == combined_path): the combined file
+    is fully loaded into memory before the temp file is opened, and the
+    final write is atomic-rename only after both inputs are consumed.
+    """
+    out_path = Path(out_path)
+    combined_path = Path(combined_path)
+    refresh_path = Path(refresh_path)
+
     with open(combined_path, 'r', encoding='utf-8') as f:
         combined = json.load(f)
     combined_feats = combined.get('features') or []
@@ -754,14 +799,37 @@ def merge_geojson(combined_path, refresh_path, layer_id, out_path):
         added += 1
 
     out = {'type': 'FeatureCollection', 'features': keep_list}
-    with open(out_path, 'w', encoding='utf-8') as fout:
-        json.dump(out, fout, separators=(',', ':'))
+    # Temp + atomic-rename for symmetry with merge_csv. Both inputs are
+    # already in memory at this point so source-file safety is implicit,
+    # but the temp pattern still guards against partial-write corruption
+    # if the process is killed mid-dump.
+    tmp_path = out_path.with_suffix(out_path.suffix + '.tmp')
+    try:
+        with open(tmp_path, 'w', encoding='utf-8') as fout:
+            json.dump(out, fout, separators=(',', ':'))
+        os.replace(tmp_path, out_path)
+    except Exception:
+        try:
+            tmp_path.unlink()
+        except FileNotFoundError:
+            pass
+        raise
     return {'kept': kept, 'removed': removed, 'added': added,
             'total_features': len(keep_list)}
 
 
 def cmd_merge(layer_id, refresh_filepath):
-    """Entry point: python build.py merge <layer_id> <refresh_file>"""
+    """Entry point: python build.py merge <layer_id> <refresh_file>
+
+    Reads from and writes back to the repo working-tree file in place
+    (ROOT / target_combined). Atomic-rename in merge_csv / merge_geojson
+    makes this safe even if the process is killed mid-merge.
+
+    Under the repo-as-source-of-truth model (OPERATING.md §1) the canonical
+    combined files live in the repo working tree, not /mnt/project/. The
+    operator commits the post-merge result via the standard commit-every-unit
+    flow; no separate /mnt/user-data/outputs/ stage is needed.
+    """
     refresh_path = Path(refresh_filepath)
     if not refresh_path.exists():
         print(f'ERROR: refresh file not found: {refresh_filepath}')
@@ -781,16 +849,16 @@ def cmd_merge(layer_id, refresh_filepath):
               f'(file={target_combined}). Merge applies only to combined layers.')
         sys.exit(2)
 
-    combined_src = PROJECT / target_combined
+    combined_src = ROOT / target_combined
     if not combined_src.exists():
-        print(f'ERROR: combined file missing from project: {combined_src}')
+        print(f'ERROR: combined file missing from repo working tree: {combined_src}')
         sys.exit(2)
 
-    out_dir = Path('/mnt/user-data/outputs')
-    out_dir.mkdir(parents=True, exist_ok=True)
-    out_path = out_dir / target_combined
+    # In-place: read and write the same path. merge_csv / merge_geojson
+    # use temp + atomic-rename to make this safe.
+    out_path = combined_src
 
-    print(f'Merging layer_id={layer_id}')
+    print(f'Merging layer_id={layer_id} (in-place)')
     print(f'  combined:  {combined_src}')
     print(f'  refresh:   {refresh_path}')
     print(f'  output:    {out_path}')

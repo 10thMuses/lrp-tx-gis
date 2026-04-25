@@ -105,6 +105,7 @@ Stop active feature work at ~65% of token budget. Reserve ~35% for close-out + b
 12. **Deploy + merge + delete-branch is atomic.** Any chat that deploys must also merge to `main` and delete the feature branch in the same chat. Deferring creates silent regression.
 13. **Stage fits one chat.** Five+ commits or three+ distinct subsystems = split before starting, not after. A stage resumed via handoff once is acceptable; twice means original scope was two stages pretending to be one.
 14. **Recon-only sessions are failures.** Every shipping chat pushes ≥1 non-handoff commit to origin.
+15. **Atomic in-place writes.** Any function that may write back to the same path it reads from MUST use temp-file + atomic rename (`os.replace`). Opening the destination in `'w'` mode before the source read completes truncates the source to zero bytes when the paths coincide. Surfaced by the `merge_csv` data-wipe bug; codified to prevent the same shape of bug in any future read-modify-write helper. Symmetric guards required even when one variant happens to be safe by accident (full-load-into-memory).
 
 **Verification proportional to blast radius:**
 
