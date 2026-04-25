@@ -453,3 +453,37 @@ layers:
   tippecanoe:
   - -Z0
   - -z14
+- id: fcc_fiber_coverage
+  file: fcc_fiber_coverage.geojson
+  geom: fill
+  group: Telecom
+  label: Fiber coverage (FCC BDC, Jun 2025)
+  color: '#0891b2'
+  fill_opacity: 0.55
+  default_on: false
+  min_zoom: 6
+  color_steps:
+    field: fiber_provider_count
+    default: '#cbd5e1'
+    stops:
+      - [1, '#67e8f9']
+      - [3, '#0891b2']
+  popup:
+  - bsl_count
+  - fiber_served_bsls
+  - fiber_underserved_bsls
+  - fiber_unserved_bsls
+  - fiber_provider_count
+  - as_of_date
+  popup_labels:
+    bsl_count: BSLs (total)
+    fiber_served_bsls: Fiber served (≥100/20)
+    fiber_underserved_bsls: Fiber underserved (25/3–<100/20)
+    fiber_unserved_bsls: Fiber unserved
+    fiber_provider_count: Fiber providers
+    as_of_date: As-of
+  tippecanoe:
+  - -Z6
+  - -z12
+  - --coalesce-densest-as-needed
+  - --simplification=8

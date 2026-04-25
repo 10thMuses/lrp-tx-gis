@@ -385,7 +385,11 @@ function layerPaint(L) {
     return { 'line-color': L.color, 'line-width': sizingLineWidthExpr(L), 'line-opacity': 0.9 };
   }
   if (L.geom === 'fill') {
-    return { 'fill-color': L.color, 'fill-opacity': L.fill_opacity || 0.25, 'fill-outline-color': L.color };
+    const cs = L.color_steps;
+    const fillColor = cs
+      ? ['step', ['get', cs.field], cs.default, ...cs.stops.flat()]
+      : L.color;
+    return { 'fill-color': fillColor, 'fill-opacity': L.fill_opacity || 0.25, 'fill-outline-color': L.color };
   }
   if (L.geom === 'label') {
     return {
