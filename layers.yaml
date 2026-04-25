@@ -90,13 +90,17 @@ layers:
   - name
   - plant_code
   - county
-  - sector
+  - operator
+  - commissioned
   - capacity_mw
   - technology
   - fuel
   filterable_fields:
-  - {field: sector, type: categorical, label: Sector}
-  - {field: county, type: text, label: County}
+  - {field: county, type: categorical, label: County}
+  - {field: technology, type: categorical, label: Technology}
+  - {field: fuel, type: categorical, label: Fuel}
+  - {field: capacity_mw, type: numeric, label: Capacity (MW)}
+  - {field: commissioned, type: categorical, label: Commissioned}
   - {field: name, type: text, label: Plant name}
   tippecanoe:
   - -zg
@@ -112,13 +116,15 @@ layers:
   - name
   - plant_code
   - county
-  - technology
+  - operator
+  - commissioned
   - capacity_mw
-  - capacity
+  - technology
   filterable_fields:
-  - {field: capacity, type: numeric, label: Capacity (MW)}
+  - {field: county, type: categorical, label: County}
   - {field: technology, type: categorical, label: Technology}
-  - {field: county, type: text, label: County}
+  - {field: capacity_mw, type: numeric, label: Capacity (MW)}
+  - {field: commissioned, type: categorical, label: Commissioned}
   - {field: name, type: text, label: Plant name}
   tippecanoe:
   - -zg
@@ -133,18 +139,17 @@ layers:
   radius: 2
   popup:
   - project
+  - county
+  - commissioned
+  - capacity_mw
   - manu
   - model
-  - capacity_mw
-  - cap_kw
-  - year
-  - county
   filterable_fields:
-  - {field: cap_kw, type: numeric, label: Turbine capacity (kW)}
-  - {field: year, type: numeric, label: Year online}
+  - {field: county, type: categorical, label: County}
+  - {field: capacity_mw, type: numeric, label: Capacity (MW)}
+  - {field: commissioned, type: categorical, label: Commissioned}
   - {field: manu, type: categorical, label: Manufacturer}
   - {field: project, type: text, label: Project}
-  - {field: county, type: text, label: County}
   tippecanoe:
   - -zg
   - -r1
