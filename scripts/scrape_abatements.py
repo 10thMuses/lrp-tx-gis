@@ -4,7 +4,9 @@ Abatement scraper — commissioners-court agendas + public notices.
 
 Output: data/abatements/abatement_hits_YYYYMMDD_HHMMSS.csv
 
-Scope per docs/refinement-abatement-spec.md §12:
+Scope (canonical leading signal per ARCHITECTURE.md §11 — Comptroller registries
+JS-gated with multi-month lag; commissioners-court agendas required ≥30 days
+before abatement vote per Tax Code §312.207(d)):
 - 23 Trans-Pecos / Permian-core / peripheral counties.
 - Filings 2025 + 2026 only.
 - Skip PDF-only counties; flag in output.
