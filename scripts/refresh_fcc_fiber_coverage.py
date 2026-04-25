@@ -5,7 +5,7 @@ Source: ArcGIS Living Atlas FCC BDC FeatureServer, layer 5 (H3 res-8 hexes).
   https://services8.arcgis.com/peDZJliSvYims39Q/arcgis/rest/services/FCC_Broadband_Data_Collection_December_2024_View/FeatureServer/5
   (URL slug is legacy; service refreshed 2026-03-06; item title is "June 2025 BDC".)
 
-Scope: 23-county Permian-focus footprint (Andrews … Winkler per docs/refinement-sequence.md §188).
+Scope: 23-county Permian-focus footprint (Andrews, Borden, Brewster, Crane, Crockett, Culberson, Dawson, Ector, Fisher, Glasscock, Howard, Irion, Jeff Davis, Kent, Loving, Martin, Midland, Mitchell, Pecos, Reeves, Reagan, Schleicher, Scurry, Sterling, Sutton, Terrell, Tom Green, Upton, Ward, Winkler — all West-TX counties touching ERCOT Far West).
 Filter: TotalBSLs > 0 within bbox -105.998,28.972,-100.115,32.525, then spatial-clip to county union.
 Fields: GEOID, TotalBSLs, ServedBSLsFiber, UnderservedBSLsFiber, UnservedBSLsFiber, UniqueProvidersFiber.
 
