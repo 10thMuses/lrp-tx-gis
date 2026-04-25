@@ -60,7 +60,7 @@ layers:
   label: Groundwater Wells (TWDB)
   color: '#a855f7'
   default_on: false
-  min_zoom: 6
+  min_zoom: 10
   radius: 2.5
   popup:
   - name
@@ -360,15 +360,35 @@ layers:
   - entity
   - county
   - capacity_mw
+  - technology
   - manu
   - model
+  - project
+  - funnel_stage
+  - zone
   - commissioned
   - plant_code
+  popup_labels:
+    name: Project
+    entity: Company
+    county: County
+    capacity_mw: Project MW
+    technology: Mode
+    manu: Manufacturer
+    model: Turbine model
+    project: Number of CTs
+    funnel_stage: Status
+    zone: Received date
+    commissioned: Issue date
+    plant_code: Permit No.
   filterable_fields:
   - {field: county, type: categorical, label: County}
-  - {field: entity, type: categorical, label: Company}
-  - {field: commissioned, type: text, label: Date Filed}
+  - {field: technology, type: categorical, label: Mode}
   - {field: manu, type: categorical, label: Manufacturer}
+  - {field: operator, type: categorical, label: Operator}
+  - {field: funnel_stage, type: categorical, label: Status}
+  - {field: capacity_mw, type: numeric, label: Project MW}
+  - {field: year, type: numeric, label: Received year}
   tippecanoe:
   - -Z0
   - -z14
@@ -419,37 +439,32 @@ layers:
   radius: 4
   popup:
   - name
-  - operator
-  - entity
   - county
+  - commissioned
   - technology
   - mw
   - capacity
-  - zone
   - use
-  - cap_kw
-  - project
   - sector
-  - status
+  - project
   - poi
   popup_labels:
-    name: Project
-    operator: Applicant
-    entity: Developer
+    name: Applicant
     county: County
+    commissioned: Approved date
     technology: Project type
     mw: Project MW
     capacity: Capex ($M)
-    zone: Abatement term (yrs)
     use: Abatement schedule
-    cap_kw: Jobs commitment
-    project: Reinvestment zone
     sector: Taxing entities
-    status: Status
+    project: Reinvestment zone
     poi: Agenda URL
   filterable_fields:
-  - {field: technology, type: categorical, label: Project Type}
-  - {field: status, type: categorical, label: Status}
+  - {field: county, type: categorical, label: County}
+  - {field: technology, type: categorical, label: Project type}
+  - {field: commissioned, type: text, label: Approved date}
+  - {field: mw, type: numeric, label: Project MW}
+  - {field: capacity, type: numeric, label: Capex ($M)}
   tippecanoe:
   - -Z0
   - -z14
