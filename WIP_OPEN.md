@@ -8,28 +8,89 @@ Per Readme §10: **`## Next chat`** = paste-ready for next shipping chat. **`## 
 
 ## Next chat
 
-**Chat 92 — FIELD EXPANSION + WELLS HIDE.** Bundled `layers.yaml` + refresh-script maintenance chat. No layer-count change (stays at 25). Fits one chat; no sprint-plan doc warranted.
+**Chat 92 — AUDIT-1: DOC CONSOLIDATION.** Doc-only meta chat. Replaces 4 governance docs with 2. No code changes, no build, no deploy, no layer-count change.
+
+Originates from 2026-04-25 governance audit identifying ~700 lines of duplicate rule text across `Readme.md`, `GIS_SPEC.md`, `docs/principles.md`, `docs/refinement-sequence.md`. Per-chat read-overhead reduction target: ~50–60KB. Audit-2 and Audit-3 follow as Chats 93 and 94.
 
 ### Task
 
-1. **`tceq_gas_turbines` — extend refresh to capture all source XLSX fields.** Current `scripts/refresh_tceq_gas_turbines.py` captures 13 of ~18 source columns. Add: full `received_date` (ISO; only `year` captured today), TCEQ `permit_no` (distinct from INR which is in `plant_code`), `num_units`, permit `status` (issued / pending / renewed / modified). Map into unused `combined_points.csv` columns via the abatement-style overload (Chat 88 schema): `inr` ← permit_no, `funnel_stage` ← permit status, `zone` ← received_date ISO, `project` ← num_units. Add new fields to popup + `filterable_fields` (numeric on `mw`, `year`; categorical on `technology`, `manu`, `operator`, `county`, `funnel_stage`).
+1. **Create `OPERATING.md`** — single canonical operating doc, ≤250 lines. Sections + sources (every active rule must appear exactly once):
 
-2. **`tax_abatements` — popup/filter rename + field additions (display layer only; Chat 88 schema stays locked).**
-   - Rename `commissioned` popup+filter label "Commissioned" → **"Approved date"**.
-   - Popup field order: `name` (Applicant), `county`, `commissioned` (Approved date), `technology` (Project type), `mw` (Project MW), `capacity` (Capex $M), `use` (Abatement schedule), `sector` (Taxing entities), `project` (Reinvestment zone), `poi` (Agenda URL).
-   - `filterable_fields`: `county` (categorical), `technology` (categorical), `commissioned` (date range, "Approved date"), `mw` (numeric), `capacity` (numeric).
-   - No `status` in popup or filters.
-   - Technology filter set: `natural_gas`, `gas_peaker`, `solar`, `wind`, `battery`, `renewable_other` (no new pull).
+   | § | Section | Source |
+   |---|---|---|
+   | 1 | Source of truth | Readme §1 |
+   | 2 | Operator-time discipline (acceptable asks, banned phrases, default-to-action) | Readme §2 + §8 + GIS_SPEC §11 banned-patterns |
+   | 3 | Default behavior + prompt classification | Readme §4 + §5 |
+   | 4 | Batch execution | Readme §6 |
+   | 5 | Session protocol (commit-every-unit, push-on-commit, stage sizing, no-recon-only-sessions, session-open reconciliation, close-out atomicity, never `git add -A`) | Readme §7 (12 rules → ~6, deduped) + §10 |
+   | 6 | Context discipline | Readme §9 + principles §1 |
+   | 7 | Tool-call budgets + expected budget | Readme §11 + §12 + principles §2 |
+   | 8 | GitHub sync (clone-push bracket, Git Data API tree commit, no force-push, branch-merge sequence) | Readme §10 + principles §5 + settled "GitHub sync" |
+   | 9 | Build/deploy hard rules | GIS_SPEC §1 (deduped against above) |
+   | 10 | Trigger phrases | GIS_SPEC §0 |
+   | 11 | Credential hygiene | principles §6 |
 
-3. **`wells` — hide to reduce memory footprint.** Current state: `default_on: false`, `min_zoom: 6`, thousands of statewide features. Primary: raise `min_zoom: 10`. Fallback if memory persists: flag entry with `hidden: true` and skip sidebar render in `build_template.html`. Do NOT delete PMTiles — keep on disk for future re-enable without re-refresh.
+2. **Create `ARCHITECTURE.md`** — stack and reference doc, ≤250 lines. Sections + sources:
+
+   | § | Section | Source |
+   |---|---|---|
+   | 1 | Stack overview | GIS_SPEC §3 (runtime) |
+   | 2 | Project file layout | GIS_SPEC §2 |
+   | 3 | Data pipeline | GIS_SPEC §3 (data pipeline) + principles §4 |
+   | 4 | Canonical schemas | GIS_SPEC §3 (canonical schemas) |
+   | 5 | Layer catalog (table) | GIS_SPEC §6 (update count to 25) |
+   | 6 | Frontend features | GIS_SPEC §7 |
+   | 7 | Deployment | GIS_SPEC §8 |
+   | 8 | Known fragility (table) | GIS_SPEC §9 |
+   | 9 | Acceptance criteria | GIS_SPEC §10 + principles §3 |
+   | 10 | Adding a layer (checklist) | GIS_SPEC Appendix B |
+   | 11 | Color palette | GIS_SPEC Appendix C |
+   | 12 | Fetch utilities (Python snippet) | GIS_SPEC Appendix A |
+   | 13 | Multi-chat refinement patterns (preserve verbatim; revisited Audit-2) | principles §7 |
+
+3. **Delete in same commit:**
+   - `Readme.md`
+   - `GIS_SPEC.md`
+   - `docs/principles.md`
+   - `docs/refinement-sequence.md`
+
+4. **Retain unchanged:**
+   - `docs/settled.md` (append-only ledger, the right pattern)
+   - `docs/refinement-abatement-spec.md` (active feature spec, not governance)
+   - `WIP_LOG.md` (deferred to Audit-3)
+   - `COMMANDS.md` in `/mnt/project/` (deferred to Audit-3)
+   - All scripts, build code, layers.yaml, data files
+
+5. **Resolve contradictions** as part of the consolidation (do not preserve):
+   - Drop the GIS_SPEC §1.11 pre-flight `ls /mnt/project/` step (contradicts Readme §1 repo-canonical). Pre-flight is the session-open script.
+   - Drop GIS_SPEC §11 chat-label rule (`**N - YYYY-MM-DD HH:MM - Title**`, increment `memory_user_edits`). Branch name carries the chat number; userMemories explicitly says don't cache it.
+   - Drop refinement-sequence.md operator-merges-via-PR rule (Readme §10 Chat 84a direct-merge supersedes; doc is being deleted anyway).
+   - Drop all references to `SESSION_LOG.md` (renamed to WIP_LOG.md, then frozen Chat 83a).
+   - Drop GIS_SPEC §12–18 tombstone (already marked consolidated 2026-04-22).
+
+6. **Update WIP_OPEN.md cross-references** as final action (in same commit as the doc swap):
+   - Line 5: `Readme §10` → `OPERATING.md §5` (or whatever section number lands)
+   - §Next chat: `Readme §10` → new ref
+   - §GitHub sync — live (line 284): `Readme.md §7 + docs/principles.md §5` → `OPERATING.md §5 + §8`
+   - Any other live cross-references found via `grep -nE 'Readme\.md|GIS_SPEC|principles\.md|refinement-sequence'` — fix or delete each.
 
 ### Acceptance
 
-- Layer count unchanged (25).
-- `tceq_gas_turbines` popup + filter UI shows all populated source fields.
-- `tax_abatements` popup shows "Approved date" label; filter UI has 5 filters (county, technology, approved_date range, mw, capacity); no status anywhere.
-- `wells` not loaded below zoom 10 (or absent from sidebar if fallback chosen).
-- Build + deploy + CDN verification per standard protocol; live site returns HTTP 200 with 25 layer ids.
+- `OPERATING.md` exists at repo root, ≤250 lines, contains every active rule from the 4 deleted files.
+- `ARCHITECTURE.md` exists at repo root, ≤250 lines, contains every architecture/reference detail from GIS_SPEC.md and principles.md.
+- 4 files deleted in single commit: `Readme.md`, `GIS_SPEC.md`, `docs/principles.md`, `docs/refinement-sequence.md`.
+- `grep -rE 'Readme\.md|GIS_SPEC\.md|principles\.md|refinement-sequence\.md' --include="*.md"` returns zero hits in the repo (excluding git history).
+- WIP_OPEN.md cross-references updated.
+- `docs/settled.md` and `docs/refinement-abatement-spec.md` unchanged.
+- No code changes (`build.py`, `build_template.html`, `layers.yaml`, scripts/* untouched).
+- No build, no deploy.
+- Branch merged to main, branch deleted from origin.
+
+### Pre-flight
+
+Chat 91 closed 2026-04-25: clean `main`, layer count 25, deploy `69ec91f62150e8257e82413d` live.
+
+**Existing branch on origin:** `refinement-chat92-field-expansion-wells` (2 commits, 303 lines: partial tceq field-expansion + handoff doc). DO NOT delete; resumable as Chat 95. Audit-1 uses a separate branch.
 
 ### Session open
 
@@ -37,43 +98,24 @@ Per Readme §10: **`## Next chat`** = paste-ready for next shipping chat. **`## 
 PAT=$(grep '^GITHUB_PAT=' /mnt/project/CREDENTIALS.md | cut -d= -f2)
 cd /home/claude && rm -rf repo 2>/dev/null
 git clone -q https://x-access-token:${PAT}@github.com/10thMuses/lrp-tx-gis.git repo && cd repo
-bash scripts/session-open.sh refinement-chat92-field-expansion-wells
-apt-get install -y tippecanoe libcairo2 -q
-pip install shapely pmtiles pyyaml cairosvg pandas requests openpyxl --break-system-packages -q
+bash scripts/session-open.sh refinement-chat92-audit-doc-consolidation
 ```
 
-### Deploy pattern (CANONICAL)
+No tippecanoe install. No pip installs. Doc-only chat.
 
-Unchanged: Netlify MCP → CLI proxy. REST-API dead.
-
-1. `Netlify:netlify-deploy-services-updater` `{operation: "deploy-site", params: {siteId: "01b53b80-687e-4641-b088-115b7d5ef638"}}` → single-use `--proxy-path` URL.
-2. `cd /mnt/user-data/outputs/dist && npx -y @netlify/mcp@latest --site-id 01b53b80-687e-4641-b088-115b7d5ef638 --proxy-path "<URL>" --no-wait` → `{"deployId":"...","buildId":"..."}`.
-3. Poll `get-deploy-for-site` until `state=ready`.
-4. `sleep 45` for CDN warm-up. HEAD may 503; GET is source of truth.
-5. `curl -s -A "Mozilla/5.0" https://lrp-tx-gis.netlify.app/ | grep -oE '"id":"[a-z_][a-z0-9_]*"' | sort -u | wc -l` → 25.
-
-Proxy URL single-use. On 503 upload error, request fresh URL.
-
-### Pre-flight
-
-Chat 91 closed 2026-04-25: BEAD `bead_fiber_planned` layer dropped per 30-min ship rule (no downloadable footprint geometry — BDO XLSX trio archived to `data/bead_bdo/`); Reeves adapter URL migrated `co.reeves.tx.us` → `reevescounty.org` (old DNS dead; new domain Akamai-blocked from datacenter egress, so adapter cannot be verified from cloud runners). Layer count unchanged at 25. Branch `refinement-chat91-bead-fiber-reeves` merged and deleted. Start from clean `main`.
-
-### Close-out (NON-NEGOTIABLE, per Readme §10)
+### Close-out
 
 ```bash
-PAT=$(grep '^GITHUB_PAT=' /mnt/project/CREDENTIALS.md | cut -d= -f2)
-git fetch origin refinement-chat92-field-expansion-wells
 git checkout main && git pull --rebase origin main
-git merge --no-ff origin/refinement-chat92-field-expansion-wells -m "Merge refinement-chat92-field-expansion-wells (Chat 92): tceq_gas_turbines field expansion + tax_abatements popup rename + wells min_zoom raise (deploy <id>)"
-# Rewrite WIP_OPEN.md §Next chat → next sprint-queue chat (operator decides at close-out: Permian-core abatement, power-plant refresh, or DC sub-sequence)
-# Update §Prod status with new deployId
-# Drop the just-promoted entry from §Sprint queue
+git merge --no-ff origin/refinement-chat92-audit-doc-consolidation -m "Merge refinement-chat92-audit-doc-consolidation (Chat 92): doc consolidation — Readme.md + GIS_SPEC.md + principles.md + refinement-sequence.md → OPERATING.md + ARCHITECTURE.md"
+# Rewrite WIP_OPEN.md §Next chat → Chat 93 AUDIT-2 brief (already drafted in §Sprint queue below; promote verbatim)
+# Update §Sprint queue: drop Audit-1 entry, drop Audit-2 entry (just promoted), keep Audit-3
 git commit -am "Chat 92 close-out"
 git push
-git push --delete origin refinement-chat92-field-expansion-wells
+git push --delete origin refinement-chat92-audit-doc-consolidation
 ```
 
-**Credential hygiene carry-forward:** `GITHUB_PAT` leak from Chat 87 remains unrotated per operator override. Token valid until 2027-04-21. Flag again in Chat 92 close-out if still outstanding.
+**Credential hygiene carry-forward:** `GITHUB_PAT` leak from Chat 87 remains unrotated per operator override. Token valid until 2027-04-21.
 
 ---
 
@@ -81,7 +123,53 @@ git push --delete origin refinement-chat92-field-expansion-wells
 
 Ordered by operator priority. N+2 and beyond. Multi-chat active sprint detail lives in `docs/sprint-plan.md`; one-paragraph pointers below.
 
-### Chat 93+ — ABATEMENT PERMIAN-CORE + PERIPHERAL
+### Chat 93 — AUDIT-2: SCRIPTS + CONTRADICTIONS + STRANDED BRANCHES
+
+Doc-only meta chat following Audit-1 (Chat 92). Replaces copy-pasted bash blocks in WIP_OPEN.md with reusable scripts; resolves remaining doc contradictions; cleans up stranded branches.
+
+Tasks:
+1. **Write `scripts/close-out.sh`** — wraps `git fetch / checkout main / rebase / merge --no-ff / push / push --delete` as one command. Args: `<branch-name> [<deploy-id>]`.
+2. **Write `scripts/deploy.sh`** — wraps Netlify MCP deploy → CLI proxy → poll → sleep 45 → curl verify with real UA → layer-count grep as one command. Returns deploy ID and final layer count.
+3. **Write `scripts/ship.sh`** — composite of build + deploy + close-out. One command, atomic.
+4. **Compress WIP_OPEN.md `## Next chat` template** to ≤20 lines (Task / Acceptance / Branch / Pre-flight). Static blocks (session-open bash, deploy pattern, close-out bash) move into the scripts above.
+5. **Audit + clean stranded branches:** `chat76-wip` (HEAD `4d6ca08`) and `refinement-tceq-refresh` (HEAD `606b271`). Diff each against current main; the latter is explicitly scoped out per `docs/settled.md` so its commits do NOT merge — delete. For chat76-wip, diff and either promote to a sprint-queue entry or delete.
+6. **Add `.gitignore` entries** for transient outputs (`outputs/refresh/*.xlsx`, `outputs/refresh/*.bin`, `*.zip`) to make `git add -A` pollution structurally impossible. Pre-commit hook rejecting files >1MB unless explicitly opted in.
+7. **Resolve any remaining contradictions** found during Audit-1 (will be enumerated in Chat 92's close-out notes).
+
+Branch: `refinement-chat93-audit-scripts`. Doc-only + scripts; no build, no deploy.
+
+Acceptance: `scripts/close-out.sh` + `scripts/deploy.sh` + `scripts/ship.sh` exist and execute end-to-end on a dry-run; WIP_OPEN.md `## Next chat` template ≤20 lines; zero stranded branches on origin (only `main` + active feature branches); `.gitignore` updated.
+
+### Chat 94 — AUDIT-3: WIP_LOG BURN-DOWN + COMMANDS MOVE + TELEMETRY
+
+Final audit chat. Reduces per-chat clone overhead by ~91KB; relocates operator-reference docs out of repo root; adds protocol-violation telemetry.
+
+Tasks:
+1. **Move `WIP_LOG.md` → `archive/wip_log_pre_chat83.md`** (gzip optional). Frozen since Chat 83a; git history preserves audit trail. Update OPERATING.md reference.
+2. **Move `COMMANDS.md` → `docs/triggers.md`**, marked "reference only, not authority." Sidebar copy is an operator-side cleanup item flagged in close-out.
+3. **Write `scripts/audit.sh`** — counts: lines in OPERATING.md (target ≤250), stranded branches on origin (target 0), open backlog items aged >10 chats (target ≤5), files in repo root (target stable). Outputs a single-line health summary.
+4. **Add `.github/workflows/audit.yml`** — weekly cron Mon 06:00 UTC runs `scripts/audit.sh`; fails the workflow on threshold breach. (Alerting deferred per existing pattern.)
+5. **Cross-reference scrub** — every doc reference matches a real file; every script invocation matches a real script. Final pass with `grep -rE 'Readme\.md|GIS_SPEC|principles\.md|refinement-sequence' --include="*.md"` returns zero hits.
+6. **Slim `docs/settled.md`** — split into "permanent decisions" (kept) and "operational notes" (move to OPERATING.md or delete if superseded).
+
+Branch: `refinement-chat94-audit-burndown`. Doc-only + script + CI workflow; no build, no deploy.
+
+Acceptance: `WIP_LOG.md` no longer at repo root; `docs/triggers.md` exists; `scripts/audit.sh` exists and runs clean; `.github/workflows/audit.yml` triggers on weekly cron. Per-chat clone overhead measurably reduced (verify with `du -sh` before/after, target <50KB total governance text in repo root).
+
+### Chat 95 — RESUME FIELD EXPANSION + WELLS HIDE *(deferred from Chat 92)*
+
+Branch `refinement-chat92-field-expansion-wells` already has 2 commits on origin (HEAD `3f16b81`): partial §1 tceq refresh-script field expansion + handoff doc `docs/_chat92-field-expansion-wells_handoff.md`. Resume from that handoff doc per OPERATING.md session-open reconciliation.
+
+Tasks (verbatim from original Chat 92 brief, deferred by audit sequence):
+1. **`tceq_gas_turbines` — extend refresh to capture all source XLSX fields.** §1 partially shipped on the existing branch. Continue from handoff doc.
+2. **`tax_abatements` — popup/filter rename + field additions** (display layer only; Chat 88 schema stays locked). Rename `commissioned` label "Commissioned" → "Approved date". Popup field order, `filterable_fields` per original spec. No `status` in popup/filters. Technology filter set: `natural_gas`, `gas_peaker`, `solar`, `wind`, `battery`, `renewable_other`.
+3. **`wells` — hide to reduce memory footprint.** Raise `min_zoom: 10`. Fallback: flag `hidden: true` and skip sidebar render. Keep PMTiles on disk.
+
+Branch: existing `refinement-chat92-field-expansion-wells` (do NOT recreate). Build + deploy + verify per OPERATING.md acceptance criteria.
+
+Acceptance: layer count unchanged (25); tceq_gas_turbines popup + filter UI shows all populated source fields; tax_abatements popup shows "Approved date"; wells not loaded below zoom 10; live site returns HTTP 200 with 25 layer ids.
+
+### Chat 96+ — ABATEMENT PERMIAN-CORE + PERIPHERAL
 
 Permian-core (Andrews, Ector, Glasscock, Loving, Martin, Midland, Ward, Winkler) → peripheral (Crane, Crockett, Irion, Reagan, Schleicher, Sutton, Upton). PDF-only counties dropped per spec §12.3. 4–6 chats. **Constraint surfaced Chat 91:** any county on the same CivicEngage CMS hosting platform now used by Reeves (`reevescounty.org`) is Akamai bot-protected from datacenter egress — adapter URL fixes are correct but cannot be verified from cloud runners or GitHub Actions until residential proxy or whitelisted egress is provisioned. Promoted to `docs/sprint-plan.md` when it enters the active 5-chat window.
 
