@@ -1,0 +1,66 @@
+{
+  "schema_version": "1.0",
+  "generated": "2026-04-26T14:11:53Z",
+  "model": "claude-sonnet-4-5-20250929",
+  "input_file": "data/datacenters/dc_anchors.json",
+  "input_entry_count": 8,
+  "processed_entry_count": 8,
+  "proposals": [
+    {
+      "id": "project-horizon-poolside-coreweave",
+      "diff": {},
+      "additional_sources": [],
+      "conflicts": [],
+      "fetch_failures": [],
+      "no_change": true
+    },
+    {
+      "id": "stargate-abilene-crusoe-oracle",
+      "diff": {},
+      "additional_sources": [
+        {
+          "url": "https://openai.com/index/five-new-stargate-sites/",
+          "claim": "OpenAI announces five new Stargate sites; Abilene confirmed as one of the initial operational sites with two buildings operational as of the announcement date"
+        },
+        {
+          "url": "https://www.tomshardware.com/tech-industry/oracle-and-openai-scrap-planned-600mw-abilene-expansion",
+          "claim": "600 MW expansion lease at Abilene scrapped and re-leased to Microsoft as adjacent campus; original Abilene campus progressing as planned with 1200 MW target"
+        }
+      ],
+      "conflicts": [],
+      "fetch_failures": []
+    },
+    {
+      "id": "microsoft-crusoe-abilene",
+      "error": "Claude API exhausted retries"
+    },
+    {
+      "id": "project-matador-fermi-america",
+      "error": "Claude API exhausted retries"
+    },
+    {
+      "id": "gw-ranch-pacifico-pecos",
+      "error": "Claude API exhausted retries"
+    },
+    {
+      "id": "stargate-frontier-shackelford",
+      "diff": {},
+      "additional_sources": [
+        {
+          "url": "https://www.thealbanynews.net/news/shackelford-data-center-named-official-stargate-ai-campus",
+          "claim": "Official confirmation that Shackelford County site is the 'Frontier Campus' of Stargate project, with 10 buildings across 700 acres totaling 3.7 million square feet"
+        }
+      ],
+      "conflicts": [],
+      "fetch_failures": []
+    },
+    {
+      "id": "stargate-milam-sb-energy",
+      "error": "Claude API exhausted retries"
+    },
+    {
+      "id": "meta-temple-bell",
+      "error": "Claude API exhausted retries"
+    }
+  ]
+}
