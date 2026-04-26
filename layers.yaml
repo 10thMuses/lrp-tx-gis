@@ -167,10 +167,13 @@ layers:
   - name
   - plant_code
   - county
+  - operator
+  - commissioned
   - capacity_mw
   filterable_fields:
+  - {field: county, type: categorical, label: County}
   - {field: capacity_mw, type: numeric, label: Capacity (MW)}
-  - {field: county, type: text, label: County}
+  - {field: commissioned, type: categorical, label: Commissioned}
   - {field: name, type: text, label: Plant name}
   tippecanoe:
   - -zg
