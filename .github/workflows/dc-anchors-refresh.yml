@@ -1,0 +1,98 @@
+name: dc-anchors-refresh
+
+# Weekly Claude-in-the-loop refresh of data/datacenters/dc_anchors.json.
+# Runs scripts/refresh_dc_anchors.py against each entry's source URLs and
+# opens a PR with proposed diffs for human review. Never auto-merges.
+#
+# Per OPERATING.md §10: state lives only in origin. This workflow does not
+# write to main directly — only to a feature branch via the PR.
+
+on:
+  schedule:
+    # Every Monday 06:00 UTC (01:00 CST / 02:00 CDT — runs before US business hours)
+    - cron: "0 6 * * 1"
+  workflow_dispatch:  # manual trigger from Actions tab for ad-hoc runs
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Run refresh script
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          python3 scripts/refresh_dc_anchors.py
+
+      - name: Check for proposals
+        id: check
+        run: |
+          if [ ! -f outputs/refresh/dc_anchors_proposed.json ]; then
+            echo "no proposal file produced"
+            echo "has_proposals=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          # Count meaningful proposals (anything with diff, additional_sources, or conflicts)
+          MEANINGFUL=$(python3 -c "
+          import json
+          with open('outputs/refresh/dc_anchors_proposed.json') as f:
+              d = json.load(f)
+          n = sum(1 for p in d.get('proposals', [])
+                  if p.get('diff') or p.get('additional_sources') or p.get('conflicts')
+                  or p.get('parse_error') or p.get('error'))
+          print(n)
+          ")
+          echo "meaningful proposal count: $MEANINGFUL"
+          if [ "$MEANINGFUL" -gt 0 ]; then
+            echo "has_proposals=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "has_proposals=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Create PR if proposals present
+        if: steps.check.outputs.has_proposals == 'true'
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: dc-anchors-refresh-${{ github.run_number }}
+          base: main
+          commit-message: "DC anchors weekly refresh: proposed diffs"
+          title: "DC anchors refresh — proposed diffs (run #${{ github.run_number }})"
+          body: |
+            Automated weekly refresh by `scripts/refresh_dc_anchors.py`.
+
+            See `outputs/refresh/dc_anchors_proposed.json` for the full proposal.
+
+            **Review checklist:**
+            - [ ] Confirm each proposed `diff` against the cited `evidence_url` and `evidence_quote`
+            - [ ] Confirm any `additional_sources` add real signal (not duplicates)
+            - [ ] Investigate any `conflicts` — usually means a source page changed but the canonical is still right
+            - [ ] Investigate any `fetch_failures` — paywalls, dead links, layout changes
+            - [ ] If accepting any diffs, manually edit `data/datacenters/dc_anchors.json` and update `generated` date
+            - [ ] Delete `outputs/refresh/dc_anchors_proposed.json` after applying / rejecting
+
+            **Never merge this PR as-is.** It contains proposals only, not approved updates.
+          add-paths: |
+            outputs/refresh/dc_anchors_proposed.json
+          delete-branch: true
+
+      - name: No-change summary
+        if: steps.check.outputs.has_proposals == 'false'
+        run: |
+          echo "No meaningful proposals this run. No PR opened."
+          if [ -f outputs/refresh/dc_anchors_proposed.json ]; then
+            echo "(Empty proposal file written but not committed.)"
+          fi
