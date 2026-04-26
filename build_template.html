@@ -527,15 +527,23 @@ function addLayer(L) {
       });
     }
     if (L.geom === 'line') {
-      map.addLayer({
-        id: `${lyrId}__casing`,
-        type: 'line',
-        source: srcId,
-        'source-layer': L.id,
-        minzoom: L.min_zoom || 0,
-        paint: { 'line-color': '#ffffff', 'line-width': 4.5, 'line-opacity': 0.85 },
-        layout: { visibility: L.default_on ? 'visible' : 'none', 'line-cap': 'round', 'line-join': 'round' },
-      });
+      // Casing: white outline behind colored lines for satellite contrast.
+      // Skip when the layer color is already white (counties) — casing would
+      // make the line look 4-5x thicker. Skip when line_width <= 0.5 — sub-
+      // pixel lines should not be casing-fattened.
+      const _lw = L.line_width ?? 0.5;
+      const _isWhite = (L.color || '').toLowerCase() === '#ffffff';
+      if (!_isWhite && _lw > 0.5) {
+        map.addLayer({
+          id: `${lyrId}__casing`,
+          type: 'line',
+          source: srcId,
+          'source-layer': L.id,
+          minzoom: L.min_zoom || 0,
+          paint: { 'line-color': '#ffffff', 'line-width': _lw + 1, 'line-opacity': 0.6 },
+          layout: { visibility: L.default_on ? 'visible' : 'none', 'line-cap': 'round', 'line-join': 'round' },
+        });
+      }
     }
     map.addLayer(lyr);
     if (L.geom === 'fill') {
