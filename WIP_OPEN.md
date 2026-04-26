@@ -8,33 +8,36 @@ Per OPERATING.md §10: **`## Next chat`** = task spec for the immediately-next s
 
 ## Next chat
 
-**Chat 98 — DC RESEARCH: datacenter anchor index.** First of the 3-chat DC sub-sequence (research → layer build → auto-refresh cron). Produce a structured, source-cited datacenter-anchor data file. No build, no deploy — research-and-commit only.
+**Chat 99 — DC LAYER BUILD: render dc_anchors as map layer.** Second of the 3-chat DC sub-sequence (research ✓ → layer build → auto-refresh cron). Consume `data/datacenters/dc_anchors.json` and ship a new `dc_anchors` layer to prod.
 
 ### Task
 
-1. Compile a structured JSON file at `data/datacenters/dc_anchors.json` covering Texas datacenter anchors, minimum: Longfellow/Poolside (Pecos), Stargate (Abilene), Project Matador (Pecos basin), Fermi (Amarillo), plus any other large announced/under-construction TX datacenter projects surfaced via web search.
-2. Per entry: `id` (slugified), `name`, `developer`, `county`, `lat`, `lon` (point or centroid; mark `coord_accuracy` ∈ `precise|approximate|county_centroid`), `status` (`announced|permitted|under_construction|operational`), `capacity_mw_announced`, `commissioned_target` (year or null), `power_source` (free text), `sources` (array of {url, accessed: ISO date, claim}). Use ≥2 sources per non-trivial field; flag single-sourced entries with `single_source: true`.
-3. Schema doc at `data/datacenters/README.md`: field definitions, data-quality conventions, refresh cadence target.
-4. Commit + push. No build, no deploy. WIP next-chat = Chat 99 (layer build).
+1. Append `dc_anchors` entry to `layers.yaml`. Source = `data/datacenters/dc_anchors.json` (custom JSON loader required — it's not GeoJSON or CSV in the canonical schema).
+2. Add a custom loader path in `build.py` (or per existing pattern) that reads `dc_anchors.json` and emits a points GeoJSON consumable by tippecanoe. Map fields: `id`, `name`, `developer`, `county`, `status`, `capacity_mw_announced`, `commissioned_target`, `power_source`, `coord_accuracy`. Sources array → flatten to `sources_count` + `sources_urls` (joined string for popup) so it survives tile encoding.
+3. Symbology: graduated-circle on `capacity_mw_announced` (e.g. 100–500 / 500–2000 / 2000–5000 / 5000+ MW buckets); dim-marker for `coord_accuracy=county_centroid`; status-color overlay (announced=grey, permitted=amber, under_construction=blue, operational=green) — match the existing layer palette in `ARCHITECTURE.md` if a similar precedent exists.
+4. Popup template: name (bold), developer, county, status badge, capacity MW, target commissioning year, power-source paragraph, and a "Sources (N)" expandable footer with the URLs. Surface `coord_accuracy` as a small "approximate location" badge when not `precise`.
+5. Sidebar entry with filter on `status` + `county`. Standard build → preview → prod sequence per §8.
+6. WIP next-chat = Chat 100 (auto-refresh GitHub Actions cron with LLM-in-the-loop parser).
 
 ### Acceptance
 
-- `data/datacenters/dc_anchors.json` exists with ≥5 entries, schema-valid (every required field populated or explicitly null with rationale).
-- Every entry has ≥1 source URL with accessed-date.
-- `data/datacenters/README.md` documents schema.
-- Branch merged + deleted same chat per §6.12 (no deploy means atomic-with-merge only, not deploy).
-- WIP next-chat updated for Chat 99 layer build.
+- New layer `dc_anchors` renders 8 points (or whatever the JSON contains at chat-time) on prod.
+- Popup surfaces all required fields; sources list links out correctly.
+- Filter UI works for `status` and `county`.
+- `built=26  missing=0  errored=0` on final build line.
+- Local↔prod md5 identical post-deploy.
+- Branch merged + deleted same chat per §6.12.
 
 ### Branch
 
-`refinement-chat98-dc-research`.
+`refinement-chat99-dc-layer`.
 
 ### Pre-flight
 
-- Chat 97 closed clean, deploy `69ed60e59254f7df1a9cacdb` (2026-04-26). Print-only legend shipped: `#print-legend` element + `@media print` 4-column flow + `btn-print` handler populating from `activeLayerIds()` × `LAYERS` (filtering `sidebar_omit`, preserving ERCOT-queue gradient swatch). Prod md5 = local dist md5: `d114b4e7f7b1714bff721d7d432092d6`. Build clean: `built=25 missing=0 errored=0 tiles_total=18816 KB`. Netlify upload deduped against Chat 96 PMTiles (template-only delta). One transient `npx` proxy upload error on first attempt; succeeded on retry with fresh proxy URL.
-- Research-only chat — no `build.py` invocation, no Netlify call, no tippecanoe. Tool budget for research-only: 6–10 (web_search × N + commit + push + WIP write).
-- Schema lives in `data/datacenters/README.md`; Chat 99 will consume it for layer build via `layers.yaml` append + a custom loader. Coord precision matters because Chat 99 will render points; mark `county_centroid` entries clearly.
-- Source-quality bar: official permits, SEC filings, primary press releases, ERCOT INR filings, county economic-development records preferred. Pure secondary tech press OK only as confirmation.
+- Chat 98 closed clean (no deploy). 8 entries shipped to `data/datacenters/dc_anchors.json`: Project Horizon (Pecos, 2 GW, under_construction), Stargate Abilene (Taylor, 1.2 GW, operational), Microsoft–Crusoe Abilene (Taylor, 900 MW, under_construction), Project Matador / Fermi America (Carson, 11 GW, permitted), GW Ranch / Pacifico (Pecos, 7.65 GW, permitted), Stargate Frontier Shackelford (Shackelford, 1.4 GW, under_construction), Stargate Milam / SB Energy (Milam, 1.2 GW, under_construction), Meta Temple (Bell, 198 MW, operational). Total announced capacity: ~25.6 GW across 8 anchors.
+- Coord accuracy bias: 2 entries are `county_centroid` (Shackelford, Milam — county-level only); 6 are `approximate` (right area, ≤10 km). None are `precise` parcel-level; precision can be tightened later via TCEQ permit lookups but is not blocking for layer-build.
+- Schema doc at `data/datacenters/README.md`. Source-quality conventions and refresh cadence (weekly Mondays 06:00 UTC target) defined there.
+- Tool budget for layer-build with deploy: 6–10 (yaml edit + loader patch + build + Netlify proxy + verify + WIP write + close-out script). The `dc_anchors` source is JSON not the canonical CSV/GeoJSON, so `build.py` will need a small dispatcher branch — keep it minimal, single-purpose.
 
 ---
 
