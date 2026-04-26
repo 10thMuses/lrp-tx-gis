@@ -4,38 +4,35 @@ Active state. Read at session open. Updated at close-out of every shipping chat.
 
 Per OPERATING.md §10: **`## Next chat
 
-**Chat 103 — DOC-ONLY: PROMOTE FRESH-CONTAINER FIX TO `session-open.sh`.** Two recurring gaps confirmed across Chats 100, 101, 102: (a) `cairosvg` (pip) and `tippecanoe` (apt) not preinstalled in fresh containers; (b) `scripts/close-out.sh` fails on missing git identity. Both have been worked around three chats running. Per OPERATING.md §14, structural fix beats prose rule.
+**Chat 104 — DC AUTO-REFRESH CRON.** GitHub Actions weekly cron that runs `scripts/refresh_dc_anchors.py` against `data/datacenters/dc_anchors.json` + a watchlist URL feed; LLM-in-the-loop parser (Anthropic API) proposes diffs (status changes, capacity revisions, new entries flagged `single_source: true`); diffs surface as a PR for human review (never auto-merged).
 
 ### Task
 
-1. **Patch `scripts/session-open.sh`** to install build deps and set git identity if missing. Suggested block at top of script after the branch-checkout phase:
-   - `command -v tippecanoe >/dev/null 2>&1 || apt-get install -y tippecanoe >/dev/null 2>&1`
-   - `python3 -c "import cairosvg" 2>/dev/null || pip install -q cairosvg --break-system-packages`
-   - `git config user.email >/dev/null 2>&1 || git config user.email "claude@anthropic.local"`
-   - `git config user.name >/dev/null 2>&1 || git config user.name "Claude"`
-2. **Smoke-test inside this chat** by re-running `bash scripts/session-open.sh refinement-chat103-session-open-fix` after editing — should be idempotent (deps already installed = no-op).
-3. **Doc-only commit** — no build, no deploy. Per §12 budget: 2–6 tool calls.
-4. WIP next-chat = Chat 104 (DC auto-refresh cron — still blocked on Anthropic API key in repo secrets; if still blocked, jump to abatement workstreams).
+1. **Pre-flight gate:** confirm `ANTHROPIC_API_KEY` present in repo Secrets at `github.com/10thMuses/lrp-tx-gis/settings/secrets/actions`. If absent, halt with operator-action ask. PAT lacks scope to add secrets via API.
+2. **Watchlist source file:** create `data/datacenters/dc_watchlist.yaml` with the same 8 anchors from `dc_anchors.json` plus their canonical announcement-URL list. One entry per anchor: `id`, `urls[]`, `last_checked`.
+3. **Refresh script** at `scripts/refresh_dc_anchors.py`: fetch each watchlist URL with retry; pass HTML + current `dc_anchors.json` entry to Claude API (`claude-sonnet-4-5` or current default) with structured-output schema; emit proposed diff per anchor; write to `outputs/refresh/dc_anchors_proposed.json` with provenance.
+4. **GitHub Actions workflow** at `.github/workflows/dc-anchors-refresh.yml`: cron `0 6 * * 1` (Monday 06:00 UTC); checkout → install deps → run script → if proposed diffs non-empty, open PR (using `peter-evans/create-pull-request@v6` or equivalent); never merge.
+5. Smoke-test the script locally with one URL before workflow ships.
+6. Doc-only of workflow + script + watchlist; no build, no deploy. WIP next-chat = Chat 105 cosmetic backlog (PMTiles feature counts at 0 in sidebar — small fix).
 
 ### Acceptance
 
-- `scripts/session-open.sh` includes idempotent install + identity blocks.
-- Re-running `session-open.sh` in same chat does not error.
-- Pre-flight blocks for "known close-out script gap" and "known build dep gap" can be removed from `## Next chat` for Chat 104.
+- `ANTHROPIC_API_KEY` confirmed in repo Secrets (operator UI action).
+- `scripts/refresh_dc_anchors.py` and `data/datacenters/dc_watchlist.yaml` created.
+- `.github/workflows/dc-anchors-refresh.yml` created with cron + PR-creation step.
+- Local smoke-test produces a valid (possibly empty) `outputs/refresh/dc_anchors_proposed.json`.
 - Branch merged + deleted same chat per §6.12.
 - No build / deploy.
 
 ### Branch
 
-`refinement-chat103-session-open-fix`
+`refinement-chat104-dc-cron`
 
 ### Pre-flight
 
-- Chat 102 shipped clean. ERCOT queue project aggregation popup live on prod (deploy `69ee07134b63d09184004cf9`). Layer count 26. Build-time aggregation in `compute_ercot_group_aggregates(csv_path)` streams `combined_points.csv` once and returns `{group_key: {group_total_mw, group_count, group_breakdown}}`; `split_combined_csv()` accepts the dict and stamps the three derived fields onto each `ercot_queue` feature's props before NDGeoJSON write. PMTiles metadata schema confirms encoding: `group_total_mw: Number`, `group_count: Number`, `group_breakdown: String`. Build agg log: `1205 groups, 394 with 2+ components` — exact match to recon. Test case LONGFELLOW__PECOS recon-verified at 6 rows / 2153.3 MW.
-- Popup helper `ercotQueueGroupSummaryHtml(props)` renders summary block (total MW, component count, breakdown ul) above per-row table when `group_count > 1`; empty for singletons. Wired into existing `ercotQueuePopupHtml` dispatcher (no `layers.yaml` change needed; ERCOT popup uses dedicated function not registry-iterated).
-- **Deviation from prior WIP task #2 (atomic CSV rewrite):** chose build-time stamping over `combined_points.csv` rewrite. Derived fields stay in code, source CSV stays canonical, no §6.15 atomic-write needed. The user-visible outcome (each tile feature carries its group's aggregates) is identical.
-- Sprint queue: session-open structural fix (this chat) → DC auto-refresh cron (still blocked on API key) → abatement workstreams.
-- Tool budget for Chat 103 doc-only: 2–6 (single edit, smoke-test, commit, push, close-out).
+- Chat 103 shipped clean. `scripts/session-open.sh` now installs tippecanoe + cairosvg if missing (non-fatal on failure) and continues to set git identity unconditionally. Smoke-tested via re-run on already-checked-out branch.
+- Sprint queue: DC auto-refresh cron (this chat, gated on Secret) → cosmetic PMTiles count fix → wind operator fill (sprint-plan item) → Permian abatement work (HARD BLOCKED on Akamai/CivicEngage; pending operator decision on residential-proxy spend).
+- Tool budget for Chat 104: 6–10 (script + workflow + watchlist + smoke-test + commit + close-out).
 
 ## Sprint queue
 

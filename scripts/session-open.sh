@@ -43,6 +43,18 @@ echo "=== session-open: branch=$BRANCH slug=$SLUG ==="
 git config user.email "claude@lrp.local"
 git config user.name  "Claude (LRP GIS)"
 
+# Build deps (idempotent). Fresh containers lack tippecanoe (apt) and cairosvg (pip).
+# Install only if missing. Failures are logged but do not abort session-open;
+# build.py will surface a hard error later if a missing dep actually blocks a build.
+if ! command -v tippecanoe >/dev/null 2>&1; then
+  echo "[deps] tippecanoe not found — installing"
+  apt-get install -y tippecanoe >/dev/null 2>&1 || echo "[deps] tippecanoe install failed (non-fatal; build will error if needed)"
+fi
+if ! python3 -c "import cairosvg" 2>/dev/null; then
+  echo "[deps] cairosvg not found — installing"
+  pip install -q cairosvg --break-system-packages >/dev/null 2>&1 || echo "[deps] cairosvg install failed (non-fatal; build will error if needed)"
+fi
+
 # 1. Branch-ahead check (OPERATING.md §10). Fetch origin first.
 git fetch origin --quiet
 
