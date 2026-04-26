@@ -358,6 +358,52 @@ def csv_to_ndgeojson(csv_path, out_path):
     return n_total, n_written
 
 
+
+def dc_anchors_to_ndgeojson(json_path, out_path):
+    """Custom loader for data/datacenters/dc_anchors.json.
+    Maps the curated DC-anchor schema → ndgeojson points consumable by tippecanoe.
+    Sources array → flattened sources_count + sources_urls (joined string for popup).
+    """
+    with open(json_path, 'r', encoding='utf-8') as f:
+        d = json.load(f)
+    entries = d.get('entries') or []
+    n_total = 0
+    n_written = 0
+    with open(out_path, 'w', encoding='utf-8') as fout:
+        for e in entries:
+            n_total += 1
+            lat = fnum(e.get('lat'))
+            lon = fnum(e.get('lon'))
+            if lat is None or lon is None:
+                continue
+            if not (-180 <= lon <= 180 and -90 <= lat <= 90):
+                continue
+            srcs = e.get('sources') or []
+            urls = [s.get('url') for s in srcs if s.get('url')]
+            props = {
+                'id': e.get('id', ''),
+                'name': e.get('name', ''),
+                'developer': e.get('developer', ''),
+                'county': e.get('county', ''),
+                'status': e.get('status', ''),
+                'capacity_mw_announced': e.get('capacity_mw_announced'),
+                'commissioned_target': e.get('commissioned_target'),
+                'power_source': e.get('power_source', ''),
+                'coord_accuracy': e.get('coord_accuracy', ''),
+                'sources_count': len(urls),
+                'sources_urls': '\n'.join(urls),
+            }
+            feat = {
+                'type': 'Feature',
+                'geometry': {'type': 'Point', 'coordinates': [lon, lat]},
+                'properties': props,
+            }
+            fout.write(json.dumps(feat, separators=(',', ':')))
+            fout.write('\n')
+            n_written += 1
+    return n_total, n_written
+
+
 def geojson_to_ndgeojson(gj_path, out_path):
     n = 0
     with open(gj_path, 'r', encoding='utf-8') as f:
@@ -510,6 +556,8 @@ def build_layer(layer, report, split_stats):
     try:
         if src.suffix.lower() == '.csv':
             n_total, n_written = csv_to_ndgeojson(src, nd)
+        elif src.suffix.lower() == '.json':
+            n_total, n_written = dc_anchors_to_ndgeojson(src, nd)
         else:
             n_total, n_written = geojson_to_ndgeojson(src, nd)
         if n_written == 0:
