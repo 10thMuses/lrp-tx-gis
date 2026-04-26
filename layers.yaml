@@ -267,6 +267,7 @@ layers:
   - county
   - zone
   - entity
+  - operator
   - inr
   - poi
   filterable_fields:
@@ -277,7 +278,7 @@ layers:
   - {field: funnel_stage, type: categorical, label: Funnel stage}
   - {field: commissioned, type: categorical, label: Commissioned}
   - {field: under_construction, type: categorical, label: Under construction}
-  - {field: county, type: text, label: County}
+  - {field: county, type: categorical, label: County}
   - {field: entity, type: text, label: Developer}
   - {field: name, type: text, label: Project}
   tippecanoe:
