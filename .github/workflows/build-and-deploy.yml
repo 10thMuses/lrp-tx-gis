@@ -1,0 +1,126 @@
+name: build-and-deploy
+
+# Cloud-side build + deploy as a fallback when local tippecanoe is unavailable
+# (e.g., Claude Code on native Windows, or any machine without tippecanoe).
+# Runs `python build.py` in a Linux GitHub Actions runner with apt-installed
+# tippecanoe, then deploys the resulting dist/ directory to Netlify prod.
+#
+# Manual trigger only (workflow_dispatch). No automatic builds on push/PR
+# to avoid surprise prod deploys; explicit operator (or operator-via-Claude)
+# action required every time.
+#
+# Required repo Secrets:
+#   ANTHROPIC_API_KEY  — already set (used by dc-anchors-refresh.yml)
+#   NETLIFY_AUTH_TOKEN — Personal Access Token from app.netlify.com
+#                        → User Settings → Applications → Personal Access Tokens
+#                        → New access token. Add as repo Secret.
+#   NETLIFY_SITE_ID    — already known: 01b53b80-687e-4641-b088-115b7d5ef638
+#                        Add as repo Secret (or hardcode below).
+
+on:
+  workflow_dispatch:
+    inputs:
+      message:
+        description: "Optional commit/deploy message (used in deploy log)"
+        required: false
+        default: "manual cloud build"
+
+permissions:
+  contents: read
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install system dependencies (tippecanoe)
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq tippecanoe
+          tippecanoe --version
+
+      - name: Install Python dependencies
+        run: |
+          pip install --quiet pyyaml cairosvg pmtiles
+
+      - name: Run build
+        env:
+          LRP_DIST_DIR: ${{ github.workspace }}/dist
+        run: |
+          mkdir -p "${LRP_DIST_DIR}"
+          python3 build.py 2>&1 | tee build.log
+          echo ""
+          echo "=== build summary ==="
+          tail -5 build.log
+
+      - name: Verify build output
+        run: |
+          if [ ! -f "${{ github.workspace }}/dist/index.html" ]; then
+            echo "ERROR: dist/index.html not produced — build failed silently"
+            exit 1
+          fi
+          # Confirm the build report shows zero errors
+          if grep -q "errored=0" build.log; then
+            echo "OK: build reports errored=0"
+          else
+            echo "ERROR: build report does not show errored=0"
+            grep -E "built=|errored=" build.log || true
+            exit 1
+          fi
+          # Show final tile count for sanity
+          echo ""
+          echo "tiles in dist/:"
+          ls -lh "${{ github.workspace }}/dist/tiles/" 2>/dev/null | head -30 || echo "  (no tiles dir)"
+
+      - name: Install Netlify CLI
+        run: npm install -g netlify-cli@latest
+
+      - name: Deploy to Netlify (prod)
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+        run: |
+          if [ -z "${NETLIFY_AUTH_TOKEN}" ]; then
+            echo "ERROR: NETLIFY_AUTH_TOKEN secret not set."
+            echo "Add at: github.com/10thMuses/lrp-tx-gis/settings/secrets/actions"
+            echo "Get token at: app.netlify.com → User Settings → Applications → Personal Access Tokens"
+            exit 1
+          fi
+          if [ -z "${NETLIFY_SITE_ID}" ]; then
+            echo "ERROR: NETLIFY_SITE_ID secret not set (should be 01b53b80-687e-4641-b088-115b7d5ef638)"
+            exit 1
+          fi
+          netlify deploy \
+            --dir="${{ github.workspace }}/dist" \
+            --site="${NETLIFY_SITE_ID}" \
+            --auth="${NETLIFY_AUTH_TOKEN}" \
+            --prod \
+            --message="${{ inputs.message }} (run #${{ github.run_number }})" \
+            --json | tee deploy.json
+          DEPLOY_ID=$(python3 -c "import json; print(json.load(open('deploy.json'))['deploy_id'])" 2>/dev/null || echo "unknown")
+          echo "deploy_id=$DEPLOY_ID" >> "$GITHUB_OUTPUT"
+          echo ""
+          echo "==================================================="
+          echo "DEPLOYED TO PROD: https://lrp-tx-gis.netlify.app"
+          echo "deploy_id: $DEPLOY_ID"
+          echo "==================================================="
+
+      - name: Verify prod is live
+        run: |
+          sleep 30  # CDN warm-up
+          STATUS=$(curl -sI -A "Mozilla/5.0" https://lrp-tx-gis.netlify.app/ | head -1)
+          echo "prod HTTP status: $STATUS"
+          if echo "$STATUS" | grep -q "200"; then
+            echo "OK: prod live"
+          else
+            echo "WARN: prod returned non-200 (may be CDN propagation; retry in 1-2 min)"
+          fi
