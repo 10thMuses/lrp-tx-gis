@@ -304,3 +304,18 @@ A new prose rule is the last resort, not the first response.
 - WIP_OPEN.md size (target ≤8KB)
 
 Drift in any metric is the prompt for a structural fix — not a new rule.
+
+---
+
+## 16. Settled decisions
+
+Operator-authorized decisions that downstream chats should not re-litigate. Listed in reverse chronological order; entries do not expire — once settled, settled.
+
+**2026-04-26 (Chat 104b):**
+
+- **GitHub PAT scope upgraded to include `Workflows: Read and write`.** Required for shipping any file under `.github/workflows/`. Token name `claude-lrp-gis`, expires 2027-04-21. Authorized by operator after Chat 104 push-rejection on workflow file.
+- **Repo setting "Allow GitHub Actions to create and approve pull requests" enabled** at `Settings → Actions → General → Workflow permissions`. Required for the `peter-evans/create-pull-request@v6` step in `dc-anchors-refresh.yml` and any future PR-opening cron. Authorized by operator after Chat 104 first workflow_dispatch run failed at PR creation step.
+- **PacketStream residential proxy egress authorized** for the abatement-scrape sequence (`reevescounty.org` Akamai bot-block + ~14 other CivicEngage CMS counties). Pay-as-you-go, ~$5–20/month at projected volume. Operator to set up account and provide endpoint URL + credentials before Permian abatement chats resume.
+- **Selenium / Playwright JS-rendered scrape authorized** for the Comptroller LDAD source (`comptroller.texas.gov/economy/development/search-tools/sb1340/search.php`). Implementation deferred until after Permian abatement core ships. Authorization class extended to other state-government search interfaces requiring JS rendering, evaluated case-by-case.
+
+**Permanently settled (pre-Chat 104):** see ARCHITECTURE.md §11 for the catalogue of permanently-excluded layers and data sources.
