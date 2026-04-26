@@ -396,10 +396,10 @@ function sizingRadiusExpr(L) {
 }
 function sizingLineWidthExpr(L) {
   const rule = SIZING_RULES[L.id];
-  if (!rule || rule.mode !== 'kv_line') return L.line_width ?? 1;
-  return ['case', ['<=', _sizingVal(rule), 0], 1,
+  if (!rule || rule.mode !== 'kv_line') return L.line_width ?? 0.5;
+  return ['case', ['<=', _sizingVal(rule), 0], 0.5,
     ['interpolate', ['linear'], _sizingVal(rule),
-      0, 0.75, 69, 1, 138, 1.25, 230, 1.5, 345, 1.75, 500, 2]];
+      0, 0.4, 69, 0.5, 138, 0.65, 230, 0.8, 345, 1, 500, 1.25]];
 }
 function sizingIconSizeExpr(L) {
   const rule = SIZING_RULES[L.id];
@@ -477,8 +477,8 @@ function layerPaint(L) {
   if (L.geom === 'label') {
     return {
       'text-color': L.color || '#0f172a',
-      'text-halo-color': '#ffffff',
-      'text-halo-width': 2,
+      'text-halo-color': '#0f172a',
+      'text-halo-width': 1.5,
     };
   }
   return {};
