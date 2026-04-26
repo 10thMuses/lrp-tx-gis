@@ -2,49 +2,54 @@
 
 Active state. Read at session open. Updated at close-out of every shipping chat.
 
-Per OPERATING.md §10: **`## Next chat`** = task spec for the immediately-next shipping chat. **`## Sprint queue`** = N+2 and beyond. Multi-step sprint detail lives in `docs/sprint-plan.md` (deleted per item when shipped).
+Per OPERATING.md §10: **`## Next chat
 
----
-
-## Next chat
-
-**Chat 100 — DC AUTO-REFRESH CRON: GitHub Actions weekly refresh of dc_anchors with LLM-in-the-loop parser.** Third and final of the DC sub-sequence (research ✓ Chat 98 → layer build ✓ Chat 99 → auto-refresh). Stand up `.github/workflows/dc-anchors-refresh.yml` cron weekly Mondays 06:00 UTC, scraping the per-entry `sources[*].url` plus a watchlist of TX datacenter trade-press feeds; LLM-in-the-loop parser proposes diffs against `data/datacenters/dc_anchors.json`; diffs surface as a PR for human review (never auto-merged).
+**Chat 100 — MOBILE-FRIENDLY MAP (sprint stage 1 of 2–3).** Per operator reprioritization 2026-04-26, mobile work moves ahead of DC auto-refresh cron and all abatement workstreams. First chat of the sprint sets up responsive breakpoints + touch-friendly controls; subsequent chats handle pinch-zoom tuning, measure tool + print-to-PDF mobile usability, and popup sizing.
 
 ### Task
 
-1. Create `.github/workflows/dc-anchors-refresh.yml`. Cron `0 6 * * 1`. Manual trigger via `workflow_dispatch`.
-2. Refresh script in `scripts/refresh_dc_anchors.py` (new). Inputs: existing `dc_anchors.json` + watchlist URL feed. Outputs: proposed diff JSON to stdout + write candidate `dc_anchors.json.proposed`.
-3. LLM-in-the-loop parser path: prompt template stored in repo (`scripts/dc_anchors_parser_prompt.md`); workflow calls Anthropic API (key in repo secrets) with current entries + scraped article excerpts; parser returns structured diff (`status_change`, `capacity_revision`, `new_entry`, `accessed_bump`).
-4. PR-creation step: workflow opens PR with diff summary in body. New entries flagged `single_source: true` until reviewer adds a second source. `accessed` dates bump only on confirmation.
-5. Acceptance protocol for first run: dry-run via `workflow_dispatch`, inspect proposed diff manually, do NOT merge unless plausible. Cron only goes live after one successful manual dry-run.
-6. WIP next-chat = backlog from `## Sprint queue` ordering at that time; ABATEMENT PERMIAN-CORE if Akamai unblock has landed by then, else MOBILE-FRIENDLY MAP or COMPTROLLER LDAD SCRAPE per operator priority.
+1. Add mobile breakpoint at 768 px in `build_template.html`. Sidebar collapses to a bottom sheet or off-canvas drawer below breakpoint; map fills viewport.
+2. Touch-friendly controls: increase tap targets to ≥44 px (WCAG); ensure layer toggles, filter chips, and the print/export buttons remain reachable on small viewports.
+3. Popup sizing: cap popup max-width at `min(90vw, 360px)` on mobile; verify long-text fields (e.g. `power_source` on `dc_anchors`, `legal_desc` on `parcels_pecos`) scroll inside the popup rather than overflowing the viewport.
+4. Smoke-test on a mobile UA via curl + render check; defer pinch-zoom tuning, measure-tool mobile, and print-to-PDF mobile to Chat 101 (sprint stage 2).
+5. Standard build → preview → prod sequence per §8.
+6. WIP next-chat = Chat 101 (mobile sprint stage 2: pinch-zoom + measure tool + print-mobile).
 
 ### Acceptance
 
-- `.github/workflows/dc-anchors-refresh.yml` exists, syntax-valid (`gh workflow view` clean).
-- Manual `workflow_dispatch` run completes without error; output PR created with at least an `accessed` date bump on one entry (smoke test).
-- Anthropic API key added to repo secrets (operator action; ask pattern per OPERATING.md §2).
-- Cron scheduled but tested only via `workflow_dispatch` — do not wait for first scheduled run.
+- `index.html` includes a `@media (max-width: 768px)` block governing sidebar layout, control sizing, and popup max-width.
+- Tap targets ≥44 px below breakpoint (verifiable via inspecting `min-height` / `min-width` declarations on `.layer-toggle`, `.filter-chip`, `#btn-print`, etc.).
+- `built=26 missing=0 errored=0` on final build line.
+- Local↔prod md5 identical post-deploy.
 - Branch merged + deleted same chat per §6.12.
 
 ### Branch
 
-`refinement-chat100-dc-cron`.
+`refinement-chat100-mobile-1`.
 
 ### Pre-flight
 
-- Chat 99 shipped clean. `dc_anchors` layer live on prod with 8 features. Local↔prod md5 identical (`efc81b2a01cffb1f20793a72a4b8180d` index, `7d8c6243bdb2c7088c930aee624336c5` pmtiles). Build clean: `built=26 missing=0 errored=0 tiles_total=18865 KB`.
-- Symbology shipped: graduated radius via SIZING_RULES (mw mode); status color (announced=slate `#94a3b8`, permitted=amber `#f59e0b`, under_construction=blue `#0ea5e9`, operational=green `#16a34a`); coord_accuracy=county_centroid dimmed to 0.45 opacity. Wired in `build_template.html` via `dcAnchorsColorExpr()` + `dcAnchorsOpacityExpr()` + extension of the `layerPaint` per-id dispatcher (was ercot_queue-only, now ercot_queue + dc_anchors).
-- Popup uses standard `popup_labels` rendering — sources surfaced as `sources_count` (int) and `sources_urls` (newline-joined string). Custom expandable-footer popup not implemented (kept Rule 7 minimization). If operator wants per-URL link rendering, that's a follow-up template patch via `dcAnchorsPopupHtml(props)` mirroring `ercotQueuePopupHtml`.
-- Filter fields: `status` (categorical), `county` (categorical), `capacity_mw_announced` (numeric), `developer` (text), `name` (text).
-- Hard prerequisite for cron: Anthropic API key added to repo secrets. Operator must add via GitHub UI; PAT in `CREDENTIALS.md` lacks repo-secrets-write scope.
-- Tool budget for cron stand-up: 4–8 (workflow yaml + refresh script + parser prompt + first dry-run + WIP write + close-out).
-
----
+- Chat 99 shipped clean. `dc_anchors` layer live on prod (deploy `69ed6743f0d200d1782b60e7`). Layer count 26.
+- DC auto-refresh cron deferred per operator priority change. Sub-sequence research ✓ (Chat 98) → build ✓ (Chat 99) → auto-refresh **paused at queue position 4** (after mobile sprint + ERCOT aggregation popup).
+- Known close-out script gap: `scripts/close-out.sh` fails on missing git identity in fresh containers. Workaround = `git config user.email "claude@anthropic.local" && git config user.name "Claude"` before `close-out.sh`. Structural fix (move into `session-open.sh`) deferrable; track as backlog item.
+- Tool budget for mobile stage 1 with deploy: 6–8 (template patch + build + Netlify proxy + verify + WIP write + close-out). All edits in `build_template.html`; no `build.py` or `layers.yaml` touch needed.
+- Reference: existing template uses Tailwind-style utility classes inline + scoped `<style>` block. Add mobile rules in the existing `<style>` block, not a new file.
 
 ## Sprint queue
 
 Ordered by operator priority. N+2 and beyond. Detailed multi-step entries live in `docs/sprint-plan.md`.
+
+### MOBILE-FRIENDLY MAP — STAGES 2–3
+
+Continuation of the mobile sprint started at Chat 100. Stage 2 (Chat 101): pinch-zoom tuning, measure-tool mobile usability, print-to-PDF mobile usability. Stage 3 (Chat 102, if needed): polish + cross-device QA. 1–2 chats remaining after Chat 100.
+
+### ERCOT QUEUE PROJECT AGGREGATION POPUP
+
+`ercot_queue` has 1,205 distinct project `group` keys; 394 groups have 2+ components. Build-time aggregation in `build.py`: compute `group_total_mw`, `group_count`, `group_breakdown` per group; popup template renders summary line + breakdown list. Test case Longfellow__Pecos: 6 rows, 2,153.3 MW total. 1 chat.
+
+### DC AUTO-REFRESH CRON
+
+`.github/workflows/dc-anchors-refresh.yml`. Cron `0 6 * * 1`. Refresh script in `scripts/refresh_dc_anchors.py` reads existing `dc_anchors.json` + watchlist URL feed; LLM-in-the-loop parser proposes diffs (status changes, capacity revisions, new entries flagged `single_source: true`); diffs surface as PR for human review (never auto-merged). **Hard prerequisite:** Anthropic API key in repo secrets — operator must add via GitHub UI; PAT lacks scope. 1 chat once unblocked.
 
 ### ABATEMENT PERMIAN-CORE + PERIPHERAL
 
@@ -57,14 +62,6 @@ Supersedes prior "operator manual XLSX download" ask. There is no bulk XLSX. Can
 ### ABATEMENT WEEKLY CRON
 
 `.github/workflows/abatement-scrape.yml`. Cron weekly Monday 06:00 UTC. Commit diff to `data/abatements/abatement_hits_latest.csv` + rolling history. **Hard prerequisite:** `reevescounty.org` Akamai block must be resolved before cron ships, otherwise Reeves silently produces 0 hits.
-
-### MOBILE-FRIENDLY MAP
-
-Responsive breakpoints, touch-friendly controls, pinch-zoom tuning, measure tool + print-to-PDF mobile usability, popup sizing. 2–3 chats.
-
-### ERCOT QUEUE PROJECT AGGREGATION POPUP  *(low priority)*
-
-`ercot_queue` has 1,205 distinct project `group` keys; 394 groups have 2+ components. Build-time aggregation in `build.py`: compute `group_total_mw`, `group_count`, `group_breakdown` per group; popup template renders summary line + breakdown list. Test case Longfellow__Pecos: 6 rows, 2,153.3 MW total.
 
 ---
 
