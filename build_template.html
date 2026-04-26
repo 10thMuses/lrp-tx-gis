@@ -58,6 +58,7 @@
   .measure-readout .mk { color: var(--muted); font-size: 10px; text-transform: uppercase; letter-spacing: 0.05em; }
   .measure-readout .mv { font-weight: 600; font-variant-numeric: tabular-nums; }
   .measure-readout .hint { color: var(--muted); font-size: 10px; margin-top: 4px; }
+  .measure-readout .mr-close { display: none; position: absolute; top: 4px; right: 6px; background: transparent; border: 0; width: 32px; height: 32px; font-size: 22px; line-height: 1; color: var(--muted); cursor: pointer; padding: 0; }
   .watermark { position: absolute; bottom: 42px; right: 8px; z-index: 3; pointer-events: none; font-size: 11px; font-weight: 700; letter-spacing: 0.18em; color: rgba(220, 38, 38, 0.78); background: rgba(255, 255, 255, 0.85); padding: 4px 10px; border: 1px solid rgba(220, 38, 38, 0.32); border-radius: 3px; text-transform: uppercase; font-variant-numeric: tabular-nums; }
   .maplibregl-popup-content { font-family: inherit; font-size: 12px; padding: 10px 12px; border-radius: 6px; }
   .maplibregl-popup-content table { border-collapse: collapse; }
@@ -129,6 +130,13 @@
 
   #print-legend { display: none; }
 
+  /* Stage-2 mobile: measure-readout reposition off the drawer, show close-btn. */
+  @media (max-width: 768px) {
+    body:not(.sb-collapsed) .measure-readout { left: auto; right: 8px; max-width: calc(100vw - 16px); }
+    .measure-readout { padding-right: 36px; min-width: 200px; }
+    .measure-readout .mr-close { display: block; min-height: 32px; min-width: 32px; }
+  }
+
   @media print {
     @page { size: landscape; margin: 0.4in; }
     body { display: block; overflow: visible; height: auto; background: #fff; }
@@ -196,6 +204,7 @@
   <button id="sb-toggle" class="sb-toggle" type="button" aria-label="Toggle sidebar" aria-expanded="true" title="Toggle sidebar">«</button>
   <div class="coord" id="coord">—</div>
   <div class="measure-readout" id="measure-readout">
+    <button type="button" class="mr-close" id="m-close" aria-label="Close measure" title="Close">×</button>
     <div><span class="mk">Distance</span> &nbsp;<span class="mv" id="m-dist">0.00 mi</span></div>
     <div><span class="mk">Area</span> &nbsp;<span class="mv" id="m-area">— ac</span></div>
     <div class="hint">Click to add points · double-click to close polygon · Measure again to clear</div>
@@ -325,6 +334,26 @@ map.addControl(new maplibregl.AttributionControl({ compact: true }), 'bottom-rig
 map.addControl(new maplibregl.NavigationControl({ showCompass: true, visualizePitch: false }), 'top-right');
 map.addControl(new maplibregl.ScaleControl({ unit: 'imperial', maxWidth: 160 }), 'bottom-right');
 map.addControl(new maplibregl.FullscreenControl(), 'top-right');
+
+// ---------- MOBILE VIEWPORT GESTURE & MEASURE TUNING (≤768 px) ----------
+// Phones: disable two-finger rotate (surprises users); keep pinch-zoom.
+// Also widens measure-vertex visual radius for finger-tap accuracy.
+const _mqMobile = window.matchMedia('(max-width: 768px)');
+function _applyMobileMapTuning(mq) {
+  const isMobile = mq.matches;
+  if (isMobile) {
+    map.touchZoomRotate.disableRotation();
+    map.dragRotate.disable();
+  } else {
+    map.touchZoomRotate.enableRotation();
+    map.dragRotate.enable();
+  }
+  if (map.getLayer && map.getLayer('measure-pts')) {
+    map.setPaintProperty('measure-pts', 'circle-radius', isMobile ? 12 : 4);
+  }
+}
+_applyMobileMapTuning(_mqMobile);
+_mqMobile.addEventListener('change', _applyMobileMapTuning);
 
 // ---------- SIZING (data-driven by MW / kV) ----------
 // Layers without clean sizing field fall back to L.radius / static width.
@@ -1007,6 +1036,17 @@ document.getElementById('btn-print').addEventListener('click', () => {
     }).join('');
   const legendEl = document.getElementById('print-legend');
   legendEl.innerHTML = rows ? `<div class="pl-title">Active layers</div>${rows}` : '';
+  // Mobile: hide drawer overlay during print so iOS Safari preview captures map only.
+  const _isMobilePrint = window.matchMedia('(max-width: 768px)').matches;
+  const _hideForPrint = _isMobilePrint && !document.body.classList.contains('sb-collapsed');
+  if (_hideForPrint) {
+    document.body.classList.add('sb-collapsed');
+    const _restoreAfterPrint = () => {
+      document.body.classList.remove('sb-collapsed');
+      window.removeEventListener('afterprint', _restoreAfterPrint);
+    };
+    window.addEventListener('afterprint', _restoreAfterPrint);
+  }
   setTimeout(() => window.print(), 50);
 });
 
@@ -1052,7 +1092,7 @@ function ensureMeasureLayers() {
     });
     map.addLayer({
       id: 'measure-pts', type: 'circle', source: 'measure-src',
-      paint: { 'circle-radius': 4, 'circle-color': '#0f172a', 'circle-stroke-color': '#fff', 'circle-stroke-width': 2 },
+      paint: { 'circle-radius': _mqMobile.matches ? 12 : 4, 'circle-color': '#0f172a', 'circle-stroke-color': '#fff', 'circle-stroke-width': 2 },
       filter: ['==', '$type', 'Point'],
     });
   }
@@ -1111,6 +1151,15 @@ measureBtn.addEventListener('click', () => {
     clearMeasure();
   }
 });
+
+// Close-readout button (visible on mobile) — delegates to the existing toggle.
+const measureCloseBtn = document.getElementById('m-close');
+if (measureCloseBtn) {
+  measureCloseBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (measureActive) measureBtn.click();
+  });
+}
 
 map.on('click', e => {
   if (!measureActive) return;
