@@ -99,12 +99,32 @@
   .sb-toggle:hover { background: var(--hover); }
   .sb-toggle:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
 
-  @media (max-width: 720px) {
+  @media (max-width: 768px) {
+    /* Layout: collapse to single column; sidebar becomes off-canvas drawer over the map. */
     body { grid-template-columns: 1fr; grid-template-areas: "topbar" "map"; }
     body.sb-collapsed { grid-template-columns: 1fr; }
-    .sidebar { position: absolute; top: 48px; left: 0; bottom: 0; width: 280px; z-index: 10; transform: translateX(0); transition: transform 220ms ease; box-shadow: 2px 0 10px rgba(0,0,0,0.12); }
+    .sidebar { position: absolute; top: 48px; left: 0; bottom: 0; width: min(86vw, 320px); z-index: 10; transform: translateX(0); transition: transform 220ms ease; box-shadow: 2px 0 10px rgba(0,0,0,0.12); }
     body.sb-collapsed .sidebar { transform: translateX(-100%); box-shadow: none; }
-    body:not(.sb-collapsed) .sb-toggle { left: calc(280px + 8px); }
+    body:not(.sb-collapsed) .sb-toggle { left: calc(min(86vw, 320px) + 8px); }
+
+    /* Touch targets: WCAG 2.5.5 — ≥44px primary controls. */
+    .topbar button { min-height: 44px; padding: 8px 14px; font-size: 13px; }
+    .layer { min-height: 44px; padding: 8px 0; gap: 12px; }
+    .layer input[type=checkbox] { width: 20px; height: 20px; }
+    .layer .label { font-size: 14px; }
+    .filter-multi > summary { min-height: 44px; padding: 10px 10px; font-size: 13px; display: flex; align-items: center; }
+    .filter-multi label { min-height: 36px; display: flex; align-items: center; padding: 6px 0; font-size: 13px; }
+    .filter-multi-search { min-height: 36px; font-size: 13px; padding: 6px 8px; }
+    .filter-text { min-height: 40px; font-size: 13px; padding: 8px 10px; }
+    .filter-range input { min-height: 40px; font-size: 13px; padding: 8px 8px; width: 72px; }
+    .filter-clear { font-size: 13px; padding: 8px 4px; display: inline-block; }
+    .basemap-picker select { min-height: 44px; padding: 10px 10px; font-size: 13px; }
+    .maplibregl-ctrl-group button { width: 44px !important; height: 44px !important; }
+
+    /* Popups: cap width on mobile and let long-text fields scroll inside the popup. */
+    .maplibregl-popup { max-width: min(90vw, 360px) !important; }
+    .maplibregl-popup-content { max-width: min(90vw, 360px); max-height: 60vh; overflow-y: auto; -webkit-overflow-scrolling: touch; word-wrap: break-word; overflow-wrap: anywhere; }
+    .maplibregl-popup-content td.v { white-space: normal; word-break: break-word; }
   }
 
   #print-legend { display: none; }
