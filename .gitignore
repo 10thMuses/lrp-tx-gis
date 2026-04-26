@@ -1,6 +1,11 @@
 # Secrets — live only in Project Knowledge at /mnt/project/CREDENTIALS.md
 CREDENTIALS.md
 
+# Local environment files (Claude Code)
+.env
+.env.local
+.env.*.local
+
 # Build artifacts
 dist/
 *.pmtiles
@@ -15,6 +20,11 @@ venv/
 tmp*/
 *.tmp
 .DS_Store
+Thumbs.db
+desktop.ini
 
 # Local user-data mounts
 /mnt/user-data/
+
+# Claude Code session artifacts
+.claude/
