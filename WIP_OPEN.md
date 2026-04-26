@@ -8,15 +8,14 @@ Per OPERATING.md §10: **`## Next chat`** = task spec for the immediately-next s
 
 ## Next chat
 
-**Chat 96 — POWER PLANT POPUP REDESIGN (yaml-only) — RESUME, partial state on branch.** Branch `refinement-chat96-power-plant-popup-redesign` already exists on origin with 3 of 5 layers edited (commit `6dccf4d`): `eia860_plants`, `eia860_battery`, `wind` per field contract. Session-open detects + checks out the existing branch. Resume from there.
+**Chat 96 — POWER PLANT POPUP REDESIGN (yaml-only) — RESUME, partial state on branch.** Branch `refinement-chat96-power-plant-popup-redesign` already exists on origin with 4 of 5 layers edited: `eia860_plants`, `eia860_battery`, `wind` (commit `6dccf4d`) + `solar` (commit added Chat 96b). Session-open detects + checks out the existing branch. Resume from there.
 
 ### Task
 
-1. **Already on branch (do NOT recreate)**: 3 yaml edits landed in commit `6dccf4d`. Verify with `git log --oneline -3`.
-2. **Edit `layers.yaml` for the remaining 2 layers**:
-   - **`solar`**: popup ADD `commissioned` + `operator` (no `sector` to drop — already absent). Filterable_fields rewrite to county(cat)/capacity_mw(num)/commissioned(cat)/name(text). Match the pattern used in Chat 96 partial commit for eia860_plants/battery.
-   - **`ercot_queue`**: popup ADD `operator` (insert after `name` or wherever logical). No filterable_fields change — existing `mw` numeric + `commissioned` categorical satisfy the contract.
-3. Commit + push (§6.11). Composite single commit acceptable since both edits are same subsystem.
+1. **Already on branch (do NOT recreate)**: 4 yaml edits landed. Verify with `git log --oneline -4`.
+2. **Edit `layers.yaml` for the remaining 1 layer**:
+   - **`ercot_queue`**: popup ADD `operator` (insert after `entity` or wherever logical). Filterable_fields: flip `county` from `text` to `categorical` to match the pattern across the other 4 layers. Existing `mw` numeric + `commissioned` categorical satisfy the rest of the contract.
+3. Commit + push (§6.11).
 4. `build. deploy to prod.` Verify per §8 step 4 (curl real UA, 25 layer ids).
 5. Spot-check rendered popup HTML for one feature in each of the 5 layers (grep prod HTML for the popup template; tile data already verified Chat 95).
 6. Close-out per §5 — **this chat must merge to main** since it deploys (§6.12 atomic deploy+merge+delete).
@@ -41,7 +40,7 @@ Unchanged from original Chat 96 spec — see prior `## Next chat` template archi
 - Schema verified Chat 96 partial: all required fields present in `combined_points.csv` header (operator, commissioned, capacity_mw, technology, fuel, manu, model). Skip re-verification.
 - `commissioned` ships as `categorical` (build.py auto-promotes/demotes based on `CATEGORICAL_CAP`). Matches `ercot_queue` precedent. Pattern established in commit `6dccf4d`.
 - `cairosvg` and `openpyxl` may need install in the build container (`pip install --break-system-packages cairosvg openpyxl`); see Chat 95 gotcha (`build.py` imports `build_sprite` at module top which hard-imports `cairosvg`).
-- Tool-call budget: 6. yaml edit + commit (1 composite), build (1), deploy MCP + npx (2), poll + verify + spot-check (1), close-out (1).
+- Tool-call budget: 5. yaml edit + commit (1), build (1), deploy MCP + npx (2), poll + verify + spot-check + close-out (1).
 
 ---
 
