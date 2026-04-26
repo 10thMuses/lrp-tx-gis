@@ -4,34 +4,34 @@ Active state. Read at session open. Updated at close-out of every shipping chat.
 
 Per OPERATING.md §10: **`## Next chat
 
-**Chat 105 — COSMETIC: PMTILES FEATURE COUNTS IN SIDEBAR.** Currently the sidebar shows `0` for prebuilt-PMTiles layers' feature counts (carryforward from Chat 91). Fix involves either reading PMTiles metadata at build time or letting the client fetch on layer-on. Small, no schema change.
+**Chat 106 — WIND OPERATOR/TECHNOLOGY FILL via EIA-860 JOIN.** USWTDB schema lacks `operator`, `technology`, `fuel` fields — currently 19,464/19,464 structural blanks. EIA-860 wind plants table carries operator + technology by plant. Spatial join (USWTDB turbine point → nearest EIA-860 plant centroid within ~5 miles) backfills these fields for the bulk of turbines.
 
 ### Task
 
-1. Identify the sidebar feature-count rendering code in `build_template.html` (search for `feature_count` or sidebar layer-row template).
-2. For prebuilt PMTiles layers, the count is currently set to 0 because the build step that populates `feature_count` only runs for layers built from `combined_*` files. Either:
-   - **Option A (build-time):** in `build.py`, after each layer's PMTiles is finalized, run `tippecanoe-decode --stats` (or use `python-pmtiles` to read tile metadata) to count features and stamp into the layer's manifest entry.
-   - **Option B (client-time):** in `build_template.html`, on layer-on event, fetch the PMTiles header and count tiles for the visible bbox. Higher complexity, less accurate.
-3. Recommended: Option A. PMTiles metadata can be read once at build with python-pmtiles or `tippecanoe-decode`.
-4. Test with `eia860_plants` and `wells` (both prebuilt) — counts should appear in sidebar.
-5. Standard build → preview → prod sequence per §8.
+1. **Refresh EIA-860 wind plants subset.** `scripts/refresh_eia860.py` already pulls full EIA-860; extend to emit a `wind_plants` slice (filter rows where `prime_mover_code == 'WT'` or technology contains 'wind'). Output to `outputs/refresh/eia860_wind_plants_<date>.csv` with columns: plant_code, plant_name, operator_name, prime_mover_code, technology, lat, lon, capacity_mw, commissioned_year.
+2. **Spatial join script** at `scripts/join_wind_eia860.py`: for each USWTDB row in `outputs/refresh/wind_<date>.csv`, find nearest EIA-860 wind plant within 8 km (5 miles); copy operator_name → `operator`, technology → `technology`, plant fuel → `fuel`. Log unmatched rows for review. Atomic rewrite per §6.15.
+3. **Merge** updated wind subset into `combined_points.csv` via `python build.py merge wind outputs/refresh/wind_<date>.csv`.
+4. **Build → preview → prod** per §8. Verify popup shows operator/technology on at least 5 sample turbines.
+5. WIP next-chat = Chat 107 (date_range filter for tax_abatements OR Comptroller LDAD scrape, pending operator decision held from Chat 105).
 
 ### Acceptance
 
-- Prebuilt layers show non-zero feature counts in sidebar.
+- ≥80% of USWTDB turbines have populated `operator` after join.
+- `wind` layer popup shows operator + technology values where joined.
 - Build clean: `built=26 missing=0 errored=0`.
 - Local↔prod md5 identical post-deploy.
 - Branch merged + deleted same chat per §6.12.
 
 ### Branch
 
-`refinement-chat105-pmtiles-feature-counts`
+`refinement-chat106-wind-operator-fill`
 
 ### Pre-flight
 
-- Chat 104 shipped clean. DC auto-refresh cron live: `scripts/refresh_dc_anchors.py` reads `data/datacenters/dc_anchors.json` source URLs directly (no separate watchlist file), fetches each, asks Claude API for proposed diffs (status, capacity, commissioned_target, power_source, additional_sources). `.github/workflows/dc-anchors-refresh.yml` runs cron `0 6 * * 1` (Monday 06:00 UTC) + `workflow_dispatch` for manual trigger; opens PR with `outputs/refresh/dc_anchors_proposed.json` if any meaningful proposals; never auto-merges. ANTHROPIC_API_KEY in repo Secrets confirmed by operator. Local URL-fetch smoke-test passed (186 KB from poolside.ai). End-to-end smoke-test deferred to first manual `workflow_dispatch` trigger from GitHub Actions UI.
-- Sprint queue: cosmetic PMTiles feature counts (this chat) → wind operator/technology fill via EIA-860 join → Permian abatement work (UNBLOCKED — operator authorized PacketStream proxy spend; sequence: proxy account setup → 1 chat to wire proxy into existing scrapers → resume Permian county sequence) → Comptroller LDAD scrape (UNBLOCKED — operator authorized Playwright; 1-2 chats after Permian abatement core).
-- Tool budget for Chat 105: 6–10 (read sidebar code, modify build.py, test with two layers, build, preview, prod, close-out).
+- Chat 105 shipped clean. PMTiles feature counts now correct in sidebar for all 4 prebuilt layers (parcels_pecos=14720, rrc_pipelines=35879, tiger_highways=8010, bts_rail=16522). Fix structural: `read_pmtiles_feature_count(pm_path)` helper in `build.py` reads `tilestats.layers[*].count` from PMTiles metadata via python-pmtiles; prebuilt layer return statement now uses helper with YAML-fallback. Deploy `69ee25b25be421df2f22b294`. Index-only delta (1 file uploaded), no PMTiles regenerated. Local↔prod md5 = `423773f3346c6868fff66d8da43e0842`. python-pmtiles added as build dep (was implicit; not added to a pip requirements file because there isn't one — relies on session-open.sh apt/pip install layer; consider promoting to `requirements.txt` if dep count grows).
+- Sprint queue: wind operator fill (this chat) → date_range filter OR Comptroller LDAD (pending decision) → Permian abatement work [DROPPED per Chat 105 strategic reset].
+- Tool budget for Chat 106: 8–12 (refresh script edit + join script + merge + build + preview + prod + verify + close-out).
+- **For Claude Code post-migration:** wind operator fill is mostly script-edit work (CC-friendly). Build + deploy at the end requires tippecanoe — either install WSL2 once on the desktop, or do the edits in CC and bring this chat up to ship the final build+deploy step.
 
 ## Sprint queue
 
@@ -62,7 +62,8 @@ Cross-device QA + polish for the mobile-friendly map work shipped in Chats 100�
 ## Prod status
 
 - Layer count: **26**
-- Last published deploy: `69ee07134b63d09184004cf9` (Chat 102, 2026-04-26). State=ready. ERCOT queue project aggregation popup. `compute_ercot_group_aggregates(csv_path)` streams `combined_points.csv` once and returns `{group_key: {group_total_mw, group_count, group_breakdown}}` (breakdown is `\n`-joined `<name> · <mw> MW · <county>` lines, sorted by MW desc). `split_combined_csv()` stamps these fields onto every ercot_queue feature's props during NDGeoJSON write. Popup helper `ercotQueueGroupSummaryHtml(props)` renders a summary block (sage-pink card with project group label, total MW, component count, breakdown list) above the per-row table when `group_count > 1`; empty for singletons. Build clean: `built=26  missing=0  errored=0  tiles_total=18933 KB` (+68 KB from prior deploy carrying 3 new fields × 1,778 ercot_queue rows). Local↔prod md5 identical. Aggregation reach: 1,205 groups total, 394 with 2+ components.
+- Last published deploy: `69ee25b25be421df2f22b294` (Chat 105, 2026-04-26). State=ready. PMTiles feature counts fix for prebuilt layers. `read_pmtiles_feature_count(pm_path)` helper added to `build.py` (reads `tilestats.layers[*].count` via python-pmtiles); prebuilt layer return path now uses helper with YAML-fallback to `feature_count` field then 0. Sidebar now shows: parcels_pecos=14720, rrc_pipelines=35879, tiger_highways=8010, bts_rail=16522 (previously all 0). Build clean: `built=26 missing=0 errored=0 tiles_total=18933 KB`. Index-only delta (1 file uploaded), no PMTiles regenerated. Local↔prod md5 = `423773f3346c6868fff66d8da43e0842`.
+- Previous deploy: `69ee07134b63d09184004cf9` (Chat 102, 2026-04-26). State=ready. ERCOT queue project aggregation popup. `compute_ercot_group_aggregates(csv_path)` streams `combined_points.csv` once and returns `{group_key: {group_total_mw, group_count, group_breakdown}}` (breakdown is `\n`-joined `<name> · <mw> MW · <county>` lines, sorted by MW desc). `split_combined_csv()` stamps these fields onto every ercot_queue feature's props during NDGeoJSON write. Popup helper `ercotQueueGroupSummaryHtml(props)` renders a summary block (sage-pink card with project group label, total MW, component count, breakdown list) above the per-row table when `group_count > 1`; empty for singletons. Build clean: `built=26  missing=0  errored=0  tiles_total=18933 KB` (+68 KB from prior deploy carrying 3 new fields × 1,778 ercot_queue rows). Local↔prod md5 identical. Aggregation reach: 1,205 groups total, 394 with 2+ components.
 - Previous deploy: `69edeb7d83b23c994ffd00ed` (Chat 101, 2026-04-26). Mobile stage 2: gesture rotation disabled below 768 px via matchMedia, measure-vertex radius 4→12 on mobile, `.measure-readout` close button, `#btn-print` collapses drawer on mobile.
 - URL: `https://lrp-tx-gis.netlify.app` — requires real User-Agent on curl (`-A "Mozilla/5.0"`).
 
