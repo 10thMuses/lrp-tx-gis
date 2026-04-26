@@ -311,6 +311,12 @@ Drift in any metric is the prompt for a structural fix — not a new rule.
 
 Operator-authorized decisions that downstream chats should not re-litigate. Listed in reverse chronological order; entries do not expire — once settled, settled.
 
+**2026-04-26 (Chat 106a):**
+
+- **Cloud-build + deploy workflow shipped.** `.github/workflows/build-and-deploy.yml` runs `python build.py` in a Linux GitHub Actions runner (with apt-installed tippecanoe) and deploys the resulting `dist/` to Netlify prod via netlify-cli. Manual trigger only (`workflow_dispatch`); no auto-deploy on push. Provides a third independent build path: chat container, local desktop (with WSL2 or tippecanoe), or this cloud workflow. Requires repo Secrets: `ANTHROPIC_API_KEY` (already set), `NETLIFY_AUTH_TOKEN` (operator must add), `NETLIFY_SITE_ID` (operator must add, value = `01b53b80-687e-4641-b088-115b7d5ef638`).
+- **`build.py DIST` made env-configurable.** `DIST = Path(os.environ.get('LRP_DIST_DIR', '/mnt/user-data/outputs/dist'))`. Backward-compatible default keeps chat-container behavior identical; cloud workflow sets `LRP_DIST_DIR=$GITHUB_WORKSPACE/dist`. Local desktop builds (post-WSL2 setup or future Mac) can also override.
+- **Comptroller LDAD scrape: queued for next week.** Operator authorized; sequenced as 1–2 chats post-migration (Chat 107+). Implementation: Playwright headless against `comptroller.texas.gov/economy/development/search-tools/sb1340/search.php`, paginate result pages, write to `outputs/refresh/comptroller_ldad_<date>.csv`, merge into `tax_abatements` layer. Provides statewide abatement coverage to complement existing 9 county-scraped records.
+
 **2026-04-26 (Chat 104b):**
 
 - **GitHub PAT scope upgraded to include `Workflows: Read and write`.** Required for shipping any file under `.github/workflows/`. Token name `claude-lrp-gis`, expires 2027-04-21. Authorized by operator after Chat 104 push-rejection on workflow file.

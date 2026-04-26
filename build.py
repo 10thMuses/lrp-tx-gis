@@ -71,7 +71,7 @@ SPRITE_SRC = Path(__file__).parent / 'sprite'
 TEMPLATE_FILE = ROOT / 'build_template.html'
 TMP = Path('/tmp/gis_build')
 SPLIT_DIR = TMP / 'split'
-DIST = Path('/mnt/user-data/outputs/dist')
+DIST = Path(os.environ.get('LRP_DIST_DIR', '/mnt/user-data/outputs/dist'))
 PROJECT = Path('/mnt/project')
 
 COMBINED_CSV = 'combined_points.csv'

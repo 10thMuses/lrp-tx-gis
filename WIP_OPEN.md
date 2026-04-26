@@ -28,30 +28,23 @@ Per OPERATING.md §10: **`## Next chat
 
 ### Pre-flight
 
+- Chat 106a shipped (parallel insurance chat). Cloud build+deploy workflow at `.github/workflows/build-and-deploy.yml`: workflow_dispatch trigger, Linux runner with apt-installed tippecanoe, env-driven `LRP_DIST_DIR`, deploys via netlify-cli to prod. **Operator must add `NETLIFY_AUTH_TOKEN` and `NETLIFY_SITE_ID` to repo Secrets before first cloud build.** Site ID = `01b53b80-687e-4641-b088-115b7d5ef638`. Token from `app.netlify.com → User Settings → Applications → Personal Access Tokens`. Once added, cloud builds become a third independent build path.
 - Chat 105 shipped clean. PMTiles feature counts now correct in sidebar for all 4 prebuilt layers (parcels_pecos=14720, rrc_pipelines=35879, tiger_highways=8010, bts_rail=16522). Fix structural: `read_pmtiles_feature_count(pm_path)` helper in `build.py` reads `tilestats.layers[*].count` from PMTiles metadata via python-pmtiles; prebuilt layer return statement now uses helper with YAML-fallback. Deploy `69ee25b25be421df2f22b294`. Index-only delta (1 file uploaded), no PMTiles regenerated. Local↔prod md5 = `423773f3346c6868fff66d8da43e0842`. python-pmtiles added as build dep (was implicit; not added to a pip requirements file because there isn't one — relies on session-open.sh apt/pip install layer; consider promoting to `requirements.txt` if dep count grows).
-- Sprint queue: wind operator fill (this chat) → date_range filter OR Comptroller LDAD (pending decision) → Permian abatement work [DROPPED per Chat 105 strategic reset].
+- Sprint queue: wind operator fill (this chat) → date_range filter for tax_abatements → Comptroller LDAD scrape (Playwright, AUTHORIZED Chat 106a) → Permian abatement work [DROPPED per Chat 105 strategic reset].
 - Tool budget for Chat 106: 8–12 (refresh script edit + join script + merge + build + preview + prod + verify + close-out).
-- **For Claude Code post-migration:** wind operator fill is mostly script-edit work (CC-friendly). Build + deploy at the end requires tippecanoe — either install WSL2 once on the desktop, or do the edits in CC and bring this chat up to ship the final build+deploy step.
+- **For Claude Code post-migration:** wind operator fill is mostly script-edit work (CC-friendly). Build + deploy at the end requires tippecanoe — three independent paths now available: (a) chat container, (b) WSL2 on Windows desktop after one-time install, (c) `build-and-deploy.yml` cloud workflow via GitHub Actions UI button.
 
 ## Sprint queue
 
 Ordered by operator priority. N+2 and beyond. Detailed multi-step entries live in `docs/sprint-plan.md`.
 
-### DC AUTO-REFRESH CRON
+### DATE-RANGE FILTER FOR `tax_abatements.commissioned`
 
-`.github/workflows/dc-anchors-refresh.yml`. Cron `0 6 * * 1`. Refresh script in `scripts/refresh_dc_anchors.py` reads existing `dc_anchors.json` + watchlist URL feed; LLM-in-the-loop parser proposes diffs (status changes, capacity revisions, new entries flagged `single_source: true`); diffs surface as PR for human review (never auto-merged). **Hard prerequisite:** Anthropic API key in repo secrets — operator must add via GitHub UI; PAT lacks scope. 1 chat once unblocked.
-
-### ABATEMENT PERMIAN-CORE + PERIPHERAL
-
-Permian-core (Andrews, Ector, Glasscock, Loving, Martin, Midland, Ward, Winkler) → peripheral (Crane, Crockett, Irion, Reagan, Schleicher, Sutton, Upton) county scrape sequence. 4–6 chats. **Hard constraint:** CivicEngage/Akamai bot-block on `reevescounty.org` extends to any county on the same CMS hosting platform — adapter fixes verifiable only after residential-proxy or whitelisted egress provisioned. Detail in `docs/sprint-plan.md`.
+True range slider replacing current text-multi-select on distinct ISO dates. Touches `build.py compute_filter_stats` + `build_template.html filterFieldControlHtml` + matching predicate. 1–2 chats.
 
 ### COMPTROLLER LDAD SCRAPE
 
-Supersedes prior "operator manual XLSX download" ask. There is no bulk XLSX. Canonical source: `https://comptroller.texas.gov/economy/development/search-tools/sb1340/search.php`. Blocked pending operator authorization for JS-rendered scrape (Selenium / Playwright — same authorization class as CRPUB / RRC MFT). Until authorized: backstop only.
-
-### ABATEMENT WEEKLY CRON
-
-`.github/workflows/abatement-scrape.yml`. Cron weekly Monday 06:00 UTC. Commit diff to `data/abatements/abatement_hits_latest.csv` + rolling history. **Hard prerequisite:** `reevescounty.org` Akamai block must be resolved before cron ships, otherwise Reeves silently produces 0 hits.
+Operator authorized Chat 106a. Playwright headless against `https://comptroller.texas.gov/economy/development/search-tools/sb1340/search.php`. Paginate result pages, write to `outputs/refresh/comptroller_ldad_<date>.csv`, merge into `tax_abatements` layer. Provides statewide abatement coverage to complement existing 9 county-scraped records. 1–2 chats.
 
 ### MOBILE STAGE 3 — HOTFIX ON DEMAND
 
