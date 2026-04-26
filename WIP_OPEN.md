@@ -8,36 +8,33 @@ Per OPERATING.md §10: **`## Next chat`** = task spec for the immediately-next s
 
 ## Next chat
 
-**Chat 97 — LEGEND ON PRINT/SHARE/PDF.** Promoted from sprint queue. Sidebar carries the legend in screen mode but is hidden by `@media print` in `build_template.html`, so prints/PDFs ship legend-less. Inject a print-only legend element enumerating only the active (toggled-on) layers — name + color swatch + symbol — into the print page.
+**Chat 98 — DC RESEARCH: datacenter anchor index.** First of the 3-chat DC sub-sequence (research → layer build → auto-refresh cron). Produce a structured, source-cited datacenter-anchor data file. No build, no deploy — research-and-commit only.
 
 ### Task
 
-1. Recon `build_template.html` `@media print` block + sidebar markup to identify the exact selectors hiding the legend and the available print real estate.
-2. Add a print-only `<div id="print-legend">` (hidden in screen, shown in print) populated client-side from the same layer-state that drives the sidebar — only layers currently `default_on=true` OR toggled on by the user at print time.
-3. Style: layer name + color swatch (12px box matching layer `color`) + geometry symbol (point dot / line dash / polygon outline). Two-column flex grid in the print footer or a dedicated final page. Must fit landscape 10.3"×7.1" with ≥15 active layers (multi-column or multi-page wrap).
-4. `build. deploy to prod.` Verify by curling prod, opening print-preview locally on `dist/index.html`, and confirming the legend renders with at least the default-on layers.
-5. Atomic close-out per §5 / §6.12.
+1. Compile a structured JSON file at `data/datacenters/dc_anchors.json` covering Texas datacenter anchors, minimum: Longfellow/Poolside (Pecos), Stargate (Abilene), Project Matador (Pecos basin), Fermi (Amarillo), plus any other large announced/under-construction TX datacenter projects surfaced via web search.
+2. Per entry: `id` (slugified), `name`, `developer`, `county`, `lat`, `lon` (point or centroid; mark `coord_accuracy` ∈ `precise|approximate|county_centroid`), `status` (`announced|permitted|under_construction|operational`), `capacity_mw_announced`, `commissioned_target` (year or null), `power_source` (free text), `sources` (array of {url, accessed: ISO date, claim}). Use ≥2 sources per non-trivial field; flag single-sourced entries with `single_source: true`.
+3. Schema doc at `data/datacenters/README.md`: field definitions, data-quality conventions, refresh cadence target.
+4. Commit + push. No build, no deploy. WIP next-chat = Chat 99 (layer build).
 
 ### Acceptance
 
-- Print preview of prod URL shows a visible legend listing every currently-active layer with name + color swatch + symbol matching its on-map style.
-- Screen view is visually unchanged (no new sidebar element, no layout shift).
-- ≥15 active layers wraps without overflow off the page.
-- Build errored=0, layer count=25, deploy state=ready.
-- Branch merged + deleted same chat per §6.12.
+- `data/datacenters/dc_anchors.json` exists with ≥5 entries, schema-valid (every required field populated or explicitly null with rationale).
+- Every entry has ≥1 source URL with accessed-date.
+- `data/datacenters/README.md` documents schema.
+- Branch merged + deleted same chat per §6.12 (no deploy means atomic-with-merge only, not deploy).
+- WIP next-chat updated for Chat 99 layer build.
 
 ### Branch
 
-`refinement-chat97-print-legend`.
+`refinement-chat98-dc-research`.
 
 ### Pre-flight
 
-- Chat 96 closed clean, deploy `69ed5ab2b573b4ee0b052773` (2026-04-26). 5 layer popup specs (`eia860_plants`, `eia860_battery`, `solar`, `wind`, `ercot_queue`) shipped with `commissioned` / `operator` / `capacity_mw` / `fuel` / `technology` per field contract; `sector` removed from all five (the 3 remaining `sector` hits in prod HTML are in `tax_abatements.popup_labels` → "Taxing entities", out of scope). Prod md5 matched local dist: `22be6d63c665968c3a843cd67d183ec3`.
-- This is `build_template.html` work — touching the file directly is OK (it is the template, not a layer addition; §6 rule 7 does not apply).
-- Color swatch source: `LAYERS_CONFIG[i].color` already in template scope. Geometry symbol can be derived from `LAYERS_CONFIG[i].geom` (`point` | `line` | `polygon`) — no new data plumbing.
-- Active-layer set already exists in client state (whatever drives the sidebar checkboxes). Reuse, do not re-derive.
-- Build deps: `pip install --break-system-packages cairosvg openpyxl pyyaml` before `python3 build.py` (build_sprite hard-imports cairosvg at module top). `tippecanoe` via `apt-get install -y tippecanoe` if cold.
-- Tool-call budget: 8. recon (1), template edit (1), build (1), deploy MCP + npx (2), poll + verify (1), close-out (1). Reserve 1 for blocker recovery.
+- Chat 97 closed clean, deploy `69ed60e59254f7df1a9cacdb` (2026-04-26). Print-only legend shipped: `#print-legend` element + `@media print` 4-column flow + `btn-print` handler populating from `activeLayerIds()` × `LAYERS` (filtering `sidebar_omit`, preserving ERCOT-queue gradient swatch). Prod md5 = local dist md5: `d114b4e7f7b1714bff721d7d432092d6`. Build clean: `built=25 missing=0 errored=0 tiles_total=18816 KB`. Netlify upload deduped against Chat 96 PMTiles (template-only delta). One transient `npx` proxy upload error on first attempt; succeeded on retry with fresh proxy URL.
+- Research-only chat — no `build.py` invocation, no Netlify call, no tippecanoe. Tool budget for research-only: 6–10 (web_search × N + commit + push + WIP write).
+- Schema lives in `data/datacenters/README.md`; Chat 99 will consume it for layer build via `layers.yaml` append + a custom loader. Coord precision matters because Chat 99 will render points; mark `county_centroid` entries clearly.
+- Source-quality bar: official permits, SEC filings, primary press releases, ERCOT INR filings, county economic-development records preferred. Pure secondary tech press OK only as confirmation.
 
 ---
 
@@ -57,10 +54,6 @@ Supersedes prior "operator manual XLSX download" ask. There is no bulk XLSX. Can
 
 `.github/workflows/abatement-scrape.yml`. Cron weekly Monday 06:00 UTC. Commit diff to `data/abatements/abatement_hits_latest.csv` + rolling history. **Hard prerequisite:** `reevescounty.org` Akamai block must be resolved before cron ships, otherwise Reeves silently produces 0 hits.
 
-### LEGEND ON PRINT / SHARE / PDF
-
-*(Promoted to Chat 97 — see `## Next chat`.)*
-
 ### DC RESEARCH → DC BUILD → DC AUTO-REFRESH
 
 3-chat sub-sequence. Research anchors: Longfellow/Poolside (Pecos), Stargate (Abilene), Project Matador/Fermi → structured data file → layer build → GitHub Actions weekly refresh with LLM-in-the-loop parser. Detail in `docs/sprint-plan.md`.
@@ -78,7 +71,7 @@ Responsive breakpoints, touch-friendly controls, pinch-zoom tuning, measure tool
 ## Prod status
 
 - Layer count: **25**
-- Last published deploy: `69ed5ab2b573b4ee0b052773` (Chat 96, 2026-04-26). State=ready. Carries popup+filter redesign for the 5 power-related layers (`eia860_plants`, `eia860_battery`, `solar`, `wind`, `ercot_queue`): `sector` removed; `operator` / `commissioned` / `capacity_mw` / `fuel` / `technology` surfaced per field contract. Build clean: `built=25 missing=0 errored=0 tiles_total=18816 KB`. Local↔prod md5 identical (`22be6d63c665968c3a843cd67d183ec3`); Netlify upload deduped against Chat 95 PMTiles (data unchanged, template-only delta).
+- Last published deploy: `69ed60e59254f7df1a9cacdb` (Chat 97, 2026-04-26). State=ready. Carries print-only legend: `#print-legend` element + `@media print` 4-column flow + `btn-print` handler populating from `activeLayerIds()` × `LAYERS` (filtering `sidebar_omit`, preserving ERCOT-queue gradient swatch). Build clean: `built=25 missing=0 errored=0 tiles_total=18816 KB`. Local↔prod md5 identical (`d114b4e7f7b1714bff721d7d432092d6`); Netlify upload deduped against Chat 96 PMTiles (template-only delta).
 - URL: `https://lrp-tx-gis.netlify.app` — requires real User-Agent on curl (`-A "Mozilla/5.0"`).
 
 ---
