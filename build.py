@@ -506,11 +506,14 @@ def geojson_to_ndgeojson(gj_path, out_path):
 
 
 def run_tippecanoe(nd_path, pmtiles_path, layer_id, extra_args):
+    # NOTE: --read-parallel removed in Chat 107a — caused intermittent
+    # 'database is locked' errors on certain filesystems (overlayfs,
+    # tmpfs). Speed gain wasn't worth the lock race; layer-level
+    # serial build is reliable.
     cmd = [
         'tippecanoe',
         '-fo', str(pmtiles_path),
         '-l', layer_id,
-        '--read-parallel',
     ] + list(extra_args) + [str(nd_path)]
     proc = subprocess.run(cmd, capture_output=True, text=True)
     if proc.returncode != 0:
