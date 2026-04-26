@@ -318,6 +318,7 @@ const SIZING_RULES = {
   substations:    { field: 'voltage',     mode: 'kv' },
   tpit_subs:      { field: 'voltage',     mode: 'kv' },
   tpit_lines:     { field: 'voltage',     mode: 'kv_line' },
+  dc_anchors:     { field: 'capacity_mw_announced', mode: 'mw' },
 };
 function _sizingVal(rule) {
   const base = ['to-number', ['get', rule.field], 0];
@@ -381,15 +382,37 @@ function ercotQueueColorExpr() {
   ];
 }
 
+// Chat 99: dc_anchors color by permitting status.
+// announced=slate, permitted=amber, under_construction=blue, operational=green.
+function dcAnchorsColorExpr() {
+  return ['match', ['get', 'status'],
+    'announced',         '#94a3b8',
+    'permitted',         '#f59e0b',
+    'under_construction','#0ea5e9',
+    'operational',       '#16a34a',
+    '#64748b'
+  ];
+}
+// Dim county_centroid markers to signal coord imprecision.
+function dcAnchorsOpacityExpr() {
+  return ['match', ['get', 'coord_accuracy'],
+    'county_centroid', 0.45,
+    0.9
+  ];
+}
+
 function layerPaint(L) {
   if (L.geom === 'point') {
-    const color = (L.id === 'ercot_queue') ? ercotQueueColorExpr() : L.color;
+    let color = L.color;
+    if (L.id === 'ercot_queue') color = ercotQueueColorExpr();
+    else if (L.id === 'dc_anchors') color = dcAnchorsColorExpr();
+    const opacity = (L.id === 'dc_anchors') ? dcAnchorsOpacityExpr() : (L.fill_opacity ?? 0.9);
     return {
       'circle-radius': L.circle_radius ?? sizingRadiusExpr(L),
       'circle-color': color,
       'circle-stroke-width': L.stroke_width ?? 1.2,
       'circle-stroke-color': L.stroke_color ?? '#ffffff',
-      'circle-opacity': L.fill_opacity ?? 0.9,
+      'circle-opacity': opacity,
     };
   }
   if (L.geom === 'line') {

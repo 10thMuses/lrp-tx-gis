@@ -511,3 +511,43 @@ layers:
   - -z12
   - --coalesce-densest-as-needed
   - --simplification=8
+- id: dc_anchors
+  file: data/datacenters/dc_anchors.json
+  geom: point
+  group: Projects
+  label: Datacenter Anchors (≥100 MW)
+  color: '#0ea5e9'
+  default_on: false
+  radius: 7
+  stroke_width: 1.5
+  popup:
+  - name
+  - developer
+  - county
+  - status
+  - capacity_mw_announced
+  - commissioned_target
+  - power_source
+  - coord_accuracy
+  - sources_count
+  - sources_urls
+  popup_labels:
+    name: Project
+    developer: Developer
+    county: County
+    status: Status
+    capacity_mw_announced: Announced capacity (MW)
+    commissioned_target: Target commissioning
+    power_source: Power source / notes
+    coord_accuracy: Coord accuracy
+    sources_count: Sources
+    sources_urls: Source URLs
+  filterable_fields:
+  - {field: status, type: categorical, label: Status}
+  - {field: county, type: categorical, label: County}
+  - {field: capacity_mw_announced, type: numeric, label: Capacity (MW)}
+  - {field: developer, type: text, label: Developer}
+  - {field: name, type: text, label: Project}
+  tippecanoe:
+  - -Z0
+  - -z14
