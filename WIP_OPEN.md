@@ -4,39 +4,38 @@ Active state. Read at session open. Updated at close-out of every shipping chat.
 
 Per OPERATING.md §10: **`## Next chat
 
-**Chat 102 — ERCOT QUEUE PROJECT AGGREGATION POPUP.** `ercot_queue` has 1,205 distinct project `group` keys; 394 groups have 2+ components. Build-time aggregation (totals + breakdown per group) plus popup template change to render group summary above per-row detail.
+**Chat 103 — DOC-ONLY: PROMOTE FRESH-CONTAINER FIX TO `session-open.sh`.** Two recurring gaps confirmed across Chats 100, 101, 102: (a) `cairosvg` (pip) and `tippecanoe` (apt) not preinstalled in fresh containers; (b) `scripts/close-out.sh` fails on missing git identity. Both have been worked around three chats running. Per OPERATING.md §14, structural fix beats prose rule.
 
 ### Task
 
-1. **Aggregation in `build.py`.** Read `combined_points.csv` rows where `layer_id == ercot_queue`. Group by the `group` field. Compute per-group: `group_total_mw` (sum of `capacity_mw`), `group_count` (row count), `group_breakdown` (newline-joined or JSON-encoded list of component lines: `<project_name> · <capacity_mw> MW · <county>`). Stamp these fields onto every queue row so each feature carries its group's aggregates.
-2. **Atomic in-place write per §6.15.** Use temp-file + `os.replace` for the combined-csv rewrite.
-3. **Popup template in `build_template.html`.** Conditional render: if `group_count > 1`, prepend a summary block above the per-row fields ("Group total: X MW across Y projects") followed by `group_breakdown` as a list. Test case Longfellow__Pecos: 6 rows, 2,153.3 MW expected.
-4. **`layers.yaml` schema.** Register the three new fields under `ercot_queue.popup_fields` if the template reads them via the registry, OR confirm pass-through via the catch-all popup loop.
-5. Standard build → preview → prod per §8.
-6. WIP next-chat = Chat 103 (DC auto-refresh cron, blocked on Anthropic API key in repo secrets; Andrea must add via GitHub UI before that chat. If still blocked, jump to abatement workstreams).
+1. **Patch `scripts/session-open.sh`** to install build deps and set git identity if missing. Suggested block at top of script after the branch-checkout phase:
+   - `command -v tippecanoe >/dev/null 2>&1 || apt-get install -y tippecanoe >/dev/null 2>&1`
+   - `python3 -c "import cairosvg" 2>/dev/null || pip install -q cairosvg --break-system-packages`
+   - `git config user.email >/dev/null 2>&1 || git config user.email "claude@anthropic.local"`
+   - `git config user.name >/dev/null 2>&1 || git config user.name "Claude"`
+2. **Smoke-test inside this chat** by re-running `bash scripts/session-open.sh refinement-chat103-session-open-fix` after editing — should be idempotent (deps already installed = no-op).
+3. **Doc-only commit** — no build, no deploy. Per §12 budget: 2–6 tool calls.
+4. WIP next-chat = Chat 104 (DC auto-refresh cron — still blocked on Anthropic API key in repo secrets; if still blocked, jump to abatement workstreams).
 
 ### Acceptance
 
-- `combined_points.csv` `ercot_queue` rows carry `group_total_mw`, `group_count`, `group_breakdown` populated for all 1,205 group keys.
-- Popup on a group-2+ feature renders summary + breakdown above the per-row detail.
-- Longfellow__Pecos popup: 2,153.3 MW total across 6 components.
-- `built=26  missing=0  errored=0`.
-- Local↔prod md5 identical post-deploy.
+- `scripts/session-open.sh` includes idempotent install + identity blocks.
+- Re-running `session-open.sh` in same chat does not error.
+- Pre-flight blocks for "known close-out script gap" and "known build dep gap" can be removed from `## Next chat` for Chat 104.
 - Branch merged + deleted same chat per §6.12.
+- No build / deploy.
 
 ### Branch
 
-`refinement-chat102-ercot-aggregation`
+`refinement-chat103-session-open-fix`
 
 ### Pre-flight
 
-- Chat 101 shipped clean. Mobile stage 2 live on prod (deploy `69edeb7d83b23c994ffd00ed`). Layer count 26. CSS+JS-only patch, no PMTiles regenerated. Local↔prod md5 `3945461c8f188881ab029d93a787d943`. Mobile stage 2 acceptance: gesture rotation disabled below 768 px via matchMedia listener (re-enables past breakpoint); measure-vertex circle-radius 4→12 on mobile via setPaintProperty + initial radius from `_mqMobile.matches`; `.measure-readout` repositions to right edge when drawer open and exposes a × close button on mobile that delegates to existing measureBtn toggle; `#btn-print` collapses drawer on mobile before `window.print()` and restores via `afterprint`.
-- Mobile stage 3 (polish + cross-device QA) was sprint-listed as optional. Folded into hotfix-on-demand: if Andrea surfaces issues in real-device testing, those become discrete patch chats; no scheduled stage 3.
-- Sprint queue: ERCOT aggregation (this chat) → DC auto-refresh cron (paused at queue position 4 — needs API key) → abatement workstreams.
-- Tool budget for aggregation chat with deploy: 6–8 (build.py aggregation helper + template popup edit + build with `ercot_queue` PMTiles regen + Netlify proxy + verify + WIP write + close-out). `ercot_queue` is the only PMTiles needing regen; rest stay prebuilt.
-- Reference: aggregation logic likely belongs alongside `merge_csv` or as a separate `aggregate_ercot_groups` helper in `build.py`. Confirm whether the `group` field is already canonicalized in `combined_points.csv` or computed at build time. Group keying (e.g. `Longfellow__Pecos`) is the existing project-grouping algorithm output — verify field name is literal `group`.
-- Known close-out script gap: `scripts/close-out.sh` fails on missing git identity in fresh containers. Workaround = `git config user.email "claude@anthropic.local" && git config user.name "Claude"` before `close-out.sh`. Structural fix (move into `session-open.sh`) deferrable; backlog item.
-- Known build dep gap in fresh containers: `cairosvg` (pip) and `tippecanoe` (apt) not preinstalled. Resolve with `pip install cairosvg --break-system-packages && apt-get install -y tippecanoe` before `python3 build.py`. Structural fix (add to `session-open.sh`) deferrable; backlog item.
+- Chat 102 shipped clean. ERCOT queue project aggregation popup live on prod (deploy `69ee07134b63d09184004cf9`). Layer count 26. Build-time aggregation in `compute_ercot_group_aggregates(csv_path)` streams `combined_points.csv` once and returns `{group_key: {group_total_mw, group_count, group_breakdown}}`; `split_combined_csv()` accepts the dict and stamps the three derived fields onto each `ercot_queue` feature's props before NDGeoJSON write. PMTiles metadata schema confirms encoding: `group_total_mw: Number`, `group_count: Number`, `group_breakdown: String`. Build agg log: `1205 groups, 394 with 2+ components` — exact match to recon. Test case LONGFELLOW__PECOS recon-verified at 6 rows / 2153.3 MW.
+- Popup helper `ercotQueueGroupSummaryHtml(props)` renders summary block (total MW, component count, breakdown ul) above per-row table when `group_count > 1`; empty for singletons. Wired into existing `ercotQueuePopupHtml` dispatcher (no `layers.yaml` change needed; ERCOT popup uses dedicated function not registry-iterated).
+- **Deviation from prior WIP task #2 (atomic CSV rewrite):** chose build-time stamping over `combined_points.csv` rewrite. Derived fields stay in code, source CSV stays canonical, no §6.15 atomic-write needed. The user-visible outcome (each tile feature carries its group's aggregates) is identical.
+- Sprint queue: session-open structural fix (this chat) → DC auto-refresh cron (still blocked on API key) → abatement workstreams.
+- Tool budget for Chat 103 doc-only: 2–6 (single edit, smoke-test, commit, push, close-out).
 
 ## Sprint queue
 
@@ -67,8 +66,8 @@ Cross-device QA + polish for the mobile-friendly map work shipped in Chats 100�
 ## Prod status
 
 - Layer count: **26**
-- Last published deploy: `69edeb7d83b23c994ffd00ed` (Chat 101, 2026-04-26). State=ready. Mobile stage 2: gesture + measure tool + print handler. Two-finger rotate disabled below 768 px via `matchMedia` listener (`map.touchZoomRotate.disableRotation()` + `map.dragRotate.disable()` on mobile, `.enableRotation()`/`.enable()` past breakpoint); measure-vertex `circle-radius` 4→12 on mobile (initial value from `_mqMobile.matches` in `ensureMeasureLayers`, dynamic update via `setPaintProperty` in the matchMedia handler); `.measure-readout` repositions to right edge when drawer is open on mobile and exposes a × close button that delegates to the existing measureBtn toggle; `#btn-print` handler force-collapses the drawer on mobile before `window.print()` and restores via `afterprint`. Build clean: `built=26  missing=0  errored=0  tiles_total=18865 KB`. Local↔prod md5 identical (index `3945461c8f188881ab029d93a787d943`). CSS+JS-only — no PMTiles regenerated. iPhone-UA serves identical bundle (no UA-routed variants).
-- Previous deploy: `69ede86f9d6157312033e693` (Chat 100, 2026-04-26). Mobile stage 1: 768 px breakpoint, off-canvas drawer at `min(86vw, 320px)`, ≥44 px tap targets on `.topbar button`, `.layer`, `.filter-multi > summary`, `.basemap-picker select`, `.maplibregl-ctrl-group button`. Popup max-width capped at `min(90vw, 360px)` with `max-height: 60vh; overflow-y: auto` and `word-break: break-word`.
+- Last published deploy: `69ee07134b63d09184004cf9` (Chat 102, 2026-04-26). State=ready. ERCOT queue project aggregation popup. `compute_ercot_group_aggregates(csv_path)` streams `combined_points.csv` once and returns `{group_key: {group_total_mw, group_count, group_breakdown}}` (breakdown is `\n`-joined `<name> · <mw> MW · <county>` lines, sorted by MW desc). `split_combined_csv()` stamps these fields onto every ercot_queue feature's props during NDGeoJSON write. Popup helper `ercotQueueGroupSummaryHtml(props)` renders a summary block (sage-pink card with project group label, total MW, component count, breakdown list) above the per-row table when `group_count > 1`; empty for singletons. Build clean: `built=26  missing=0  errored=0  tiles_total=18933 KB` (+68 KB from prior deploy carrying 3 new fields × 1,778 ercot_queue rows). Local↔prod md5 identical. Aggregation reach: 1,205 groups total, 394 with 2+ components.
+- Previous deploy: `69edeb7d83b23c994ffd00ed` (Chat 101, 2026-04-26). Mobile stage 2: gesture rotation disabled below 768 px via matchMedia, measure-vertex radius 4→12 on mobile, `.measure-readout` close button, `#btn-print` collapses drawer on mobile.
 - URL: `https://lrp-tx-gis.netlify.app` — requires real User-Agent on curl (`-A "Mozilla/5.0"`).
 
 ---
@@ -89,13 +88,13 @@ Cross-device QA + polish for the mobile-friendly map work shipped in Chats 100�
 - `NETLIFY_PAT` absent from `CREDENTIALS.md`. Netlify MCP proxy path canonical
 - `GITHUB_PAT` can push branches, 403 on PR creation. Direct-merge-to-main is the protocol (OPERATING.md §9)
 - **Akamai datacenter-egress block on `reevescounty.org`** — cloud-runner / GitHub-Actions traffic 403s regardless of UA / TLS fingerprint. Hard prerequisite for the abatement-weekly-cron sprint item. Unblock options: residential-proxy egress (paid), Akamai allowlisting via Reeves County IT (low likelihood), search-API result pages
-- `scripts/close-out.sh` fails on missing git identity in fresh containers. Workaround documented in Pre-flight; structural fix = move identity init into `session-open.sh`. Backlog.
-- Fresh-container build deps: `cairosvg` (pip) and `tippecanoe` (apt) not preinstalled. Workaround documented in Pre-flight; structural fix = add install steps to `session-open.sh` if recurring (now confirmed recurring across Chats 100 and 101 — promote to active fix in Chat 102 or 103).
+- Fresh-container build deps + git identity gaps — promoted to **active fix in Chat 103**. Currently both worked around manually (cairosvg + tippecanoe install at session start; `git config user.email/.name` before close-out.sh).
 
 **Process:**
 - Chat 92 §6.12 violation (deploy + merge atomic): published deploy `69ed2cdf4039c554a1316ad2` to prod but deferred close-out merge, citing scope-creep. Reconciled in Chat 93 (merge `3a59a73`). Root cause: doc-restructure work appeared on a feature branch alongside the data-layer work, blowing past §6.13 stage-fits-one-chat. Preventive structural fix: pre-commit hook could reject doc-structure changes on `refinement-*` branches; lower-effort alternative is operator-side discipline at branch-naming time.
-- Chat 100 §6.12 deviation: deploy + merge were not atomic in the same chat — deploy `69ede86f9d6157312033e693` shipped, branch pushed, but merge to main + WIP rewrite ran in the operator-prompted close-out turn. Cause: tool-budget exhausted on build dep installs (cairosvg, tippecanoe) before merge step. Preventive fix tracked in Open backlog → Infrastructure (preinstall in `session-open.sh`).
-- Chat 101 §6.12 compliant: deploy + merge atomic in single shipping flow.
+- Chat 100 §6.12 deviation: deploy + merge were not atomic in the same chat. Tracked as fixed via session-open.sh structural fix scheduled for Chat 103.
+- Chats 101 + 102 §6.12 compliant: deploy + merge atomic in single shipping flow.
+- Chat 102 tool-budget overrun: 14 tool calls vs 6–8 estimate. Cause: heavy verification of stamped-fields encoding (tippecanoe-decode iterations + pmtiles metadata read) before deploying. Lesson: PMTiles metadata schema check via python-pmtiles is the single sufficient verification step; skip tippecanoe-decode tile-by-tile sampling.
 
 **Outstanding credential hygiene:**
 - `GITHUB_PAT` leak from Chat 87 unrotated per operator override. Token valid until 2027-04-21

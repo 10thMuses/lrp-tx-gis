@@ -798,6 +798,22 @@ function setFilterPanelVisible(lid, visible) {
   if (meta && !visible) meta.classList.remove('on');
 }
 
+function ercotQueueGroupSummaryHtml(props) {
+  const cnt = props.group_count;
+  if (cnt === undefined || cnt === null || Number(cnt) <= 1) return '';
+  const total = props.group_total_mw;
+  const totalStr = (total !== undefined && total !== null && total !== '')
+    ? `${Number(total).toLocaleString(undefined, {maximumFractionDigits: 1})} MW` : '— MW';
+  const breakdown = props.group_breakdown || '';
+  const items = String(breakdown).split('\n').filter(Boolean)
+    .map(line => `<li style="margin:1px 0;">${escapeHtml(line)}</li>`).join('');
+  return `<div style="margin:4px 0 6px;padding:6px 8px;background:#fdf4ff;border-left:3px solid #ec4899;border-radius:3px;">
+    <div style="font-size:10px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:#86198f;margin-bottom:2px;">Project group</div>
+    <div style="font-size:12px;font-weight:600;color:var(--text);margin-bottom:3px;">${totalStr} across ${Number(cnt)} components</div>
+    <ul style="font-size:11px;margin:0;padding-left:14px;color:var(--text);line-height:1.4;">${items}</ul>
+  </div>`;
+}
+
 function ercotQueuePopupHtml(props) {
   const title = props.name || 'ERCOT queue project';
   const mwVal = (props.capacity_mw !== undefined && props.capacity_mw !== null && props.capacity_mw !== '')
@@ -823,6 +839,7 @@ function ercotQueuePopupHtml(props) {
     .map(([k, v]) => `<tr><td class="k">${FIELD_LABELS[k] || k}</td><td class="v">${escapeHtml(String(v))}</td></tr>`)
     .join('');
   return `<div class="title">${escapeHtml(title)}</div>
+    ${ercotQueueGroupSummaryHtml(props)}
     <table>${rows}</table>${abatementAnnotationHtml(props)}
     <div class="src">${escapeHtml(props.source || 'ERCOT GIR queue')}${props.source_date ? ' · ' + escapeHtml(props.source_date) : ''}</div>`;
 }
