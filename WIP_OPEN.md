@@ -4,35 +4,34 @@ Active state. Read at session open. Updated at close-out of every shipping chat.
 
 Per OPERATING.md §10: **`## Next chat
 
-**Chat 104 — DC AUTO-REFRESH CRON.** GitHub Actions weekly cron that runs `scripts/refresh_dc_anchors.py` against `data/datacenters/dc_anchors.json` + a watchlist URL feed; LLM-in-the-loop parser (Anthropic API) proposes diffs (status changes, capacity revisions, new entries flagged `single_source: true`); diffs surface as a PR for human review (never auto-merged).
+**Chat 105 — COSMETIC: PMTILES FEATURE COUNTS IN SIDEBAR.** Currently the sidebar shows `0` for prebuilt-PMTiles layers' feature counts (carryforward from Chat 91). Fix involves either reading PMTiles metadata at build time or letting the client fetch on layer-on. Small, no schema change.
 
 ### Task
 
-1. **Pre-flight gate:** confirm `ANTHROPIC_API_KEY` present in repo Secrets at `github.com/10thMuses/lrp-tx-gis/settings/secrets/actions`. If absent, halt with operator-action ask. PAT lacks scope to add secrets via API.
-2. **Watchlist source file:** create `data/datacenters/dc_watchlist.yaml` with the same 8 anchors from `dc_anchors.json` plus their canonical announcement-URL list. One entry per anchor: `id`, `urls[]`, `last_checked`.
-3. **Refresh script** at `scripts/refresh_dc_anchors.py`: fetch each watchlist URL with retry; pass HTML + current `dc_anchors.json` entry to Claude API (`claude-sonnet-4-5` or current default) with structured-output schema; emit proposed diff per anchor; write to `outputs/refresh/dc_anchors_proposed.json` with provenance.
-4. **GitHub Actions workflow** at `.github/workflows/dc-anchors-refresh.yml`: cron `0 6 * * 1` (Monday 06:00 UTC); checkout → install deps → run script → if proposed diffs non-empty, open PR (using `peter-evans/create-pull-request@v6` or equivalent); never merge.
-5. Smoke-test the script locally with one URL before workflow ships.
-6. Doc-only of workflow + script + watchlist; no build, no deploy. WIP next-chat = Chat 105 cosmetic backlog (PMTiles feature counts at 0 in sidebar — small fix).
+1. Identify the sidebar feature-count rendering code in `build_template.html` (search for `feature_count` or sidebar layer-row template).
+2. For prebuilt PMTiles layers, the count is currently set to 0 because the build step that populates `feature_count` only runs for layers built from `combined_*` files. Either:
+   - **Option A (build-time):** in `build.py`, after each layer's PMTiles is finalized, run `tippecanoe-decode --stats` (or use `python-pmtiles` to read tile metadata) to count features and stamp into the layer's manifest entry.
+   - **Option B (client-time):** in `build_template.html`, on layer-on event, fetch the PMTiles header and count tiles for the visible bbox. Higher complexity, less accurate.
+3. Recommended: Option A. PMTiles metadata can be read once at build with python-pmtiles or `tippecanoe-decode`.
+4. Test with `eia860_plants` and `wells` (both prebuilt) — counts should appear in sidebar.
+5. Standard build → preview → prod sequence per §8.
 
 ### Acceptance
 
-- `ANTHROPIC_API_KEY` confirmed in repo Secrets (operator UI action).
-- `scripts/refresh_dc_anchors.py` and `data/datacenters/dc_watchlist.yaml` created.
-- `.github/workflows/dc-anchors-refresh.yml` created with cron + PR-creation step.
-- Local smoke-test produces a valid (possibly empty) `outputs/refresh/dc_anchors_proposed.json`.
+- Prebuilt layers show non-zero feature counts in sidebar.
+- Build clean: `built=26 missing=0 errored=0`.
+- Local↔prod md5 identical post-deploy.
 - Branch merged + deleted same chat per §6.12.
-- No build / deploy.
 
 ### Branch
 
-`refinement-chat104-dc-cron`
+`refinement-chat105-pmtiles-feature-counts`
 
 ### Pre-flight
 
-- Chat 103 shipped clean. `scripts/session-open.sh` now installs tippecanoe + cairosvg if missing (non-fatal on failure) and continues to set git identity unconditionally. Smoke-tested via re-run on already-checked-out branch.
-- Sprint queue: DC auto-refresh cron (this chat, gated on Secret) → cosmetic PMTiles count fix → wind operator fill (sprint-plan item) → Permian abatement work (HARD BLOCKED on Akamai/CivicEngage; pending operator decision on residential-proxy spend).
-- Tool budget for Chat 104: 6–10 (script + workflow + watchlist + smoke-test + commit + close-out).
+- Chat 104 shipped clean. DC auto-refresh cron live: `scripts/refresh_dc_anchors.py` reads `data/datacenters/dc_anchors.json` source URLs directly (no separate watchlist file), fetches each, asks Claude API for proposed diffs (status, capacity, commissioned_target, power_source, additional_sources). `.github/workflows/dc-anchors-refresh.yml` runs cron `0 6 * * 1` (Monday 06:00 UTC) + `workflow_dispatch` for manual trigger; opens PR with `outputs/refresh/dc_anchors_proposed.json` if any meaningful proposals; never auto-merges. ANTHROPIC_API_KEY in repo Secrets confirmed by operator. Local URL-fetch smoke-test passed (186 KB from poolside.ai). End-to-end smoke-test deferred to first manual `workflow_dispatch` trigger from GitHub Actions UI.
+- Sprint queue: cosmetic PMTiles feature counts (this chat) → wind operator/technology fill via EIA-860 join → Permian abatement work (UNBLOCKED — operator authorized PacketStream proxy spend; sequence: proxy account setup → 1 chat to wire proxy into existing scrapers → resume Permian county sequence) → Comptroller LDAD scrape (UNBLOCKED — operator authorized Playwright; 1-2 chats after Permian abatement core).
+- Tool budget for Chat 105: 6–10 (read sidebar code, modify build.py, test with two layers, build, preview, prod, close-out).
 
 ## Sprint queue
 
