@@ -8,36 +8,37 @@ Per OPERATING.md §10: **`## Next chat`** = task spec for the immediately-next s
 
 ## Next chat
 
-**Chat 99 — DC LAYER BUILD: render dc_anchors as map layer.** Second of the 3-chat DC sub-sequence (research ✓ → layer build → auto-refresh cron). Consume `data/datacenters/dc_anchors.json` and ship a new `dc_anchors` layer to prod.
+**Chat 100 — DC AUTO-REFRESH CRON: GitHub Actions weekly refresh of dc_anchors with LLM-in-the-loop parser.** Third and final of the DC sub-sequence (research ✓ Chat 98 → layer build ✓ Chat 99 → auto-refresh). Stand up `.github/workflows/dc-anchors-refresh.yml` cron weekly Mondays 06:00 UTC, scraping the per-entry `sources[*].url` plus a watchlist of TX datacenter trade-press feeds; LLM-in-the-loop parser proposes diffs against `data/datacenters/dc_anchors.json`; diffs surface as a PR for human review (never auto-merged).
 
 ### Task
 
-1. Append `dc_anchors` entry to `layers.yaml`. Source = `data/datacenters/dc_anchors.json` (custom JSON loader required — it's not GeoJSON or CSV in the canonical schema).
-2. Add a custom loader path in `build.py` (or per existing pattern) that reads `dc_anchors.json` and emits a points GeoJSON consumable by tippecanoe. Map fields: `id`, `name`, `developer`, `county`, `status`, `capacity_mw_announced`, `commissioned_target`, `power_source`, `coord_accuracy`. Sources array → flatten to `sources_count` + `sources_urls` (joined string for popup) so it survives tile encoding.
-3. Symbology: graduated-circle on `capacity_mw_announced` (e.g. 100–500 / 500–2000 / 2000–5000 / 5000+ MW buckets); dim-marker for `coord_accuracy=county_centroid`; status-color overlay (announced=grey, permitted=amber, under_construction=blue, operational=green) — match the existing layer palette in `ARCHITECTURE.md` if a similar precedent exists.
-4. Popup template: name (bold), developer, county, status badge, capacity MW, target commissioning year, power-source paragraph, and a "Sources (N)" expandable footer with the URLs. Surface `coord_accuracy` as a small "approximate location" badge when not `precise`.
-5. Sidebar entry with filter on `status` + `county`. Standard build → preview → prod sequence per §8.
-6. WIP next-chat = Chat 100 (auto-refresh GitHub Actions cron with LLM-in-the-loop parser).
+1. Create `.github/workflows/dc-anchors-refresh.yml`. Cron `0 6 * * 1`. Manual trigger via `workflow_dispatch`.
+2. Refresh script in `scripts/refresh_dc_anchors.py` (new). Inputs: existing `dc_anchors.json` + watchlist URL feed. Outputs: proposed diff JSON to stdout + write candidate `dc_anchors.json.proposed`.
+3. LLM-in-the-loop parser path: prompt template stored in repo (`scripts/dc_anchors_parser_prompt.md`); workflow calls Anthropic API (key in repo secrets) with current entries + scraped article excerpts; parser returns structured diff (`status_change`, `capacity_revision`, `new_entry`, `accessed_bump`).
+4. PR-creation step: workflow opens PR with diff summary in body. New entries flagged `single_source: true` until reviewer adds a second source. `accessed` dates bump only on confirmation.
+5. Acceptance protocol for first run: dry-run via `workflow_dispatch`, inspect proposed diff manually, do NOT merge unless plausible. Cron only goes live after one successful manual dry-run.
+6. WIP next-chat = backlog from `## Sprint queue` ordering at that time; ABATEMENT PERMIAN-CORE if Akamai unblock has landed by then, else MOBILE-FRIENDLY MAP or COMPTROLLER LDAD SCRAPE per operator priority.
 
 ### Acceptance
 
-- New layer `dc_anchors` renders 8 points (or whatever the JSON contains at chat-time) on prod.
-- Popup surfaces all required fields; sources list links out correctly.
-- Filter UI works for `status` and `county`.
-- `built=26  missing=0  errored=0` on final build line.
-- Local↔prod md5 identical post-deploy.
+- `.github/workflows/dc-anchors-refresh.yml` exists, syntax-valid (`gh workflow view` clean).
+- Manual `workflow_dispatch` run completes without error; output PR created with at least an `accessed` date bump on one entry (smoke test).
+- Anthropic API key added to repo secrets (operator action; ask pattern per OPERATING.md §2).
+- Cron scheduled but tested only via `workflow_dispatch` — do not wait for first scheduled run.
 - Branch merged + deleted same chat per §6.12.
 
 ### Branch
 
-`refinement-chat99-dc-layer`.
+`refinement-chat100-dc-cron`.
 
 ### Pre-flight
 
-- Chat 98 closed clean (no deploy). 8 entries shipped to `data/datacenters/dc_anchors.json`: Project Horizon (Pecos, 2 GW, under_construction), Stargate Abilene (Taylor, 1.2 GW, operational), Microsoft–Crusoe Abilene (Taylor, 900 MW, under_construction), Project Matador / Fermi America (Carson, 11 GW, permitted), GW Ranch / Pacifico (Pecos, 7.65 GW, permitted), Stargate Frontier Shackelford (Shackelford, 1.4 GW, under_construction), Stargate Milam / SB Energy (Milam, 1.2 GW, under_construction), Meta Temple (Bell, 198 MW, operational). Total announced capacity: ~25.6 GW across 8 anchors.
-- Coord accuracy bias: 2 entries are `county_centroid` (Shackelford, Milam — county-level only); 6 are `approximate` (right area, ≤10 km). None are `precise` parcel-level; precision can be tightened later via TCEQ permit lookups but is not blocking for layer-build.
-- Schema doc at `data/datacenters/README.md`. Source-quality conventions and refresh cadence (weekly Mondays 06:00 UTC target) defined there.
-- Tool budget for layer-build with deploy: 6–10 (yaml edit + loader patch + build + Netlify proxy + verify + WIP write + close-out script). The `dc_anchors` source is JSON not the canonical CSV/GeoJSON, so `build.py` will need a small dispatcher branch — keep it minimal, single-purpose.
+- Chat 99 shipped clean. `dc_anchors` layer live on prod with 8 features. Local↔prod md5 identical (`efc81b2a01cffb1f20793a72a4b8180d` index, `7d8c6243bdb2c7088c930aee624336c5` pmtiles). Build clean: `built=26 missing=0 errored=0 tiles_total=18865 KB`.
+- Symbology shipped: graduated radius via SIZING_RULES (mw mode); status color (announced=slate `#94a3b8`, permitted=amber `#f59e0b`, under_construction=blue `#0ea5e9`, operational=green `#16a34a`); coord_accuracy=county_centroid dimmed to 0.45 opacity. Wired in `build_template.html` via `dcAnchorsColorExpr()` + `dcAnchorsOpacityExpr()` + extension of the `layerPaint` per-id dispatcher (was ercot_queue-only, now ercot_queue + dc_anchors).
+- Popup uses standard `popup_labels` rendering — sources surfaced as `sources_count` (int) and `sources_urls` (newline-joined string). Custom expandable-footer popup not implemented (kept Rule 7 minimization). If operator wants per-URL link rendering, that's a follow-up template patch via `dcAnchorsPopupHtml(props)` mirroring `ercotQueuePopupHtml`.
+- Filter fields: `status` (categorical), `county` (categorical), `capacity_mw_announced` (numeric), `developer` (text), `name` (text).
+- Hard prerequisite for cron: Anthropic API key added to repo secrets. Operator must add via GitHub UI; PAT in `CREDENTIALS.md` lacks repo-secrets-write scope.
+- Tool budget for cron stand-up: 4–8 (workflow yaml + refresh script + parser prompt + first dry-run + WIP write + close-out).
 
 ---
 
@@ -57,10 +58,6 @@ Supersedes prior "operator manual XLSX download" ask. There is no bulk XLSX. Can
 
 `.github/workflows/abatement-scrape.yml`. Cron weekly Monday 06:00 UTC. Commit diff to `data/abatements/abatement_hits_latest.csv` + rolling history. **Hard prerequisite:** `reevescounty.org` Akamai block must be resolved before cron ships, otherwise Reeves silently produces 0 hits.
 
-### DC RESEARCH → DC BUILD → DC AUTO-REFRESH
-
-3-chat sub-sequence. Research anchors: Longfellow/Poolside (Pecos), Stargate (Abilene), Project Matador/Fermi → structured data file → layer build → GitHub Actions weekly refresh with LLM-in-the-loop parser. Detail in `docs/sprint-plan.md`.
-
 ### MOBILE-FRIENDLY MAP
 
 Responsive breakpoints, touch-friendly controls, pinch-zoom tuning, measure tool + print-to-PDF mobile usability, popup sizing. 2–3 chats.
@@ -73,8 +70,8 @@ Responsive breakpoints, touch-friendly controls, pinch-zoom tuning, measure tool
 
 ## Prod status
 
-- Layer count: **25**
-- Last published deploy: `69ed60e59254f7df1a9cacdb` (Chat 97, 2026-04-26). State=ready. Carries print-only legend: `#print-legend` element + `@media print` 4-column flow + `btn-print` handler populating from `activeLayerIds()` × `LAYERS` (filtering `sidebar_omit`, preserving ERCOT-queue gradient swatch). Build clean: `built=25 missing=0 errored=0 tiles_total=18816 KB`. Local↔prod md5 identical (`d114b4e7f7b1714bff721d7d432092d6`); Netlify upload deduped against Chat 96 PMTiles (template-only delta).
+- Layer count: **26**
+- Last published deploy: `69ed6743f0d200d1782b60e7` (Chat 99, 2026-04-26). State=ready. Adds `dc_anchors` layer (Projects group): 8 Texas datacenter anchor points from `data/datacenters/dc_anchors.json` via custom JSON loader (`dc_anchors_to_ndgeojson` in `build.py`). Symbology: graduated radius on `capacity_mw_announced` (mw mode); status-keyed circle color via `dcAnchorsColorExpr()`; `coord_accuracy=county_centroid` dimmed to 0.45 opacity via `dcAnchorsOpacityExpr()`. Build clean: `built=26 missing=0 errored=0 tiles_total=18865 KB`. Local↔prod md5 identical (index `efc81b2a01cffb1f20793a72a4b8180d`, dc_anchors.pmtiles `7d8c6243bdb2c7088c930aee624336c5`).
 - URL: `https://lrp-tx-gis.netlify.app` — requires real User-Agent on curl (`-A "Mozilla/5.0"`).
 
 ---
