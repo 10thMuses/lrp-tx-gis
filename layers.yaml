@@ -4,13 +4,13 @@ layers:
   geom: line
   group: Reference
   label: Counties (Outline)
-  color: '#475569'
+  color: '#ffffff'
   default_on: true
   popup:
   - NAME
   tippecanoe:
   - -zg
-  - --coalesce-densest-as-needed
+  - --extend-zooms-if-still-dropping
   - --simplification=8
 - id: cities
   file: combined_points.csv
@@ -44,7 +44,9 @@ layers:
   group: Water & Regulatory
   label: Groundwater District Management Zone 1
   color: '#8b5cf6'
-  fill_opacity: 0.15
+  fill_opacity: 0
+  stroke_color: '#a78bfa'
+  stroke_width: 1.5
   default_on: false
   popup:
   - NAME
@@ -218,8 +220,8 @@ layers:
   file: combined_points.csv
   geom: point
   group: Transmission & Grid
-  label: Substation Upgrades
-  color: '#b45309'
+  label: Planned Substation Upgrades (TPIT)
+  color: '#fbbf24'
   default_on: false
   min_zoom: 6
   radius: 3.5
@@ -237,14 +239,37 @@ layers:
   file: combined_geoms.geojson
   geom: line
   group: Transmission & Grid
-  label: Transmission Upgrades
-  color: '#f59e0b'
+  label: Planned Transmission Upgrades (TPIT)
+  color: '#fbbf24'
+  line_width: 1
   default_on: false
   popup:
   - name
-  - source
+  - owner
+  - voltage
+  - status
+  - tier
+  - in_service
+  - from
+  - to
+  - county
+  popup_labels:
+    name: Project
+    owner: Owner
+    voltage: Voltage (kV)
+    status: Status
+    tier: TPIT tier
+    in_service: In-service date
+    from: From
+    to: To
+    county: County
   filterable_fields:
-  - {field: name, type: text, label: Name}
+  - {field: owner, type: categorical, label: Owner}
+  - {field: voltage, type: categorical, label: Voltage (kV)}
+  - {field: status, type: categorical, label: Status}
+  - {field: tier, type: categorical, label: TPIT tier}
+  - {field: county, type: categorical, label: County}
+  - {field: name, type: text, label: Project name}
   tippecanoe:
   - -zg
   - --simplification=8
@@ -283,23 +308,6 @@ layers:
   - {field: name, type: text, label: Project}
   tippecanoe:
   - -zg
-- id: parcels_pecos
-  prebuilt: true
-  geom: fill
-  group: Land & Deal
-  label: Pecos County Parcels
-  color: '#78350f'
-  fill_opacity: 0.15
-  default_on: false
-  sidebar_omit: true
-  min_zoom: 11
-  popup:
-  - owner
-  - situs
-  - acres
-  - legal_desc
-  - land_use
-  - prop_id
 - id: waha_circle
   file: combined_geoms.geojson
   geom: point
@@ -335,9 +343,9 @@ layers:
   geom: label
   group: Reference
   label: County Labels
-  color: '#475569'
+  color: '#f1f5f9'
   default_on: true
-  min_zoom: 5
+  min_zoom: 4
   popup:
   - name
   tippecanoe:
@@ -348,7 +356,8 @@ layers:
   geom: line
   group: Pipelines
   label: "Oil & Gas Pipelines (>20\", RRC)"
-  color: '#7c2d12'
+  color: '#fb923c'
+  line_width: 1
   default_on: false
   popup:
   - operator
@@ -360,7 +369,7 @@ layers:
   file: combined_points.csv
   geom: point
   group: Permits
-  label: TCEQ Gas Turbines
+  label: Gas Turbine Air Permits (TCEQ, recent filings)
   color: '#eab308'
   default_on: false
   radius: 4
@@ -406,7 +415,7 @@ layers:
   geom: line
   group: Reference
   label: Highways (Interstate + US)
-  color: '#f59e0b'
+  color: '#fde047'
   line_width: 0.6
   default_on: false
   popup:
@@ -417,7 +426,8 @@ layers:
   geom: line
   group: Reference
   label: Rail (Main Lines)
-  color: '#475569'
+  color: '#cbd5e1'
+  line_width: 1
   default_on: false
   popup:
   - owner
@@ -441,8 +451,8 @@ layers:
   file: combined_points.csv
   geom: point
   group: Permits
-  label: Property Tax Abatements (Ch.312 / LDAD, new or expansion)
-  description: 'County-level property tax abatements for new or expanded facilities. Chapter 312 reinvestment zones and Local Development Agreements (HB 5 / SB 1340 successors to the sunsetted Ch.313).'
+  label: Approved Tax Abatements (energy & DC projects)
+  description: 'County-level property tax abatements granted to new or expanded energy and infrastructure projects. Chapter 312 reinvestment zones and Local Development Agreements (HB 5 / SB 1340 successors to the sunsetted Ch.313).'
   color: '#dc2626'
   default_on: false
   radius: 4
@@ -477,40 +487,6 @@ layers:
   tippecanoe:
   - -Z0
   - -z14
-- id: fcc_fiber_coverage
-  file: fcc_fiber_coverage.geojson
-  geom: fill
-  group: Telecom
-  label: Fiber coverage (FCC BDC, Jun 2025)
-  color: '#0891b2'
-  fill_opacity: 0.55
-  default_on: false
-  min_zoom: 6
-  color_steps:
-    field: fiber_provider_count
-    default: '#cbd5e1'
-    stops:
-      - [1, '#67e8f9']
-      - [3, '#0891b2']
-  popup:
-  - bsl_count
-  - fiber_served_bsls
-  - fiber_underserved_bsls
-  - fiber_unserved_bsls
-  - fiber_provider_count
-  - as_of_date
-  popup_labels:
-    bsl_count: BSLs (total)
-    fiber_served_bsls: Fiber served (≥100/20)
-    fiber_underserved_bsls: Fiber underserved (25/3–<100/20)
-    fiber_unserved_bsls: Fiber unserved
-    fiber_provider_count: Fiber providers
-    as_of_date: As-of
-  tippecanoe:
-  - -Z6
-  - -z12
-  - --coalesce-densest-as-needed
-  - --simplification=8
 - id: dc_anchors
   file: data/datacenters/dc_anchors.json
   geom: point
