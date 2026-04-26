@@ -230,7 +230,47 @@ def _flatten_coords(coords):
 
 # ---------- COMBINED-FILE SPLITTER (one pass → per-layer NDGeoJSON) ----------
 
-def split_combined_csv(csv_path, out_dir, abate_index=None):
+def compute_ercot_group_aggregates(csv_path):
+    """One pass through combined_points.csv to aggregate ercot_queue rows by `group`.
+    Returns {group_key: {'group_total_mw': float|None, 'group_count': int, 'group_breakdown': str}}.
+    Breakdown is newline-joined list of "<name> · <mw> MW · <county>" lines, sorted by mw desc.
+    """
+    by_group = {}
+    with open(csv_path, newline='', encoding='utf-8') as fin:
+        reader = csv.DictReader(fin)
+        for row in reader:
+            if row.get('layer_id') != 'ercot_queue':
+                continue
+            g = row.get('group') or ''
+            if not g:
+                continue
+            mw = fnum(row.get('capacity_mw'))
+            comp = {
+                'name': row.get('name') or '',
+                'mw': mw,
+                'county': row.get('county') or '',
+            }
+            by_group.setdefault(g, []).append(comp)
+    result = {}
+    for g, comps in by_group.items():
+        comps_sorted = sorted(comps, key=lambda c: -(c['mw'] or 0))
+        total = sum((c['mw'] or 0) for c in comps_sorted)
+        any_mw = any(c['mw'] is not None for c in comps_sorted)
+        lines = []
+        for c in comps_sorted:
+            mw_str = f"{c['mw']:.1f} MW" if c['mw'] is not None else '— MW'
+            nm = c['name'] or '(unnamed)'
+            ct = c['county'] or ''
+            lines.append(f'{nm} · {mw_str} · {ct}'.rstrip(' ·'))
+        result[g] = {
+            'group_total_mw': round(total, 1) if any_mw else None,
+            'group_count': len(comps_sorted),
+            'group_breakdown': '\n'.join(lines),
+        }
+    return result
+
+
+def split_combined_csv(csv_path, out_dir, abate_index=None, ercot_group_aggs=None):
     """Single pass through combined_points.csv → per-layer NDGeoJSON files
     in out_dir. Returns {layer_id: (n_total, n_written)}.
 
@@ -261,6 +301,15 @@ def split_combined_csv(csv_path, out_dir, abate_index=None):
                     fs = props.get('funnel_stage')
                     if fs:
                         props['status'] = str(fs).split('|', 1)[0]
+                # Stamp ERCOT queue group aggregates onto every queue row's props
+                if lid == 'ercot_queue' and ercot_group_aggs is not None:
+                    g = props.get('group')
+                    if g and g in ercot_group_aggs:
+                        agg = ercot_group_aggs[g]
+                        if agg['group_total_mw'] is not None:
+                            props['group_total_mw'] = agg['group_total_mw']
+                        props['group_count'] = agg['group_count']
+                        props['group_breakdown'] = agg['group_breakdown']
                 # Annotate facility rows with matched abatement fields
                 if abate_index and lid in ABATEMENT_TARGET_LAYERS:
                     before = 'abatement_applicant' in props
@@ -962,7 +1011,10 @@ def main():
         print(f'Abatement index: {len(abate_index)} applicants for fuzzy-join')
     if cc.exists():
         print(f'Splitting {COMBINED_CSV} ...')
-        s = split_combined_csv(cc, SPLIT_DIR, abate_index=abate_index)
+        ercot_group_aggs = compute_ercot_group_aggregates(cc)
+        print(f'  ERCOT group aggregates: {len(ercot_group_aggs)} groups, '
+              f'{sum(1 for v in ercot_group_aggs.values() if v["group_count"] > 1)} with 2+ components')
+        s = split_combined_csv(cc, SPLIT_DIR, abate_index=abate_index, ercot_group_aggs=ercot_group_aggs)
         split_stats.update(s)
         print(f'  {sum(v[1] for v in s.values()):,} features across {len(s)} layers')
     if cg.exists():
