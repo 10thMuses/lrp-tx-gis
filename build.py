@@ -40,6 +40,32 @@ import yaml
 
 from build_sprite import build_sprite_sheet
 
+
+def read_pmtiles_feature_count(pm_path):
+    """Read feature count from a PMTiles file's tilestats metadata.
+
+    Returns int or None if metadata is missing/malformed. Uses python-pmtiles.
+    Used for prebuilt layers where build.py doesn't run tippecanoe (so n_written
+    is unknown) — read the count baked into the prebuilt PMTiles header instead
+    of returning 0 to the sidebar.
+    """
+    try:
+        from pmtiles.reader import Reader, MmapSource
+        with open(pm_path, 'rb') as f:
+            src = MmapSource(f)
+            reader = Reader(src)
+            md = reader.metadata()
+        ts = md.get('tilestats') or {}
+        layers = ts.get('layers') or []
+        if not layers:
+            return None
+        # Sum counts across all layers (typically just 1 for our prebuilts)
+        total = sum(int(l.get('count', 0)) for l in layers)
+        return total if total > 0 else None
+    except Exception:
+        return None
+
+
 ROOT = Path(__file__).parent
 SPRITE_SRC = Path(__file__).parent / 'sprite'
 TEMPLATE_FILE = ROOT / 'build_template.html'
@@ -570,9 +596,15 @@ def build_layer(layer, report, split_stats):
             if sz < 1024:
                 report.append((lid, 0, 0, 'ERROR', f'prebuilt too small: {sz}B via {tier_used}'))
                 return None
-            report.append((lid, 0, 0, f'OK {sz//1024}KB',
+            # Read feature count from the prebuilt PMTiles' tilestats metadata
+            # (build.py doesn't tippecanoe these layers, so n_written is unknown).
+            # Falls back to YAML feature_count (if set) then 0.
+            n_features = read_pmtiles_feature_count(pm)
+            if n_features is None:
+                n_features = layer.get('feature_count', 0)
+            report.append((lid, 0, n_features, f'OK {sz//1024}KB',
                           f'prebuilt[{tier_used}] {time.time()-t0:.1f}s'))
-            return {'id': lid, 'bytes': sz, 'features': layer.get('feature_count', 0)}
+            return {'id': lid, 'bytes': sz, 'features': n_features}
         except Exception as e:
             report.append((lid, 0, 0, 'ERROR', f'prebuilt: {str(e)[:80]}'))
             return None
