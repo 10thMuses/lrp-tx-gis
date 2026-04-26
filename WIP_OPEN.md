@@ -8,35 +8,36 @@ Per OPERATING.md §10: **`## Next chat`** = task spec for the immediately-next s
 
 ## Next chat
 
-**Chat 96 — POWER PLANT POPUP REDESIGN — RESUME, all 5 yaml edits done, ship pending.** Branch `refinement-chat96-power-plant-popup-redesign` has all 5 layers' popup+filter edits committed (Chat 96 / 96b / 96c). Remaining: **build → deploy → verify → atomic close-out (§6.12)**. No yaml work left.
+**Chat 97 — LEGEND ON PRINT/SHARE/PDF.** Promoted from sprint queue. Sidebar carries the legend in screen mode but is hidden by `@media print` in `build_template.html`, so prints/PDFs ship legend-less. Inject a print-only legend element enumerating only the active (toggled-on) layers — name + color swatch + symbol — into the print page.
 
 ### Task
 
-1. **Do NOT touch `layers.yaml`.** Verify state with `git log --oneline origin/main..HEAD` — should show 5 commits (3 yaml edits + 2 prior partial-handoff WIP updates) plus a Chat 96c WIP update; the final yaml edit is `e59ed2d` (ercot_queue).
-2. `build. deploy to prod.` — fresh build required; Chat 96c built locally but `dist/` evaporated on container reset. Per §6.6 "one chat = one final build."
-3. Verify per §8 step 4: `curl -A "Mozilla/5.0"` on root, grep 25 layer ids.
-4. Spot-check rendered popup HTML — one feature each across the 5 layers (`eia860_plants`, `eia860_battery`, `wind`, `solar`, `ercot_queue`). Grep prod HTML for the popup template; confirm `operator` + `commissioned` present, `sector` absent. Tile data already verified Chat 95; this is template-only verification.
-5. **Atomic close-out (§6.12 hard rule)**: `bash scripts/close-out.sh refinement-chat96-power-plant-popup-redesign <deployId>` — must run same chat as deploy.
+1. Recon `build_template.html` `@media print` block + sidebar markup to identify the exact selectors hiding the legend and the available print real estate.
+2. Add a print-only `<div id="print-legend">` (hidden in screen, shown in print) populated client-side from the same layer-state that drives the sidebar — only layers currently `default_on=true` OR toggled on by the user at print time.
+3. Style: layer name + color swatch (12px box matching layer `color`) + geometry symbol (point dot / line dash / polygon outline). Two-column flex grid in the print footer or a dedicated final page. Must fit landscape 10.3"×7.1" with ≥15 active layers (multi-column or multi-page wrap).
+4. `build. deploy to prod.` Verify by curling prod, opening print-preview locally on `dist/index.html`, and confirming the legend renders with at least the default-on layers.
+5. Atomic close-out per §5 / §6.12.
 
 ### Acceptance
 
-- All 5 layers' popup spec in prod HTML omits `sector` and includes `commissioned` + `operator` (USWTDB-driven `wind` exempt from operator per Chat 95 schema gap; popup shows `manu`/`model` instead).
-- `eia860_plants` popup spec includes at minimum: `operator`, `commissioned`, `capacity_mw`, `technology`, `fuel`.
-- `ercot_queue` popup includes `operator`; filter `county` is `categorical`.
+- Print preview of prod URL shows a visible legend listing every currently-active layer with name + color swatch + symbol matching its on-map style.
+- Screen view is visually unchanged (no new sidebar element, no layout shift).
+- ≥15 active layers wraps without overflow off the page.
 - Build errored=0, layer count=25, deploy state=ready.
 - Branch merged + deleted same chat per §6.12.
 
 ### Branch
 
-`refinement-chat96-power-plant-popup-redesign` (5 layer edits + 3 partial-handoff WIP commits on origin; session-open detects + checks out).
+`refinement-chat97-print-legend`.
 
 ### Pre-flight
 
-- Yaml fully spec-compliant per Chat 96 field contract. Verified locally via `python3 -c "import yaml; ..."` round-trip; 25 layers parse clean.
-- Chat 96c local build was clean: `built=25 missing=0 errored=0 tiles_total=18816 KB`. Same source data → expect identical result.
-- Build deps: install `cairosvg openpyxl pyyaml` via `pip install --break-system-packages` before running `build.py` (build_sprite hard-imports cairosvg at module top — Chat 95/96c confirmed gotcha).
-- `tippecanoe` installs cleanly via `apt-get install -y tippecanoe` (v2.49+).
-- Tool-call budget: 6. install+build (1), deploy-site MCP (1), npx proxy (1), poll + curl verify + popup grep (1), close-out script (1). Reserve 1 for blocker recovery.
+- Chat 96 closed clean, deploy `69ed5ab2b573b4ee0b052773` (2026-04-26). 5 layer popup specs (`eia860_plants`, `eia860_battery`, `solar`, `wind`, `ercot_queue`) shipped with `commissioned` / `operator` / `capacity_mw` / `fuel` / `technology` per field contract; `sector` removed from all five (the 3 remaining `sector` hits in prod HTML are in `tax_abatements.popup_labels` → "Taxing entities", out of scope). Prod md5 matched local dist: `22be6d63c665968c3a843cd67d183ec3`.
+- This is `build_template.html` work — touching the file directly is OK (it is the template, not a layer addition; §6 rule 7 does not apply).
+- Color swatch source: `LAYERS_CONFIG[i].color` already in template scope. Geometry symbol can be derived from `LAYERS_CONFIG[i].geom` (`point` | `line` | `polygon`) — no new data plumbing.
+- Active-layer set already exists in client state (whatever drives the sidebar checkboxes). Reuse, do not re-derive.
+- Build deps: `pip install --break-system-packages cairosvg openpyxl pyyaml` before `python3 build.py` (build_sprite hard-imports cairosvg at module top). `tippecanoe` via `apt-get install -y tippecanoe` if cold.
+- Tool-call budget: 8. recon (1), template edit (1), build (1), deploy MCP + npx (2), poll + verify (1), close-out (1). Reserve 1 for blocker recovery.
 
 ---
 
@@ -58,7 +59,7 @@ Supersedes prior "operator manual XLSX download" ask. There is no bulk XLSX. Can
 
 ### LEGEND ON PRINT / SHARE / PDF
 
-Print CSS at `build_template.html` hides `.sidebar` on `@media print`. Sidebar IS the legend; prints ship without it. Inject print-only legend element enumerating active layers (name + color swatch + symbol) into print header or footer. Fit within 10.3"×7.1" landscape. Handle >15 active layers via multi-column or multi-page.
+*(Promoted to Chat 97 — see `## Next chat`.)*
 
 ### DC RESEARCH → DC BUILD → DC AUTO-REFRESH
 
@@ -77,7 +78,7 @@ Responsive breakpoints, touch-friendly controls, pinch-zoom tuning, measure tool
 ## Prod status
 
 - Layer count: **25**
-- Last published deploy: `69ed43136147a9a6b3966ebd` (Chat 95, 2026-04-25). State=ready. Carries EIA-860 (2024-data) plants + battery refresh and full USWTDB wind refresh merged into `combined_points.csv`. Prod tile bytes verified match local build (`eia860_plants.pmtiles` 87061 B header md5 identical local↔prod).
+- Last published deploy: `69ed5ab2b573b4ee0b052773` (Chat 96, 2026-04-26). State=ready. Carries popup+filter redesign for the 5 power-related layers (`eia860_plants`, `eia860_battery`, `solar`, `wind`, `ercot_queue`): `sector` removed; `operator` / `commissioned` / `capacity_mw` / `fuel` / `technology` surfaced per field contract. Build clean: `built=25 missing=0 errored=0 tiles_total=18816 KB`. Local↔prod md5 identical (`22be6d63c665968c3a843cd67d183ec3`); Netlify upload deduped against Chat 95 PMTiles (data unchanged, template-only delta).
 - URL: `https://lrp-tx-gis.netlify.app` — requires real User-Agent on curl (`-A "Mozilla/5.0"`).
 
 ---
