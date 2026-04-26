@@ -327,6 +327,43 @@ def split_combined_csv(csv_path, out_dir, abate_index=None, ercot_group_aggs=Non
                     fs = props.get('funnel_stage')
                     if fs:
                         props['status'] = str(fs).split('|', 1)[0]
+                # Relabel EIA-860 fuel codes: "Natural Gas (NG)" not "NG"
+                # EIA fuel-code reference, common subset for TX plants.
+                if lid in ('eia860_plants', 'eia860_battery'):
+                    fuel = props.get('fuel')
+                    if fuel:
+                        FUEL_LABELS = {
+                            'NG':  'Natural Gas (NG)',
+                            'WND': 'Wind (WND)',
+                            'SUN': 'Solar (SUN)',
+                            'MWH': 'Battery / Energy Storage (MWH)',
+                            'DFO': 'Distillate Fuel Oil (DFO)',
+                            'WAT': 'Water / Hydroelectric (WAT)',
+                            'SUB': 'Subbituminous Coal (SUB)',
+                            'LFG': 'Landfill Gas (LFG)',
+                            'LIG': 'Lignite Coal (LIG)',
+                            'WH':  'Waste Heat (WH)',
+                            'NUC': 'Nuclear (NUC)',
+                            'PC':  'Petroleum Coke (PC)',
+                            'BLQ': 'Black Liquor (BLQ)',
+                            'WDS': 'Wood / Wood Solids (WDS)',
+                            'PUR': 'Purchased Steam (PUR)',
+                            'OG':  'Other Gas (OG)',
+                            'BFG': 'Blast Furnace Gas (BFG)',
+                            'BIT': 'Bituminous Coal (BIT)',
+                            'RFO': 'Residual Fuel Oil (RFO)',
+                            'OBG': 'Other Biomass Gas (OBG)',
+                            'KER': 'Kerosene (KER)',
+                            'JF':  'Jet Fuel (JF)',
+                            'GEO': 'Geothermal (GEO)',
+                            'MSW': 'Municipal Solid Waste (MSW)',
+                            'OBS': 'Other Biomass Solids (OBS)',
+                            'OBL': 'Other Biomass Liquids (OBL)',
+                            'TDF': 'Tire-Derived Fuel (TDF)',
+                            'PG':  'Propane Gas (PG)',
+                        }
+                        if fuel in FUEL_LABELS:
+                            props['fuel'] = FUEL_LABELS[fuel]
                 # Stamp ERCOT queue group aggregates onto every queue row's props
                 if lid == 'ercot_queue' and ercot_group_aggs is not None:
                     g = props.get('group')
