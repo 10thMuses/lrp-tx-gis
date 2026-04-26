@@ -5,7 +5,7 @@ layers:
   group: Reference
   label: Counties (Outline)
   color: '#ffffff'
-  line_width: 0.5
+  line_width: 1
   default_on: true
   popup:
   - NAME
@@ -344,9 +344,10 @@ layers:
   geom: label
   group: Reference
   label: County Labels
-  color: '#f1f5f9'
+  color: '#0f172a'
+  text_halo: false
   default_on: true
-  min_zoom: 4
+  min_zoom: 5
   popup:
   - name
   tippecanoe:
