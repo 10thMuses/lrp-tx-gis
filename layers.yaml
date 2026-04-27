@@ -9,10 +9,14 @@ layers:
   default_on: true
   popup:
   - NAME
+  - GEOID
   tippecanoe:
   - -zg
   - --extend-zooms-if-still-dropping
   - --simplification=8
+  popup_labels:
+    NAME: County
+    GEOID: FIPS
 - id: cities
   file: combined_points.csv
   geom: point
@@ -25,6 +29,8 @@ layers:
   radius: 4
   tippecanoe:
   - -zg
+  popup_labels:
+    name: City
 - id: caramba_north
   file: combined_geoms.geojson
   geom: fill
@@ -39,6 +45,72 @@ layers:
   - cropType
   tippecanoe:
   - -zg
+  popup_labels:
+    Name: Tract
+    arableLandSize: Arable acres
+    cropType: Land type
+- id: solstice_substation
+  file: combined_geoms.geojson
+  geom: point
+  group: Local Developments
+  label: AEP Solstice Substation
+  color: '#FFD400'
+  default_on: true
+  circle_radius: 12
+  stroke_color: '#FFD400'
+  stroke_width: 3
+  fill_opacity: 0
+  popup:
+  - name
+  - operator
+  - county
+  - voltage_kv
+  - status
+  - role
+  - osm_id
+  popup_labels:
+    name: Substation
+    operator: Operator
+    county: County
+    voltage_kv: Voltage (kV)
+    status: Status
+    role: Role
+    osm_id: OSM ID
+  tippecanoe:
+  - -Z0
+  - -z14
+- id: la_escalera
+  file: combined_geoms.geojson
+  geom: fill
+  group: Local Developments
+  label: La Escalera Ranch (Apex Clean Energy)
+  description: La Escalera Ranch — Lyda Family. Approximate ~223,000-acre ranch outline;
+    site of Apex Clean Energy's Pecos Flat 3.3 GW wind/solar/green-hydrogen complex.
+    Boundary APPROXIMATE.
+  color: '#FFD400'
+  fill_opacity: 0
+  stroke_color: '#FFD400'
+  stroke_width: 2.5
+  default_on: true
+  popup:
+  - name
+  - owner
+  - developer
+  - county
+  - acres
+  - project
+  - ACCURACY
+  popup_labels:
+    name: Tract
+    owner: Owner
+    developer: Developer
+    county: County
+    acres: Acres
+    project: Project
+    ACCURACY: Boundary accuracy
+  tippecanoe:
+  - -Z0
+  - -z14
 - id: mpgcd_zone1
   file: combined_geoms.geojson
   geom: fill
@@ -56,6 +128,11 @@ layers:
   - note
   tippecanoe:
   - -zg
+  popup_labels:
+    NAME: District
+    ZONE: Zone
+    ACCURACY: Accuracy
+    note: Note
 - id: eia860_plants
   file: combined_points.csv
   geom: point
@@ -69,19 +146,42 @@ layers:
   - plant_code
   - county
   - operator
+  - sector
   - commissioned
   - capacity_mw
   - technology
   - fuel
   filterable_fields:
-  - {field: county, type: categorical, label: County}
-  - {field: technology, type: categorical, label: Technology}
-  - {field: fuel, type: categorical, label: Fuel}
-  - {field: capacity_mw, type: numeric, label: Capacity (MW)}
-  - {field: commissioned, type: categorical, label: Commissioned}
-  - {field: name, type: text, label: Plant name}
+  - field: county
+    type: categorical
+    label: County
+  - field: technology
+    type: categorical
+    label: Technology
+  - field: fuel
+    type: categorical
+    label: Fuel
+  - field: capacity_mw
+    type: numeric
+    label: Capacity (MW)
+  - field: commissioned
+    type: categorical
+    label: Commissioned
+  - field: name
+    type: text
+    label: Plant name
   tippecanoe:
   - -zg
+  popup_labels:
+    name: Plant
+    plant_code: EIA Plant Code
+    county: County
+    operator: Operator
+    sector: Sector
+    commissioned: Commissioned
+    capacity_mw: Capacity (MW)
+    technology: Technology
+    fuel: Fuel
 - id: eia860_battery
   file: combined_points.csv
   geom: point
@@ -99,13 +199,31 @@ layers:
   - capacity_mw
   - technology
   filterable_fields:
-  - {field: county, type: categorical, label: County}
-  - {field: technology, type: categorical, label: Technology}
-  - {field: capacity_mw, type: numeric, label: Capacity (MW)}
-  - {field: commissioned, type: categorical, label: Commissioned}
-  - {field: name, type: text, label: Plant name}
+  - field: county
+    type: categorical
+    label: County
+  - field: technology
+    type: categorical
+    label: Technology
+  - field: capacity_mw
+    type: numeric
+    label: Capacity (MW)
+  - field: commissioned
+    type: categorical
+    label: Commissioned
+  - field: name
+    type: text
+    label: Plant name
   tippecanoe:
   - -zg
+  popup_labels:
+    name: Battery
+    plant_code: EIA Plant Code
+    county: County
+    operator: Operator
+    commissioned: Commissioned
+    capacity_mw: Capacity (MW)
+    technology: Technology
 - id: wind
   file: combined_points.csv
   geom: point
@@ -123,16 +241,33 @@ layers:
   - manu
   - model
   filterable_fields:
-  - {field: county, type: categorical, label: County}
-  - {field: capacity_mw, type: numeric, label: Capacity (MW)}
-  - {field: commissioned, type: categorical, label: Commissioned}
-  - {field: manu, type: categorical, label: Manufacturer}
-  - {field: project, type: text, label: Project}
+  - field: county
+    type: categorical
+    label: County
+  - field: capacity_mw
+    type: numeric
+    label: Capacity (MW)
+  - field: commissioned
+    type: categorical
+    label: Commissioned
+  - field: manu
+    type: categorical
+    label: Manufacturer
+  - field: project
+    type: text
+    label: Project
   tippecanoe:
   - -zg
   - -r1
   - --drop-densest-as-needed
   - --extend-zooms-if-still-dropping
+  popup_labels:
+    project: Project
+    county: County
+    commissioned: Commissioned
+    capacity_mw: Turbine MW
+    manu: Manufacturer
+    model: Model
 - id: solar
   file: combined_points.csv
   geom: point
@@ -145,33 +280,51 @@ layers:
   - name
   - plant_code
   - county
-  - operator
-  - commissioned
   - capacity_mw
   filterable_fields:
-  - {field: county, type: categorical, label: County}
-  - {field: capacity_mw, type: numeric, label: Capacity (MW)}
-  - {field: commissioned, type: categorical, label: Commissioned}
-  - {field: name, type: text, label: Plant name}
+  - field: county
+    type: categorical
+    label: County
+  - field: capacity_mw
+    type: numeric
+    label: Capacity (MW)
+  - field: commissioned
+    type: categorical
+    label: Commissioned
+  - field: name
+    type: text
+    label: Plant name
   tippecanoe:
   - -zg
+  popup_labels:
+    name: Plant
+    plant_code: EIA Plant Code
+    county: County
+    capacity_mw: Capacity (MW)
 - id: transmission
   file: combined_geoms.geojson
   geom: line
   group: Transmission & Grid
-  label: "Transmission \u2265100 kV"
+  label: Transmission ≥100 kV
   color: '#38bdf8'
   default_on: false
   popup:
   - V
   - O
   filterable_fields:
-  - {field: V, type: numeric, label: Voltage (kV)}
-  - {field: O, type: text, label: Operator}
+  - field: V
+    type: numeric
+    label: Voltage (kV)
+  - field: O
+    type: text
+    label: Operator
   tippecanoe:
   - -zg
   - --simplification=8
   - --coalesce-densest-as-needed
+  popup_labels:
+    V: Voltage (kV)
+    O: Operator
 - id: substations
   file: combined_points.csv
   geom: point
@@ -185,13 +338,25 @@ layers:
   - name
   - operator
   - voltage
+  - osm_id
   filterable_fields:
-  - {field: voltage, type: numeric, label: Voltage (V)}
-  - {field: operator, type: text, label: Operator}
-  - {field: name, type: text, label: Name}
+  - field: voltage
+    type: numeric
+    label: Voltage (V)
+  - field: operator
+    type: text
+    label: Operator
+  - field: name
+    type: text
+    label: Name
   tippecanoe:
   - -zg
   - --drop-densest-as-needed
+  popup_labels:
+    name: Name
+    operator: Operator
+    voltage: Voltage (V)
+    osm_id: OSM ID
 - id: tpit_subs
   file: combined_points.csv
   geom: point
@@ -206,11 +371,21 @@ layers:
   - voltage
   - operator
   filterable_fields:
-  - {field: voltage, type: numeric, label: Voltage (V)}
-  - {field: operator, type: categorical, label: Operator}
-  - {field: name, type: text, label: Name}
+  - field: voltage
+    type: numeric
+    label: Voltage (V)
+  - field: operator
+    type: categorical
+    label: Operator
+  - field: name
+    type: text
+    label: Name
   tippecanoe:
   - -zg
+  popup_labels:
+    name: Substation
+    voltage: Voltage (V)
+    operator: Operator
 - id: tpit_lines
   file: combined_geoms.geojson
   geom: line
@@ -240,12 +415,24 @@ layers:
     to: To
     county: County
   filterable_fields:
-  - {field: owner, type: categorical, label: Owner}
-  - {field: voltage, type: categorical, label: Voltage (kV)}
-  - {field: status, type: categorical, label: Status}
-  - {field: tier, type: categorical, label: TPIT tier}
-  - {field: county, type: categorical, label: County}
-  - {field: name, type: text, label: Project name}
+  - field: owner
+    type: categorical
+    label: Owner
+  - field: voltage
+    type: categorical
+    label: Voltage (kV)
+  - field: status
+    type: categorical
+    label: Status
+  - field: tier
+    type: categorical
+    label: TPIT tier
+  - field: county
+    type: categorical
+    label: County
+  - field: name
+    type: text
+    label: Project name
   tippecanoe:
   - -zg
   - --simplification=8
@@ -272,27 +459,47 @@ layers:
   - inr
   - poi
   filterable_fields:
-  - {field: mw, type: numeric, label: MW}
-  - {field: fuel, type: categorical, label: Fuel}
-  - {field: technology, type: categorical, label: Technology}
-  - {field: zone, type: categorical, label: ERCOT zone}
-  - {field: funnel_stage, type: categorical, label: Funnel stage}
-  - {field: commissioned, type: categorical, label: Commissioned}
-  - {field: under_construction, type: categorical, label: Under construction}
-  - {field: county, type: categorical, label: County}
-  - {field: entity, type: text, label: Developer}
-  - {field: name, type: text, label: Project}
+  - field: mw
+    type: numeric
+    label: MW
+  - field: fuel
+    type: categorical
+    label: Fuel
+  - field: technology
+    type: categorical
+    label: Technology
+  - field: zone
+    type: categorical
+    label: ERCOT zone
+  - field: funnel_stage
+    type: categorical
+    label: Funnel stage
+  - field: commissioned
+    type: categorical
+    label: Commissioned
+  - field: under_construction
+    type: categorical
+    label: Under construction
+  - field: county
+    type: categorical
+    label: County
+  - field: entity
+    type: text
+    label: Developer
+  - field: name
+    type: text
+    label: Project
   tippecanoe:
   - -zg
 - id: waha_circle
   file: combined_geoms.geojson
   geom: point
-  group: Reference
-  label: Waha Hub Ring
+  group: Local Developments
+  label: WAHA Hub Ring
   color: '#FFD400'
-  circle_radius: 14
+  circle_radius: 16
   stroke_color: '#FFD400'
-  stroke_width: 2
+  stroke_width: 2.5
   fill_opacity: 0
   default_on: true
   popup:
@@ -300,11 +507,13 @@ layers:
   tippecanoe:
   - -Z0
   - -z14
+  popup_labels:
+    name: Hub
 - id: labels_hubs
   file: combined_geoms.geojson
   geom: label
-  group: Reference
-  label: WAHA Natural Gas Hub
+  group: Local Developments
+  label: WAHA Hub Label
   color: '#fef3c7'
   default_on: true
   show_marker: true
@@ -314,6 +523,8 @@ layers:
   tippecanoe:
   - -Z0
   - -z14
+  popup_labels:
+    name: Hub
 - id: county_labels
   file: combined_geoms.geojson
   geom: label
@@ -332,7 +543,7 @@ layers:
   prebuilt: true
   geom: line
   group: Pipelines
-  label: "Oil & Gas Pipelines (>20\", RRC)"
+  label: Oil & Gas Pipelines (>20", RRC)
   color: '#fb7185'
   line_width: 0.75
   default_on: false
@@ -349,44 +560,67 @@ layers:
   label: Gas Turbine Air Permits (TCEQ, recent filings)
   color: '#f0abfc'
   default_on: false
-  radius: 4
+  radius: 7
   popup:
   - name
   - entity
+  - operator
   - county
   - capacity_mw
+  - mw
   - technology
+  - fuel
   - manu
   - model
   - project
   - funnel_stage
   - zone
   - commissioned
+  - year
   - plant_code
   popup_labels:
     name: Project
     entity: Company
+    operator: Operator
     county: County
     capacity_mw: Project MW
+    mw: Project MW (alt)
     technology: Mode
+    fuel: Fuel
     manu: Manufacturer
     model: Turbine model
     project: Number of CTs
     funnel_stage: Status
     zone: Received date
     commissioned: Issue date
+    year: Received year
     plant_code: Permit No.
   filterable_fields:
-  - {field: county, type: categorical, label: County}
-  - {field: technology, type: categorical, label: Mode}
-  - {field: manu, type: categorical, label: Manufacturer}
-  - {field: operator, type: categorical, label: Operator}
-  - {field: funnel_stage, type: categorical, label: Status}
-  - {field: capacity_mw, type: numeric, label: Project MW}
-  - {field: year, type: numeric, label: Received year}
+  - field: county
+    type: categorical
+    label: County
+  - field: technology
+    type: categorical
+    label: Mode
+  - field: manu
+    type: categorical
+    label: Manufacturer
+  - field: operator
+    type: categorical
+    label: Operator
+  - field: funnel_stage
+    type: categorical
+    label: Status
+  - field: capacity_mw
+    type: numeric
+    label: Project MW
+  - field: year
+    type: numeric
+    label: Received year
   tippecanoe:
   - -Z0
   - -z14
+  stroke_width: 2
 - id: tiger_highways
   prebuilt: true
   geom: line
@@ -415,14 +649,18 @@ layers:
   geom: point
   group: Permits
   label: Approved Tax Abatements (energy & DC projects)
-  description: 'County-level property tax abatements granted to new or expanded energy and infrastructure projects. Chapter 312 reinvestment zones and Local Development Agreements (HB 5 / SB 1340 successors to the sunsetted Ch.313).'
+  description: County-level property tax abatements granted to new or expanded energy
+    and infrastructure projects. Chapter 312 reinvestment zones and Local Development
+    Agreements (HB 5 / SB 1340 successors to the sunsetted Ch.313).
   color: '#ef4444'
   default_on: false
-  radius: 4
+  radius: 7
   popup:
   - name
+  - operator
   - county
   - commissioned
+  - funnel_stage
   - technology
   - mw
   - capacity
@@ -432,8 +670,10 @@ layers:
   - poi
   popup_labels:
     name: Applicant
+    operator: Applicant (alt)
     county: County
     commissioned: Approved date
+    funnel_stage: Status
     technology: Project type
     mw: Project MW
     capacity: Capex ($M)
@@ -442,14 +682,25 @@ layers:
     project: Reinvestment zone
     poi: Agenda URL
   filterable_fields:
-  - {field: county, type: categorical, label: County}
-  - {field: technology, type: categorical, label: Project type}
-  - {field: commissioned, type: text, label: Approved date}
-  - {field: mw, type: numeric, label: Project MW}
-  - {field: capacity, type: numeric, label: Capex ($M)}
+  - field: county
+    type: categorical
+    label: County
+  - field: technology
+    type: categorical
+    label: Project type
+  - field: commissioned
+    type: text
+    label: Approved date
+  - field: mw
+    type: numeric
+    label: Project MW
+  - field: capacity
+    type: numeric
+    label: Capex ($M)
   tippecanoe:
   - -Z0
   - -z14
+  stroke_width: 2
 - id: dc_anchors
   file: data/datacenters/dc_anchors.json
   geom: point
@@ -482,11 +733,21 @@ layers:
     sources_count: Sources
     sources_urls: Source URLs
   filterable_fields:
-  - {field: status, type: categorical, label: Status}
-  - {field: county, type: categorical, label: County}
-  - {field: capacity_mw_announced, type: numeric, label: Capacity (MW)}
-  - {field: developer, type: text, label: Developer}
-  - {field: name, type: text, label: Project}
+  - field: status
+    type: categorical
+    label: Status
+  - field: county
+    type: categorical
+    label: County
+  - field: capacity_mw_announced
+    type: numeric
+    label: Capacity (MW)
+  - field: developer
+    type: text
+    label: Developer
+  - field: name
+    type: text
+    label: Project
   tippecanoe:
   - -Z0
   - -z14
