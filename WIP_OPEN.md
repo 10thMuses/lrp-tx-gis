@@ -4,15 +4,15 @@ Active state. Read at session open. Updated at close-out of every shipping chat.
 
 Per OPERATING.md §10: **`## Next chat
 
-**Chat 107b — GROUP-LEVEL TOGGLE-ALL CHECKBOXES IN SIDEBAR.** Each group header in the sidebar (Generation, Transmission & Grid, Permits, etc.) needs a tri-state checkbox that turns all layers in that group on or off in one action. Pure UI feature in `build_template.html` — no build pipeline change.
+**Chat 109 — GROUP-LEVEL TOGGLE-ALL CHECKBOXES IN SIDEBAR (was 107b).** Each group header in the sidebar (Local Developments, Land & Deal, Generation, Transmission & Grid, Permits, etc.) needs a tri-state checkbox that turns all layers in that group on or off in one action. Pure UI feature in `build_template.html` — no build pipeline change.
 
 ### Task
 
-1. In `build_template.html` sidebar render code, each group header (currently a `<div class="group-header">` or similar) gets a checkbox prepended: unchecked = no layers in group on, checked = all on, indeterminate = some on.
+1. In `build_template.html` sidebar render code, each group header gets a checkbox prepended: unchecked = no layers in group on, checked = all on, indeterminate = some on.
 2. Click handler: toggling group checkbox toggles all layers in that group (calls existing per-layer toggle for each).
 3. Reactive update: when individual layer toggles change, recompute group checkbox state (all-on / none-on / mixed → indeterminate via `checkbox.indeterminate = true`).
 4. CSS: subtle styling so group checkbox doesn't compete with layer checkboxes (smaller, lighter color, or use a different control like a button).
-5. Smoke-test in chat: build, preview locally, click through every group's toggle, confirm individual + group state stays consistent.
+5. Smoke-test: build, click through every group's toggle, confirm individual + group state stays consistent.
 6. Standard build → preview → prod per §8.
 
 ### Acceptance
@@ -26,17 +26,13 @@ Per OPERATING.md §10: **`## Next chat
 
 ### Branch
 
-`refinement-chat107b-group-toggle`
+`refinement-chat109-group-toggle`
 
 ### Pre-flight
 
-- Chat 107a shipped clean. 24 layers (was 26): removed `parcels_pecos` (not for sharing) and `fcc_fiber_coverage` (FCC BDC residential broadband data — wrong concept for thesis). White county outlines visible at all zooms; lighter county labels for satellite contrast (#f1f5f9). Line widths halved on transmission/rail/pipelines (default 2→1; transmission voltage scaling 1.5–4 → 0.75–2 in `sizingLineWidthExpr` in `build_template.html`). Brighter colors for satellite contrast: rrc_pipelines `#7c2d12 → #fb923c`, bts_rail `#475569 → #cbd5e1`, tiger_highways `#f59e0b → #fde047`, tpit_subs/tpit_lines `#b45309/#f59e0b → #fbbf24`, counties `#475569 → #ffffff`. mpgcd_zone1: `fill_opacity 0` + stroke. Permits group labels: "Gas Turbine Air Permits (TCEQ, recent filings)" + "Approved Tax Abatements (energy & DC projects)". tpit_lines: added filterable owner/voltage/status/tier/county fields (was just name). build.py: removed `--read-parallel` (caused tippecanoe SQLite lock race on container's overlay filesystem). Deploy `69ee72bcbd5d65c5bac1e0eb`. Build clean: `built=24 missing=0 errored=0 tiles_total=12712 KB`.
-- **Open follow-ups from operator review:**
-  - Item 4 (more transmission upgrade filter fields): **shipped in 107a** — added owner/voltage/status/tier/county.
-  - Item 11 (more reference layers — streets, townships): **defer**. Streets adds significant tile size; townships not applicable to TX (Spanish/Mexican land grants, not PLSS). Reconsider after Hanwha share.
-  - Item 2/3 (solar + wind operator fills): Chat 106 still queued. Same EIA-860 join methodology applies to both.
-- Sprint queue: group toggle UI (this chat) → wind+solar operator fill via EIA-860 join → Comptroller LDAD scrape (Playwright, authorized Chat 106a) → Permian abatement work [DROPPED Chat 105].
-- Tool budget for Chat 107b: 6–10 (template edits + build + preview + prod + close-out).
+- Chat 108 shipped clean. New `Local Developments` group at top of sidebar, default-on. Three highlight features added in yellow (#FFD400): `solstice_substation` (AEP Solstice Substation, point @ OSM way 500535889 → 30.94832, -103.36171); `la_escalera` (La Escalera Ranch / Apex Pecos Flat polygon, ACCURACY: APPROXIMATE, ~223,000 acres anchored in Pecos County); `waha_circle` + `labels_hubs` moved out of Reference, repositioned to Coyanosa/Pecos County (31.235, -103.207), feature `name` uppercased to "WAHA". Permits visibility pass: `tceq_gas_turbines` r=4→7 stroke 1.5→2, `tax_abatements` r=4→7 stroke 1.5→2. Popup audit pass — added `popup_labels` and missing fields across counties (+GEOID), eia860_plants (+sector), substations (+osm_id, "Voltage (V)" label), tceq_gas_turbines (+fuel/operator/year), tax_abatements (+operator/funnel_stage), and labels-only refinements on eia860_battery/wind/solar/transmission/tpit_subs/cities/mpgcd_zone1/caramba_north. Deploy `69ef88a531ab2405cddbc098`. Build clean: `built=24 missing=0 errored=0 tiles_total=11446 KB`. Local↔prod md5 identical (`58cf18ab760e9df639176e9918943cfc`).
+- Resume note: deploy was blocked at end of original Chat 108 by Netlify upload 503; cleared on retry in Chat 108b (resume) without code changes.
+- Tool budget for Chat 109: 6–10 (template edits + build + preview + prod + close-out).
 
 ## Sprint queue
 
@@ -59,12 +55,12 @@ Cross-device QA + polish for the mobile-friendly map work shipped in Chats 100�
 ## Prod status
 
 - Layer count: **24**
-- Last published deploy: `69ee7b6cffaa366af764784c` (Chat 107d, 2026-04-26). State=ready. Critical bug fix on top of 107c: build.py was defaulting `line_width` to **2** in the layer registry render path (line 825), overriding template defaults — so the JS template's 0.5 default never took effect. Fixed: `'line_width': L.get('line_width', 0.5)`. Also: county_labels switched to dark text (`#0f172a`) with halo opt-out via new `text_halo: false` YAML flag (operator request: no halos on county labels); template halo logic now auto-picks contrast (light text → dark halo, dark text → light halo) and respects `text_halo: false`. Counties `line_width` raised 0.5 → 1 (sub-pixel was disappearing on high-DPI displays). county_labels `min_zoom: 4 → 5` so they stop overlapping illegibly at world-zoom but stay visible at state-wide TX view. Build clean: `built=24 missing=0 errored=0 tiles_total=12712 KB`.
+- Last published deploy: `69ef88a531ab2405cddbc098` (Chat 108, 2026-04-27). State=ready. Local Developments group + popup audit + permit visibility. New layers: `solstice_substation` (AEP Solstice Substation point, OSM way 500535889 coords), `la_escalera` (Apex Pecos Flat ranch outline, ACCURACY: APPROXIMATE, ~223k acres). Moved `waha_circle` + `labels_hubs` from Reference to Local Developments; WAHA repositioned to Coyanosa/Pecos County (31.235, -103.207); name uppercased. `tceq_gas_turbines` r=4→7 stroke 1.5→2; `tax_abatements` r=4→7 stroke 1.5→2 (visibility pass per operator review). Popup completeness pass across all layers — added `osm_id` to substations, `sector` to eia860_plants, `GEOID` to counties, `fuel/operator/year` to tceq_gas_turbines, `operator/funnel_stage` to tax_abatements; popup_labels added to 12 layers for clarity. `GROUP_ORDER` prepends 'Local Developments' so it renders first in sidebar. Build clean: `built=24 missing=0 errored=0 tiles_total=11446 KB`. Local↔prod md5 identical (`58cf18ab760e9df639176e9918943cfc`).
+- Previous deploy: `69ee7b6cffaa366af764784c` (Chat 107d, 2026-04-26). State=ready. Critical bug fix on top of 107c: build.py was defaulting `line_width` to **2** in the layer registry render path (line 825), overriding template defaults — so the JS template's 0.5 default never took effect. Fixed: `'line_width': L.get('line_width', 0.5)`. Also: county_labels switched to dark text (`#0f172a`) with halo opt-out via new `text_halo: false` YAML flag; template halo logic now auto-picks contrast (light text → dark halo, dark text → light halo). Counties `line_width` raised 0.5 → 1. county_labels `min_zoom: 4 → 5`.
 - Previous deploy: `69ee76fc43cd26b6f3460922` (Chat 107c, 2026-04-26). State=ready. Contrast/legibility/fuel pass.
 - Previous deploy: `69ee72bcbd5d65c5bac1e0eb` (Chat 107a, 2026-04-26).
 - Previous deploy: `69ee25b25be421df2f22b294` (Chat 105, 2026-04-26). PMTiles feature counts fix for prebuilt layers.
 - Previous deploy: `69ee07134b63d09184004cf9` (Chat 102, 2026-04-26). State=ready. ERCOT queue project aggregation popup. `compute_ercot_group_aggregates(csv_path)` streams `combined_points.csv` once and returns `{group_key: {group_total_mw, group_count, group_breakdown}}` (breakdown is `\n`-joined `<name> · <mw> MW · <county>` lines, sorted by MW desc). `split_combined_csv()` stamps these fields onto every ercot_queue feature's props during NDGeoJSON write. Popup helper `ercotQueueGroupSummaryHtml(props)` renders a summary block (sage-pink card with project group label, total MW, component count, breakdown list) above the per-row table when `group_count > 1`; empty for singletons. Build clean: `built=26  missing=0  errored=0  tiles_total=18933 KB` (+68 KB from prior deploy carrying 3 new fields × 1,778 ercot_queue rows). Local↔prod md5 identical. Aggregation reach: 1,205 groups total, 394 with 2+ components.
-- Previous deploy: `69edeb7d83b23c994ffd00ed` (Chat 101, 2026-04-26). Mobile stage 2: gesture rotation disabled below 768 px via matchMedia, measure-vertex radius 4→12 on mobile, `.measure-readout` close button, `#btn-print` collapses drawer on mobile.
 - URL: `https://lrp-tx-gis.netlify.app` — requires real User-Agent on curl (`-A "Mozilla/5.0"`).
 
 ---
