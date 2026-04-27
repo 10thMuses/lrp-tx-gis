@@ -524,8 +524,9 @@ function addLayer(L) {
         'text-size': 13,
         'text-anchor': 'top',
         'text-offset': [0, 0.4],
-        'text-allow-overlap': false,
-        'text-padding': 1,
+        'text-allow-overlap': true,
+        'text-ignore-placement': true,
+        'text-padding': 0,
       });
     }
     if (L.geom === 'line') {
@@ -1014,7 +1015,14 @@ function syncHash() {
     if (L && isLayerFiltered(L)) activeFilters[lid] = filterState[lid];
   });
   const filtersStr = Object.keys(activeFilters).length > 0 ? JSON.stringify(activeFilters) : undefined;
-  writeHash({ lat: c.lat, lon: c.lng, zoom: map.getZoom(), layers: activeLayerIds().join(','), base: currentBase, filters: filtersStr, sb: sidebarCollapsed ? '1' : undefined });
+  // Only embed layers= in hash if user has deviated from defaults.
+  // Keeps refreshes/bookmarks of clean state from carrying every-layer-on
+  // back across sessions.
+  const activeIds = activeLayerIds().sort();
+  const defaultIds = LAYERS.filter(L => L.default_on).map(L => L.id).sort();
+  const isDefaultLayerSet = activeIds.length === defaultIds.length && activeIds.every((id, i) => id === defaultIds[i]);
+  const layersStr = isDefaultLayerSet ? undefined : activeIds.join(',');
+  writeHash({ lat: c.lat, lon: c.lng, zoom: map.getZoom(), layers: layersStr, base: currentBase, filters: filtersStr, sb: sidebarCollapsed ? '1' : undefined });
 }
 
 let currentBase = initBase;
