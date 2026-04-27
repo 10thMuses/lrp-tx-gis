@@ -397,10 +397,10 @@ function sizingRadiusExpr(L) {
 }
 function sizingLineWidthExpr(L) {
   const rule = SIZING_RULES[L.id];
-  if (!rule || rule.mode !== 'kv_line') return L.line_width ?? 0.5;
-  return ['case', ['<=', _sizingVal(rule), 0], 0.5,
+  if (!rule || rule.mode !== 'kv_line') return L.line_width ?? 0.75;
+  return ['case', ['<=', _sizingVal(rule), 0], 0.75,
     ['interpolate', ['linear'], _sizingVal(rule),
-      0, 0.4, 69, 0.5, 138, 0.65, 230, 0.8, 345, 1, 500, 1.25]];
+      0, 0.65, 69, 0.75, 138, 0.9, 230, 1.05, 345, 1.25, 500, 1.5]];
 }
 function sizingIconSizeExpr(L) {
   const rule = SIZING_RULES[L.id];
@@ -460,13 +460,14 @@ function layerPaint(L) {
     return {
       'circle-radius': L.circle_radius ?? sizingRadiusExpr(L),
       'circle-color': color,
-      'circle-stroke-width': L.stroke_width ?? 1.2,
+      'circle-stroke-width': L.stroke_width ?? 1.5,
       'circle-stroke-color': L.stroke_color ?? '#ffffff',
+      'circle-stroke-opacity': 1,
       'circle-opacity': opacity,
     };
   }
   if (L.geom === 'line') {
-    return { 'line-color': L.color, 'line-width': sizingLineWidthExpr(L), 'line-opacity': 0.9 };
+    return { 'line-color': L.color, 'line-width': sizingLineWidthExpr(L), 'line-opacity': 1.0 };
   }
   if (L.geom === 'fill') {
     const cs = L.color_steps;
@@ -532,11 +533,11 @@ function addLayer(L) {
     if (L.geom === 'line') {
       // Casing: white outline behind colored lines for satellite contrast.
       // Skip when the layer color is already white (counties) — casing would
-      // make the line look 4-5x thicker. Skip when line_width <= 0.5 — sub-
-      // pixel lines should not be casing-fattened.
-      const _lw = L.line_width ?? 0.5;
+      // make the line look 4-5x thicker. Skip when line_width <= 0.75 — sub-
+      // pixel/thin lines should not be casing-fattened.
+      const _lw = L.line_width ?? 0.75;
       const _isWhite = (L.color || '').toLowerCase() === '#ffffff';
-      if (!_isWhite && _lw > 0.5) {
+      if (!_isWhite && _lw > 0.75) {
         map.addLayer({
           id: `${lyrId}__casing`,
           type: 'line',
