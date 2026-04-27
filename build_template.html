@@ -176,6 +176,7 @@
   <div class="title">Texas Energy GIS</div>
   <div class="spacer"></div>
   <button id="btn-measure" title="Measure distance &amp; area">Measure</button>
+  <button id="btn-reset" title="Reset to default layers + view">Reset</button>
   <button id="btn-share" title="Copy shareable URL">Share view</button>
   <button id="btn-print" title="Print / PDF (landscape)">Print / PDF</button>
 </div>
@@ -524,6 +525,7 @@ function addLayer(L) {
         'text-anchor': 'top',
         'text-offset': [0, 0.4],
         'text-allow-overlap': false,
+        'text-padding': 1,
       });
     }
     if (L.geom === 'line') {
@@ -1040,6 +1042,12 @@ function applyBasemap(id) {
 const bmSelect = document.getElementById('basemap-select');
 bmSelect.value = initBase;
 bmSelect.addEventListener('change', () => applyBasemap(bmSelect.value));
+
+document.getElementById('btn-reset').addEventListener('click', () => {
+  // Hard reset: clear hash, reload to defaults. The reload reads the bare URL,
+  // applies default_on per layer, no carryover from previous session state.
+  location.href = location.origin + location.pathname;
+});
 
 document.getElementById('btn-share').addEventListener('click', async () => {
   syncHash();
