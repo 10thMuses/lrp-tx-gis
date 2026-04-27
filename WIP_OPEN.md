@@ -4,35 +4,32 @@ Active state. Read at session open. Updated at close-out of every shipping chat.
 
 Per OPERATING.md §10: **`## Next chat
 
-**Chat 109 — GROUP-LEVEL TOGGLE-ALL CHECKBOXES IN SIDEBAR (was 107b).** Each group header in the sidebar (Local Developments, Land & Deal, Generation, Transmission & Grid, Permits, etc.) needs a tri-state checkbox that turns all layers in that group on or off in one action. Pure UI feature in `build_template.html` — no build pipeline change.
+**Chat 110 — GROUP-LEVEL TOGGLE-ALL CHECKBOXES IN SIDEBAR (deferred from 107b/109).** Each group header in the sidebar (Local Developments, Hyperscale DC & Power Campuses, Land & Deal, Generation, Transmission & Grid, Permits, etc.) needs a tri-state checkbox that turns all layers in that group on or off. Pure UI in `build_template.html`.
 
 ### Task
 
-1. In `build_template.html` sidebar render code, each group header gets a checkbox prepended: unchecked = no layers in group on, checked = all on, indeterminate = some on.
-2. Click handler: toggling group checkbox toggles all layers in that group (calls existing per-layer toggle for each).
-3. Reactive update: when individual layer toggles change, recompute group checkbox state (all-on / none-on / mixed → indeterminate via `checkbox.indeterminate = true`).
-4. CSS: subtle styling so group checkbox doesn't compete with layer checkboxes (smaller, lighter color, or use a different control like a button).
-5. Smoke-test: build, click through every group's toggle, confirm individual + group state stays consistent.
-6. Standard build → preview → prod per §8.
+1. Group header gets a checkbox prepended: unchecked = none on, checked = all on, indeterminate = some on.
+2. Click handler toggles all layers in group.
+3. Reactive: individual layer toggles update group checkbox state.
+4. CSS: subtle styling so group checkbox doesn't compete with layer checkboxes.
+5. Build → preview → prod per §8.
 
 ### Acceptance
 
 - Every group header has a tri-state checkbox.
-- Clicking group checkbox toggles all layers in that group.
-- Toggling individual layers updates group checkbox to all/none/indeterminate correctly.
-- Build clean: `built=24 missing=0 errored=0`.
+- Build clean: `built=26 missing=0 errored=0`.
 - Local↔prod md5 identical post-deploy.
 - Branch merged + deleted same chat per §6.12.
 
 ### Branch
 
-`refinement-chat109-group-toggle`
+`refinement-chat110-group-toggle`
 
 ### Pre-flight
 
-- Chat 108 shipped clean. New `Local Developments` group at top of sidebar, default-on. Three highlight features added in yellow (#FFD400): `solstice_substation` (AEP Solstice Substation, point @ OSM way 500535889 → 30.94832, -103.36171); `la_escalera` (La Escalera Ranch / Apex Pecos Flat polygon, ACCURACY: APPROXIMATE, ~223,000 acres anchored in Pecos County); `waha_circle` + `labels_hubs` moved out of Reference, repositioned to Coyanosa/Pecos County (31.235, -103.207), feature `name` uppercased to "WAHA". Permits visibility pass: `tceq_gas_turbines` r=4→7 stroke 1.5→2, `tax_abatements` r=4→7 stroke 1.5→2. Popup audit pass — added `popup_labels` and missing fields across counties (+GEOID), eia860_plants (+sector), substations (+osm_id, "Voltage (V)" label), tceq_gas_turbines (+fuel/operator/year), tax_abatements (+operator/funnel_stage), and labels-only refinements on eia860_battery/wind/solar/transmission/tpit_subs/cities/mpgcd_zone1/caramba_north. Deploy `69ef8b0a7ca58c0d4d25ae4d` (re-uploaded after first deploy 69ef88a531ab2405cddbc098 reported state=ready but did not promote to prod alias). Build clean: `built=24 missing=0 errored=0 tiles_total=11446 KB`. Local↔prod md5 identical (`58cf18ab760e9df639176e9918943cfc`).
-- Resume note: deploy was blocked at end of original Chat 108 by Netlify upload 503; cleared on retry in Chat 108b (resume) without code changes.
-- Tool budget for Chat 109: 6–10 (template edits + build + preview + prod + close-out).
+- Chat 109b shipped clean. Final state: `Local Developments` group (Solstice 22r/5stroke yellow ring; WAHA circle+label repositioned to (31.155, -103.105) — verified Pecos County via point-in-polygon test against TIGER counties; prior placement at (31.235, -103.207) was actually in Reeves). New `Hyperscale DC & Power Campuses` group right after Local Developments containing la_escalera + longfellow_ranch + gw_ranch — all red `#ef4444` outlines, fill_opacity 0, default_on, no acreage in label. Orphan `dev_gw_ranch` and `dev_longfellow_campus` layers from unmerged chat108-local-developments branch were superseded and removed from prod by this deploy. Deploy `69ef926ed31a462a98b27f77`. Build clean: `built=26 missing=0 errored=0 tiles_total=11556 KB`. Local↔prod md5 identical (`45c2b24279e52c0debd67167b6025f89`).
+- Stale branches deleted at chat 109b close-out: `refinement-chat108-local-developments` (parallel deploy with wrong palette/group/labels), `refinement-chat109-hyperscale-campuses` (superseded by 109b).
+- Resolved: operator's "Pacifico" reference = developer of GW Ranch, not a separate site (confirmed in Chat 109; not contradicted in Chat 109b).
 
 ## Sprint queue
 
@@ -55,7 +52,8 @@ Cross-device QA + polish for the mobile-friendly map work shipped in Chats 100�
 ## Prod status
 
 - Layer count: **24**
-- Last published deploy: `69ef8b0a7ca58c0d4d25ae4d` (Chat 108b, 2026-04-27). State=ready. Local Developments group + popup audit + permit visibility. New layers: `solstice_substation` (AEP Solstice Substation point, OSM way 500535889 coords), `la_escalera` (Apex Pecos Flat ranch outline, ACCURACY: APPROXIMATE, ~223k acres). Moved `waha_circle` + `labels_hubs` from Reference to Local Developments; WAHA repositioned to Coyanosa/Pecos County (31.235, -103.207); name uppercased. `tceq_gas_turbines` r=4→7 stroke 1.5→2; `tax_abatements` r=4→7 stroke 1.5→2 (visibility pass per operator review). Popup completeness pass across all layers — added `osm_id` to substations, `sector` to eia860_plants, `GEOID` to counties, `fuel/operator/year` to tceq_gas_turbines, `operator/funnel_stage` to tax_abatements; popup_labels added to 12 layers for clarity. `GROUP_ORDER` prepends 'Local Developments' so it renders first in sidebar. Build clean: `built=24 missing=0 errored=0 tiles_total=11446 KB`. Local↔prod md5 identical (`58cf18ab760e9df639176e9918943cfc`).
+- Last published deploy: `69ef926ed31a462a98b27f77` (Chat 109b, 2026-04-27). State=ready. Hyperscale DC & Power Campuses group consolidation + WAHA Pecos fix + Solstice visibility. La Escalera moved Local Developments → Hyperscale DC & Power Campuses (yellow → red `#ef4444`, fill 0). New layers `longfellow_ranch` + `gw_ranch` (red outline, no fill, default_on, no acreage in labels) — Mitchell family Longfellow Ranch (host to Poolside Project Horizon 2 GW) and Pacifico Energy GW Ranch (7.65 GW off-grid). AEP Solstice circle_radius 12→22, stroke_width 3→5 (was a near-invisible dot at zoom 8 over satellite imagery). WAHA repositioned (31.235, -103.207) → (31.155, -103.105) — point-in-polygon verified against TIGER counties showed prior placement was in Reeves; new placement is Pecos. GROUP_ORDER now: ['Local Developments', 'Hyperscale DC & Power Campuses', 'Land & Deal', ...]. Orphan `dev_gw_ranch`+`dev_longfellow_campus` layers from unmerged parallel branch superseded; absent from this deploy. Build clean: `built=26 missing=0 errored=0 tiles_total=11556 KB`. Local↔prod md5 identical (`45c2b24279e52c0debd67167b6025f89`).
+- Previous deploy: `69ef8b0a7ca58c0d4d25ae4d` (Chat 108b, 2026-04-27). State=ready. Local Developments group + popup audit + permit visibility.
 - Previous deploy: `69ee7b6cffaa366af764784c` (Chat 107d, 2026-04-26). State=ready. Critical bug fix on top of 107c: build.py was defaulting `line_width` to **2** in the layer registry render path (line 825), overriding template defaults — so the JS template's 0.5 default never took effect. Fixed: `'line_width': L.get('line_width', 0.5)`. Also: county_labels switched to dark text (`#0f172a`) with halo opt-out via new `text_halo: false` YAML flag; template halo logic now auto-picks contrast (light text → dark halo, dark text → light halo). Counties `line_width` raised 0.5 → 1. county_labels `min_zoom: 4 → 5`.
 - Previous deploy: `69ee76fc43cd26b6f3460922` (Chat 107c, 2026-04-26). State=ready. Contrast/legibility/fuel pass.
 - Previous deploy: `69ee72bcbd5d65c5bac1e0eb` (Chat 107a, 2026-04-26).
