@@ -816,6 +816,7 @@ def render_html(layers_config, layer_stats, filter_stats=None):
             'color': L['color'],
             'default_on': L.get('default_on', False),
             'sidebar_omit': L.get('sidebar_omit', False),
+            'companions': L.get('companions', []),
             'popup': L.get('popup', []),
             'popup_labels': L.get('popup_labels', {}),
             'description': L.get('description', ''),
