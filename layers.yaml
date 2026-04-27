@@ -394,7 +394,7 @@ layers:
   label: Highways (Interstate + US)
   color: '#fbbf24'
   line_width: 0.5
-  default_on: false
+  default_on: true
   popup:
   - name
   - rttyp
@@ -405,7 +405,7 @@ layers:
   label: Rail (Main Lines)
   color: '#94a3b8'
   line_width: 0.5
-  default_on: false
+  default_on: true
   popup:
   - owner
   - subdivision
