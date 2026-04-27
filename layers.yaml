@@ -56,31 +56,6 @@ layers:
   - note
   tippecanoe:
   - -zg
-- id: wells
-  file: combined_points.csv
-  geom: point
-  group: Water & Regulatory
-  label: Groundwater Wells (TWDB)
-  color: '#a855f7'
-  default_on: false
-  min_zoom: 10
-  radius: 2.5
-  popup:
-  - name
-  - county
-  - depth_ft
-  - use
-  - aquifer
-  filterable_fields:
-  - {field: depth_ft, type: numeric, label: Depth (ft)}
-  - {field: aquifer, type: categorical, label: Aquifer}
-  - {field: use, type: categorical, label: Use}
-  - {field: county, type: categorical, label: County}
-  tippecanoe:
-  - -zg
-  - -r1
-  - --drop-densest-as-needed
-  - --extend-zooms-if-still-dropping
 - id: eia860_plants
   file: combined_points.csv
   geom: point
@@ -435,20 +410,6 @@ layers:
   - owner
   - subdivision
   - net
-- id: water_mains_approx
-  file: combined_geoms.geojson
-  geom: line
-  group: Water & Regulatory
-  label: Water Mains (Approximate)
-  color: '#06b6d4'
-  default_on: false
-  popup:
-  - name
-  - operator
-  - note
-  - accuracy
-  tippecanoe:
-  - -zg
 - id: tax_abatements
   file: combined_points.csv
   geom: point
