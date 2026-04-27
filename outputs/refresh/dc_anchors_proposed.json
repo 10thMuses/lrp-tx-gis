@@ -1,0 +1,63 @@
+{
+  "schema_version": "1.0",
+  "generated": "2026-04-27T08:22:59Z",
+  "model": "claude-sonnet-4-5-20250929",
+  "input_file": "data/datacenters/dc_anchors.json",
+  "input_entry_count": 8,
+  "processed_entry_count": 8,
+  "proposals": [
+    {
+      "id": "project-horizon-poolside-coreweave",
+      "diff": {},
+      "additional_sources": [],
+      "conflicts": [],
+      "fetch_failures": [],
+      "no_change": true
+    },
+    {
+      "id": "stargate-abilene-crusoe-oracle",
+      "diff": {},
+      "additional_sources": [
+        {
+          "url": "https://openai.com/index/five-new-stargate-sites/",
+          "claim": "OpenAI announced five new Stargate AI datacenter sites to accelerate the $500B, 10-gigawatt U.S. infrastructure buildout"
+        }
+      ],
+      "conflicts": [],
+      "fetch_failures": []
+    },
+    {
+      "id": "microsoft-crusoe-abilene",
+      "error": "Claude API exhausted retries"
+    },
+    {
+      "id": "project-matador-fermi-america",
+      "error": "Claude API exhausted retries"
+    },
+    {
+      "id": "gw-ranch-pacifico-pecos",
+      "error": "Claude API exhausted retries"
+    },
+    {
+      "id": "stargate-frontier-shackelford",
+      "diff": {},
+      "additional_sources": [
+        {
+          "url": "https://www.thealbanynews.net/news/shackelford-data-center-named-official-stargate-ai-campus",
+          "accessed_date": "2025-10-02",
+          "claim": "Shackelford County site officially confirmed as Stargate Frontier Campus; 5,000 construction jobs, 1,600 full-time positions"
+        }
+      ],
+      "conflicts": [],
+      "fetch_failures": []
+    },
+    {
+      "id": "stargate-milam-sb-energy",
+      "error": "Claude API exhausted retries"
+    },
+    {
+      "id": "meta-temple-bell",
+      "error": "Claude API exhausted retries"
+    }
+  ]
+}
