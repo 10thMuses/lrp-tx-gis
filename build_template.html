@@ -1,4 +1,5 @@
 <!doctype html>
+<!-- LRP build 1ebfd19d90fdbf673feb576b2889fef3bfc44960 -->
 <html lang="en">
 <head>
 <meta charset="utf-8" />
@@ -37,12 +38,15 @@
   .sidebar { grid-area: sidebar; background: var(--panel); border-right: 1px solid var(--border); overflow-y: auto; overflow-x: hidden; padding: 12px 0; min-width: 0; }
   body.sb-collapsed .sidebar { border-right: none; }
   .group { padding: 0 16px 12px; }
-  .group h3 { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin: 16px 0 8px; }
+  .group .group-header { display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none; margin: 16px 0 8px; }
+  .group .group-header input[type=checkbox] { accent-color: #0f172a; cursor: pointer; margin: 0; }
+  .group h3 { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin: 0; }
   .layer { display: flex; align-items: center; gap: 10px; padding: 5px 0; cursor: pointer; user-select: none; }
   .layer input[type=checkbox] { accent-color: #0f172a; cursor: pointer; }
-  .layer .swatch { display: inline-block; width: 10px; height: 10px; border-radius: 2px; border: 1px solid rgba(0,0,0,0.1); flex-shrink: 0; }
+  .layer .swatch { display: inline-block; width: 10px; height: 10px; border-radius: 2px; border: 1px solid rgba(0,0,0,0.1); flex-shrink: 0; box-sizing: border-box; }
   .layer .swatch.line { height: 3px; border-radius: 1px; width: 14px; }
   .layer .swatch.fill { opacity: 0.85; }
+  .layer .swatch.outline { background: transparent !important; opacity: 1; border-width: 2px; border-style: solid; }
   .layer .label { font-size: 13px; flex: 1; }
   .layer .count { font-size: 11px; color: var(--muted); font-variant-numeric: tabular-nums; }
   .basemap-picker { padding: 12px 16px; border-top: 1px solid var(--border); margin-top: 12px; }
@@ -955,7 +959,32 @@ function wirePopups() {
   });
 }
 
-const GROUP_ORDER = ['Local Developments', 'Hyperscale DC & Power Campuses', 'Land & Deal', 'Generation', 'Transmission & Grid', 'Pipelines', 'Permits', 'Projects', 'Reference', 'Water & Regulatory'];
+const GROUP_ORDER = ['Reference', 'Land & Deal', 'Local Focal Points', 'Local Hyperscale DC & Power Campuses', 'Power Generation', 'Transmission & Grid', 'Pipelines', 'Permits', 'Projects'];
+
+function setLayerVisibilityWithCompanions(L, visible) {
+  setLayerVisibility(L, visible);
+  if (Array.isArray(L.companions) && L.companions.length) {
+    L.companions.forEach(cid => {
+      const C = LAYERS.find(x => x.id === cid);
+      if (C) setLayerVisibility(C, visible);
+    });
+  }
+}
+
+function updateGroupCheckbox(groupEl) {
+  const groupCb = groupEl.querySelector('input.group-toggle');
+  if (!groupCb) return;
+  const layerCbs = groupEl.querySelectorAll('label.layer input[type=checkbox]');
+  if (!layerCbs.length) {
+    groupCb.checked = false;
+    groupCb.indeterminate = false;
+    return;
+  }
+  const total = layerCbs.length;
+  const checked = Array.from(layerCbs).filter(c => c.checked).length;
+  groupCb.checked = checked === total;
+  groupCb.indeterminate = checked > 0 && checked < total;
+}
 
 function renderSidebar(activeSet) {
   const grouped = {};
@@ -969,13 +998,19 @@ function renderSidebar(activeSet) {
     if (!grouped[g]) return;
     const div = document.createElement('div');
     div.className = 'group';
-    div.innerHTML = `<h3>${g}</h3>` + grouped[g].map(L => {
+    const header = `<label class="group-header" title="Toggle all layers in ${escapeHtml(g)}"><input type="checkbox" class="group-toggle" /><h3>${g}</h3></label>`;
+    div.innerHTML = header + grouped[g].map(L => {
       const on = activeSet.has(L.id);
-      const swCls = L.geom === 'line' ? 'swatch line' : (L.geom === 'fill' ? 'swatch fill' : 'swatch');
+      // Layers with no fill (fill_opacity:0) render as outline-only on the map.
+      // Mirror that in the sidebar swatch so the legend matches what's drawn.
+      const isOutlineOnly = L.geom === 'fill' && (L.fill_opacity === 0 || L.fill_opacity === '0');
+      const swCls = L.geom === 'line'
+        ? 'swatch line'
+        : (L.geom === 'fill' ? (isOutlineOnly ? 'swatch outline' : 'swatch fill') : 'swatch');
       // ERCOT queue: swatch reflects the fuel-type color split on the map.
       const swStyle = (L.id === 'ercot_queue')
         ? 'background:linear-gradient(90deg,#f59e0b 0 20%,#eab308 20% 40%,#84cc16 40% 60%,#dc2626 60% 80%,#64748b 80% 100%)'
-        : `background:${L.color}`;
+        : (isOutlineOnly ? `border-color:${L.color}` : `background:${L.color}`);
       const panel = renderLayerFilterPanel(L);
       return `<label class="layer" data-id="${L.id}"${L.description ? ` title="${escapeHtml(L.description)}"` : ''}>
         <input type="checkbox" ${on ? 'checked' : ''} />
@@ -988,10 +1023,32 @@ function renderSidebar(activeSet) {
   });
   container.querySelectorAll('label.layer input').forEach(cb => {
     cb.addEventListener('change', e => {
-      const id = cb.closest('label').dataset.id;
+      const labelEl = cb.closest('label');
+      const id = labelEl.dataset.id;
       const L = LAYERS.find(x => x.id === id);
-      setLayerVisibility(L, cb.checked);
+      setLayerVisibilityWithCompanions(L, cb.checked);
       setFilterPanelVisible(id, cb.checked);
+      updateGroupCheckbox(labelEl.closest('.group'));
+      syncHash();
+    });
+  });
+  container.querySelectorAll('.group').forEach(groupEl => {
+    updateGroupCheckbox(groupEl);
+    const groupCb = groupEl.querySelector('input.group-toggle');
+    if (!groupCb) return;
+    groupCb.addEventListener('change', e => {
+      const want = groupCb.checked;
+      groupEl.querySelectorAll('label.layer').forEach(lab => {
+        const cb = lab.querySelector('input[type=checkbox]');
+        if (!cb || cb.checked === want) return;
+        cb.checked = want;
+        const id = lab.dataset.id;
+        const L = LAYERS.find(x => x.id === id);
+        if (!L) return;
+        setLayerVisibilityWithCompanions(L, want);
+        setFilterPanelVisible(id, want);
+      });
+      groupCb.indeterminate = false;
       syncHash();
     });
   });
@@ -1076,10 +1133,13 @@ document.getElementById('btn-print').addEventListener('click', () => {
   const rows = LAYERS
     .filter(L => active.has(L.id) && !L.sidebar_omit)
     .map(L => {
-      const swCls = L.geom === 'line' ? 'pl-sw line' : (L.geom === 'fill' ? 'pl-sw fill' : 'pl-sw');
+      const isOutlineOnly = L.geom === 'fill' && (L.fill_opacity === 0 || L.fill_opacity === '0');
+      const swCls = L.geom === 'line'
+        ? 'pl-sw line'
+        : (L.geom === 'fill' ? (isOutlineOnly ? 'pl-sw outline' : 'pl-sw fill') : 'pl-sw');
       const swStyle = (L.id === 'ercot_queue')
         ? 'background:linear-gradient(90deg,#f59e0b 0 20%,#eab308 20% 40%,#84cc16 40% 60%,#dc2626 60% 80%,#64748b 80% 100%)'
-        : `background:${L.color}`;
+        : (isOutlineOnly ? `background:transparent;border:2px solid ${L.color}` : `background:${L.color}`);
       return `<div class="pl-row"><span class="${swCls}" style="${swStyle}"></span><span class="pl-name">${escapeHtml(L.label)}</span></div>`;
     }).join('');
   const legendEl = document.getElementById('print-legend');

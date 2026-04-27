@@ -52,7 +52,7 @@ layers:
 - id: solstice_substation
   file: combined_geoms.geojson
   geom: point
-  group: Local Developments
+  group: Local Focal Points
   label: AEP Solstice Substation
   color: '#FFD400'
   default_on: true
@@ -82,7 +82,7 @@ layers:
 - id: la_escalera
   file: combined_geoms.geojson
   geom: fill
-  group: Hyperscale DC & Power Campuses
+  group: Local Hyperscale DC & Power Campuses
   label: La Escalera Ranch (Apex Clean Energy)
   description: La Escalera Ranch — Lyda Family. Approximate ~223,000-acre ranch outline;
     site of Apex Clean Energy's Pecos Flat 3.3 GW wind/solar/green-hydrogen complex.
@@ -114,7 +114,7 @@ layers:
 - id: longfellow_ranch
   file: combined_geoms.geojson
   geom: fill
-  group: Hyperscale DC & Power Campuses
+  group: Local Hyperscale DC & Power Campuses
   label: Longfellow Ranch
   description: Mitchell family ranch (Pecos/Terrell/Brewster). Site of Poolside's
     2 GW Project Horizon AI campus, anchor tenant CoreWeave. Boundary APPROXIMATE.
@@ -145,7 +145,7 @@ layers:
 - id: gw_ranch
   file: combined_geoms.geojson
   geom: fill
-  group: Hyperscale DC & Power Campuses
+  group: Local Hyperscale DC & Power Campuses
   label: GW Ranch (Pacifico Energy)
   description: Pacifico Energy 7.65 GW off-grid gas + battery + solar campus on Hwy
     18, ~17 mi N of Fort Stockton, Pecos Co. Largest TCEQ-permitted DC campus in U.S.
@@ -179,7 +179,7 @@ layers:
 - id: mpgcd_zone1
   file: combined_geoms.geojson
   geom: fill
-  group: Water & Regulatory
+  group: Local Focal Points
   label: Groundwater District Management Zone 1
   color: '#8b5cf6'
   fill_opacity: 0
@@ -201,7 +201,7 @@ layers:
 - id: eia860_plants
   file: combined_points.csv
   geom: point
-  group: Generation
+  group: Power Generation
   label: Power Plants (EIA-860)
   color: '#22d3ee'
   default_on: false
@@ -250,7 +250,7 @@ layers:
 - id: eia860_battery
   file: combined_points.csv
   geom: point
-  group: Generation
+  group: Power Generation
   label: Battery Storage (EIA-860)
   color: '#f472b6'
   default_on: false
@@ -292,7 +292,7 @@ layers:
 - id: wind
   file: combined_points.csv
   geom: point
-  group: Generation
+  group: Power Generation
   label: Wind Turbines (USWTDB)
   color: '#84cc16'
   default_on: false
@@ -336,7 +336,7 @@ layers:
 - id: solar
   file: combined_points.csv
   geom: point
-  group: Generation
+  group: Power Generation
   label: Solar Farms (EIA-860)
   color: '#facc15'
   default_on: false
@@ -559,8 +559,10 @@ layers:
 - id: waha_circle
   file: combined_geoms.geojson
   geom: point
-  group: Local Developments
-  label: WAHA Hub Ring
+  group: Local Focal Points
+  label: WAHA Natural Gas Hub
+  companions:
+  - labels_hubs
   color: '#FFD400'
   circle_radius: 16
   stroke_color: '#FFD400'
@@ -577,8 +579,9 @@ layers:
 - id: labels_hubs
   file: combined_geoms.geojson
   geom: label
-  group: Local Developments
+  group: Local Focal Points
   label: WAHA Hub Label
+  sidebar_omit: true
   color: '#fef3c7'
   default_on: true
   show_marker: true
