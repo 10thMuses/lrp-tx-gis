@@ -56,9 +56,9 @@ layers:
   label: AEP Solstice Substation
   color: '#FFD400'
   default_on: true
-  circle_radius: 12
+  circle_radius: 22
   stroke_color: '#FFD400'
-  stroke_width: 3
+  stroke_width: 5
   fill_opacity: 0
   popup:
   - name
@@ -82,14 +82,14 @@ layers:
 - id: la_escalera
   file: combined_geoms.geojson
   geom: fill
-  group: Local Developments
+  group: Hyperscale DC & Power Campuses
   label: La Escalera Ranch (Apex Clean Energy)
   description: La Escalera Ranch — Lyda Family. Approximate ~223,000-acre ranch outline;
     site of Apex Clean Energy's Pecos Flat 3.3 GW wind/solar/green-hydrogen complex.
     Boundary APPROXIMATE.
-  color: '#FFD400'
+  color: '#ef4444'
   fill_opacity: 0
-  stroke_color: '#FFD400'
+  stroke_color: '#ef4444'
   stroke_width: 2.5
   default_on: true
   popup:
@@ -107,6 +107,71 @@ layers:
     county: County
     acres: Acres
     project: Project
+    ACCURACY: Boundary accuracy
+  tippecanoe:
+  - -Z0
+  - -z14
+- id: longfellow_ranch
+  file: combined_geoms.geojson
+  geom: fill
+  group: Hyperscale DC & Power Campuses
+  label: Longfellow Ranch
+  description: Mitchell family ranch (Pecos/Terrell/Brewster). Site of Poolside's
+    2 GW Project Horizon AI campus, anchor tenant CoreWeave. Boundary APPROXIMATE.
+  color: '#ef4444'
+  fill_opacity: 0
+  stroke_color: '#ef4444'
+  stroke_width: 2.5
+  default_on: true
+  popup:
+  - name
+  - owner
+  - developer
+  - campus
+  - capacity
+  - county
+  - ACCURACY
+  popup_labels:
+    name: Tract
+    owner: Owner
+    developer: Developer
+    campus: Type
+    capacity: Capacity
+    county: County
+    ACCURACY: Boundary accuracy
+  tippecanoe:
+  - -Z0
+  - -z14
+- id: gw_ranch
+  file: combined_geoms.geojson
+  geom: fill
+  group: Hyperscale DC & Power Campuses
+  label: GW Ranch (Pacifico Energy)
+  description: Pacifico Energy 7.65 GW off-grid gas + battery + solar campus on Hwy
+    18, ~17 mi N of Fort Stockton, Pecos Co. Largest TCEQ-permitted DC campus in U.S.
+    Footprint APPROXIMATE.
+  color: '#ef4444'
+  fill_opacity: 0
+  stroke_color: '#ef4444'
+  stroke_width: 2.5
+  default_on: true
+  popup:
+  - name
+  - developer
+  - campus
+  - capacity
+  - status
+  - grid
+  - county
+  - ACCURACY
+  popup_labels:
+    name: Project
+    developer: Developer
+    campus: Type
+    capacity: Capacity
+    status: Status
+    grid: Grid
+    county: County
     ACCURACY: Boundary accuracy
   tippecanoe:
   - -Z0
