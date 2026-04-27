@@ -5,7 +5,7 @@ layers:
   group: Reference
   label: Counties (Outline)
   color: '#ffffff'
-  line_width: 1
+  line_width: 1.25
   default_on: true
   popup:
   - NAME
@@ -217,7 +217,7 @@ layers:
   group: Transmission & Grid
   label: Planned Transmission Upgrades (TPIT)
   color: '#06b6d4'
-  line_width: 0.5
+  line_width: 0.75
   default_on: false
   popup:
   - name
@@ -334,7 +334,7 @@ layers:
   group: Pipelines
   label: "Oil & Gas Pipelines (>20\", RRC)"
   color: '#fb7185'
-  line_width: 0.5
+  line_width: 0.75
   default_on: false
   popup:
   - operator
@@ -393,7 +393,7 @@ layers:
   group: Reference
   label: Highways (Interstate + US)
   color: '#fbbf24'
-  line_width: 0.5
+  line_width: 0.75
   default_on: true
   popup:
   - name
@@ -404,7 +404,7 @@ layers:
   group: Reference
   label: Rail (Main Lines)
   color: '#94a3b8'
-  line_width: 0.5
+  line_width: 0.75
   default_on: true
   popup:
   - owner
