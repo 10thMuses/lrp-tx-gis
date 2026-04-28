@@ -1,0 +1,39 @@
+=== ERCOT queue geocoding stage 1 ===
+Total ercot_queue rows: 1778
+  EIA-860 matched:    324  (18.2%)
+  USWTDB matched:     10  (0.6%)
+  Stayed at centroid: 1444  (81.2%)
+
+By fuel bucket:
+  solar    matched  131 /  625  ( 21.0%)
+  wind     matched   46 /  155  ( 29.7%)
+  battery  matched  132 /  896  ( 14.7%)
+  gas      matched   25 /   98  ( 25.5%)
+  other    matched    0 /    4  (  0.0%)
+
+Solar+wind+battery match rate: 309/1676 (18.4%)
+Acceptance target: >=60%
+
+Sample EIA-860 matches (ercot_name -> eia_name | county | score | bucket):
+  'Abeja Solar Farm' -> 'Abeja Solar Farm' | BEE | 100.0 | solar
+  'Accalia Point Solar' -> 'Accalia Point Solar, LLC' | CAMERON | 90.0 | solar
+  'Adelite Storage' -> 'Adelite Storage Project LLC' | MILAM | 90.0 | battery
+  'Aegle Power' -> 'Aegle Power' | CAMERON | 100.0 | gas
+  'Alamo City BESS' -> 'Alamo City ESS' | BEXAR | 95.0 | battery
+  'Albatross BESS' -> 'Albatross Solar, LLC' | MCLENNAN | 90.0 | battery
+
+Sample USWTDB matches (ercot_name -> uswtdb_p_name | county | score):
+  'Cedro Hill Wind Repower' -> 'Cedro Hill' | WEBB | 90.0
+  'Elbow Creek repower' -> 'Elbow Creek Wind Farm' | HOWARD | 90.0
+  'Goat Mountain Wind-Repower' -> 'Goat Phase I' | STERLING | 90.0
+  'Buzzi Maryneal Wind Project' -> 'Maryneal' | NOLAN | 90.0
+  'Prairie Hill Wind' -> 'Prairie Hill' | MCLENNAN | 100.0
+  'Stephens Ranch Wind Repower' -> 'Stephens Ranch 1' | BORDEN | 90.0
+
+Sample misses (name | county | bucket):
+  'MAKALU SOLAR' | HUNT | solar
+  'VALDIVIAN SOLAR' | HUNT | solar
+  'Acker BESS' | CASTRO | battery
+  'Strawberry Acres Storage' | WILSON | battery
+  'Adamstown Solar' | WILBARGER | solar
+  'Adam Bryant BESS' | MEDINA | battery
