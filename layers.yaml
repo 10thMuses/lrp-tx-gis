@@ -185,7 +185,7 @@ layers:
   fill_opacity: 0
   stroke_color: '#a78bfa'
   stroke_width: 1.5
-  default_on: false
+  default_on: true
   popup:
   - NAME
   - ZONE

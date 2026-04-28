@@ -478,7 +478,7 @@ function layerPaint(L) {
     const fillColor = cs
       ? ['step', ['get', cs.field], cs.default, ...cs.stops.flat()]
       : L.color;
-    return { 'fill-color': fillColor, 'fill-opacity': L.fill_opacity || 0.25, 'fill-outline-color': L.color };
+    return { 'fill-color': fillColor, 'fill-opacity': L.fill_opacity ?? 0.25, 'fill-outline-color': L.color };
   }
   if (L.geom === 'label') {
     const tc = L.color || '#0f172a';
