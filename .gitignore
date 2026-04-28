@@ -18,6 +18,9 @@ venv/
 
 # Scratch / tmp
 tmp*/
+
+# Large upstream archives (re-fetchable)
+outputs/refresh/tl_*.zip
 *.tmp
 .DS_Store
 Thumbs.db
