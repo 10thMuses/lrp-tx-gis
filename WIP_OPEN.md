@@ -4,36 +4,37 @@ Active state. Read at session open. Updated at close-out of every shipping chat.
 
 Per OPERATING.md §10: **`## Next chat
 
-**Chat 112 — ERCOT QUEUE GEOCODING SPRINT STAGE 1: EIA-860 + USWTDB joins.** All 1,778 `ercot_queue` rows currently sit at county centroids — visible as clusters at county center on the map. Stage 1 of the multi-chat sprint described below in `### ERCOT QUEUE PRECISE GEOCODING`.
+**Chat 113 — ERCOT QUEUE GEOCODING SPRINT STAGE 2: TPIT POI proximity + dc_anchors exact match.** Stage 2 is the **primary** geocoding mechanism for the queue. Stage 1 (Chat 112) handled the 18.4% of queue rows that already exist in EIA-860 as operating plants; this stage targets the forward-looking remainder via each row's declared POI substation.
 
 ### Task
 
-1. Write `scripts/geocode_ercot_queue.py`. Reads `combined_points.csv` streaming; never loads into Claude context.
-2. Build EIA-860 plant index from `outputs/refresh/eia860_plants_2026-04-25.csv` keyed `(normalized_plant_name, county)`. Normalize: lowercase, strip punctuation, collapse whitespace, drop suffixes (`solar`, `wind`, `battery`, `bess`, `farm`, `project`, `station`, `phase i/ii/iii`, roman/arabic numerals at end).
-3. Build USWTDB project index from the canonical USWTDB CSV (path TBD — see if `outputs/refresh/uswtdb_*.csv` exists; if not, fetch from `https://eersc.usgs.gov/api/uswtdb/v1/turbines.csv`). Aggregate turbines per `p_name`: lat/lon = mean of turbine points; keyed `(normalized_p_name, county_set)`.
-4. For each `ercot_queue` row in `combined_points.csv`: try EIA-860 fuzzy match first (rapidfuzz `WRatio` ≥ 88 within same county), fall back to USWTDB for wind, leave at centroid otherwise. Stamp `coords_source` prop = `eia860 | uswtdb | county_centroid`.
-5. Atomic write per §6.15 (temp + `os.replace`).
-6. Log match counts by source. Acceptance target ≥ 60% non-centroid for solar/wind/battery rows; whatever lands lands for gas/other.
-7. Build → preview → prod per §8.
+1. Verify the queue's POI/substation column. Inspect `combined_points.csv` schema for ercot_queue rows (likely `poi_substation` or `poi`; whatever the source ERCOT GIR field name lands as in the existing pipeline).
+2. Extend `scripts/geocode_ercot_queue.py` (or add a Stage 2 helper invoked from it) with two new passes:
+   - **TPIT POI proximity:** index TPIT substation features (`outputs/refresh/tpit_*.geojson` or however tpit_subs is sourced — verify path) keyed `(normalized_substation_name, county)`; for each ercot_queue row not already matched in Stage 1, fuzzy-match the row's POI field to the TPIT substation index (rapidfuzz `WRatio` ≥ 88, same county). Stamp `coords_source = tpit_poi`.
+   - **dc_anchors exact-name match:** the 8 `dc_anchors` features carry anchor-tenant names (e.g., CoreWeave, Crusoe). For ercot_queue rows whose developer/project name matches a dc_anchors entry exactly, snap to dc_anchors centroid. Stamp `coords_source = dc_anchors`.
+3. Preserve Stage 1 matches (`eia860`, `uswtdb`); never overwrite. Stage-2 passes only operate on rows currently `coords_source = county_centroid`.
+4. Atomic write per §6.15.
+5. Append match-rate log to `outputs/refresh/_geocode_ercot_log.txt`.
+6. Build → deploy to prod per §8.
 
 ### Acceptance
 
 - Build clean: `built=26 missing=0 errored=0`.
 - ercot_queue feature count unchanged (1,778).
-- New popup field `coords_source` visible (popup template needs no change — generic field renderer; verify in dist).
-- Local↔prod md5 identical post-deploy.
+- Aggregate (Stage 1 + Stage 2) match rate ≥ 60% non-centroid for solar/wind/battery (the original target moved here from Stage 1).
+- Local↔prod md5 identical.
 - Branch merged + deleted same chat per §6.12.
-- Match-rate log printed in build summary or saved to `outputs/refresh/_geocode_ercot_log.txt`.
 
 ### Branch
 
-`refinement-chat112-ercot-geocode-stage1`
+`refinement-chat113-ercot-geocode-stage2`
 
 ### Pre-flight
 
-- Chat 111 shipped clean. `county_labels` extended from 46 (West Texas only) to 254 (all of Texas, FIPS 48) via TIGER 2024 county polygons. Source: `https://www2.census.gov/geo/tiger/TIGER2024/COUNTY/tl_2024_us_county.zip` (84 MB, gitignored). Position = `shapely.representative_point()` per county polygon, not centroid (handles concave shapes, e.g. river-meander lobes). Naming convention preserved: `<NAME> County` matching the existing 46. Replacement strategy (drop all 46 old, append 254 new) per Task §4 — TIGER NAME field is authoritative. Build clean: `built=26 missing=0 errored=0 tiles_total=11595 KB` (+96 KB vs 110c — county_labels tile grew from 46→254 features). Local↔prod md5 identical (`4fb699f478ad530c04f44ab350493bd1`). Deploy `69f01efe66cedded36ed2e99`. Canonical script: `scripts/extend_county_labels.py`.
-- **Side observation worth flagging.** Operator's Chat 111 framing implied data-coverage gap: "Visible counties without labels at typical viewing zooms include Loving, Ector, Sterling, Hudspeth, Presidio, Val Verde, Kimble, Kinney." All 8 of those counties were already in the original 46-feature set. Coords post-Chat-111 (rep-points): Loving `[-103.57, 31.83]`, Ector `[-102.54, 31.87]`, Sterling `[-101.05, 31.82]`, Hudspeth `[-105.42, 31.32]`, Presidio `[-104.24, 29.94]`, Val Verde `[-101.05, 29.76]`, Kimble `[-99.71, 30.50]`, Kinney `[-100.41, 29.35]`. If those still appear missing post-deploy, root cause is rendering, not data — likely MapLibre symbol-collision declutter (with 254 labels at low zoom, the engine drops overlapping labels) or the `min_zoom: 5` setting (107d) gating short-name labels under specific layout conditions. Chat 112 stays focused on ERCOT geocoding; operator can flag rendering as a sprint item if visual review confirms the issue persists.
-- Chats 110/110b/110c/111 chain: incremental UI/data refinements, all clean atomic deploys. Pattern works; no process-level changes needed.
+- Chat 112 shipped clean. Deploy `69f0ad1c2ffe34b3320d0e1e` (2026-04-28), md5 `0b630fd927c6d76adbb1ee8e9a518a6c`. Build clean: `built=26 missing=0 errored=0 tiles_total=11603 KB` (+8 KB vs Chat 111 — new `coords_source` field × 1,778 ercot_queue rows).
+- Stage 1 match rates by bucket — for context only, do not retune Stage 1: solar 131/625 (21.0%), wind 56/155 (36.1%), battery 132/896 (14.7%), gas 25/98 (25.5%). Aggregate solar+wind+battery 309/1,676 (18.4%). Structural reason for missing the 60% target documented in Chat 112 handoff: EIA-860 indexes operating plants, queue is forward-looking. Do not lower WRatio threshold below 88; do not retune `norm_name` suffix-stripping.
+- The Stage 1 popup label "County centroid (approximate)" describes provenance reliability, not literal geometric centroid placement. Coords already varied per row pre-Stage-1 (187 counties hold up to 36 distinct coord pairs each). Acceptable unless operator wants stricter language.
+- **Side observation queued for separate chat** (not in scope here): WAHA Natural Gas Hub marker visually obscures GW Ranch campus polygon at typical viewing zooms — paint-order issue, see Sprint queue.
 
 ## Sprint queue
 
@@ -41,12 +42,22 @@ Ordered by operator priority. N+2 and beyond. Detailed multi-step entries live i
 
 ### ERCOT QUEUE PRECISE GEOCODING
 
-**Multi-chat sprint.** Stage 1 promoted to Chat 112 (above). Remaining stages:
+**Multi-chat sprint.** Reframed after Chat 112: Stage 2 is the **primary** lever, not a minor extension.
 
-- **Stage 2 (Chat 113):** dc_anchors exact-name match + TPIT substation/line proximity for points lacking other matches + popup field for `coords_source`. ercot_queue popup template currently renders all props generically — verify `coords_source` shows up cleanly without template change.
-- **Stage 3 (Chat 114, optional):** operator spot-check + manual overrides for high-value misses (anchor tenants, large MW gas peakers).
+- **Stage 1 (Chat 112, shipped):** EIA-860 + USWTDB joins for queue rows that already exist as operating plants. Final aggregate match rate 18.4% (309/1,676 solar+wind+battery). Structural ceiling — EIA-860 indexes operating plants while queue is forward-looking by design. Coverage at this level was not a tuning failure, it was the data limit.
+- **Stage 2 (Chat 113, promoted to Next chat):** TPIT substation POI proximity + dc_anchors exact-name match. Targets the ~80% of queue rows still at county-centroid provenance after Stage 1. This stage owns the original ≥60% target.
+- **Stage 3 (Chat 114, optional):** operator spot-check + manual overrides for high-value misses (anchor tenants, large-MW gas peakers).
 
-Approach reference for Stage 1 in §Task above. Expected match rate 60–80%; 20–40% will stay imprecise.
+### WAHA MARKER OBSCURES GW RANCH (PAINT ORDER)
+
+Surfaced Chat 112 close-out. WAHA Natural Gas Hub renders as a large filled orange marker near 31.16°N, -102.82°W. GW Ranch (Pacifico Energy) campus polygon sits ~2 mi south at 31.13°N within the WAHA marker's render footprint at typical viewing zooms — its 3.5-mi-wide red stroke is fully obscured. Operator-visible symptom: only 2 of 3 hyperscale-campus red outlines (Escalera + Longfellow) render in West Texas; GW Ranch invisible. Diagnosis confirmed: gw_ranch is 1 Polygon, 1 part, present in `combined_geoms.geojson`; not a data bug.
+
+Fix options (1 chat, low blast radius):
+- Reorder MapLibre layer paint stack so campus polygon strokes draw above `waha_circle` / `labels_hubs` marker fills.
+- Reduce `waha_circle` radius (configured in `build_template.html` paint block).
+- Both. Investigate first; preferred fix is paint-order reorder so map readability of the WAHA hub itself isn't compromised.
+
+Touches `build_template.html` only. No data change.
 
 ### DATE-RANGE FILTER FOR `tax_abatements.commissioned`
 
@@ -69,7 +80,8 @@ Cross-device QA + polish for the mobile-friendly map work shipped in Chats 100�
 ## Prod status
 
 - Layer count: **24** (display layers — `county_labels` + `counties` count once each in the registry)
-- Last published deploy: `69f01efe66cedded36ed2e99` (Chat 111, 2026-04-28). State=ready. `county_labels` extended 46 → 254 (all TX counties via TIGER 2024). Local↔prod md5 identical (`4fb699f478ad530c04f44ab350493bd1`). Build clean: `built=26 missing=0 errored=0 tiles_total=11595 KB`.
+- Last published deploy: `69f0ad1c2ffe34b3320d0e1e` (Chat 112, 2026-04-28). State=ready. ERCOT queue geocoding Stage 1: 334 rows matched via EIA-860 (324) + USWTDB (10); 1,444 retained existing approximate coords with `coords_source=county_centroid` provenance label. New `coords_source` field stamped on all 1,778 ercot_queue rows. Build clean: `built=26 missing=0 errored=0 tiles_total=11603 KB`. Local↔prod md5 identical (`0b630fd927c6d76adbb1ee8e9a518a6c`). Aggregate solar+wind+battery match rate 18.4% — below the original 60% target for structural reasons (EIA-860 indexes operating plants only). Stage 2 (TPIT POI proximity) carries the 60% target.
+- Previous deploy: `69f01efe66cedded36ed2e99` (Chat 111, 2026-04-28). State=ready. `county_labels` extended 46 → 254 (all TX counties via TIGER 2024). Local↔prod md5 identical (`4fb699f478ad530c04f44ab350493bd1`). Build clean: `built=26 missing=0 errored=0 tiles_total=11595 KB`.
 - Previous deploy: `69f008f6187338b50dc2a829` (Chat 110c, 2026-04-28). State=ready. Transmission & Grid reorder + tpit_subs recolor + Longfellow polygon move.
 - Previous deploy: `69f00661239f04d4b9bec06f` (Chat 110b, 2026-04-28). Hotfix: `fill-opacity || 0.25` → `?? 0.25`; `mpgcd_zone1` default_on true.
 - Previous deploy: `69efdc12326f632c49033ed2` (Chat 110, 2026-04-27). Sidebar overhaul.
@@ -89,7 +101,7 @@ Cross-device QA + polish for the mobile-friendly map work shipped in Chats 100�
 **Data-pipeline gaps** (non-blocking):
 - `eia860_plants`: 476/1367 rows still null `capacity_mw` (down from 529), 529/1367 null `commissioned`, 438/1367 null `technology`. EIA-860 source-side gaps; will not improve without alternate source.
 - `wind`: USWTDB schema has no `operator`, `technology`, or `fuel`; structural blanks (19464/19464). `commissioned` populated for 19364/19464 (down from 0); `manu` and `model` populated. Filling operator would require joining a project-layer source (e.g. EIA-860 wind plants) — separate sprint item if pursued.
-- `ercot_queue`: 1,778/1,778 rows currently at county centroids — Chat 112 sprint addresses.
+- `ercot_queue`: Stage 1 (Chat 112) geocoded 334/1,778 rows precisely via EIA-860+USWTDB; remaining 1,444 carry `coords_source=county_centroid` provenance. Stage 2 (Chat 113) targets the remainder via TPIT POI proximity, owns the ≥60% match-rate target.
 - Cosmetic: prebuilt PMTiles feature counts show 0 in sidebar
 - BEAD `bead_fiber_planned` layer (Chat 91 §1 dropped): BDO XLSX trio archived to `data/bead_bdo/` but contains no county or coords. Three unblock paths documented in `data/bead_bdo/README.md`
 

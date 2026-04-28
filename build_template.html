@@ -849,6 +849,13 @@ function ercotQueuePopupHtml(props) {
   const county = props.county || '';
   const zone = props.zone || '';
   const entity = props.entity || '';
+  // Chat 112: coords_source surfaces precise-geocoding provenance per row.
+  const coordsSourceMap = {
+    eia860: 'EIA-860 plant match',
+    uswtdb: 'USWTDB project match',
+    county_centroid: 'County centroid (approximate)',
+  };
+  const coordsSource = coordsSourceMap[props.coords_source] || props.coords_source || '';
   const rows = [
     ['MW', mw],
     ['Fuel', fuel],
@@ -857,6 +864,7 @@ function ercotQueuePopupHtml(props) {
     ['County', county],
     ['ERCOT zone', zone],
     ['Interconnection entity', entity],
+    ['Coordinates', coordsSource],
   ].filter(([, v]) => v !== '' && v !== undefined && v !== null)
     .map(([k, v]) => `<tr><td class="k">${FIELD_LABELS[k] || k}</td><td class="v">${escapeHtml(String(v))}</td></tr>`)
     .join('');
