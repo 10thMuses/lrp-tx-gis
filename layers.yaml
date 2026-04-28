@@ -366,30 +366,6 @@ layers:
     plant_code: EIA Plant Code
     county: County
     capacity_mw: Capacity (MW)
-- id: transmission
-  file: combined_geoms.geojson
-  geom: line
-  group: Transmission & Grid
-  label: Transmission ≥100 kV
-  color: '#38bdf8'
-  default_on: false
-  popup:
-  - V
-  - O
-  filterable_fields:
-  - field: V
-    type: numeric
-    label: Voltage (kV)
-  - field: O
-    type: text
-    label: Operator
-  tippecanoe:
-  - -zg
-  - --simplification=8
-  - --coalesce-densest-as-needed
-  popup_labels:
-    V: Voltage (kV)
-    O: Operator
 - id: substations
   file: combined_points.csv
   geom: point
@@ -427,7 +403,7 @@ layers:
   geom: point
   group: Transmission & Grid
   label: Planned Substation Upgrades (TPIT)
-  color: '#06b6d4'
+  color: '#a78bfa'
   default_on: false
   min_zoom: 6
   radius: 3.5
@@ -451,6 +427,30 @@ layers:
     name: Substation
     voltage: Voltage (V)
     operator: Operator
+- id: transmission
+  file: combined_geoms.geojson
+  geom: line
+  group: Transmission & Grid
+  label: Transmission ≥100 kV
+  color: '#38bdf8'
+  default_on: false
+  popup:
+  - V
+  - O
+  filterable_fields:
+  - field: V
+    type: numeric
+    label: Voltage (kV)
+  - field: O
+    type: text
+    label: Operator
+  tippecanoe:
+  - -zg
+  - --simplification=8
+  - --coalesce-densest-as-needed
+  popup_labels:
+    V: Voltage (kV)
+    O: Operator
 - id: tpit_lines
   file: combined_geoms.geojson
   geom: line
