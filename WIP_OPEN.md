@@ -4,34 +4,52 @@ Active state. Read at session open. Updated at close-out of every shipping chat.
 
 Per OPERATING.md §10: **`## Next chat
 
-**Chat 111 — DATE-RANGE FILTER FOR `tax_abatements.commissioned`.** True range slider replacing the current text-multi-select on distinct ISO dates.
+**Chat 111 — COUNTY LABELS COVERAGE EXTENSION.** `county_labels` currently has 46 features (West Texas only). Visible counties without labels at typical viewing zooms include Loving, Ector, Sterling, Hudspeth, Presidio, Val Verde, Kimble, Kinney, and ~200 others statewide. Operator wants comprehensive coverage.
 
 ### Task
 
-1. `build.py compute_filter_stats`: emit a `date_range` filter type with min/max ISO bounds for `tax_abatements.commissioned`.
-2. `build_template.html filterFieldControlHtml`: render two date inputs (min/max) for `type === 'date_range'`.
-3. `build_template.html buildFilterExpr`: matching predicate that compares ISO-formatted strings via `>=` / `<=`.
-4. Build → preview → prod per §8.
+1. Fetch TIGER 2024 county polygons for all of Texas (FIPS 48) — single shapefile from Census `https://www2.census.gov/geo/tiger/TIGER2024/COUNTY/`.
+2. Compute representative point (`pyshp`/`shapely.representative_point()`, not centroid — handles concave shapes) per county.
+3. Stream into `combined_geoms.geojson` as `layer_id: county_labels` features with `name: <COUNTY>` property.
+4. Drop the existing 46 `county_labels` features first (replace, don't dedupe by name — TIGER NAME field is authoritative).
+5. Counties (Outline) layer is a separate question — leave at 46 for now unless operator requests extending. Sprint item if so.
+6. Build → preview → prod per §8.
 
 ### Acceptance
 
-- `tax_abatements.commissioned` filter is a date range (two date pickers), not a multi-select.
+- `county_labels` feature count ≥ 254.
 - Build clean: `built=26 missing=0 errored=0`.
+- Visual check at zoom 7–9: every visible Texas county has a label.
 - Local↔prod md5 identical post-deploy.
 - Branch merged + deleted same chat per §6.12.
 
 ### Branch
 
-`refinement-chat111-date-range-filter`
+`refinement-chat111-county-labels-statewide`
 
 ### Pre-flight
 
-- Chat 110b shipped a hotfix on top of Chat 110: two bugs surfaced in the Chat 110 deploy that operator caught visually. (1) Hyperscale campuses + Caramba North + groundwater zone were rendering with `fill-opacity:0.25` despite YAML `fill_opacity:0` because `build_template.html` line 477 used `L.fill_opacity || 0.25` — JS coerces literal `0` as falsy so `||` fell through to the default. Fixed by switching to `L.fill_opacity ?? 0.25` (same nullish-coalesce pattern already in use on line 459 for `circle-opacity`). Pre-dates Chat 110 — also affected the layers added in Chat 109b that operator missed at the time. (2) `mpgcd_zone1` (Groundwater District Management Zone 1) flipped `default_on:false → true` per operator request. Deploy `69f00661239f04d4b9bec06f`. Local↔prod md5 identical (`0ac3feb7ce6e975600c4a3c4342a5dd6`). Build clean: `built=26 missing=0 errored=0 tiles_total=11556 KB`. **Add to ARCHITECTURE.md fragility table at next refactor**: `||` vs `??` for any numeric paint property where `0` is a valid value (radius, width, opacity). The line-461 pattern (`?? 0.9`) is the safe template; `|| 0.25` is the bug template.
-- Chat 110 (parent) shipped sidebar overhaul: GROUP_ORDER reordered with Reference + Land & Deal at top; Local Developments → Local Focal Points; Hyperscale DC & Power Campuses → Local Hyperscale DC & Power Campuses; Generation → Power Generation; Water & Regulatory dropped (empty). WAHA ring + label consolidated under one toggle "WAHA Natural Gas Hub" via new `companions` field (`labels_hubs` is `sidebar_omit:true`). Tri-state group checkboxes (unchecked / checked / indeterminate) on every group header. Outline-only sidebar swatch for layers with `fill_opacity:0` — but the on-map fill itself was buggy until 110b.
+- Chat 110c shipped clean. Final state: `tpit_subs` recolored `#06b6d4 → #a78bfa` matching `substations` (semantic pairing); Transmission & Grid sidebar order now `[substations, tpit_subs, transmission, tpit_lines]`; `longfellow_ranch` polygon moved from southern Pecos/Terrell/Brewster (~30.3, -102.6 — Mitchell family ranch homestead) to central Pecos (~30.77, -102.68) at the ERCOT queue cluster operator confirmed visually as the actual Project Horizon AI campus location. Resolves overlap with `la_escalera`. Gap to `gw_ranch` (~31.13, -102.84) now ~18 mi. Edit script `scripts/edit_110c_trans_fix.py` is the canonical source of the new polygon coords. Deploy `69f008f6187338b50dc2a829`. Local↔prod md5 identical (`5fbac81d4e356c58b5eab73777027ba6`). Build clean: `built=26 missing=0 errored=0 tiles_total=11499 KB` (-57 KB vs 110b — Longfellow polygon is smaller).
+- Chats 110/110b/110c chain: parent (sidebar overhaul) + 110b (fill-opacity falsy bug) + 110c (this). Operator-driven incremental refinement; each shipped clean atomically per §6.12. Pattern is acceptable but suggests pre-flight visual review before declaring a UI chat done — would have caught 110b's red-fill bug and several 110c items in one cycle.
 
 ## Sprint queue
 
 Ordered by operator priority. N+2 and beyond. Detailed multi-step entries live in `docs/sprint-plan.md`.
+
+### ERCOT QUEUE PRECISE GEOCODING
+
+**Multi-chat sprint.** All 1,778 `ercot_queue` rows currently sit at county centroids — operator caught this visually (clusters at county center on map). Most projects can be cross-referenced to existing rich-coordinate sources:
+
+- **EIA-860 plants** (1,367 rows, lat/lon present) — match on plant_name fuzzy + county. Highest hit rate for solar/wind/battery already-operating projects.
+- **USWTDB** (19,464 turbines, lat/lon present) — match on project_name for wind aggregates.
+- **dc_anchors** (8 rows) — exact name match for DC tenants in queue.
+- **TPIT** — substation/line proximity for points lacking other matches.
+
+Approach: write `scripts/geocode_ercot_queue.py` that reads `combined_points.csv`, joins against the four sources (in priority order above), updates lat/lon in-place, logs match-rate by source, atomic write. For unmatched rows, leave at county centroid + flag `coords_source: county_centroid` in props. Expected match rate 60–80%; 20–40% will stay imprecise. Sprint = 2–3 chats: (1) EIA-860 + USWTDB joins, (2) dc_anchors + TPIT proximity + popup field for `coords_source`, (3) operator-spot-check + manual overrides for high-value misses.
+
+### DATE-RANGE FILTER FOR `tax_abatements.commissioned`
+
+True range slider replacing current text-multi-select on distinct ISO dates. Touches `build.py compute_filter_stats` + `build_template.html filterFieldControlHtml` + matching predicate. 1–2 chats. **Deferred** — operator's chat-110 series surfaced higher-priority data-quality work above.
 
 ### COMPTROLLER LDAD SCRAPE
 
@@ -46,8 +64,9 @@ Cross-device QA + polish for the mobile-friendly map work shipped in Chats 100�
 ## Prod status
 
 - Layer count: **24**
-- Last published deploy: `69f00661239f04d4b9bec06f` (Chat 110b, 2026-04-28). State=ready. Hotfix on top of 110: `build_template.html` `L.fill_opacity || 0.25` → `?? 0.25` (literal 0 was falling through to 0.25, defeating outline-only intent for hyperscale layers since Chat 109b). `mpgcd_zone1` default_on false → true. Local↔prod md5 identical (`0ac3feb7ce6e975600c4a3c4342a5dd6`). Build clean: `built=26 missing=0 errored=0 tiles_total=11556 KB`.
-- Previous deploy: `69efdc12326f632c49033ed2` (Chat 110, 2026-04-27). State=ready. Sidebar overhaul: GROUP_ORDER reordered (`Reference` + `Land & Deal` at top); `Local Developments` → `Local Focal Points` (now 4 layers incl. `mpgcd_zone1` moved from Water & Regulatory and `labels_hubs` as sidebar_omit companion of `waha_circle`); `Hyperscale DC & Power Campuses` → `Local Hyperscale DC & Power Campuses`; `Generation` → `Power Generation`; `Water & Regulatory` group dropped (empty). WAHA Hub Ring + WAHA Hub Label consolidated into one sidebar toggle "WAHA Natural Gas Hub" via new `companions` field (`waha_circle.companions:[labels_hubs]`) + new template helper `setLayerVisibilityWithCompanions`. Tri-state group checkbox on every group header (unchecked / checked / indeterminate; clicking toggles all layers in group). Outline-only swatch in sidebar + print legend for fill layers with `fill_opacity:0` (matches what the map draws — no fill, just outline). `build.py` emits new `companions` field to template registry. Build clean: `built=26 missing=0 errored=0 tiles_total=11556 KB`. Local↔prod md5 identical (`3ff55097c8d710e35bc802b3407accea`).
+- Last published deploy: `69f008f6187338b50dc2a829` (Chat 110c, 2026-04-28). State=ready. Transmission & Grid reorder + tpit_subs recolor + Longfellow polygon move. Sidebar order within group now `[substations, tpit_subs, transmission, tpit_lines]`; both substation layers share `#a78bfa` purple. `longfellow_ranch` polygon repositioned from southern Pecos/Terrell/Brewster (~30.3, -102.6) to central Pecos at the actual Project Horizon AI campus (~30.77, -102.68) per operator visual identification; resolves la_escalera overlap. Local↔prod md5 identical (`5fbac81d4e356c58b5eab73777027ba6`). Build clean: `built=26 missing=0 errored=0 tiles_total=11499 KB`.
+- Previous deploy: `69f00661239f04d4b9bec06f` (Chat 110b, 2026-04-28). Hotfix: `fill-opacity || 0.25` → `?? 0.25`; `mpgcd_zone1` default_on true.
+- Previous deploy: `69efdc12326f632c49033ed2` (Chat 110, 2026-04-27). Sidebar overhaul.
 - Previous deploy: `69ef926ed31a462a98b27f77` (Chat 109b, 2026-04-27). State=ready. Hyperscale DC & Power Campuses group consolidation + WAHA Pecos fix + Solstice visibility.
 - Previous deploy: `69ef8b0a7ca58c0d4d25ae4d` (Chat 108b, 2026-04-27). State=ready. Local Developments group + popup audit + permit visibility.
 - Previous deploy: `69ee7b6cffaa366af764784c` (Chat 107d, 2026-04-26). State=ready. Critical bug fix on top of 107c: build.py was defaulting `line_width` to **2** in the layer registry render path (line 825), overriding template defaults — so the JS template's 0.5 default never took effect. Fixed: `'line_width': L.get('line_width', 0.5)`. Also: county_labels switched to dark text (`#0f172a`) with halo opt-out via new `text_halo: false` YAML flag; template halo logic now auto-picks contrast (light text → dark halo, dark text → light halo). Counties `line_width` raised 0.5 → 1. county_labels `min_zoom: 4 → 5`.
