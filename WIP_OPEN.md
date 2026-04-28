@@ -4,11 +4,11 @@ Active state. Read at session open. Updated at close-out of every shipping chat.
 
 Per OPERATING.md §10: **`## Next chat
 
-**Chat 114 — ERCOT QUEUE GEOCODING SPRINT STAGE 3: operator-curated manual overrides.** Stage 2 (Chat 113) hit a structural ceiling at 27.0% solar+wind+battery match rate; the 60% target from the Chat 113 WIP is dropped per operator-acknowledged data limits (see Pre-flight below). Stage 3 trades programmatic breadth for surgical precision on high-value rows where Stage 2 missed.
+**Chat 115 — ERCOT QUEUE GEOCODING SPRINT STAGE 3: operator-curated manual overrides.** Re-promoted from Chat 114 (Chat 114 reduced to WAHA paint-order fix because operator-gated Stage 3 input was absent at session-open). Stage 2 (Chat 113) hit a structural ceiling at 27.0% solar+wind+battery match rate; the 60% target from the Chat 113 WIP is dropped per operator-acknowledged data limits (see Pre-flight below). Stage 3 trades programmatic breadth for surgical precision on high-value rows where Stage 2 missed.
 
 ### Task
 
-1. **Operator provides** a manual-override CSV at `data/ercot_queue_overrides.csv` with columns `inr,lat,lon,override_reason` (inr = ERCOT INR id, the queue row's stable identifier; override_reason free text). If file absent at session-open, Chat 114 reduces to handoff-write only.
+1. **Operator provides** a manual-override CSV at `data/ercot_queue_overrides.csv` with columns `inr,lat,lon,override_reason` (inr = ERCOT INR id, the queue row's stable identifier; override_reason free text). If file absent at session-open, Chat 115 reduces to handoff-write only.
 2. Add a Stage 2.d pass to `scripts/geocode_ercot_queue.py`: load the override CSV, build an `inr → (lat, lon, reason)` map, and apply LAST in the pipeline. Override stamps take precedence over ALL upstream stages (operator authority) and snap to the override coords with `coords_source = manual_override`. Reason logged in run log; not stamped on the row (no schema change).
 3. Atomic write per §6.15.
 4. Append run log with: total override rows, INRs not found in queue (warn, do not fail), per-bucket override count, before/after match-rate delta.
@@ -25,16 +25,16 @@ Per OPERATING.md §10: **`## Next chat
 
 ### Branch
 
-`refinement-chat114-ercot-overrides`
+`refinement-chat115-ercot-overrides`
 
 ### Pre-flight
 
+- Chat 114 shipped clean. Deploy `69f10553bbc94b136581c584` (2026-04-28). WAHA paint-order fix: layers.yaml reorder moved `waha_circle` and `labels_hubs` to before `la_escalera` (now at LAYERS array indices 4-5 vs campus polygons at 6-8). Local↔prod md5 identical (`2f8f2597c2aa3b08766cd27378b5308f`). Build clean: `built=26 missing=0 errored=0 tiles_total=11606 KB`. Sidebar Local Focal Points group within-order changed from solstice → mpgcd_zone1 → waha to solstice → waha → mpgcd_zone1 (cosmetic side effect; sidebar group order unchanged via GROUP_ORDER constant in template). The Chat 114 Stage-3 spec is re-promoted unchanged below; only the chat number, branch name, and deploy ID are updated.
 - Chat 113 shipped clean. Deploy `69f0c593e361c81f37ca36ee` (2026-04-28). Match counts: Stage 1 eia860 324, uswtdb 10; Stage 2 tpit_poi 78, substation_poi 67, dc_anchors 0; county_centroid 1,299. Aggregate solar+wind+battery 452/1,676 (27.0%).
 - **Structural ceiling on programmatic match rate.** TPIT (141 planned-upgrade substations) + OSM substations (1,637 rows, only 792 indexable after no-county / no-name drops) cannot cover queue projects whose POI substations are being built FOR the project (not in either source) or named ambiguously ("138kV tap to Line X" with no substation handle). Further programmatic lift requires new data sources (e.g., ERCOT GIS Report substation tabular layer, FERC Form 715), not in scope here.
 - Stage 2 scope assumption noted: WIP_OPEN named TPIT + dc_anchors as the two passes; per OPERATING.md §7 ambiguity rule, Chat 113 added a third Stage-2 pass against the OSM `substations` layer (same matching kernel, distinct `substation_poi` provenance) to chase the 60% target. Three Stage-2 passes within one chat; no §6.13 violation. dc_anchors pass stamped 0 rows — no curated tenant alias matched any same-county queue row, expected for a forward-looking generation queue where anchor tenants don't typically appear as queue developers.
 - Override application is idempotent: re-running the pipeline with the same override CSV produces the same coords. Operator can edit the CSV and re-run anytime.
 - WRatio threshold (88) and norm_name / norm_substation_name suffix-stripping settled in Chat 113. Do not retune in Stage 3.
-- **Side observation queued for separate chat** (not in scope here): WAHA Natural Gas Hub marker visually obscures GW Ranch campus polygon at typical viewing zooms — paint-order issue, see Sprint queue.
 
 ## Sprint queue
 
@@ -42,22 +42,11 @@ Ordered by operator priority. N+2 and beyond. Detailed multi-step entries live i
 
 ### ERCOT QUEUE PRECISE GEOCODING
 
-**Multi-chat sprint.** Stage 2 (Chat 113) hit a structural data-coverage ceiling. Stage 3 (Chat 114) reframed from "optional" to the next-chat task as operator-curated overrides for high-value misses.
+**Multi-chat sprint.** Stage 2 (Chat 113) hit a structural data-coverage ceiling. Stage 3 (originally scheduled Chat 114, now Chat 115) reframed from "optional" to the next-chat task as operator-curated overrides for high-value misses.
 
 - **Stage 1 (Chat 112, shipped):** EIA-860 + USWTDB joins. Aggregate match rate 18.4% (309/1,676 solar+wind+battery). Structural ceiling — EIA-860 indexes operating plants while queue is forward-looking by design.
 - **Stage 2 (Chat 113, shipped):** TPIT POI proximity (78 matches), OSM substations POI proximity (67 matches; added per §7 ambiguity rule beyond the named TPIT scope), dc_anchors exact-alias (0 matches; no curated tenant alias hit any same-county queue row). Aggregate solar+wind+battery 27.0% (452/1,676) — below the 60% target. Structural ceiling: queue POI universe includes substations being built FOR the project (not in TPIT or OSM today) or named ambiguously without a substation handle. Further programmatic lift requires new substation sources not currently in scope.
-- **Stage 3 (Chat 114, promoted to Next chat):** operator-curated manual override CSV at `data/ercot_queue_overrides.csv`, applied as a final precedence-winning pass. Idempotent; operator can edit and re-run anytime.
-
-### WAHA MARKER OBSCURES GW RANCH (PAINT ORDER)
-
-Surfaced Chat 112 close-out. WAHA Natural Gas Hub renders as a large filled orange marker near 31.16°N, -102.82°W. GW Ranch (Pacifico Energy) campus polygon sits ~2 mi south at 31.13°N within the WAHA marker's render footprint at typical viewing zooms — its 3.5-mi-wide red stroke is fully obscured. Operator-visible symptom: only 2 of 3 hyperscale-campus red outlines (Escalera + Longfellow) render in West Texas; GW Ranch invisible. Diagnosis confirmed: gw_ranch is 1 Polygon, 1 part, present in `combined_geoms.geojson`; not a data bug.
-
-Fix options (1 chat, low blast radius):
-- Reorder MapLibre layer paint stack so campus polygon strokes draw above `waha_circle` / `labels_hubs` marker fills.
-- Reduce `waha_circle` radius (configured in `build_template.html` paint block).
-- Both. Investigate first; preferred fix is paint-order reorder so map readability of the WAHA hub itself isn't compromised.
-
-Touches `build_template.html` only. No data change.
+- **Stage 3 (Chat 115, promoted to Next chat):** operator-curated manual override CSV at `data/ercot_queue_overrides.csv`, applied as a final precedence-winning pass. Idempotent; operator can edit and re-run anytime. (Chat 114 displaced to WAHA paint-order fix because Stage 3 input was absent at session-open.)
 
 ### DATE-RANGE FILTER FOR `tax_abatements.commissioned`
 
@@ -80,7 +69,8 @@ Cross-device QA + polish for the mobile-friendly map work shipped in Chats 100�
 ## Prod status
 
 - Layer count: **24** (display layers — `county_labels` + `counties` count once each in the registry)
-- Last published deploy: `69f0c593e361c81f37ca36ee` (Chat 113, 2026-04-28). State=ready. ERCOT queue geocoding Stage 2: 78 rows matched via TPIT POI proximity (planned-upgrade substations, fuzzy WRatio≥88, same-county via TIGER 2024 point-in-polygon county derivation), 67 rows via OSM substations layer (same matching kernel, distinct `substation_poi` provenance), 0 rows via dc_anchors exact-alias match. Final coords_source distribution: county_centroid 1,299; eia860 324; tpit_poi 78; substation_poi 67; uswtdb 10. Build clean: `built=26 missing=0 errored=0 tiles_total=11606 KB`. Local↔prod md5 identical (index.html `0b630fd927c6d76adbb1ee8e9a518a6c`; ercot_queue.pmtiles `dbff4c440340bee1ebb2dcd0572a3851`). Aggregate solar+wind+battery match rate 27.0% (452/1,676) — below 60% target for structural reasons (queue POI universe extends beyond available substation catalogs). Stage 2 scope assumption: WIP named two passes (TPIT + dc_anchors); per §7 ambiguity rule, Chat 113 added a third pass against OSM substations to chase the target.
+- Last published deploy: `69f10553bbc94b136581c584` (Chat 114, 2026-04-28). State=ready. WAHA paint-order fix: `waha_circle` (lines 559-578) and `labels_hubs` (lines 579-595) moved before `la_escalera` (line 82) in `layers.yaml`, so MapLibre `addLayer` iteration paints WAHA marker + label BEFORE Hyperscale campus polygons, putting the campus polygon strokes ON TOP. LAYERS array indices: solstice_substation 3, waha_circle 4, labels_hubs 5, la_escalera 6, longfellow_ranch 7, gw_ranch 8, mpgcd_zone1 9. Sidebar Local Focal Points group within-order changed from solstice → mpgcd_zone1 → waha to solstice → waha → mpgcd_zone1 (mild cosmetic side effect; labels_hubs `sidebar_omit: true` so unaffected). GROUP_ORDER constant in `build_template.html` unchanged, so cross-group sidebar order intact. Build clean: `built=26 missing=0 errored=0 tiles_total=11606 KB` (unchanged from Chat 113). Local↔prod md5 identical (index.html `2f8f2597c2aa3b08766cd27378b5308f`). Operator-visible result: GW Ranch's 3.5-mi-wide red campus stroke renders unobscured at all zooms. WAHA hub readability preserved (radius/styling untouched).
+- Previous deploy: `69f0c593e361c81f37ca36ee` (Chat 113, 2026-04-28). State=ready. ERCOT queue geocoding Stage 2: 78 rows matched via TPIT POI proximity (planned-upgrade substations, fuzzy WRatio≥88, same-county via TIGER 2024 point-in-polygon county derivation), 67 rows via OSM substations layer (same matching kernel, distinct `substation_poi` provenance), 0 rows via dc_anchors exact-alias match. Final coords_source distribution: county_centroid 1,299; eia860 324; tpit_poi 78; substation_poi 67; uswtdb 10. Build clean: `built=26 missing=0 errored=0 tiles_total=11606 KB`. Local↔prod md5 identical (index.html `0b630fd927c6d76adbb1ee8e9a518a6c`; ercot_queue.pmtiles `dbff4c440340bee1ebb2dcd0572a3851`). Aggregate solar+wind+battery match rate 27.0% (452/1,676) — below 60% target for structural reasons (queue POI universe extends beyond available substation catalogs). Stage 2 scope assumption: WIP named two passes (TPIT + dc_anchors); per §7 ambiguity rule, Chat 113 added a third pass against OSM substations to chase the target.
 - Previous deploy: `69f0ad1c2ffe34b3320d0e1e` (Chat 112, 2026-04-28). State=ready. ERCOT queue geocoding Stage 1: 334 rows matched via EIA-860 (324) + USWTDB (10); 1,444 retained existing approximate coords with `coords_source=county_centroid` provenance label. New `coords_source` field stamped on all 1,778 ercot_queue rows. Build clean: `built=26 missing=0 errored=0 tiles_total=11603 KB`. Local↔prod md5 identical (`0b630fd927c6d76adbb1ee8e9a518a6c`).
 - Previous deploy: `69f01efe66cedded36ed2e99` (Chat 111, 2026-04-28). State=ready. `county_labels` extended 46 → 254 (all TX counties via TIGER 2024). Local↔prod md5 identical (`4fb699f478ad530c04f44ab350493bd1`). Build clean: `built=26 missing=0 errored=0 tiles_total=11595 KB`.
 - Previous deploy: `69f008f6187338b50dc2a829` (Chat 110c, 2026-04-28). State=ready. Transmission & Grid reorder + tpit_subs recolor + Longfellow polygon move.
@@ -102,7 +92,7 @@ Cross-device QA + polish for the mobile-friendly map work shipped in Chats 100�
 **Data-pipeline gaps** (non-blocking):
 - `eia860_plants`: 476/1367 rows still null `capacity_mw` (down from 529), 529/1367 null `commissioned`, 438/1367 null `technology`. EIA-860 source-side gaps; will not improve without alternate source.
 - `wind`: USWTDB schema has no `operator`, `technology`, or `fuel`; structural blanks (19464/19464). `commissioned` populated for 19364/19464 (down from 0); `manu` and `model` populated. Filling operator would require joining a project-layer source (e.g. EIA-860 wind plants) — separate sprint item if pursued.
-- `ercot_queue`: Stages 1+2 (Chats 112–113) geocoded 479/1,778 rows precisely via cascading sources — eia860 324, tpit_poi 78, substation_poi 67, uswtdb 10, dc_anchors 0. Remaining 1,299 carry `coords_source=county_centroid` provenance. Aggregate solar+wind+battery 452/1,676 (27.0%); structural ceiling on programmatic match rate. Stage 3 (Chat 114) targets remaining high-value misses via operator-curated manual override CSV.
+- `ercot_queue`: Stages 1+2 (Chats 112–113) geocoded 479/1,778 rows precisely via cascading sources — eia860 324, tpit_poi 78, substation_poi 67, uswtdb 10, dc_anchors 0. Remaining 1,299 carry `coords_source=county_centroid` provenance. Aggregate solar+wind+battery 452/1,676 (27.0%); structural ceiling on programmatic match rate. Stage 3 (Chat 115) targets remaining high-value misses via operator-curated manual override CSV.
 - Cosmetic: prebuilt PMTiles feature counts show 0 in sidebar
 - BEAD `bead_fiber_planned` layer (Chat 91 §1 dropped): BDO XLSX trio archived to `data/bead_bdo/` but contains no county or coords. Three unblock paths documented in `data/bead_bdo/README.md`
 

@@ -79,6 +79,43 @@ layers:
   tippecanoe:
   - -Z0
   - -z14
+- id: waha_circle
+  file: combined_geoms.geojson
+  geom: point
+  group: Local Focal Points
+  label: WAHA Natural Gas Hub
+  companions:
+  - labels_hubs
+  color: '#FFD400'
+  circle_radius: 16
+  stroke_color: '#FFD400'
+  stroke_width: 2.5
+  fill_opacity: 0
+  default_on: true
+  popup:
+  - name
+  tippecanoe:
+  - -Z0
+  - -z14
+  popup_labels:
+    name: Hub
+- id: labels_hubs
+  file: combined_geoms.geojson
+  geom: label
+  group: Local Focal Points
+  label: WAHA Hub Label
+  sidebar_omit: true
+  color: '#fef3c7'
+  default_on: true
+  show_marker: true
+  min_zoom: 4
+  popup:
+  - name
+  tippecanoe:
+  - -Z0
+  - -z14
+  popup_labels:
+    name: Hub
 - id: la_escalera
   file: combined_geoms.geojson
   geom: fill
@@ -556,43 +593,6 @@ layers:
     label: Project
   tippecanoe:
   - -zg
-- id: waha_circle
-  file: combined_geoms.geojson
-  geom: point
-  group: Local Focal Points
-  label: WAHA Natural Gas Hub
-  companions:
-  - labels_hubs
-  color: '#FFD400'
-  circle_radius: 16
-  stroke_color: '#FFD400'
-  stroke_width: 2.5
-  fill_opacity: 0
-  default_on: true
-  popup:
-  - name
-  tippecanoe:
-  - -Z0
-  - -z14
-  popup_labels:
-    name: Hub
-- id: labels_hubs
-  file: combined_geoms.geojson
-  geom: label
-  group: Local Focal Points
-  label: WAHA Hub Label
-  sidebar_omit: true
-  color: '#fef3c7'
-  default_on: true
-  show_marker: true
-  min_zoom: 4
-  popup:
-  - name
-  tippecanoe:
-  - -Z0
-  - -z14
-  popup_labels:
-    name: Hub
 - id: county_labels
   file: combined_geoms.geojson
   geom: label
