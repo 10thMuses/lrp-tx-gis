@@ -4,36 +4,36 @@ Active state. Read at session open. Updated at close-out of every shipping chat.
 
 Per OPERATING.md §10: **`## Next chat
 
-**Chat 112 — ERCOT QUEUE GEOCODING SPRINT STAGE 1: EIA-860 + USWTDB joins.** All 1,778 `ercot_queue` rows currently sit at county centroids — visible as clusters at county center on the map. Stage 1 of the multi-chat sprint described below in `### ERCOT QUEUE PRECISE GEOCODING`.
+**Chat 112 (cont.) — RESUME ERCOT GEOCODING STAGE 1: build + deploy + merge.** Stage 1 code and data work shipped to branch `refinement-chat112-ercot-geocode-stage1` over three commits; build/deploy/merge not yet done. Read `docs/_chat112-ercot-geocode-stage1_handoff.md` first — `session-open.sh` will print it.
 
 ### Task
 
-1. Write `scripts/geocode_ercot_queue.py`. Reads `combined_points.csv` streaming; never loads into Claude context.
-2. Build EIA-860 plant index from `outputs/refresh/eia860_plants_2026-04-25.csv` keyed `(normalized_plant_name, county)`. Normalize: lowercase, strip punctuation, collapse whitespace, drop suffixes (`solar`, `wind`, `battery`, `bess`, `farm`, `project`, `station`, `phase i/ii/iii`, roman/arabic numerals at end).
-3. Build USWTDB project index from the canonical USWTDB CSV (path TBD — see if `outputs/refresh/uswtdb_*.csv` exists; if not, fetch from `https://eersc.usgs.gov/api/uswtdb/v1/turbines.csv`). Aggregate turbines per `p_name`: lat/lon = mean of turbine points; keyed `(normalized_p_name, county_set)`.
-4. For each `ercot_queue` row in `combined_points.csv`: try EIA-860 fuzzy match first (rapidfuzz `WRatio` ≥ 88 within same county), fall back to USWTDB for wind, leave at centroid otherwise. Stamp `coords_source` prop = `eia860 | uswtdb | county_centroid`.
-5. Atomic write per §6.15 (temp + `os.replace`).
-6. Log match counts by source. Acceptance target ≥ 60% non-centroid for solar/wind/battery rows; whatever lands lands for gas/other.
-7. Build → preview → prod per §8.
+1. Build per §8. Acceptance: `built=26 missing=0 errored=0`.
+2. Deploy to prod per §8.
+3. Verify local↔prod md5 identical; spot-check ercot_queue popup shows new "Coordinates" row.
+4. Update `## Sprint queue` ERCOT section: Stage 2 (TPIT POI proximity) is the **primary** geocoding mechanism, not a minor extension. Stage 1 EIA-860 match rate landed at 18.4% (vs 60% target) for structural reasons documented in handoff doc — EIA-860 only indexes operating plants while the ERCOT queue is forward-looking by design.
+5. Delete `docs/_chat112-ercot-geocode-stage1_handoff.md` on the branch (separate commit before close-out).
+6. Replace this `## Next chat` with Chat 113 spec (Stage 2: TPIT POI proximity).
+7. Atomic close-out per §6.12.
 
 ### Acceptance
 
-- Build clean: `built=26 missing=0 errored=0`.
-- ercot_queue feature count unchanged (1,778).
-- New popup field `coords_source` visible (popup template needs no change — generic field renderer; verify in dist).
-- Local↔prod md5 identical post-deploy.
-- Branch merged + deleted same chat per §6.12.
-- Match-rate log printed in build summary or saved to `outputs/refresh/_geocode_ercot_log.txt`.
+- Build clean.
+- Deploy state=ready, local↔prod md5 identical.
+- Branch merged + deleted same session.
+- WIP_OPEN.md updated with Chat 113 spec.
 
 ### Branch
 
-`refinement-chat112-ercot-geocode-stage1`
+`refinement-chat112-ercot-geocode-stage1` (existing — `session-open.sh §10` will check it out, not reconstruct).
 
 ### Pre-flight
 
-- Chat 111 shipped clean. `county_labels` extended from 46 (West Texas only) to 254 (all of Texas, FIPS 48) via TIGER 2024 county polygons. Source: `https://www2.census.gov/geo/tiger/TIGER2024/COUNTY/tl_2024_us_county.zip` (84 MB, gitignored). Position = `shapely.representative_point()` per county polygon, not centroid (handles concave shapes, e.g. river-meander lobes). Naming convention preserved: `<NAME> County` matching the existing 46. Replacement strategy (drop all 46 old, append 254 new) per Task §4 — TIGER NAME field is authoritative. Build clean: `built=26 missing=0 errored=0 tiles_total=11595 KB` (+96 KB vs 110c — county_labels tile grew from 46→254 features). Local↔prod md5 identical (`4fb699f478ad530c04f44ab350493bd1`). Deploy `69f01efe66cedded36ed2e99`. Canonical script: `scripts/extend_county_labels.py`.
-- **Side observation worth flagging.** Operator's Chat 111 framing implied data-coverage gap: "Visible counties without labels at typical viewing zooms include Loving, Ector, Sterling, Hudspeth, Presidio, Val Verde, Kimble, Kinney." All 8 of those counties were already in the original 46-feature set. Coords post-Chat-111 (rep-points): Loving `[-103.57, 31.83]`, Ector `[-102.54, 31.87]`, Sterling `[-101.05, 31.82]`, Hudspeth `[-105.42, 31.32]`, Presidio `[-104.24, 29.94]`, Val Verde `[-101.05, 29.76]`, Kimble `[-99.71, 30.50]`, Kinney `[-100.41, 29.35]`. If those still appear missing post-deploy, root cause is rendering, not data — likely MapLibre symbol-collision declutter (with 254 labels at low zoom, the engine drops overlapping labels) or the `min_zoom: 5` setting (107d) gating short-name labels under specific layout conditions. Chat 112 stays focused on ERCOT geocoding; operator can flag rendering as a sprint item if visual review confirms the issue persists.
-- Chats 110/110b/110c/111 chain: incremental UI/data refinements, all clean atomic deploys. Pattern works; no process-level changes needed.
+- Three commits on branch: `scripts/geocode_ercot_queue.py` + log; `combined_points.csv` rewritten with `coords_source` column (334 rows geocoded: 324 EIA-860 + 10 USWTDB; 1,444 retained existing approximate coords); `build_template.html` popup edit (handoff's "no template change needed" claim was wrong — `ercotQueuePopupHtml` hand-codes its rows array, additive edit was required).
+- Match rate by bucket: solar 131/625 (21.0%), wind 56/155 (36.1%), battery 132/896 (14.7%), gas 25/98 (25.5%). Solar+wind+battery 309/1,676 (18.4%) vs ≥60% target.
+- Reframe in handoff doc: 60% target is unreachable in Stage 1 with the specified data sources because EIA-860 indexes operating plants and the queue is forward-looking. Do not retune. Stage 2 TPIT POI proximity is the actual lever.
+- Original WIP_OPEN.md said "all 1,778 rows sit at county centroids" — verified false; coords already varied per row pre-script (187 counties hold up to 36 distinct coord pairs each). The script preserves existing lat/lon for unmatched rows. Acceptable.
+- Chat 111 shipped clean: `county_labels` 46→254, deploy `69f01efe66cedded36ed2e99`, md5 `4fb699f478ad530c04f44ab350493bd1`.
 
 ## Sprint queue
 
