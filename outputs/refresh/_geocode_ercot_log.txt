@@ -37,3 +37,122 @@ Sample misses (name | county | bucket):
   'Strawberry Acres Storage' | WILSON | battery
   'Adamstown Solar' | WILBARGER | solar
   'Adam Bryant BESS' | MEDINA | battery
+
+=== ERCOT queue geocoding pipeline (Stage 1 + Stage 2) ===
+run_at: 2026-04-28T13:47:38Z
+Total ercot_queue rows: 1778
+  Stage 1 EIA-860 matched:   324  (18.2%)
+  Stage 1 USWTDB matched:    10  (0.6%)
+  Stage 2 TPIT POI matched:  78  (4.4%)
+  Stage 2 dc_anchors match:  0  (0.0%)
+  Total non-centroid:        412  (23.2%)
+  Stayed at centroid:        1366  (76.8%)
+
+By fuel bucket (matched / total):
+  solar     165 /  625  ( 26.4%)
+  wind       58 /  155  ( 37.4%)
+  battery   163 /  896  ( 18.2%)
+  gas        26 /   98  ( 26.5%)
+  other       0 /    4  (  0.0%)
+
+Solar+wind+battery match rate: 386/1676 (23.0%)
+Acceptance target: >=60% (solar+wind+battery non-centroid)
+
+Sample EIA-860 matches (ercot_name -> eia_name | county | score | bucket):
+  'Abeja Solar Farm' -> 'Abeja Solar Farm' | BEE | 100.0 | solar
+  'Accalia Point Solar' -> 'Accalia Point Solar, LLC' | CAMERON | 90.0 | solar
+  'Adelite Storage' -> 'Adelite Storage Project LLC' | MILAM | 90.0 | battery
+  'Aegle Power' -> 'Aegle Power' | CAMERON | 100.0 | gas
+  'Alamo City BESS' -> 'Alamo City ESS' | BEXAR | 95.0 | battery
+  'Albatross BESS' -> 'Albatross Solar, LLC' | MCLENNAN | 90.0 | battery
+
+Sample USWTDB matches (ercot_name -> uswtdb_p_name | county | score):
+  'Cedro Hill Wind Repower' -> 'Cedro Hill' | WEBB | 90.0
+  'Elbow Creek repower' -> 'Elbow Creek Wind Farm' | HOWARD | 90.0
+  'Goat Mountain Wind-Repower' -> 'Goat Phase I' | STERLING | 90.0
+  'Buzzi Maryneal Wind Project' -> 'Maryneal' | NOLAN | 90.0
+  'Prairie Hill Wind' -> 'Prairie Hill' | MCLENNAN | 100.0
+  'Stephens Ranch Wind Repower' -> 'Stephens Ranch 1' | BORDEN | 90.0
+
+Sample TPIT POI matches (ercot_poi -> tpit_name | county | score | bucket):
+  'tap 345 kV (76000) North McCamey -  (59903) Bearkat \n(Benedum 345 kV station that LCRA will build part of 24RPG024).' -> 'North McCamey Subsation' | UPTON | 90.0 | wind
+  'tap 345 kV (76000) North McCamey -  (59903) Bearkat \n(Benedum 345 kV station that LCRA will build part of 24RPG024).' -> 'North McCamey Subsation' | UPTON | 90.0 | wind
+  '76595 North McCamey 138kV' -> 'North McCamey Subsation' | UPTON | 95.0 | battery
+  'Tap 69kV 5823 UVALDE Switch - 5820 UVALDE SUB' -> 'Uvalde Substation' | UVALDE | 90.0 | battery
+  'AEP Solstice Substation #60404' -> 'Solstice Substation' | PECOS | 90.0 | solar
+  'Tap AEP Solstice (60404) to Bakersfield (76002) 345kV' -> 'Bakersfield Substation' | PECOS | 90.0 | solar
+
+Sample dc_anchors matches (ercot_name | entity -> anchor | county | bucket):
+
+Sample misses (name | county | bucket):
+  'MAKALU SOLAR' | HUNT | solar
+  'VALDIVIAN SOLAR' | HUNT | solar
+  'Acker BESS' | CASTRO | battery
+  'Strawberry Acres Storage' | WILSON | battery
+  'Adamstown Solar' | WILBARGER | solar
+  'Adam Bryant BESS' | MEDINA | battery
+
+
+=== ERCOT queue geocoding pipeline (Stage 1 + Stage 2) ===
+run_at: 2026-04-28T14:31:51Z
+Total ercot_queue rows: 1778
+  Stage 1 EIA-860 matched:        324  (18.2%)
+  Stage 1 USWTDB matched:         10  (0.6%)
+  Stage 2 TPIT POI matched:       78  (4.4%)
+  Stage 2 OSM-substation matched: 67  (3.8%)
+  Stage 2 dc_anchors match:       0  (0.0%)
+  Total non-centroid:             479  (26.9%)
+  Stayed at centroid:             1299  (73.1%)
+
+By fuel bucket (matched / total):
+  solar     183 /  625  ( 29.3%)
+  wind       65 /  155  ( 41.9%)
+  battery   204 /  896  ( 22.8%)
+  gas        27 /   98  ( 27.6%)
+  other       0 /    4  (  0.0%)
+
+Solar+wind+battery match rate: 452/1676 (27.0%)
+Acceptance target: >=60% (solar+wind+battery non-centroid)
+
+Sample EIA-860 matches (ercot_name -> eia_name | county | score | bucket):
+  'Abeja Solar Farm' -> 'Abeja Solar Farm' | BEE | 100.0 | solar
+  'Accalia Point Solar' -> 'Accalia Point Solar, LLC' | CAMERON | 90.0 | solar
+  'Adelite Storage' -> 'Adelite Storage Project LLC' | MILAM | 90.0 | battery
+  'Aegle Power' -> 'Aegle Power' | CAMERON | 100.0 | gas
+  'Alamo City BESS' -> 'Alamo City ESS' | BEXAR | 95.0 | battery
+  'Albatross BESS' -> 'Albatross Solar, LLC' | MCLENNAN | 90.0 | battery
+
+Sample USWTDB matches (ercot_name -> uswtdb_p_name | county | score):
+  'Cedro Hill Wind Repower' -> 'Cedro Hill' | WEBB | 90.0
+  'Elbow Creek repower' -> 'Elbow Creek Wind Farm' | HOWARD | 90.0
+  'Goat Mountain Wind-Repower' -> 'Goat Phase I' | STERLING | 90.0
+  'Buzzi Maryneal Wind Project' -> 'Maryneal' | NOLAN | 90.0
+  'Prairie Hill Wind' -> 'Prairie Hill' | MCLENNAN | 100.0
+  'Stephens Ranch Wind Repower' -> 'Stephens Ranch 1' | BORDEN | 90.0
+
+Sample TPIT POI matches (ercot_poi -> tpit_name | county | score | bucket):
+  'tap 345 kV (76000) North McCamey -  (59903) Bearkat \n(Benedum 345 kV station that LCRA will build part of 24RPG024).' -> 'North McCamey Subsation' | UPTON | 90.0 | wind
+  'tap 345 kV (76000) North McCamey -  (59903) Bearkat \n(Benedum 345 kV station that LCRA will build part of 24RPG024).' -> 'North McCamey Subsation' | UPTON | 90.0 | wind
+  '76595 North McCamey 138kV' -> 'North McCamey Subsation' | UPTON | 95.0 | battery
+  'Tap 69kV 5823 UVALDE Switch - 5820 UVALDE SUB' -> 'Uvalde Substation' | UVALDE | 90.0 | battery
+  'AEP Solstice Substation #60404' -> 'Solstice Substation' | PECOS | 90.0 | solar
+  'Tap AEP Solstice (60404) to Bakersfield (76002) 345kV' -> 'Bakersfield Substation' | PECOS | 90.0 | solar
+
+Sample OSM-substation matches (ercot_poi -> osm_name | county | score | bucket):
+  '10002 NS Crane Switch 138kV' -> 'Crane Substation' | CRANE | 90.0 | battery
+  '76006 Bow Wood 345 kV' -> 'Bow Wood Substation' | MCCULLOCH | 90.0 | battery
+  '#76006 Bow Wood 345 kV' -> 'Bow Wood Substation' | MCCULLOCH | 90.0 | solar
+  '1058 LONGSHORE 345kV' -> 'Longshore Substation' | HOWARD | 90.0 | battery
+  'Tap 345kV 76090  Divide  - 76009 Twin Buttes Ckt 1' -> 'Twin Buttes Substation' | TOM GREEN | 90.0 | wind
+  'Tap 138 kV #76320 Schkade -  #76011 Twin Buttes Line; LCRA' -> 'Twin Buttes Substation' | TOM GREEN | 90.0 | battery
+
+Sample dc_anchors matches (ercot_name | entity -> anchor | county | bucket):
+
+Sample misses (name | county | bucket):
+  'MAKALU SOLAR' | HUNT | solar
+  'VALDIVIAN SOLAR' | HUNT | solar
+  'Acker BESS' | CASTRO | battery
+  'Strawberry Acres Storage' | WILSON | battery
+  'Adamstown Solar' | WILBARGER | solar
+  'Adam Bryant BESS' | MEDINA | battery
+
