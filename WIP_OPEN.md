@@ -4,38 +4,36 @@ Active state. Read at session open. Updated at close-out of every shipping chat.
 
 Per OPERATING.md §10: **`## Next chat
 
-**Chat 117 — ERCOT QUEUE GEOCODING SPRINT STAGE 3: operator-curated manual overrides.** Re-promoted from Chat 116 (third consecutive session reduced to handoff-write only because operator-gated Stage 3 input was absent at session-open; Chat 114 displaced to a WAHA paint-order fix; Chats 115 and 116 reduced to handoff-write only). Stage 2 (Chat 113) hit a structural ceiling at 27.0% solar+wind+battery match rate; the 60% target from the Chat 113 WIP is dropped per operator-acknowledged data limits. Stage 3 trades programmatic breadth for surgical precision on high-value rows where Stage 2 missed.
+**Chat 118 — COMPTROLLER LDAD SCRAPE: statewide `tax_abatements` coverage.** Substituted into Next chat by Chat 117 replan after three consecutive sessions (Chats 114 displaced, 115+116 reduced to handoff-only) failed to advance ERCOT Stage 3 because the operator-curated override CSV did not land. ERCOT Stage 3 demoted to sprint queue with "resumes on CSV arrival" — substitution does not deprioritize Stage 3, only stops it from blocking the next-chat slot. LDAD work is operator-pre-authorized in Chat 106a, has no input precondition, and advances `tax_abatements` from 9 county-scraped records to statewide coverage.
 
 ### Task
 
-1. **Operator provides** a manual-override CSV at `data/ercot_queue_overrides.csv` with columns `inr,lat,lon,override_reason` (inr = ERCOT INR id, the queue row's stable identifier; override_reason free text). If file absent at session-open, Chat 117 reduces to handoff-write only.
-2. Add a Stage 2.d pass to `scripts/geocode_ercot_queue.py`: load the override CSV, build an `inr → (lat, lon, reason)` map, and apply LAST in the pipeline. Override stamps take precedence over ALL upstream stages (operator authority) and snap to the override coords with `coords_source = manual_override`. Reason logged in run log; not stamped on the row (no schema change).
-3. Atomic write per §6.15.
-4. Append run log with: total override rows, INRs not found in queue (warn, do not fail), per-bucket override count, before/after match-rate delta.
-5. Build → deploy to prod per §8.
+1. Add `scripts/scrape_ldad.py` (or extend `scripts/scrape_abatements.py` if cleaner) that drives Playwright-headless against `https://comptroller.texas.gov/economy/development/search-tools/sb1340/search.php`, paginates result pages, and writes `outputs/refresh/comptroller_ldad_<ISO-date>.csv`.
+2. Required CSV columns (minimum): `agreement_id`, `taxing_unit`, `applicant`, `county`, `commissioned`, `lat`, `lon`. Geocode lat/lon to county centroid if no per-site coords are exposed; stamp `coords_source = ldad_county_centroid` for those rows.
+3. Merge into combined points per OPERATING.md §8 merge cycle: drop existing `tax_abatements` rows from `combined_points.csv`, append refreshed rows, atomic write per §6.15.
+4. Build → deploy to prod per §8.
+5. Append run log: total LDAD rows scraped, rows merged into `tax_abatements`, before/after row count.
 
 ### Acceptance
 
 - Build clean: `built=26 missing=0 errored=0`.
-- ercot_queue feature count unchanged (1,778).
-- Every override-CSV INR present in queue is stamped `manual_override`.
-- Override INRs not found in queue logged as warnings (do not fail the run).
+- `tax_abatements` row count grows from current 9 to scraped total (LDAD universe is ~hundreds of agreements statewide).
+- No schema change to `tax_abatements` field set beyond what's already present (audit current fields before extending).
 - Local↔prod md5 identical.
 - Branch merged + deleted same chat per §6.12.
+- If Akamai or Comptroller-side rate-limiting blocks the scrape mid-run, partial results are written and the chat reduces to a refresh-only commit (no merge into combined points until full coverage is in hand). Document any pagination or block boundary in the run log.
 
 ### Branch
 
-`refinement-chat117-ercot-overrides`
+`refinement-chat118-ldad-scrape`
 
 ### Pre-flight
 
-- **Third consecutive reduction. Operator decision required before Chat 117 opens.** Chats 114, 115, 116 each opened with the Stage 3 spec on the next-chat slot and each opened without `data/ercot_queue_overrides.csv`. Chat 114 displaced to a WAHA fix; Chats 115 and 116 reduced to handoff-write only. If Chat 117 also opens without the CSV the deterministic spec auto-reduces a fourth time. Two clean unblocked alternatives already in the sprint queue if the operator wants to substitute: **COMPTROLLER LDAD SCRAPE** (authorized in Chat 106a, no input precondition, advances `tax_abatements` statewide coverage, 1–2 chats) and **DATE-RANGE FILTER for `tax_abatements.commissioned`** (deferred but unblocked, touches `build.py compute_filter_stats` + `build_template.html filterFieldControlHtml` + matching predicate, 1–2 chats). Either can be promoted to Next chat by editing this block; Stage 3 stays in the sprint queue and resumes whenever the CSV lands.
-- Chat 116 was a handoff-write-only chat. Override CSV absent at `data/ercot_queue_overrides.csv` at session-open, so per the Chat 116 task spec item 1, the chat reduced to WIP rewrite + close-out: Stage 3 re-promoted to Chat 117, deploy log marked no-deploy, branch `refinement-chat116-handoff` merged to main with `(no deploy)` tag. Layer count, schema, prod artifacts unchanged from Chat 114. Last published deploy still Chat 114 `69f10553bbc94b136581c584`.
-- Chat 114 shipped clean. Deploy `69f10553bbc94b136581c584` (2026-04-28). WAHA paint-order fix: layers.yaml reorder moved `waha_circle` and `labels_hubs` to before `la_escalera` (now at LAYERS array indices 4-5 vs campus polygons at 6-8). Local↔prod md5 identical (`2f8f2597c2aa3b08766cd27378b5308f`). Build clean: `built=26 missing=0 errored=0 tiles_total=11606 KB`.
-- Chat 113 shipped clean. Deploy `69f0c593e361c81f37ca36ee` (2026-04-28). Match counts: Stage 1 eia860 324, uswtdb 10; Stage 2 tpit_poi 78, substation_poi 67, dc_anchors 0; county_centroid 1,299. Aggregate solar+wind+battery 452/1,676 (27.0%).
-- **Structural ceiling on programmatic match rate.** TPIT (141 planned-upgrade substations) + OSM substations (1,637 rows, only 792 indexable after no-county / no-name drops) cannot cover queue projects whose POI substations are being built FOR the project (not in either source) or named ambiguously ("138kV tap to Line X" with no substation handle). Further programmatic lift requires new data sources (e.g., ERCOT GIS Report substation tabular layer, FERC Form 715), not in scope here.
-- Override application is idempotent: re-running the pipeline with the same override CSV produces the same coords. Operator can edit the CSV and re-run anytime.
-- WRatio threshold (88) and norm_name / norm_substation_name suffix-stripping settled in Chat 113. Do not retune in Stage 3.
+- Chat 117 was a replan-only chat. Substituted Stage 3 → LDAD scrape because three consecutive next-chat slots (114, 115, 116) failed on the same CSV-input gap. Branch `refinement-chat117-replan` merged to main with `(no deploy)` tag. Layer count, schema, prod artifacts unchanged. Last published deploy still Chat 114 `69f10553bbc94b136581c584`.
+- LDAD scope confirmed by Chat 106a operator authorization; sprint queue carried this entry through Chats 107–116 without contention. Two-chat ceiling per the queue entry; one chat sufficient if pagination + geocoding land cleanly, two if a schema-extension audit on `tax_abatements` is needed first.
+- Akamai datacenter-egress block is documented for `reevescounty.org` (Chat 110 onward, see Open backlog §Infrastructure). `comptroller.texas.gov` has not exhibited the same behavior in prior chats but verify with a single sanity curl during recon before the full Playwright run.
+- Geocoding strategy: LDAD records are agreement-level not site-level, so per-record lat/lon is unlikely to be exposed. County-centroid stamping with `coords_source = ldad_county_centroid` is the documented fallback. If site-level addresses ARE exposed in the search-result detail pages, prefer geocoding those over centroid; document the choice in the run log.
+- ERCOT Stage 3 stays alive in the sprint queue. The override-CSV pipeline path remains valid and resumes the moment the CSV lands at `data/ercot_queue_overrides.csv` — no rework needed.
 
 ## Sprint queue
 
@@ -43,19 +41,15 @@ Ordered by operator priority. N+2 and beyond. Detailed multi-step entries live i
 
 ### ERCOT QUEUE PRECISE GEOCODING
 
-**Multi-chat sprint.** Stage 2 (Chat 113) hit a structural data-coverage ceiling. Stage 3 has been queued for four consecutive next-chat slots (originally Chat 114, then Chats 115, 116, now 117) but each has opened without the operator-curated override CSV at `data/ercot_queue_overrides.csv`.
+**Multi-chat sprint.** Stage 2 (Chat 113) hit a structural data-coverage ceiling. Stage 3 was queued as Next chat for four consecutive slots (Chats 114, 115, 116, 117) without the operator-curated override CSV at `data/ercot_queue_overrides.csv` materializing. Chat 117 substituted the next-chat slot to Comptroller LDAD scrape; Stage 3 stays alive here and **resumes on CSV arrival** — the moment `data/ercot_queue_overrides.csv` exists in the repo, this entry can be re-promoted to Next chat without any rework.
 
 - **Stage 1 (Chat 112, shipped):** EIA-860 + USWTDB joins. Aggregate match rate 18.4% (309/1,676 solar+wind+battery). Structural ceiling — EIA-860 indexes operating plants while queue is forward-looking by design.
 - **Stage 2 (Chat 113, shipped):** TPIT POI proximity (78 matches), OSM substations POI proximity (67 matches; added per §7 ambiguity rule beyond the named TPIT scope), dc_anchors exact-alias (0 matches; no curated tenant alias hit any same-county queue row). Aggregate solar+wind+battery 27.0% (452/1,676) — below the 60% target. Structural ceiling: queue POI universe includes substations being built FOR the project (not in TPIT or OSM today) or named ambiguously without a substation handle. Further programmatic lift requires new substation sources not currently in scope.
-- **Stage 3 (Chat 117, promoted to Next chat for the fourth consecutive slot):** operator-curated manual override CSV at `data/ercot_queue_overrides.csv`, applied as a final precedence-winning pass. Idempotent; operator can edit and re-run anytime. Three prior reductions (Chats 114 displaced, 115 + 116 handoff-only) on the same input-precondition gap. If Chat 117 opens without the CSV, operator should substitute alternative work (Comptroller LDAD scrape or date-range filter — both unblocked, both queued below).
+- **Stage 3 (deferred — resumes on CSV arrival):** operator-curated manual override CSV at `data/ercot_queue_overrides.csv`, applied as a final precedence-winning pass. Idempotent; operator can edit and re-run anytime. Spec details: add a Stage 2.d pass to `scripts/geocode_ercot_queue.py` that loads the override CSV, builds an `inr → (lat, lon, reason)` map, applies LAST in the pipeline, and stamps `coords_source = manual_override`. Reason logged in run log only (no schema change). Atomic write per §6.15. WRatio threshold (88) and norm-name suffix-stripping settled in Chat 113 — do not retune.
 
 ### DATE-RANGE FILTER FOR `tax_abatements.commissioned`
 
 True range slider replacing current text-multi-select on distinct ISO dates. Touches `build.py compute_filter_stats` + `build_template.html filterFieldControlHtml` + matching predicate. 1–2 chats. **Deferred** — operator's chat-110/111 series surfaced higher-priority data-quality work above.
-
-### COMPTROLLER LDAD SCRAPE
-
-Operator authorized Chat 106a. Playwright headless against `https://comptroller.texas.gov/economy/development/search-tools/sb1340/search.php`. Paginate result pages, write to `outputs/refresh/comptroller_ldad_<date>.csv`, merge into `tax_abatements` layer. Provides statewide abatement coverage to complement existing 9 county-scraped records. 1–2 chats.
 
 ### COUNTY_LABELS RENDER REVIEW (CONDITIONAL)
 
@@ -71,6 +65,7 @@ Cross-device QA + polish for the mobile-friendly map work shipped in Chats 100�
 
 - Layer count: **24** (display layers — `county_labels` + `counties` count once each in the registry)
 - Last published deploy: `69f10553bbc94b136581c584` (Chat 114, 2026-04-28). State=ready. WAHA paint-order fix: `waha_circle` (lines 559-578) and `labels_hubs` (lines 579-595) moved before `la_escalera` (line 82) in `layers.yaml`, so MapLibre `addLayer` iteration paints WAHA marker + label BEFORE Hyperscale campus polygons, putting the campus polygon strokes ON TOP. LAYERS array indices: solstice_substation 3, waha_circle 4, labels_hubs 5, la_escalera 6, longfellow_ranch 7, gw_ranch 8, mpgcd_zone1 9. Sidebar Local Focal Points group within-order changed from solstice → mpgcd_zone1 → waha to solstice → waha → mpgcd_zone1 (mild cosmetic side effect; labels_hubs `sidebar_omit: true` so unaffected). GROUP_ORDER constant in `build_template.html` unchanged, so cross-group sidebar order intact. Build clean: `built=26 missing=0 errored=0 tiles_total=11606 KB` (unchanged from Chat 113). Local↔prod md5 identical (index.html `2f8f2597c2aa3b08766cd27378b5308f`). Operator-visible result: GW Ranch's 3.5-mi-wide red campus stroke renders unobscured at all zooms. WAHA hub readability preserved (radius/styling untouched).
+- Chat 117 (2026-04-29): **no deploy.** Replan only. Substituted ERCOT Stage 3 → Comptroller LDAD scrape on the next-chat slot after three consecutive sessions failed to advance Stage 3 because the operator-curated override CSV did not land at `data/ercot_queue_overrides.csv`. Stage 3 not abandoned — demoted into the sprint queue as "resumes on CSV arrival" with full spec preserved; the override-CSV pipeline path remains valid and the sprint resumes the moment the CSV exists in the repo. Branch `refinement-chat117-replan` merged to main with `(no deploy)` tag. Layer count, schema, prod artifacts unchanged from Chat 114. Last published deploy still Chat 114 `69f10553bbc94b136581c584`.
 - Chat 116 (2026-04-28): **no deploy.** Handoff-write only. Override CSV absent at `data/ercot_queue_overrides.csv` at session-open, so per the Chat 116 task spec item 1 the chat reduced to WIP rewrite + close-out: Stage 3 re-promoted to Chat 117 (fourth consecutive next-chat slot), sprint queue updated with explicit substitution candidates (Comptroller LDAD scrape, date-range filter), branch `refinement-chat116-handoff` merged to main with `(no deploy)` tag. Layer count, schema, prod artifacts all unchanged from Chat 114.
 - Chat 115 (2026-04-28): **no deploy.** Handoff-write only. Override CSV absent at `data/ercot_queue_overrides.csv` at session-open, so per the Chat 115 task spec item 1 the chat reduced to WIP rewrite + close-out: Stage 3 re-promoted to Chat 116, sprint queue updated, branch `refinement-chat115-handoff` merged to main with `(no deploy)` tag. Layer count, schema, prod artifacts all unchanged from Chat 114.
 - Previous deploy: `69f0c593e361c81f37ca36ee` (Chat 113, 2026-04-28). State=ready. ERCOT queue geocoding Stage 2: 78 rows matched via TPIT POI proximity (planned-upgrade substations, fuzzy WRatio≥88, same-county via TIGER 2024 point-in-polygon county derivation), 67 rows via OSM substations layer (same matching kernel, distinct `substation_poi` provenance), 0 rows via dc_anchors exact-alias match. Final coords_source distribution: county_centroid 1,299; eia860 324; tpit_poi 78; substation_poi 67; uswtdb 10. Build clean: `built=26 missing=0 errored=0 tiles_total=11606 KB`. Local↔prod md5 identical (index.html `0b630fd927c6d76adbb1ee8e9a518a6c`; ercot_queue.pmtiles `dbff4c440340bee1ebb2dcd0572a3851`). Aggregate solar+wind+battery match rate 27.0% (452/1,676) — below 60% target for structural reasons (queue POI universe extends beyond available substation catalogs). Stage 2 scope assumption: WIP named two passes (TPIT + dc_anchors); per §7 ambiguity rule, Chat 113 added a third pass against OSM substations to chase the target.
