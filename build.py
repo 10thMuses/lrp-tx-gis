@@ -719,6 +719,7 @@ def compute_filter_stats(layers_config, split_dir):
         # Per-field accumulators
         numeric = {}   # field -> [min, max]
         distinct = {}  # field -> set of string values
+        dates = {}     # field -> [min_iso, max_iso] (first 10 chars, lex-sortable)
         declared = {}  # field -> (type, label)
         for s in spec:
             f = s['field']
@@ -727,6 +728,10 @@ def compute_filter_stats(layers_config, split_dir):
                 numeric[f] = [float('inf'), float('-inf')]
             elif s.get('type') == 'categorical':
                 distinct[f] = set()
+            elif s.get('type') == 'date_range':
+                # ISO YYYY-MM-DD strings sort lexicographically; first 10
+                # chars also normalize values like "2026-04-29T12:34:56".
+                dates[f] = ['', '']
             elif s.get('type') == 'text':
                 # UI POLISH v2: text fields auto-populate as searchable
                 # multi-select dropdowns when distinct count fits under cap.
@@ -750,6 +755,17 @@ def compute_filter_stats(layers_config, split_dir):
                         continue
                     if num < numeric[f][0]: numeric[f][0] = num
                     if num > numeric[f][1]: numeric[f][1] = num
+                for f in dates:
+                    v = props.get(f)
+                    if v is None or v == '':
+                        continue
+                    s = str(v).strip()[:10]
+                    if not s:
+                        continue
+                    if dates[f][0] == '' or s < dates[f][0]:
+                        dates[f][0] = s
+                    if dates[f][1] == '' or s > dates[f][1]:
+                        dates[f][1] = s
                 for f in distinct:
                     v = props.get(f)
                     if v is None or v == '':
@@ -778,6 +794,14 @@ def compute_filter_stats(layers_config, split_dir):
                     entry['type'] = 'text'
                 else:
                     entry['values'] = sorted(vals)
+            elif typ == 'date_range' and f in dates:
+                mn, mx = dates[f]
+                if mn and mx:
+                    entry['min'] = mn
+                    entry['max'] = mx
+                else:
+                    # No dated rows — skip this field
+                    continue
             elif typ == 'text' and f in distinct:
                 # UI POLISH v2: promote to categorical (multi-select dropdown)
                 # when distinct values fit under cap; else keep as plain text.

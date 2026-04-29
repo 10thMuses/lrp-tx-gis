@@ -757,7 +757,7 @@ layers:
     type: categorical
     label: Project type
   - field: commissioned
-    type: text
+    type: date_range
     label: Approved date
   - field: mw
     type: numeric
