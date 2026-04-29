@@ -79,6 +79,7 @@
   .filter-field-label { display: block; color: var(--muted); font-size: 10px; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 2px; }
   .filter-range { display: flex; gap: 4px; align-items: center; }
   .filter-range input { width: 60px; padding: 3px 5px; border: 1px solid var(--border); border-radius: 4px; font: inherit; font-size: 11px; }
+  .filter-field[data-type="date_range"] .filter-range input { width: auto; flex: 1 1 0; min-width: 0; padding: 3px 4px; }
   .filter-multi { border: 1px solid var(--border); border-radius: 4px; background: #fff; }
   .filter-multi > summary { cursor: pointer; padding: 3px 6px; font-size: 11px; user-select: none; list-style: none; }
   .filter-multi > summary::-webkit-details-marker { display: none; }
@@ -122,6 +123,7 @@
     .filter-multi-search { min-height: 36px; font-size: 13px; padding: 6px 8px; }
     .filter-text { min-height: 40px; font-size: 13px; padding: 8px 10px; }
     .filter-range input { min-height: 40px; font-size: 13px; padding: 8px 8px; width: 72px; }
+    .filter-field[data-type="date_range"] .filter-range input { width: auto; flex: 1 1 0; min-width: 0; padding: 8px 6px; }
     .filter-clear { font-size: 13px; padding: 8px 4px; display: inline-block; }
     .basemap-picker select { min-height: 44px; padding: 10px 10px; font-size: 13px; }
     .maplibregl-ctrl-group button { width: 44px !important; height: 44px !important; }
@@ -637,6 +639,15 @@ function buildFilterExpr(L) {
       if (v.min !== undefined && v.min !== '') clauses.push(['>=', ['to-number', ['get', f.field], NaN], Number(v.min)]);
       if (v.max !== undefined && v.max !== '') clauses.push(['<=', ['to-number', ['get', f.field], NaN], Number(v.max)]);
       if (clauses.length > 1) parts.push(['all'].concat(clauses));
+    } else if (f.type === 'date_range') {
+      if ((v.min === undefined || v.min === '') && (v.max === undefined || v.max === '')) return;
+      // ISO date strings sort lex == chrono. Slice to first 10 chars to
+      // normalize "2026-04-29T12:34:56" against picker output "2026-04-29".
+      const dateExpr = ['slice', ['to-string', ['get', f.field]], 0, 10];
+      const clauses = [['has', f.field]];
+      if (v.min !== undefined && v.min !== '') clauses.push(['>=', dateExpr, v.min]);
+      if (v.max !== undefined && v.max !== '') clauses.push(['<=', dateExpr, v.max]);
+      if (clauses.length > 1) parts.push(['all'].concat(clauses));
     } else if (f.type === 'categorical') {
       if (!Array.isArray(v) || v.length === 0) return;
       if (Array.isArray(f.values) && v.length >= f.values.length) return;
@@ -669,6 +680,7 @@ function isLayerFiltered(L) {
     const v = state[f.field];
     if (v === undefined || v === null) return false;
     if (f.type === 'numeric') return (v.min !== undefined && v.min !== '') || (v.max !== undefined && v.max !== '');
+    if (f.type === 'date_range') return (v.min !== undefined && v.min !== '') || (v.max !== undefined && v.max !== '');
     if (f.type === 'categorical') return Array.isArray(v) && v.length > 0 && (!Array.isArray(f.values) || v.length < f.values.length);
     if (f.type === 'text') return typeof v === 'string' && v.trim() !== '';
     return false;
@@ -703,6 +715,20 @@ function filterFieldControlHtml(lid, f) {
       <div class="filter-range">
         <input type="number" placeholder="min" value="${curMin}" data-bound="min" step="any">
         <input type="number" placeholder="max" value="${curMax}" data-bound="max" step="any">
+      </div>
+    </div>`;
+  }
+  if (f.type === 'date_range') {
+    const curMin = state && state.min ? state.min : '';
+    const curMax = state && state.max ? state.max : '';
+    const rng = (f.min && f.max) ? `(${f.min} – ${f.max})` : '';
+    const minAttr = f.min ? ` min="${escapeHtml(f.min)}"` : '';
+    const maxAttr = f.max ? ` max="${escapeHtml(f.max)}"` : '';
+    return `<div class="filter-field" data-field="${f.field}" data-type="date_range">
+      <span class="filter-field-label">${escapeHtml(f.label)} ${rng}</span>
+      <div class="filter-range">
+        <input type="date" value="${escapeHtml(curMin)}" data-bound="min"${minAttr}${maxAttr} aria-label="${escapeHtml(f.label)} from">
+        <input type="date" value="${escapeHtml(curMax)}" data-bound="max"${minAttr}${maxAttr} aria-label="${escapeHtml(f.label)} to">
       </div>
     </div>`;
   }
@@ -750,6 +776,17 @@ function bindFilterPanel(panel) {
     const ftype = fieldEl.dataset.type;
     if (ftype === 'numeric') {
       fieldEl.querySelectorAll('input[type=number]').forEach(inp => {
+        inp.addEventListener('input', () => {
+          filterState[lid] = filterState[lid] || {};
+          filterState[lid][fname] = filterState[lid][fname] || {};
+          const bound = inp.dataset.bound;
+          filterState[lid][fname][bound] = inp.value;
+          applyLayerFilter(L);
+          syncHash();
+        });
+      });
+    } else if (ftype === 'date_range') {
+      fieldEl.querySelectorAll('input[type=date]').forEach(inp => {
         inp.addEventListener('input', () => {
           filterState[lid] = filterState[lid] || {};
           filterState[lid][fname] = filterState[lid][fname] || {};
