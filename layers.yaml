@@ -267,8 +267,8 @@ layers:
     type: numeric
     label: Capacity (MW)
   - field: commissioned
-    type: categorical
-    label: Commissioned
+    type: numeric
+    label: Commissioned (year)
   - field: name
     type: text
     label: Plant name
@@ -311,8 +311,8 @@ layers:
     type: numeric
     label: Capacity (MW)
   - field: commissioned
-    type: categorical
-    label: Commissioned
+    type: numeric
+    label: Commissioned (year)
   - field: name
     type: text
     label: Plant name
@@ -350,8 +350,8 @@ layers:
     type: numeric
     label: Capacity (MW)
   - field: commissioned
-    type: categorical
-    label: Commissioned
+    type: numeric
+    label: Commissioned (year)
   - field: manu
     type: categorical
     label: Manufacturer
