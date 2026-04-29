@@ -4,7 +4,7 @@ layers:
   geom: line
   group: Reference
   label: Counties (Outline)
-  color: '#ffffff'
+  color: '#fbbf24'
   line_width: 1.25
   default_on: true
   popup:
