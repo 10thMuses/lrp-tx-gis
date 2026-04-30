@@ -543,31 +543,6 @@ def main_counts_only():
                 print(f"  [{cname} {year}] ERROR {e}")
                 continue
     print("=== counts-only scrape complete ===")
-    """Scrape one (county, year). Falls back to monthly if cap exceeded."""
-    label = f"{year}"
-    start = f"01/01/{year}"
-    end = f"12/31/{year}"
-    result = scrape_chunk(county_name, county_code, district, start, end, label)
-    if result == ["EXCEEDS"]:
-        print(f"    [{county_name} {year}] cap hit — falling back to monthly")
-        rows = []
-        for month in range(1, 13):
-            month_end_day = {1:31,2:29 if year%4==0 and (year%100!=0 or year%400==0) else 28,
-                             3:31,4:30,5:31,6:30,7:31,8:31,9:30,10:31,11:30,12:31}[month]
-            mlabel = f"{year}-{month:02d}"
-            mstart = f"{month:02d}/01/{year}"
-            mend = f"{month:02d}/{month_end_day:02d}/{year}"
-            time.sleep(THROTTLE_SECS)
-            mresult = scrape_chunk(county_name, county_code, district, mstart, mend, mlabel)
-            if mresult == ["EXCEEDS"]:
-                # If even monthly hits cap, log and skip — doesn't happen in this universe
-                print(f"      [{county_name} {mlabel}] MONTHLY cap also exceeded — skipped")
-                continue
-            if mresult is None:
-                continue
-            rows.extend(mresult)
-        return rows
-    return result or []
 
 
 # ============================================================================
@@ -659,7 +634,9 @@ def main():
 
 
 if __name__ == "__main__":
-    if len(sys.argv) >= 2 and sys.argv[1] == "counts":
+    if "--counts-only" in sys.argv or (len(sys.argv) >= 2 and sys.argv[1] == "counts"):
+        # Strip the flag/keyword so any subsequent positional args remain valid for future use
+        sys.argv = [a for a in sys.argv if a not in ("--counts-only", "counts")]
         main_counts_only()
     else:
         main()
