@@ -819,3 +819,74 @@ layers:
   tippecanoe:
   - -Z0
   - -z14
+- id: drilling_permit_density
+  file: combined_geoms.geojson
+  geom: fill
+  group: Permits
+  label: Drilling Permit Density (RRC W-1, 11 Permian counties)
+  description: >
+    County-level density of RRC W-1 drilling permits (oil & gas), 11 Permian
+    counties (Pecos, Reeves, Ward, Loving, Winkler, Culberson, Crane, Upton, Reagan,
+    Crockett, Terrell). Counts span 1976-2026 from RRC W-1 Public Query, normalized
+    by WGS84 geodesic county area. Default fill driven by 20-year window (2006+);
+    other windows exposed as filterable numeric fields (all-time / 20-yr / 10-yr / 5-yr)
+    so the operator can switch the buyer-narrative slice. Frame — shows drilling-intensity
+    gradient across the basin so site-specific risk arguments (low-density Pecos vs
+    core Loving/Ward/Upton) can be made in spatial terms.
+  color: '#6b21a8'
+  color_steps:
+    field: permits_per_sqmi_20yr
+    default: '#f3e8ff'
+    stops:
+    - [0.5, '#d8b4fe']
+    - [2.0, '#c084fc']
+    - [5.0, '#9333ea']
+    - [8.0, '#6b21a8']
+  fill_opacity: 0.6
+  default_on: false
+  popup:
+  - county
+  - area_sqmi
+  - permit_count_all
+  - permit_count_20yr
+  - permit_count_10yr
+  - permit_count_5yr
+  - permits_per_sqmi_all
+  - permits_per_sqmi_20yr
+  - permits_per_sqmi_10yr
+  - permits_per_sqmi_5yr
+  - source
+  - source_date
+  popup_labels:
+    county: County
+    area_sqmi: Area (sq mi)
+    permit_count_all: Permits (all-time)
+    permit_count_20yr: Permits (20-yr)
+    permit_count_10yr: Permits (10-yr)
+    permit_count_5yr: Permits (5-yr)
+    permits_per_sqmi_all: Density (all-time, /sqmi)
+    permits_per_sqmi_20yr: Density (20-yr, /sqmi)
+    permits_per_sqmi_10yr: Density (10-yr, /sqmi)
+    permits_per_sqmi_5yr: Density (5-yr, /sqmi)
+    source: Source
+    source_date: Scraped
+  filterable_fields:
+  - field: county
+    type: categorical
+    label: County
+  - field: permits_per_sqmi_all
+    type: numeric
+    label: Density (all-time)
+  - field: permits_per_sqmi_20yr
+    type: numeric
+    label: Density (20-yr)
+  - field: permits_per_sqmi_10yr
+    type: numeric
+    label: Density (10-yr)
+  - field: permits_per_sqmi_5yr
+    type: numeric
+    label: Density (5-yr)
+  tippecanoe:
+  - -zg
+  - --extend-zooms-if-still-dropping
+  - --simplification=8

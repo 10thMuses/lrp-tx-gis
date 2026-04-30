@@ -4,39 +4,33 @@ Active state. Read at session open. Updated at close-out of every shipping chat.
 
 Per OPERATING.md §10: **`## Next chat
 
-**Chat 123 — RRC W-1 DRILLING PERMIT DENSITY CHOROPLETH.** New layer build — 11 Permian counties, monthly granularity, multi-window aggregation (all-time / 20yr / 10yr / 5yr), normalized by county area. Buyer-narrative artifact for Pecos/Caramba: shows drilling-intensity gradient across the basin so site-specific risk can be argued in spatial terms.
+**Chat 124 — RRC W-1 DRILLING DENSITY: BUILD + SHIP.** Pickup of Chat 123 mid-flight handoff. Branch `refinement-chat123-rrc-drilling-density` already carries the scrape fixes, the aggregator script, the 11 augmented `combined_geoms.geojson` features, and the `layers.yaml` stanza. Remaining: build → atomic deploy + merge + delete-branch + run log. See `docs/_chat123-rrc-drilling-density_handoff.md` (auto-printed by `session-open.sh`).
 
 ### Task
 
-1. **Run counts-only scrape.** Execute `python3 scripts/scrape_rrc_w1.py` in counts-only mode for all 11 counties × 1976–2026 (561 queries, ~25–30 min wall). Output: `outputs/refresh/rrc_w1_counts.csv` with `(county, year, count, district)`. Counts-only mode skips pagination — captures only the `total` from `parse_total_count(html)`. **Note:** `--counts-only` flag was scaffolded in Chat 122 but not finished; finish it as the first task action (constants `OUT_COUNTS` and `COUNTS_CHECKPOINT` already declared in scraper).
-2. **Pull TIGER county polygons** for the 11 counties from the 2024 TIGER tl_2024_us_county shapefile (10 of the 11 already exist as features in `combined_geoms.geojson` `counties` layer — verify and pull missing). Compute `area_sqmi` per county.
-3. **Aggregate.** For each county, compute four windows from `rrc_w1_counts.csv`: `permit_count_all` (1976–2026), `permit_count_20yr` (2006–2026), `permit_count_10yr` (2016–2026), `permit_count_5yr` (2021–2026). Compute permits_per_sqmi for each window.
-4. **Add `drilling_permit_density` layer.** Single `layers.yaml` append (per §6.7) + 11 features appended to `combined_geoms.geojson`. Group: `Permits` (new group). Style: data-driven fill on `permits_per_sqmi_20yr` using the purple `#6b21a8` family per ARCHITECTURE.md §10. Filter declarations: numeric on each `permits_per_sqmi_*` field so operator can switch windows interactively.
-5. **Build → atomic deploy + merge to main + delete branch** per §6.12.
-6. **Run log.** Final coverage: counties scraped clean / FETCH_FAILED holes (if any). Per-county all-time totals. Density ranking (which counties highest permits/sq-mi).
+1. **Validate yaml.** `python3 -c "import yaml; yaml.safe_load(open('layers.yaml'))"` must succeed.
+2. **Build.** `python3 build.py`. Expected `built=27 missing=0 errored=0`.
+3. **Atomic deploy + merge per §6.12.** Netlify MCP `deploy-site` → CLI proxy → poll `state=ready` → sleep 45 → curl `-A "Mozilla/5.0"` and grep `drilling_permit_density` in registry JSON.
+4. **Close-out.** `bash scripts/close-out.sh refinement-chat123-rrc-drilling-density <deployId>`. Delete the handoff doc on the branch before merge.
+5. **Run log.** Density ranking by 20-yr permits/sqmi: Loving 13.6 · Upton 9.0 · Ward 8.1 · Reagan 7.3 · Crane 6.0 · Reeves 5.2 · Winkler 3.8 · Crockett 1.2 · Pecos 1.2 · Culberson 0.8 · Terrell 0.1. Pecos thesis confirmed (1.17 vs Loving 13.6 = 11.7× gradient).
 
 ### Acceptance
 
-- Counts CSV: 11 × 51 = 561 rows, no FETCH_FAILED holes (per-chunk failures get logged + retried; full rerun on flaky chunks acceptable).
-- Build clean: `built=27 missing=0 errored=0`.
-- Local↔prod md5 identical.
+- yaml.safe_load passes.
+- Build clean `built=27 missing=0 errored=0`.
+- Local↔prod md5 identical (index + new `drilling_permit_density.pmtiles`).
 - Branch merged + deleted same chat per §6.12.
-- Pecos density (permits/sq-mi) visibly lower than Reeves/Loving/Ward in the rendered choropleth — sanity check the Pecos thesis.
+- `drilling_permit_density` appears in prod registry JSON; visual confirms Pecos visibly lighter than Reeves/Loving/Ward.
 
 ### Branch
 
-`refinement-chat123-rrc-drilling-density`. Fresh branch from main — Chat 122's branch already merged with `(no deploy)` tag.
+`refinement-chat123-rrc-drilling-density` (existing — `session-open.sh` will check it out from origin per §10 branch-ahead rule). Branch is the truth.
 
 ### Pre-flight
 
-- Chat 122 (2026-04-30): no deploy, scraper-only chat. Shipped `scripts/scrape_rrc_w1.py` (commit `9476077`) — RRC W-1 Public Query scraper for the 11 Permian counties Andrea named (Pecos, Reeves, Ward, Loving, Winkler, Culberson, Crane, Upton, Reagan, Crockett, Terrell). Validated on Loving 2020: 569/569 events captured, 461 distinct permits — full coverage. Scraper-engineering decisions baked into the code:
-  - **Pagination requires `sortApiNumber`.** Without sort applied, sequential `pager.offset` walking captures only ~80% of records — server rebuilds result-set on each request with unstable sort. Code GETs `/DP/changeQuerySortOrderAction.do?order=sortApiNumber` after the POST query before pagination begins.
-  - **Dedup by `univ_doc_no` not `permit_no`.** `permit_no` repeats across status events (initial approval, amendments, re-issuances) — a single permit can produce 2–3 listing rows. The reported "total" on the listing page counts events not permits. `univ_doc_no` is the per-event unique key.
-  - **Junk-row filter.** Each result page has a "Click on lease name for detailed permit information" instructional `<tr>` that matches the same row structure but lacks a numeric `permit_no` — filter by `permit_no.isdigit()`.
-  - **Cap fallback.** Single-county-year queries are ~600 events; cap empirically lies between 569 and 2,411. Code falls back to monthly chunks if `parse_total_count(html) == "EXCEEDS"`. For 1976–2026 most county-years stay well under cap; modern (2018+) high-activity Pecos/Reeves years may need the fallback.
-  - **No lat/lon on listing.** Coords sit on detail pages only. **This is why the work split into two chats** — density choropleth (Chat 123) needs only counts; per-permit point layer (Chat 124+) needs detail-page scrape OR RRC wells-shapefile join, ~80–150k fetches → infeasible in one chat budget.
-- Throttle 1.5s, 3 retries with 10s sleep, atomic CSV writes per §6.15. Resume-capable via `outputs/refresh/rrc_w1_checkpoint.json`.
-- ERCOT Stage 3 still gated on `data/ercot_queue_overrides.csv` (now nine consecutive slots gated; remains in sprint queue).
+- Chat 123 (2026-04-30): partial. Two scraper fixes shipped to branch (`0015f08` orphan-code cleanup + `--counts-only` flag; `2833048` RRC district code corrections for Reagan/Upton/Culberson — Chat 122's TARGETS table had three wrong districts that Loving-only validation missed). Aggregator script + 11 augmented geoms + YAML stanza shipped to branch as commit 3 of 4. Counts CSV (561 rows, 0 fail) lives only in container intermediate; not committed (gitignored convention) but densities are baked into GeoJSON feature properties so re-scrape is not required for build/deploy. Chat exhausted tool budget before reaching build step.
+- Chat 122 (2026-04-30): scraper-only, no deploy. Shipped `scripts/scrape_rrc_w1.py` (commit `9476077`).
+- ERCOT Stage 3 still gated on `data/ercot_queue_overrides.csv` (now ten consecutive slots gated; remains in sprint queue).
 
 ## Sprint queue
 
