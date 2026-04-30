@@ -96,9 +96,9 @@ TARGETS = [
     ("LOVING",    "301", "08"),
     ("WINKLER",   "495", "08"),
     ("CRANE",     "103", "08"),
-    ("UPTON",     "461", "08"),
-    ("REAGAN",    "383", "08"),
-    ("CULBERSON", "109", "7C"),
+    ("UPTON",     "461", "7C"),
+    ("REAGAN",    "383", "7C"),
+    ("CULBERSON", "109", "08"),
     ("CROCKETT",  "105", "7C"),
     ("TERRELL",   "443", "7C"),
 ]
@@ -513,61 +513,75 @@ def append_count_rows(rows):
     os.replace(tmp, OUT_COUNTS)
 
 
-def main_counts_only():
+def main_counts_only(county_filter=None):
+    """Counts-only scrape. If county_filter is a list of county names (case-insensitive),
+    only those counties are scraped, and output files are suffixed with the county name
+    (`outputs/refresh/rrc_w1_counts_<county>.csv` + `..._checkpoint_<county>.json`).
+    With no filter, writes to canonical OUT_COUNTS / COUNTS_CHECKPOINT paths."""
     os.makedirs("outputs/refresh", exist_ok=True)
+    targets = TARGETS
+    out_path = OUT_COUNTS
+    ckpt_path = COUNTS_CHECKPOINT
+    if county_filter:
+        wanted = {c.upper() for c in county_filter}
+        targets = [t for t in TARGETS if t[0].upper() in wanted]
+        if not targets:
+            print(f"unknown counties: {county_filter}")
+            sys.exit(1)
+        suffix = "_".join(c.upper() for c in county_filter)
+        out_path = OUT_COUNTS.replace(".csv", f"_{suffix}.csv")
+        ckpt_path = COUNTS_CHECKPOINT.replace(".json", f"_{suffix}.json")
+
     state = {"completed": []}
-    if os.path.exists(COUNTS_CHECKPOINT):
-        with open(COUNTS_CHECKPOINT) as f:
+    if os.path.exists(ckpt_path):
+        with open(ckpt_path) as f:
             state = json.load(f)
     completed = set(tuple(c) for c in state["completed"])
 
     yr_start = START_YEAR
     yr_end = END_YEAR
-    print(f"=== RRC W-1 counts-only: {len(TARGETS)} counties × {yr_start}-{yr_end} ===")
-    for (cname, ccode, district) in TARGETS:
+    print(f"=== RRC W-1 counts-only: {len(targets)} counties × {yr_start}-{yr_end} → {out_path} ===")
+    for (cname, ccode, district) in targets:
         for year in range(yr_start, yr_end + 1):
             key = (cname, year)
             if key in completed:
                 continue
             try:
                 rows = scrape_county_year_counts_only(cname, ccode, district, year)
-                append_count_rows(rows)
+                _append_count_rows(rows, out_path)
                 state["completed"].append(list(key))
-                tmp = COUNTS_CHECKPOINT + ".tmp"
+                tmp = ckpt_path + ".tmp"
                 with open(tmp, "w") as f:
                     json.dump(state, f)
-                os.replace(tmp, COUNTS_CHECKPOINT)
+                os.replace(tmp, ckpt_path)
                 cnt = sum(int(r["count"]) for r in rows if r.get("count") not in ("", None))
                 print(f"  [{cname} {year}] {cnt}")
             except Exception as e:
                 print(f"  [{cname} {year}] ERROR {e}")
                 continue
-    print("=== counts-only scrape complete ===")
-    """Scrape one (county, year). Falls back to monthly if cap exceeded."""
-    label = f"{year}"
-    start = f"01/01/{year}"
-    end = f"12/31/{year}"
-    result = scrape_chunk(county_name, county_code, district, start, end, label)
-    if result == ["EXCEEDS"]:
-        print(f"    [{county_name} {year}] cap hit — falling back to monthly")
-        rows = []
-        for month in range(1, 13):
-            month_end_day = {1:31,2:29 if year%4==0 and (year%100!=0 or year%400==0) else 28,
-                             3:31,4:30,5:31,6:30,7:31,8:31,9:30,10:31,11:30,12:31}[month]
-            mlabel = f"{year}-{month:02d}"
-            mstart = f"{month:02d}/01/{year}"
-            mend = f"{month:02d}/{month_end_day:02d}/{year}"
-            time.sleep(THROTTLE_SECS)
-            mresult = scrape_chunk(county_name, county_code, district, mstart, mend, mlabel)
-            if mresult == ["EXCEEDS"]:
-                # If even monthly hits cap, log and skip — doesn't happen in this universe
-                print(f"      [{county_name} {mlabel}] MONTHLY cap also exceeded — skipped")
-                continue
-            if mresult is None:
-                continue
-            rows.extend(mresult)
-        return rows
-    return result or []
+    print(f"=== counts-only scrape complete: {out_path} ===")
+
+
+def _append_count_rows(rows, out_path):
+    """Atomic append. Splits the singleton append_count_rows so per-worker
+    CSV paths can be passed in."""
+    if not rows:
+        return
+    new_file = not os.path.exists(out_path)
+    fields = ["county_name", "county_code", "district", "year", "month", "count", "status"]
+    tmp = out_path + ".tmp"
+    existing = []
+    if not new_file:
+        with open(out_path) as f:
+            existing = list(csv.DictReader(f))
+    with open(tmp, "w", newline="") as f:
+        writer = csv.DictWriter(f, fieldnames=fields)
+        writer.writeheader()
+        for r in existing:
+            writer.writerow({k: r.get(k, "") for k in fields})
+        for r in rows:
+            writer.writerow({k: r.get(k, "") for k in fields})
+    os.replace(tmp, out_path)
 
 
 # ============================================================================
@@ -659,7 +673,8 @@ def main():
 
 
 if __name__ == "__main__":
-    if len(sys.argv) >= 2 and sys.argv[1] == "counts":
-        main_counts_only()
+    if "--counts-only" in sys.argv or (len(sys.argv) >= 2 and sys.argv[1] == "counts"):
+        positional = [a for a in sys.argv[1:] if a not in ("--counts-only", "counts")]
+        main_counts_only(county_filter=positional or None)
     else:
         main()
