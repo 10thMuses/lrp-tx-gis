@@ -390,9 +390,6 @@ layers:
   - field: capacity_mw
     type: numeric
     label: Capacity (MW)
-  - field: commissioned
-    type: categorical
-    label: Commissioned
   - field: name
     type: text
     label: Plant name
@@ -578,7 +575,7 @@ layers:
     label: Funnel stage
   - field: commissioned
     type: categorical
-    label: Commissioned
+    label: Commissioned (Y/N)
   - field: under_construction
     type: categorical
     label: Under construction
