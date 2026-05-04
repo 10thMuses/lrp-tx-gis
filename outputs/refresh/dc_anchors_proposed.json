@@ -1,0 +1,66 @@
+{
+  "schema_version": "1.0",
+  "generated": "2026-05-04T08:28:53Z",
+  "model": "claude-sonnet-4-5-20250929",
+  "input_file": "data/datacenters/dc_anchors.json",
+  "input_entry_count": 8,
+  "processed_entry_count": 8,
+  "proposals": [
+    {
+      "id": "project-horizon-poolside-coreweave",
+      "diff": {},
+      "additional_sources": [],
+      "conflicts": [],
+      "fetch_failures": [],
+      "no_change": true
+    },
+    {
+      "id": "stargate-abilene-crusoe-oracle",
+      "diff": {},
+      "additional_sources": [
+        {
+          "url": "https://openai.com/index/five-new-stargate-sites/",
+          "claim": "OpenAI, Oracle, and SoftBank announce five new Stargate AI datacenter sites in 2026, accelerating infrastructure buildout."
+        },
+        {
+          "url": "https://www.tomshardware.com/tech-industry/oracle-and-openai-scrap-planned-600mw-abilene-expansion",
+          "claim": "600MW expansion lease scrapped and re-leased separately to Microsoft as adjacent campus (March 2026)."
+        }
+      ],
+      "conflicts": [],
+      "fetch_failures": []
+    },
+    {
+      "id": "microsoft-crusoe-abilene",
+      "error": "Claude API exhausted retries"
+    },
+    {
+      "id": "project-matador-fermi-america",
+      "error": "Claude API exhausted retries"
+    },
+    {
+      "id": "gw-ranch-pacifico-pecos",
+      "error": "Claude API exhausted retries"
+    },
+    {
+      "id": "stargate-frontier-shackelford",
+      "diff": {},
+      "additional_sources": [
+        {
+          "url": "https://www.thealbanynews.net/news/shackelford-data-center-named-official-stargate-ai-campus",
+          "claim": "Oracle executive Mahesh Thiagarajan quoted, confirming Shackelford County campus as part of Stargate project and commitment to local job creation"
+        }
+      ],
+      "conflicts": [],
+      "fetch_failures": []
+    },
+    {
+      "id": "stargate-milam-sb-energy",
+      "error": "Claude API exhausted retries"
+    },
+    {
+      "id": "meta-temple-bell",
+      "error": "Claude API exhausted retries"
+    }
+  ]
+}
