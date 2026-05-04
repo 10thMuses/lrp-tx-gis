@@ -816,3 +816,58 @@ layers:
   tippecanoe:
   - -Z0
   - -z14
+- id: drilling_permits
+  file: combined_points.csv
+  geom: point
+  group: Permits
+  label: RRC Drilling Permits (lifetime, 11 Permian counties)
+  color: '#78716c'
+  default_on: false
+  radius: 4
+  stroke_width: 1
+  popup:
+  - name
+  - plant_code
+  - operator
+  - county
+  - technology
+  - project
+  - depth_ft
+  - commissioned
+  - year
+  - zone
+  - funnel_stage
+  popup_labels:
+    name: Lease
+    plant_code: Permit no.
+    operator: Operator
+    county: County
+    technology: Application type
+    project: Well no.
+    depth_ft: Total depth (ft)
+    commissioned: Issue date
+    year: Year
+    zone: RRC district
+    funnel_stage: Status
+  filterable_fields:
+  - field: county
+    type: categorical
+    label: County
+  - field: technology
+    type: categorical
+    label: Application type
+  - field: zone
+    type: categorical
+    label: District
+  - field: operator
+    type: categorical
+    label: Operator
+  - field: year
+    type: numeric
+    label: Issue year
+  - field: depth_ft
+    type: numeric
+    label: Total depth (ft)
+  tippecanoe:
+  - -Z6
+  - -z14
