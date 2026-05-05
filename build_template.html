@@ -111,10 +111,14 @@
     body.sb-collapsed { grid-template-columns: 1fr; }
     .sidebar { position: absolute; top: 48px; left: 0; bottom: 0; width: min(86vw, 320px); z-index: 10; transform: translateX(0); transition: transform 220ms ease; box-shadow: 2px 0 10px rgba(0,0,0,0.12); }
     body.sb-collapsed .sidebar { transform: translateX(-100%); box-shadow: none; }
-    body:not(.sb-collapsed) .sb-toggle { left: calc(min(86vw, 320px) + 8px); }
+    body:not(.sb-collapsed) .sb-toggle { left: min(calc(min(86vw, 320px) + 8px), calc(100vw - 52px)); }
+
+    /* Mobile: hide decorative title text in topbar — buttons + brand must fit ≤360px viewports. */
+    .topbar .title { display: none; }
+    .topbar { gap: 8px; padding: 0 8px; }
 
     /* Touch targets: WCAG 2.5.5 — ≥44px primary controls. */
-    .topbar button { min-height: 44px; padding: 8px 14px; font-size: 13px; }
+    .topbar button { min-height: 44px; padding: 8px 10px; font-size: 13px; }
     .layer { min-height: 44px; padding: 8px 0; gap: 12px; }
     .layer input[type=checkbox] { width: 20px; height: 20px; }
     .layer .label { font-size: 14px; }
@@ -183,8 +187,8 @@
   <div class="spacer"></div>
   <button id="btn-measure" title="Measure distance &amp; area">Measure</button>
   <button id="btn-reset" title="Reset to default layers + view">Reset</button>
-  <button id="btn-share" title="Copy shareable URL">Share view</button>
-  <button id="btn-print" title="Print / PDF (landscape)">Print / PDF</button>
+  <button id="btn-share" title="Copy shareable URL">Share</button>
+  <button id="btn-print" title="Print / PDF (landscape)">Print</button>
 </div>
 
 <aside class="sidebar">
@@ -1318,6 +1322,15 @@ map.on('click', e => {
   if (!measureActive) return;
   measurePoints.push([e.lngLat.lng, e.lngLat.lat]);
   renderMeasure();
+});
+
+// Mobile: tapping the visible map sliver while drawer is open closes the drawer.
+// Skipped while measuring (taps are vertex-add) and when drawer already collapsed.
+map.on('click', () => {
+  if (!_mqMobile.matches) return;
+  if (measureActive) return;
+  if (sidebarCollapsed) return;
+  sbToggle.click();
 });
 map.on('dblclick', e => {
   if (!measureActive) return;
