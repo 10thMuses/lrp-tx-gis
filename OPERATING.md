@@ -75,6 +75,8 @@ bash scripts/session-open.sh <branch-name>
 
 `session-open.sh` enforces three rules mechanically: branch-ahead check (fetch origin; if remote branch has commits, check out, never reconstruct); handoff-doc detection (print `docs/_<slug>_handoff.md` if present); empty-branch upstream push.
 
+**Reading WIP_OPEN.md at session-open.** Only the `## Next chat` block is required for task scope (≤200 lines from the heading). The `## Sprint queue`, `## Prod status`, and `## Open backlog` sections are reference material — read on demand when something specific in the chat references them, never as standing context. Saves ~3 KB of token envelope per shipping chat. Use `view` with an explicit `view_range` clamped to the `## Next chat` heading and the next `## ` heading.
+
 **Close-out** (every shipping chat — non-negotiable):
 
 ```bash
@@ -138,12 +140,12 @@ Ambiguity → pick most plausible interpretation, execute, note assumption at cl
 
 ## 8. Build / refresh / merge cycles
 
-**Build cycle** (target 4 tool calls for `build. deploy to prod.`):
+**Build cycle** (target 3 tool calls for `build. deploy to prod.`):
 
 1. Composite bash: install tippecanoe if cold, install Python deps, run `build.py`.
 2. Netlify MCP `deploy-site` returns single-use proxy URL.
 3. CLI proxy: `cd /mnt/user-data/outputs/dist && npx -y @netlify/mcp@latest --site-id <siteId> --proxy-path "<URL>" --no-wait`. Returns `deployId`.
-4. Poll `get-deploy-for-site` until `state=ready`. Sleep 45 for CDN warm-up. Verify with `curl -A "Mozilla/5.0"` (default UA returns 503 — bot block on Netlify edge). Grep layer-id count.
+4. Poll prod URL for md5 parity vs `dist/index.html` md5. Parity == both `state=ready` and CDN propagated in one signal. Replaces the prior `get-deploy-for-site` MCP poll + blind 45s CDN sleep — saves ~3KB JSON parse per poll iteration plus one MCP round-trip per deploy. Use `curl -A "Mozilla/5.0"` (default UA returns 503 — bot block on Netlify edge). One-shot bash: `LOCAL=$(md5sum dist/index.html | awk '{print $1}'); for i in {1..60}; do PROD=$(curl -s -A "Mozilla/5.0" https://lrp-tx-gis.netlify.app/ | md5sum | awk '{print $1}'); [ "$PROD" = "$LOCAL" ] && break; sleep 5; done`. Correctness depends on every build producing a byte-unique index.html, guaranteed by the `/*__BUILD_ID__*/` token substitution in `build.py:render_html` (per-build UTC timestamp + random nonce). Removing that marker breaks this poll.
 5. `present_files dist/index.html`.
 
 **Refresh cycle:**

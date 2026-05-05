@@ -18,17 +18,17 @@
 #   1. Build if --rebuild OR dist/ missing. Refuse if errored>0 (§6 rule 8).
 #   2. JSON-RPC call to Netlify MCP `deploy-site` → single-use proxy URL.
 #   3. npx @netlify/mcp upload via proxy URL → captures deployId.
-#   4. Poll `get-deploy-for-site` until state=ready.
-#   5. Sleep 45s for CDN warm-up.
-#   6. curl -A "Mozilla/5.0" verify on root + one tile endpoint.
-#   7. Echo deployId on stdout.
+#   4. Poll prod URL for md5 parity vs local dist/index.html. Parity == both
+#      (a) deploy state=ready and (b) CDN propagated, in one signal. Replaces
+#      the prior get-deploy-for-site MCP poll + blind 45s CDN sleep.
+#   5. Echo deployId on stdout.
 #
 # Exit codes:
 #   0   ready and verified
 #   2   build errored (errored>0 in build report)
 #   3   missing NETLIFY_PAT (canonical path: see WIP_OPEN.md Open backlog)
 #   4   verify failed (HTTP non-200 on root or tile)
-#   5   poll timeout (state never reached `ready` within 5 minutes)
+#   5   poll timeout (md5 parity not reached within 5 minutes)
 
 set -euo pipefail
 
@@ -100,45 +100,47 @@ UPLOAD_OUT=$(npx -y @netlify/mcp@latest --site-id "$SITE_ID" --proxy-path "$PROX
 popd >/dev/null
 DEPLOY_ID=$(echo "$UPLOAD_OUT" | grep -oE '[0-9a-f]{24}' | head -1 || echo "")
 if [ -z "$DEPLOY_ID" ]; then
+  # On failure, dump full output so the operator can see deprecation warnings,
+  # auth errors, npm noise, etc. On success we already have what we need.
   log "ERROR: upload produced no deployId. Output: $UPLOAD_OUT"
   exit 3
 fi
 log "[§8.3] deployId: $DEPLOY_ID"
 
-# 4. Poll for state=ready (5 min timeout, 5s interval).
-log "[§8.4] polling get-deploy-for-site"
-TIMEOUT=300
-ELAPSED=0
-STATE="building"
-while [ "$STATE" != "ready" ] && [ "$ELAPSED" -lt "$TIMEOUT" ]; do
-  sleep 5
-  ELAPSED=$((ELAPSED + 5))
-  POLL_RESP=$(mcp_call "get-deploy-for-site" "{\"siteId\":\"$SITE_ID\",\"deployId\":\"$DEPLOY_ID\"}")
-  STATE=$(echo "$POLL_RESP" | python3 -c 'import sys,json,re; t=json.load(sys.stdin)["result"]["content"][0]["text"]; m=re.search(r"\"state\"\s*:\s*\"(\w+)\"",t); print(m.group(1) if m else "unknown")' 2>/dev/null || echo "unknown")
-  log "  ${ELAPSED}s state=$STATE"
-  if [ "$STATE" = "error" ]; then
-    log "ERROR: deploy state=error"
-    exit 4
-  fi
-done
-if [ "$STATE" != "ready" ]; then
-  log "ERROR: poll timeout after ${TIMEOUT}s, state=$STATE"
-  exit 5
-fi
-
-# 5. CDN warm-up.
-log "[§8.5] sleeping 45s for CDN warm-up"
-sleep 45
-
-# 6. Curl verification.
-log "[§8.6] verifying root + tile endpoint"
-ROOT_CODE=$(curl -sI -A "Mozilla/5.0" -o /dev/null -w "%{http_code}" "https://lrp-tx-gis.netlify.app/")
-if [ "$ROOT_CODE" != "200" ]; then
-  log "ERROR: root returned HTTP $ROOT_CODE"
+# 4–6. Fused md5-parity poll: prod==local md5 means (a) deploy state=ready AND
+# (b) CDN has propagated. Eliminates the separate get-deploy-for-site MCP poll
+# (saved ~3KB JSON per call × N polls) AND the blind 45s CDN sleep. The poll
+# converges in 5–60s typically; falls back to the same 5-minute ceiling.
+#
+# Correctness depends on every build producing a byte-unique index.html so
+# parity-already-true cannot be the pre-deploy state. Guaranteed by the
+# /*__BUILD_ID__*/ token substitution in build.py:render_html (per-build UTC
+# timestamp + random nonce). Removing that marker breaks this poll.
+LOCAL_INDEX="$DIST/index.html"
+if [ ! -f "$LOCAL_INDEX" ]; then
+  log "ERROR: $LOCAL_INDEX missing — cannot compute md5-parity target"
   exit 4
 fi
-LAYER_COUNT=$(curl -s -A "Mozilla/5.0" "https://lrp-tx-gis.netlify.app/" | grep -oE '"id":"[a-z_][a-z0-9_]*"' | sort -u | wc -l)
-log "[§8.6] verified: root 200, layer-id count $LAYER_COUNT"
+LOCAL_MD5=$(md5sum "$LOCAL_INDEX" | awk '{print $1}')
+log "[§8.4] polling for prod md5 == local md5 ($LOCAL_MD5)"
+TIMEOUT=300
+ELAPSED=0
+PROD_MD5=""
+ROOT_CODE=""
+while [ "$PROD_MD5" != "$LOCAL_MD5" ] && [ "$ELAPSED" -lt "$TIMEOUT" ]; do
+  sleep 5
+  ELAPSED=$((ELAPSED + 5))
+  ROOT_CODE=$(curl -sI -A "Mozilla/5.0" -o /dev/null -w "%{http_code}" "https://lrp-tx-gis.netlify.app/" || echo "000")
+  if [ "$ROOT_CODE" = "200" ]; then
+    PROD_MD5=$(curl -s -A "Mozilla/5.0" "https://lrp-tx-gis.netlify.app/" | md5sum | awk '{print $1}')
+  fi
+  log "  ${ELAPSED}s root=$ROOT_CODE prod_md5=${PROD_MD5:-none}"
+done
+if [ "$PROD_MD5" != "$LOCAL_MD5" ]; then
+  log "ERROR: md5-parity timeout after ${TIMEOUT}s. prod=$PROD_MD5 local=$LOCAL_MD5"
+  exit 5
+fi
+log "[§8.6] verified: root 200, md5 parity local↔prod"
 
 # 7. Emit deployId on stdout (single line).
 echo "$DEPLOY_ID"
