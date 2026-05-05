@@ -855,7 +855,14 @@ def render_html(layers_config, layer_stats, filter_stats=None):
         })
     registry_json = json.dumps(clean, separators=(',', ':'))
     tpl = TEMPLATE_FILE.read_text()
-    out = tpl.replace('/*__LAYERS__*/', registry_json)
+    # Inject a per-build identity marker so every deploy produces a byte-unique
+    # index.html. Two consumers depend on this:
+    #   1. Netlify dedup-buster (originally why this marker existed — Chat 110a).
+    #   2. md5-parity poll in scripts/deploy.sh (Chat 127b) — md5 changing on
+    #      every build is what makes "prod md5 == local md5" a reliable
+    #      ready+propagated signal across both data and code-only deploys.
+    build_id = time.strftime('%Y%m%dT%H%M%SZ', time.gmtime()) + '-' + os.urandom(4).hex()
+    out = tpl.replace('/*__LAYERS__*/', registry_json).replace('/*__BUILD_ID__*/', build_id)
     (DIST / 'index.html').write_text(out)
 
 
