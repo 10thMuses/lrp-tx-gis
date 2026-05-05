@@ -35,6 +35,9 @@ set -euo pipefail
 # Logging helper: stderr only — stdout reserved for deployId.
 log() { echo "$@" >&2; }
 
+# Repo root: parent of scripts/ regardless of where this is invoked from.
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+
 REBUILD=0
 SITE_ID="01b53b80-687e-4641-b088-115b7d5ef638"
 DIST="dist"
@@ -62,16 +65,25 @@ if [ "$REBUILD" = "1" ] || [ ! -d "$DIST" ]; then
 fi
 
 # 2. Netlify MCP `deploy-site` requires auth.
-if [ ! -f /mnt/project/CREDENTIALS.md ]; then
-  log "ERROR: /mnt/project/CREDENTIALS.md not readable"
-  exit 3
-fi
-NETLIFY_PAT=$(grep '^NETLIFY_PAT=' /mnt/project/CREDENTIALS.md 2>/dev/null | cut -d= -f2 || true)
+# Resolution order: .env at repo root (Claude Code mode), then
+# /mnt/project/CREDENTIALS.md (chat mode), then current shell env.
+# awk with `=$1=$2…` pattern picks the last non-empty NETLIFY_PAT= line.
+read_pat() {
+  local f="$1"
+  [ -f "$f" ] || return 0
+  awk -F= 'BEGIN{v=""} /^NETLIFY_PAT=/ {sub(/^NETLIFY_PAT=/,""); if(length($0)>0) v=$0} END{print v}' "$f"
+}
+NETLIFY_PAT=$(read_pat "$ROOT/.env")
 if [ -z "${NETLIFY_PAT:-}" ]; then
-  log "ERROR: NETLIFY_PAT missing from CREDENTIALS.md."
-  log "       This script's bash-only path needs NETLIFY_PAT to call MCP via JSON-RPC."
+  NETLIFY_PAT=$(read_pat /mnt/project/CREDENTIALS.md)
+fi
+if [ -z "${NETLIFY_PAT:-}" ]; then
+  NETLIFY_PAT="${NETLIFY_PAT_ENV:-}"
+fi
+if [ -z "${NETLIFY_PAT:-}" ]; then
+  log "ERROR: NETLIFY_PAT not found."
+  log "       Resolution order: .env at repo root, /mnt/project/CREDENTIALS.md, NETLIFY_PAT_ENV var."
   log "       Until provisioned, deploy via Netlify MCP in chat (OPERATING.md §8)."
-  log "       See WIP_OPEN.md Open backlog: 'NETLIFY_PAT absent from CREDENTIALS.md'."
   exit 3
 fi
 

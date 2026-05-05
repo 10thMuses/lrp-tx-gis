@@ -8,7 +8,16 @@ This is the single operating doc. All execution rules live here. Architecture, s
 
 ## 1. Source of truth
 
-**Repo > sidebar > memory.** Repo wins on disagreement. Sidebar lags; memory churns. Working dir in-chat is `/home/claude/repo/`; any reference to `/mnt/project/<file>` resolves there. The only `/mnt/project/` file Claude reads is `CREDENTIALS.md` for the GitHub PAT at session open.
+**Repo > sidebar > memory.** Repo wins on disagreement. Sidebar lags; memory churns.
+
+The working directory and credential locations differ by environment:
+
+| Environment | Working dir | Credentials |
+|---|---|---|
+| Chat (Anthropic web/mobile) | `/home/claude/repo/` (cloned per session) | `/mnt/project/CREDENTIALS.md` |
+| Claude Code | local clone, persistent | `.env` at repo root (gitignored) |
+
+See `CLAUDE.md` for the full Claude Code environment delta. When `CLAUDE.md` and this file disagree on environment specifics, `CLAUDE.md` wins; on execution discipline, this file wins.
 
 Live reads use the GitHub Contents API on first access in a chat. `raw.githubusercontent.com` only for files known stable for hours.
 
@@ -64,7 +73,7 @@ Execute end-to-end without mid-session confirmation.
 
 Both are scripts in `scripts/`. Operator's `## Next chat` block in `WIP_OPEN.md` carries task scope only. Procedural bash is not pasted into WIP_OPEN.
 
-**Session-open** (every shipping chat):
+**Session-open — chat mode** (every shipping chat):
 
 ```bash
 PAT=$(grep '^GITHUB_PAT=' /mnt/project/CREDENTIALS.md | cut -d= -f2)
@@ -72,6 +81,14 @@ cd /home/claude && rm -rf repo 2>/dev/null
 git clone -q https://x-access-token:${PAT}@github.com/10thMuses/lrp-tx-gis.git repo && cd repo
 bash scripts/session-open.sh <branch-name>
 ```
+
+**Session-open — Claude Code mode** (first session only):
+
+```bash
+bash scripts/bootstrap-claude-code.sh   # idempotent, run once after clone
+```
+
+After the first session, Claude Code skips the clone-edit-push bracket entirely — working dir is the persistent local clone. Each shipping session opens with `git checkout -b refinement-<slug>` and proceeds directly. `session-open.sh` is optional but its branch-ahead check + handoff-doc detection is still useful.
 
 `session-open.sh` enforces three rules mechanically: branch-ahead check (fetch origin; if remote branch has commits, check out, never reconstruct); handoff-doc detection (print `docs/_<slug>_handoff.md` if present); empty-branch upstream push.
 

@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 """Build pipeline for the Texas Energy GIS Map.
 
-Reads /mnt/project/layers.yaml. Supports two data-file patterns:
+Reads `layers.yaml` from the project dir (env LRP_PROJECT_DIR; defaults to
+/mnt/project/ in chat mode, repo root in Claude Code mode). Supports two
+data-file patterns:
 
   1. COMBINED FILES (default for most layers):
        - combined_points.csv   — union of all point CSVs; `layer_id` column tags each row
@@ -71,8 +73,17 @@ SPRITE_SRC = Path(__file__).parent / 'sprite'
 TEMPLATE_FILE = ROOT / 'build_template.html'
 TMP = Path('/tmp/gis_build')
 SPLIT_DIR = TMP / 'split'
+
+# Environment-driven paths. Defaults match chat-mode (/mnt/project/, /mnt/user-data/);
+# Claude Code mode sets LRP_PROJECT_DIR=. and LRP_DIST_DIR=./dist via .env / shell.
+# Resolution order on every path: explicit env var → mnt default → repo ROOT fallback.
+def _resolve_path(env_key, default):
+    p = Path(os.environ.get(env_key, default))
+    return p if p.exists() else ROOT
+
 DIST = Path(os.environ.get('LRP_DIST_DIR', '/mnt/user-data/outputs/dist'))
-PROJECT = Path('/mnt/project')
+PROJECT = _resolve_path('LRP_PROJECT_DIR', '/mnt/project')
+UPLOADS = _resolve_path('LRP_UPLOADS_DIR', '/mnt/user-data/uploads')
 
 COMBINED_CSV = 'combined_points.csv'
 COMBINED_GJ = 'combined_geoms.geojson'
@@ -211,9 +222,12 @@ def fnum(v):
 
 
 def resolve_source(file_rel):
-    """Return absolute path in /mnt/project/ (flat), subfolder fallback,
+    """Return absolute path in PROJECT (flat), subfolder fallback,
     or repo ROOT (GitHub-as-canonical-source fallback for files not synced
-    into project knowledge — the canonical source is the cloned repo)."""
+    into project knowledge — the canonical source is the cloned repo).
+
+    PROJECT resolves via LRP_PROJECT_DIR env var: /mnt/project/ in chat mode,
+    repo root in Claude Code mode. The function is mode-agnostic."""
     flat = PROJECT / file_rel
     if flat.exists():
         return flat
@@ -568,12 +582,12 @@ def build_layer(layer, report, split_stats):
     pm.parent.mkdir(parents=True, exist_ok=True)
 
     # Prebuilt PMTiles: 3-tier resolution → dist/tiles/<id>.pmtiles
-    #   tier 1: /mnt/project/<id>.pmtiles            (project knowledge or in-session cp)
-    #   tier 2: /mnt/user-data/uploads/<id>.pmtiles  (operator session upload)
+    #   tier 1: PROJECT/<id>.pmtiles                (chat: /mnt/project/, code: ./)
+    #   tier 2: UPLOADS/<id>.pmtiles                (chat: /mnt/user-data/uploads/, code: ./uploads/)
     #   tier 3: https://lrp-tx-gis.netlify.app/tiles/<id>.pmtiles  (current prod, self-sustaining)
     if layer.get('prebuilt'):
         src_project = PROJECT / f'{lid}.pmtiles'
-        src_uploads = Path('/mnt/user-data/uploads') / f'{lid}.pmtiles'
+        src_uploads = UPLOADS / f'{lid}.pmtiles'
         prod_url = f'https://lrp-tx-gis.netlify.app/tiles/{lid}.pmtiles'
         tier_used = None
         try:
@@ -1028,7 +1042,7 @@ def cmd_merge(layer_id, refresh_filepath):
     makes this safe even if the process is killed mid-merge.
 
     Under the repo-as-source-of-truth model (OPERATING.md §1) the canonical
-    combined files live in the repo working tree, not /mnt/project/. The
+    combined files live in the repo working tree, not in PROJECT. The
     operator commits the post-merge result via the standard commit-every-unit
     flow; no separate /mnt/user-data/outputs/ stage is needed.
     """
@@ -1080,7 +1094,7 @@ def cmd_merge(layer_id, refresh_filepath):
 
     sz = out_path.stat().st_size
     print(f'\n  output size: {sz/1e6:.2f} MB')
-    print(f'\nDrop {out_path.name} into /mnt/project/ to replace the existing combined file.')
+    print(f'\nWrote {out_path} (in-place). Commit via standard flow.')
 
 
 # ---------- MAIN (build) ----------

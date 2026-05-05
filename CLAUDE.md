@@ -42,6 +42,29 @@ This repo's `OPERATING.md` was written for ephemeral chat containers where state
 
 When `OPERATING.md` and this section disagree on environment specifics, this section wins. When they disagree on execution discipline (banned asks, blast radius, hard rules 1–8, 10–15), `OPERATING.md` wins.
 
+## First-time setup
+
+```bash
+git clone https://github.com/10thMuses/lrp-tx-gis.git
+cd lrp-tx-gis
+bash scripts/bootstrap-claude-code.sh
+# edit .env to fill in GITHUB_PAT and NETLIFY_PAT
+```
+
+`bootstrap-claude-code.sh` is idempotent. It installs tippecanoe + python deps, copies `.env.example` → `.env` if missing, sets git identity, and runs a smoke test.
+
+## Build paths
+
+`build.py` resolves paths from environment variables with chat-mode fallbacks:
+
+| Variable | Code mode (.env) | Chat mode default |
+|---|---|---|
+| `LRP_PROJECT_DIR` | `.` | `/mnt/project` |
+| `LRP_DIST_DIR` | `./dist` | `/mnt/user-data/outputs/dist` |
+| `LRP_UPLOADS_DIR` | `./uploads` | `/mnt/user-data/uploads` |
+
+Same for `scripts/deploy.sh`: NETLIFY_PAT resolves from `.env` first, then `/mnt/project/CREDENTIALS.md`, then shell env.
+
 ## Hard constraints worth repeating
 
 These are the highest-cost failure modes; surface them in working memory:
@@ -53,13 +76,7 @@ These are the highest-cost failure modes; surface them in working memory:
 
 ## Credentials
 
-`.env` at repo root, gitignored. Format:
-
-```
-GITHUB_PAT=<value>
-```
-
-GitHub PAT is needed only for scripted operations that require explicit auth (e.g., direct API calls). Most git operations use local credential helper.
+`.env` at repo root, gitignored. See `.env.example` for the full template. Required keys: `GITHUB_PAT`, `NETLIFY_PAT`. GitHub PAT is needed only for scripted operations that require explicit auth — most git operations use the local credential helper. NETLIFY_PAT is required for `scripts/deploy.sh`; without it the script falls back to in-chat Netlify MCP (chat mode only).
 
 ## Repo
 
