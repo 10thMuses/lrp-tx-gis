@@ -256,8 +256,8 @@ Procedural bash for session-open and close-out is NOT pasted into WIP_OPEN.md. T
 
 | Chat type | Target | With GitHub sync |
 |---|---:|---:|
-| Build (no new layer) | 4 | 6 |
-| New-layer addition | 6 | 8 |
+| Build (no new layer) | 3 | 5 |
+| New-layer addition | 5 | 7 |
 | Refresh (single source) | 4–10 | 6–12 |
 | Doc-only commit | 2 | 2–6 |
 
