@@ -1,6 +1,6 @@
 # CLAUDE.md
 
-Bootstrap doc for Claude Code sessions on this repo. Auto-loaded into every session's context.
+Bootstrap doc for Claude Code sessions on this repo. Auto-loaded into every session.
 
 ---
 
@@ -10,7 +10,7 @@ Bootstrap doc for Claude Code sessions on this repo. Auto-loaded into every sess
 
 ## Voice
 
-Peer-level industry tone. Concise, factual, professional, direct. No fluff, no recap, no repetitive language. No "should I proceed" hedging — when the next move is named and unblocked, execute. Substantive data integrated. Minimize tokens.
+Peer-level industry tone. Concise, factual, professional, direct. No fluff, no recap, no repetitive language. No "should I proceed" hedging — when the next move is named and unblocked, execute. Substantive data integrated.
 
 ## Project
 
@@ -18,66 +18,88 @@ LRP Texas Energy GIS Map. MapLibre + PMTiles + tippecanoe stack. Deployed to Net
 
 ---
 
-## Session start — required reading
-
-Every shipping session, in order:
-
-1. `OPERATING.md` — execution rules, session protocol, hard rules, trigger phrases, build/refresh/merge cycles
-2. `ARCHITECTURE.md` — schema, layer catalog, palette, fragility table
-3. `WIP_OPEN.md` — `## Next chat` block carries the active task
-
-Conversational sessions: read `WIP_OPEN.md` only if state-dependent. Skip the rest.
-
-## Environment delta from prior chat-based sessions
-
-This repo's `OPERATING.md` was written for ephemeral chat containers where state evaporates on reset. In Claude Code the working dir is persistent local. Adjust accordingly:
-
-- **No clone-edit-push bracket.** Working dir is the local clone. Edits land in place.
-- **`/mnt/project/` does not exist.** `CREDENTIALS.md` content lives in `.env` at repo root (gitignored). GitHub auth uses local git credentials, not the PAT-over-MCP pattern.
-- **Push-on-commit (§6.9) is discipline, not survival.** Container doesn't reset. Still good practice for backup and CI triggers.
-- **Session-open script (§5) skipped.** No clone needed. Run only the handoff-doc detection portion if useful.
-- **Close-out script** still valid for branch merge + WIP_OPEN update + push.
-- **Tool-call budgets (§12) do not apply.** No per-session cap.
-- **`present_files` does not exist.** Local files are already accessible to the operator. Just name the path.
-
-When `OPERATING.md` and this section disagree on environment specifics, this section wins. When they disagree on execution discipline (banned asks, blast radius, hard rules 1–8, 10–15), `OPERATING.md` wins.
-
 ## First-time setup
 
 ```bash
 git clone https://github.com/10thMuses/lrp-tx-gis.git
 cd lrp-tx-gis
 bash scripts/bootstrap-claude-code.sh
-# edit .env to fill in GITHUB_PAT and NETLIFY_PAT
 ```
 
-`bootstrap-claude-code.sh` is idempotent. It installs tippecanoe + python deps, copies `.env.example` → `.env` if missing, sets git identity, and runs a smoke test.
+`bootstrap-claude-code.sh` is idempotent. It installs `tippecanoe` (via `brew` on macOS or `apt-get` on Linux), installs Python deps (`pyyaml`, `pmtiles`, `requests`), copies `.env.example` → `.env` if missing, sets git identity defaults, runs a smoke test.
+
+Then edit `.env` to populate:
+- `GITHUB_PAT` — fine-grained PAT with Contents R/W on `10thMuses/lrp-tx-gis`. Mint at https://github.com/settings/personal-access-tokens.
+- `NETLIFY_PAT` — Netlify Personal Access Token. Mint at https://app.netlify.com/user/applications#personal-access-tokens.
+
+`.env` is gitignored. The PATs in this file enable scripted builds and deploys; most ordinary `git` operations use the local credential helper.
+
+---
+
+## Required reading at session start
+
+1. `OPERATING.md` — execution rules, hard rules, build/deploy cycles
+2. `ARCHITECTURE.md` — schema, layer catalog, palette, fragility table
+3. `WIP_OPEN.md` — active sprints and backlog
+
+---
 
 ## Build paths
 
-`build.py` resolves paths from environment variables with chat-mode fallbacks:
+`build.py` and `scripts/deploy.sh` resolve paths from environment variables, falling back to `/mnt/...` for chat-mode compatibility. In Code mode, `.env` overrides:
 
-| Variable | Code mode (.env) | Chat mode default |
+| Variable | Code mode (.env) | Default |
 |---|---|---|
 | `LRP_PROJECT_DIR` | `.` | `/mnt/project` |
 | `LRP_DIST_DIR` | `./dist` | `/mnt/user-data/outputs/dist` |
 | `LRP_UPLOADS_DIR` | `./uploads` | `/mnt/user-data/uploads` |
 
-Same for `scripts/deploy.sh`: NETLIFY_PAT resolves from `.env` first, then `/mnt/project/CREDENTIALS.md`, then shell env.
+`scripts/deploy.sh` reads `NETLIFY_PAT` from `.env` first, then `/mnt/project/CREDENTIALS.md`, then the `NETLIFY_PAT_ENV` shell var.
+
+---
 
 ## Hard constraints worth repeating
 
-These are the highest-cost failure modes; surface them in working memory:
+These are the highest-cost failure modes; surface them in working memory.
 
-- **Never read source data files into context.** Stream through `tippecanoe` subprocesses only. No `cat`/`head`/`view` of `combined_points.csv`, `combined_geoms.geojson`, or any layer source file.
+- **Never read source data files into context.** Stream through `tippecanoe` subprocesses only. No `cat` / `head` / `view` of `combined_points.csv`, `combined_geoms.geojson`, or any layer source file.
 - **Never `git add -A`.** Always stage explicit paths.
 - **Never hand-code coordinates or feature values.** No source, no layer.
 - **Atomic in-place writes** for any read-modify-write helper (`os.replace`, not `'w'` mode).
+- **Atomic deploy + merge.** Never deploy without the matching merge in the same session.
 
-## Credentials
-
-`.env` at repo root, gitignored. See `.env.example` for the full template. Required keys: `GITHUB_PAT`, `NETLIFY_PAT`. GitHub PAT is needed only for scripted operations that require explicit auth — most git operations use the local credential helper. NETLIFY_PAT is required for `scripts/deploy.sh`; without it the script falls back to in-chat Netlify MCP (chat mode only).
+---
 
 ## Repo
 
 `github.com/10thMuses/lrp-tx-gis` — `main` canonical. Branch naming: `refinement-<slug>` for shipping work. `<slug>` is 2–4 words.
+
+## Common workflows
+
+**Start a change:**
+```bash
+git checkout main && git pull --ff-only
+git checkout -b refinement-<slug>
+```
+
+**Build + deploy:**
+```bash
+bash scripts/deploy.sh --rebuild
+```
+
+**Close out:**
+```bash
+bash scripts/close-out.sh refinement-<slug> <deploy-id> "<message>"
+```
+
+**Single-layer refresh:**
+```bash
+python3 build.py merge <layer_id> <refresh_file>
+git add combined_points.csv  # or combined_geoms.geojson
+git commit -m "refresh: <layer_id> from <source> <date>"
+```
+
+**Audit drift:**
+```bash
+bash scripts/audit.sh
+```
