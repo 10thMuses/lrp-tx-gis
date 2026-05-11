@@ -1,0 +1,89 @@
+{
+  "schema_version": "1.0",
+  "generated": "2026-05-11T09:38:12Z",
+  "model": "claude-sonnet-4-5-20250929",
+  "input_file": "data/datacenters/dc_anchors.json",
+  "input_entry_count": 8,
+  "processed_entry_count": 8,
+  "proposals": [
+    {
+      "id": "project-horizon-poolside-coreweave",
+      "diff": {},
+      "additional_sources": [],
+      "conflicts": [],
+      "fetch_failures": [],
+      "no_change": true
+    },
+    {
+      "id": "stargate-abilene-crusoe-oracle",
+      "diff": {},
+      "additional_sources": [
+        {
+          "url": "https://www.tomshardware.com/tech-industry/oracle-and-openai-scrap-planned-600mw-abilene-expansion",
+          "claim": "600MW Abilene expansion scrapped (re-leased to Microsoft as adjacent campus); core 1.2GW Abilene project on track"
+        }
+      ],
+      "conflicts": [],
+      "fetch_failures": []
+    },
+    {
+      "id": "microsoft-crusoe-abilene",
+      "error": "Claude API exhausted retries"
+    },
+    {
+      "id": "project-matador-fermi-america",
+      "error": "Claude API exhausted retries"
+    },
+    {
+      "id": "gw-ranch-pacifico-pecos",
+      "diff": {
+        "status": {
+          "current": "permitted",
+          "proposed": "under_construction",
+          "evidence_url": "https://www.texastribune.org/2026/02/02/texas-permian-basin-power-plant-project-data-centers/",
+          "evidence_quote": "largest permitted data center campus in the U.S."
+        },
+        "commissioned_target": {
+          "current": 2027,
+          "proposed": 2028,
+          "evidence_url": "https://www.kcbd.com/2026/02/01/texas-approves-largest-permitted-data-center-campus-us/",
+          "evidence_quote": "First power H1 2027; 1 GW online 2028"
+        }
+      },
+      "additional_sources": [
+        {
+          "url": "https://www.kcbd.com/2026/02/01/texas-approves-largest-permitted-data-center-campus-us/",
+          "claim": "Texas approves 'largest permitted data center campus' in U.S., 7.65 GW gas-fired generation permit issued Jan/Feb 2026"
+        },
+        {
+          "url": "https://www.texastribune.org/2026/02/02/texas-permian-basin-power-plant-project-data-centers/",
+          "claim": "Developer calls it largest power project in U.S., located in Pecos County"
+        },
+        {
+          "url": "https://markets.financialcontent.com/stocks/article/bizwire-2026-1-26-pacifico-energy-secures-765-gw-power-generation-permit-for-gw-ranch-project",
+          "claim": "Pacifico Energy secures 7.65 GW power generation permit for GW Ranch project, January 26, 2026"
+        }
+      ],
+      "conflicts": [
+        {
+          "field": "commissioned_target",
+          "claim": "KCBD source says 'First power H1 2027; 1 GW online 2028; 5+ GW by 2031' suggesting phased rollout with full operation extending to 2031, not 2027",
+          "evidence_url": "https://www.kcbd.com/2026/02/01/texas-approves-largest-permitted-data-center-campus-us/"
+        }
+      ],
+      "fetch_failures": []
+    },
+    {
+      "id": "stargate-frontier-shackelford",
+      "error": "Claude API exhausted retries"
+    },
+    {
+      "id": "stargate-milam-sb-energy",
+      "error": "Claude API exhausted retries"
+    },
+    {
+      "id": "meta-temple-bell",
+      "error": "Claude API exhausted retries"
+    }
+  ]
+}
