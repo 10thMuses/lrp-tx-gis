@@ -709,6 +709,88 @@ layers:
   - owner
   - subdivision
   - net
+- id: permits_permian6
+  file: data/permits_permian6.csv
+  geom: point
+  group: Permits
+  label: Permits (RRC W-1, 6-county Permian)
+  description: RRC drilling permits with WGS84 coordinates and approved depth.
+    Source dbf-EOM monthly snapshots (`daf420.dat.MM-DD-YYYY`), 2018-01 through
+    current. Subject (sale area) — Pecos, Reeves, Ward. Active Permian peer
+    (boom area) — Midland, Martin, Reagan. Each permit row carries
+    `county_role` ∈ {subject, peer}. Records without a parseable total_depth
+    are excluded at the parser stage per R2-2.
+  color: '#dc2626'
+  default_on: false
+  min_zoom: 6
+  radius: 3
+  popup:
+  - permit_no
+  - api_no
+  - county_name
+  - county_role
+  - district
+  - lease_name
+  - well_no
+  - operator_name
+  - submitted_date
+  - approved_date
+  - permit_year
+  - status
+  - wellbore_profile
+  - filing_purpose
+  - oil_gas
+  - total_depth
+  popup_labels:
+    permit_no: Permit #
+    api_no: API #
+    county_name: County
+    county_role: Role
+    district: District
+    lease_name: Lease
+    well_no: Well #
+    operator_name: Operator
+    submitted_date: Submitted
+    approved_date: Approved
+    permit_year: Year
+    status: Status
+    wellbore_profile: Wellbore profile
+    filing_purpose: Filing purpose code
+    oil_gas: Oil/Gas
+    total_depth: Total depth (ft)
+  filterable_fields:
+  - field: county_name
+    type: categorical
+    label: County
+  - field: county_role
+    type: categorical
+    label: Role (subject/peer)
+  - field: wellbore_profile
+    type: categorical
+    label: Wellbore profile
+  - field: status
+    type: categorical
+    label: Status
+  - field: oil_gas
+    type: categorical
+    label: Oil/Gas
+  - field: district
+    type: categorical
+    label: District
+  - field: total_depth
+    type: numeric
+    label: Total depth (ft)
+  - field: permit_year
+    type: numeric
+    label: Permit year
+  - field: operator_name
+    type: text
+    label: Operator
+  tippecanoe:
+  - -zg
+  - -r1
+  - --drop-densest-as-needed
+  - --extend-zooms-if-still-dropping
 - id: wells_permian6
   file: data/wells_permian6.csv
   geom: point

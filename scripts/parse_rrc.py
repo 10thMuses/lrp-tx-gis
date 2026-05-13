@@ -276,9 +276,240 @@ def parse_wellbore(src: Path, dst: Path) -> dict:
     return counts
 
 
+PERMIT_FIELDS = [
+    "layer_id",
+    "permit_no", "status_no", "api_no",
+    "county_fips", "county_name", "county_role", "district",
+    "lease_name", "well_no",
+    "operator_name",
+    "submitted_date", "approved_date",
+    "permit_year",
+    "status",
+    "wellbore_profile",     # horizontal | vertical
+    "filing_purpose",       # raw 1-char code (P/X/E/...) — populated only when present
+    "oil_gas",              # oil | gas | unknown — derived from filing_purpose if recognizable
+    "total_depth",
+    "lat", "lon",
+]
+
+
+# Master record (212b, prefix 0108) byte positions (1-indexed in wba091-style;
+# decoded here as Python slices). Verified empirically on the
+# daf420.dat.01-31-2018 monthly snapshot.
+M_RECKEY = slice(0, 4)             # "0108"
+M_PERMIT_ID = slice(4, 14)         # 10-digit permit/status master id
+M_COUNTY_FIPS = slice(11, 14)      # last 3 digits of master id = Texas county FIPS
+M_LEASE_NAME = slice(14, 46)       # 32 chars, space-padded
+M_WELL_NO = slice(50, 54)          # 4 chars
+M_SUBMIT_DATE = slice(58, 66)      # YYYYMMDD
+M_OPERATOR = slice(66, 98)         # 32 chars, space-padded
+M_STATUS_FLAG = slice(100, 101)    # A=Approved etc. (uniform 'A' in EOM file — all approved)
+M_DISTRICT = slice(112, 114)       # 2-digit RRC district
+M_APPROVE_DATE = slice(120, 128)   # YYYYMMDD
+# Wellbore profile: in 9/1474 records the literal "HL" appears at position 160.
+# The position-160 byte alone is a poor signal — many records carry "H " or
+# other 2-char codes there. We search a small window for the exact "HL"
+# substring and fall back to "vertical" when absent (the dominant case).
+M_PROFILE_WINDOW = slice(155, 170)
+M_FILING_PURPOSE = slice(182, 183)     # X (63%), E (18%), P (12%), 3 (6%)
+
+# Location record (26b, prefix '14' or '15'): WGS84 lat/lon
+LOC_LON = slice(2, 14)             # signed 12-char "DDD.DDDDDDD" or " -DD.DDDDDDD" (TX always negative)
+LOC_LAT = slice(16, 26)            # "DD.DDDDDDD"
+
+PERMIT_STATUS_MAP = {
+    "A": "approved",
+    "X": "cancelled",
+    "W": "withdrawn",
+    "E": "expired",
+    "D": "denied",
+    "P": "pending",
+    "S": "submitted",
+}
+
+# Loose mapping from filing_purpose codes seen in samples → an oil/gas
+# best-guess. Refined empirically; rows that come back as 'unknown' get
+# carried with that label rather than dropped (R2-2's filter is applied
+# downstream in the build layer config).
+FILING_TO_OG = {
+    "O": "oil",
+    "G": "gas",
+    "P": "production-other",
+    # Less-frequent / less-known codes left as None so they surface as 'unknown'.
+}
+
+
+def parse_date(raw: bytes) -> str:
+    s = raw.decode("ascii", errors="replace").strip()
+    if len(s) == 8 and s.isdigit() and s != "00000000":
+        return f"{s[:4]}-{s[4:6]}-{s[6:]}"
+    return ""
+
+
+def parse_master(line: bytes) -> dict:
+    permit_id = line[M_PERMIT_ID].decode("ascii", errors="replace")
+    county_fips = line[M_COUNTY_FIPS].decode("ascii", errors="replace")
+    status_no = permit_id[:7] if len(permit_id) >= 7 else permit_id
+    lease_name = line[M_LEASE_NAME].decode("ascii", errors="replace").strip()
+    well_no = line[M_WELL_NO].decode("ascii", errors="replace").strip().lstrip("0")
+    submit_date = parse_date(line[M_SUBMIT_DATE])
+    approve_date = parse_date(line[M_APPROVE_DATE])
+    operator = line[M_OPERATOR].decode("ascii", errors="replace").strip()
+    status_flag = line[M_STATUS_FLAG].decode("ascii", errors="replace").strip()
+    district = line[M_DISTRICT].decode("ascii", errors="replace").strip()
+    # Wellbore profile heuristic: byte 160 carries the wellbore-type letter.
+    # 'H' (~48% of records) → horizontal; everything else → vertical/directional/blank.
+    # The literal substring "HL" appears only in ~9/1474 records — a much rarer
+    # special-class marker not the primary horizontal indicator.
+    profile_byte = chr(line[160]) if len(line) > 160 else ' '
+    wellbore_profile = "horizontal" if profile_byte == "H" else "vertical"
+    filing_purpose = line[M_FILING_PURPOSE].decode("ascii", errors="replace").strip()
+    oil_gas = FILING_TO_OG.get(filing_purpose, "unknown")
+    status = PERMIT_STATUS_MAP.get(status_flag, status_flag.lower() or "unknown")
+    permit_year = submit_date[:4] if submit_date else (approve_date[:4] if approve_date else "")
+    return {
+        "permit_no": permit_id,
+        "status_no": status_no,
+        "county_fips": county_fips,
+        "lease_name": lease_name,
+        "well_no": well_no,
+        "submitted_date": submit_date,
+        "approved_date": approve_date,
+        "operator_name": operator,
+        "status": status,
+        "district": district,
+        "wellbore_profile": wellbore_profile,
+        "filing_purpose": filing_purpose,
+        "oil_gas": oil_gas,
+        "permit_year": permit_year,
+    }
+
+
+def parse_loc(line: bytes) -> tuple[float | None, float | None]:
+    """Decode WGS84 lon (signed) + lat from a 26-byte 14/15-prefixed line."""
+    if len(line) != 26:
+        return None, None
+    lon_s = line[LOC_LON].decode("ascii", errors="replace").strip()
+    lat_s = line[LOC_LAT].decode("ascii", errors="replace").strip()
+    try:
+        lon = float(lon_s)
+    except ValueError:
+        lon = None
+    try:
+        lat = float(lat_s)
+    except ValueError:
+        lat = None
+    # Texas longitude is always negative; the file stores either signed
+    # ("-103.4567890") or unsigned magnitudes — normalize to negative.
+    if lon is not None:
+        lon = -abs(lon)
+    return lat, lon
+
+
+# total_depth lives at bytes 322-331 of the 510-byte detail record (10-char
+# zero-padded depth in feet). Verified empirically across 3 known permits
+# (KING E.F. = 4822, UNIVERSITY UE A = 4982, REED = 500). The 7-digit field
+# at 332-339 is a related sub-depth (plug-back / penetration) that we don't
+# expose on the map.
+D_TOTAL_DEPTH = slice(322, 332)
+
+def extract_total_depth(detail_line: bytes) -> str:
+    """Return zero-padded total_depth as int-string, or '' if unparseable or 0."""
+    if len(detail_line) < 332:
+        return ""
+    raw = detail_line[D_TOTAL_DEPTH].decode("ascii", errors="replace")
+    if not raw.isdigit():
+        return ""
+    v = int(raw)
+    if v <= 0 or v > 50000:
+        return ""
+    return str(v)
+
+
+def parse_permits(src: Path, dst: Path) -> dict:
+    """Stream-parse daf420.dat (one EOM monthly snapshot) → permits CSV.
+    Atomic temp+replace."""
+    tmp = dst.with_suffix(dst.suffix + ".tmp")
+    tmp.parent.mkdir(parents=True, exist_ok=True)
+
+    counts = {
+        "lines_total": 0,
+        "permits_seen": 0,
+        "permits_in_scope": 0,
+        "permits_no_latlon": 0,
+        "permits_no_depth": 0,
+        "rows_written": 0,
+    }
+
+    with open(src, "rb") as f_in, open(tmp, "w", newline="", encoding="utf-8") as f_out:
+        writer = csv.DictWriter(f_out, fieldnames=PERMIT_FIELDS)
+        writer.writeheader()
+
+        # Block state
+        cur_master = None
+        cur_detail = None
+        cur_lat = None
+        cur_lon = None
+
+        def flush_block():
+            if cur_master is None:
+                return
+            counts["permits_seen"] += 1
+            cnty = cur_master.get("county_fips", "")
+            if cnty not in COUNTIES:
+                return
+            counts["permits_in_scope"] += 1
+            depth = extract_total_depth(cur_detail) if cur_detail else ""
+            if not depth:
+                counts["permits_no_depth"] += 1
+                return  # R2-2: exclude null total_depth at the data layer
+            if cur_lat is None or cur_lon is None:
+                counts["permits_no_latlon"] += 1
+                return
+            row = {f: "" for f in PERMIT_FIELDS}
+            row.update(cur_master)
+            row["layer_id"] = "permits_permian6"
+            row["county_name"] = COUNTIES[cnty]
+            row["county_role"] = "subject" if cnty in SUBJECT_COUNTY_FIPS else "peer"
+            row["api_no"] = f"42-{cnty}-{cur_master['status_no'][-5:]}" if cur_master.get("status_no") else ""
+            row["total_depth"] = depth
+            row["lat"] = f"{cur_lat:.6f}"
+            row["lon"] = f"{cur_lon:.6f}"
+            writer.writerow(row)
+            counts["rows_written"] += 1
+
+        for raw_line in f_in:
+            counts["lines_total"] += 1
+            line = raw_line.rstrip(b"\r\n")
+            if len(line) < 4:
+                continue
+            key4 = line[:4]
+            if key4 == b"0108":
+                # New permit boundary — flush prior block first
+                flush_block()
+                cur_master = parse_master(line)
+                cur_detail = None
+                cur_lat = None
+                cur_lon = None
+            elif key4 == b"0208":
+                cur_detail = line
+            elif len(line) == 26 and line[:2] in (b"14", b"15"):
+                lat, lon = parse_loc(line)
+                # Prefer first non-null lat/lon (14 vs 15 are usually same coords)
+                if cur_lat is None and lat is not None:
+                    cur_lat = lat
+                if cur_lon is None and lon is not None:
+                    cur_lon = lon
+        # Final flush
+        flush_block()
+
+    os.replace(tmp, dst)
+    return counts
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("target", choices=["wells", "all"], default="all", nargs="?")
+    ap.add_argument("target", choices=["wells", "permits", "all"], default="all", nargs="?")
     args = ap.parse_args()
 
     if args.target in ("wells", "all"):
@@ -293,6 +524,44 @@ def main() -> int:
             print(f"  {k}: {v:,}")
         size_mb = dst.stat().st_size / (1024 * 1024)
         print(f"  output: {size_mb:.2f} MB")
+
+    if args.target in ("permits", "all"):
+        # Glob all EOM monthly snapshots cached under data/rrc_raw/.
+        # fetch_rrc.py downloads the latest only; if the operator pre-pulled
+        # a backfill set, we iterate them all here.
+        src_dir = RAW
+        snapshots = sorted(src_dir.glob("daf420.dat.*"))
+        if not snapshots:
+            print(f"ERROR: no daf420.dat.* snapshots in {src_dir} — "
+                  f"run `python3 scripts/fetch_rrc.py permits` first")
+            return 2
+        dst = ROOT / "data" / "permits_permian6.csv"
+        agg_counts = {
+            "lines_total": 0, "permits_seen": 0, "permits_in_scope": 0,
+            "permits_no_latlon": 0, "permits_no_depth": 0, "rows_written": 0,
+        }
+        # Multi-file aggregation: parse each into a temp CSV, then concatenate.
+        # Easier approach: parse first, then append for subsequent.
+        for i, snap in enumerate(snapshots):
+            print(f"=== parse permits [{i+1}/{len(snapshots)}]: {snap.name} ===")
+            if i == 0:
+                c = parse_permits(snap, dst)
+            else:
+                # Append mode — parse to temp, then concatenate without header.
+                tmp_dst = dst.with_suffix(".append.tmp.csv")
+                c = parse_permits(snap, tmp_dst)
+                with open(tmp_dst) as f_in, open(dst, "a") as f_out:
+                    next(f_in)  # skip header
+                    f_out.writelines(f_in)
+                tmp_dst.unlink()
+            for k, v in c.items():
+                agg_counts[k] += v
+        print(f"\n=== permits aggregate ===")
+        for k, v in agg_counts.items():
+            print(f"  {k}: {v:,}")
+        size_mb = dst.stat().st_size / (1024 * 1024)
+        print(f"  output: {size_mb:.2f} MB ({dst})")
+
     return 0
 
 

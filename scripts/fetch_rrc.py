@@ -60,6 +60,7 @@ CHUNK = 65536
 # MFT folder UUIDs.
 WELLBORE_UUID = "b070ce28-5c58-4fe2-9eb7-8b70befb7af9"  # Full Wellbore folder
 PENDING_UUID = "0ad92a65-4212-49a1-98a7-d667a55fb497"   # Drilling Permits Pending folder
+EOM_LATLON_UUID = "f5dfea9c-bb39-4a5e-a44e-fb522e088cba"  # Drilling Permit EOM + Lat/Lon folder
 
 POST_URL = "https://mft.rrc.texas.gov/webclient/godrive/PublicGoDrive.xhtml"
 
@@ -204,11 +205,52 @@ def fetch_pending_latest(force: bool = False) -> Path:
     return out_dir
 
 
+def fetch_eom_latlon(force: bool = False, limit: int | None = None) -> Path:
+    """Download all 'Drilling Permit EOM + Lat/Lon' monthly snapshots into
+    data/rrc_raw/. These are the daf420.dat.MM-DD-YYYY series, ~4 MB each,
+    covering 2018-01 through current. Idempotent per-file."""
+    print(f"  fetching EOM lat/lon snapshots into {RAW_DIR} ...")
+    session = make_session()
+    html, vs = get_folder(session, EOM_LATLON_UUID)
+    files = list_files(html)
+    targets = [(ri, name) for ri, name, _sz in files if name.startswith("daf420.dat.")]
+    print(f"    {len(targets)} EOM snapshots available")
+    if limit:
+        targets = targets[-limit:]  # take the most recent N (folder order is chronological)
+        print(f"    limiting to most-recent {len(targets)}")
+
+    fetched = 0
+    skipped = 0
+    for ri, name in targets:
+        out_path = RAW_DIR / name
+        if out_path.exists() and not force:
+            skipped += 1
+            continue
+        time.sleep(THROTTLE_SECS)
+        # Re-harvest the ViewState for each download — JSF views can invalidate
+        # after submission. Cheap belt-and-suspenders.
+        html2, vs2 = get_folder(session, EOM_LATLON_UUID)
+        # Row id may have shifted if folder repaginated; locate by filename.
+        files2 = list_files(html2)
+        ri2 = next((r for r, n, _ in files2 if n == name), None)
+        if ri2 is None:
+            print(f"      {name}: not found on refresh, skipping")
+            continue
+        n = download_row(session, vs2, ri2, out_path)
+        fetched += 1
+        if fetched % 10 == 0:
+            print(f"      [{fetched}/{len(targets) - skipped}] {name}: {n/1024:.1f} KB")
+    print(f"    fetched {fetched}, cached {skipped}")
+    return RAW_DIR
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("target", choices=["wells", "permits", "all"], default="all", nargs="?")
+    ap.add_argument("target", choices=["wells", "permits", "pending", "all"], default="all", nargs="?")
     ap.add_argument("--force", action="store_true",
                     help="re-download even if cached")
+    ap.add_argument("--limit", type=int,
+                    help="for permits: limit to most-recent N EOM snapshots")
     args = ap.parse_args()
 
     RAW_DIR.mkdir(parents=True, exist_ok=True)
@@ -216,6 +258,11 @@ def main() -> int:
     if args.target in ("wells", "all"):
         fetch_wellbore(force=args.force)
     if args.target in ("permits", "all"):
+        # Permits = full EOM + Lat/Lon backfill (2018-present).
+        fetch_eom_latlon(force=args.force, limit=args.limit)
+    if args.target == "pending":
+        # Pending-permits snapshot — kept as a debugging target; not used in
+        # the permits_permian6 layer (stale since 2021-02 per ARCHITECTURE §11).
         fetch_pending_latest(force=args.force)
     print("=== fetch complete ===")
     return 0
