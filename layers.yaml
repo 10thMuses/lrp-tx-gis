@@ -795,13 +795,13 @@ layers:
   file: data/wells_permian6.csv
   geom: point
   group: Permits
-  label: Wells (RRC, 6-county Permian)
-  description: Current-state RRC wellbore registry for the 6-county Permian
-    sale-area-vs-peer scope. Subject (sale area) — Pecos, Reeves, Ward.
-    Active Permian peer (boom area) — Midland, Martin, Reagan. Source dbf900.txt
-    Full Wellbore ASCII (weekly cadence). 99,224 wells; 90.6% carry WGS84
-    coordinates. The `county_role` property tags each well as `subject` or `peer`
-    for downstream sale-vs-peer comparison views.
+  label: Wells (active + drilling, 6-county Permian)
+  description: Active RRC wellbores (not plugged / abandoned / P&A) for the
+    6-county Permian sale-area-vs-peer scope. Subject — Pecos, Reeves, Ward.
+    Active Permian peer — Midland, Martin, Reagan. R2-1 filter applied at the
+    parser: plug_flag='N' only (drilling-in-progress wells live in the permits
+    layer, not here). Source dbf900.txt Full Wellbore ASCII (weekly).
+    71,328 active wells.
   color: '#6b21a8'
   default_on: false
   min_zoom: 7

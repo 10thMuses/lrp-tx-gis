@@ -39,6 +39,33 @@ Each well row carries `county_role` ∈ {subject, peer} for downstream compariso
 
 Cardinality before/after: 115,908 (11-county) → 99,224 (6-county). Lat/lon-bearing: 101,408 → 89,944 (90.6% coverage on the 6-county filter). PMTiles 7.59 MB → 10.26 MB (the new `county_role` + `total_depth` numeric coercion add overhead).
 
+## Decision log — 2026-05-13 — R2-1: wells layer filtered to active only
+
+R2-1 spec asked for "wells status = active OR drilling" only, excluding
+inactive / plugged / abandoned / dry-hole / P&A / other. Mapping derived
+from the dbf900 wellbore database (wba091 layout):
+
+- `plug_flag` at WBROOT byte 91 — `Y` = plugged / abandoned / P&A
+  (33,709 of 115,908 wells in the original 11-county scope = 29%).
+- `active_flag` at WBCOMPL byte 46 — sparse ('A' in only 5,373 of 99,224
+  records; majority are blank). Not a reliable active marker on its own.
+- Drilling-in-progress wells aren't represented in dbf900 — those live
+  in the permits layer (`permits_permian6`). So "drilling" status maps
+  to a different layer entirely.
+
+Filter applied at the parser (`scripts/parse_rrc.py:flush()`): exclude
+rows where `plug_flag == 'Y'`. The 6-county active well count:
+
+| Role | County | Before (all wells) | After (active) | Plugged share |
+|---|---|---:|---:|---:|
+| subject | Pecos | 17,501 | 12,095 | 31% |
+| subject | Reeves | 12,957 | 10,884 | 16% |
+| subject | Ward | 14,565 | 9,950 | 32% |
+| peer | Martin | 18,050 | 13,568 | 25% |
+| peer | Midland | 20,664 | 14,827 | 28% |
+| peer | Reagan | 15,487 | 10,004 | 35% |
+| **total** | | **99,224** | **71,328** | **28%** |
+
 ## Decision log — 2026-05-13 — Part C: permits_permian6 (forensic parse)
 
 The previous "scoped-out, no published daf-series layout" deferral was overridden. Forensic byte-position analysis of `daf420.dat.MM-DD-YYYY` (RRC EOM + Lat/Lon monthly snapshots) cracked the structure end-to-end. Field positions documented in `docs/rrc_layouts/permit_purpose_codes.md` and the `M_*` slice constants at the head of `scripts/parse_rrc.py`.

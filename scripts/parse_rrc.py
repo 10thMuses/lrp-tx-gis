@@ -207,11 +207,22 @@ def parse_wbnewloc(line: bytes, acc: dict) -> None:
 
 
 def flush(acc: dict, writer: csv.DictWriter) -> bool:
-    """Emit acc as a row if county is in scope. Returns True if written."""
+    """Emit acc as a row if county is in scope AND well is not plugged.
+
+    R2-1: include only wells with status ∈ {active, drilling}. In dbf900
+    wells are completed wellbores (drilling-in-progress lives in the
+    permits layer, not here), so 'drilling' is never observed. The remaining
+    discriminant is plug_flag: 'N' = not plugged (active by default),
+    'Y' = plugged / abandoned / P&A (excluded). Rationale + before/after
+    cardinality logged in WIP_OPEN.md decision log."""
     cnty = acc.get("county_fips", "")
     if cnty not in COUNTIES:
         return False
     if not acc.get("api_no"):
+        return False
+    # R2-1 hard filter: exclude plugged / abandoned / P&A wells.
+    plug = acc.get("plug_flag", "")
+    if plug == "Y":
         return False
     row = {f: acc.get(f, "") for f in CSV_FIELDS}
     row["layer_id"] = "wells_permian6"
