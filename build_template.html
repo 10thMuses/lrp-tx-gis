@@ -274,6 +274,7 @@
       <option value="wells_pre1990">Wells drilled before 1990 (legacy shallow infra)</option>
       <option value="permits_deep10k">New permits targeting &gt; 10,000 ft (deep zone only)</option>
       <option value="wells_active">Active wells, current</option>
+      <option value="wells_plugged">Plugged and abandoned wells (legacy infrastructure)</option>
       <option value="compare_depth_since2015">Sale-area vs. peer, depth comparison since 2015</option>
     </select>
   </div>
@@ -901,10 +902,12 @@ function filterFieldControlHtml(lid, f) {
     if (f.sort_by_count && counts) {
       vals = vals.slice().sort((a, b) => (counts[b] || 0) - (counts[a] || 0) || a.localeCompare(b));
     }
+    const valueLabels = f.value_labels || {};
     const renderOption = v => {
       const c = counts ? counts[v] : null;
       const suffix = c != null ? ` <span class="filter-multi-count">(${c.toLocaleString()})</span>` : '';
-      return `<label><input type="checkbox" value="${escapeHtml(v)}" ${selected.has(v) ? 'checked' : ''}> ${escapeHtml(v)}${suffix}</label>`;
+      const display = valueLabels[v] || v;
+      return `<label><input type="checkbox" value="${escapeHtml(v)}" ${selected.has(v) ? 'checked' : ''}> ${escapeHtml(display)}${suffix}</label>`;
     };
     const lis = vals.map(renderOption).join('');
     const selCount = selected.size;
@@ -1222,6 +1225,30 @@ const StatsPanel = (() => {
       const mean = ages.reduce((a, b) => a + b, 0) / ages.length;
       return `<div class="sp-section"><h5>Mean well age</h5><div>${mean.toFixed(1)} yr <span class="sp-foot">(current_year − spud_year; ${ages.length.toLocaleString()} wells with a parseable spud date)</span></div></div>`;
     })() : '';
+    // R26: wells plug status breakdown + mean spud_year per status.
+    const plugNote = L.id === 'wells_permian6' ? (() => {
+      let nPlug = 0, nActive = 0, sumYrPlug = 0, sumYrActive = 0, cYrPlug = 0, cYrActive = 0;
+      rows.forEach(r => {
+        const p = r.plug_flag;
+        const y = fnum(r.spud_year);
+        if (p === 'Y') { nPlug++; if (y !== null) { sumYrPlug += y; cYrPlug++; } }
+        else if (p === 'N') { nActive++; if (y !== null) { sumYrActive += y; cYrActive++; } }
+      });
+      const total = nPlug + nActive;
+      if (total === 0) return '';
+      const pctP = (100 * nPlug / total).toFixed(1);
+      const pctA = (100 * nActive / total).toFixed(1);
+      const myP = cYrPlug ? (sumYrPlug / cYrPlug).toFixed(0) : '—';
+      const myA = cYrActive ? (sumYrActive / cYrActive).toFixed(0) : '—';
+      return `<div class="sp-section"><h5>Plug status</h5>
+        <table>
+          <tr><th>Status</th><th class="num">n</th><th class="num">%</th><th class="num">Mean spud year</th></tr>
+          <tr><td>Plugged / Abandoned</td><td class="num">${nPlug.toLocaleString()}</td><td class="num">${pctP}%</td><td class="num">${myP}</td></tr>
+          <tr><td>Active</td><td class="num">${nActive.toLocaleString()}</td><td class="num">${pctA}%</td><td class="num">${myA}</td></tr>
+        </table>
+        <div class="sp-foot">Legacy wells (older) should skew earlier; active wells should skew later.</div>
+      </div>`;
+    })() : '';
 
     function rowTable(rows, header) {
       const total = rows.reduce((a, b) => a + b[1], 0) || 1;
@@ -1267,6 +1294,7 @@ const StatsPanel = (() => {
       if (depthByProfile && depthByProfile.length > 0) html += `<div class="sp-section"><h5>Mean depth by wellbore profile</h5>${meanTable(depthByProfile, 'Type')}</div>`;
     }
     if (ageNote) html += ageNote;
+    if (plugNote) html += plugNote;
     // Top operators
     if (operators && operators.length > 0) {
       html += `<div class="sp-section"><h5>Top 10 operators</h5>${rowTable(operators, '<tr><th>Operator</th><th class="num">n</th><th class="num">%</th></tr>')}</div>`;
@@ -1923,7 +1951,11 @@ function featurePopupHtml(L, props) {
   const rows = (L.popup || []).map(k => {
     const v = props[k];
     if (v === undefined || v === null || v === '') return '';
-    const valStr = typeof v === 'number' ? (Number.isInteger(v) ? v : v.toFixed(2)) : String(v);
+    let valStr = typeof v === 'number' ? (Number.isInteger(v) ? v : v.toFixed(2)) : String(v);
+    // R26: human-readable label for wells plug_flag in popups
+    if (L.id === 'wells_permian6' && k === 'plug_flag') {
+      valStr = valStr === 'Y' ? 'Plugged / Abandoned' : (valStr === 'N' ? 'Active' : valStr);
+    }
     const lbl = (L.popup_labels && L.popup_labels[k]) || k;
     return `<tr><td class="k">${escapeHtml(lbl)}</td><td class="v">${escapeHtml(valStr)}</td></tr>`;
   }).join('');
@@ -2071,6 +2103,79 @@ function activeLayerIds() {
   return LAYERS.filter(L => {
     try { return map.getLayoutProperty(`lyr_${L.id}`, 'visibility') !== 'none'; } catch (e) { return false; }
   }).map(L => L.id);
+}
+
+// R2-9 / R26: saved-view definitions. Each key maps to a recipe:
+//   layers:  array of layer ids to make active (replaces current selection)
+//   filters: object keyed by layer id with that layer's filter state
+//   scrubber: optional year to set on the time-series scrubber (null = full history)
+const SAVED_VIEWS = {
+  all_permits: {
+    layers: ['permits_permian6'],
+    filters: {},
+    scrubber: null,
+  },
+  permits_recent10: {
+    layers: ['permits_permian6'],
+    filters: { permits_permian6: { permit_year: { min: String(new Date().getFullYear() - 10), max: '' } } },
+    scrubber: null,
+  },
+  permits_recent10_sale: {
+    layers: ['permits_permian6'],
+    filters: { permits_permian6: { permit_year: { min: String(new Date().getFullYear() - 10), max: '' }, county_role: ['subject'] } },
+    scrubber: null,
+  },
+  permits_recent10_peer: {
+    layers: ['permits_permian6'],
+    filters: { permits_permian6: { permit_year: { min: String(new Date().getFullYear() - 10), max: '' }, county_role: ['peer'] } },
+    scrubber: null,
+  },
+  wells_pre1990: {
+    layers: ['wells_permian6'],
+    filters: { wells_permian6: { completion_year: { min: '', max: '1989' } } },
+    scrubber: null,
+  },
+  permits_deep10k: {
+    layers: ['permits_permian6'],
+    filters: { permits_permian6: { total_depth: { min: '10000', max: '' } } },
+    scrubber: null,
+  },
+  wells_active: {
+    layers: ['wells_permian6'],
+    filters: { wells_permian6: { plug_flag: ['N'] } },
+    scrubber: null,
+  },
+  wells_plugged: {
+    layers: ['wells_permian6'],
+    filters: { wells_permian6: { plug_flag: ['Y'] } },
+    scrubber: null,
+  },
+  compare_depth_since2015: {
+    layers: ['permits_permian6', 'wells_permian6'],
+    filters: {
+      permits_permian6: { permit_year: { min: '2015', max: '' } },
+      wells_permian6: { completion_year: { min: '2015', max: '' } },
+    },
+    scrubber: null,
+  },
+};
+
+function applySavedView(key) {
+  const view = SAVED_VIEWS[key];
+  if (!view) return;
+  filterState = {};
+  Object.keys(view.filters || {}).forEach(lid => {
+    filterState[lid] = JSON.parse(JSON.stringify(view.filters[lid]));
+  });
+  scrubberYear = (view.scrubber === undefined) ? null : view.scrubber;
+  const want = new Set(view.layers || []);
+  LAYERS.forEach(L => setLayerVisibility(L, want.has(L.id)));
+  renderSidebar(want);
+  LAYERS.forEach(L => applyLayerFilter(L));
+  refreshFilterBanner();
+  Scrubber.onLayerVisibilityChange(activeLayerIds());
+  StatsPanel.refresh();
+  syncHash();
 }
 
 function syncHash() {
