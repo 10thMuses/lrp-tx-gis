@@ -26,7 +26,17 @@ Sprint spec asked for two new layers (`permits_pecos11` + `wells_pecos11`, 1976-
 - Existing `scripts/scrape_rrc_w1.py` covers permit listing rows 1976-present but defers lat/lon to per-permit detail-page fetches (~40h throttled for the full Permian backfill).
 - ARCHITECTURE.md §11 entry rewritten to reflect the actual blocker; revisit if RRC publishes the daf-series layout OR operator authorizes the long detail-page scrape.
 
-**Deploy status:** local build clean (`built=27 missing=0 errored=0 tiles_total=19656 KB`); deploy + close-out blocked on missing `NETLIFY_PAT` (no `.env` in this clone). Branch `refinement-rrc-permits-wells` pushed for operator-side deploy via `bash scripts/deploy.sh --rebuild` once PAT is populated.
+**Deploy + push status:** local build clean (`built=27 missing=0 errored=0 tiles_total=19656 KB`), commit `90234c0` on local branch `refinement-rrc-permits-wells`. Push to origin AND deploy both blocked: this WSL clone has no `NETLIFY_PAT`, no `GITHUB_PAT`, no `.git-credentials`, no SSH key, no `gh` CLI — `git push` exits with `could not read Username for 'https://github.com'`. To ship: populate `.env` (both PATs) on the operator workstation, then `git push -u origin refinement-rrc-permits-wells && bash scripts/deploy.sh --rebuild && bash scripts/close-out.sh refinement-rrc-permits-wells <deploy-id> "Add wells_pecos11"`.
+
+## Round 2 backlog — Hanwha thesis features (gated)
+
+Round 2 spec received 2026-05-13. Ten items (R2-1 … R2-10) covering: wells filter to active+drilling, permits filter to production-purpose only, full historical depth (1976/1964-present), sidebar filter UX overhaul, oil/gas color + depth-scaled symbol size, time-series scrubber, live stats panel with PDF/CSV/XLSX export, Pecos-vs-active-Permian-peers comparison, pre-baked thesis bookmarks, verification + ship.
+
+**Hard gate:** Round 2 explicitly conditions on "After the current RRC permits/wells task (Round 1) ships to prod, execute this Round 2 batch autonomously." R1 has not shipped to prod (push + deploy both blocked above).
+
+**Soft gate — permits layer:** every R2 item that touches permits (R2-2, R2-3 perm half, R2-4 perm filters, R2-5 perm color, R2-6 perm half of scrubber, R2-7 perm stats panel, R2-8 perm comparison, R2-9 perm bookmarks) depends on `permits_pecos11` being a real layer. That layer is still scoped-out per the Round 1 decision above. R2-8 also wants Midland + Ector counties added for peer comparison — outside the 11-county scope by design.
+
+**Foldable into R1 (deferred to keep R1 atomic per user's own protocol):** R2-1 (wells active+drilling filter at the parse layer) — would require remapping WBROOT plug_flag + active_flag codes to a true status field; R2-3 wells half (spud date) — would require adding WBDATE segment (key 03) `WB-W2-G1-DATE` to the parser; R2-5 wells color/size — pure `layers.yaml` edit. None folded; the user's instruction is "Each item is its own atomic branch." Once R1 ships, these become R2-1, R2-3, R2-5 atomic branches.
 
 ---
 
