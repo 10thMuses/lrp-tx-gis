@@ -64,6 +64,34 @@ nohup python3 scripts/scrape_rrc_w1_detail_coords.py \\
 When that file exists, the next sprint extends `scripts/parse_rrc.py` to merge
 it into `data/permits_permian6.csv`.
 
+## Round 2.5 Part 4C — Comptroller Ch.312/313 reconciliation (no new layer)
+
+Probed `api.comptroller.texas.gov/open-data/v1/tables/ch312-abatement`
+(1,486 records statewide, fields verified). All entries are
+`agmt_type=abatement`; no Ch.313 records share this endpoint. Probed
+plausible Ch.313 slugs (`ch313-abatement`, `chapter-313-abatement`,
+`value-limitation`, etc.) — all 500 errors.
+
+Status distribution: Expired 758, Active 596, Inactive 96, Cancelled 22,
+Deleted 12, Pending 2.
+
+**6-county Permian scope match: zero.** Searched `locl_gov_nm` and
+`govt_name` for keywords (pecos, reeves, ward, midland, martin, reagan)
+— no hits. Ch.312 reinvestment zones are a city-level tool, and the
+West-Texas Permian counties have few populated cities issuing Ch.312
+abatements; the 9 abatements already in our `tax_abatements` layer
+(8 Pecos + 1 Reeves) come through the LDAD (Local Development Agreement
+Database) scrape, not Ch.312.
+
+**Conclusion**: no parallel `abatements_active_312_313` layer needed
+for the 6-county scope. The existing `tax_abatements` layer (1,495
+statewide, refreshed 2026-04-29) already covers the relevant Permian
+records and is fresher than the Ch.312 API data we'd derive.
+
+If a future scope expansion brings urban counties into the map
+(Andrews-30, Ector-Dallas-Bexar-etc.), the Ch.312 API import becomes
+worthwhile and is documented as ready-to-implement once needed.
+
 ## Round 2.5 — what's shipped, what's queued
 
 **Shipped (2026-05-13):**
