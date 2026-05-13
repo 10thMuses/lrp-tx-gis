@@ -90,31 +90,65 @@ fi
 MCP_URL="https://netlify-mcp.netlify.app/mcp"
 mcp_call() {
   # Args: <tool-name> <json-args>
+  # Netlify's MCP endpoint upgraded to require the streamable-HTTP Accept header
+  # (application/json + text/event-stream). Without both, the server returns
+  # -32000 "Not Acceptable: Client must accept both application/json and text/event-stream".
+  # We don't actually consume the SSE stream — the JSON-RPC response is delivered
+  # as the first event and parsed below.
   local TOOL="$1" ARGS="$2"
-  curl -sS -X POST "$MCP_URL" \
+  local RAW
+  RAW=$(curl -sS -X POST "$MCP_URL" \
     -H "Authorization: Bearer $NETLIFY_PAT" \
     -H "Content-Type: application/json" \
-    -d "{\"jsonrpc\":\"2.0\",\"id\":1,\"method\":\"tools/call\",\"params\":{\"name\":\"$TOOL\",\"arguments\":$ARGS}}"
+    -H "Accept: application/json, text/event-stream" \
+    -d "{\"jsonrpc\":\"2.0\",\"id\":1,\"method\":\"tools/call\",\"params\":{\"name\":\"$TOOL\",\"arguments\":$ARGS}}")
+  # If the response is event-stream framed, peel the first `data:` line.
+  if echo "$RAW" | head -1 | grep -q '^event:'; then
+    echo "$RAW" | awk '/^data: /{sub(/^data: /,""); print; exit}'
+  else
+    echo "$RAW"
+  fi
 }
 
-log "[§8.2] requesting deploy-site proxy URL"
-DEPLOY_RESP=$(mcp_call "deploy-site" "{\"siteId\":\"$SITE_ID\"}")
-PROXY_URL=$(echo "$DEPLOY_RESP" | python3 -c 'import sys,json; r=json.load(sys.stdin); print(r["result"]["content"][0]["text"])' 2>/dev/null || echo "")
-if [ -z "$PROXY_URL" ]; then
-  log "ERROR: deploy-site MCP call returned no proxy URL: $DEPLOY_RESP"
-  exit 3
-fi
+# 2-3. Zip dist/ and POST to Netlify Deploys REST API directly.
+# The earlier MCP-proxy + npx @netlify/mcp pipeline broke twice in 2026-05:
+# Netlify reorganized MCP tools under selectSchema envelopes, and the
+# proxy-path CLI invocation began returning exit-1 with no captured output.
+# The REST API is documented, single-call, and avoids npx/network fragility.
+log "[§8.2] zipping $DIST/"
+ZIP=/tmp/lrp-deploy-$$.zip
+rm -f "$ZIP"
+# Use Python's zipfile rather than shelling to `zip` — `zip` is a separate
+# Debian package not installed on every WSL/runner image.
+python3 - "$DIST" "$ZIP" <<'PYZIP'
+import os, sys, zipfile
+src, dst = sys.argv[1], sys.argv[2]
+with zipfile.ZipFile(dst, "w", compression=zipfile.ZIP_DEFLATED, compresslevel=6) as z:
+    for root, dirs, files in os.walk(src):
+        for f in files:
+            full = os.path.join(root, f)
+            arc = os.path.relpath(full, src)
+            z.write(full, arc)
+PYZIP
+ZIP_BYTES=$(stat -c %s "$ZIP")
+log "[§8.2] zip: $((ZIP_BYTES / 1024)) KB"
 
-# 3. Upload bytes via npx proxy.
-log "[§8.3] uploading $DIST/ via proxy"
-pushd "$DIST" >/dev/null
-UPLOAD_OUT=$(npx -y @netlify/mcp@latest --site-id "$SITE_ID" --proxy-path "$PROXY_URL" --no-wait 2>&1)
-popd >/dev/null
-DEPLOY_ID=$(echo "$UPLOAD_OUT" | grep -oE '[0-9a-f]{24}' | head -1 || echo "")
+log "[§8.3] POST /api/v1/sites/$SITE_ID/deploys"
+DEPLOY_RESP=$(curl -sS -X POST "https://api.netlify.com/api/v1/sites/$SITE_ID/deploys" \
+  -H "Authorization: Bearer $NETLIFY_PAT" \
+  -H "Content-Type: application/zip" \
+  --data-binary "@$ZIP")
+rm -f "$ZIP"
+DEPLOY_ID=$(echo "$DEPLOY_RESP" | python3 -c '
+import sys, json
+try:
+    r = json.load(sys.stdin)
+    print(r.get("id") or "")
+except Exception:
+    pass
+')
 if [ -z "$DEPLOY_ID" ]; then
-  # On failure, dump full output so the operator can see deprecation warnings,
-  # auth errors, npm noise, etc. On success we already have what we need.
-  log "ERROR: upload produced no deployId. Output: $UPLOAD_OUT"
+  log "ERROR: deploy API returned no id. Response: $DEPLOY_RESP"
   exit 3
 fi
 log "[§8.3] deployId: $DEPLOY_ID"
