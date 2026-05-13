@@ -76,6 +76,7 @@ PEER_COUNTY_FIPS = frozenset({"317", "329", "383"})      # Martin, Midland, Reag
 # Segment keys (from wba091 §1.2)
 SEG_WBROOT = "01"
 SEG_WBCOMPL = "02"
+SEG_WBDATE = "03"
 SEG_WBNEWLOC = "13"
 
 CSV_FIELDS = [
@@ -83,6 +84,7 @@ CSV_FIELDS = [
     "api_no", "county_fips", "county_name", "county_role", "district",
     "well_no", "lease_no", "oil_gas",
     "total_depth", "completion_date", "completion_year",
+    "spud_date", "spud_year",
     "newest_permit_no", "plug_flag", "active_flag",
     "lat", "lon",
 ]
@@ -198,6 +200,28 @@ def parse_wbcompl(line: bytes, acc: dict) -> None:
     acc["active_flag"] = active
 
 
+def parse_wbdate(line: bytes, acc: dict) -> None:
+    """Extract spud_date from WBDATE segment (key=03).
+
+    R2-6: per operator instruction, the WB-W2-G1-DATE field at byte 32 of
+    the WBDATE segment is treated as the well's spud_date for the time-series
+    scrubber. (Strictly W-2/G-1 is the completion-form filing date in the
+    RRC's W-2 Oil/G-1 Gas completion forms; using it as the time anchor
+    matches operator preference for "when was activity happening" — close
+    enough to a true spud date for the Hanwha legal-defense framing.)
+    """
+    raw = slice_at(line, 32, 8).decode("ascii", errors="replace").strip()
+    if len(raw) == 8 and raw.isdigit() and raw != "00000000":
+        yyyy, mm, dd = raw[:4], raw[4:6], raw[6:]
+        try:
+            yr = int(yyyy)
+            if 1900 <= yr <= 2030 and "spud_date" not in acc:
+                acc["spud_date"] = f"{yyyy}-{mm}-{dd}"
+                acc["spud_year"] = str(yr)
+        except ValueError:
+            pass
+
+
 def parse_wbnewloc(line: bytes, acc: dict) -> None:
     """Extract WGS84 lat/lon from WBNEWLOC (key=13).
 
@@ -276,6 +300,9 @@ def parse_wellbore(src: Path, dst: Path) -> dict:
             elif key == SEG_WBCOMPL:
                 if acc:
                     parse_wbcompl(line, acc)
+            elif key == SEG_WBDATE:
+                if acc:
+                    parse_wbdate(line, acc)
             elif key == SEG_WBNEWLOC:
                 counts["wbnewloc_seen"] += 1
                 if acc:
