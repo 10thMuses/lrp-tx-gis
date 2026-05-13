@@ -64,6 +64,41 @@ nohup python3 scripts/scrape_rrc_w1_detail_coords.py \\
 When that file exists, the next sprint extends `scripts/parse_rrc.py` to merge
 it into `data/permits_permian6.csv`.
 
+## Round 2.5 Part 4D — HIFLD layers (URL discovery + deferral)
+
+Probed the HIFLD ArcGIS Hub and Esri Living-Atlas content search for live
+FeatureServer URLs for the six requested asset classes. Result: HIFLD's
+content is now split across multiple ArcGIS orgs; one URL per layer is
+not derivable without per-layer search.
+
+URLs confirmed working (status 200, real metadata):
+- **Electric Power Transmission Lines:**
+  `services1.arcgis.com/Hp6G80Pky0om7QvQ/.../Electric_Power_Transmission_Lines/FeatureServer/0`
+  → 6-county bbox ≥ 69 kV pull is feasible in a single fetch.
+- **Petroleum Refineries (EIA):** FEMA Region 6 mirror at
+  `services2.arcgis.com/FiaPA4ga0iQKduv3/.../Petroleum_Refineries_in_the_US/FeatureServer`
+  (US-wide; needs Texas + 6-county bbox filter — count likely 0 in the
+  bbox since refineries cluster on the coast and around Big Spring).
+- **Oil Refinery polygons (HIFLD via HSEMA):**
+  `services1.arcgis.com/Hp6G80Pky0om7QvQ/.../Oil_Refinery_(Polygon)/FeatureServer/0`.
+
+URLs NOT yet found (need per-layer ArcGIS Hub search, each ~5-10 min):
+- Electric Substations (HIFLD set is token-gated per `ARCHITECTURE.md
+  §9`; OSM-sourced `substations` layer already covers the gap).
+- Crude Oil Pipelines (RRC source covers > 20" already; HIFLD adds
+  smaller-diameter lines).
+- Natural Gas Pipelines (same — RRC partial coverage).
+- Hydrocarbon Gas Liquid Pipelines.
+- Natural Gas Processing Plants.
+- Natural Gas Storage Facilities.
+
+**Deferral rationale**: Each sub-layer is one of the user's per-item
+atomic branches. URL discovery alone is approaching the 60-min budget;
+adding fetch + filter + tippecanoe per layer puts the total at 3-6 h.
+For the Hanwha demo, ERCOT geocoding upgrade (Part 3) and counterparty
+asset boundaries (Part 5) are higher-value uses of remaining time. The
+URLs above are the starting point for the next layer-data sprint.
+
 ## Round 2.5 Part 4C — Comptroller Ch.312/313 reconciliation (no new layer)
 
 Probed `api.comptroller.texas.gov/open-data/v1/tables/ch312-abatement`
