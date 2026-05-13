@@ -89,7 +89,17 @@
   #stats-panel.collapsed .sp-body { display: none; }
   #stats-panel .sp-head { display: flex; align-items: center; gap: 6px; padding: 8px 10px; border-bottom: 1px solid var(--border); cursor: pointer; user-select: none; }
   #stats-panel .sp-head h3 { font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text); margin: 0; }
-  #stats-panel .sp-head .sp-toggle { margin-left: auto; font-size: 10px; padding: 2px 8px; border: 1px solid var(--border); background: #ffffff; color: var(--text); border-radius: 4px; }
+  #stats-panel .sp-head .sp-toggle { margin-left: 4px; font-size: 10px; padding: 2px 8px; border: 1px solid var(--border); background: #ffffff; color: var(--text); border-radius: 4px; }
+  #stats-panel .sp-head .sp-compare { margin-left: auto; font-size: 10px; padding: 2px 8px; border: 1px solid var(--border); background: #ffffff; color: var(--text); border-radius: 4px; }
+  #stats-panel .sp-head .sp-compare[aria-pressed="true"] { background: #0f172a; color: #ffffff; border-color: #0f172a; }
+  #stats-panel .sp-compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 4px; }
+  #stats-panel .sp-compare-grid > div { border: 1px solid var(--border); border-radius: 4px; padding: 6px 8px; }
+  #stats-panel .sp-compare-grid h6 { font-size: 10px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: var(--muted); margin: 0 0 4px; }
+  #stats-panel .sp-compare-summary { background: #fef3c7; border: 1px solid #fbbf24; border-radius: 4px; padding: 6px 8px; margin-bottom: 6px; font-size: 11px; line-height: 1.5; }
+  /* R2-9: saved-views dropdown at top of sidebar */
+  .saved-views { padding: 8px 10px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 6px; }
+  .saved-views label { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; font-weight: 700; }
+  .saved-views select { flex: 1 1 auto; font: inherit; font-size: 11px; padding: 3px 6px; border: 1px solid var(--border); border-radius: 4px; background: #ffffff; cursor: pointer; }
   #stats-panel .sp-body { padding: 8px 10px; }
   #stats-panel .sp-empty { color: var(--muted); padding: 20px 10px; text-align: center; }
   #stats-panel .sp-layer { margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1px dashed var(--border); }
@@ -253,6 +263,20 @@
 </div>
 
 <aside class="sidebar">
+  <div class="saved-views">
+    <label for="saved-views-select">Views</label>
+    <select id="saved-views-select" aria-label="Saved thesis views">
+      <option value="">— pick a saved view —</option>
+      <option value="all_permits">All permits, 1976-present</option>
+      <option value="permits_recent10">Permits in last 10 years</option>
+      <option value="permits_recent10_sale">Permits in last 10 years, sale-area only</option>
+      <option value="permits_recent10_peer">Permits in last 10 years, peer counties only</option>
+      <option value="wells_pre1990">Wells drilled before 1990 (legacy shallow infra)</option>
+      <option value="permits_deep10k">New permits targeting &gt; 10,000 ft (deep zone only)</option>
+      <option value="wells_active">Active wells, current</option>
+      <option value="compare_depth_since2015">Sale-area vs. peer, depth comparison since 2015</option>
+    </select>
+  </div>
   <div id="layer-groups"></div>
   <div class="basemap-picker">
     <h3>Basemap</h3>
@@ -277,6 +301,7 @@
     <aside id="stats-panel" class="collapsed" aria-label="Live stats panel" hidden>
       <div class="sp-head">
         <h3>Live stats</h3>
+        <button class="sp-compare" type="button" aria-pressed="false" title="Toggle sale-area vs peer comparison view">Compare</button>
         <button class="sp-toggle" type="button">Show</button>
       </div>
       <div class="sp-body"></div>
@@ -1287,6 +1312,81 @@ const StatsPanel = (() => {
     return cache[lid];
   }
 
+  // R2-8: split-by-role helper. Returns { subject: [rows...], peer: [rows...] }.
+  function splitByRole(rows) {
+    const out = { subject: [], peer: [] };
+    rows.forEach(r => {
+      const role = String(r.county_role || '').toLowerCase();
+      if (role === 'subject') out.subject.push(r);
+      else if (role === 'peer') out.peer.push(r);
+    });
+    return out;
+  }
+  // R2-8 subject/peer county counts — used for normalization (per-county rates).
+  const ROLE_COUNTY_COUNT = { subject: 3, peer: 3 };
+  let compareMode = false;
+
+  function renderCompareSection(L, panelLabel, rows) {
+    const { subject, peer } = splitByRole(rows);
+    const tfield = L.id === 'permits_permian6' ? 'permit_year' : 'spud_year';
+    const tk = (arr) => tukeyDepth(arr, 'total_depth') || { mean: 0, p50: 0, n_below: 0, n_above: 0 };
+    const tkS = tk(subject);
+    const tkP = tk(peer);
+    // Per-county-year rate since 2015. Window length: thisYear − 2014.
+    const thisYear = new Date().getFullYear();
+    const yearsSince2015 = Math.max(1, thisYear - 2014);
+    const since2015 = (arr) => arr.filter(r => { const y = fnum(r[tfield]); return y !== null && y >= 2015; }).length;
+    const sCount = since2015(subject);
+    const pCount = since2015(peer);
+    const sRate = sCount / yearsSince2015 / ROLE_COUNTY_COUNT.subject;
+    const pRate = pCount / yearsSince2015 / ROLE_COUNTY_COUNT.peer;
+    const ratio = sRate > 0 ? (pRate / sRate) : (pRate > 0 ? Infinity : 0);
+    const since2015Depth = (arr) => {
+      const vals = arr.filter(r => { const y = fnum(r[tfield]); return y !== null && y >= 2015; })
+                      .map(r => fnum(r.total_depth)).filter(v => v !== null);
+      return vals.length ? vals.reduce((a, b) => a + b, 0) / vals.length : 0;
+    };
+    const sDepth = since2015Depth(subject);
+    const pDepth = since2015Depth(peer);
+    const summary = `
+      <div class="sp-compare-summary">
+        Sale-area (Pecos/Reeves/Ward) vs. peer (Midland/Martin/Reagan), since 2015:<br>
+        Sale-area: <strong>${sCount.toLocaleString()}</strong> ${L.id === 'permits_permian6' ? 'permits' : 'wells'} (${sRate.toFixed(1)}/county/yr).
+        Peer: <strong>${pCount.toLocaleString()}</strong> (${pRate.toFixed(1)}/county/yr).
+        Peer rate is <strong>${isFinite(ratio) ? ratio.toFixed(1) + '×' : '∞'}</strong> the sale-area rate.<br>
+        Mean depth since 2015: sale-area <strong>${Math.round(sDepth).toLocaleString()} ft</strong>, peer <strong>${Math.round(pDepth).toLocaleString()} ft</strong>.
+      </div>`;
+    const colHtml = (name, arr) => {
+      const tkRow = tk(arr);
+      const oilGas = countBy(arr, 'oil_gas');
+      const totalOG = oilGas.reduce((a, b) => a + b[1], 0) || 1;
+      const oilGasRows = oilGas.map(([k, v]) => `<tr><td>${escapeHtmlLocal(k || '(blank)')}</td><td class="num">${v.toLocaleString()}</td><td class="num">${(100 * v / totalOG).toFixed(1)}%</td></tr>`).join('');
+      return `<div>
+        <h6>${name}</h6>
+        <table>
+          <tr><th>Total</th><td class="num">${arr.length.toLocaleString()}</td></tr>
+          <tr><th>Mean depth</th><td class="num">${Math.round(tkRow.mean).toLocaleString()} ft</td></tr>
+          <tr><th>Median</th><td class="num">${Math.round(tkRow.p50).toLocaleString()} ft</td></tr>
+        </table>
+        <h6 style="margin-top:6px;">Oil / gas</h6>
+        <table><tr><th>Code</th><th class="num">n</th><th class="num">%</th></tr>${oilGasRows}</table>
+      </div>`;
+    };
+    return `<div class="sp-layer"><h4>${panelLabel} <span class="sp-n">— ${rows.length.toLocaleString()} in view (compare mode)</span></h4>
+      ${summary}
+      <div class="sp-compare-grid">
+        ${colHtml('Sale-area (n=' + subject.length.toLocaleString() + ')', subject)}
+        ${colHtml('Peer (n=' + peer.length.toLocaleString() + ')', peer)}
+      </div>
+      <div class="sp-buttons">
+        <button data-action="csv" data-layer="${L.id}">CSV</button>
+        <button data-action="xlsx" data-layer="${L.id}">XLSX</button>
+        <button data-action="markdown" data-layer="${L.id}">Copy MD</button>
+        <button data-action="pdf">Print PDF</button>
+      </div>
+    </div>`;
+  }
+
   function activeStatsLayers() {
     const want = activeLayerIds();
     return STATS_LAYERS.filter(sl => want.has(sl.id));
@@ -1309,7 +1409,9 @@ const StatsPanel = (() => {
         const rows = await loadCache(sl.id);
         if (myId !== lastRenderId) return;
         const filtered = applyFilters(rows, L);
-        sections.push(renderLayerStats(L, sl.label, filtered));
+        sections.push(compareMode
+          ? renderCompareSection(L, sl.label, filtered)
+          : renderLayerStats(L, sl.label, filtered));
       } catch (e) {
         sections.push(`<div class="sp-layer"><h4>${sl.label}</h4><div class="sp-empty">load failed: ${escapeHtmlLocal(String(e))}</div></div>`);
       }
@@ -1471,6 +1573,16 @@ const StatsPanel = (() => {
   }
 
   head.addEventListener('click', e => {
+    if (e.target.classList.contains('sp-compare')) {
+      compareMode = !compareMode;
+      e.target.setAttribute('aria-pressed', compareMode ? 'true' : 'false');
+      e.target.textContent = compareMode ? 'Compare ✓' : 'Compare';
+      // Force expand so users see the new view.
+      root.classList.remove('collapsed');
+      toggle.textContent = 'Hide';
+      refresh();
+      return;
+    }
     if (e.target === toggle || !e.target.closest('button')) {
       root.classList.toggle('collapsed');
       toggle.textContent = root.classList.contains('collapsed') ? 'Show' : 'Hide';
@@ -2202,6 +2314,16 @@ map.on('load', () => {
   refreshFilterBanner();
   Scrubber.onLayerVisibilityChange(activeLayerIds());
   StatsPanel.refresh();
+  // R2-9: wire saved-views dropdown.
+  const savedSel = document.getElementById('saved-views-select');
+  if (savedSel) {
+    savedSel.addEventListener('change', () => {
+      const k = savedSel.value;
+      if (!k) return;
+      applySavedView(k);
+      // Don't reset the select to "" — keep the choice visible to the user.
+    });
+  }
   wirePopups();
   map.on('moveend', syncHash);
   // Refresh active-count labels after tiles render post-move
