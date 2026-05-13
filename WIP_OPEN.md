@@ -12,6 +12,48 @@ For older deploy history, `git log --merges --grep "deploy [0-9a-f]" main`.
 
 ---
 
+## ⚠ Next action for operator (2026-05-13)
+
+Branch `refinement-rrc-permits-wells` has two unpushed commits (`90234c0`, `e2b8d7d`) on the WSL clone at `~/lrp-tx-gis`. **Both sides — WSL `~/lrp-tx-gis` and Windows `C:\Users\AndreaHimmel\lrp-tx-gis` — have only `.env.example`, no populated `.env` and no `CREDENTIALS.md`.** Credential-cache probing beyond those filenames was declined by the auto-mode classifier, so any locally-cached gh/Netlify CLI tokens were not consulted.
+
+To ship Round 1:
+1. On the workstation (either side), `cp .env.example .env` then fill in `GITHUB_PAT` (Contents R/W on `10thMuses/lrp-tx-gis`) and `NETLIFY_PAT`.
+2. `git push -u origin refinement-rrc-permits-wells`
+3. `bash scripts/deploy.sh --rebuild`
+4. `bash scripts/close-out.sh refinement-rrc-permits-wells <deploy-id> "Add wells_pecos11"`
+
+Round 2 spec is in the backlog below — **do not start until R1 is on prod AND the permits layer is unblocked**.
+
+---
+
+## Decision log — 2026-05-13 — RRC permits/wells sprint scope pivot
+
+Sprint spec asked for two new layers (`permits_pecos11` + `wells_pecos11`, 1976-present, with lat/lon, 11 Permian counties). Delivered one (`wells_pecos11`) and deferred the other after source-discovery probing.
+
+**What works:**
+- `scripts/fetch_rrc.py` — RRC GoAnywhere PrimeFaces POST scrape (validated end-to-end). GET MFT folder link → harvest JSESSIONID + ViewState → POST row id to `/webclient/godrive/PublicGoDrive.xhtml`.
+- `scripts/parse_rrc.py wells` — streams `dbf900.txt.gz` (29.6M segment-records, 1.2M wellbores) in 17s, filters to 11 counties → `data/wells_pecos11.csv`. Layout: `docs/rrc_layouts/wba091_well-bore-database.pdf`. Lat/lon from WBNEWLOC (seg 13) at pos 133/143, PIC S9(3)V9(7) zoned-decimal. RRC convention: longitude stored as positive magnitude — parser forces negative for Texas hemisphere.
+- Layer build: 115,908 wells in scope, 101,408 with WGS84 coordinates (87.5%), 7.6 MB PMTiles, no cardinality issues.
+
+**What's blocked — permits_pecos11:**
+- RRC's "Drilling Permit Master & Trailer" file (`daf802.txt.gz`, 1.21 GB) has no published byte-position layout. The "Pending" file IS documented (pendingdrillingpermits.pdf) but its folder has been stale since 2021-02. The "EOM + Lat/Lon" `daf420.dat.MM-DD-YYYY` series has lat/lon but no public layout.
+- Existing `scripts/scrape_rrc_w1.py` covers permit listing rows 1976-present but defers lat/lon to per-permit detail-page fetches (~40h throttled for the full Permian backfill).
+- ARCHITECTURE.md §11 entry rewritten to reflect the actual blocker; revisit if RRC publishes the daf-series layout OR operator authorizes the long detail-page scrape.
+
+**Deploy + push status:** local build clean (`built=27 missing=0 errored=0 tiles_total=19656 KB`), commit `90234c0` on local branch `refinement-rrc-permits-wells`. Push to origin AND deploy both blocked: this WSL clone has no `NETLIFY_PAT`, no `GITHUB_PAT`, no `.git-credentials`, no SSH key, no `gh` CLI — `git push` exits with `could not read Username for 'https://github.com'`. To ship: populate `.env` (both PATs) on the operator workstation, then `git push -u origin refinement-rrc-permits-wells && bash scripts/deploy.sh --rebuild && bash scripts/close-out.sh refinement-rrc-permits-wells <deploy-id> "Add wells_pecos11"`.
+
+## Round 2 backlog — Hanwha thesis features (gated)
+
+Round 2 spec received 2026-05-13. Ten items (R2-1 … R2-10) covering: wells filter to active+drilling, permits filter to production-purpose only, full historical depth (1976/1964-present), sidebar filter UX overhaul, oil/gas color + depth-scaled symbol size, time-series scrubber, live stats panel with PDF/CSV/XLSX export, Pecos-vs-active-Permian-peers comparison, pre-baked thesis bookmarks, verification + ship.
+
+**Hard gate:** Round 2 explicitly conditions on "After the current RRC permits/wells task (Round 1) ships to prod, execute this Round 2 batch autonomously." R1 has not shipped to prod (push + deploy both blocked above).
+
+**Soft gate — permits layer:** every R2 item that touches permits (R2-2, R2-3 perm half, R2-4 perm filters, R2-5 perm color, R2-6 perm half of scrubber, R2-7 perm stats panel, R2-8 perm comparison, R2-9 perm bookmarks) depends on `permits_pecos11` being a real layer. That layer is still scoped-out per the Round 1 decision above. R2-8 also wants Midland + Ector counties added for peer comparison — outside the 11-county scope by design.
+
+**Foldable into R1 (deferred to keep R1 atomic per user's own protocol):** R2-1 (wells active+drilling filter at the parse layer) — would require remapping WBROOT plug_flag + active_flag codes to a true status field; R2-3 wells half (spud date) — would require adding WBDATE segment (key 03) `WB-W2-G1-DATE` to the parser; R2-5 wells color/size — pure `layers.yaml` edit. None folded; the user's instruction is "Each item is its own atomic branch." Once R1 ships, these become R2-1, R2-3, R2-5 atomic branches.
+
+---
+
 ## Active sprints
 
 ### ERCOT queue geocoding — Stage 3

@@ -709,6 +709,67 @@ layers:
   - owner
   - subdivision
   - net
+- id: wells_pecos11
+  file: data/wells_pecos11.csv
+  geom: point
+  group: Permits
+  label: Wells (RRC, 11-county Permian)
+  description: Current-state RRC wellbore registry for the 11-county Permian scope
+    (Pecos, Reeves, Ward, Crane, Upton, Reagan, Crockett, Terrell, Brewster, Jeff
+    Davis, Culberson). Source dbf900.txt Full Wellbore ASCII (weekly cadence).
+    115,908 wells; 87.5% carry WGS84 coordinates.
+  color: '#6b21a8'
+  default_on: false
+  min_zoom: 8
+  radius: 2
+  popup:
+  - api_no
+  - county_name
+  - district
+  - well_no
+  - lease_no
+  - oil_gas
+  - total_depth
+  - completion_date
+  - newest_permit_no
+  - plug_flag
+  - active_flag
+  popup_labels:
+    api_no: API #
+    county_name: County
+    district: District
+    well_no: Well #
+    lease_no: Lease #
+    oil_gas: Oil/Gas
+    total_depth: Total depth (ft)
+    completion_date: Completion date
+    newest_permit_no: Newest drilling permit
+    plug_flag: Plugged?
+    active_flag: Active?
+  filterable_fields:
+  - field: county_name
+    type: categorical
+    label: County
+  - field: oil_gas
+    type: categorical
+    label: Oil/Gas
+  - field: plug_flag
+    type: categorical
+    label: Plugged?
+  - field: active_flag
+    type: categorical
+    label: Active?
+  - field: district
+    type: categorical
+    label: District
+  - field: total_depth
+    type: numeric
+    label: Total depth (ft)
+  tippecanoe:
+  - -zg
+  - -r1
+  - --drop-densest-as-needed
+  - --extend-zooms-if-still-dropping
 - id: tax_abatements
   file: combined_points.csv
   geom: point

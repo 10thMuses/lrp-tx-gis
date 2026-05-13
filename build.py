@@ -1169,11 +1169,32 @@ def main():
     print(f'out: {DIST}/index.html')
 
 
+def cmd_refresh(target):
+    """Trigger handler for `refresh wells` (and future `refresh permits`).
+    Runs fetch_rrc → parse_rrc to regenerate data/<layer>.csv. Atomic temp+replace
+    on each step. Operator then re-runs `python3 build.py` to rebuild PMTiles."""
+    if target not in ('wells', 'permits', 'all'):
+        print(f"unknown refresh target: {target}")
+        sys.exit(2)
+    if target == 'permits':
+        print('permits_pecos11 is scoped-out — daf420 record layout unavailable. '
+              'See WIP_OPEN.md decision log.')
+        sys.exit(2)
+    subprocess.check_call([sys.executable, str(ROOT / 'scripts' / 'fetch_rrc.py'), target])
+    subprocess.check_call([sys.executable, str(ROOT / 'scripts' / 'parse_rrc.py'), target])
+    print(f'\n{target} refreshed. Run `python3 build.py` to rebuild PMTiles.')
+
+
 if __name__ == '__main__':
     if len(sys.argv) > 1 and sys.argv[1] == 'merge':
         if len(sys.argv) < 4:
             print('Usage: python build.py merge <layer_id> <refresh_file>')
             sys.exit(2)
         cmd_merge(sys.argv[2], sys.argv[3])
+    elif len(sys.argv) > 1 and sys.argv[1] == 'refresh':
+        if len(sys.argv) < 3:
+            print('Usage: python build.py refresh <wells|permits|all>')
+            sys.exit(2)
+        cmd_refresh(sys.argv[2])
     else:
         main()

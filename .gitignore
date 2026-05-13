@@ -22,6 +22,11 @@ tmp*/
 # Large upstream archives (re-fetchable)
 outputs/refresh/tl_*.zip
 *.tmp
+
+# RRC raw downloads + parsed county-filtered CSVs (re-fetchable; ~hundreds of MB)
+data/rrc_raw/
+data/permits_pecos11.csv
+data/wells_pecos11.csv
 .DS_Store
 Thumbs.db
 desktop.ini
