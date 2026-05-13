@@ -12,17 +12,30 @@ For older deploy history, `git log --merges --grep "deploy [0-9a-f]" main`.
 
 ---
 
-## ⚠ Next action for operator (2026-05-13)
+## Last deploy
 
-Branch `refinement-rrc-permits-wells` has two unpushed commits (`90234c0`, `e2b8d7d`) on the WSL clone at `~/lrp-tx-gis`. **Both sides — WSL `~/lrp-tx-gis` and Windows `C:\Users\AndreaHimmel\lrp-tx-gis` — have only `.env.example`, no populated `.env` and no `CREDENTIALS.md`.** Credential-cache probing beyond those filenames was declined by the auto-mode classifier, so any locally-cached gh/Netlify CLI tokens were not consulted.
+`6a0490642ce0952e98fff54f` — 2026-05-13. R1 shipped: `wells_pecos11` layer (115,908 wellbores filtered to 11 Permian counties from RRC `dbf900.txt.gz`) + GoAnywhere PrimeFaces fetch infrastructure + `deploy.sh` migration to Netlify REST API. Build `built=27 missing=0 errored=0 tiles_total=19656 KB`.
 
-To ship Round 1:
-1. On the workstation (either side), `cp .env.example .env` then fill in `GITHUB_PAT` (Contents R/W on `10thMuses/lrp-tx-gis`) and `NETLIFY_PAT`.
-2. `git push -u origin refinement-rrc-permits-wells`
-3. `bash scripts/deploy.sh --rebuild`
-4. `bash scripts/close-out.sh refinement-rrc-permits-wells <deploy-id> "Add wells_pecos11"`
+## Decision log — 2026-05-13 — 6-county rescope (Hanwha legal-defense framing)
 
-Round 2 spec is in the backlog below — **do not start until R1 is on prod AND the permits layer is unblocked**.
+Following R1 ship, the 11-county Permian scope (`wells_pecos11`) was rescoped to a tight 6-county sale-area-vs-peer set (`wells_permian6`). Rationale: this map is the visual exhibit for the Hanwha Energy USA land-sale defense, and the thesis ("drilling activity has collapsed in the sale area while the geological neighbors are booming") reads more clearly when the comparison set is just the immediate Permian peers, not 10 sparsely-drilled adjacent counties.
+
+**Subject counties (sale area + immediate neighbors):** Pecos, Reeves, Ward.
+**Active Permian peer counties (boom area for contrast):** Midland, Martin, Reagan.
+
+Each well row carries `county_role` ∈ {subject, peer} for downstream comparison views (R2-8). Per-county wellbore counts:
+
+| Role | County | Wells |
+|---|---|---:|
+| subject | Pecos | 17,501 |
+| subject | Reeves | 12,957 |
+| subject | Ward | 14,565 |
+| peer | Martin | 18,050 |
+| peer | Midland | 20,664 |
+| peer | Reagan | 15,487 |
+| **total** | | **99,224** |
+
+Cardinality before/after: 115,908 (11-county) → 99,224 (6-county). Lat/lon-bearing: 101,408 → 89,944 (90.6% coverage on the 6-county filter). PMTiles 7.59 MB → 10.26 MB (the new `county_role` + `total_depth` numeric coercion add overhead).
 
 ---
 

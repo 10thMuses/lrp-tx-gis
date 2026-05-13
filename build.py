@@ -89,7 +89,8 @@ COMBINED_CSV = 'combined_points.csv'
 COMBINED_GJ = 'combined_geoms.geojson'
 
 NUMERIC_KEYS = {'mw', 'capacity', 'capacity_mw', 'cap_kw', 'depth_ft',
-                'year', 'plant_code', 'osm_id', 'acres'}
+                'year', 'plant_code', 'osm_id', 'acres',
+                'total_depth', 'spud_year', 'permit_year', 'completion_year'}
 
 # Filter UI: cap distinct values for a categorical (or text) filter. Above this,
 # the field is auto-demoted to plain text (substring match) so the UI stays
