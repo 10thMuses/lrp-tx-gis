@@ -18,6 +18,52 @@ For older deploy history, `git log --merges --grep "deploy [0-9a-f]" main`.
 
 For older deploy history, `git log --merges --grep "deploy [0-9a-f]" main`.
 
+## Round 2.5 Part 2 — historical permits backfill
+
+**Part 2A — Wells Spudded report (RRC 2005-current):** **deferred — no
+machine-readable source.** Probed `rrc.texas.gov` for the canonical wells-
+spudded series; the only first-party data is (a) a JS-rendered data-viz
+dashboard at `/resource-center/data-visualization/oil-gas-data-visualization/wells-spudded/`,
+and (b) "Monthly Drilling, Completion, and Plugging Summaries" available
+only as PDFs from 2020+ at
+`/oil-and-gas/research-and-statistics/drilling-information/monthly-drilling-completion-and-plugging-summaries/`.
+The 2005-2019 range is not published as bulk CSV. Closest historical
+artifact is a single 1960-2018 statewide-summary PDF
+(`/media/3yhlylo4/drill_graph_2018.pdf`).
+
+Resolvable paths if this becomes blocking:
+1. Selenium/Playwright against the JS data-viz dashboard (operator hasn't
+   authorized headless browsers).
+2. Per-month PDF parse 2020-current for spud counts only (no per-well lat/lon).
+3. Per-permit detail scrape via the W-1 JSP — covered by Part 2B below.
+
+**Part 2B — 1976-2004 per-permit detail-page scrape:** **script written,
+not yet run.** `scripts/scrape_rrc_w1_detail_coords.py` consumes the
+existing `scripts/scrape_rrc_w1.py` listing output and fetches each in-scope
+permit's detail page for surface lat/lon. Resumable via JSON checkpoint;
+atomic CSV appends. Estimated runtime ~7 h throttled (~17k permits × 1.5 s).
+
+To trigger overnight:
+
+```bash
+# 1. populate the listing-side output (1976-2004 backfill for 6-county scope)
+python3 scripts/scrape_rrc_w1.py PECOS 1976 2004
+python3 scripts/scrape_rrc_w1.py REEVES 1976 2004
+python3 scripts/scrape_rrc_w1.py WARD 1976 2004
+python3 scripts/scrape_rrc_w1.py MIDLAND 1976 2004
+python3 scripts/scrape_rrc_w1.py MARTIN 1976 2004
+python3 scripts/scrape_rrc_w1.py REAGAN 1976 2004
+
+# 2. fetch coords (overnight)
+nohup python3 scripts/scrape_rrc_w1_detail_coords.py \\
+    --in outputs/refresh/rrc_w1_permits.csv \\
+    --out outputs/refresh/rrc_w1_permits_with_coords.csv \\
+    > /tmp/rrc_w1_coords.log 2>&1 &
+```
+
+When that file exists, the next sprint extends `scripts/parse_rrc.py` to merge
+it into `data/permits_permian6.csv`.
+
 ## Round 2 — deferred to next session
 
 Heavy template/JS work that didn't fit this autonomous run. Each is its own atomic branch when picked up; the wells + permits data layers are already on prod with the right `filterable_fields` schema for the new UI to read.
