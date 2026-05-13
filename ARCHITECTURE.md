@@ -114,9 +114,11 @@ Build never materializes source data into model context. Streaming subprocess on
 | fcc_fiber_coverage | fill | — | FCC BDC fixed-availability | Quarterly | standalone |
 | waha_circle | point | 1 | Hand-placed | Persistent | combined |
 | labels_hubs | point | — | Hand toponyms | Rare | combined |
-| wells_permian6 | point | 89,944 | RRC dbf900 Full Wellbore ASCII (MFT) | Weekly | standalone |
+| wells_permian6 | point | 62,214 | RRC dbf900 Full Wellbore ASCII (MFT, active-only filter) | Weekly | standalone |
+| permits_permian6 | point | 28,842 | RRC daf420 EOM+LatLon (forensic parse, 2018-present) | Weekly | standalone |
+| counterparty_assets | fill | 4 | Hand-placed approximated boundaries | Persistent | combined |
 
-**26 layers total live in prod** as of last close-out. Update this table when count changes.
+**29 layers total live in prod** as of last close-out. Update this table when count changes.
 
 *Scope note (2026-05-13):* the original `wells_pecos11` 11-county filter (Pecos
 + 10 neighbors) was reduced to a 6-county sale-area-vs-peer scope to support

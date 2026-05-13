@@ -14,9 +14,49 @@ For older deploy history, `git log --merges --grep "deploy [0-9a-f]" main`.
 
 ## Last deploy
 
-`6a04990a155513aedd0e842d` — 2026-05-13. R2-3 + R2-5 shipped: completion_year + permit_year exposed for year sliders; oil/gas color split (oil=#16a34a, gas=#dc2626) and depth-scaled symbol size (3px→8.5px across 0-25K ft) for both wells_permian6 and permits_permian6. Build `built=28 missing=0 errored=0 tiles_total=33356 KB`.
+`6a04a7f8b6d653154ab5cb03` — 2026-05-13. R2.5 Part 5 shipped: counterparty
+asset boundary polygons (Microsoft Reeves DC, Core Scientific Pecos, Belding
+Farms/Cockrell, Fort Stockton Holdings/Riggs/CWEI) as a new
+`counterparty_assets` layer. Build `built=29 missing=0 errored=0 tiles_total=34098 KB`.
 
 For older deploy history, `git log --merges --grep "deploy [0-9a-f]" main`.
+
+## Round 2 + Round 2.5 — shipped to prod 2026-05-13
+
+**Round 1** (pre-R2 foundation, 3 deploys):
+- Part A — wells_pecos11 + RRC GoAnywhere fetch + deploy.sh REST migration (`1a7c358`, deploy `6a0490642ce0952e98fff54f`).
+- Part B — rescope to 6-county sale-vs-peer (`wells_permian6`) (`3c86d26`, deploy `6a0491744965c0882b9ff10f`).
+- Part C — forensic `permits_permian6` parser (28,842 permits, 2018-2026) (`394921d`, deploy `6a0494da155513a00c0e842f`).
+
+**Round 2** (Hanwha thesis features, all 10 items shipped):
+- R2-1 wells active-only filter (`3391ca5`, deploy `6a049844a81b3c9e76c41fe1`).
+- R2-2 production-purpose permits — rolled into Part C parser.
+- R2-3 + R2-5 year sliders + oil/gas color + depth-scaled size (`bf6c816`, deploy `6a04990a155513aedd0e842d`).
+- R2-4 sidebar filter UX overhaul — quick-preset chips, sort-by-count operator dropdown, "Showing: …" banner, Reset-all button, debounced numeric inputs (`b819df2`, deploy `6a04a1e75b1a6f047835c026`).
+- R2-6 time-series scrubber — shared bottom-of-map slider, play/pause/reset, spud_year for wells (parsed from WBDATE byte 32) + permit_year for permits, year-cutoff AND-merges into every layer's filter expression (`679d252`, deploy `6a04a2ee5c5f270fa0ad73f8`).
+- R2-7 live stats panel + downloads — top-right collapsible panel; counts by year/county/oil-gas/profile/role; Tukey 1.5×IQR depth percentiles with outlier-exclusion footnote; top-10 operators; mean depth by decade/oil-gas/profile; mean well age (current_year − spud_year). Downloads: CSV (sectioned), Markdown (clipboard), PDF (window.print + print stylesheet), XLSX (multi-tab via SheetJS lazy-loaded from CDN) (`98aa4c7`, deploy `6a04a4502a2db809e0dd7dc2`).
+- R2-8 sale-vs-peer comparison toggle in stats panel — side-by-side subject (Pecos/Reeves/Ward) vs peer (Midland/Martin/Reagan) with raw + per-county-per-year-since-2015 normalization + thesis banner ("Peer rate is N× the sale-area rate"). R2-9 thesis bookmarks — 8 saved views in sidebar dropdown, URL-hash-shareable (`03b2871`, deploy `6a04a4fc5c5f271650ad7403`).
+- R2-10 final smoke test — prod root 200, all 29 layer PMTiles 200, both stats-data JSON files 200, inlined LAYERS array contains 29 ids, Scrubber + StatsPanel + SAVED_VIEWS + filter-banner all present in the page source.
+
+**Round 2.5** (data-layer batch):
+- Part 1 — layer inventory + currency check (`c05912d`).
+- Part 2 — Wells Spudded backfill source deferred (no machine-readable 2005-2019 RRC source); 1976-2004 detail-page scrape script written + overnight trigger documented (`d7e69bf`).
+- Part 3 — ERCOT precise-coord upgrade via abatement cross-reference (`scripts/enrich_ercot_coords.py` upgraded 3 of 43 imprecise rows; FERC EQR / PUC CCN deferred) (`cd22431`, deploy `6a04a72c593d41138ea8bd67`).
+- Part 4C — Comptroller Ch.312/313 API probed; 0 records in 6-county scope; existing `tax_abatements` layer already covers, no new layer needed (`3cb4d9c`).
+- Part 4D — HIFLD layers URL discovery; transmission + refinery URLs confirmed live, other four (substations, NG/oil/HGL pipelines, NG processing plants, NG storage) need per-layer search beyond the 60-min sub-task budget. Substations already covered by OSM-sourced layer per ARCHITECTURE §9 (`2dac669`).
+- Part 5 — Counterparty asset boundaries: 4 new APPROXIMATE polygons (Microsoft Reeves DC, Core Scientific Pecos, Belding Farms/Cockrell, Fort Stockton Holdings/Riggs/CWEI); Pacifico already in `gw_ranch` (`cd22431`, deploy `6a04a7f8b6d653154ab5cb03`).
+- Part 6 — Sidebar integration: every new layer renders through the existing `filterable_fields` schema; no per-layer template surgery required.
+- Part 7 — This file.
+
+**Hanwha thesis features live on prod**:
+1. 6-county Permian scope (sale-area Pecos/Reeves/Ward vs peer Midland/Martin/Reagan) with `county_role` on every well + permit row.
+2. Permit-collapse-vs-boom contrast directly visible: peer-county permit rate is **2× sale-area** by 2024, 2.3× by 2024 (logged in decision log).
+3. Time-series scrubber animates feature buildup 1964-2026 across both layers; play button shows activity collapse vs boom.
+4. Stats panel + IQR depth percentiles + 4 export formats are presentation-ready for legal/technical review.
+5. 8 saved views including "Sale-area vs. peer, depth comparison since 2015" pre-baked for one-click presentation.
+6. Oil/gas color split + depth-scaled symbol size — deep horizontal new permits in peer counties read as large red dots; shallow legacy wells in Pecos read as small gray/green dots.
+7. Counterparty boundary polygons for the 5 named sites (4 new + Pacifico).
+8. Data currency: every layer ≤18 days old. RRC layers refreshed 2026-05-13.
 
 ## Round 2.5 Part 2 — historical permits backfill
 
@@ -179,17 +219,18 @@ worthwhile and is documented as ready-to-implement once needed.
 data, acceptable). No layer breached the 30-day threshold during this
 session.
 
-## Round 2 — deferred to next session
+## Round 2 — all 10 items shipped on 2026-05-13
 
-Heavy template/JS work that didn't fit this autonomous run. Each is its own atomic branch when picked up; the wells + permits data layers are already on prod with the right `filterable_fields` schema for the new UI to read.
+R2-4, R2-6, R2-7, R2-8, R2-9 (previously deferred) all shipped in this run.
+See the per-item deploy IDs in the "Round 2" block above. No outstanding R2
+items remain.
 
-- **R2-4: comprehensive sidebar filter panel** — top-level filter chips, depth bucket quick chips (<5K / 5-10K / 10-15K / >15K), year-range 5-year quick chips, operator searchable dropdown sorted by count with counts shown, "Showing: <filter summary>" banner at top of map, "Reset filters" button. Acceptance: every filter is reachable in one click from the sidebar root; numeric inputs are debounced; current filter state appears in a header banner. Implementation surface: ~80% in `build_template.html` (extend the existing `filterFieldControlHtml` + the `applyAllFilters` runtime).
-- **R2-6: time-series scrubber** — shared bottom-of-map slider that animates feature buildup over time across both layers. Per-feature appearance date = `permit_year` (permits) / `completion_year` (wells). Play / pause / reset, 1 yr/sec, respects filter state. Implementation: new component, MapLibre `filter` expression on `<=` of slider value.
-- **R2-7: live stats panel + downloads** — collapsible top-right panel with count/percentile/distribution stats per layer, IQR/Tukey outlier filtering on depth, PDF / CSV / XLSX / Markdown exports. Heaviest item — needs a stats compute engine + download serializers.
-- **R2-8: sale-area vs peers comparison** — toggle that pivots stats panel into side-by-side subject (Pecos/Reeves/Ward) vs peer (Midland/Martin/Reagan) view. Per-county-normalized rates. The data already carries `county_role` for this; UI work only.
-- **R2-9: thesis bookmarks (Saved views)** — sidebar dropdown with 8 pre-baked filter combinations ("Permits in last 10 years, sale-area only", etc.). URL hash updates for shareability. The template already reads `location.hash` at boot; this is a sidebar-component addition.
+## Backlog for the next layer-data sprint
 
-All five are well-scoped and unblocked — they just need a dedicated session (~6-10 hours total) on the front-end.
+- R2.5 Part 4D — five remaining HIFLD layers (substations excluded — OSM covers): per-layer URL discovery + fetch + filter + tippecanoe per atomic branch.
+- R2.5 Part 2B execution — `scripts/scrape_rrc_w1_detail_coords.py` overnight job for 1976-2004 backfill, trigger documented above.
+- R2.5 Part 3 deeper geocoding — FERC EQR + PUC CCN cross-reference for the 40 remaining county-centroid ercot_queue rows.
+- Counterparty asset boundary upgrade — replace the four APPROXIMATE polygons with TCEQ CRPUB / abatement-derived precise boundaries once an authorized scrape path is available.
 
 ## Decision log — 2026-05-13 — 6-county rescope (Hanwha legal-defense framing)
 
