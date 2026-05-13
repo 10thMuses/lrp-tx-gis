@@ -782,7 +782,7 @@ layers:
     label: Total depth (ft)
   - field: permit_year
     type: numeric
-    label: Permit year
+    label: Permit year (1976-present once Round 2.5 backfill ships; 2018-present today)
   - field: operator_name
     type: text
     label: Operator
@@ -816,6 +816,7 @@ layers:
   - oil_gas
   - total_depth
   - completion_date
+  - completion_year
   - newest_permit_no
   - plug_flag
   - active_flag
@@ -829,6 +830,7 @@ layers:
     oil_gas: Oil/Gas
     total_depth: Total depth (ft)
     completion_date: Completion date
+    completion_year: Completion year
     newest_permit_no: Newest drilling permit
     plug_flag: Plugged?
     active_flag: Active?
@@ -842,18 +844,15 @@ layers:
   - field: oil_gas
     type: categorical
     label: Oil/Gas
-  - field: plug_flag
-    type: categorical
-    label: Plugged?
-  - field: active_flag
-    type: categorical
-    label: Active?
   - field: district
     type: categorical
     label: District
   - field: total_depth
     type: numeric
     label: Total depth (ft)
+  - field: completion_year
+    type: numeric
+    label: Completion year
   tippecanoe:
   - -zg
   - -r1
