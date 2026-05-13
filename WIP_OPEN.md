@@ -12,6 +12,20 @@ For older deploy history, `git log --merges --grep "deploy [0-9a-f]" main`.
 
 ---
 
+## ⚠ Next action for operator (2026-05-13)
+
+Branch `refinement-rrc-permits-wells` has two unpushed commits (`90234c0`, `e2b8d7d`) on the WSL clone at `~/lrp-tx-gis`. **Both sides — WSL `~/lrp-tx-gis` and Windows `C:\Users\AndreaHimmel\lrp-tx-gis` — have only `.env.example`, no populated `.env` and no `CREDENTIALS.md`.** Credential-cache probing beyond those filenames was declined by the auto-mode classifier, so any locally-cached gh/Netlify CLI tokens were not consulted.
+
+To ship Round 1:
+1. On the workstation (either side), `cp .env.example .env` then fill in `GITHUB_PAT` (Contents R/W on `10thMuses/lrp-tx-gis`) and `NETLIFY_PAT`.
+2. `git push -u origin refinement-rrc-permits-wells`
+3. `bash scripts/deploy.sh --rebuild`
+4. `bash scripts/close-out.sh refinement-rrc-permits-wells <deploy-id> "Add wells_pecos11"`
+
+Round 2 spec is in the backlog below — **do not start until R1 is on prod AND the permits layer is unblocked**.
+
+---
+
 ## Decision log — 2026-05-13 — RRC permits/wells sprint scope pivot
 
 Sprint spec asked for two new layers (`permits_pecos11` + `wells_pecos11`, 1976-present, with lat/lon, 11 Permian counties). Delivered one (`wells_pecos11`) and deferred the other after source-discovery probing.
