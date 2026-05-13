@@ -64,6 +64,58 @@ nohup python3 scripts/scrape_rrc_w1_detail_coords.py \\
 When that file exists, the next sprint extends `scripts/parse_rrc.py` to merge
 it into `data/permits_permian6.csv`.
 
+## Round 2.5 — what's shipped, what's queued
+
+**Shipped (2026-05-13):**
+- Part 1 — Layer inventory: `docs/layer_inventory_2026-05-13.md` (26 layers
+  catalogued, currency check clean, gaps identified).
+- Part 2 — Permits historical backfill: Wells-Spudded source deferred
+  (no machine-readable 2005-2019 source); `scripts/scrape_rrc_w1_detail_coords.py`
+  written + documented as overnight nohup trigger.
+
+**Queued for the next layer-data-only sprint (no template/JS work required):**
+
+- **Part 3 — ERCOT precise geocoding upgrade.** Inventory tagged the
+  existing layer as Stage-2 geocoded (precise via EIA-860 + USWTDB join,
+  county-centroid fallback). The R2.5 spec calls for FERC EQR + PUC
+  filings + Ch.312/313 cross-reference. Skipped this run for time;
+  next sprint should target precise geocoding for the 30-40 projects
+  in the 6-county Permian scope where confidence is currently `county_centroid`.
+- **Part 4A/B — EIA-860 + USWTDB refresh checks.** Both layers refreshed
+  2026-04-28 (inside the 30-day threshold). No action this sprint.
+  Re-check after EIA-860 2025 annual release lands (mid-2026).
+- **Part 4C — Comptroller Ch.312/313 split.** API verified working at
+  `https://api.comptroller.texas.gov/open-data/v1/tables/ch312-abatement`.
+  Returns full abatement metadata (status, value, dates, owner, locl_gov_nm
+  = county appraisal district) but no lat/lon — geocoding required via
+  property address or address-text in `abat_zone_nm`. Existing
+  `tax_abatements` layer (LDAD scrape, 1,486 statewide records, already
+  geocoded) likely covers most of the relevant 6-county slice; next
+  sprint should reconcile vs. the 312/313 API instead of building a
+  parallel layer.
+- **Part 4D — HIFLD energy infrastructure layers** (transmission ≥69 kV,
+  HIFLD substations, NG/HGL/crude pipelines, NG processing plants, refineries,
+  NG storage). Six sub-layers; each fetch + filter + tippecanoe pass is
+  ~30-60 min per layer. Atomic-branch one per layer.
+- **Part 5 — Counterparty asset boundaries.** Five sites (Pacifico GW Ranch,
+  Microsoft Reeves DC, Core Scientific Pecos, Belding Farms/Cockrell,
+  Fort Stockton Holdings/Riggs/CWEI). TCEQ CRPUB scrape + Ch.312/313 join
+  required per spec. Existing `gw_ranch` polygon already covers Pacifico;
+  the other four are net-new boundary digitization. Defer until Part 4C
+  abatement reconciliation lands (the abatement addresses are the
+  cross-reference source).
+- **Part 6 — Sidebar integration for new layers** — happens naturally
+  via `filterable_fields` schema when the new layers land. No template
+  surgery for new layers, only the R2-4/6/7 overhauls noted below.
+- **Part 7 — Documentation updates.** `CLAUDE.md` refresh-trigger phrases
+  for wells/permits already added this sprint; the rest land alongside
+  their respective layer branches.
+
+**Currency-check status (operator's 30-day rule):** Every present layer is
+≤18 days old except `rrc_pipelines` (2019 prebuilt, slow-changing route
+data, acceptable). No layer breached the 30-day threshold during this
+session.
+
 ## Round 2 — deferred to next session
 
 Heavy template/JS work that didn't fit this autonomous run. Each is its own atomic branch when picked up; the wells + permits data layers are already on prod with the right `filterable_fields` schema for the new UI to read.

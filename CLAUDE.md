@@ -99,6 +99,32 @@ git add combined_points.csv  # or combined_geoms.geojson
 git commit -m "refresh: <layer_id> from <source> <date>"
 ```
 
+**RRC wells refresh (`refresh wells.`):**
+```bash
+python3 build.py refresh wells     # fetches dbf900.txt.gz + parses → data/wells_permian6.csv
+python3 build.py                   # rebuild PMTiles
+```
+
+**RRC permits refresh (`refresh permits.`):**
+```bash
+python3 scripts/fetch_rrc.py permits   # downloads all EOM monthly snapshots
+python3 scripts/parse_rrc.py permits   # parses 6-county filter → data/permits_permian6.csv
+python3 build.py                       # rebuild PMTiles
+```
+
+**Permits 1976-2004 backfill (overnight job):**
+```bash
+# Per-county W-1 listing scrape (1976-2004, 6 counties)
+for c in PECOS REEVES WARD MIDLAND MARTIN REAGAN; do
+  python3 scripts/scrape_rrc_w1.py "$c" 1976 2004
+done
+# Then nohup the detail-page lat/lon backfill (~7 h throttled)
+nohup python3 scripts/scrape_rrc_w1_detail_coords.py \
+  --in outputs/refresh/rrc_w1_permits.csv \
+  --out outputs/refresh/rrc_w1_permits_with_coords.csv \
+  > /tmp/rrc_w1_coords.log 2>&1 &
+```
+
 **Audit drift:**
 ```bash
 bash scripts/audit.sh
