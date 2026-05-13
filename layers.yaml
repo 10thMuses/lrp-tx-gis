@@ -887,8 +887,8 @@ layers:
   file: data/wells_permian6.csv
   geom: point
   group: Permits
-  label: Wells (active + drilling, 6-county Permian)
-  description: "Active RRC wellbores (not plugged / abandoned / P&A) for the 6-county Permian sale-area-vs-peer scope. Subject \u2014 Pecos, Reeves, Ward. Active Permian peer \u2014 Midland, Martin, Reagan. R2-1 filter applied at the parser (plug_flag=N only \u2014 drilling-in-progress wells live in the permits layer, not here). Source dbf900.txt Full Wellbore ASCII (weekly). 71,328 active wells."
+  label: Wells (6-county Permian, active + plugged)
+  description: "All RRC wellbores in 6-county Permian scope (active + plugged/abandoned). Use the status filter to switch views. Plugged wells are the visible legacy infrastructure that demonstrates drilling-era completion. Subject \u2014 Pecos, Reeves, Ward. Active Permian peer \u2014 Midland, Martin, Reagan. Source dbf900.txt Full Wellbore ASCII (weekly). ~99,224 wells."
   color: '#6b21a8'
   default_on: false
   min_zoom: 7
@@ -919,8 +919,8 @@ layers:
     completion_date: Completion date
     completion_year: Completion year
     newest_permit_no: Newest drilling permit
-    plug_flag: Plugged?
-    active_flag: Active?
+    plug_flag: Plug status
+    active_flag: Active flag
   filterable_fields:
   - field: county_name
     type: categorical
@@ -934,6 +934,12 @@ layers:
   - field: district
     type: categorical
     label: District
+  - field: plug_flag
+    type: categorical
+    label: Plug status
+    value_labels:
+      Y: Y = Plugged/Abandoned
+      N: N = Active
   - field: total_depth
     type: numeric
     label: Total depth (ft)
