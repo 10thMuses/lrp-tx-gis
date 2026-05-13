@@ -47,6 +47,7 @@ import argparse
 import csv
 import gzip
 import os
+import re
 import sys
 from pathlib import Path
 
@@ -601,7 +602,113 @@ def main() -> int:
         size_mb = dst.stat().st_size / (1024 * 1024)
         print(f"  output: {size_mb:.2f} MB ({dst})")
 
+        # R26: append W-1 detail-page backfill rows (1976-2017) if present.
+        # Output of scripts/scrape_rrc_w1_detail_coords.py. Atomic-append with
+        # de-dup by permit_no against existing rows.
+        backfill = ROOT / "outputs" / "refresh" / "rrc_w1_permits_with_coords.csv"
+        if backfill.exists():
+            print(f"\n=== merge W-1 backfill: {backfill.name} ===")
+            n_appended = _merge_w1_backfill(dst, backfill)
+            print(f"  rows appended (deduped vs existing): {n_appended:,}")
+            size_mb = dst.stat().st_size / (1024 * 1024)
+            print(f"  output: {size_mb:.2f} MB ({dst})")
+        else:
+            print(f"\n(backfill: {backfill} not found — skip)")
+
     return 0
+
+
+def _merge_w1_backfill(permits_csv: Path, backfill_csv: Path) -> int:
+    """Append rows from the W-1 detail-page scrape into the permits CSV.
+
+    Maps backfill schema (permit_no, api_no, operator_name, lease_name,
+    well_no, district, county_name, wb_profile, filing_purpose, total_depth,
+    approved_date, submitted_date, year_chunk, lat, lon) → permits CSV
+    schema (layer_id, permit_no, status_no, api_no, county_fips, county_name,
+    county_role, district, lease_name, well_no, operator_name,
+    submitted_date, approved_date, permit_year, status, wellbore_profile,
+    filing_purpose, oil_gas, total_depth, lat, lon).
+
+    Dedup by permit_no — backfill rows whose permit_no already exists in
+    the main CSV are skipped (the daf420 EOM source wins).
+    Returns count of rows appended."""
+    existing_keys: set[str] = set()
+    with open(permits_csv, "r", encoding="utf-8") as f:
+        r = csv.DictReader(f)
+        for row in r:
+            pn = row.get("permit_no", "")
+            if pn:
+                existing_keys.add(pn)
+            api = row.get("api_no", "")
+            if api:
+                existing_keys.add(api)
+
+    SUBJECT = {"PECOS", "REEVES", "WARD"}
+    PEER = {"MIDLAND", "MARTIN", "REAGAN"}
+    # county_fips by name (3-digit suffix from RRC county codes)
+    NAME_TO_FIPS = {
+        "PECOS": "371", "REEVES": "389", "WARD": "475",
+        "MIDLAND": "329", "MARTIN": "317", "REAGAN": "383",
+    }
+
+    n_appended = 0
+    with open(permits_csv, "a", encoding="utf-8", newline="") as f_out, \
+         open(backfill_csv, "r", encoding="utf-8") as f_in:
+        w = csv.writer(f_out)
+        r = csv.DictReader(f_in)
+        for row in r:
+            pn = row.get("permit_no", "").strip()
+            api = row.get("api_no", "").strip()
+            cname = row.get("county_name", "").strip().upper()
+            if cname not in NAME_TO_FIPS:
+                continue
+            if pn and pn in existing_keys:
+                continue
+            if api and api in existing_keys:
+                continue
+            lat = row.get("lat", "").strip()
+            lon = row.get("lon", "").strip()
+            if not lat or not lon:
+                continue
+            td = row.get("total_depth", "").strip()
+            adate = row.get("approved_date", "").strip()
+            sdate = row.get("submitted_date", "").strip()
+            yr = ""
+            for cand in (adate, sdate, row.get("year_chunk", "")):
+                m = re.search(r"(19|20)\d{2}", cand)
+                if m:
+                    yr = m.group(0)
+                    break
+            role = "subject" if cname in SUBJECT else ("peer" if cname in PEER else "")
+            w.writerow([
+                "permits_permian6",                # layer_id
+                pn,                                 # permit_no
+                "",                                 # status_no
+                api,                                # api_no
+                NAME_TO_FIPS[cname],                # county_fips
+                cname.title(),                      # county_name
+                role,                               # county_role
+                row.get("district", ""),            # district
+                row.get("lease_name", ""),          # lease_name
+                row.get("well_no", ""),             # well_no
+                row.get("operator_name", ""),       # operator_name
+                sdate,                              # submitted_date
+                adate,                              # approved_date
+                yr,                                 # permit_year
+                row.get("status", ""),              # status
+                row.get("wb_profile", ""),          # wellbore_profile
+                row.get("filing_purpose", ""),      # filing_purpose
+                "",                                 # oil_gas
+                td,                                 # total_depth
+                lat,                                # lat
+                lon,                                # lon
+            ])
+            if pn:
+                existing_keys.add(pn)
+            if api:
+                existing_keys.add(api)
+            n_appended += 1
+    return n_appended
 
 
 if __name__ == "__main__":
