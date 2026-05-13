@@ -83,6 +83,37 @@
   .filter-chip:hover { border-color: #94a3b8; }
   .filter-chip.active { background: #0f172a; color: #ffffff; border-color: #0f172a; }
   .filter-multi-count { color: var(--muted); font-size: 10px; font-variant-numeric: tabular-nums; }
+  /* R2-7: live stats panel top-right of map */
+  #stats-panel { position: absolute; top: 8px; right: 8px; z-index: 5; width: min(360px, 92vw); max-height: min(88vh, 880px); overflow-y: auto; background: rgba(255,255,255,0.97); border: 1px solid var(--border); border-radius: 6px; font-size: 11px; box-shadow: 0 1px 6px rgba(0,0,0,0.08); }
+  #stats-panel.collapsed { max-height: none; overflow: visible; }
+  #stats-panel.collapsed .sp-body { display: none; }
+  #stats-panel .sp-head { display: flex; align-items: center; gap: 6px; padding: 8px 10px; border-bottom: 1px solid var(--border); cursor: pointer; user-select: none; }
+  #stats-panel .sp-head h3 { font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text); margin: 0; }
+  #stats-panel .sp-head .sp-toggle { margin-left: auto; font-size: 10px; padding: 2px 8px; border: 1px solid var(--border); background: #ffffff; color: var(--text); border-radius: 4px; }
+  #stats-panel .sp-body { padding: 8px 10px; }
+  #stats-panel .sp-empty { color: var(--muted); padding: 20px 10px; text-align: center; }
+  #stats-panel .sp-layer { margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1px dashed var(--border); }
+  #stats-panel .sp-layer:last-child { border-bottom: 0; margin-bottom: 0; }
+  #stats-panel .sp-layer h4 { font-size: 12px; font-weight: 700; margin: 0 0 4px; color: var(--text); display: flex; align-items: baseline; gap: 6px; }
+  #stats-panel .sp-layer h4 .sp-n { font-variant-numeric: tabular-nums; }
+  #stats-panel .sp-section { margin: 8px 0; }
+  #stats-panel .sp-section h5 { font-size: 10px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: var(--muted); margin: 0 0 4px; }
+  #stats-panel table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+  #stats-panel table th, #stats-panel table td { text-align: left; padding: 2px 4px; border-bottom: 1px solid rgba(15, 23, 42, 0.04); }
+  #stats-panel table th { font-weight: 600; color: var(--muted); font-size: 10px; }
+  #stats-panel table td.num { text-align: right; font-variant-numeric: tabular-nums; }
+  #stats-panel .sp-foot { color: var(--muted); font-size: 10px; line-height: 1.4; margin-top: 4px; }
+  #stats-panel .sp-buttons { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 8px; }
+  #stats-panel .sp-buttons button { font: inherit; font-size: 10px; padding: 3px 8px; border: 1px solid var(--border); background: #ffffff; color: var(--text); border-radius: 4px; cursor: pointer; text-transform: uppercase; letter-spacing: 0.04em; font-weight: 600; }
+  #stats-panel .sp-buttons button:hover { background: #f1f5f9; }
+  #stats-panel .sp-spark { display: flex; align-items: flex-end; gap: 1px; height: 22px; margin: 2px 0; }
+  #stats-panel .sp-spark .bar { background: #0f172a; min-width: 3px; flex: 1 1 0; }
+  @media print {
+    body * { visibility: hidden; }
+    #stats-panel, #stats-panel * { visibility: visible; }
+    #stats-panel { position: static; max-height: none; max-width: 100%; width: auto; box-shadow: none; border: 0; overflow: visible; }
+    #stats-panel .sp-head .sp-toggle, #stats-panel .sp-buttons { display: none !important; }
+  }
   /* R2-6: time-series scrubber pinned to bottom of map */
   #scrubber { position: absolute; bottom: 28px; left: 50%; transform: translateX(-50%); z-index: 4; width: min(92vw, 720px); background: rgba(255,255,255,0.96); border: 1px solid var(--border); border-radius: 6px; padding: 8px 12px; display: flex; align-items: center; gap: 10px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); font-size: 11px; }
   #scrubber.collapsed { padding: 4px 10px; width: auto; }
@@ -243,6 +274,13 @@
 <div class="map-wrap">
   <div id="map">
     <div id="filter-banner" role="status" aria-live="polite"></div>
+    <aside id="stats-panel" class="collapsed" aria-label="Live stats panel" hidden>
+      <div class="sp-head">
+        <h3>Live stats</h3>
+        <button class="sp-toggle" type="button">Show</button>
+      </div>
+      <div class="sp-body"></div>
+    </aside>
     <div id="scrubber" aria-label="Time-series scrubber" hidden>
       <button class="scrub-toggle" type="button" data-action="hide" aria-label="Hide scrubber">×</button>
       <button class="scrub-btn" type="button" data-action="play" aria-label="Play/pause">▶</button>
@@ -897,6 +935,7 @@ function bindFilterPanel(panel) {
             applyLayerFilter(L);
             syncHash();
             refreshFilterBanner();
+      StatsPanel.refresh();
           }, 220);
         });
       });
@@ -918,6 +957,7 @@ function bindFilterPanel(panel) {
           applyLayerFilter(L);
           syncHash();
           refreshFilterBanner();
+      StatsPanel.refresh();
           // Re-render so chip active states + inputs reflect new state.
           refreshPanelInline(panel, L);
         });
@@ -932,6 +972,7 @@ function bindFilterPanel(panel) {
           applyLayerFilter(L);
           syncHash();
           refreshFilterBanner();
+      StatsPanel.refresh();
         });
       });
     } else if (ftype === 'categorical') {
@@ -944,6 +985,7 @@ function bindFilterPanel(panel) {
           applyLayerFilter(L);
           syncHash();
           refreshFilterBanner();
+      StatsPanel.refresh();
         });
       });
       const searchInp = fieldEl.querySelector('input.filter-multi-search');
@@ -965,7 +1007,7 @@ function bindFilterPanel(panel) {
           filterState[lid] = filterState[lid] || {};
           filterState[lid][fname] = inp.value;
           clearTimeout(timer);
-          timer = setTimeout(() => { applyLayerFilter(L); syncHash(); refreshFilterBanner(); }, 250);
+          timer = setTimeout(() => { applyLayerFilter(L); syncHash(); refreshFilterBanner(); StatsPanel.refresh(); }, 250);
         });
       }
     }
@@ -975,6 +1017,468 @@ function bindFilterPanel(panel) {
     clearEl.addEventListener('click', () => clearLayerFilters(L));
   }
 }
+
+// =================================================================
+// R2-7: live stats panel.
+// Data source: per-layer slim JSON at /data/<layer>.json (built by
+// write_stats_attrs in build.py). Stats refresh on every filter / scrubber
+// change. Downloads: CSV, Markdown (clipboard), PDF (window.print), XLSX
+// (multi-tab via SheetJS, loaded on-demand from a CDN the first time it is
+// needed — see ensureSheetJS).
+// =================================================================
+const StatsPanel = (() => {
+  const root = document.getElementById('stats-panel');
+  if (!root) return { refresh: () => {} };
+  const body = root.querySelector('.sp-body');
+  const toggle = root.querySelector('.sp-toggle');
+  const head = root.querySelector('.sp-head');
+  // Layers in the panel + their time field (drives histogram x-axis).
+  const STATS_LAYERS = [
+    { id: 'permits_permian6', label: 'Permits', timeField: 'permit_year', minYear: 1976 },
+    { id: 'wells_permian6',   label: 'Active wells', timeField: 'spud_year', minYear: 1964 },
+  ];
+  // Cached attribute arrays per layer (loaded lazily on first show).
+  const cache = {};
+  let lastRenderId = 0;
+
+  function fnum(v) {
+    if (v === null || v === undefined || v === '') return null;
+    const n = Number(v);
+    return Number.isFinite(n) ? n : null;
+  }
+
+  function applyFilters(rows, L, ff) {
+    // ff is the layer's filterState entry. scrubberYear is also AND-merged.
+    const state = filterState[L.id] || {};
+    const tfield = SCRUBBER_TIME_FIELD[L.id];
+    const scrubMax = scrubberYear !== null ? Number(scrubberYear) : null;
+    return rows.filter(r => {
+      if (scrubMax !== null && tfield) {
+        const tv = fnum(r[tfield]);
+        if (tv === null || tv > scrubMax) return false;
+      }
+      for (const f of (L.filterable_fields || [])) {
+        const v = state[f.field];
+        if (v === undefined || v === null) continue;
+        const rv = r[f.field];
+        if (f.type === 'numeric') {
+          if ((v.min === undefined || v.min === '') && (v.max === undefined || v.max === '')) continue;
+          const n = fnum(rv);
+          if (n === null) return false;
+          if (v.min !== undefined && v.min !== '' && n < Number(v.min)) return false;
+          if (v.max !== undefined && v.max !== '' && n > Number(v.max)) return false;
+        } else if (f.type === 'date_range') {
+          if ((!v.min) && (!v.max)) continue;
+          const s = String(rv || '').slice(0, 10);
+          if (!s) return false;
+          if (v.min && s < v.min) return false;
+          if (v.max && s > v.max) return false;
+        } else if (f.type === 'categorical') {
+          if (!Array.isArray(v) || v.length === 0) continue;
+          if (Array.isArray(f.values) && v.length >= f.values.length) continue;
+          if (!v.includes(String(rv || ''))) return false;
+        } else if (f.type === 'text') {
+          if (typeof v !== 'string' || v.trim() === '') continue;
+          const q = v.trim().toLowerCase();
+          if (!String(rv || '').toLowerCase().includes(q)) return false;
+        }
+      }
+      return true;
+    });
+  }
+
+  // IQR/Tukey 1.5x outlier filter on a numeric field. Returns
+  // { values, n_in, lower, upper, n_below, n_above, q1, q3, p25, p50, p75, mean }.
+  function tukeyDepth(rows, field) {
+    const vals = rows.map(r => fnum(r[field])).filter(v => v !== null).sort((a, b) => a - b);
+    if (vals.length === 0) return null;
+    const q = p => {
+      const idx = (vals.length - 1) * p;
+      const lo = Math.floor(idx), hi = Math.ceil(idx);
+      if (lo === hi) return vals[lo];
+      return vals[lo] * (hi - idx) + vals[hi] * (idx - lo);
+    };
+    const q1 = q(0.25), q3 = q(0.75);
+    const iqr = q3 - q1;
+    const lower = q1 - 1.5 * iqr;
+    const upper = q3 + 1.5 * iqr;
+    const kept = vals.filter(v => v >= lower && v <= upper);
+    const n_below = vals.filter(v => v < lower).length;
+    const n_above = vals.filter(v => v > upper).length;
+    const sum = kept.reduce((a, b) => a + b, 0);
+    return {
+      n_in: kept.length,
+      lower, upper, n_below, n_above,
+      q1, q3, p25: q(0.25), p50: q(0.5), p75: q(0.75),
+      mean: kept.length ? sum / kept.length : 0,
+    };
+  }
+
+  function countBy(rows, field) {
+    const m = new Map();
+    rows.forEach(r => {
+      const k = r[field] === undefined ? '' : String(r[field]);
+      m.set(k, (m.get(k) || 0) + 1);
+    });
+    return Array.from(m.entries()).sort((a, b) => b[1] - a[1]);
+  }
+
+  function meanDepthBy(rows, groupField) {
+    const m = new Map();
+    rows.forEach(r => {
+      const k = String(r[groupField] || '');
+      const v = fnum(r.total_depth);
+      if (v === null) return;
+      if (!m.has(k)) m.set(k, { sum: 0, n: 0 });
+      const e = m.get(k);
+      e.sum += v; e.n += 1;
+    });
+    return Array.from(m.entries()).map(([k, e]) => [k, e.n ? e.sum / e.n : 0, e.n]).sort((a, b) => b[2] - a[2]);
+  }
+
+  function decadeOf(yrStr) {
+    const y = fnum(yrStr);
+    if (y === null) return '';
+    return `${Math.floor(y / 10) * 10}s`;
+  }
+
+  function sparklineHtml(yearCounts, minYear, maxYear) {
+    const max = Math.max(...yearCounts.map(([, c]) => c), 1);
+    const bars = [];
+    for (let y = minYear; y <= maxYear; y++) {
+      const c = yearCounts.find(p => Number(p[0]) === y);
+      const h = c ? Math.max(2, Math.round((c[1] / max) * 22)) : 1;
+      bars.push(`<span class="bar" style="height:${h}px" title="${y}: ${c ? c[1] : 0}"></span>`);
+    }
+    return `<div class="sp-spark">${bars.join('')}</div>`;
+  }
+
+  function escapeHtmlLocal(s) { return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+  function renderLayerStats(L, panelLabel, rows) {
+    if (rows.length === 0) {
+      return `<div class="sp-layer"><h4>${panelLabel} <span class="sp-n">— 0 in view</span></h4></div>`;
+    }
+    const n = rows.length;
+    const oilGas = countBy(rows, 'oil_gas');
+    const profile = L.id === 'permits_permian6' ? countBy(rows, 'wellbore_profile') : null;
+    const status = L.id === 'permits_permian6' ? countBy(rows, 'status') : countBy(rows, 'active_flag');
+    const counties = countBy(rows, 'county_name');
+    const role = countBy(rows, 'county_role');
+    const operators = L.id === 'permits_permian6' ? countBy(rows, 'operator_name').slice(0, 10) : null;
+    const tfield = L.id === 'permits_permian6' ? 'permit_year' : 'spud_year';
+    const yearCounts = countBy(rows, tfield).map(([y, c]) => [Number(y), c]).filter(p => p[0] >= 1900);
+    const yrs = yearCounts.map(p => p[0]);
+    const minY = yrs.length ? Math.min(...yrs) : null;
+    const maxY = yrs.length ? Math.max(...yrs) : null;
+    const decades = countBy(rows, tfield).map(([y, c]) => [decadeOf(y), c]);
+    const decadeAgg = new Map();
+    decades.forEach(([d, c]) => { if (!d) return; decadeAgg.set(d, (decadeAgg.get(d) || 0) + c); });
+    const tk = tukeyDepth(rows, 'total_depth');
+    // Depth-by-oil/gas, depth-by-profile, depth-by-decade (mean only)
+    const depthByOG = meanDepthBy(rows, 'oil_gas').slice(0, 4);
+    const depthByProfile = profile ? meanDepthBy(rows, 'wellbore_profile') : null;
+    const depthByDecade = (() => {
+      const m = new Map();
+      rows.forEach(r => {
+        const d = decadeOf(r[tfield]);
+        const v = fnum(r.total_depth);
+        if (!d || v === null) return;
+        if (!m.has(d)) m.set(d, { sum: 0, n: 0 });
+        m.get(d).sum += v; m.get(d).n += 1;
+      });
+      return Array.from(m.entries()).sort((a, b) => a[0].localeCompare(b[0]))
+        .map(([d, e]) => [d, e.sum / e.n, e.n]);
+    })();
+    const ageNote = L.id === 'wells_permian6' ? (() => {
+      const now = new Date().getFullYear();
+      const ages = rows.map(r => fnum(r.spud_year)).filter(v => v !== null).map(y => now - y);
+      if (ages.length === 0) return '';
+      const mean = ages.reduce((a, b) => a + b, 0) / ages.length;
+      return `<div class="sp-section"><h5>Mean well age</h5><div>${mean.toFixed(1)} yr <span class="sp-foot">(current_year − spud_year; ${ages.length.toLocaleString()} wells with a parseable spud date)</span></div></div>`;
+    })() : '';
+
+    function rowTable(rows, header) {
+      const total = rows.reduce((a, b) => a + b[1], 0) || 1;
+      const lines = rows.map(([k, v]) => `<tr><td>${escapeHtmlLocal(k || '(blank)')}</td><td class="num">${v.toLocaleString()}</td><td class="num">${(100*v/total).toFixed(1)}%</td></tr>`).join('');
+      return `<table>${header}${lines}</table>`;
+    }
+    function meanTable(rows, label) {
+      const lines = rows.map(([k, m, c]) => `<tr><td>${escapeHtmlLocal(k || '(blank)')}</td><td class="num">${Math.round(m).toLocaleString()} ft</td><td class="num">${c.toLocaleString()}</td></tr>`).join('');
+      return `<table><tr><th>${label}</th><th class="num">Mean depth</th><th class="num">n</th></tr>${lines}</table>`;
+    }
+
+    let html = `<div class="sp-layer"><h4>${panelLabel} <span class="sp-n">— ${n.toLocaleString()} in view</span></h4>`;
+    // Oil/gas + profile + status
+    html += `<div class="sp-section"><h5>Oil/gas</h5>${rowTable(oilGas, '<tr><th>Code</th><th class="num">n</th><th class="num">%</th></tr>')}</div>`;
+    if (profile) html += `<div class="sp-section"><h5>Wellbore profile</h5>${rowTable(profile, '<tr><th>Type</th><th class="num">n</th><th class="num">%</th></tr>')}</div>`;
+    if (status && status.length > 0) html += `<div class="sp-section"><h5>Status</h5>${rowTable(status, '<tr><th>Status</th><th class="num">n</th><th class="num">%</th></tr>')}</div>`;
+    // County + role
+    html += `<div class="sp-section"><h5>County</h5>${rowTable(counties, '<tr><th>County</th><th class="num">n</th><th class="num">%</th></tr>')}</div>`;
+    if (role && role.length > 1) html += `<div class="sp-section"><h5>Role (subject / peer)</h5>${rowTable(role, '<tr><th>Role</th><th class="num">n</th><th class="num">%</th></tr>')}</div>`;
+    // Year sparkline + table
+    if (minY !== null && maxY !== null) {
+      html += `<div class="sp-section"><h5>By ${tfield === 'permit_year' ? 'permit year' : 'spud year'} (${minY}–${maxY})</h5>${sparklineHtml(yearCounts, minY, maxY)}</div>`;
+    }
+    // Decade
+    const decadeArr = Array.from(decadeAgg.entries()).sort((a, b) => a[0].localeCompare(b[0]));
+    if (decadeArr.length > 0) {
+      html += `<div class="sp-section"><h5>By decade</h5>${rowTable(decadeArr, '<tr><th>Decade</th><th class="num">n</th><th class="num">%</th></tr>')}</div>`;
+    }
+    // Depth stats (Tukey)
+    if (tk) {
+      html += `<div class="sp-section"><h5>Total depth (ft, Tukey-IQR-filtered)</h5>
+        <table>
+          <tr><th>Stat</th><th class="num">ft</th></tr>
+          <tr><td>Mean</td><td class="num">${Math.round(tk.mean).toLocaleString()}</td></tr>
+          <tr><td>Median (p50)</td><td class="num">${Math.round(tk.p50).toLocaleString()}</td></tr>
+          <tr><td>p25</td><td class="num">${Math.round(tk.p25).toLocaleString()}</td></tr>
+          <tr><td>p75</td><td class="num">${Math.round(tk.p75).toLocaleString()}</td></tr>
+        </table>
+        <div class="sp-foot">Outliers excluded: ${tk.n_below.toLocaleString()} below ${Math.round(tk.lower).toLocaleString()} ft, ${tk.n_above.toLocaleString()} above ${Math.round(tk.upper).toLocaleString()} ft. Counts and year-stats above are NOT outlier-filtered.</div>
+      </div>`;
+      if (depthByDecade.length > 0) html += `<div class="sp-section"><h5>Mean depth by decade</h5>${meanTable(depthByDecade, 'Decade')}</div>`;
+      if (depthByOG.length > 0) html += `<div class="sp-section"><h5>Mean depth by oil/gas</h5>${meanTable(depthByOG, 'Code')}</div>`;
+      if (depthByProfile && depthByProfile.length > 0) html += `<div class="sp-section"><h5>Mean depth by wellbore profile</h5>${meanTable(depthByProfile, 'Type')}</div>`;
+    }
+    if (ageNote) html += ageNote;
+    // Top operators
+    if (operators && operators.length > 0) {
+      html += `<div class="sp-section"><h5>Top 10 operators</h5>${rowTable(operators, '<tr><th>Operator</th><th class="num">n</th><th class="num">%</th></tr>')}</div>`;
+    }
+    // Download buttons
+    html += `<div class="sp-buttons">
+      <button data-action="csv" data-layer="${L.id}">CSV</button>
+      <button data-action="xlsx" data-layer="${L.id}">XLSX</button>
+      <button data-action="markdown" data-layer="${L.id}">Copy MD</button>
+      <button data-action="pdf">Print PDF</button>
+    </div></div>`;
+    return html;
+  }
+
+  function filterSummaryText(L) {
+    // Same logic the banner uses, but returned as plain text per layer.
+    const out = [];
+    (L.filterable_fields || []).forEach(f => {
+      const v = (filterState[L.id] || {})[f.field];
+      if (v === undefined || v === null) return;
+      if (f.type === 'numeric') {
+        const mn = v.min !== undefined && v.min !== '' ? v.min : null;
+        const mx = v.max !== undefined && v.max !== '' ? v.max : null;
+        if (mn === null && mx === null) return;
+        if (mn !== null && mx !== null) out.push(`${f.label}: ${mn}-${mx}`);
+        else if (mn !== null) out.push(`${f.label}: >= ${mn}`);
+        else out.push(`${f.label}: <= ${mx}`);
+      } else if (f.type === 'categorical') {
+        if (!Array.isArray(v) || v.length === 0) return;
+        if (Array.isArray(f.values) && v.length >= f.values.length) return;
+        out.push(`${f.label}: ${v.join(',')}`);
+      }
+    });
+    if (scrubberYear !== null && SCRUBBER_TIME_FIELD[L.id]) out.push(`Year cutoff: <= ${scrubberYear}`);
+    return out.length ? out.join('; ') : 'none';
+  }
+
+  async function loadCache(lid) {
+    if (cache[lid]) return cache[lid];
+    const res = await fetch(`data/${lid}.json`);
+    if (!res.ok) throw new Error(`stats data fetch failed: ${res.status}`);
+    cache[lid] = await res.json();
+    return cache[lid];
+  }
+
+  function activeStatsLayers() {
+    const want = activeLayerIds();
+    return STATS_LAYERS.filter(sl => want.has(sl.id));
+  }
+
+  // Render entry-point — debounced via myRenderId guard against rapid filter changes.
+  async function refresh() {
+    const layers = activeStatsLayers();
+    if (layers.length === 0) {
+      root.hidden = true;
+      return;
+    }
+    root.hidden = false;
+    const myId = ++lastRenderId;
+    const sections = [];
+    for (const sl of layers) {
+      const L = LAYERS.find(x => x.id === sl.id);
+      if (!L) continue;
+      try {
+        const rows = await loadCache(sl.id);
+        if (myId !== lastRenderId) return;
+        const filtered = applyFilters(rows, L);
+        sections.push(renderLayerStats(L, sl.label, filtered));
+      } catch (e) {
+        sections.push(`<div class="sp-layer"><h4>${sl.label}</h4><div class="sp-empty">load failed: ${escapeHtmlLocal(String(e))}</div></div>`);
+      }
+    }
+    if (myId !== lastRenderId) return;
+    body.innerHTML = sections.length ? sections.join('') : '<div class="sp-empty">No layers selected.</div>';
+    wireDownloadButtons();
+  }
+
+  // ---------- DOWNLOADS ----------
+  function buildStatsTables(L, rows) {
+    // Returns an object {tableName: rows-array} for export.
+    const tfield = L.id === 'permits_permian6' ? 'permit_year' : 'spud_year';
+    const tk = tukeyDepth(rows, 'total_depth');
+    const out = {};
+    out['summary'] = [['Metric', 'Value']];
+    out['summary'].push(['Total features', rows.length]);
+    out['summary'].push(['Filters', filterSummaryText(L)]);
+    if (tk) {
+      out['summary'].push(['Mean depth (Tukey)', Math.round(tk.mean)]);
+      out['summary'].push(['Median depth (Tukey)', Math.round(tk.p50)]);
+      out['summary'].push(['p25 depth', Math.round(tk.p25)]);
+      out['summary'].push(['p75 depth', Math.round(tk.p75)]);
+      out['summary'].push(['Outliers excluded (below)', tk.n_below]);
+      out['summary'].push(['Outliers excluded (above)', tk.n_above]);
+      out['summary'].push(['Tukey lower fence', Math.round(tk.lower)]);
+      out['summary'].push(['Tukey upper fence', Math.round(tk.upper)]);
+    }
+    const yearCounts = countBy(rows, tfield).map(([y, c]) => [y, c]).sort((a, b) => Number(a[0]) - Number(b[0]));
+    out['by_year'] = [['Year', 'Count']].concat(yearCounts);
+    out['by_county'] = [['County', 'Count']].concat(countBy(rows, 'county_name'));
+    out['by_oil_gas'] = [['Code', 'Count']].concat(countBy(rows, 'oil_gas'));
+    if (L.id === 'permits_permian6') {
+      out['by_profile'] = [['Profile', 'Count']].concat(countBy(rows, 'wellbore_profile'));
+      out['by_status'] = [['Status', 'Count']].concat(countBy(rows, 'status'));
+      out['top_operators'] = [['Operator', 'Count']].concat(countBy(rows, 'operator_name').slice(0, 25));
+    }
+    out['by_role'] = [['Role', 'Count']].concat(countBy(rows, 'county_role'));
+    // Depth-by-decade
+    const decadeAgg = new Map();
+    rows.forEach(r => {
+      const d = decadeOf(r[tfield]);
+      const v = fnum(r.total_depth);
+      if (!d || v === null) return;
+      if (!decadeAgg.has(d)) decadeAgg.set(d, { sum: 0, n: 0 });
+      decadeAgg.get(d).sum += v; decadeAgg.get(d).n += 1;
+    });
+    out['mean_depth_by_decade'] = [['Decade', 'Mean depth (ft)', 'n']].concat(
+      Array.from(decadeAgg.entries()).sort((a, b) => a[0].localeCompare(b[0]))
+        .map(([d, e]) => [d, Math.round(e.sum / e.n), e.n])
+    );
+    return out;
+  }
+
+  function csvOfTable(table) {
+    return table.map(row => row.map(c => {
+      const s = c === null || c === undefined ? '' : String(c);
+      return /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
+    }).join(',')).join('\n');
+  }
+
+  function downloadBlob(blob, filename) {
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 200);
+  }
+
+  function exportCsv(L) {
+    return loadCache(L.id).then(rows => {
+      const tables = buildStatsTables(L, applyFilters(rows, L));
+      const parts = [];
+      Object.entries(tables).forEach(([name, t]) => {
+        parts.push(`### ${name}`);
+        parts.push(csvOfTable(t));
+        parts.push('');
+      });
+      const header = `# RRC Permian Basin Data — ${L.label}\n# Filter: ${filterSummaryText(L)}\n# Generated: ${new Date().toISOString()}\n`;
+      const blob = new Blob([header + parts.join('\n')], { type: 'text/csv;charset=utf-8' });
+      const fn = `${L.id}_stats_${new Date().toISOString().slice(0, 10)}.csv`;
+      downloadBlob(blob, fn);
+    });
+  }
+
+  function ensureSheetJS() {
+    if (window.XLSX) return Promise.resolve(window.XLSX);
+    return new Promise((resolve, reject) => {
+      const s = document.createElement('script');
+      s.src = 'https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js';
+      s.onload = () => resolve(window.XLSX);
+      s.onerror = () => reject(new Error('SheetJS CDN load failed'));
+      document.head.appendChild(s);
+    });
+  }
+
+  function exportXlsx(L) {
+    return Promise.all([loadCache(L.id), ensureSheetJS()]).then(([rows, XLSX]) => {
+      const tables = buildStatsTables(L, applyFilters(rows, L));
+      const wb = XLSX.utils.book_new();
+      Object.entries(tables).forEach(([name, t]) => {
+        const ws = XLSX.utils.aoa_to_sheet(t);
+        XLSX.utils.book_append_sheet(wb, ws, name.slice(0, 31));
+      });
+      const fn = `${L.id}_stats_${new Date().toISOString().slice(0, 10)}.xlsx`;
+      XLSX.writeFile(wb, fn);
+    }).catch(err => {
+      alert(`XLSX export failed: ${err.message}\n\nFalling back to CSV.`);
+      return exportCsv(L);
+    });
+  }
+
+  function exportMarkdown(L) {
+    return loadCache(L.id).then(rows => {
+      const tables = buildStatsTables(L, applyFilters(rows, L));
+      const parts = [
+        `# ${L.label} — Permian stats`,
+        `**Filter**: ${filterSummaryText(L)}`,
+        `**Generated**: ${new Date().toISOString()}`,
+        '',
+      ];
+      Object.entries(tables).forEach(([name, t]) => {
+        parts.push(`## ${name.replace(/_/g, ' ')}`);
+        if (t.length < 2) { parts.push('_(empty)_', ''); return; }
+        const hdr = t[0];
+        parts.push('| ' + hdr.map(h => String(h)).join(' | ') + ' |');
+        parts.push('| ' + hdr.map(() => '---').join(' | ') + ' |');
+        for (let i = 1; i < t.length; i++) {
+          parts.push('| ' + t[i].map(c => String(c == null ? '' : c).replace(/\|/g, '\\|')).join(' | ') + ' |');
+        }
+        parts.push('');
+      });
+      const md = parts.join('\n');
+      navigator.clipboard.writeText(md).then(
+        () => { alert('Markdown copied to clipboard.'); },
+        () => {
+          // Fallback: download as .md
+          const blob = new Blob([md], { type: 'text/markdown;charset=utf-8' });
+          downloadBlob(blob, `${L.id}_stats_${new Date().toISOString().slice(0, 10)}.md`);
+        }
+      );
+    });
+  }
+
+  function wireDownloadButtons() {
+    body.querySelectorAll('button[data-action]').forEach(btn => {
+      const act = btn.dataset.action;
+      const lid = btn.dataset.layer;
+      const L = lid ? LAYERS.find(x => x.id === lid) : null;
+      btn.addEventListener('click', () => {
+        if (act === 'pdf') { window.print(); return; }
+        if (!L) return;
+        if (act === 'csv') exportCsv(L);
+        else if (act === 'xlsx') exportXlsx(L);
+        else if (act === 'markdown') exportMarkdown(L);
+      });
+    });
+  }
+
+  head.addEventListener('click', e => {
+    if (e.target === toggle || !e.target.closest('button')) {
+      root.classList.toggle('collapsed');
+      toggle.textContent = root.classList.contains('collapsed') ? 'Show' : 'Hide';
+    }
+  });
+
+  return { refresh };
+})();
 
 // R2-6: time-series scrubber controller. Animates feature buildup over time
 // across both temporal layers (permits + wells). Year cutoff piggybacks on
@@ -1022,6 +1526,7 @@ const Scrubber = (() => {
         if (SCRUBBER_TIME_FIELD[L.id]) applyLayerFilter(L);
       });
       refreshFilterBanner();
+      StatsPanel.refresh();
     }
   }
 
@@ -1183,6 +1688,7 @@ function refreshFilterBanner() {
       }
       syncHash();
       refreshFilterBanner();
+      StatsPanel.refresh();
     });
   });
   const resetBtn = banner.querySelector('.banner-reset');
@@ -1418,6 +1924,7 @@ function renderSidebar(activeSet) {
       setFilterPanelVisible(id, cb.checked);
       updateGroupCheckbox(labelEl.closest('.group'));
       Scrubber.onLayerVisibilityChange(activeLayerIds());
+      StatsPanel.refresh();
       syncHash();
     });
   });
@@ -1694,6 +2201,7 @@ map.on('load', () => {
   LAYERS.forEach(L => { if (filterState[L.id]) applyLayerFilter(L); });
   refreshFilterBanner();
   Scrubber.onLayerVisibilityChange(activeLayerIds());
+  StatsPanel.refresh();
   wirePopups();
   map.on('moveend', syncHash);
   // Refresh active-count labels after tiles render post-move
