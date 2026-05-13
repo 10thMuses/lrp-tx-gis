@@ -704,6 +704,60 @@ layers:
   - owner
   - subdivision
   - net
+- id: counterparty_assets
+  file: combined_geoms.geojson
+  geom: fill
+  group: Land & Deal
+  label: Counterparty asset boundaries (APPROXIMATE)
+  description: 'R2.5 Part 5 — counterparty land + datacenter polygons for the
+    Hanwha legal-defense framing. Pacifico GW Ranch is in its own gw_ranch
+    layer (already shipped); the four sites here are net-new approximated
+    boundaries centered on public-record reference points and sized to
+    disclosed acreage. TCEQ CRPUB + Ch.312/313 cross-reference yielded no
+    clean coordinates for these specific sites (Microsoft Reeves, Core
+    Scientific Pecos, Belding Farms/Cockrell, Fort Stockton Holdings), so
+    every feature carries boundary_confidence=approximated and a source_url.'
+  color: '#92400e'
+  fill_opacity: 0.18
+  stroke_color: '#78350f'
+  stroke_width: 2
+  default_on: false
+  popup:
+  - name
+  - counterparty
+  - primary_use
+  - disclosed_acreage
+  - capacity_mw_if_applicable
+  - status
+  - county
+  - boundary_confidence
+  - source_url
+  popup_labels:
+    name: Site
+    counterparty: Counterparty
+    primary_use: Use
+    disclosed_acreage: Disclosed acres
+    capacity_mw_if_applicable: Capacity (MW)
+    status: Status
+    county: County
+    boundary_confidence: Boundary
+    source_url: Source URL
+  filterable_fields:
+  - field: counterparty
+    type: categorical
+    label: Counterparty
+  - field: primary_use
+    type: categorical
+    label: Use
+  - field: county
+    type: categorical
+    label: County
+  - field: boundary_confidence
+    type: categorical
+    label: Boundary confidence
+  tippecanoe:
+  - -Z0
+  - -z14
 - id: permits_permian6
   file: data/permits_permian6.csv
   geom: point
