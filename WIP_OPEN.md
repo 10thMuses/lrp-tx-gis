@@ -14,9 +14,21 @@ For older deploy history, `git log --merges --grep "deploy [0-9a-f]" main`.
 
 ## Last deploy
 
-`6a0491744965c0882b9ff10f` — 2026-05-13. Part B shipped: rescope wells from 11-county to 6-county sale-area-vs-peer set (`wells_permian6`). 115,908 → 99,224 wells (subject 45,023 / peer 54,201). Build `built=27 missing=0 errored=0 tiles_total=22327 KB`.
+`6a04990a155513aedd0e842d` — 2026-05-13. R2-3 + R2-5 shipped: completion_year + permit_year exposed for year sliders; oil/gas color split (oil=#16a34a, gas=#dc2626) and depth-scaled symbol size (3px→8.5px across 0-25K ft) for both wells_permian6 and permits_permian6. Build `built=28 missing=0 errored=0 tiles_total=33356 KB`.
 
 For older deploy history, `git log --merges --grep "deploy [0-9a-f]" main`.
+
+## Round 2 — deferred to next session
+
+Heavy template/JS work that didn't fit this autonomous run. Each is its own atomic branch when picked up; the wells + permits data layers are already on prod with the right `filterable_fields` schema for the new UI to read.
+
+- **R2-4: comprehensive sidebar filter panel** — top-level filter chips, depth bucket quick chips (<5K / 5-10K / 10-15K / >15K), year-range 5-year quick chips, operator searchable dropdown sorted by count with counts shown, "Showing: <filter summary>" banner at top of map, "Reset filters" button. Acceptance: every filter is reachable in one click from the sidebar root; numeric inputs are debounced; current filter state appears in a header banner. Implementation surface: ~80% in `build_template.html` (extend the existing `filterFieldControlHtml` + the `applyAllFilters` runtime).
+- **R2-6: time-series scrubber** — shared bottom-of-map slider that animates feature buildup over time across both layers. Per-feature appearance date = `permit_year` (permits) / `completion_year` (wells). Play / pause / reset, 1 yr/sec, respects filter state. Implementation: new component, MapLibre `filter` expression on `<=` of slider value.
+- **R2-7: live stats panel + downloads** — collapsible top-right panel with count/percentile/distribution stats per layer, IQR/Tukey outlier filtering on depth, PDF / CSV / XLSX / Markdown exports. Heaviest item — needs a stats compute engine + download serializers.
+- **R2-8: sale-area vs peers comparison** — toggle that pivots stats panel into side-by-side subject (Pecos/Reeves/Ward) vs peer (Midland/Martin/Reagan) view. Per-county-normalized rates. The data already carries `county_role` for this; UI work only.
+- **R2-9: thesis bookmarks (Saved views)** — sidebar dropdown with 8 pre-baked filter combinations ("Permits in last 10 years, sale-area only", etc.). URL hash updates for shareability. The template already reads `location.hash` at boot; this is a sidebar-component addition.
+
+All five are well-scoped and unblocked — they just need a dedicated session (~6-10 hours total) on the front-end.
 
 ## Decision log — 2026-05-13 — 6-county rescope (Hanwha legal-defense framing)
 
