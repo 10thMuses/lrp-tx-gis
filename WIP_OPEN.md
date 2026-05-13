@@ -6,20 +6,137 @@ Active work. Updated when something completes or a new sprint item is added.
 
 ## Last deploy
 
-`69f99009df0672911f61e588` — 2026-05-05. Mobile QA hotfix triple in `build_template.html` (topbar overflow, sb-toggle clamp at narrow viewports, tap-to-close drawer). Layer count 24. Build clean `built=26 missing=0 errored=0 tiles_total=12064 KB`.
+`6a04dc7a2a2db8a7d9dd7c6a` — 2026-05-13 (R26 P6). 33 layers. Build clean
+`built=33 missing=0 errored=0 tiles_total=34045 KB`.
 
 For older deploy history, `git log --merges --grep "deploy [0-9a-f]" main`.
 
 ---
 
-## Last deploy
+## Round 26 (Hanwha-defense session) — 2026-05-13 — all 7 priorities resolved
 
-`6a04a7f8b6d653154ab5cb03` — 2026-05-13. R2.5 Part 5 shipped: counterparty
-asset boundary polygons (Microsoft Reeves DC, Core Scientific Pecos, Belding
-Farms/Cockrell, Fort Stockton Holdings/Riggs/CWEI) as a new
-`counterparty_assets` layer. Build `built=29 missing=0 errored=0 tiles_total=34098 KB`.
+Operator's autonomy-mode batch. Seven priorities; outcomes below.
 
-For older deploy history, `git log --merges --grep "deploy [0-9a-f]" main`.
+| # | Priority | Status | Commit / deploy |
+|---|---|---|---|
+| 1 | Wells plug_flag correction (keep plugged/abandoned) | **Shipped** | `454a855` → deploy `6a04d7669b15b06ac47b9191` |
+| 2 | Abatement Ch.312 vs LDAD reconciliation | **Shipped (no-new-layer)** | `26e53d7` → deploy `6a04d850c7718e9acc340a83` |
+| 3 | HIFLD energy infrastructure (4 layers; storage absent) | **Shipped** | merged `4002fa3` → deploy `6a04d9d9b6ed87a73e791891` |
+| 4 | Pre-2018 permits backfill | **Scrape launched + merge logic** | merged `377d99b` (no-deploy); scrape running |
+| 5 | Production deliverable (Excel + PDF, 1993-2026) | **Shipped** | merged `3a983f8` (non-map artifact) |
+| 6 | ERCOT substation-match precision upgrade | **Shipped** | `568066c` → deploy `6a04dc7a2a2db8a7d9dd7c6a` |
+| 7 | Refresh automation plan doc | **Shipped (planning-only)** | merged `19c666e` |
+
+### Per-priority detail
+
+**P1 — Wells plug_flag correction**: parser hard-filter removed; wells count
+71,328 → 99,224 (added back 27,896 plugged/abandoned wells). `plug_flag`
+exposed as a categorical filter with Y/N value_labels. Two new saved views:
+"Active wells, current" (filter plug_flag=N) and "Plugged and abandoned
+wells (legacy infrastructure)" (plug_flag=Y). Stats panel gains a "Plug
+status" section (counts + % + mean spud_year per status). Popup formats
+plug_flag as "Plugged / Abandoned" or "Active". **Bug fix incidental to
+this priority**: `applySavedView()` was referenced but never defined in
+R2-9 — saved-views menu shipped non-functional. Now defined, all 9 thesis
+bookmarks wired.
+
+**P2 — Abatement reconciliation**: re-probed Comptroller Ch.312 state API
+in every text field. 0 in-scope records confirmed (Ch.312 is a city tool;
+West Texas Permian counties have few populated cities filing). LDAD layer
+has 5 in-scope records, all from Pecos Co. commissioner-court (Ch.381 —
+county economic development agreement). Zero overlap; per the <50%-overlap
+rule a separate Ch.312 layer would be empty in the current scope. Updated
+the `tax_abatements` label + description to clarify it covers Local /
+Ch.381 + Ch.312. The Ch.312 API import path is documented as
+ready-to-implement in ARCHITECTURE §7 if scope expands.
+
+**P3 — HIFLD energy infrastructure**: 4 of 5 layers added under a new
+"Energy Infrastructure" sidebar group. New generic `scripts/fetch_hifld.py`
+fetcher (anonymous-accessible, 6-county-bbox-clipped, paginated, atomic):
+  - hifld_ng_pipelines (907 features)
+  - hifld_crude_pipelines (21)
+  - hifld_hgl_pipelines (15)
+  - hifld_ng_processing (53 plants)
+  - hifld_ng_storage: 0 features in 6-county bbox (geologically expected;
+    Underground Natural Gas Storage clusters in Gulf Coast salt domes and
+    Appalachian depleted reservoirs, not the Permian uplift). No empty
+    layer added.
+
+**P4 — Pre-2018 permits backfill**:
+- *P4A Wells Spudded report 2005-2017*: deferred. RRC's data-viz dashboard
+  is a Power BI embed with no CSV/JSON export; monthly drilling PDFs only
+  go back to 2020. 2005-2017 is unrecoverable without a headless-browser
+  scrape. Backfill 1976-2017 collapses to P4B.
+- *P4B 1976-2017 detail-page scrape*: launched as overnight background
+  job. Wrapper script runs `scripts/scrape_rrc_w1.py` sequentially for the
+  6 counties × 1976-2017, then auto-launches
+  `scripts/scrape_rrc_w1_detail_coords.py` via nohup. Logs at
+  `/tmp/lrp-scrape/listing.log` and `/tmp/lrp-scrape/coords.log`.
+  Estimated total runtime ~12-15h.
+- *Merge logic*: `scripts/parse_rrc.py` now auto-detects
+  `outputs/refresh/rrc_w1_permits_with_coords.csv` on next permits-rebuild
+  and atomic-appends new rows (deduped by permit_no + api_no; rows without
+  lat/lon are skipped).
+- *P4C*: saved view "All permits, 1976-present" applies no permit_year
+  filter, so it'll naturally pick up the backfilled rows on next build.
+
+**P5 — Production deliverable**: built from RRC PDQ_DSV bulk dump (3.44 GB
+ZIP from MFT link 1f5ddb8d-…). New `scripts/fetch_pdq_dump.py` reuses the
+GoAnywhere protocol. New `scripts/build_production_deliverable.py`
+processes 75.8M lease-month rows in ~5 min, produces:
+  - `data/production_permian6.xlsx` (152 KB, 6 tabs: annual-by-county /
+    top-20-operators / top-100-leases / monthly-time-series / sale-vs-peer
+    / raw-county-month)
+  - `data/production_permian6_summary.pdf` (52 KB, 4 pages: headline chart
+    / per-county small multiples / top operators / methodology)
+
+  **Hanwha thesis numbers from PDQ**:
+  Peer/subject oil ratio: 3.02× (2022) → 3.34× (2024) → 4.14× (2026 YTD).
+  Confirms the permits/wells trend at production level: peer Permian is
+  3-4× more productive than the sale area and the gap is widening.
+
+**P6 — ERCOT precision upgrade**: new
+`scripts/enrich_ercot_substation_match.py` extracts substation tokens
+from the row's `zone`/POI text, matches against the 372 named OSM
+substations in the 6-county bbox. Strict filters: token-frequency cap
+(reject tokens shared by ≥3 substations), discriminating-token gate (≥7
+chars or digit-bearing, OR ≥2 distinct ≥5-char tokens), 30-mi Haversine
+sanity gate. Result: 7 upgrades (Energy City BESS → Texaco Mabee, Wisdom
+Solar/BESS → Soaptree Switching, Slager Lake Wind → Bearkat, Shallow
+Valley Storage → Coyanosa, Aggie Solar/Storage → Bone Springs).
+Remaining 33 require FERC EQR + Texas PUC CCN filings search per project
+— documented as next sprint's manual-review queue.
+
+**P7 — Refresh automation plan**: `docs/refresh_automation_plan.md` —
+21-layer inventory, weekly+monthly cron schedule proposal, 5 decision
+points requiring operator sign-off (frequency, notification channel, UTC
+timing, branch model, single-layer-fail behavior). Estimated 6-7 h
+implementation effort post-decision. **No GitHub Action created** —
+planning-only per user direction.
+
+### Background jobs still running
+
+- W-1 listing scrape (PECOS in-progress, then REEVES/WARD/MIDLAND/MARTIN/REAGAN)
+  → `outputs/refresh/rrc_w1_permits.csv`
+- W-1 detail-coord scrape (queued, launches when listing completes)
+  → `outputs/refresh/rrc_w1_permits_with_coords.csv`
+- Both logged to `/tmp/lrp-scrape/{listing,coords}.log`. When complete:
+  ```bash
+  python3 scripts/parse_rrc.py permits   # auto-merges backfill rows
+  python3 build.py
+  bash scripts/deploy.sh
+  ```
+
+### Prod URL state
+
+- https://lrp-tx-gis.netlify.app/ → deploy `6a04dc7a2a2db8a7d9dd7c6a`
+- 33 layers (was 29 pre-session)
+- Wells layer: 99,224 wells (was 71,328 active-only)
+- All 9 saved views now functional (R2-9 bug fix)
+- Tax abatements: 1,495 records, label/description clarified
+- ERCOT precision: 47 of 80 in-scope rows now have precise coords
+  (40 pre-existing + 7 new R26 upgrades), up from 40
+- 4 new HIFLD Energy Infrastructure layers
 
 ## Round 2 + Round 2.5 — shipped to prod 2026-05-13
 
