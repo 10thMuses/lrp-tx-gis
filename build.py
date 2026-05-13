@@ -734,6 +734,7 @@ def compute_filter_stats(layers_config, split_dir):
         # Per-field accumulators
         numeric = {}   # field -> [min, max]
         distinct = {}  # field -> set of string values
+        value_counts = {}  # R2-4: field -> {value: int} — for sort-by-count UIs
         dates = {}     # field -> [min_iso, max_iso] (first 10 chars, lex-sortable)
         declared = {}  # field -> (type, label)
         for s in spec:
@@ -785,9 +786,14 @@ def compute_filter_stats(layers_config, split_dir):
                     v = props.get(f)
                     if v is None or v == '':
                         continue
+                    sv = str(v)
                     if len(distinct[f]) >= CATEGORICAL_CAP + 1:
                         continue  # already over cap, no point collecting more
-                    distinct[f].add(str(v))
+                    distinct[f].add(sv)
+                    # R2-4: track value counts so the template can sort
+                    # operator-style dropdowns by frequency.
+                    bucket = value_counts.setdefault(f, {})
+                    bucket[sv] = bucket.get(sv, 0) + 1
         # Assemble per-layer output
         out = {}
         for f, (typ, label) in declared.items():
@@ -809,6 +815,10 @@ def compute_filter_stats(layers_config, split_dir):
                     entry['type'] = 'text'
                 else:
                     entry['values'] = sorted(vals)
+                    # R2-4: value counts for sort-by-count dropdowns (operator chips).
+                    counts = value_counts.get(f) or {}
+                    if counts:
+                        entry['value_counts'] = {k: counts.get(k, 0) for k in entry['values']}
             elif typ == 'date_range' and f in dates:
                 mn, mx = dates[f]
                 if mn and mx:
@@ -826,6 +836,9 @@ def compute_filter_stats(layers_config, split_dir):
                 if len(vals) <= CATEGORICAL_CAP:
                     entry['type'] = 'categorical'
                     entry['values'] = sorted(vals)
+                    counts = value_counts.get(f) or {}
+                    if counts:
+                        entry['value_counts'] = {k: counts.get(k, 0) for k in entry['values']}
                 # else: keep as text, no values (template shows plain input)
             out[f] = entry
         if out:
@@ -845,6 +858,14 @@ def render_html(layers_config, layer_stats, filter_stats=None):
         fstats = filter_stats.get(L['id'], {})
         for s in (L.get('filterable_fields') or []):
             entry = fstats.get(s['field'])
+            # R2-4: pass-through optional schema hints from yaml that the
+            # template uses to render quick-chip presets and count-sorted
+            # dropdowns. These never affect the filter logic itself.
+            if entry is not None:
+                if s.get('quick_presets'):
+                    entry['quick_presets'] = s['quick_presets']
+                if s.get('sort_by_count'):
+                    entry['sort_by_count'] = True
             if entry is not None:
                 ff.append(entry)
         clean.append({
