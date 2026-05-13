@@ -38,7 +38,8 @@ Output CSV columns:
   lease_no, oil_gas, total_depth, completion_date, newest_permit_no,
   plug_flag, active_flag, lat, lon
 
-Cardinality target: ~30-40k rows for 11 Permian counties out of ~750k statewide.
+Cardinality target: 6-county Permian rescope yields ~60-90k rows out of ~750k
+statewide (subject: Pecos/Reeves/Ward; peer: Midland/Martin/Reagan).
 """
 from __future__ import annotations
 
@@ -52,21 +53,25 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 RAW = ROOT / "data" / "rrc_raw"
 
-# 11-county Permian scope. FIPS county codes (3 digits), state code 48.
+# 6-county Permian scope. FIPS county codes (3 digits), state code 48.
 # Matches WB-API-CNTY field in WBROOT records.
+#
+# Subject counties (sale area):       Pecos · Reeves · Ward
+# Active Permian peer counties:       Midland · Martin · Reagan
+#
+# Rationale (per 2026-05-13 rescope, decision-logged in WIP_OPEN.md):
+# tight sale-area-vs-boom-area contrast for the Hanwha legal defense.
 COUNTIES = {
-    "043": "Brewster",
-    "103": "Crane",
-    "105": "Crockett",
-    "109": "Culberson",
-    "243": "Jeff Davis",
+    "317": "Martin",
+    "329": "Midland",
     "371": "Pecos",
     "383": "Reagan",
     "389": "Reeves",
-    "443": "Terrell",
-    "461": "Upton",
     "475": "Ward",
 }
+
+SUBJECT_COUNTY_FIPS = frozenset({"371", "389", "475"})   # Pecos, Reeves, Ward
+PEER_COUNTY_FIPS = frozenset({"317", "329", "383"})      # Martin, Midland, Reagan
 
 # Segment keys (from wba091 §1.2)
 SEG_WBROOT = "01"
@@ -75,7 +80,7 @@ SEG_WBNEWLOC = "13"
 
 CSV_FIELDS = [
     "layer_id",
-    "api_no", "county_fips", "county_name", "district",
+    "api_no", "county_fips", "county_name", "county_role", "district",
     "well_no", "lease_no", "oil_gas",
     "total_depth", "completion_date",
     "newest_permit_no", "plug_flag", "active_flag",
@@ -209,8 +214,9 @@ def flush(acc: dict, writer: csv.DictWriter) -> bool:
     if not acc.get("api_no"):
         return False
     row = {f: acc.get(f, "") for f in CSV_FIELDS}
-    row["layer_id"] = "wells_pecos11"
+    row["layer_id"] = "wells_permian6"
     row["county_name"] = COUNTIES[cnty]
+    row["county_role"] = "subject" if cnty in SUBJECT_COUNTY_FIPS else "peer"
     writer.writerow(row)
     return True
 
@@ -280,7 +286,7 @@ def main() -> int:
         if not src.exists():
             print(f"ERROR: {src} not found — run `python3 scripts/fetch_rrc.py wells` first")
             return 2
-        dst = ROOT / "data" / "wells_pecos11.csv"
+        dst = ROOT / "data" / "wells_permian6.csv"
         print(f"=== parse wells: {src.name} → {dst} ===")
         counts = parse_wellbore(src, dst)
         for k, v in counts.items():

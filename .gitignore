@@ -25,8 +25,8 @@ outputs/refresh/tl_*.zip
 
 # RRC raw downloads + parsed county-filtered CSVs (re-fetchable; ~hundreds of MB)
 data/rrc_raw/
-data/permits_pecos11.csv
-data/wells_pecos11.csv
+data/wells_permian6.csv
+data/permits_permian6.csv
 .DS_Store
 Thumbs.db
 desktop.ini

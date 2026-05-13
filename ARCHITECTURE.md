@@ -114,9 +114,15 @@ Build never materializes source data into model context. Streaming subprocess on
 | fcc_fiber_coverage | fill | — | FCC BDC fixed-availability | Quarterly | standalone |
 | waha_circle | point | 1 | Hand-placed | Persistent | combined |
 | labels_hubs | point | — | Hand toponyms | Rare | combined |
-| wells_pecos11 | point | 101,408 | RRC dbf900 Full Wellbore ASCII (MFT) | Weekly | standalone |
+| wells_permian6 | point | 89,944 | RRC dbf900 Full Wellbore ASCII (MFT) | Weekly | standalone |
 
 **26 layers total live in prod** as of last close-out. Update this table when count changes.
+
+*Scope note (2026-05-13):* the original `wells_pecos11` 11-county filter (Pecos
++ 10 neighbors) was reduced to a 6-county sale-area-vs-peer scope to support
+the Hanwha legal-defense thesis. Subject (sale area) = Pecos, Reeves, Ward.
+Active Permian peer (boom area) = Midland, Martin, Reagan. Tagged per-row via
+`county_role` ∈ {subject, peer}.
 
 **Prebuilt PMTiles** are resolved at build time via 3-tier lookup: `/mnt/project/<id>.pmtiles` → `/mnt/user-data/uploads/<id>.pmtiles` → `https://lrp-tx-gis.netlify.app/tiles/<id>.pmtiles`. Sources ≥10MB use this pattern with `prebuilt: true` in `layers.yaml`.
 
@@ -228,7 +234,7 @@ Permanently excluded. Revisit only on the listed condition.
 
 | Source | Reason | Revisit if |
 |---|---|---|
-| `permits_pecos11` (RRC drilling permits 1976-present with lat/lon) | `daf420.dat` / `daf802.txt` fixed-width byte-position layouts are not published by RRC. Pending file is documented but stale since 2021. Per-permit detail-page scrape via W-1 JSP is feasible but ~40h throttled. | RRC publishes daf-series record layout OR operator authorizes long-running scraping job |
+| `permits_permian6` (RRC drilling permits, 6-county scope, lat/lon-bearing) | `daf420.dat` / `daf802.txt` fixed-width byte-position layouts are not published by RRC. Pending file is documented but stale since 2021. Per-permit detail-page scrape via W-1 JSP is feasible but ~40h throttled. *Update 2026-05-13: forensic empirical-parsing attempt in flight (Part C of the Hanwha rescope sprint) — may be reclassified as in-scope if successful.* | RRC publishes daf-series record layout OR operator authorizes long-running scraping job |
 | `tceq_pws` | HTTP 400 on original endpoint; operator declined | TCEQ publishes alternate feed |
 | `tceq_pbr` | CRPUB HTML-only scrape; authorization declined | Operator authorizes scrape |
 | `tceq_nsr_pending` | Same as `tceq_pbr` | Same |

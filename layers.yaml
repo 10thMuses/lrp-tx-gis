@@ -709,22 +709,25 @@ layers:
   - owner
   - subdivision
   - net
-- id: wells_pecos11
-  file: data/wells_pecos11.csv
+- id: wells_permian6
+  file: data/wells_permian6.csv
   geom: point
   group: Permits
-  label: Wells (RRC, 11-county Permian)
-  description: Current-state RRC wellbore registry for the 11-county Permian scope
-    (Pecos, Reeves, Ward, Crane, Upton, Reagan, Crockett, Terrell, Brewster, Jeff
-    Davis, Culberson). Source dbf900.txt Full Wellbore ASCII (weekly cadence).
-    115,908 wells; 87.5% carry WGS84 coordinates.
+  label: Wells (RRC, 6-county Permian)
+  description: Current-state RRC wellbore registry for the 6-county Permian
+    sale-area-vs-peer scope. Subject (sale area) — Pecos, Reeves, Ward.
+    Active Permian peer (boom area) — Midland, Martin, Reagan. Source dbf900.txt
+    Full Wellbore ASCII (weekly cadence). 99,224 wells; 90.6% carry WGS84
+    coordinates. The `county_role` property tags each well as `subject` or `peer`
+    for downstream sale-vs-peer comparison views.
   color: '#6b21a8'
   default_on: false
-  min_zoom: 8
+  min_zoom: 7
   radius: 2
   popup:
   - api_no
   - county_name
+  - county_role
   - district
   - well_no
   - lease_no
@@ -737,6 +740,7 @@ layers:
   popup_labels:
     api_no: API #
     county_name: County
+    county_role: Role
     district: District
     well_no: Well #
     lease_no: Lease #
@@ -750,6 +754,9 @@ layers:
   - field: county_name
     type: categorical
     label: County
+  - field: county_role
+    type: categorical
+    label: Role (subject/peer)
   - field: oil_gas
     type: categorical
     label: Oil/Gas
