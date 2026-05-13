@@ -715,6 +715,54 @@ def build_layer(layer, report, split_stats):
 
 # ---------- HTML + NETLIFY ----------
 
+# R2-7: fields included in the client-side stats attribute snapshot.
+STATS_ATTRS_FIELDS = {
+    'permits_permian6': [
+        'permit_year', 'oil_gas', 'wellbore_profile', 'total_depth',
+        'county_name', 'county_role', 'status', 'operator_name',
+    ],
+    'wells_permian6': [
+        'spud_year', 'oil_gas', 'completion_year', 'total_depth',
+        'county_name', 'county_role', 'plug_flag', 'active_flag',
+        'district',
+    ],
+}
+
+
+def write_stats_attrs(layers_config):
+    """R2-7: emit dist/data/<layer>.json for layers whose IDs appear in
+    STATS_ATTRS_FIELDS. Each output is a slim array of attribute objects
+    (no coords, no popup-only fields) sized for client-side filtering +
+    stats compute in the browser.
+    """
+    out_dir = DIST / 'data'
+    out_dir.mkdir(parents=True, exist_ok=True)
+    for lid, fields in STATS_ATTRS_FIELDS.items():
+        src = ROOT / 'data' / f'{lid}.csv'
+        if not src.exists():
+            continue
+        rows = []
+        with open(src, newline='', encoding='utf-8') as fin:
+            for r in csv.DictReader(fin):
+                rec = {}
+                for f in fields:
+                    v = r.get(f, '')
+                    if v == '' or v is None:
+                        continue
+                    if f in NUMERIC_KEYS:
+                        num = fnum(v)
+                        if num is not None:
+                            rec[f] = num
+                            continue
+                    rec[f] = v
+                if rec:
+                    rows.append(rec)
+        dst = out_dir / f'{lid}.json'
+        with open(dst, 'w', encoding='utf-8') as fout:
+            json.dump(rows, fout, separators=(',', ':'))
+        print(f'  stats-attrs: {lid} -> {dst.name} ({len(rows):,} rows)')
+
+
 def compute_filter_stats(layers_config, split_dir):
     """Second pass over split ndjson to compute per-layer filter stats for
     any layer declaring `filterable_fields`. Returns:
@@ -1172,6 +1220,7 @@ def main():
             stats.append(s)
 
     filter_stats = compute_filter_stats(cfg, SPLIT_DIR)
+    write_stats_attrs(cfg)
     render_html(cfg, stats, filter_stats)
     write_netlify_config()
 
