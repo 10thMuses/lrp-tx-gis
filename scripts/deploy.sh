@@ -56,10 +56,31 @@ log "=== deploy: site=$SITE_ID dist=$DIST ==="
 # 1. Build if needed.
 if [ "$REBUILD" = "1" ] || [ ! -d "$DIST" ]; then
   log "[§8.1] running build.py"
-  REPORT=$(python3 build.py 2>&1 | tee /dev/stderr | tail -3)
-  ERR=$(echo "$REPORT" | grep -oE 'errored=[0-9]+' | head -1 | cut -d= -f2 || echo 0)
+  set +e
+  python3 build.py > /tmp/build.log 2>&1
+  BUILD_RC=$?
+  set -e
+  tail -40 /tmp/build.log >&2
+  if [ "$BUILD_RC" -ne 0 ]; then
+    log "ERROR: build.py exited $BUILD_RC — refusing to deploy"
+    exit 2
+  fi
+  ERR=$(grep -oE 'errored=[0-9]+' /tmp/build.log | head -1 | cut -d= -f2 || echo 0)
   if [ "${ERR:-0}" -gt 0 ]; then
     log "ERROR: build had errored=$ERR layers (§6 rule 8 — refusing to deploy)"
+    exit 2
+  fi
+  # Belt-and-suspenders: if the build report wasn't even produced, the build
+  # crashed mid-pipeline. A previous incident (R2-1 attempt 1) saw a YAML
+  # parse error skip the report entirely while leaving a stale partial dist/,
+  # which deploy.sh happily zipped and shipped, clobbering prod.
+  if ! grep -q '^built=[0-9]' /tmp/build.log; then
+    log "ERROR: build.py produced no 'built=' summary — assuming aborted, refusing to deploy"
+    exit 2
+  fi
+  # Final structural check: dist/index.html and dist/tiles/ must exist
+  if [ ! -f "$DIST/index.html" ] || [ ! -d "$DIST/tiles" ]; then
+    log "ERROR: build did not produce $DIST/index.html or $DIST/tiles/ — refusing to deploy"
     exit 2
   fi
 fi

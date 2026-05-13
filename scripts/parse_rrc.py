@@ -82,7 +82,7 @@ CSV_FIELDS = [
     "layer_id",
     "api_no", "county_fips", "county_name", "county_role", "district",
     "well_no", "lease_no", "oil_gas",
-    "total_depth", "completion_date",
+    "total_depth", "completion_date", "completion_year",
     "newest_permit_no", "plug_flag", "active_flag",
     "lat", "lon",
 ]
@@ -170,6 +170,13 @@ def parse_wbroot(line: bytes, acc: dict) -> None:
     acc["district"] = district
     if cent.isdigit() and yy.isdigit() and mm.isdigit() and dd.isdigit() and int(cent) > 0:
         acc["completion_date"] = f"{cent}{yy}-{mm}-{dd}"
+        # R2-3: numeric year for time-series filters/scrubber
+        try:
+            yr = int(f"{cent}{yy}")
+            if 1900 <= yr <= 2030:
+                acc["completion_year"] = str(yr)
+        except ValueError:
+            pass
     acc["total_depth"] = total_depth
     acc["newest_permit_no"] = newest_permit
     acc["plug_flag"] = plug_flag
@@ -207,11 +214,22 @@ def parse_wbnewloc(line: bytes, acc: dict) -> None:
 
 
 def flush(acc: dict, writer: csv.DictWriter) -> bool:
-    """Emit acc as a row if county is in scope. Returns True if written."""
+    """Emit acc as a row if county is in scope AND well is not plugged.
+
+    R2-1: include only wells with status ∈ {active, drilling}. In dbf900
+    wells are completed wellbores (drilling-in-progress lives in the
+    permits layer, not here), so 'drilling' is never observed. The remaining
+    discriminant is plug_flag: 'N' = not plugged (active by default),
+    'Y' = plugged / abandoned / P&A (excluded). Rationale + before/after
+    cardinality logged in WIP_OPEN.md decision log."""
     cnty = acc.get("county_fips", "")
     if cnty not in COUNTIES:
         return False
     if not acc.get("api_no"):
+        return False
+    # R2-1 hard filter: exclude plugged / abandoned / P&A wells.
+    plug = acc.get("plug_flag", "")
+    if plug == "Y":
         return False
     row = {f: acc.get(f, "") for f in CSV_FIELDS}
     row["layer_id"] = "wells_permian6"
