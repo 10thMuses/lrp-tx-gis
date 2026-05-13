@@ -82,7 +82,7 @@ CSV_FIELDS = [
     "layer_id",
     "api_no", "county_fips", "county_name", "county_role", "district",
     "well_no", "lease_no", "oil_gas",
-    "total_depth", "completion_date",
+    "total_depth", "completion_date", "completion_year",
     "newest_permit_no", "plug_flag", "active_flag",
     "lat", "lon",
 ]
@@ -170,6 +170,13 @@ def parse_wbroot(line: bytes, acc: dict) -> None:
     acc["district"] = district
     if cent.isdigit() and yy.isdigit() and mm.isdigit() and dd.isdigit() and int(cent) > 0:
         acc["completion_date"] = f"{cent}{yy}-{mm}-{dd}"
+        # R2-3: numeric year for time-series filters/scrubber
+        try:
+            yr = int(f"{cent}{yy}")
+            if 1900 <= yr <= 2030:
+                acc["completion_year"] = str(yr)
+        except ValueError:
+            pass
     acc["total_depth"] = total_depth
     acc["newest_permit_no"] = newest_permit
     acc["plug_flag"] = plug_flag

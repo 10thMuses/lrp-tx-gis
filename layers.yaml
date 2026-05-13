@@ -796,12 +796,12 @@ layers:
   geom: point
   group: Permits
   label: Wells (active + drilling, 6-county Permian)
-  description: Active RRC wellbores (not plugged / abandoned / P&A) for the
+  description: 'Active RRC wellbores (not plugged / abandoned / P&A) for the
     6-county Permian sale-area-vs-peer scope. Subject — Pecos, Reeves, Ward.
     Active Permian peer — Midland, Martin, Reagan. R2-1 filter applied at the
-    parser: plug_flag='N' only (drilling-in-progress wells live in the permits
+    parser (plug_flag=N only — drilling-in-progress wells live in the permits
     layer, not here). Source dbf900.txt Full Wellbore ASCII (weekly).
-    71,328 active wells.
+    71,328 active wells.'
   color: '#6b21a8'
   default_on: false
   min_zoom: 7
