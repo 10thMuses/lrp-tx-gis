@@ -12,6 +12,24 @@ For older deploy history, `git log --merges --grep "deploy [0-9a-f]" main`.
 
 ---
 
+## Decision log — 2026-05-13 — RRC permits/wells sprint scope pivot
+
+Sprint spec asked for two new layers (`permits_pecos11` + `wells_pecos11`, 1976-present, with lat/lon, 11 Permian counties). Delivered one (`wells_pecos11`) and deferred the other after source-discovery probing.
+
+**What works:**
+- `scripts/fetch_rrc.py` — RRC GoAnywhere PrimeFaces POST scrape (validated end-to-end). GET MFT folder link → harvest JSESSIONID + ViewState → POST row id to `/webclient/godrive/PublicGoDrive.xhtml`.
+- `scripts/parse_rrc.py wells` — streams `dbf900.txt.gz` (29.6M segment-records, 1.2M wellbores) in 17s, filters to 11 counties → `data/wells_pecos11.csv`. Layout: `docs/rrc_layouts/wba091_well-bore-database.pdf`. Lat/lon from WBNEWLOC (seg 13) at pos 133/143, PIC S9(3)V9(7) zoned-decimal. RRC convention: longitude stored as positive magnitude — parser forces negative for Texas hemisphere.
+- Layer build: 115,908 wells in scope, 101,408 with WGS84 coordinates (87.5%), 7.6 MB PMTiles, no cardinality issues.
+
+**What's blocked — permits_pecos11:**
+- RRC's "Drilling Permit Master & Trailer" file (`daf802.txt.gz`, 1.21 GB) has no published byte-position layout. The "Pending" file IS documented (pendingdrillingpermits.pdf) but its folder has been stale since 2021-02. The "EOM + Lat/Lon" `daf420.dat.MM-DD-YYYY` series has lat/lon but no public layout.
+- Existing `scripts/scrape_rrc_w1.py` covers permit listing rows 1976-present but defers lat/lon to per-permit detail-page fetches (~40h throttled for the full Permian backfill).
+- ARCHITECTURE.md §11 entry rewritten to reflect the actual blocker; revisit if RRC publishes the daf-series layout OR operator authorizes the long detail-page scrape.
+
+**Deploy status:** local build clean (`built=27 missing=0 errored=0 tiles_total=19656 KB`); deploy + close-out blocked on missing `NETLIFY_PAT` (no `.env` in this clone). Branch `refinement-rrc-permits-wells` pushed for operator-side deploy via `bash scripts/deploy.sh --rebuild` once PAT is populated.
+
+---
+
 ## Active sprints
 
 ### ERCOT queue geocoding — Stage 3

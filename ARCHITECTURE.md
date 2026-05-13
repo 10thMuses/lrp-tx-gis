@@ -114,8 +114,9 @@ Build never materializes source data into model context. Streaming subprocess on
 | fcc_fiber_coverage | fill | — | FCC BDC fixed-availability | Quarterly | standalone |
 | waha_circle | point | 1 | Hand-placed | Persistent | combined |
 | labels_hubs | point | — | Hand toponyms | Rare | combined |
+| wells_pecos11 | point | 101,408 | RRC dbf900 Full Wellbore ASCII (MFT) | Weekly | standalone |
 
-**25 layers total live in prod** as of last close-out. Update this table when count changes.
+**26 layers total live in prod** as of last close-out. Update this table when count changes.
 
 **Prebuilt PMTiles** are resolved at build time via 3-tier lookup: `/mnt/project/<id>.pmtiles` → `/mnt/user-data/uploads/<id>.pmtiles` → `https://lrp-tx-gis.netlify.app/tiles/<id>.pmtiles`. Sources ≥10MB use this pattern with `prebuilt: true` in `layers.yaml`.
 
@@ -178,6 +179,8 @@ Default `curl` UA returns 503 on prod edge. Always pass `-A "Mozilla/5.0"`.
 
 | Source | Issue | Countermeasure |
 |---|---|---|
+| RRC MFT GoAnywhere | Each download requires GET landing → harvest JSESSIONID + javax.faces.ViewState → POST `/webclient/godrive/PublicGoDrive.xhtml` with row id | `scripts/fetch_rrc.py` handles the PrimeFaces protocol end-to-end |
+| RRC dbf900 lat/lon sign | Longitude stored as positive zoned-decimal magnitude (sign overpunch always positive) | Parser forces lon negative for Texas hemisphere |
 | AGOL FeatureServer cold fetch | 503 "DNS cache overflow" | 5-retry, 10s sleep |
 | HIFLD transmission AGOL | 503 under retry | Same |
 | RRC pipelines AGOL | 403 transient; `STATUS_CD='A'` → 0 rows | Use `STATUS_CD='B'` |
@@ -225,7 +228,7 @@ Permanently excluded. Revisit only on the listed condition.
 
 | Source | Reason | Revisit if |
 |---|---|---|
-| `rrc_wells_permian` | RRC MFT GoAnywhere PrimeFaces — no direct-URL bulk | Bulk endpoint published |
+| `permits_pecos11` (RRC drilling permits 1976-present with lat/lon) | `daf420.dat` / `daf802.txt` fixed-width byte-position layouts are not published by RRC. Pending file is documented but stale since 2021. Per-permit detail-page scrape via W-1 JSP is feasible but ~40h throttled. | RRC publishes daf-series record layout OR operator authorizes long-running scraping job |
 | `tceq_pws` | HTTP 400 on original endpoint; operator declined | TCEQ publishes alternate feed |
 | `tceq_pbr` | CRPUB HTML-only scrape; authorization declined | Operator authorizes scrape |
 | `tceq_nsr_pending` | Same as `tceq_pbr` | Same |

@@ -56,6 +56,8 @@ These are non-negotiable. Violations require a corrective commit.
 
 **Single-layer refresh:** `python3 build.py merge <layer_id> <refresh_file>`. In-place atomic-rename merge into `combined_points.csv` or `combined_geoms.geojson`. Commit the result; rebuild as a separate step.
 
+**RRC wells refresh:** `python3 build.py refresh wells` chains `scripts/fetch_rrc.py wells` (PrimeFaces GoAnywhere POST scrape → `data/rrc_raw/dbf900.txt.gz`) and `scripts/parse_rrc.py wells` (segment-aware streaming parser per wba091 layout → `data/wells_pecos11.csv`). Raw archive + parsed CSV are gitignored; commit nothing from this step except potentially the regenerated PMTiles after a rebuild.
+
 **Deploy:** `bash scripts/deploy.sh [--rebuild]`. Reads `NETLIFY_PAT` from `.env`. Sequence:
 1. Build if `--rebuild` or `dist/` missing. Exit 2 if `errored>0`.
 2. Netlify MCP `deploy-site` returns single-use proxy URL.
