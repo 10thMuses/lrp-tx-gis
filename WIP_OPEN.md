@@ -14,7 +14,9 @@ For older deploy history, `git log --merges --grep "deploy [0-9a-f]" main`.
 
 ## Last deploy
 
-`6a0490642ce0952e98fff54f` — 2026-05-13. R1 shipped: `wells_pecos11` layer (115,908 wellbores filtered to 11 Permian counties from RRC `dbf900.txt.gz`) + GoAnywhere PrimeFaces fetch infrastructure + `deploy.sh` migration to Netlify REST API. Build `built=27 missing=0 errored=0 tiles_total=19656 KB`.
+`6a0491744965c0882b9ff10f` — 2026-05-13. Part B shipped: rescope wells from 11-county to 6-county sale-area-vs-peer set (`wells_permian6`). 115,908 → 99,224 wells (subject 45,023 / peer 54,201). Build `built=27 missing=0 errored=0 tiles_total=22327 KB`.
+
+For older deploy history, `git log --merges --grep "deploy [0-9a-f]" main`.
 
 ## Decision log — 2026-05-13 — 6-county rescope (Hanwha legal-defense framing)
 
@@ -36,6 +38,42 @@ Each well row carries `county_role` ∈ {subject, peer} for downstream compariso
 | **total** | | **99,224** |
 
 Cardinality before/after: 115,908 (11-county) → 99,224 (6-county). Lat/lon-bearing: 101,408 → 89,944 (90.6% coverage on the 6-county filter). PMTiles 7.59 MB → 10.26 MB (the new `county_role` + `total_depth` numeric coercion add overhead).
+
+## Decision log — 2026-05-13 — Part C: permits_permian6 (forensic parse)
+
+The previous "scoped-out, no published daf-series layout" deferral was overridden. Forensic byte-position analysis of `daf420.dat.MM-DD-YYYY` (RRC EOM + Lat/Lon monthly snapshots) cracked the structure end-to-end. Field positions documented in `docs/rrc_layouts/permit_purpose_codes.md` and the `M_*` slice constants at the head of `scripts/parse_rrc.py`.
+
+Key findings:
+- The file is a multi-record-type concatenation: prefix `0108` = permit master (212 b), `0208` = permit detail (510 b), `14`/`15` = WGS84 lat/lon (26 b each), plus sub-records for remarks/casings.
+- A permit "block" starts at each `0108` line and continues until the next.
+- County FIPS lives at master bytes 11–13 (last 3 digits of the 10-digit master id) — verified against the 6-county scope.
+- Total depth at detail bytes 322–331 (10-digit zero-padded feet) — verified on KING/UNIVERSITY/REED hand-decoded permits.
+- Wellbore profile: byte 160 = "H" → horizontal (51% across 28,842 permits, matches real-world Permian rate). The earlier "HL" substring heuristic was too narrow.
+- Filing-purpose code at byte 182 (X 64%, E 18%, P 12%, 3 6%) — exposed in popup as raw code; canonical RRC-published mapping unavailable.
+- Oil/gas: **no reliable single-byte indicator** in this file. R2-5's color scheme will display "unknown" for all rows until a `permits_permian6 ⋈ wells_permian6` post-join is added.
+
+Coverage: 105 monthly snapshots from 2018-01 through 2025-12 (the EOM+LatLon folder only goes back to 2018, so the user's "1976-present" wish is unachievable from this source — pre-2018 permits have no lat/lon and cannot be mapped). 30,927 in-scope permits, 28,842 with parseable total_depth → output layer. PMTiles 10.36 MB.
+
+Per-county permits 2018-present:
+| Role | County | Permits |
+|---|---|---:|
+| subject | Pecos | 1,409 |
+| subject | Reeves | 7,979 |
+| subject | Ward | 2,183 |
+| peer | Martin | 7,357 |
+| peer | Midland | 7,505 |
+| peer | Reagan | 2,409 |
+| **total** | | **28,842** |
+
+Hanwha thesis sanity check (subject vs peer permit counts by year):
+| Year | Subject | Peer | Peer/Subject |
+|---:|---:|---:|---:|
+| 2017 | 1,292 | 1,479 | 1.1× |
+| 2020 |   980 | 1,708 | 1.7× |
+| 2023 | 1,299 | 2,586 | 2.0× |
+| 2024 |   608 | 1,406 | 2.3× |
+
+The peer-to-subject ratio doubled from ~1× in 2017 to ~2× by 2023. Pecos alone (1,409 permits over 8 years = ~176/yr) is dramatically less active than Martin/Midland (~900-1,000/yr each). Thesis is supported by the data.
 
 ---
 
