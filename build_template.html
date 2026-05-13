@@ -379,6 +379,10 @@ const SIZING_RULES = {
   tpit_subs:      { field: 'voltage',     mode: 'kv' },
   tpit_lines:     { field: 'voltage',     mode: 'kv_line' },
   dc_anchors:     { field: 'capacity_mw_announced', mode: 'mw' },
+  // R2-5: depth-scaled symbol size. 3px at surface → 8px at 15K+ ft. Makes
+  // the "deep zones only" pattern in permits/wells visually obvious.
+  permits_permian6: { field: 'total_depth', mode: 'depth_ft' },
+  wells_permian6:   { field: 'total_depth', mode: 'depth_ft' },
 };
 function _sizingVal(rule) {
   const base = ['to-number', ['get', rule.field], 0];
@@ -402,6 +406,13 @@ function sizingRadiusExpr(L) {
     return ['case', ['<=', _sizingVal(rule), 0], fb,
       ['interpolate', ['linear'], _sizingVal(rule),
         0, 3, 69, 4, 138, 6, 230, 8, 345, 11, 500, 14]];
+  }
+  if (rule.mode === 'depth_ft') {
+    // R2-5: 3px at 0 ft → 8px at 15K+ ft. Linear-ish ramp through the depth
+    // buckets called out in R2-4 (<5K, 5-10K, 10-15K, >15K).
+    return ['case', ['<=', _sizingVal(rule), 0], fb,
+      ['interpolate', ['linear'], _sizingVal(rule),
+        0, 3, 5000, 4, 10000, 5.5, 15000, 7.5, 25000, 8.5]];
   }
   return fb;
 }
@@ -461,11 +472,24 @@ function dcAnchorsOpacityExpr() {
   ];
 }
 
+// R2-5: oil/gas color split for permits and wells. Oil = green (#16a34a),
+// gas = red (#dc2626). The wells layer uses raw RRC codes (O/G/blank) from
+// WBCOMPL; permits currently carry 'unknown' until a permits⋈wells join
+// lifts oil/gas tagging from completed wellbores (see permit_purpose_codes.md).
+function oilGasColorExpr() {
+  return ['match', ['get', 'oil_gas'],
+    ['O', 'oil'],          '#16a34a',
+    ['G', 'gas'],          '#dc2626',
+    /* default (blank / unknown) */ '#9ca3af'
+  ];
+}
+
 function layerPaint(L) {
   if (L.geom === 'point') {
     let color = L.color;
     if (L.id === 'ercot_queue') color = ercotQueueColorExpr();
     else if (L.id === 'dc_anchors') color = dcAnchorsColorExpr();
+    else if (L.id === 'wells_permian6' || L.id === 'permits_permian6') color = oilGasColorExpr();
     const opacity = (L.id === 'dc_anchors') ? dcAnchorsOpacityExpr() : (L.fill_opacity ?? 0.9);
     return {
       'circle-radius': L.circle_radius ?? sizingRadiusExpr(L),
