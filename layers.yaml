@@ -530,6 +530,139 @@ layers:
   tippecanoe:
   - -zg
   - --simplification=8
+- id: hifld_ng_pipelines
+  file: data/hifld/hifld_ng_pipelines.geojson
+  geom: line
+  group: Energy Infrastructure
+  label: Natural Gas Pipelines (HIFLD/EIA)
+  description: 'Interstate + intrastate natural-gas transmission pipelines from HIFLD/EIA (FEMA Region 6 mirror) clipped to the 6-county Permian bbox. Operator + pipe-type (Interstate/Intrastate) + status are attribute-level filters. Source: services2.arcgis.com/FiaPA4ga0iQKduv3/.../Natural_Gas_Interstate_and_Intrastate_Pipelines_1/FeatureServer/0. 907 features in scope.'
+  color: '#fb923c'
+  line_width: 0.75
+  default_on: false
+  popup:
+  - TYPEPIPE
+  - Operator
+  - Status
+  popup_labels:
+    TYPEPIPE: Pipe type
+    Operator: Operator
+    Status: Status
+  filterable_fields:
+  - field: TYPEPIPE
+    type: categorical
+    label: Pipe type
+  - field: Operator
+    type: categorical
+    label: Operator
+    sort_by_count: true
+  - field: Status
+    type: categorical
+    label: Status
+  tippecanoe:
+  - -zg
+  - --simplification=8
+  - --coalesce-densest-as-needed
+- id: hifld_crude_pipelines
+  file: data/hifld/hifld_crude_pipelines.geojson
+  geom: line
+  group: Energy Infrastructure
+  label: Crude Oil Trunk Pipelines (HIFLD/EIA)
+  description: 'Crude-oil trunk pipelines from HIFLD/EIA (FEMA Region 6 mirror) clipped to the 6-county Permian bbox. Source: services2.arcgis.com/FiaPA4ga0iQKduv3/.../Crude_Oil_Trunk_Pipelines_1/FeatureServer/0. 21 features in scope.'
+  color: '#7f1d1d'
+  line_width: 1
+  default_on: false
+  popup:
+  - Pipename
+  - Opername
+  popup_labels:
+    Pipename: Pipeline name
+    Opername: Operator
+  filterable_fields:
+  - field: Opername
+    type: categorical
+    label: Operator
+    sort_by_count: true
+  - field: Pipename
+    type: text
+    label: Pipeline name
+  tippecanoe:
+  - -zg
+  - --simplification=8
+- id: hifld_hgl_pipelines
+  file: data/hifld/hifld_hgl_pipelines.geojson
+  geom: line
+  group: Energy Infrastructure
+  label: Hydrocarbon Gas Liquids Pipelines (HIFLD/EIA)
+  description: 'HGL (NGL / propane / butane / ethane) pipelines from HIFLD/EIA (FEMA Region 6 mirror) clipped to the 6-county Permian bbox. Source: services2.arcgis.com/FiaPA4ga0iQKduv3/.../Hydrocarbon_Gas_Liquids_Pipelines_1/FeatureServer/0. 15 features in scope.'
+  color: '#a16207'
+  line_width: 1
+  default_on: false
+  popup:
+  - Pipename
+  - Opername
+  popup_labels:
+    Pipename: Pipeline name
+    Opername: Operator
+  filterable_fields:
+  - field: Opername
+    type: categorical
+    label: Operator
+    sort_by_count: true
+  - field: Pipename
+    type: text
+    label: Pipeline name
+  tippecanoe:
+  - -zg
+  - --simplification=8
+- id: hifld_ng_processing
+  file: data/hifld/hifld_ng_processing.geojson
+  geom: point
+  group: Energy Infrastructure
+  label: Natural Gas Processing Plants (HIFLD/EIA)
+  description: 'Natural-gas processing plants from EIA via ArcGIS Online (HIFLD-equivalent) clipped to the 6-county Permian bbox. Capacity in MMcfd, operator, owner, county. 53 plants in scope. Source: services2.arcgis.com/ZOdjAzAQ2B0f85zi/.../NaturalGas_ProcessingPlants_US_EIA/FeatureServer/0.'
+  color: '#15803d'
+  default_on: false
+  radius: 6
+  stroke_width: 1.5
+  popup:
+  - Plant_Name
+  - Owner
+  - Operator
+  - County
+  - City
+  - Cap_MMcfd
+  - Plant_Flow
+  - Period
+  popup_labels:
+    Plant_Name: Plant
+    Owner: Owner
+    Operator: Operator
+    County: County
+    City: City
+    Cap_MMcfd: Capacity (MMcfd)
+    Plant_Flow: Plant flow (MMcfd)
+    Period: Reporting year
+  filterable_fields:
+  - field: County
+    type: categorical
+    label: County
+  - field: Operator
+    type: categorical
+    label: Operator
+    sort_by_count: true
+  - field: Owner
+    type: categorical
+    label: Owner
+    sort_by_count: true
+  - field: Cap_MMcfd
+    type: numeric
+    label: Capacity (MMcfd)
+  - field: Period
+    type: numeric
+    label: Reporting year
+  tippecanoe:
+  - -Z0
+  - -z14
 - id: ercot_queue
   file: combined_points.csv
   geom: point
