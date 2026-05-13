@@ -83,6 +83,18 @@
   .filter-chip:hover { border-color: #94a3b8; }
   .filter-chip.active { background: #0f172a; color: #ffffff; border-color: #0f172a; }
   .filter-multi-count { color: var(--muted); font-size: 10px; font-variant-numeric: tabular-nums; }
+  /* R2-6: time-series scrubber pinned to bottom of map */
+  #scrubber { position: absolute; bottom: 28px; left: 50%; transform: translateX(-50%); z-index: 4; width: min(92vw, 720px); background: rgba(255,255,255,0.96); border: 1px solid var(--border); border-radius: 6px; padding: 8px 12px; display: flex; align-items: center; gap: 10px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); font-size: 11px; }
+  #scrubber.collapsed { padding: 4px 10px; width: auto; }
+  #scrubber.collapsed > :not(.scrub-toggle):not(.scrub-label) { display: none; }
+  .scrub-toggle { font: inherit; font-size: 10px; padding: 3px 8px; border: 1px solid var(--border); background: #ffffff; border-radius: 4px; cursor: pointer; text-transform: uppercase; letter-spacing: 0.04em; font-weight: 600; }
+  .scrub-btn { font: inherit; font-size: 12px; padding: 3px 10px; border: 1px solid var(--border); background: #ffffff; border-radius: 4px; cursor: pointer; }
+  .scrub-btn:hover { background: #f1f5f9; }
+  .scrub-btn[disabled] { opacity: 0.4; cursor: not-allowed; }
+  .scrub-input { flex: 1 1 auto; min-width: 0; }
+  .scrub-label { font-variant-numeric: tabular-nums; min-width: 7.5em; text-align: center; font-weight: 600; }
+  .scrub-label .yr { font-size: 14px; }
+  .scrub-label .sub { color: var(--muted); font-size: 10px; }
   /* R2-4: global filter-summary banner at top of map */
   #filter-banner { position: absolute; top: 8px; left: 50%; transform: translateX(-50%); z-index: 4; max-width: min(92vw, 980px); background: rgba(255, 255, 255, 0.96); border: 1px solid var(--border); border-radius: 6px; padding: 6px 10px; display: none; font-size: 11px; line-height: 1.4; box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
   #filter-banner.show { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
@@ -231,6 +243,13 @@
 <div class="map-wrap">
   <div id="map">
     <div id="filter-banner" role="status" aria-live="polite"></div>
+    <div id="scrubber" aria-label="Time-series scrubber" hidden>
+      <button class="scrub-toggle" type="button" data-action="hide" aria-label="Hide scrubber">×</button>
+      <button class="scrub-btn" type="button" data-action="play" aria-label="Play/pause">▶</button>
+      <button class="scrub-btn" type="button" data-action="reset" aria-label="Reset to full history">⤺</button>
+      <input class="scrub-input" type="range" min="1900" max="2030" step="1" value="2030" aria-label="Year cutoff">
+      <span class="scrub-label"><span class="yr">All</span><br><span class="sub">cumulative</span></span>
+    </div>
   </div>
   <button id="sb-toggle" class="sb-toggle" type="button" aria-label="Toggle sidebar" aria-expanded="true" title="Toggle sidebar">«</button>
   <div class="coord" id="coord">—</div>
@@ -674,10 +693,30 @@ function layerHasFilters(L) {
   return Array.isArray(L.filterable_fields) && L.filterable_fields.length > 0;
 }
 
+// R2-6: time-series scrubber state. Year-cutoff applies as an additional
+// `<= scrubberYear` clause on each layer's time-anchor field (spud_year for
+// wells, permit_year for permits). null = "show full history" (default).
+let scrubberYear = null;
+const SCRUBBER_TIME_FIELD = {
+  permits_permian6: 'permit_year',
+  wells_permian6: 'spud_year',
+};
+
 function buildFilterExpr(L) {
   const state = filterState[L.id];
-  if (!state) return null;
+  const tfield = SCRUBBER_TIME_FIELD[L.id];
   const parts = [];
+  if (scrubberYear !== null && tfield) {
+    parts.push(['all',
+      ['has', tfield],
+      ['<=', ['to-number', ['get', tfield], NaN], Number(scrubberYear)]
+    ]);
+  }
+  if (!state) {
+    if (parts.length === 0) return null;
+    if (parts.length === 1) return parts[0];
+    return ['all'].concat(parts);
+  }
   (L.filterable_fields || []).forEach(f => {
     const v = state[f.field];
     if (v === undefined || v === null) return;
@@ -935,6 +974,139 @@ function bindFilterPanel(panel) {
   if (clearEl) {
     clearEl.addEventListener('click', () => clearLayerFilters(L));
   }
+}
+
+// R2-6: time-series scrubber controller. Animates feature buildup over time
+// across both temporal layers (permits + wells). Year cutoff piggybacks on
+// each layer's filter expression via SCRUBBER_TIME_FIELD + scrubberYear.
+const Scrubber = (() => {
+  const root = document.getElementById('scrubber');
+  if (!root) return { onLayerVisibilityChange: () => {} };
+  const input = root.querySelector('.scrub-input');
+  const playBtn = root.querySelector('[data-action="play"]');
+  const resetBtn = root.querySelector('[data-action="reset"]');
+  const hideBtn = root.querySelector('[data-action="hide"]');
+  const label = root.querySelector('.scrub-label .yr');
+  const sub = root.querySelector('.scrub-label .sub');
+  let playing = false;
+  let raf = null;
+  let lastTick = 0;
+
+  function rangeFromLayers() {
+    // Pull min spud_year + min permit_year as the start; current year + 1 as cap.
+    let lo = 2026, hi = 2026;
+    LAYERS.forEach(L => {
+      const tfield = SCRUBBER_TIME_FIELD[L.id];
+      if (!tfield) return;
+      const ff = (L.filterable_fields || []).find(f => f.field === tfield);
+      if (!ff) return;
+      if (ff.min !== undefined && ff.min !== null) lo = Math.min(lo, Number(ff.min));
+      if (ff.max !== undefined && ff.max !== null) hi = Math.max(hi, Number(ff.max));
+    });
+    if (!isFinite(lo) || lo < 1900) lo = 1964;
+    if (!isFinite(hi) || hi < lo) hi = 2030;
+    return { lo, hi };
+  }
+
+  function setYear(y, mute) {
+    scrubberYear = (y === null || y >= Number(input.max)) ? null : Number(y);
+    if (scrubberYear === null) {
+      label.textContent = 'All';
+      sub.textContent = 'cumulative';
+    } else {
+      label.textContent = String(scrubberYear);
+      sub.textContent = '≤ this year';
+    }
+    if (!mute) {
+      LAYERS.forEach(L => {
+        if (SCRUBBER_TIME_FIELD[L.id]) applyLayerFilter(L);
+      });
+      refreshFilterBanner();
+    }
+  }
+
+  function tick(ts) {
+    if (!playing) return;
+    if (!lastTick) lastTick = ts;
+    const dt = ts - lastTick;
+    if (dt >= 1000) {
+      lastTick = ts;
+      let v = Number(input.value) + 1;
+      const max = Number(input.max);
+      if (v > max) {
+        playing = false;
+        playBtn.textContent = '▶';
+        return;
+      }
+      input.value = String(v);
+      setYear(v);
+    }
+    raf = requestAnimationFrame(tick);
+  }
+
+  function play() {
+    if (playing) {
+      playing = false;
+      playBtn.textContent = '▶';
+      if (raf) cancelAnimationFrame(raf);
+      return;
+    }
+    // If at end, restart from min.
+    if (Number(input.value) >= Number(input.max)) {
+      input.value = input.min;
+      setYear(Number(input.min));
+    }
+    playing = true;
+    playBtn.textContent = '⏸';
+    lastTick = 0;
+    raf = requestAnimationFrame(tick);
+  }
+
+  function reset() {
+    playing = false;
+    if (raf) cancelAnimationFrame(raf);
+    playBtn.textContent = '▶';
+    input.value = input.max;
+    setYear(null);
+  }
+
+  input.addEventListener('input', () => {
+    setYear(Number(input.value));
+  });
+  playBtn.addEventListener('click', play);
+  resetBtn.addEventListener('click', reset);
+  hideBtn.addEventListener('click', () => {
+    root.hidden = true;
+    reset();
+  });
+
+  // Show only when a temporal layer is active.
+  function onLayerVisibilityChange(activeIds) {
+    const any = LAYERS.some(L => SCRUBBER_TIME_FIELD[L.id] && activeIds.has(L.id));
+    if (any) {
+      const { lo, hi } = rangeFromLayers();
+      input.min = String(lo);
+      input.max = String(hi);
+      if (Number(input.value) > hi || Number(input.value) < lo) input.value = String(hi);
+      root.hidden = false;
+    } else {
+      root.hidden = true;
+      if (scrubberYear !== null) {
+        scrubberYear = null;
+        LAYERS.forEach(L => { if (SCRUBBER_TIME_FIELD[L.id]) applyLayerFilter(L); });
+      }
+    }
+  }
+  return { onLayerVisibilityChange, setYear, getYear: () => scrubberYear };
+})();
+
+function activeLayerIds() {
+  const out = new Set();
+  document.querySelectorAll('label.layer input:checked').forEach(cb => {
+    const id = cb.closest('label.layer').dataset.id;
+    if (id) out.add(id);
+  });
+  return out;
 }
 
 function clearLayerFilters(L) {
@@ -1245,6 +1417,7 @@ function renderSidebar(activeSet) {
       setLayerVisibilityWithCompanions(L, cb.checked);
       setFilterPanelVisible(id, cb.checked);
       updateGroupCheckbox(labelEl.closest('.group'));
+      Scrubber.onLayerVisibilityChange(activeLayerIds());
       syncHash();
     });
   });
@@ -1520,6 +1693,7 @@ map.on('load', () => {
   // Replay any filters loaded from hash
   LAYERS.forEach(L => { if (filterState[L.id]) applyLayerFilter(L); });
   refreshFilterBanner();
+  Scrubber.onLayerVisibilityChange(activeLayerIds());
   wirePopups();
   map.on('moveend', syncHash);
   // Refresh active-count labels after tiles render post-move
