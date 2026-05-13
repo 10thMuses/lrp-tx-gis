@@ -105,7 +105,7 @@ Build never materializes source data into model context. Streaming subprocess on
 | tpit_lines | line | 133 | ERCOT TPIT XLSX | Monthly | combined |
 | pipelines | line | 776 | RRC 2019 | Annual | combined |
 | ercot_queue | point | 1,778 | ERCOT xlsx | Monthly | combined |
-| tax_abatements | point | 9 | Commissioners-court agenda scrape | Weekly cron (planned) | combined |
+| tax_abatements | point | 1,495 | Commissioners-court agenda scrape (LDAD) | Weekly cron (planned) | combined |
 | tceq_gas_turbines | point | 6 | TCEQ turbine-lst.xlsx | Annual | combined |
 | tiger_highways | line | — | Census TIGER | Rare | prebuilt |
 | rrc_pipelines | line | — | RRC | Annual | prebuilt |
@@ -167,7 +167,9 @@ Data-driven sizing live on: `ercot_queue`, `solar`, `eia860_plants`, `eia860_bat
 
 Filter UI: `filterable_fields:` schema in `layers.yaml` per layer. Numeric → range; categorical → multi-select (capped at 2000 distinct values, demoted to text-substring above cap); date → range; text → searchable substring.
 
-Tax-abatement annotation: build-time fuzzy join matches `tax_abatements` applicants to `eia860_plants`, `ercot_queue`, `solar`, `wind`, `eia860_battery` rows by `(county, applicant_norm subset-of facility-name/entity/operator/project tokens)`. 5 annotations live; 9 abatement-layer features. Match rule is subset-only (Chat 85 tightening — token-overlap produces false positives on generic tokens like `ii`, `bess`, `solar`).
+Tax-abatement annotation: build-time fuzzy join matches `tax_abatements` applicants to `eia860_plants`, `ercot_queue`, `solar`, `wind`, `eia860_battery` rows by `(county, applicant_norm subset-of facility-name/entity/operator/project tokens)`. Match rule is subset-only (Chat 85 tightening — token-overlap produces false positives on generic tokens like `ii`, `bess`, `solar`).
+
+Tax-abatement program-source reconciliation (R26, 2026-05-13): the `tax_abatements` layer is sourced from LDAD (county commissioner-court agenda scrape, 1,495 statewide records). The Texas Comptroller's Chapter 312 state API at `api.comptroller.texas.gov/open-data/v1/tables/ch312-abatement` was probed; 0 records match the 6-county Permian scope. All 5 in-scope LDAD records originate from Pecos-County commissioner court (program = Chapter 381, county economic development agreement). No second `tax_abatements_312_state` layer was added because it would be empty in the current scope. The Ch.312 import path is documented as ready-to-implement if scope ever expands to urban Texas counties.
 
 Backlog (no build without explicit ask): cross-layer search; measure tool persistence improvements; custom domain; legend-on-print; mobile-friendly responsive breakpoints.
 

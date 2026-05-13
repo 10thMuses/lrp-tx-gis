@@ -999,8 +999,8 @@ layers:
   file: combined_points.csv
   geom: point
   group: Permits
-  label: Approved Tax Abatements (energy & DC projects)
-  description: County-level property tax abatements granted to new or expanded energy and infrastructure projects. Chapter 312 reinvestment zones and Local Development Agreements (HB 5 / SB 1340 successors to the sunsetted Ch.313).
+  label: Approved Tax Abatements (Local / Ch.381 + Ch.312)
+  description: "Property tax abatements granted to new or expanded energy and infrastructure projects. Sourced from county commissioner-court agendas (LDAD scrape, 1,495 statewide records). Programs covered: Chapter 381 (county economic development agreements), Chapter 312 (city/county reinvestment zone abatements), and successors to the sunsetted Chapter 313 school value limitation. 6-county Permian scope: 5 records, all Ch.381 (county-court). The Texas Comptroller's Ch.312 state API returned 0 records in 6-county scope as of 2026-05-13 (probed via api.comptroller.texas.gov/open-data/v1/tables/ch312-abatement; Ch.312 is a city tool and West Texas Permian counties have few populated cities filing Ch.312 abatements)."
   color: '#ef4444'
   default_on: false
   radius: 7
