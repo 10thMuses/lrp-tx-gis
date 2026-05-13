@@ -77,6 +77,24 @@
   .layer-filters.open { display: block; }
   .filter-field { margin: 4px 0; }
   .filter-field-label { display: block; color: var(--muted); font-size: 10px; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 2px; }
+  /* R2-4: quick-preset chips for numeric ranges (year buckets, depth buckets) */
+  .filter-chips { display: flex; flex-wrap: wrap; gap: 3px; margin-top: 4px; }
+  .filter-chip { font: inherit; font-size: 10px; padding: 2px 6px; border: 1px solid var(--border); background: #ffffff; color: var(--text); border-radius: 10px; cursor: pointer; line-height: 1.4; }
+  .filter-chip:hover { border-color: #94a3b8; }
+  .filter-chip.active { background: #0f172a; color: #ffffff; border-color: #0f172a; }
+  .filter-multi-count { color: var(--muted); font-size: 10px; font-variant-numeric: tabular-nums; }
+  /* R2-4: global filter-summary banner at top of map */
+  #filter-banner { position: absolute; top: 8px; left: 50%; transform: translateX(-50%); z-index: 4; max-width: min(92vw, 980px); background: rgba(255, 255, 255, 0.96); border: 1px solid var(--border); border-radius: 6px; padding: 6px 10px; display: none; font-size: 11px; line-height: 1.4; box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
+  #filter-banner.show { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+  #filter-banner .banner-lead { font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: var(--muted); font-size: 10px; }
+  .banner-chip { display: inline-flex; align-items: center; gap: 4px; background: #f1f5f9; padding: 2px 4px 2px 8px; border-radius: 12px; font-size: 11px; }
+  .banner-chip .bc-layer { color: #475569; font-weight: 600; }
+  .banner-chip .bc-field { color: var(--muted); }
+  .banner-chip .bc-val { color: var(--text); font-weight: 600; }
+  .banner-chip .bc-x { font: inherit; font-size: 13px; line-height: 1; padding: 0 4px; background: transparent; border: 0; color: var(--muted); cursor: pointer; }
+  .banner-chip .bc-x:hover { color: #dc2626; }
+  .banner-reset { margin-left: auto; font: inherit; font-size: 10px; padding: 3px 8px; border: 1px solid var(--border); background: #ffffff; color: var(--text); border-radius: 4px; cursor: pointer; text-transform: uppercase; letter-spacing: 0.04em; font-weight: 600; }
+  .banner-reset:hover { background: #f1f5f9; }
   .filter-range { display: flex; gap: 4px; align-items: center; }
   .filter-range input { width: 60px; padding: 3px 5px; border: 1px solid var(--border); border-radius: 4px; font: inherit; font-size: 11px; }
   .filter-field[data-type="date_range"] .filter-range input { width: auto; flex: 1 1 0; min-width: 0; padding: 3px 4px; }
@@ -211,7 +229,9 @@
 </aside>
 
 <div class="map-wrap">
-  <div id="map"></div>
+  <div id="map">
+    <div id="filter-banner" role="status" aria-live="polite"></div>
+  </div>
   <button id="sb-toggle" class="sb-toggle" type="button" aria-label="Toggle sidebar" aria-expanded="true" title="Toggle sidebar">«</button>
   <div class="coord" id="coord">—</div>
   <div class="measure-readout" id="measure-readout">
@@ -738,12 +758,22 @@ function filterFieldControlHtml(lid, f) {
     const curMin = state && state.min !== undefined && state.min !== '' ? state.min : '';
     const curMax = state && state.max !== undefined && state.max !== '' ? state.max : '';
     const rng = (f.min !== undefined && f.max !== undefined) ? `(${f.min}–${f.max})` : '';
+    // R2-4: quick-preset chips for year/depth buckets.
+    let chips = '';
+    if (Array.isArray(f.quick_presets) && f.quick_presets.length > 0) {
+      const chipHtml = f.quick_presets.map((p, i) => {
+        const active = state && Number(state.min) === Number(p.min) && Number(state.max) === Number(p.max);
+        return `<button type="button" class="filter-chip${active ? ' active' : ''}" data-min="${p.min}" data-max="${p.max}">${escapeHtml(p.label)}</button>`;
+      }).join('');
+      chips = `<div class="filter-chips">${chipHtml}</div>`;
+    }
     return `<div class="filter-field" data-field="${f.field}" data-type="numeric">
       <span class="filter-field-label">${escapeHtml(f.label)} ${rng}</span>
       <div class="filter-range">
         <input type="number" placeholder="min" value="${curMin}" data-bound="min" step="any">
         <input type="number" placeholder="max" value="${curMax}" data-bound="max" step="any">
       </div>
+      ${chips}
     </div>`;
   }
   if (f.type === 'date_range') {
@@ -761,9 +791,20 @@ function filterFieldControlHtml(lid, f) {
     </div>`;
   }
   if (f.type === 'categorical') {
-    const vals = f.values || [];
+    let vals = f.values || [];
     const selected = new Set(Array.isArray(state) ? state : []);
-    const lis = vals.map(v => `<label><input type="checkbox" value="${escapeHtml(v)}" ${selected.has(v) ? 'checked' : ''}> ${escapeHtml(v)}</label>`).join('');
+    // R2-4: sort by descending value-count when the yaml requested it
+    // (operator dropdowns). Counts are baked in via filter_stats.
+    const counts = f.value_counts || null;
+    if (f.sort_by_count && counts) {
+      vals = vals.slice().sort((a, b) => (counts[b] || 0) - (counts[a] || 0) || a.localeCompare(b));
+    }
+    const renderOption = v => {
+      const c = counts ? counts[v] : null;
+      const suffix = c != null ? ` <span class="filter-multi-count">(${c.toLocaleString()})</span>` : '';
+      return `<label><input type="checkbox" value="${escapeHtml(v)}" ${selected.has(v) ? 'checked' : ''}> ${escapeHtml(v)}${suffix}</label>`;
+    };
+    const lis = vals.map(renderOption).join('');
     const selCount = selected.size;
     const summaryTxt = selCount > 0 ? `${escapeHtml(f.label)} — ${selCount} selected` : `${escapeHtml(f.label)} (${vals.length})`;
     const searchBox = vals.length > 20
@@ -803,14 +844,43 @@ function bindFilterPanel(panel) {
     const fname = fieldEl.dataset.field;
     const ftype = fieldEl.dataset.type;
     if (ftype === 'numeric') {
+      // R2-4: debounce numeric input so the slider drag/typing doesn't
+      // hammer setFilter on every keystroke.
+      let numericTimer = null;
       fieldEl.querySelectorAll('input[type=number]').forEach(inp => {
         inp.addEventListener('input', () => {
           filterState[lid] = filterState[lid] || {};
           filterState[lid][fname] = filterState[lid][fname] || {};
           const bound = inp.dataset.bound;
           filterState[lid][fname][bound] = inp.value;
+          clearTimeout(numericTimer);
+          numericTimer = setTimeout(() => {
+            applyLayerFilter(L);
+            syncHash();
+            refreshFilterBanner();
+          }, 220);
+        });
+      });
+      // R2-4: quick-preset chips — clicking sets min/max immediately.
+      fieldEl.querySelectorAll('.filter-chip').forEach(chip => {
+        chip.addEventListener('click', () => {
+          filterState[lid] = filterState[lid] || {};
+          filterState[lid][fname] = filterState[lid][fname] || {};
+          const mn = chip.dataset.min;
+          const mx = chip.dataset.max;
+          const cur = filterState[lid][fname];
+          const same = String(cur.min) === String(mn) && String(cur.max) === String(mx);
+          if (same) {
+            // Toggle off — clear the field.
+            filterState[lid][fname] = {};
+          } else {
+            filterState[lid][fname] = { min: mn, max: mx };
+          }
           applyLayerFilter(L);
           syncHash();
+          refreshFilterBanner();
+          // Re-render so chip active states + inputs reflect new state.
+          refreshPanelInline(panel, L);
         });
       });
     } else if (ftype === 'date_range') {
@@ -822,6 +892,7 @@ function bindFilterPanel(panel) {
           filterState[lid][fname][bound] = inp.value;
           applyLayerFilter(L);
           syncHash();
+          refreshFilterBanner();
         });
       });
     } else if (ftype === 'categorical') {
@@ -833,6 +904,7 @@ function bindFilterPanel(panel) {
           filterState[lid][fname] = Array.from(current);
           applyLayerFilter(L);
           syncHash();
+          refreshFilterBanner();
         });
       });
       const searchInp = fieldEl.querySelector('input.filter-multi-search');
@@ -854,7 +926,7 @@ function bindFilterPanel(panel) {
           filterState[lid] = filterState[lid] || {};
           filterState[lid][fname] = inp.value;
           clearTimeout(timer);
-          timer = setTimeout(() => { applyLayerFilter(L); syncHash(); }, 250);
+          timer = setTimeout(() => { applyLayerFilter(L); syncHash(); refreshFilterBanner(); }, 250);
         });
       }
     }
@@ -869,13 +941,84 @@ function clearLayerFilters(L) {
   delete filterState[L.id];
   applyLayerFilter(L);
   const panel = document.querySelector(`.layer-filters[data-layer-id="${L.id}"]`);
-  if (panel) {
-    // Rewrite controls to reset values
-    const fields = L.filterable_fields.map(f => filterFieldControlHtml(L.id, f)).join('');
-    panel.innerHTML = fields + `<div class="filter-clear-row"><span class="filter-clear" data-clear="${L.id}">Clear filters</span></div>`;
-    bindFilterPanel(panel);
-  }
+  if (panel) refreshPanelInline(panel, L);
   syncHash();
+  refreshFilterBanner();
+}
+
+// R2-4: rerender a panel in-place after a chip click or programmatic state change.
+function refreshPanelInline(panel, L) {
+  const fields = L.filterable_fields.map(f => filterFieldControlHtml(L.id, f)).join('');
+  panel.innerHTML = fields + `<div class="filter-clear-row"><span class="filter-clear" data-clear="${L.id}">Clear filters</span></div>`;
+  bindFilterPanel(panel);
+}
+
+// R2-4: render the "Showing: …" banner at top-of-map summarizing every active
+// filter across every visible layer. Clicking [×] on a chip clears that
+// single field; clicking "Reset all filters" clears every layer.
+function refreshFilterBanner() {
+  const banner = document.getElementById('filter-banner');
+  if (!banner) return;
+  const parts = [];
+  LAYERS.forEach(L => {
+    if (!layerHasFilters(L) || !isLayerFiltered(L)) return;
+    (L.filterable_fields || []).forEach(f => {
+      const v = (filterState[L.id] || {})[f.field];
+      if (v === undefined || v === null) return;
+      let txt = '';
+      if (f.type === 'numeric') {
+        const mn = v.min !== undefined && v.min !== '' ? v.min : null;
+        const mx = v.max !== undefined && v.max !== '' ? v.max : null;
+        if (mn === null && mx === null) return;
+        if (mn !== null && mx !== null) txt = `${mn}–${mx}`;
+        else if (mn !== null) txt = `≥ ${mn}`;
+        else txt = `≤ ${mx}`;
+      } else if (f.type === 'date_range') {
+        const mn = v.min || ''; const mx = v.max || '';
+        if (!mn && !mx) return;
+        txt = mn && mx ? `${mn} → ${mx}` : (mn || mx);
+      } else if (f.type === 'categorical') {
+        if (!Array.isArray(v) || v.length === 0) return;
+        if (Array.isArray(f.values) && v.length >= f.values.length) return;
+        txt = v.length <= 3 ? v.join(', ') : `${v.length} selected`;
+      } else if (f.type === 'text') {
+        if (typeof v !== 'string' || v.trim() === '') return;
+        txt = `"${v.trim()}"`;
+      }
+      if (!txt) return;
+      parts.push(`<span class="banner-chip"><span class="bc-layer">${escapeHtml(L.label.split(' (')[0])}</span> <span class="bc-field">${escapeHtml(f.label)}</span> <span class="bc-val">${escapeHtml(txt)}</span> <button class="bc-x" data-layer="${L.id}" data-field="${f.field}" type="button" aria-label="Clear this filter">×</button></span>`);
+    });
+  });
+  if (parts.length === 0) {
+    banner.classList.remove('show');
+    banner.innerHTML = '';
+    return;
+  }
+  banner.classList.add('show');
+  banner.innerHTML = `<span class="banner-lead">Showing:</span> ${parts.join(' ')} <button class="banner-reset" type="button">Reset all filters</button>`;
+  banner.querySelectorAll('.bc-x').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const lid = btn.dataset.layer;
+      const fname = btn.dataset.field;
+      if (filterState[lid]) {
+        delete filterState[lid][fname];
+        const L = LAYERS.find(x => x.id === lid);
+        if (L) {
+          applyLayerFilter(L);
+          const panel = document.querySelector(`.layer-filters[data-layer-id="${lid}"]`);
+          if (panel) refreshPanelInline(panel, L);
+        }
+      }
+      syncHash();
+      refreshFilterBanner();
+    });
+  });
+  const resetBtn = banner.querySelector('.banner-reset');
+  if (resetBtn) resetBtn.addEventListener('click', () => {
+    LAYERS.forEach(L => {
+      if (filterState[L.id]) clearLayerFilters(L);
+    });
+  });
 }
 
 function setFilterPanelVisible(lid, visible) {
@@ -1376,6 +1519,7 @@ map.on('load', () => {
   }
   // Replay any filters loaded from hash
   LAYERS.forEach(L => { if (filterState[L.id]) applyLayerFilter(L); });
+  refreshFilterBanner();
   wirePopups();
   map.on('moveend', syncHash);
   // Refresh active-count labels after tiles render post-move

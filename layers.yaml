@@ -121,9 +121,7 @@ layers:
   geom: fill
   group: Local Hyperscale DC & Power Campuses
   label: La Escalera Ranch (Apex Clean Energy)
-  description: La Escalera Ranch — Lyda Family. Approximate ~223,000-acre ranch outline;
-    site of Apex Clean Energy's Pecos Flat 3.3 GW wind/solar/green-hydrogen complex.
-    Boundary APPROXIMATE.
+  description: "La Escalera Ranch \u2014 Lyda Family. Approximate ~223,000-acre ranch outline; site of Apex Clean Energy's Pecos Flat 3.3 GW wind/solar/green-hydrogen complex. Boundary APPROXIMATE."
   color: '#ef4444'
   fill_opacity: 0
   stroke_color: '#ef4444'
@@ -153,8 +151,7 @@ layers:
   geom: fill
   group: Local Hyperscale DC & Power Campuses
   label: Longfellow Ranch
-  description: Mitchell family ranch (Pecos/Terrell/Brewster). Site of Poolside's
-    2 GW Project Horizon AI campus, anchor tenant CoreWeave. Boundary APPROXIMATE.
+  description: Mitchell family ranch (Pecos/Terrell/Brewster). Site of Poolside's 2 GW Project Horizon AI campus, anchor tenant CoreWeave. Boundary APPROXIMATE.
   color: '#ef4444'
   fill_opacity: 0
   stroke_color: '#ef4444'
@@ -184,9 +181,7 @@ layers:
   geom: fill
   group: Local Hyperscale DC & Power Campuses
   label: GW Ranch (Pacifico Energy)
-  description: Pacifico Energy 7.65 GW off-grid gas + battery + solar campus on Hwy
-    18, ~17 mi N of Fort Stockton, Pecos Co. Largest TCEQ-permitted DC campus in U.S.
-    Footprint APPROXIMATE.
+  description: Pacifico Energy 7.65 GW off-grid gas + battery + solar campus on Hwy 18, ~17 mi N of Fort Stockton, Pecos Co. Largest TCEQ-permitted DC campus in U.S. Footprint APPROXIMATE.
   color: '#ef4444'
   fill_opacity: 0
   stroke_color: '#ef4444'
@@ -465,7 +460,7 @@ layers:
   file: combined_geoms.geojson
   geom: line
   group: Transmission & Grid
-  label: Transmission ≥100 kV
+  label: "Transmission \u2265100 kV"
   color: '#38bdf8'
   default_on: false
   popup:
@@ -714,12 +709,7 @@ layers:
   geom: point
   group: Permits
   label: Permits (RRC W-1, 6-county Permian)
-  description: RRC drilling permits with WGS84 coordinates and approved depth.
-    Source dbf-EOM monthly snapshots (`daf420.dat.MM-DD-YYYY`), 2018-01 through
-    current. Subject (sale area) — Pecos, Reeves, Ward. Active Permian peer
-    (boom area) — Midland, Martin, Reagan. Each permit row carries
-    `county_role` ∈ {subject, peer}. Records without a parseable total_depth
-    are excluded at the parser stage per R2-2.
+  description: "RRC drilling permits with WGS84 coordinates and approved depth. Source dbf-EOM monthly snapshots (`daf420.dat.MM-DD-YYYY`), 2018-01 through current. Subject (sale area) \u2014 Pecos, Reeves, Ward. Active Permian peer (boom area) \u2014 Midland, Martin, Reagan. Each permit row carries `county_role` \u2208 {subject, peer}. Records without a parseable total_depth are excluded at the parser stage per R2-2."
   color: '#dc2626'
   default_on: false
   min_zoom: 6
@@ -742,13 +732,13 @@ layers:
   - oil_gas
   - total_depth
   popup_labels:
-    permit_no: Permit #
-    api_no: API #
+    permit_no: Permit
+    api_no: API
     county_name: County
     county_role: Role
     district: District
     lease_name: Lease
-    well_no: Well #
+    well_no: Well
     operator_name: Operator
     submitted_date: Submitted
     approved_date: Approved
@@ -780,12 +770,60 @@ layers:
   - field: total_depth
     type: numeric
     label: Total depth (ft)
+    quick_presets: &id001
+    - label: <5K
+      min: 0
+      max: 5000
+    - label: 5-10K
+      min: 5000
+      max: 10000
+    - label: 10-15K
+      min: 10000
+      max: 15000
+    - label: '>15K'
+      min: 15000
+      max: 30000
   - field: permit_year
     type: numeric
     label: Permit year (1976-present once Round 2.5 backfill ships; 2018-present today)
+    quick_presets:
+    - label: 1976-1980
+      min: 1976
+      max: 1980
+    - label: 1981-1985
+      min: 1981
+      max: 1985
+    - label: 1986-1990
+      min: 1986
+      max: 1990
+    - label: 1991-1995
+      min: 1991
+      max: 1995
+    - label: 1996-2000
+      min: 1996
+      max: 2000
+    - label: 2001-2005
+      min: 2001
+      max: 2005
+    - label: 2006-2010
+      min: 2006
+      max: 2010
+    - label: 2011-2015
+      min: 2011
+      max: 2015
+    - label: 2016-2020
+      min: 2016
+      max: 2020
+    - label: 2021-2025
+      min: 2021
+      max: 2025
+    - label: 2026+
+      min: 2026
+      max: 2030
   - field: operator_name
     type: text
     label: Operator
+    sort_by_count: true
   tippecanoe:
   - -zg
   - -r1
@@ -796,12 +834,7 @@ layers:
   geom: point
   group: Permits
   label: Wells (active + drilling, 6-county Permian)
-  description: 'Active RRC wellbores (not plugged / abandoned / P&A) for the
-    6-county Permian sale-area-vs-peer scope. Subject — Pecos, Reeves, Ward.
-    Active Permian peer — Midland, Martin, Reagan. R2-1 filter applied at the
-    parser (plug_flag=N only — drilling-in-progress wells live in the permits
-    layer, not here). Source dbf900.txt Full Wellbore ASCII (weekly).
-    71,328 active wells.'
+  description: "Active RRC wellbores (not plugged / abandoned / P&A) for the 6-county Permian sale-area-vs-peer scope. Subject \u2014 Pecos, Reeves, Ward. Active Permian peer \u2014 Midland, Martin, Reagan. R2-1 filter applied at the parser (plug_flag=N only \u2014 drilling-in-progress wells live in the permits layer, not here). Source dbf900.txt Full Wellbore ASCII (weekly). 71,328 active wells."
   color: '#6b21a8'
   default_on: false
   min_zoom: 7
@@ -821,12 +854,12 @@ layers:
   - plug_flag
   - active_flag
   popup_labels:
-    api_no: API #
+    api_no: API
     county_name: County
     county_role: Role
     district: District
-    well_no: Well #
-    lease_no: Lease #
+    well_no: Well
+    lease_no: Lease
     oil_gas: Oil/Gas
     total_depth: Total depth (ft)
     completion_date: Completion date
@@ -850,9 +883,53 @@ layers:
   - field: total_depth
     type: numeric
     label: Total depth (ft)
+    quick_presets: *id001
   - field: completion_year
     type: numeric
     label: Completion year
+    quick_presets:
+    - label: 1964-1968
+      min: 1964
+      max: 1968
+    - label: 1969-1973
+      min: 1969
+      max: 1973
+    - label: 1974-1978
+      min: 1974
+      max: 1978
+    - label: 1979-1983
+      min: 1979
+      max: 1983
+    - label: 1984-1988
+      min: 1984
+      max: 1988
+    - label: 1989-1993
+      min: 1989
+      max: 1993
+    - label: 1994-1998
+      min: 1994
+      max: 1998
+    - label: 1999-2003
+      min: 1999
+      max: 2003
+    - label: 2004-2008
+      min: 2004
+      max: 2008
+    - label: 2009-2013
+      min: 2009
+      max: 2013
+    - label: 2014-2018
+      min: 2014
+      max: 2018
+    - label: 2019-2023
+      min: 2019
+      max: 2023
+    - label: 2024-2025
+      min: 2024
+      max: 2025
+    - label: 2026+
+      min: 2026
+      max: 2030
   tippecanoe:
   - -zg
   - -r1
@@ -863,9 +940,7 @@ layers:
   geom: point
   group: Permits
   label: Approved Tax Abatements (energy & DC projects)
-  description: County-level property tax abatements granted to new or expanded energy
-    and infrastructure projects. Chapter 312 reinvestment zones and Local Development
-    Agreements (HB 5 / SB 1340 successors to the sunsetted Ch.313).
+  description: County-level property tax abatements granted to new or expanded energy and infrastructure projects. Chapter 312 reinvestment zones and Local Development Agreements (HB 5 / SB 1340 successors to the sunsetted Ch.313).
   color: '#ef4444'
   default_on: false
   radius: 7
@@ -919,7 +994,7 @@ layers:
   file: data/datacenters/dc_anchors.json
   geom: point
   group: Projects
-  label: Datacenter Anchors (≥100 MW)
+  label: "Datacenter Anchors (\u2265100 MW)"
   color: '#fbbf24'
   default_on: false
   radius: 7
