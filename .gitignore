@@ -36,3 +36,10 @@ desktop.ini
 
 # Claude Code session artifacts
 .claude/
+
+# Daily abatements probe outputs (scripts/scrape_abatements.py) are diagnostic
+# artifacts, NOT a layer source. tax_abatements is fed only by the pinned
+# snapshot below via scripts/transform_abatements.py. Ignore the daily probe
+# files so the unattended daily-refresh routine cannot commit them.
+data/abatements/abatement_hits_*.csv
+!data/abatements/abatement_hits_20260424_092810.csv
