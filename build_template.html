@@ -103,6 +103,16 @@
   #wells-summary .pecos-col { background: #e7f0fe; }
   #wells-summary thead th.pecos-col { background: #d4e4fb; }
   #wells-summary tfoot td.pecos-col { background: #dbe8fd; }
+  #wells-summary th.grp { text-align: center; border-bottom: 2px solid var(--border); }
+  #wells-summary .ws-charts { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 8px; }
+  #wells-summary .ws-chart { flex: 1 1 280px; min-width: 240px; }
+  #wells-summary .ws-chart-h { font-weight: 700; margin-bottom: 4px; }
+  #wells-summary .ws-bar-row { display: flex; align-items: center; gap: 6px; margin: 1px 0; }
+  #wells-summary .ws-bar-lbl { flex: 0 0 64px; text-align: left; color: var(--muted); }
+  #wells-summary .ws-bar { flex: 1 1 auto; height: 11px; background: #eef0f3; border-radius: 2px; overflow: hidden; }
+  #wells-summary .ws-bar i { display: block; height: 100%; background: #6b21a8; }
+  #wells-summary .ws-chart.pecos .ws-bar i { background: #2f6fed; }
+  #wells-summary .ws-bar-val { flex: 0 0 48px; text-align: right; font-variant-numeric: tabular-nums; }
   @media (max-width: 768px) { #wells-summary { max-width: 94vw; max-height: 46vh; } }
   /* R2-7: live stats panel top-right of map */
   #stats-panel { position: absolute; top: 8px; right: 8px; z-index: 5; width: min(360px, 92vw); max-height: min(88vh, 880px); overflow-y: auto; background: rgba(255,255,255,0.97); border: 1px solid var(--border); border-radius: 6px; font-size: 11px; box-shadow: 0 1px 6px rgba(0,0,0,0.08); }
@@ -2233,12 +2243,14 @@ const WellsSummary = (() => {
     const cn = st.county_name;
     if (Array.isArray(cn) && cn.length) {
       if (cn.length === 1) parts.push(cn[0] + ' County');
-      else if (cn.length >= 6) parts.push('All 6 counties');
+      else if (cn.length >= 6) parts.push('Pecos + other 5 counties');
       else parts.push(cn.slice().sort((a, b) => COUNTY_ORDER.indexOf(a) - COUNTY_ORDER.indexOf(b)).join(', '));
     }
     const pf = st.plug_flag;
+    // Saved views no longer split active/plugged — only label it when the user
+    // has explicitly set a single plug-status filter by hand.
     if (Array.isArray(pf) && pf.length === 1) parts.push(pf[0] === 'Y' ? 'Plugged wells' : 'Active wells');
-    else parts.push('Active + plugged');
+    else parts.push('Spud wells');
     const og = st.oil_gas;
     if (Array.isArray(og) && og.length === 1) parts.push(og[0] === 'O' ? 'Oil only' : og[0] === 'G' ? 'Gas only' : og[0]);
     const td = st.total_depth;
@@ -2253,84 +2265,99 @@ const WellsSummary = (() => {
       const ys = sy.map(Number).filter(Number.isFinite).sort((a, b) => a - b);
       if (ys.length) parts.push(ys[0] === ys[ys.length - 1] ? 'Spud ' + ys[0] : 'Spud ' + ys[0] + '–' + ys[ys.length - 1]);
     }
-    return parts.length ? parts.join(' · ') : 'Oil & Gas Spud Wells — all selected';
+    return parts.length ? parts.join(' · ') : 'Spud wells (all counties)';
   }
+  const blank = () => ({ n: 0, o: 0, g: 0, p: 0 });
   function compute(rows) {
     const cy = new Date().getFullYear();
-    let oil = 0, gas = 0;
+    let oil = 0, gas = 0, plugged = 0;
     const present = new Set();
-    const byYear = new Map();
     const eras = eraDefs().map(e => Object.assign({ span: Math.max(1, Math.min(e.hi, cy) - e.lo + 1), per: {} }, e));
-    const blank = () => ({ n: 0, o: 0, g: 0 });
     rows.forEach(r => {
       const og = String(r.oil_gas || '');
+      const pl = String(r.plug_flag || '') === 'Y';
       if (og === 'O') oil++; else if (og === 'G') gas++;
+      if (pl) plugged++;
       const cty = String(r.county_name || '') || '—';
       present.add(cty);
       const y = num(r.spud_year); if (y === null) return;
       const yr = Math.trunc(y);
-      let ym = byYear.get(yr); if (!ym) { ym = {}; byYear.set(yr, ym); }
-      let yc = ym[cty] || (ym[cty] = blank());
-      yc.n++; if (og === 'O') yc.o++; else if (og === 'G') yc.g++;
       for (const e of eras) {
         if (yr >= e.lo && yr <= e.hi) {
-          let ec = e.per[cty] || (e.per[cty] = blank());
-          ec.n++; if (og === 'O') ec.o++; else if (og === 'G') ec.g++;
+          const ec = e.per[cty] || (e.per[cty] = blank());
+          ec.n++; if (og === 'O') ec.o++; else if (og === 'G') ec.g++; if (pl) ec.p++;
           break;
         }
       }
     });
     const counties = COUNTY_ORDER.filter(c => present.has(c))
       .concat([...present].filter(c => !COUNTY_ORDER.includes(c)).sort());
-    return { total: rows.length, oil, gas, counties, years: [...byYear.keys()].sort((a, b) => a - b), byYear, eras };
+    return { total: rows.length, oil, gas, plugged, counties, eras };
+  }
+  // Collapse the selected counties into at most two display groups: Pecos on
+  // its own (shaded — it's the thesis subject) and every other selected county
+  // summed into one combined column so the table stays readable.
+  function groupsFor(counties) {
+    const cs = counties.length ? counties : ['—'];
+    const hasPecos = cs.includes('Pecos');
+    const others = cs.filter(c => c !== 'Pecos' && c !== '—');
+    const g = [];
+    if (hasPecos) g.push({ label: 'Pecos', counties: ['Pecos'], pecos: true });
+    if (others.length) g.push({ label: others.length === 1 ? others[0] : 'Other ' + others.length + ' counties', counties: others, pecos: false });
+    if (!g.length) g.push({ label: 'Wells', counties: cs, pecos: false });
+    return g;
+  }
+  function aggr(per, cset) {
+    const a = blank();
+    cset.forEach(c => { const v = per && per[c]; if (v) { a.n += v.n; a.o += v.o; a.g += v.g; a.p += v.p; } });
+    return a;
   }
   function render(s) {
     const pct = (n, d) => d > 0 ? ' (' + (100 * n / d).toFixed(1) + '%)' : '';
-    const cs = s.counties.length ? s.counties : ['—'];
-    const multi = cs.length > 1;
-    const pcls = c => (c === 'Pecos' ? ' pecos-col' : '');
-    const sum = obj => { let n = 0, o = 0, g = 0; cs.forEach(c => { const v = obj && obj[c]; if (v) { n += v.n; o += v.o; g += v.g; } }); return { n, o, g }; };
-    // Per-county header cells: county-prefixed only when >1 county selected.
-    const grpHead = unit => cs.map(c => {
-      const k = pcls(c), p = multi ? esc(c) + ' ' : '';
-      return `<th class="cgroup${k}">${p}W</th><th class="${k.trim()}">${p}O</th><th class="${k.trim()}">${p}G</th>` + (unit ? `<th class="${k.trim()}">${p}/yr</th>` : '');
+    const groups = groupsFor(s.counties);
+    const gcls = grp => (grp.pecos ? ' pecos-col' : '');
+    // Two-row header: group name (colspan 5) over Wells/Oil/Gas/Plugged totals + /yr avg.
+    const hr1 = groups.map(grp => `<th colspan="5" class="grp cgroup${gcls(grp)}">${esc(grp.label)}</th>`).join('');
+    const hr2 = groups.map(grp => { const k = gcls(grp); return `<th class="cgroup${k}">Wells</th><th class="${k.trim()}">Oil</th><th class="${k.trim()}">Gas</th><th class="${k.trim()}">Plugged</th><th class="${k.trim()}">/yr</th>`; }).join('');
+    const eras = s.eras.filter(e => groups.some(grp => aggr(e.per, grp.counties).n > 0));
+    const bodyRows = eras.map(e => {
+      const cells = groups.map(grp => {
+        const v = aggr(e.per, grp.counties), k = gcls(grp);
+        return `<td class="cgroup${k}">${v.n.toLocaleString()}</td><td class="${k.trim()}">${v.o.toLocaleString()}</td><td class="${k.trim()}">${v.g.toLocaleString()}</td><td class="${k.trim()}">${v.p.toLocaleString()}</td><td class="${k.trim()}">${(v.n / e.span).toFixed(1)}</td>`;
+      }).join('');
+      return `<tr><td>${e.k}</td>${cells}</tr>`;
     }).join('');
-    const cellGrp = (obj, span) => cs.map(c => {
-      const v = (obj && obj[c]) || { n: 0, o: 0, g: 0 }, k = pcls(c);
-      return `<td class="cgroup${k}">${v.n.toLocaleString()}</td><td class="${k.trim()}">${v.o.toLocaleString()}</td><td class="${k.trim()}">${v.g.toLocaleString()}</td>` + (span ? `<td class="${k.trim()}">${(v.n / span).toFixed(1)}</td>` : '');
+    const totRow = (() => {
+      const cells = groups.map(grp => {
+        let n = 0, o = 0, g = 0, p = 0;
+        s.eras.forEach(e => { const v = aggr(e.per, grp.counties); n += v.n; o += v.o; g += v.g; p += v.p; });
+        const k = gcls(grp);
+        return `<td class="cgroup${k}">${n.toLocaleString()}</td><td class="${k.trim()}">${o.toLocaleString()}</td><td class="${k.trim()}">${g.toLocaleString()}</td><td class="${k.trim()}">${p.toLocaleString()}</td><td class="${k.trim()}">—</td>`;
+      }).join('');
+      return `<tr><td>All eras</td>${cells}</tr>`;
+    })();
+    const eraTbl = `<div class="ws-body">
+      <div class="ws-cap">By era — Wells / Oil / Gas / Plugged are <b>totals</b> for that era (not cumulative); <b>/yr</b> = average wells per year in the era</div>
+      <table>
+      <thead><tr><th rowspan="2">Era</th>${hr1}</tr><tr>${hr2}</tr></thead>
+      <tbody>${bodyRows || `<tr><td colspan="${1 + groups.length * 5}" style="color:var(--muted)">No wells in selection.</td></tr>`}</tbody>
+      <tfoot>${totRow}</tfoot></table></div>`;
+    // Bar chart per group — wells spudded per era.
+    const charts = groups.map(grp => {
+      const vals = s.eras.map(e => ({ k: e.k, n: aggr(e.per, grp.counties).n }));
+      const mx = Math.max(1, ...vals.map(v => v.n));
+      const bars = vals.map(v => `<div class="ws-bar-row"><span class="ws-bar-lbl">${v.k}</span><span class="ws-bar"><i style="width:${(100 * v.n / mx).toFixed(1)}%"></i></span><span class="ws-bar-val">${v.n.toLocaleString()}</span></div>`).join('');
+      return `<div class="ws-chart${grp.pecos ? ' pecos' : ''}"><div class="ws-chart-h">${esc(grp.label)} — wells per era</div>${bars}</div>`;
     }).join('');
-
-    // Era table — totals + annual average per bucket, per county.
-    const eraRows = s.eras.filter(e => sum(e.per).n > 0).map(e =>
-      `<tr><td>${e.k}</td>${cellGrp(e.per, e.span)}</tr>`).join('');
-    const eraTbl = `<div class="ws-body"><div class="ws-cap">By era — total &amp; annual average (/yr)</div><table>
-      <thead><tr><th>Era</th>${grpHead(true)}</tr></thead>
-      <tbody>${eraRows || `<tr><td colspan="${1 + cs.length * 4}" style="color:var(--muted)">No wells in selection.</td></tr>`}</tbody></table></div>`;
-
-    let yearTbl;
-    if (s.years.length) {
-      const body = s.years.map(y => `<tr><td>${y}</td>${cellGrp(s.byYear.get(y), 0)}</tr>`).join('');
-      const tot = {}; cs.forEach(c => { tot[c] = blankAcc(s, c); });
-      yearTbl = `<div class="ws-body"><div class="ws-cap">By spud year</div><table>
-        <thead><tr><th>Spud year</th>${grpHead(false)}</tr></thead>
-        <tbody>${body}</tbody>
-        <tfoot><tr><td>Total</td>${cellGrp(tot, 0)}</tr></tfoot></table></div>`;
-    } else {
-      yearTbl = `<div class="ws-body"><div style="color:var(--muted);padding:8px 2px">No wells in the current selection.</div></div>`;
-    }
     root.innerHTML = `<div class="ws-head">
         <span class="ws-title">${esc(selectionLabel())}</span>
         <span class="ws-kpi">Wells <b>${s.total.toLocaleString()}</b></span>
         <span class="ws-kpi">Oil <b>${s.oil.toLocaleString()}</b>${pct(s.oil, s.total)}</span>
         <span class="ws-kpi">Gas <b>${s.gas.toLocaleString()}</b>${pct(s.gas, s.total)}</span>
+        <span class="ws-kpi">Plugged <b>${s.plugged.toLocaleString()}</b>${pct(s.plugged, s.total)}</span>
         <button type="button" class="ws-toggle">${collapsed ? 'Show' : 'Hide'}</button>
-      </div>${eraTbl}${yearTbl}`;
+      </div>${eraTbl}<div class="ws-body"><div class="ws-charts">${charts}</div></div>`;
     root.classList.toggle('collapsed', collapsed);
-  }
-  function blankAcc(s, c) {
-    let n = 0, o = 0, g = 0;
-    s.byYear.forEach(ym => { const v = ym[c]; if (v) { n += v.n; o += v.o; g += v.g; } });
-    return { n, o, g };
   }
   function refresh() {
     let active = false;
@@ -2477,9 +2504,9 @@ function activeLayerIds() {
 //   layers:  array of layer ids to make active (replaces current selection)
 //   filters: object keyed by layer id with that layer's filter state
 //   scrubber: optional year to set on the time-series scrubber (null = full history)
-// Saved views — wells spud only (no permits). Active vs plugged wells, Pecos
-// vs the combined other-5 counties, by depth bucket (<5k / 5–10k / 10k+).
-// Generated so the set stays consistent; the dropdown is populated from it.
+// Saved views — spud wells only (no permits, no active/plugged split — all
+// spud wells; the table carries a Plugged total column). Pecos, the combined
+// other-5, or both, by depth bucket (<5k / 5–10k / 10k+). Era breakdown only.
 const SAVED_VIEWS = {};
 const _SV_LIST = [];
 (() => {
@@ -2490,16 +2517,16 @@ const _SV_LIST = [];
     ['5to10k', '5,000–10,000 ft', { total_depth: { min: '5000', max: '10000' } }],
     ['10kplus', '10,000 ft+', { total_depth: { min: '10000', max: '' } }],
   ];
-  [['active', 'Active wells', 'N'], ['plugged', 'Plugged wells', 'Y']].forEach(([sk, slbl, pf]) => {
-    [['pecos', 'Pecos', ['Pecos']], ['other5', 'Other 5 counties', OTHER5]].forEach(([ak, albl, cn]) => {
-      DEPTHS.forEach(([dk, dlbl, df]) => {
-        const key = `${sk}_${ak}_${dk}`;
-        SAVED_VIEWS[key] = {
-          layers: ['wells_permian6'], scrubber: null,
-          filters: { wells_permian6: Object.assign({ plug_flag: [pf], county_name: cn.slice() }, JSON.parse(JSON.stringify(df))) },
-        };
-        _SV_LIST.push([key, `${slbl} — ${albl} — ${dlbl}`]);
-      });
+  [['pecos', 'Pecos', ['Pecos']],
+   ['other5', 'Other 5 counties', OTHER5.slice()],
+   ['all6', 'Pecos vs. other 5', ['Pecos'].concat(OTHER5)]].forEach(([ak, albl, cn]) => {
+    DEPTHS.forEach(([dk, dlbl, df]) => {
+      const key = `spud_${ak}_${dk}`;
+      SAVED_VIEWS[key] = {
+        layers: ['wells_permian6'], scrubber: null,
+        filters: { wells_permian6: Object.assign({ county_name: cn.slice() }, JSON.parse(JSON.stringify(df))) },
+      };
+      _SV_LIST.push([key, `Spud wells — ${albl} — ${dlbl}`]);
     });
   });
   const sel = document.getElementById('saved-views-select');
