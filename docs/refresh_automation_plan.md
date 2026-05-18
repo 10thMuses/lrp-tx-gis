@@ -40,7 +40,6 @@ Refresh mechanism column values:
 | dc_anchors | trigger | scripts/refresh_dc_anchors.py | Hand-curated + sources | Continuous | Monthly review |
 | counties / cities / county_labels / labels_hubs | static | n/a | Census TIGER (rare changes) | Persistent | Never (manual) |
 | la_escalera / longfellow_ranch / gw_ranch / mpgcd_zone1 / waha_circle | static | n/a | Hand-placed | Persistent | Never |
-| counterparty_assets | static (R2.5 Part 5) | n/a | Hand-placed APPROXIMATE | Persistent | Per-deal manual |
 | parcels_pecos | prebuilt | n/a | StratMap TNRIS — annual | 2024 | Annual manual |
 | tiger_highways / bts_rail | prebuilt | n/a | Census/BTS — rare | Persistent | Multi-year |
 | caramba_north / solstice_substation | static | n/a | Hand-placed | Persistent | Never |
