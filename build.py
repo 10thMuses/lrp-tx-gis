@@ -1275,6 +1275,20 @@ def main():
     shutil.copytree(SPRITE_SRC, dist_sprite)
     print(f'Sprite: {n_icons} icons @ 1x + 2x → {SPRITE_SRC}/ + {dist_sprite}/')
 
+    # Vendored libraries (maplibre-gl, pmtiles, turf) committed in repo
+    # `vendor/`, mirrored to DIST so they are served SAME-ORIGIN. Loading
+    # MapLibre from a third-party CDN (unpkg) broke its worker pipeline →
+    # total map outage. Architecture rule: vendor same-origin, never unpkg.
+    vendor_src = ROOT / 'vendor'
+    if vendor_src.exists():
+        dist_vendor = DIST / 'vendor'
+        if dist_vendor.exists():
+            shutil.rmtree(dist_vendor)
+        shutil.copytree(vendor_src, dist_vendor)
+        print(f'Vendor: {len(list(vendor_src.iterdir()))} files → {dist_vendor}/')
+    else:
+        print('WARNING: vendor/ missing — map libs will not be served same-origin')
+
     with open(ROOT / 'layers.yaml') as f:
         cfg = yaml.safe_load(f)
 
