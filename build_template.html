@@ -1420,7 +1420,7 @@ const StatsPanel = (() => {
 
   function activeStatsLayers() {
     const want = activeLayerIds();
-    return STATS_LAYERS.filter(sl => want.has(sl.id));
+    return STATS_LAYERS.filter(sl => want.includes(sl.id));
   }
 
   // Render entry-point — debounced via myRenderId guard against rapid filter changes.
@@ -1870,7 +1870,7 @@ const Scrubber = (() => {
 
   // Show only when a temporal layer is active.
   function onLayerVisibilityChange(activeIds) {
-    const any = LAYERS.some(L => SCRUBBER_TIME_FIELD[L.id] && activeIds.has(L.id));
+    const any = LAYERS.some(L => SCRUBBER_TIME_FIELD[L.id] && activeIds.includes(L.id));
     if (any) {
       const { lo, hi } = rangeFromLayers();
       input.min = String(lo);
@@ -1887,15 +1887,6 @@ const Scrubber = (() => {
   }
   return { onLayerVisibilityChange, setYear, getYear: () => scrubberYear };
 })();
-
-function activeLayerIds() {
-  const out = new Set();
-  document.querySelectorAll('label.layer input:checked').forEach(cb => {
-    const id = cb.closest('label.layer').dataset.id;
-    if (id) out.add(id);
-  });
-  return out;
-}
 
 function clearLayerFilters(L) {
   delete filterState[L.id];
