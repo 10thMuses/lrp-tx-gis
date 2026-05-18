@@ -1,0 +1,83 @@
+{
+  "schema_version": "1.0",
+  "generated": "2026-05-18T10:00:32Z",
+  "model": "claude-sonnet-4-5-20250929",
+  "input_file": "data/datacenters/dc_anchors.json",
+  "input_entry_count": 8,
+  "processed_entry_count": 8,
+  "proposals": [
+    {
+      "id": "project-horizon-poolside-coreweave",
+      "diff": {},
+      "additional_sources": [],
+      "conflicts": [],
+      "fetch_failures": [],
+      "no_change": true
+    },
+    {
+      "id": "stargate-abilene-crusoe-oracle",
+      "diff": {},
+      "additional_sources": [
+        {
+          "url": "https://www.tomshardware.com/tech-industry/oracle-and-openai-scrap-planned-600mw-abilene-expansion",
+          "claim": "600MW expansion lease scrapped and re-leased to Microsoft as adjacent campus (March 2026)"
+        },
+        {
+          "url": "https://intuitionlabs.ai/articles/openai-stargate-datacenter-details",
+          "claim": "Stargate project overview; Abilene described as flagship site with multi-building campus (February 2026)"
+        }
+      ],
+      "conflicts": [],
+      "fetch_failures": [
+        "https://openai.com/index/five-new-stargate-sites/"
+      ]
+    },
+    {
+      "id": "microsoft-crusoe-abilene",
+      "error": "Claude API exhausted retries"
+    },
+    {
+      "id": "project-matador-fermi-america",
+      "error": "Claude API exhausted retries"
+    },
+    {
+      "id": "gw-ranch-pacifico-pecos",
+      "diff": {
+        "status": {
+          "current": "permitted",
+          "proposed": "under_construction",
+          "evidence_url": "https://markets.financialcontent.com/stocks/article/bizwire-2026-1-26-pacifico-energy-secures-765-gw-power-generation-permit-for-gw-ranch-project",
+          "evidence_quote": "Pacifico Energy Secures 7.65 GW Power Generation Permit for GW Ranch Project"
+        }
+      },
+      "additional_sources": [
+        {
+          "url": "https://www.kcbd.com/2026/02/01/texas-approves-largest-permitted-data-center-campus-us/",
+          "claim": "Texas approves 'largest permitted data center campus' in the U.S. - built southwest of Odessa, north of Fort Stockton, in Pecos County"
+        },
+        {
+          "url": "https://www.texastribune.org/2026/02/02/texas-permian-basin-power-plant-project-data-centers/",
+          "claim": "Texas Permian Basin power plant project for data centers approved"
+        },
+        {
+          "url": "https://markets.financialcontent.com/stocks/article/bizwire-2026-1-26-pacifico-energy-secures-765-gw-power-generation-permit-for-gw-ranch-project",
+          "claim": "Pacifico Energy secures 7.65 GW power generation permit (January 26, 2026)"
+        }
+      ],
+      "conflicts": [],
+      "fetch_failures": []
+    },
+    {
+      "id": "stargate-frontier-shackelford",
+      "error": "Claude API exhausted retries"
+    },
+    {
+      "id": "stargate-milam-sb-energy",
+      "error": "Claude API exhausted retries"
+    },
+    {
+      "id": "meta-temple-bell",
+      "error": "Claude API exhausted retries"
+    }
+  ]
+}
