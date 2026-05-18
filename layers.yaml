@@ -1065,6 +1065,8 @@ layers:
   color: '#ef4444'
   default_on: false
   radius: 7
+  keep_technology: [natural_gas, renewable]
+  keep_county_scope: [Pecos, Reeves, Ward, Midland, Martin, Reagan]
   popup:
   - name
   - operator

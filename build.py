@@ -572,6 +572,30 @@ def _filter_min_spud_year(nd_path, minyear):
     return removed
 
 
+def _filter_tax_keep(nd_path, techs, counties):
+    """tax_abatements declutter: keep a feature only if its `technology` is in
+    `techs` (natural_gas/renewable) OR its `county` is in `counties` (the
+    in-scope Permian whitelist — thesis-critical Pecos/Reeves abatements must
+    never be dropped by the type filter). Atomic rewrite. Returns kept count."""
+    counties_l = {str(c).strip().lower() for c in (counties or [])}
+    kept = 0
+    tmp = str(nd_path) + '.tmp'
+    with open(nd_path, 'r', encoding='utf-8') as fin, \
+         open(tmp, 'w', encoding='utf-8') as fout:
+        for line in fin:
+            try:
+                p = json.loads(line).get('properties') or {}
+            except Exception:
+                continue
+            tech = str(p.get('technology', ''))
+            cty = str(p.get('county', '')).strip().lower()
+            if tech in techs or cty in counties_l:
+                fout.write(line)
+                kept += 1
+    os.replace(tmp, nd_path)
+    return kept
+
+
 def dc_anchors_to_ndgeojson(json_path, out_path):
     """Custom loader for data/datacenters/dc_anchors.json.
     Maps the curated DC-anchor schema → ndgeojson points consumable by tippecanoe.
@@ -760,6 +784,10 @@ def build_layer(layer, report, split_stats):
         stats = split_stats.get(lid, (0, 0))
         n_total, n_written = stats
         try:
+            kt = layer.get('keep_technology')
+            if kt:
+                n_written = _filter_tax_keep(nd, set(kt), layer.get('keep_county_scope') or [])
+                print(f'  {lid}: keep_technology {kt} + county whitelist -> {n_written} kept')
             run_tippecanoe(nd, pm, lid, layer.get('tippecanoe', ['-zg']))
             sz = pm.stat().st_size
             report.append((lid, n_total, n_written,
