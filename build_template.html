@@ -84,21 +84,26 @@
   .filter-chip.active { background: #0f172a; color: #ffffff; border-color: #0f172a; }
   .filter-multi-count { color: var(--muted); font-size: 10px; font-variant-numeric: tabular-nums; }
   /* Live Oil & Gas Spud Wells summary — pinned top-center of map */
-  #wells-summary { position: absolute; top: 8px; left: 50%; transform: translateX(-50%); z-index: 6; width: min(760px, 94vw); max-height: 42vh; overflow: auto; background: rgba(255,255,255,0.97); border: 1px solid var(--border); border-radius: 6px; font-size: 11px; box-shadow: 0 2px 10px rgba(0,0,0,0.12); }
+  #wells-summary { position: absolute; top: 8px; left: 8px; z-index: 6; width: max-content; max-width: min(70vw, 1180px); max-height: 60vh; overflow: auto; background: rgba(255,255,255,0.97); border: 1px solid var(--border); border-radius: 6px; font-size: 11px; box-shadow: 0 2px 10px rgba(0,0,0,0.12); }
   #wells-summary[hidden] { display: none; }
-  #wells-summary .ws-head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; padding: 7px 10px; border-bottom: 1px solid var(--border); cursor: pointer; user-select: none; position: sticky; top: 0; background: rgba(255,255,255,0.98); }
+  #wells-summary .ws-head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; padding: 7px 10px; border-bottom: 1px solid var(--border); cursor: pointer; user-select: none; position: sticky; top: 0; left: 0; background: rgba(255,255,255,0.98); z-index: 2; }
   #wells-summary .ws-title { font-weight: 700; font-size: 12px; }
-  #wells-summary .ws-kpi { font-variant-numeric: tabular-nums; }
+  #wells-summary .ws-kpi { font-variant-numeric: tabular-nums; white-space: nowrap; }
   #wells-summary .ws-kpi b { font-size: 12px; }
   #wells-summary .ws-toggle { margin-left: auto; font-size: 10px; border: 1px solid var(--border); background: #fff; border-radius: 4px; padding: 2px 8px; cursor: pointer; text-transform: uppercase; letter-spacing: 0.04em; }
   #wells-summary.collapsed .ws-body { display: none; }
-  #wells-summary .ws-body { padding: 6px 10px 8px; }
-  #wells-summary table { border-collapse: collapse; width: 100%; font-variant-numeric: tabular-nums; }
-  #wells-summary th, #wells-summary td { padding: 2px 8px; text-align: right; border-bottom: 1px solid #eef0f3; }
-  #wells-summary th:first-child, #wells-summary td:first-child { text-align: left; }
-  #wells-summary thead th { position: sticky; top: 38px; background: #f1f5f9; }
+  #wells-summary .ws-body { padding: 4px 8px 8px; }
+  #wells-summary .ws-cap { font-weight: 700; margin: 4px 0 3px; }
+  #wells-summary table { border-collapse: collapse; width: auto; font-variant-numeric: tabular-nums; }
+  #wells-summary th, #wells-summary td { padding: 2px 7px; text-align: right; border-bottom: 1px solid #eef0f3; white-space: nowrap; }
+  #wells-summary th:first-child, #wells-summary td:first-child { text-align: left; width: 1%; white-space: nowrap; padding-right: 14px; }
+  #wells-summary thead th { background: #f1f5f9; }
   #wells-summary tfoot td { font-weight: 700; border-top: 2px solid var(--border); background: #f8fafc; }
-  @media (max-width: 768px) { #wells-summary { width: 96vw; max-height: 38vh; } }
+  #wells-summary td.cgroup, #wells-summary th.cgroup { border-left: 2px solid #d6dbe2; }
+  #wells-summary .pecos-col { background: #e7f0fe; }
+  #wells-summary thead th.pecos-col { background: #d4e4fb; }
+  #wells-summary tfoot td.pecos-col { background: #dbe8fd; }
+  @media (max-width: 768px) { #wells-summary { max-width: 94vw; max-height: 46vh; } }
   /* R2-7: live stats panel top-right of map */
   #stats-panel { position: absolute; top: 8px; right: 8px; z-index: 5; width: min(360px, 92vw); max-height: min(88vh, 880px); overflow-y: auto; background: rgba(255,255,255,0.97); border: 1px solid var(--border); border-radius: 6px; font-size: 11px; box-shadow: 0 1px 6px rgba(0,0,0,0.08); }
   #stats-panel.collapsed { max-height: none; overflow: visible; }
@@ -2207,59 +2212,125 @@ const WellsSummary = (() => {
       return true;
     });
   }
-  function periodDefs() {
-    const cy = new Date().getFullYear();
-    return [
-      { k: '1964–2000', lo: 1964, hi: 2000 },
-      { k: '2000–2020', lo: 2000, hi: 2020 },
-      { k: 'Past 5 yr', lo: cy - 4, hi: cy },
-      { k: 'Past 1 yr', lo: cy, hi: cy },
+  const COUNTY_ORDER = ['Pecos', 'Reeves', 'Ward', 'Midland', 'Martin', 'Reagan'];
+  function eraDefs() {
+    // Annual-average buckets: 10-yr increments 1964→1994, then 5-yr 1995→2025+.
+    const a = [
+      { k: '1964–1973', lo: 1964, hi: 1973 },
+      { k: '1974–1983', lo: 1974, hi: 1983 },
+      { k: '1984–1994', lo: 1984, hi: 1994 },
     ];
+    for (let st = 1995; st <= 2025; st += 5) {
+      if (st === 2025) a.push({ k: '2025+', lo: 2025, hi: 9999 });
+      else a.push({ k: st + '–' + (st + 4), lo: st, hi: st + 4 });
+    }
+    return a;
+  }
+  function esc(v) { return String(v == null ? '' : v).replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c])); }
+  function selectionLabel() {
+    const st = filterState[WELLS_ID] || {};
+    const parts = [];
+    const cn = st.county_name;
+    if (Array.isArray(cn) && cn.length) {
+      if (cn.length === 1) parts.push(cn[0] + ' County');
+      else if (cn.length >= 6) parts.push('All 6 counties');
+      else parts.push(cn.slice().sort((a, b) => COUNTY_ORDER.indexOf(a) - COUNTY_ORDER.indexOf(b)).join(', '));
+    }
+    const pf = st.plug_flag;
+    if (Array.isArray(pf) && pf.length === 1) parts.push(pf[0] === 'Y' ? 'Plugged wells' : 'Active wells');
+    else parts.push('Active + plugged');
+    const og = st.oil_gas;
+    if (Array.isArray(og) && og.length === 1) parts.push(og[0] === 'O' ? 'Oil only' : og[0] === 'G' ? 'Gas only' : og[0]);
+    const td = st.total_depth;
+    if (td && (td.min || td.max)) {
+      const mn = td.min, mx = td.max;
+      if (!mn && mx) parts.push('<' + Number(mx).toLocaleString() + ' ft');
+      else if (mn && !mx) parts.push(Number(mn).toLocaleString() + ' ft+');
+      else if (mn && mx) parts.push(Number(mn).toLocaleString() + '–' + Number(mx).toLocaleString() + ' ft');
+    }
+    const sy = st.spud_year;
+    if (Array.isArray(sy) && sy.length) {
+      const ys = sy.map(Number).filter(Number.isFinite).sort((a, b) => a - b);
+      if (ys.length) parts.push(ys[0] === ys[ys.length - 1] ? 'Spud ' + ys[0] : 'Spud ' + ys[0] + '–' + ys[ys.length - 1]);
+    }
+    return parts.length ? parts.join(' · ') : 'Oil & Gas Spud Wells — all selected';
   }
   function compute(rows) {
+    const cy = new Date().getFullYear();
     let oil = 0, gas = 0;
+    const present = new Set();
     const byYear = new Map();
-    const periods = periodDefs().map(p => Object.assign({ span: p.hi - p.lo + 1, pec: 0, oth: 0 }, p));
+    const eras = eraDefs().map(e => Object.assign({ span: Math.max(1, Math.min(e.hi, cy) - e.lo + 1), per: {} }, e));
+    const blank = () => ({ n: 0, o: 0, g: 0 });
     rows.forEach(r => {
       const og = String(r.oil_gas || '');
       if (og === 'O') oil++; else if (og === 'G') gas++;
-      const isPecos = String(r.county_name || '') === 'Pecos';
+      const cty = String(r.county_name || '') || '—';
+      present.add(cty);
       const y = num(r.spud_year); if (y === null) return;
       const yr = Math.trunc(y);
-      let e = byYear.get(yr); if (!e) { e = { n: 0, o: 0, g: 0 }; byYear.set(yr, e); }
-      e.n++; if (og === 'O') e.o++; else if (og === 'G') e.g++;
-      periods.forEach(p => { if (yr >= p.lo && yr <= p.hi) { if (isPecos) p.pec++; else p.oth++; } });
+      let ym = byYear.get(yr); if (!ym) { ym = {}; byYear.set(yr, ym); }
+      let yc = ym[cty] || (ym[cty] = blank());
+      yc.n++; if (og === 'O') yc.o++; else if (og === 'G') yc.g++;
+      for (const e of eras) {
+        if (yr >= e.lo && yr <= e.hi) {
+          let ec = e.per[cty] || (e.per[cty] = blank());
+          ec.n++; if (og === 'O') ec.o++; else if (og === 'G') ec.g++;
+          break;
+        }
+      }
     });
-    return { total: rows.length, oil, gas, years: [...byYear.keys()].sort((a, b) => a - b), byYear, periods };
+    const counties = COUNTY_ORDER.filter(c => present.has(c))
+      .concat([...present].filter(c => !COUNTY_ORDER.includes(c)).sort());
+    return { total: rows.length, oil, gas, counties, years: [...byYear.keys()].sort((a, b) => a - b), byYear, eras };
   }
   function render(s) {
     const pct = (n, d) => d > 0 ? ' (' + (100 * n / d).toFixed(1) + '%)' : '';
-    const nY = s.years.length || 1;
-    const periodTbl = `<div class="ws-body"><div style="font-weight:700;margin:2px 0 4px">Pecos vs. other 5 counties — by period (total &amp; annual avg)</div><table>
-      <thead><tr><th>Period</th><th>Pecos total</th><th>Pecos /yr</th><th>Other-5 total</th><th>Other-5 /yr</th></tr></thead>
-      <tbody>${s.periods.map(p => `<tr><td>${p.k}</td><td>${p.pec.toLocaleString()}</td><td>${(p.pec / p.span).toFixed(1)}</td><td>${p.oth.toLocaleString()}</td><td>${(p.oth / p.span).toFixed(1)}</td></tr>`).join('')}</tbody>
-      </table></div>`;
+    const cs = s.counties.length ? s.counties : ['—'];
+    const multi = cs.length > 1;
+    const pcls = c => (c === 'Pecos' ? ' pecos-col' : '');
+    const sum = obj => { let n = 0, o = 0, g = 0; cs.forEach(c => { const v = obj && obj[c]; if (v) { n += v.n; o += v.o; g += v.g; } }); return { n, o, g }; };
+    // Per-county header cells: county-prefixed only when >1 county selected.
+    const grpHead = unit => cs.map(c => {
+      const k = pcls(c), p = multi ? esc(c) + ' ' : '';
+      return `<th class="cgroup${k}">${p}W</th><th class="${k.trim()}">${p}O</th><th class="${k.trim()}">${p}G</th>` + (unit ? `<th class="${k.trim()}">${p}/yr</th>` : '');
+    }).join('');
+    const cellGrp = (obj, span) => cs.map(c => {
+      const v = (obj && obj[c]) || { n: 0, o: 0, g: 0 }, k = pcls(c);
+      return `<td class="cgroup${k}">${v.n.toLocaleString()}</td><td class="${k.trim()}">${v.o.toLocaleString()}</td><td class="${k.trim()}">${v.g.toLocaleString()}</td>` + (span ? `<td class="${k.trim()}">${(v.n / span).toFixed(1)}</td>` : '');
+    }).join('');
+
+    // Era table — totals + annual average per bucket, per county.
+    const eraRows = s.eras.filter(e => sum(e.per).n > 0).map(e =>
+      `<tr><td>${e.k}</td>${cellGrp(e.per, e.span)}</tr>`).join('');
+    const eraTbl = `<div class="ws-body"><div class="ws-cap">By era — total &amp; annual average (/yr)</div><table>
+      <thead><tr><th>Era</th>${grpHead(true)}</tr></thead>
+      <tbody>${eraRows || `<tr><td colspan="${1 + cs.length * 4}" style="color:var(--muted)">No wells in selection.</td></tr>`}</tbody></table></div>`;
+
     let yearTbl;
     if (s.years.length) {
-      const rows = s.years.map(y => { const e = s.byYear.get(y); return `<tr><td>${y}</td><td>${e.n.toLocaleString()}</td><td>${e.o.toLocaleString()}</td><td>${e.g.toLocaleString()}</td></tr>`; }).join('');
-      yearTbl = `<div class="ws-body"><table>
-        <thead><tr><th>Spud year</th><th>Wells</th><th>Oil</th><th>Gas</th></tr></thead>
-        <tbody>${rows}</tbody>
-        <tfoot>
-          <tr><td>Avg / yr (${s.years[0]}–${s.years[s.years.length - 1]}, ${s.years.length} yrs)</td><td>${(s.total / nY).toFixed(1)}</td><td>${(s.oil / nY).toFixed(1)}</td><td>${(s.gas / nY).toFixed(1)}</td></tr>
-          <tr><td>Total</td><td>${s.total.toLocaleString()}</td><td>${s.oil.toLocaleString()}</td><td>${s.gas.toLocaleString()}</td></tr>
-        </tfoot></table></div>`;
+      const body = s.years.map(y => `<tr><td>${y}</td>${cellGrp(s.byYear.get(y), 0)}</tr>`).join('');
+      const tot = {}; cs.forEach(c => { tot[c] = blankAcc(s, c); });
+      yearTbl = `<div class="ws-body"><div class="ws-cap">By spud year</div><table>
+        <thead><tr><th>Spud year</th>${grpHead(false)}</tr></thead>
+        <tbody>${body}</tbody>
+        <tfoot><tr><td>Total</td>${cellGrp(tot, 0)}</tr></tfoot></table></div>`;
     } else {
       yearTbl = `<div class="ws-body"><div style="color:var(--muted);padding:8px 2px">No wells in the current selection.</div></div>`;
     }
     root.innerHTML = `<div class="ws-head">
-        <span class="ws-title">Oil &amp; Gas Spud Wells — selection summary</span>
+        <span class="ws-title">${esc(selectionLabel())}</span>
         <span class="ws-kpi">Wells <b>${s.total.toLocaleString()}</b></span>
         <span class="ws-kpi">Oil <b>${s.oil.toLocaleString()}</b>${pct(s.oil, s.total)}</span>
         <span class="ws-kpi">Gas <b>${s.gas.toLocaleString()}</b>${pct(s.gas, s.total)}</span>
         <button type="button" class="ws-toggle">${collapsed ? 'Show' : 'Hide'}</button>
-      </div>${periodTbl}${yearTbl}`;
+      </div>${eraTbl}${yearTbl}`;
     root.classList.toggle('collapsed', collapsed);
+  }
+  function blankAcc(s, c) {
+    let n = 0, o = 0, g = 0;
+    s.byYear.forEach(ym => { const v = ym[c]; if (v) { n += v.n; o += v.o; g += v.g; } });
+    return { n, o, g };
   }
   function refresh() {
     let active = false;
