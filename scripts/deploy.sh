@@ -209,6 +209,25 @@ if [ "$PROD_MD5" != "$LOCAL_MD5" ]; then
 fi
 log "[§8.6] verified: root 200, md5 parity local↔prod"
 
+# 6b. [§8.7] Layer-integrity gate. Confirms EVERY layers.yaml layer is live
+# as a non-empty PMTiles tileset on prod before the caller proceeds to the
+# close-out merge. Enforces "never merge a broken deploy". Auto-update relies
+# on this as its unattended guardrail. Escape hatch: VERIFY_LAYERS=0 (only for
+# a known-transient verifier/network fault — never to ship a real regression).
+if [ "${VERIFY_LAYERS:-1}" = "1" ]; then
+  log "[§8.7] verifying all deployed layers (pmtiles tilestats)…"
+  if python3 "$(dirname "$0")/verify_deployed_layers.py" --quiet 1>&2; then
+    log "[§8.7] layer verification PASSED — all layers live, non-empty"
+  else
+    log "[§8.7] ERROR: layer verification FAILED — HALTING before merge."
+    log "[§8.7] Deploy artifact $DEPLOY_ID exists on Netlify but is NOT"
+    log "[§8.7] certified. Do NOT close-out/merge. Investigate, then redeploy."
+    exit 7
+  fi
+else
+  log "[§8.7] SKIPPED (VERIFY_LAYERS=0) — deploy NOT layer-certified"
+fi
+
 # 7. Emit deployId on stdout (single line).
 echo "$DEPLOY_ID"
 log "=== deploy complete ==="
