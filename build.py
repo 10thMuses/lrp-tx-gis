@@ -1030,6 +1030,8 @@ def render_html(layers_config, layer_stats, filter_stats=None):
                     entry['sort_by_count'] = True
                 if s.get('value_labels'):
                     entry['value_labels'] = s['value_labels']
+                if s.get('group_presets'):
+                    entry['group_presets'] = s['group_presets']
             if entry is not None:
                 ff.append(entry)
         clean.append({

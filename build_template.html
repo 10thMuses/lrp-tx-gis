@@ -944,9 +944,19 @@ function filterFieldControlHtml(lid, f) {
     const searchBox = vals.length > 20
       ? `<input class="filter-multi-search" type="text" placeholder="Filter options…" />`
       : '';
+    let groupChips = '';
+    if (Array.isArray(f.group_presets) && f.group_presets.length) {
+      const availNums = vals.map(Number).filter(n => !Number.isNaN(n));
+      groupChips = `<div class="filter-chips">` + f.group_presets.map(g => {
+        const inRange = availNums.filter(n => n >= Number(g.from) && n <= Number(g.to)).map(String);
+        const allSel = inRange.length > 0 && inRange.every(y => selected.has(y));
+        return `<button type="button" class="filter-chip${allSel ? ' active' : ''}" data-group-from="${g.from}" data-group-to="${g.to}">${escapeHtml(g.label)}</button>`;
+      }).join('') + `</div>`;
+    }
     return `<div class="filter-field" data-field="${f.field}" data-type="categorical">
       <details class="filter-multi"${selCount > 0 ? ' open' : ''}>
         <summary>${summaryTxt}</summary>
+        ${groupChips}
         ${searchBox}
         <div class="filter-multi-body">${lis}</div>
       </details>
@@ -1043,6 +1053,28 @@ function bindFilterPanel(panel) {
           syncHash();
           refreshFilterBanner();
       StatsPanel.refresh();
+        });
+      });
+      // Group-preset chips: bulk-select every available value within a range
+      // (e.g. spud-year decade buckets). Toggles, and combinable across chips.
+      fieldEl.querySelectorAll('.filter-chip').forEach(chip => {
+        chip.addEventListener('click', () => {
+          const gf = Number(chip.dataset.groupFrom), gt = Number(chip.dataset.groupTo);
+          filterState[lid] = filterState[lid] || {};
+          const cur = new Set(Array.isArray(filterState[lid][fname]) ? filterState[lid][fname] : []);
+          const avail = [];
+          fieldEl.querySelectorAll('input[type=checkbox]').forEach(c => {
+            const n = Number(c.value);
+            if (!Number.isNaN(n) && n >= gf && n <= gt) avail.push(c.value);
+          });
+          const allSel = avail.length > 0 && avail.every(y => cur.has(y));
+          if (allSel) avail.forEach(y => cur.delete(y)); else avail.forEach(y => cur.add(y));
+          filterState[lid][fname] = Array.from(cur);
+          applyLayerFilter(L);
+          syncHash();
+          refreshFilterBanner();
+          StatsPanel.refresh();
+          refreshPanelInline(panel, L);
         });
       });
       const searchInp = fieldEl.querySelector('input.filter-multi-search');

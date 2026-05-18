@@ -1026,6 +1026,25 @@ layers:
   - field: spud_year
     type: categorical
     label: Spud year (multi-select)
+    group_presets:
+    - label: 1964-1979
+      from: 1964
+      to: 1979
+    - label: 1980-1989
+      from: 1980
+      to: 1989
+    - label: 1990-1999
+      from: 1990
+      to: 1999
+    - label: 2000-2009
+      from: 2000
+      to: 2009
+    - label: 2010-2019
+      from: 2010
+      to: 2019
+    - label: 2020+
+      from: 2020
+      to: 2030
   - field: spud_date
     type: date_range
     label: Spud date
