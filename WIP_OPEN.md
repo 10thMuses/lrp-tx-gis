@@ -9,8 +9,8 @@ item is added. Round/decision-log history is archived in
 
 ## Last deploy
 
-`6a0b3037e1a99c55d1fd0a38` — 2026-05-18. 32 layers (counterparty_assets removed).
-Build clean `built=32 missing=0 errored=0 tiles_total=34003 KB`.
+`6a0b359f839fe364465cc40a` — 2026-05-18. 32 layers. Build clean
+`built=32 missing=0 errored=0 tiles_total=34003 KB`.
 
 Older deploy history: `git log --merges --grep "deploy [0-9a-f]" main`.
 
@@ -69,9 +69,8 @@ confirmation the issue still exists.
 - HIFLD remaining layers; ERCOT deeper geocoding (FERC EQR + PUC CCN); counterparty boundary precision upgrade. Detail in `docs/sprint-plan.md` + archive.
 
 ### UI / UX
-- **`GROUP_ORDER` missing `Energy Infrastructure`** (latent, found 2026-05-18): `build_template.html` `GROUP_ORDER` gates sidebar rendering; the `hifld_*` layers declare `group: Energy Infrastructure`, absent from `GROUP_ORDER`, so they never render in the sidebar (tiles/data build fine). Fix = add `'Energy Infrastructure'` to `GROUP_ORDER` (one-line); deferred — surfaces 4 hifld layers in the sidebar, an operator-visible change to confirm first.
-- No-browser-env note: county_labels (visual) + wells thesis XLSX/PDF (button click) were verified via config/bundle/math re-derivation, not in-browser render — eyeball once on prod to confirm.
-- **`value_labels` not plumbed through `build.py`** (latent, found 2026-05-18): `build_template.html:905` reads `f.value_labels` but `render_html` only forwards `quick_presets`/`sort_by_count` from the yaml spec, so `plug_flag`/`active_flag` filters show raw `Y`/`N`/`A` instead of friendly labels. Cosmetic; fix = add a `value_labels` pass-through beside the `quick_presets` line in `render_html`.
+- ✅ Fixed 2026-05-18: `GROUP_ORDER` += `Energy Infrastructure` (deploy `6a0b3441…` — 4 `hifld_*` layers now render in sidebar); `value_labels` pass-through in `render_html` (deploy `6a0b34a3…` — plug_flag/active_flag show friendly labels).
+- No-browser-env note: county_labels (visual) + the **Spuds Summary (PDF)** export (PDF-only button in the Wells stats panel) verified via config/bundle/math re-derivation, not in-browser render — eyeball once on prod.
 - Standalone-layer filter panels now render (2026-05-18 `build.py` fix): `hifld_*` (and `permits_permian6`, though sidebar-hidden) gained their declared filter UIs — previously silently empty. Intended; noted for awareness.
 - `date_range` filter for eia860_plants/battery/wind needs `yyyy`→`yyyy-01-01` padding in 3 ingest scripts; low priority (numeric year-slider works).
 - Filter inputs 40px on mobile vs 44px WCAG; acceptable per Apple HIG (≥40px); flag if operator testing surfaces hit-rate issues.
