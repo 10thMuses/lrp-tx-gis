@@ -43,3 +43,9 @@ desktop.ini
 # files so the unattended daily-refresh routine cannot commit them.
 data/abatements/abatement_hits_*.csv
 !data/abatements/abatement_hits_20260424_092810.csv
+
+# RRC W-1 1976-2017 permits backfill scratch + checkpoints (re-derivable from
+# scripts/scrape_rrc_w1*.py; merged into permits_permian6 at parse time, not a
+# committed layer source). Ignored so the unattended daily-refresh routine and
+# accidental `git add` cannot commit them.
+outputs/refresh/rrc_w1_*

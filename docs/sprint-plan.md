@@ -28,12 +28,6 @@ Permian-core (Andrews, Ector, Glasscock, Loving, Martin, Midland, Ward, Winkler)
 
 ---
 
-## POWER PLANT POPUP REDESIGN
-
-Detail moved to `WIP_OPEN.md` `## Next chat` (Chat 96) — field contract per layer is in the Next chat block. This section deletes when Chat 96 ships.
-
----
-
 ## DC RESEARCH → DC BUILD → DC AUTO-REFRESH (3-chat sub-sequence)
 
 Research anchors: Longfellow/Poolside (Pecos), Stargate (Abilene), Project Matador/Fermi. Capture per-project: name, county, coords, MW, announcement date, completion date, owner/operator/developer, tenant, source, confidence level. Deliver structured data file → layer build → GitHub Actions weekly refresh with LLM-in-the-loop parser.
