@@ -26,8 +26,8 @@ unblocked item on a fresh `refinement-<slug>` branch per `OPERATING.md §4`.
 Operator-set order (2026-05-18):
 
 1. ~~Doc/audit hygiene — WIP_OPEN trim, sprint-plan dead-pointer removal, rrc_w1 gitignore, stranded-branch delete~~ (this branch).
-2. **Counties outline color review** — `## Active sprints`.
-3. **Mobile popup audit** — `## Active sprints`.
+2. ~~Counties outline color review~~ — shipped 2026-05-18, deploy `6a0b19d913992206825a7f2f` (`#fbbf24`→`#64748b`, Reference slate-500).
+3. ~~Mobile popup audit~~ — verified clean 2026-05-18, no deploy: `60vh` cap + `overflow-y:auto` + `-webkit-overflow-scrolling:touch` + `overflow-wrap:anywhere` present at ≤768px; `ercotQueuePopupHtml`/generic `tax_abatements`/`abatementAnnotationHtml` builders use only cosmetic inline styles — none defeats the cap (this branch).
 4. **Wells `filterable_fields` expansion + hide `permits_permian6`** — add filters covering every `wells_permian6` data column; hide the permits layer (wells covers the same 6-county extent). `layers.yaml` (+ `build_template.html` if filter rendering needs it). High blast radius — full §5 acceptance protocol.
 
 ---
@@ -50,27 +50,12 @@ Operator-set order (2026-05-18):
 
 **Acceptance:** `coords_source = manual_override` rows in built registry equal CSV row count; aggregate solar+wind+battery match rate logged and improved vs Stage 2; no regression in Stage 1+2 rows.
 
-### Counties color holistic contrast review
-
-`#fbbf24` (amber) was a time-pressure basemap-universal hotfix. Review against
-`satellite`, `carto_light`, and dark basemaps; check clash with hyperscale
-campus strokes (`la_escalera`, `gw_ranch`, `longfellow_ranch`) and
-`tiger_highways` amber. Pick a color that survives all three basemaps without
-competing with overlays. Pure `layers.yaml` edit + visual review.
-
 ### county_labels render review
 
 If operator-named counties still appear unlabeled at zoom 7–9, inspect MapLibre
 `text-allow-overlap` / `symbol-sort-key` / `text-padding` on the county_labels
 source-layer config in `build_template.html`. Conditional on visual
 confirmation the issue still exists.
-
-### Mobile popup audit
-
-Remaining mobile risk is feature-popup density: `ercot_queue` group-aggregation
-popup (many breakdown rows); `tax_abatements` popup (long text fields). Verify
-`60vh` max-height + scroll behavior holds at mobile widths against the
-worst-offender popups. Diagnostic-first; if no issues found, no deploy needed.
 
 ---
 
@@ -85,7 +70,6 @@ worst-offender popups. Diagnostic-first; if no issues found, no deploy needed.
 - HIFLD remaining layers; ERCOT deeper geocoding (FERC EQR + PUC CCN); counterparty boundary precision upgrade. Detail in `docs/sprint-plan.md` + archive.
 
 ### UI / UX
-- Counties outline color `#fbbf24` revisit (active sprint above).
 - `date_range` filter for eia860_plants/battery/wind needs `yyyy`→`yyyy-01-01` padding in 3 ingest scripts; low priority (numeric year-slider works).
 - Filter inputs 40px on mobile vs 44px WCAG; acceptable per Apple HIG (≥40px); flag if operator testing surfaces hit-rate issues.
 
