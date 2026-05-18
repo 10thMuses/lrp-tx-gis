@@ -975,7 +975,6 @@ layers:
   default_on: false
   min_zoom: 7
   radius: 2
-  exclude_within: caramba_north
   min_spud_year: 1964
   popup:
   - api_no
