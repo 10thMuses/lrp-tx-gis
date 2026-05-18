@@ -23,19 +23,11 @@ restructure. The canonical queue is this section plus `## Active sprints`.
 Resume trigger `resume.` = clone, read this `## Queue`, execute the top
 unblocked item on a fresh `refinement-<slug>` branch per `OPERATING.md §4`.
 
-Operator-set order (2026-05-18):
+**2026-05-18 — two operator batches, all shipped** (deploy IDs + full detail in `git log --merges`):
+- Batch 1: doc/audit hygiene · counties `#fbbf24`→`#64748b` · mobile-popup audit (clean) · wells `filterable_fields` +8 / `permits_permian6` `sidebar_omit` (+`build.py` standalone-ndjson fix).
+- Batch 2: county_labels visibility · removed `counterparty_assets` (33→32) · wells own `Wells` group / −5 filters / `exclude_within` Caramba (−9 wells) · wells spud thesis XLSX+PDF export (+`write_stats_attrs` ndjson source).
 
-1. ~~Doc/audit hygiene — WIP_OPEN trim, sprint-plan dead-pointer removal, rrc_w1 gitignore, stranded-branch delete~~ (this branch).
-2. ~~Counties outline color review~~ — shipped 2026-05-18, deploy `6a0b19d913992206825a7f2f` (`#fbbf24`→`#64748b`, Reference slate-500).
-3. ~~Mobile popup audit~~ — verified clean 2026-05-18, no deploy: `60vh` cap + `overflow-y:auto` + `-webkit-overflow-scrolling:touch` + `overflow-wrap:anywhere` present at ≤768px; `ercotQueuePopupHtml`/generic `tax_abatements`/`abatementAnnotationHtml` builders use only cosmetic inline styles — none defeats the cap (this branch).
-4. ~~Wells `filterable_fields` expansion + hide `permits_permian6`~~ — shipped 2026-05-18, deploy `6a0b1ef0db3e0f1a8a6beb91`. `wells_permian6` now has all 15 data columns filterable (added `spud_year`+presets, `spud_date`/`completion_date` date_range, `active_flag`, `api_no`/`well_no`/`lease_no`/`newest_permit_no`); `permits_permian6` `sidebar_omit:true` (data/PMTiles/scrubber/saved-views retained). Root-cause `build.py` fix: standalone-layer ndjson now persists in `SPLIT_DIR` so `compute_filter_stats` sees it — also populated the previously-empty declared filters on `permits_permian6` + the `hifld_*` layers.
-
-### Second operator batch — 2026-05-18 (all shipped)
-
-5. ~~county_labels visibility~~ — deploy `6a0b2bd6ece28547614e1ac0`. Root cause: `text_halo:false` + darkest `#0f172a` on the `esri_imagery` satellite default = zero contrast at every zoom. Fix: white text + dark halo, halo-width 1→2, min_zoom 5→4.
-6. ~~Remove counterparty_assets entirely~~ — deploy `6a0b2cf383df2d701c6aab54`. Layer + 4 features (combined_geoms 6709→6705, atomic) + doc rows. **33→32 layers.**
-7. ~~Wells own group + drop 5 filters + exclude Caramba-North wells~~ — deploy `6a0b2e223f0bbb5173a21c07`. `group: Permits`→`Wells` (+GROUP_ORDER); dropped county_role/api_no/well_no/lease_no/newest_permit_no; declarative `exclude_within` in `build.py` (ray-cast PIP, no dep) removed **9** wells inside `caramba_north`.
-8. ~~Wells spud thesis summary export~~ — deploy `6a0b3037e1a99c55d1fd0a38`. Filtered XLSX (About/Summary-by-county/Spud-per-yr total+oil+gas) + print-to-PDF, always 6-county split. `write_stats_attrs` reads post-build ndjson (cache == mapped wells). Verified: Pecos 143.1 spud/yr vs peer 218.3/county/yr; Pecos 37.9% plugged vs peer 30.9%.
+No pending operator-queued items — see `## Active sprints` + `## Backlog`.
 
 ---
 
