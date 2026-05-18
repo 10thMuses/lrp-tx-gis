@@ -1,72 +1,67 @@
-# Shallow (<3,000  ft) Drilling Near the Caramba North Tract — Vibration-Risk Analysis
+# Shallow (<3,000 ft) Oil-and-Gas Drilling at and Near the Caramba North Tract — Historical and Recent Record
 
-**Prepared:** 2026-05-18 · **Classification:** Confidential — prepared in connection with the Pecos County land transaction · **Subject site:** Caramba North tract (~1,300 ac), Pecos County, TX — centroid ≈ 30.9032° N, 102.9747° W
+**Prepared:** 2026-05-18 · **Subject site:** Caramba North tract (~1,300 ac), Pecos County, TX — centroid ≈ 30.9032° N, 102.9747° W · **Classification:** Confidential
 
-## Question presented
+## Purpose
 
-The prospective buyer has raised a concern that **shallow oil-and-gas drilling in Pecos County — specifically wells less than 3,000 ft deep — could generate ground vibration that interferes with the operation of a data center the buyer intends to build on the Caramba North tract.** This memorandum tests that concern against the Railroad Commission of Texas (RRC) wellbore and spud record.
+This memorandum summarizes the historical and recent record of shallow oil-and-gas drilling — wells less than 3,000 ft total depth — at and in the vicinity of the Caramba North tract, drawn from the Railroad Commission of Texas (RRC) wellbore and drilling-permit records. It is provided as factual context for evaluating potential ground-vibration considerations for a data-center development on the site.
 
-## Bottom line
+## Summary of findings
 
-**The drilling record does not support a material risk that shallow (<3,000 ft) drilling will occur at, or close enough to, the Caramba North tract to affect data-center operations.** Shallow drilling in the immediate vicinity of the site is a *legacy* activity that effectively ceased decades ago, and the small number of nearby legacy wells are predominantly plugged and abandoned — i.e., not operating sources of any vibration. The buyer's concern, while understandable as a general matter, is not borne out by the actual drilling history at this location.
-
-The findings below are deliberately scoped and stated conservatively so they remain defensible: shallow drilling *does* continue elsewhere in Pecos County (a ~4,700-square-mile county), but the operative question for a site-specific vibration concern is **proximity and recency**, and on those measures the record is clear.
+Shallow (<3,000 ft) drilling at and around the Caramba North tract is a legacy activity that has effectively ceased in the immediate vicinity of the site. There is no shallow well within one mile of the tract; no shallow well has been spudded within two miles since 2002; and the few nearby legacy wells are predominantly plugged and abandoned. Shallow drilling does continue elsewhere in Pecos County, but it is concentrated well away from the site — of the shallow wells spudded county-wide since 2020, roughly 98% are more than fifteen miles from the tract, at a median distance of about sixty miles. Separately, the wells at issue (under 3,000 ft) are, by the depth structure of the Permian/Delaware Basin, conventional vertical wellbores; modern horizontal development targets deep producing benches several thousand feet below, not shallow intervals.
 
 ## Findings
 
-### 1. On the Caramba North tract itself: no modern shallow drilling
+### 1. On the Caramba North tract
 
-Nine wellbore records fall inside the tract boundary. Of these:
+The shallowest wellbores recorded inside the tract boundary:
 
 | Depth (ft) | Spud year | Status | Oil/Gas |
 |---|---|---|---|
-| 2,873 | 1960 | Plugged & abandoned | Gas |
-| 3,067 | 1991 | Plugged & abandoned | Oil |
-| 3,109 | 1957 | Plugged & abandoned | Oil |
-| 3,186 | 1987 | Plugged & abandoned | Oil |
+| 2,873 | 1960 | Plugged &amp; abandoned | Gas |
+| 3,067 | 1991 | Plugged &amp; abandoned | Oil |
+| 3,109 | 1957 | Plugged &amp; abandoned | Oil |
+| 3,186 | 1987 | Plugged &amp; abandoned | Oil |
 | 3,250 | 2008 | Active | Oil |
-| 22,545 | 1978 | Plugged & abandoned | Gas |
-| — | — | undrilled location record | — |
-| — | — | undrilled location record | — |
-| — | — | undrilled location record | — |
 
-- **Exactly one well on the tract is below the buyer's 3,000-ft threshold: a 2,873-ft well spudded in 1960 — drilled 66 years ago and long since plugged and abandoned.**
-- The only non-plugged, depth-recorded well on the tract (3,250 ft, spudded 2008) is **deeper than the 3,000-ft threshold the concern is premised on**, and was drilled 18 years ago.
-- There has been **no shallow (<3,000 ft) drilling on the Caramba North tract in the modern era at all.**
+Only one well on the tract lies below 3,000 ft — a 2,873-ft well spudded in 1960 and long since plugged and abandoned. The only active well on the tract (3,250 ft, spudded 2008) is deeper than 3,000 ft. There has been no shallow (<3,000 ft) drilling on the tract in the modern era. *(The remaining tract records are a single deep 22,545-ft wellbore and permitted-but-undrilled location entries.)*
 
-### 2. Within 1 mile of the site: zero shallow wells
+### 2. Within 1 mile — no shallow wells
 
-Only three wellbores of any depth sit within one mile of the tract centroid, and **none is a shallow (<3,000 ft) well.** The area immediately surrounding the proposed data center has no shallow-well drilling history.
+Three wellbores of any depth lie within one mile of the tract; **none is shallow (<3,000 ft).**
 
-### 3. Within 2 miles: shallow drilling ended ~24 years ago
+### 3. Within 2 miles — shallow drilling ended roughly 24 years ago
 
-Of the ~46 wellbores within two miles, every well shallower than 3,000 ft was spudded between **1957 and 2002**. The **most recent shallow spud within two miles was in 2002** — and that well is plugged. The large majority of the within-2-mile shallow wells are plugged and abandoned; the handful still un-plugged were drilled in **1970 and 1988**. There is **no active, and no recent, shallow drilling within two miles of the site.**
+Of about 46 wellbores within two miles, the ten shallow wells were spudded between 1960 and 2002. The most recent shallow spud within two miles was in 2002, and most of these wells are plugged and abandoned. No shallow well has been spudded within two miles in roughly a quarter-century.
 
-### 4. Within 5 miles: only three shallow spuds in the last decade
+### 4. Within 5, 10, and 15 miles
 
-Within five miles there are 496 wellbores (131 shallow). Shallow spuds since 2015 number **three** — all drilled in **2022**, all at **1,700 ft**, and all located **2.2–3.7 miles** from the tract (none closer than 2.2 mi). Across the last ~16 years there have been six shallow spuds within five miles. The nearest shallow well of any vintage is 1.05 miles away and was spudded in 1966 (plugged).
+| Radius | Wells (all depths) | Shallow (<3,000 ft) | Shallow spudded ≥ 2020 | Of shallow, plugged | Shallow spud-year range |
+|---|---|---|---|---|---|
+| ≤ 5 mi | 496 | 131 | 3 | 88 | 1954–2022 |
+| ≤ 10 mi | 1,152 | 239 | 7 | 148 | 1953–2025 |
+| ≤ 15 mi | 1,757 | 268 | 14 | 166 | 1953–2025 |
 
-### 5. The nearest *active* shallow wells are 55-year-old wellbores, not active drilling
+Recent (post-2015) shallow wells appear only beyond about two miles. The nearest recent shallow well is 2.2 miles from the tract (2022). Within five miles, only three shallow wells have been drilled since 2015.
 
-A vibration source is an **operating drill rig**, not a completed (or plugged) wellbore. The nearest non-plugged shallow wells to the site were spudded in **1970 (1.28 mi)** and **1988 (1.97 mi, 2.04 mi)** — decades-old completions, not drilling activity. The nearest *recent* shallow well (2022) is 2.2 miles away. No active shallow **drilling** is occurring adjacent to the tract.
+### 5. The nearest active wells are decades-old completions
 
-## Why this answers the buyer's concern
+The nearest non-plugged shallow wells were spudded in 1970 (1.28 mi) and 1988 (1.97 mi) — decades-old completions, not active drilling. A ground-vibration source is an operating drill rig; a plugged or long-completed wellbore is not. No active shallow drilling is occurring adjacent to the tract.
 
-The buyer's worry depends on a factual premise: that shallow (<3,000 ft) **drilling** is occurring, or is likely to occur, close enough to the Caramba North site to transmit operationally significant vibration to a data center. The RRC record refutes that premise at this location:
+### 6. County-wide context
 
-- **On-site:** one shallow well, drilled in 1960, plugged. No modern shallow drilling on the tract.
-- **0–1 mi:** no shallow wells at all.
-- **0–2 mi:** no shallow spud since 2002; nearest still-active shallow wells date to 1970/1988.
-- **0–5 mi:** only three shallow spuds in the past decade, all in 2022, all ≥2.2 mi away.
+556 shallow (<3,000 ft) wells were spudded across Pecos County (~4,700 sq mi) since 2020. Of these, **only 7 are within ten miles of the Caramba North tract and 14 within fifteen miles; the remaining 542 — about 98% — are more than fifteen miles away, at a median distance of roughly sixty miles.** Shallow drilling in the county continues, but in areas well removed from the site. The RRC drilling-permit record points the same way: only 27 drilling permits of any kind sit within ten miles of the tract, and none has been filed within ten miles since 2020.
 
-Ground vibration from drilling attenuates rapidly with distance and has no source at all from a plugged or long-completed well. With no shallow drilling on or within a mile of the tract, none within two miles for roughly a quarter-century, and only a sparse, distant 2022 cluster within five miles, the drilling record provides **strong affirmative support** for the position that shallow-drilling vibration is not a credible threat to data-center operations at Caramba North.
+### 7. The shallow wells at issue are vertical, not horizontal
+
+Modern high-intensity drilling — and the ground vibration associated with it — is a feature of long-lateral **horizontal** wells, which in the Permian/Delaware Basin target deep producing zones. In the Pecos drilling-permit record, fewer than 11% of permitted wells are shallower than 3,000 ft, while roughly half target depths of 10,000 ft or more, and the median permitted total depth is well over 8,000 ft. Horizontal laterals are not targeted at shallow (<3,000 ft) intervals. The sub-3,000-ft wells that are the subject of this memorandum are therefore, by the depth structure of the basin, **conventional vertical wellbores** — a fundamentally lower-intensity activity than the deep horizontal development that characterizes modern drilling. *(See limitations for the basis of this characterization.)*
 
 ## Scope, method, and limitations (read before relying on this)
 
-- **Source.** RRC dbo900 Full Wellbore extract as carried in the LRP Texas Energy GIS dataset (`data/wells_permian6.csv`), filtered to `county_name = Pecos`. Caramba North geometry and centroid taken from the project's `combined_geoms.geojson`. Distances are great-circle from the tract centroid; in-tract membership is exact point-in-polygon.
-- **"Shallow" = total reported depth < 3,000 ft**, matching the buyer's stated threshold. A <2,000-ft cut and a ≤3,000-ft cut were also run and do not change the conclusions.
-- **Data completeness.** Roughly 40% of Pecos wellbore records in the RRC extract lack a recorded total depth, and a small number lack a spud year. County-wide shallow *counts* are therefore conservative lower bounds among depth-known wells. The proximity and recency findings around Caramba rely on the geolocated records directly and are robust to the missing-depth records (a well with no recorded depth is not counted as shallow).
-- **County-wide context, stated for candor.** Shallow drilling continues in other parts of Pecos County — roughly 556 shallow spuds county-wide since 2020. This memo does **not** claim shallow drilling has stopped in Pecos County; it establishes that it is not occurring at or adjacent to the Caramba North site, which is the only question relevant to a site-specific vibration concern.
-- **This is a drilling-record analysis, not a geotechnical study.** It quantifies the likelihood, recency, depth, and proximity of shallow drilling — the factual premise of the concern. It does not model vibration propagation through site soils; that separate analysis, if commissioned, would only reinforce the conclusion, since vibration cannot propagate from drilling that is not occurring near the site.
+- **Source.** RRC dbo900 Full Wellbore extract and RRC W-1 drilling-permit extract, as carried in the LRP Texas Energy GIS dataset (`data/wells_permian6.csv`, `data/permits_permian6.csv`), filtered to `county_name = Pecos`. Caramba North geometry and centroid taken from `combined_geoms.geojson`. Distances are great-circle from the tract centroid; in-tract membership is exact point-in-polygon.
+- **"Shallow" = total reported depth < 3,000 ft.** A < 2,000-ft cut and a ≤ 3,000-ft cut were also run and do not change the conclusions.
+- **Well orientation.** The RRC wellbore (drilled-well) extract does **not** record a vertical/horizontal designation. The drilling-permit extract nominally carries a wellbore-profile field, but it is derived by a text/byte heuristic that yields an implausible ~50/50 split and is **not reliable enough to cite directly.** The vertical-vs-horizontal characterization in Finding 7 therefore rests on a directly recorded field — total depth — and well-established basin geology: in the Permian/Delaware Basin, horizontal development targets deep benches (thousands of feet below 3,000 ft) drilled with mile-plus laterals, whereas sub-3,000-ft wells are conventional vertical wellbores. The depth distribution of the Pecos permit record (under 11% below 3,000 ft; about half at or beyond 10,000 ft) is consistent with this and does not depend on the unreliable profile flag.
+- **Data completeness.** Roughly 40% of Pecos wellbore records in the RRC extract lack a recorded total depth, and a small number lack a spud year. County-wide shallow *counts* are therefore conservative lower bounds among depth-known wells. The proximity and recency findings rely on the geolocated records directly and are robust to the missing-depth records (a well with no recorded depth is not counted as shallow).
+- **Drilling-record analysis, not a geotechnical study.** This memorandum quantifies the location, depth, recency, and status of drilling at and near the site. It does not model vibration propagation through site soils; that is a separate engineering analysis.
 
-*Reproduce: `data/wells_permian6.csv` + `combined_geoms.geojson`; analysis scripts archived with this report.*
+*Reproduce: `data/wells_permian6.csv`, `data/permits_permian6.csv`, `combined_geoms.geojson`; analysis scripts archived with this report (`pecos_shallow_analysis.py`, `pecos_caramba_vicinity.py`, `pecos_v2_rings_permits.py`).*
