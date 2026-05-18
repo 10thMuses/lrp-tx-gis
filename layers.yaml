@@ -968,13 +968,14 @@ layers:
 - id: wells_permian6
   file: data/wells_permian6.csv
   geom: point
-  group: Permits
+  group: Wells
   label: Wells (6-county Permian, active + plugged)
   description: "All RRC wellbores in 6-county Permian scope (active + plugged/abandoned). Use the status filter to switch views. Plugged wells are the visible legacy infrastructure that demonstrates drilling-era completion. Subject \u2014 Pecos, Reeves, Ward. Active Permian peer \u2014 Midland, Martin, Reagan. Source dbf900.txt Full Wellbore ASCII (weekly). ~99,224 wells."
   color: '#6b21a8'
   default_on: false
   min_zoom: 7
   radius: 2
+  exclude_within: caramba_north
   popup:
   - api_no
   - county_name
@@ -1007,9 +1008,6 @@ layers:
   - field: county_name
     type: categorical
     label: County
-  - field: county_role
-    type: categorical
-    label: Role (subject/peer)
   - field: oil_gas
     type: categorical
     label: Oil/Gas
@@ -1129,18 +1127,6 @@ layers:
     label: Active flag
     value_labels:
       A: A = Active (RRC WBCOMPL marker)
-  - field: api_no
-    type: text
-    label: API no.
-  - field: well_no
-    type: text
-    label: Well no.
-  - field: lease_no
-    type: text
-    label: Lease no.
-  - field: newest_permit_no
-    type: text
-    label: Newest drilling permit
   tippecanoe:
   - -zg
   - -r1

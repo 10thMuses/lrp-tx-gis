@@ -485,6 +485,69 @@ def csv_to_ndgeojson(csv_path, out_path):
     return n_total, n_written
 
 
+def _load_exclusion_polys(layer_id):
+    """Polygon rings for `layer_id` from its split ndjson (written by
+    split_combined_geojson before the build_layer loop). Returns a list of
+    polygons; each polygon a list of rings; each ring a list of [x, y].
+    Handles Polygon + MultiPolygon. Empty list if unavailable."""
+    nd = SPLIT_DIR / f'{layer_id}.ndjson'
+    polys = []
+    if not nd.exists():
+        return polys
+    with open(nd, 'r', encoding='utf-8') as fin:
+        for line in fin:
+            try:
+                g = json.loads(line).get('geometry') or {}
+            except Exception:
+                continue
+            t, c = g.get('type'), g.get('coordinates')
+            if t == 'Polygon' and c:
+                polys.append(c)
+            elif t == 'MultiPolygon' and c:
+                polys.extend(c)
+    return polys
+
+
+def _pt_in_polys(x, y, polys):
+    """Even-odd ray cast. True if (x, y) is inside any polygon. Crossings
+    accumulate across all rings of a polygon so holes are respected."""
+    for poly in polys:
+        inside = False
+        for ring in poly:
+            n = len(ring)
+            j = n - 1
+            for i in range(n):
+                xi, yi = ring[i][0], ring[i][1]
+                xj, yj = ring[j][0], ring[j][1]
+                if ((yi > y) != (yj > y)) and \
+                   (x < (xj - xi) * (y - yi) / (yj - yi) + xi):
+                    inside = not inside
+                j = i
+        if inside:
+            return True
+    return False
+
+
+def _exclude_within(nd_path, polys):
+    """Drop ndjson point features whose coordinate is inside `polys`.
+    Atomic rewrite (temp + os.replace). Returns count removed."""
+    removed = 0
+    tmp = str(nd_path) + '.tmp'
+    with open(nd_path, 'r', encoding='utf-8') as fin, \
+         open(tmp, 'w', encoding='utf-8') as fout:
+        for line in fin:
+            try:
+                xy = json.loads(line)['geometry']['coordinates']
+            except Exception:
+                fout.write(line)
+                continue
+            if _pt_in_polys(xy[0], xy[1], polys):
+                removed += 1
+                continue
+            fout.write(line)
+    os.replace(tmp, nd_path)
+    return removed
+
 
 def dc_anchors_to_ndgeojson(json_path, out_path):
     """Custom loader for data/datacenters/dc_anchors.json.
@@ -699,6 +762,13 @@ def build_layer(layer, report, split_stats):
             n_total, n_written = dc_anchors_to_ndgeojson(src, nd)
         else:
             n_total, n_written = geojson_to_ndgeojson(src, nd)
+        ex = layer.get('exclude_within')
+        if ex:
+            polys = _load_exclusion_polys(ex)
+            if polys:
+                n_excl = _exclude_within(nd, polys)
+                n_written -= n_excl
+                print(f'  {lid}: exclude_within {ex} removed {n_excl} features')
         if n_written == 0:
             report.append((lid, n_total, 0, 'EMPTY', src.name))
             return None
