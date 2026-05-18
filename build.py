@@ -688,7 +688,10 @@ def build_layer(layer, report, split_stats):
     if src is None:
         report.append((lid, 0, 0, 'MISSING', file_rel))
         return None
-    nd = TMP / f'{lid}.ndjson'
+    # Persist into SPLIT_DIR (like combined-split ndjson) so compute_filter_stats
+    # can read it — standalone layers declare filterable_fields too. SPLIT_DIR is
+    # wiped at the next build start, so this does not grow unbounded.
+    nd = SPLIT_DIR / f'{lid}.ndjson'
     try:
         if src.suffix.lower() == '.csv':
             n_total, n_written = csv_to_ndgeojson(src, nd)
@@ -707,10 +710,6 @@ def build_layer(layer, report, split_stats):
     except Exception as e:
         report.append((lid, 0, 0, 'ERROR', str(e)[:80]))
         return None
-    finally:
-        if nd.exists():
-            try: nd.unlink()
-            except Exception: pass
 
 
 # ---------- HTML + NETLIFY ----------
