@@ -1000,6 +1000,8 @@ def render_html(layers_config, layer_stats, filter_stats=None):
                     entry['quick_presets'] = s['quick_presets']
                 if s.get('sort_by_count'):
                     entry['sort_by_count'] = True
+                if s.get('value_labels'):
+                    entry['value_labels'] = s['value_labels']
             if entry is not None:
                 ff.append(entry)
         clean.append({
