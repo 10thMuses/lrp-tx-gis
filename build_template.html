@@ -283,15 +283,6 @@
     <label for="saved-views-select">Views</label>
     <select id="saved-views-select" aria-label="Saved thesis views">
       <option value="">— pick a saved view —</option>
-      <option value="all_permits">All permits, 1976-present</option>
-      <option value="permits_recent10">Permits in last 10 years</option>
-      <option value="permits_recent10_sale">Permits in last 10 years, sale-area only</option>
-      <option value="permits_recent10_peer">Permits in last 10 years, peer counties only</option>
-      <option value="wells_pre1990">Wells drilled before 1990 (legacy shallow infra)</option>
-      <option value="permits_deep10k">New permits targeting &gt; 10,000 ft (deep zone only)</option>
-      <option value="wells_active">Active wells, current</option>
-      <option value="wells_plugged">Plugged and abandoned wells (legacy infrastructure)</option>
-      <option value="compare_depth_since2015">Sale-area vs. peer, depth comparison since 2015</option>
     </select>
   </div>
   <div id="layer-groups"></div>
@@ -2216,26 +2207,42 @@ const WellsSummary = (() => {
       return true;
     });
   }
+  function periodDefs() {
+    const cy = new Date().getFullYear();
+    return [
+      { k: '1964–2000', lo: 1964, hi: 2000 },
+      { k: '2000–2020', lo: 2000, hi: 2020 },
+      { k: 'Past 5 yr', lo: cy - 4, hi: cy },
+      { k: 'Past 1 yr', lo: cy, hi: cy },
+    ];
+  }
   function compute(rows) {
     let oil = 0, gas = 0;
     const byYear = new Map();
+    const periods = periodDefs().map(p => Object.assign({ span: p.hi - p.lo + 1, pec: 0, oth: 0 }, p));
     rows.forEach(r => {
       const og = String(r.oil_gas || '');
       if (og === 'O') oil++; else if (og === 'G') gas++;
+      const isPecos = String(r.county_name || '') === 'Pecos';
       const y = num(r.spud_year); if (y === null) return;
       const yr = Math.trunc(y);
       let e = byYear.get(yr); if (!e) { e = { n: 0, o: 0, g: 0 }; byYear.set(yr, e); }
       e.n++; if (og === 'O') e.o++; else if (og === 'G') e.g++;
+      periods.forEach(p => { if (yr >= p.lo && yr <= p.hi) { if (isPecos) p.pec++; else p.oth++; } });
     });
-    return { total: rows.length, oil, gas, years: [...byYear.keys()].sort((a, b) => a - b), byYear };
+    return { total: rows.length, oil, gas, years: [...byYear.keys()].sort((a, b) => a - b), byYear, periods };
   }
   function render(s) {
     const pct = (n, d) => d > 0 ? ' (' + (100 * n / d).toFixed(1) + '%)' : '';
     const nY = s.years.length || 1;
-    let body;
+    const periodTbl = `<div class="ws-body"><div style="font-weight:700;margin:2px 0 4px">Pecos vs. other 5 counties — by period (total &amp; annual avg)</div><table>
+      <thead><tr><th>Period</th><th>Pecos total</th><th>Pecos /yr</th><th>Other-5 total</th><th>Other-5 /yr</th></tr></thead>
+      <tbody>${s.periods.map(p => `<tr><td>${p.k}</td><td>${p.pec.toLocaleString()}</td><td>${(p.pec / p.span).toFixed(1)}</td><td>${p.oth.toLocaleString()}</td><td>${(p.oth / p.span).toFixed(1)}</td></tr>`).join('')}</tbody>
+      </table></div>`;
+    let yearTbl;
     if (s.years.length) {
       const rows = s.years.map(y => { const e = s.byYear.get(y); return `<tr><td>${y}</td><td>${e.n.toLocaleString()}</td><td>${e.o.toLocaleString()}</td><td>${e.g.toLocaleString()}</td></tr>`; }).join('');
-      body = `<div class="ws-body"><table>
+      yearTbl = `<div class="ws-body"><table>
         <thead><tr><th>Spud year</th><th>Wells</th><th>Oil</th><th>Gas</th></tr></thead>
         <tbody>${rows}</tbody>
         <tfoot>
@@ -2243,7 +2250,7 @@ const WellsSummary = (() => {
           <tr><td>Total</td><td>${s.total.toLocaleString()}</td><td>${s.oil.toLocaleString()}</td><td>${s.gas.toLocaleString()}</td></tr>
         </tfoot></table></div>`;
     } else {
-      body = `<div class="ws-body"><div style="color:var(--muted);padding:8px 2px">No wells in the current selection.</div></div>`;
+      yearTbl = `<div class="ws-body"><div style="color:var(--muted);padding:8px 2px">No wells in the current selection.</div></div>`;
     }
     root.innerHTML = `<div class="ws-head">
         <span class="ws-title">Oil &amp; Gas Spud Wells — selection summary</span>
@@ -2251,7 +2258,7 @@ const WellsSummary = (() => {
         <span class="ws-kpi">Oil <b>${s.oil.toLocaleString()}</b>${pct(s.oil, s.total)}</span>
         <span class="ws-kpi">Gas <b>${s.gas.toLocaleString()}</b>${pct(s.gas, s.total)}</span>
         <button type="button" class="ws-toggle">${collapsed ? 'Show' : 'Hide'}</button>
-      </div>${body}`;
+      </div>${periodTbl}${yearTbl}`;
     root.classList.toggle('collapsed', collapsed);
   }
   function refresh() {
@@ -2399,56 +2406,34 @@ function activeLayerIds() {
 //   layers:  array of layer ids to make active (replaces current selection)
 //   filters: object keyed by layer id with that layer's filter state
 //   scrubber: optional year to set on the time-series scrubber (null = full history)
-const SAVED_VIEWS = {
-  all_permits: {
-    layers: ['permits_permian6'],
-    filters: {},
-    scrubber: null,
-  },
-  permits_recent10: {
-    layers: ['permits_permian6'],
-    filters: { permits_permian6: { permit_year: { min: String(new Date().getFullYear() - 10), max: '' } } },
-    scrubber: null,
-  },
-  permits_recent10_sale: {
-    layers: ['permits_permian6'],
-    filters: { permits_permian6: { permit_year: { min: String(new Date().getFullYear() - 10), max: '' }, county_role: ['subject'] } },
-    scrubber: null,
-  },
-  permits_recent10_peer: {
-    layers: ['permits_permian6'],
-    filters: { permits_permian6: { permit_year: { min: String(new Date().getFullYear() - 10), max: '' }, county_role: ['peer'] } },
-    scrubber: null,
-  },
-  wells_pre1990: {
-    layers: ['wells_permian6'],
-    filters: { wells_permian6: { completion_year: { min: '', max: '1989' } } },
-    scrubber: null,
-  },
-  permits_deep10k: {
-    layers: ['permits_permian6'],
-    filters: { permits_permian6: { total_depth: { min: '10000', max: '' } } },
-    scrubber: null,
-  },
-  wells_active: {
-    layers: ['wells_permian6'],
-    filters: { wells_permian6: { plug_flag: ['N'] } },
-    scrubber: null,
-  },
-  wells_plugged: {
-    layers: ['wells_permian6'],
-    filters: { wells_permian6: { plug_flag: ['Y'] } },
-    scrubber: null,
-  },
-  compare_depth_since2015: {
-    layers: ['permits_permian6', 'wells_permian6'],
-    filters: {
-      permits_permian6: { permit_year: { min: '2015', max: '' } },
-      wells_permian6: { completion_year: { min: '2015', max: '' } },
-    },
-    scrubber: null,
-  },
-};
+// Saved views — wells spud only (no permits). Active vs plugged wells, Pecos
+// vs the combined other-5 counties, by depth bucket (<5k / 5–10k / 10k+).
+// Generated so the set stays consistent; the dropdown is populated from it.
+const SAVED_VIEWS = {};
+const _SV_LIST = [];
+(() => {
+  const OTHER5 = ['Reeves', 'Ward', 'Midland', 'Martin', 'Reagan'];
+  const DEPTHS = [
+    ['all', 'all depths', {}],
+    ['lt5k', '<5,000 ft', { total_depth: { min: '', max: '5000' } }],
+    ['5to10k', '5,000–10,000 ft', { total_depth: { min: '5000', max: '10000' } }],
+    ['10kplus', '10,000 ft+', { total_depth: { min: '10000', max: '' } }],
+  ];
+  [['active', 'Active wells', 'N'], ['plugged', 'Plugged wells', 'Y']].forEach(([sk, slbl, pf]) => {
+    [['pecos', 'Pecos', ['Pecos']], ['other5', 'Other 5 counties', OTHER5]].forEach(([ak, albl, cn]) => {
+      DEPTHS.forEach(([dk, dlbl, df]) => {
+        const key = `${sk}_${ak}_${dk}`;
+        SAVED_VIEWS[key] = {
+          layers: ['wells_permian6'], scrubber: null,
+          filters: { wells_permian6: Object.assign({ plug_flag: [pf], county_name: cn.slice() }, JSON.parse(JSON.stringify(df))) },
+        };
+        _SV_LIST.push([key, `${slbl} — ${albl} — ${dlbl}`]);
+      });
+    });
+  });
+  const sel = document.getElementById('saved-views-select');
+  if (sel) _SV_LIST.forEach(([v, l]) => { const o = document.createElement('option'); o.value = v; o.textContent = l; sel.appendChild(o); });
+})();
 
 function applySavedView(key) {
   const view = SAVED_VIEWS[key];
