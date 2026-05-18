@@ -968,14 +968,15 @@ layers:
 - id: wells_permian6
   file: data/wells_permian6.csv
   geom: point
-  group: Wells
-  label: Wells (6-county Permian, active + plugged)
-  description: "All RRC wellbores in 6-county Permian scope (active + plugged/abandoned). Use the status filter to switch views. Plugged wells are the visible legacy infrastructure that demonstrates drilling-era completion. Subject \u2014 Pecos, Reeves, Ward. Active Permian peer \u2014 Midland, Martin, Reagan. Source dbf900.txt Full Wellbore ASCII (weekly). ~99,224 wells."
+  group: Oil & Gas Spud Wells
+  label: Wells (1964-present, active + plugged)
+  description: "RRC oil & gas wellbores spudded 1964-present (active + plugged/abandoned). Plugged wells are visible legacy drilling-era infrastructure. Filter by spud year (multi-select), county, oil/gas, plug status. Source: RRC dbf900 Full Wellbore ASCII (weekly)."
   color: '#6b21a8'
   default_on: false
   min_zoom: 7
   radius: 2
   exclude_within: caramba_north
+  min_spud_year: 1964
   popup:
   - api_no
   - county_name
@@ -986,7 +987,6 @@ layers:
   - oil_gas
   - total_depth
   - completion_date
-  - completion_year
   - newest_permit_no
   - plug_flag
   - active_flag
@@ -1000,7 +1000,6 @@ layers:
     oil_gas: Oil/Gas
     total_depth: Total depth (ft)
     completion_date: Completion date
-    completion_year: Completion year
     newest_permit_no: Newest drilling permit
     plug_flag: Plug status
     active_flag: Active flag
@@ -1024,109 +1023,15 @@ layers:
     type: numeric
     label: Total depth (ft)
     quick_presets: *id001
-  - field: completion_year
-    type: numeric
-    label: Completion year
-    quick_presets:
-    - label: 1964-1968
-      min: 1964
-      max: 1968
-    - label: 1969-1973
-      min: 1969
-      max: 1973
-    - label: 1974-1978
-      min: 1974
-      max: 1978
-    - label: 1979-1983
-      min: 1979
-      max: 1983
-    - label: 1984-1988
-      min: 1984
-      max: 1988
-    - label: 1989-1993
-      min: 1989
-      max: 1993
-    - label: 1994-1998
-      min: 1994
-      max: 1998
-    - label: 1999-2003
-      min: 1999
-      max: 2003
-    - label: 2004-2008
-      min: 2004
-      max: 2008
-    - label: 2009-2013
-      min: 2009
-      max: 2013
-    - label: 2014-2018
-      min: 2014
-      max: 2018
-    - label: 2019-2023
-      min: 2019
-      max: 2023
-    - label: 2024-2025
-      min: 2024
-      max: 2025
-    - label: 2026+
-      min: 2026
-      max: 2030
   - field: spud_year
-    type: numeric
-    label: Spud year
-    quick_presets:
-    - label: 1964-1968
-      min: 1964
-      max: 1968
-    - label: 1969-1973
-      min: 1969
-      max: 1973
-    - label: 1974-1978
-      min: 1974
-      max: 1978
-    - label: 1979-1983
-      min: 1979
-      max: 1983
-    - label: 1984-1988
-      min: 1984
-      max: 1988
-    - label: 1989-1993
-      min: 1989
-      max: 1993
-    - label: 1994-1998
-      min: 1994
-      max: 1998
-    - label: 1999-2003
-      min: 1999
-      max: 2003
-    - label: 2004-2008
-      min: 2004
-      max: 2008
-    - label: 2009-2013
-      min: 2009
-      max: 2013
-    - label: 2014-2018
-      min: 2014
-      max: 2018
-    - label: 2019-2023
-      min: 2019
-      max: 2023
-    - label: 2024-2025
-      min: 2024
-      max: 2025
-    - label: 2026+
-      min: 2026
-      max: 2030
+    type: categorical
+    label: Spud year (multi-select)
   - field: spud_date
     type: date_range
     label: Spud date
   - field: completion_date
     type: date_range
     label: Completion date
-  - field: active_flag
-    type: categorical
-    label: Active flag
-    value_labels:
-      A: A = Active (RRC WBCOMPL marker)
   tippecanoe:
   - -zg
   - -r1
