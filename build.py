@@ -549,6 +549,29 @@ def _exclude_within(nd_path, polys):
     return removed
 
 
+def _filter_min_spud_year(nd_path, minyear):
+    """Drop ndjson point features whose `spud_year` is missing or < minyear.
+    Wells layer: only wells spudded minyear+ are mapped/summed (no clamping —
+    pre-minyear and null-spud-year wells are excluded). Atomic rewrite."""
+    removed = 0
+    tmp = str(nd_path) + '.tmp'
+    with open(nd_path, 'r', encoding='utf-8') as fin, \
+         open(tmp, 'w', encoding='utf-8') as fout:
+        for line in fin:
+            try:
+                v = (json.loads(line).get('properties') or {}).get('spud_year')
+                yr = int(float(v))
+            except Exception:
+                removed += 1
+                continue
+            if yr < minyear:
+                removed += 1
+                continue
+            fout.write(line)
+    os.replace(tmp, nd_path)
+    return removed
+
+
 def dc_anchors_to_ndgeojson(json_path, out_path):
     """Custom loader for data/datacenters/dc_anchors.json.
     Maps the curated DC-anchor schema → ndgeojson points consumable by tippecanoe.
@@ -769,6 +792,11 @@ def build_layer(layer, report, split_stats):
                 n_excl = _exclude_within(nd, polys)
                 n_written -= n_excl
                 print(f'  {lid}: exclude_within {ex} removed {n_excl} features')
+        msy = layer.get('min_spud_year')
+        if msy is not None:
+            n_drop = _filter_min_spud_year(nd, int(msy))
+            n_written -= n_drop
+            print(f'  {lid}: min_spud_year {msy} removed {n_drop} features')
         if n_written == 0:
             report.append((lid, n_total, 0, 'EMPTY', src.name))
             return None

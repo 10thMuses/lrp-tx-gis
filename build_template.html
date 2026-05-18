@@ -83,6 +83,22 @@
   .filter-chip:hover { border-color: #94a3b8; }
   .filter-chip.active { background: #0f172a; color: #ffffff; border-color: #0f172a; }
   .filter-multi-count { color: var(--muted); font-size: 10px; font-variant-numeric: tabular-nums; }
+  /* Live Oil & Gas Spud Wells summary — pinned top-center of map */
+  #wells-summary { position: absolute; top: 8px; left: 50%; transform: translateX(-50%); z-index: 6; width: min(760px, 94vw); max-height: 42vh; overflow: auto; background: rgba(255,255,255,0.97); border: 1px solid var(--border); border-radius: 6px; font-size: 11px; box-shadow: 0 2px 10px rgba(0,0,0,0.12); }
+  #wells-summary[hidden] { display: none; }
+  #wells-summary .ws-head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; padding: 7px 10px; border-bottom: 1px solid var(--border); cursor: pointer; user-select: none; position: sticky; top: 0; background: rgba(255,255,255,0.98); }
+  #wells-summary .ws-title { font-weight: 700; font-size: 12px; }
+  #wells-summary .ws-kpi { font-variant-numeric: tabular-nums; }
+  #wells-summary .ws-kpi b { font-size: 12px; }
+  #wells-summary .ws-toggle { margin-left: auto; font-size: 10px; border: 1px solid var(--border); background: #fff; border-radius: 4px; padding: 2px 8px; cursor: pointer; text-transform: uppercase; letter-spacing: 0.04em; }
+  #wells-summary.collapsed .ws-body { display: none; }
+  #wells-summary .ws-body { padding: 6px 10px 8px; }
+  #wells-summary table { border-collapse: collapse; width: 100%; font-variant-numeric: tabular-nums; }
+  #wells-summary th, #wells-summary td { padding: 2px 8px; text-align: right; border-bottom: 1px solid #eef0f3; }
+  #wells-summary th:first-child, #wells-summary td:first-child { text-align: left; }
+  #wells-summary thead th { position: sticky; top: 38px; background: #f1f5f9; }
+  #wells-summary tfoot td { font-weight: 700; border-top: 2px solid var(--border); background: #f8fafc; }
+  @media (max-width: 768px) { #wells-summary { width: 96vw; max-height: 38vh; } }
   /* R2-7: live stats panel top-right of map */
   #stats-panel { position: absolute; top: 8px; right: 8px; z-index: 5; width: min(360px, 92vw); max-height: min(88vh, 880px); overflow-y: auto; background: rgba(255,255,255,0.97); border: 1px solid var(--border); border-radius: 6px; font-size: 11px; box-shadow: 0 1px 6px rgba(0,0,0,0.08); }
   #stats-panel.collapsed { max-height: none; overflow: visible; }
@@ -299,6 +315,7 @@
 <div class="map-wrap">
   <div id="map">
     <div id="filter-banner" role="status" aria-live="polite"></div>
+    <div id="wells-summary" hidden aria-label="Oil & Gas Spud Wells summary"></div>
     <aside id="stats-panel" class="collapsed" aria-label="Live stats panel" hidden>
       <div class="sp-head">
         <h3>Live stats</h3>
@@ -2076,17 +2093,25 @@ function plannedUpgradePopupHtml(L, props) {
     <div class="src">${escapeHtml(props.source || 'ERCOT TPIT')}${props.source_date ? ' · ' + escapeHtml(props.source_date) : ''}</div>`;
 }
 
+function escapeHtml(s) { return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]); }
+
+// Tap/click only (no hover). Full attribute dump of the tapped feature —
+// every populated property, not a curated subset. Internal keys + (for wells)
+// completion_year are hidden; source/source_date go in the footer.
+const POPUP_HIDE_KEYS = new Set(['layer_id', 'source', 'source_date']);
+const POPUP_HIDE_BY_LAYER = { wells_permian6: new Set(['completion_year']) };
 function featurePopupHtml(L, props) {
-  if (L.id === 'ercot_queue') return ercotQueuePopupHtml(props);
-  if (L.id === 'tpit_subs' || L.id === 'tpit_lines') return plannedUpgradePopupHtml(L, props);
+  props = props || {};
   const src = props.source || '';
   const srcDate = props.source_date || '';
-  const title = props.name || props.Name || props.NAME || L.label;
-  const rows = (L.popup || []).map(k => {
+  const title = props.name || props.Name || props.NAME || L.label || 'Feature';
+  const perLayerHide = POPUP_HIDE_BY_LAYER[L.id];
+  const rows = Object.keys(props).map(k => {
+    if (POPUP_HIDE_KEYS.has(k)) return '';
+    if (perLayerHide && perLayerHide.has(k)) return '';
     const v = props[k];
     if (v === undefined || v === null || v === '') return '';
-    let valStr = typeof v === 'number' ? (Number.isInteger(v) ? v : v.toFixed(2)) : String(v);
-    // R26: human-readable label for wells plug_flag in popups
+    let valStr = typeof v === 'number' ? (Number.isInteger(v) ? String(v) : v.toFixed(2)) : String(v);
     if (L.id === 'wells_permian6' && k === 'plug_flag') {
       valStr = valStr === 'Y' ? 'Plugged / Abandoned' : (valStr === 'N' ? 'Active' : valStr);
     }
@@ -2094,21 +2119,114 @@ function featurePopupHtml(L, props) {
     return `<tr><td class="k">${escapeHtml(lbl)}</td><td class="v">${escapeHtml(valStr)}</td></tr>`;
   }).join('');
   return `<div class="title">${escapeHtml(title)}</div>
-    <table>${rows}</table>${abatementAnnotationHtml(props)}
+    <table>${rows}</table>
     <div class="src">${escapeHtml(src)}${srcDate ? ' · ' + escapeHtml(srcDate) : ''}</div>`;
 }
-function escapeHtml(s) { return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]); }
 
-const hoverPopup = new maplibregl.Popup({
-  closeButton: false, closeOnClick: false, offset: 8, maxWidth: '280px',
-});
-function showHoverPopup(L, e) {
-  if (measureActive) return;
-  if (!e.features || !e.features.length) return;
-  const f = e.features[0];
-  hoverPopup.setLngLat(e.lngLat).setHTML(featurePopupHtml(L, f.properties || {})).addTo(map);
+// ---- Live Oil & Gas Spud Wells summary (top-center) ----
+// Self-contained: own cache + filter application (mirrors sidebar filter
+// semantics) so it never depends on StatsPanel internals. Shows whenever the
+// wells layer is active; recomputes on every filter / scrubber / toggle.
+const WellsSummary = (() => {
+  const root = document.getElementById('wells-summary');
+  if (!root) return { refresh: () => {} };
+  const WELLS_ID = 'wells_permian6';
+  let cache = null, loading = null, collapsed = false;
+  const num = v => { if (v === null || v === undefined || v === '') return null; const n = Number(v); return Number.isFinite(n) ? n : null; };
+  root.addEventListener('click', e => {
+    if (e.target.closest('.ws-head')) {
+      collapsed = !collapsed;
+      root.classList.toggle('collapsed', collapsed);
+      const t = root.querySelector('.ws-toggle'); if (t) t.textContent = collapsed ? 'Show' : 'Hide';
+    }
+  });
+  function wellsLayer() { return LAYERS.find(L => L.id === WELLS_ID); }
+  function filtered(rows) {
+    const L = wellsLayer(); if (!L) return rows;
+    const state = filterState[L.id] || {};
+    const tfield = SCRUBBER_TIME_FIELD[L.id];
+    const scrubMax = (scrubberYear !== null && scrubberYear !== undefined) ? Number(scrubberYear) : null;
+    return rows.filter(r => {
+      if (scrubMax !== null && tfield) { const tv = num(r[tfield]); if (tv === null || tv > scrubMax) return false; }
+      for (const f of (L.filterable_fields || [])) {
+        const v = state[f.field]; if (v === undefined || v === null) continue;
+        const rv = r[f.field];
+        if (f.type === 'numeric') {
+          if ((v.min === undefined || v.min === '') && (v.max === undefined || v.max === '')) continue;
+          const n = num(rv); if (n === null) return false;
+          if (v.min !== undefined && v.min !== '' && n < Number(v.min)) return false;
+          if (v.max !== undefined && v.max !== '' && n > Number(v.max)) return false;
+        } else if (f.type === 'date_range') {
+          if (!v.min && !v.max) continue;
+          const s = String(rv || '').slice(0, 10); if (!s) return false;
+          if (v.min && s < v.min) return false;
+          if (v.max && s > v.max) return false;
+        } else if (f.type === 'categorical') {
+          if (!Array.isArray(v) || v.length === 0) continue;
+          if (Array.isArray(f.values) && v.length >= f.values.length) continue;
+          if (!v.includes(String(rv == null ? '' : rv))) return false;
+        } else if (f.type === 'text') {
+          if (typeof v !== 'string' || v.trim() === '') continue;
+          if (!String(rv == null ? '' : rv).toLowerCase().includes(v.trim().toLowerCase())) return false;
+        }
+      }
+      return true;
+    });
+  }
+  function compute(rows) {
+    let oil = 0, gas = 0;
+    const byYear = new Map();
+    rows.forEach(r => {
+      const og = String(r.oil_gas || '');
+      if (og === 'O') oil++; else if (og === 'G') gas++;
+      const y = num(r.spud_year); if (y === null) return;
+      const yr = Math.trunc(y);
+      let e = byYear.get(yr); if (!e) { e = { n: 0, o: 0, g: 0 }; byYear.set(yr, e); }
+      e.n++; if (og === 'O') e.o++; else if (og === 'G') e.g++;
+    });
+    return { total: rows.length, oil, gas, years: [...byYear.keys()].sort((a, b) => a - b), byYear };
+  }
+  function render(s) {
+    const pct = (n, d) => d > 0 ? ' (' + (100 * n / d).toFixed(1) + '%)' : '';
+    const nY = s.years.length || 1;
+    let body;
+    if (s.years.length) {
+      const rows = s.years.map(y => { const e = s.byYear.get(y); return `<tr><td>${y}</td><td>${e.n.toLocaleString()}</td><td>${e.o.toLocaleString()}</td><td>${e.g.toLocaleString()}</td></tr>`; }).join('');
+      body = `<div class="ws-body"><table>
+        <thead><tr><th>Spud year</th><th>Wells</th><th>Oil</th><th>Gas</th></tr></thead>
+        <tbody>${rows}</tbody>
+        <tfoot>
+          <tr><td>Avg / yr (${s.years[0]}–${s.years[s.years.length - 1]}, ${s.years.length} yrs)</td><td>${(s.total / nY).toFixed(1)}</td><td>${(s.oil / nY).toFixed(1)}</td><td>${(s.gas / nY).toFixed(1)}</td></tr>
+          <tr><td>Total</td><td>${s.total.toLocaleString()}</td><td>${s.oil.toLocaleString()}</td><td>${s.gas.toLocaleString()}</td></tr>
+        </tfoot></table></div>`;
+    } else {
+      body = `<div class="ws-body"><div style="color:var(--muted);padding:8px 2px">No wells in the current selection.</div></div>`;
+    }
+    root.innerHTML = `<div class="ws-head">
+        <span class="ws-title">Oil &amp; Gas Spud Wells — selection summary</span>
+        <span class="ws-kpi">Wells <b>${s.total.toLocaleString()}</b></span>
+        <span class="ws-kpi">Oil <b>${s.oil.toLocaleString()}</b>${pct(s.oil, s.total)}</span>
+        <span class="ws-kpi">Gas <b>${s.gas.toLocaleString()}</b>${pct(s.gas, s.total)}</span>
+        <button type="button" class="ws-toggle">${collapsed ? 'Show' : 'Hide'}</button>
+      </div>${body}`;
+    root.classList.toggle('collapsed', collapsed);
+  }
+  function refresh() {
+    let active = false;
+    try { active = activeLayerIds().includes(WELLS_ID); } catch (e) { active = false; }
+    if (!active) { root.hidden = true; return; }
+    root.hidden = false;
+    const done = rows => { try { render(compute(filtered(rows))); } catch (e) { root.innerHTML = '<div class="ws-head"><span class="ws-title">Wells summary unavailable</span></div>'; } };
+    if (cache) { done(cache); return; }
+    if (!loading) loading = fetch('data/' + WELLS_ID + '.json').then(r => r.json()).then(d => { cache = d; return d; }).catch(() => { cache = []; return []; });
+    loading.then(done);
+  }
+  return { refresh };
+})();
+if (typeof StatsPanel !== 'undefined' && StatsPanel && typeof StatsPanel.refresh === 'function') {
+  const _origSPRefresh = StatsPanel.refresh.bind(StatsPanel);
+  StatsPanel.refresh = function () { try { _origSPRefresh(); } finally { try { WellsSummary.refresh(); } catch (e) {} } };
 }
-function hideHoverPopup() { hoverPopup.remove(); }
 
 function wirePopups() {
   LAYERS.forEach(L => {
@@ -2116,22 +2234,17 @@ function wirePopups() {
     map.on('click', lyrId, e => {
       if (measureActive) return;
       if (!e.features || !e.features.length) return;
-      const f = e.features[0];
-      new maplibregl.Popup({ maxWidth: '300px' })
+      new maplibregl.Popup({ maxWidth: '340px' })
         .setLngLat(e.lngLat)
-        .setHTML(featurePopupHtml(L, f.properties || {}))
+        .setHTML(featurePopupHtml(L, e.features[0].properties || {}))
         .addTo(map);
     });
     map.on('mouseenter', lyrId, () => { if (!measureActive) map.getCanvas().style.cursor = 'pointer'; });
-    map.on('mousemove', lyrId, e => showHoverPopup(L, e));
-    map.on('mouseleave', lyrId, () => {
-      if (!measureActive) map.getCanvas().style.cursor = '';
-      hideHoverPopup();
-    });
+    map.on('mouseleave', lyrId, () => { if (!measureActive) map.getCanvas().style.cursor = ''; });
   });
 }
 
-const GROUP_ORDER = ['Reference', 'Land & Deal', 'Local Focal Points', 'Local Hyperscale DC & Power Campuses', 'Power Generation', 'Transmission & Grid', 'Pipelines', 'Energy Infrastructure', 'Permits', 'Wells', 'Projects'];
+const GROUP_ORDER = ['Reference', 'Land & Deal', 'Local Focal Points', 'Local Hyperscale DC & Power Campuses', 'Power Generation', 'Transmission & Grid', 'Pipelines', 'Energy Infrastructure', 'Permits', 'Oil & Gas Spud Wells', 'Projects'];
 
 function setLayerVisibilityWithCompanions(L, visible) {
   setLayerVisibility(L, visible);
@@ -2495,7 +2608,6 @@ measureBtn.addEventListener('click', () => {
     measureBtn.classList.add('active');
     measureReadout.classList.add('active');
     map.getContainer().classList.add('measure-on');
-    hoverPopup.remove();
     map.getCanvas().style.cursor = 'crosshair';
     clearMeasure();
   } else {
