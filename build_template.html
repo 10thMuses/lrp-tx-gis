@@ -64,7 +64,7 @@
   .measure-readout .hint { color: var(--muted); font-size: 10px; margin-top: 4px; }
   .measure-readout .mr-close { display: none; position: absolute; top: 4px; right: 6px; background: transparent; border: 0; width: 32px; height: 32px; font-size: 22px; line-height: 1; color: var(--muted); cursor: pointer; padding: 0; }
   .watermark { position: absolute; bottom: 42px; right: 8px; z-index: 3; pointer-events: none; font-size: 11px; font-weight: 700; letter-spacing: 0.18em; color: rgba(220, 38, 38, 0.78); background: rgba(255, 255, 255, 0.85); padding: 4px 10px; border: 1px solid rgba(220, 38, 38, 0.32); border-radius: 3px; text-transform: uppercase; font-variant-numeric: tabular-nums; }
-  .maplibregl-popup-content { font-family: inherit; font-size: 12px; padding: 10px 12px; border-radius: 6px; }
+  .maplibregl-popup-content { font-family: inherit; font-size: 12px; padding: 10px 12px; border-radius: 6px; max-width: min(90vw, 360px); max-height: 60vh; overflow-y: auto; overscroll-behavior: contain; overflow-wrap: anywhere; }
   .maplibregl-popup-content table { border-collapse: collapse; }
   .maplibregl-popup-content td { padding: 2px 6px 2px 0; vertical-align: top; }
   .maplibregl-popup-content td.k { color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: 0.04em; }
@@ -624,17 +624,26 @@ function layerPaint(L) {
     // oil/gas color as the outline ring — status readable at a glance, the
     // oil-vs-gas encoding preserved. Active wells keep the oil/gas fill.
     if (L.id === 'wells_permian6') {
-      fillColor = ['case', ['==', ['get', 'plug_flag'], 'Y'], '#111827', oilGasColorExpr()];
+      // Plugged/abandoned: solid BLACK center, oil/gas color as the outline
+      // ring. Active: solid oil/gas fill with a thin white ring.
+      fillColor = ['case', ['==', ['get', 'plug_flag'], 'Y'], '#000000', oilGasColorExpr()];
       strokeColor = ['case', ['==', ['get', 'plug_flag'], 'Y'], oilGasColorExpr(), '#ffffff'];
-      strokeWidth = ['case', ['==', ['get', 'plug_flag'], 'Y'], 2, 1.4];
+      strokeWidth = ['case', ['==', ['get', 'plug_flag'], 'Y'], 2.4, 1.2];
     }
+    const radius = (L.id === 'wells_permian6')
+      // Zoom ramp so the black center is clearly readable when zoomed to a
+      // property, without clutter across 67k wells when zoomed out.
+      ? ['interpolate', ['linear'], ['zoom'], 7, 2.5, 10, 4, 12, 6, 14, 8]
+      : (L.circle_radius ?? sizingRadiusExpr(L));
     return {
-      'circle-radius': L.circle_radius ?? sizingRadiusExpr(L),
+      'circle-radius': radius,
       'circle-color': fillColor,
       'circle-stroke-width': strokeWidth,
       'circle-stroke-color': strokeColor,
       'circle-stroke-opacity': 1,
-      'circle-opacity': opacity,
+      // Wells solid (opacity 1) so the black plugged center reads as black on
+      // the satellite basemap rather than a translucent grey.
+      'circle-opacity': (L.id === 'wells_permian6') ? 1 : opacity,
     };
   }
   if (L.geom === 'line') {
@@ -2149,6 +2158,9 @@ function escapeHtml(s) { return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;'
 // completion_year are hidden; source/source_date go in the footer.
 const POPUP_HIDE_KEYS = new Set(['layer_id', 'source', 'source_date']);
 const POPUP_HIDE_BY_LAYER = { wells_permian6: new Set(['completion_year']) };
+// Layers that should never open a popup (raw third-party attribute dumps with
+// no exhibit value — e.g. the Caramba Farms North agriwebb tract export).
+const POPUP_DISABLED = new Set(['caramba_north']);
 function featurePopupHtml(L, props) {
   props = props || {};
   const src = props.source || '';
@@ -2378,6 +2390,7 @@ if (typeof StatsPanel !== 'undefined' && StatsPanel && typeof StatsPanel.refresh
 
 function wirePopups() {
   LAYERS.forEach(L => {
+    if (POPUP_DISABLED.has(L.id)) return;
     const lyrId = `lyr_${L.id}`;
     map.on('click', lyrId, e => {
       if (measureActive) return;
