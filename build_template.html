@@ -611,11 +611,22 @@ function layerPaint(L) {
     else if (L.id === 'dc_anchors') color = dcAnchorsColorExpr();
     else if (L.id === 'wells_permian6' || L.id === 'permits_permian6') color = oilGasColorExpr();
     const opacity = (L.id === 'dc_anchors') ? dcAnchorsOpacityExpr() : (L.fill_opacity ?? 0.9);
+    let fillColor = color;
+    let strokeColor = L.stroke_color ?? '#ffffff';
+    let strokeWidth = L.stroke_width ?? 1.5;
+    // Wells: plugged/abandoned wells render with a dark center but keep their
+    // oil/gas color as the outline ring — status readable at a glance, the
+    // oil-vs-gas encoding preserved. Active wells keep the oil/gas fill.
+    if (L.id === 'wells_permian6') {
+      fillColor = ['case', ['==', ['get', 'plug_flag'], 'Y'], '#111827', oilGasColorExpr()];
+      strokeColor = ['case', ['==', ['get', 'plug_flag'], 'Y'], oilGasColorExpr(), '#ffffff'];
+      strokeWidth = ['case', ['==', ['get', 'plug_flag'], 'Y'], 2, 1.4];
+    }
     return {
       'circle-radius': L.circle_radius ?? sizingRadiusExpr(L),
-      'circle-color': color,
-      'circle-stroke-width': L.stroke_width ?? 1.5,
-      'circle-stroke-color': L.stroke_color ?? '#ffffff',
+      'circle-color': fillColor,
+      'circle-stroke-width': strokeWidth,
+      'circle-stroke-color': strokeColor,
       'circle-stroke-opacity': 1,
       'circle-opacity': opacity,
     };
