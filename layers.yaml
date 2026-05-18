@@ -899,6 +899,10 @@ layers:
   description: "RRC drilling permits with WGS84 coordinates and approved depth. Source dbf-EOM monthly snapshots (`daf420.dat.MM-DD-YYYY`), 2018-01 through current. Subject (sale area) \u2014 Pecos, Reeves, Ward. Active Permian peer (boom area) \u2014 Midland, Martin, Reagan. Each permit row carries `county_role` \u2208 {subject, peer}. Records without a parseable total_depth are excluded at the parser stage per R2-2."
   color: '#dc2626'
   default_on: false
+  # Hidden from the sidebar: wells_permian6 covers the same 6-county extent and
+  # supersedes it visually. PMTiles + data still build so the scrubber
+  # (permit_year), saved-views ("All permits…"), sizing and stats keep working.
+  sidebar_omit: true
   min_zoom: 6
   radius: 3
   popup:
@@ -1123,6 +1127,75 @@ layers:
     - label: 2026+
       min: 2026
       max: 2030
+  - field: spud_year
+    type: numeric
+    label: Spud year
+    quick_presets:
+    - label: 1964-1968
+      min: 1964
+      max: 1968
+    - label: 1969-1973
+      min: 1969
+      max: 1973
+    - label: 1974-1978
+      min: 1974
+      max: 1978
+    - label: 1979-1983
+      min: 1979
+      max: 1983
+    - label: 1984-1988
+      min: 1984
+      max: 1988
+    - label: 1989-1993
+      min: 1989
+      max: 1993
+    - label: 1994-1998
+      min: 1994
+      max: 1998
+    - label: 1999-2003
+      min: 1999
+      max: 2003
+    - label: 2004-2008
+      min: 2004
+      max: 2008
+    - label: 2009-2013
+      min: 2009
+      max: 2013
+    - label: 2014-2018
+      min: 2014
+      max: 2018
+    - label: 2019-2023
+      min: 2019
+      max: 2023
+    - label: 2024-2025
+      min: 2024
+      max: 2025
+    - label: 2026+
+      min: 2026
+      max: 2030
+  - field: spud_date
+    type: date_range
+    label: Spud date
+  - field: completion_date
+    type: date_range
+    label: Completion date
+  - field: active_flag
+    type: categorical
+    label: Active flag
+    value_labels:
+      A: A = Active (RRC WBCOMPL marker)
+  - field: api_no
+    type: text
+    label: API no.
+  - field: well_no
+    type: text
+    label: Well no.
+  - field: lease_no
+    type: text
+    label: Lease no.
+  - field: newest_permit_no
+    type: text
+    label: Newest drilling permit
   tippecanoe:
   - -zg
   - -r1
