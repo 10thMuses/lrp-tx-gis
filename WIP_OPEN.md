@@ -28,7 +28,7 @@ Operator-set order (2026-05-18):
 1. ~~Doc/audit hygiene — WIP_OPEN trim, sprint-plan dead-pointer removal, rrc_w1 gitignore, stranded-branch delete~~ (this branch).
 2. ~~Counties outline color review~~ — shipped 2026-05-18, deploy `6a0b19d913992206825a7f2f` (`#fbbf24`→`#64748b`, Reference slate-500).
 3. ~~Mobile popup audit~~ — verified clean 2026-05-18, no deploy: `60vh` cap + `overflow-y:auto` + `-webkit-overflow-scrolling:touch` + `overflow-wrap:anywhere` present at ≤768px; `ercotQueuePopupHtml`/generic `tax_abatements`/`abatementAnnotationHtml` builders use only cosmetic inline styles — none defeats the cap (this branch).
-4. **Wells `filterable_fields` expansion + hide `permits_permian6`** — add filters covering every `wells_permian6` data column; hide the permits layer (wells covers the same 6-county extent). `layers.yaml` (+ `build_template.html` if filter rendering needs it). High blast radius — full §5 acceptance protocol.
+4. ~~Wells `filterable_fields` expansion + hide `permits_permian6`~~ — shipped 2026-05-18, deploy `6a0b1ef0db3e0f1a8a6beb91`. `wells_permian6` now has all 15 data columns filterable (added `spud_year`+presets, `spud_date`/`completion_date` date_range, `active_flag`, `api_no`/`well_no`/`lease_no`/`newest_permit_no`); `permits_permian6` `sidebar_omit:true` (data/PMTiles/scrubber/saved-views retained). Root-cause `build.py` fix: standalone-layer ndjson now persists in `SPLIT_DIR` so `compute_filter_stats` sees it — also populated the previously-empty declared filters on `permits_permian6` + the `hifld_*` layers.
 
 ---
 
@@ -70,11 +70,17 @@ confirmation the issue still exists.
 - HIFLD remaining layers; ERCOT deeper geocoding (FERC EQR + PUC CCN); counterparty boundary precision upgrade. Detail in `docs/sprint-plan.md` + archive.
 
 ### UI / UX
+- **`value_labels` not plumbed through `build.py`** (latent, found 2026-05-18): `build_template.html:905` reads `f.value_labels` but `render_html` only forwards `quick_presets`/`sort_by_count` from the yaml spec, so `plug_flag`/`active_flag` filters show raw `Y`/`N`/`A` instead of friendly labels. Cosmetic; fix = add a `value_labels` pass-through beside the `quick_presets` line in `render_html`.
+- Standalone-layer filter panels now render (2026-05-18 `build.py` fix): `hifld_*` (and `permits_permian6`, though sidebar-hidden) gained their declared filter UIs — previously silently empty. Intended; noted for awareness.
 - `date_range` filter for eia860_plants/battery/wind needs `yyyy`→`yyyy-01-01` padding in 3 ingest scripts; low priority (numeric year-slider works).
 - Filter inputs 40px on mobile vs 44px WCAG; acceptable per Apple HIG (≥40px); flag if operator testing surfaces hit-rate issues.
 
 ### Audit drift (`bash scripts/audit.sh`)
 `OPERATING.md` ≤250 lines · `WIP_OPEN.md` ≤8192 bytes · 0 stranded `refinement-*`/`claude/*` branches on origin · close-out conformance 100%.
+
+**Stranded branches awaiting operator disposition (flagged 2026-05-18, not deleted):**
+- `dc-anchors-refresh-3/4/5/6` — DC-anchors auto-refresh LLM-in-the-loop `dc_anchors_proposed.json` proposals, never reviewed/applied. 3/4/5 superseded by the 2026-05-18 run; 6 is the latest proposal. Decision: review/apply/discard, then delete.
+- `refinement-chat127-drilling-permits-point` — 726 lines real unmerged work (`drilling_permits` scraper + parser + smoke test + `layers.yaml` stanza), parked on the RRC MFT-source block. Decision: revive (if MFT path now viable) or archive the work, then delete.
 
 ---
 
