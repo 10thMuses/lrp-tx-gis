@@ -78,9 +78,7 @@ confirmation the issue still exists.
 ### Audit drift (`bash scripts/audit.sh`)
 `OPERATING.md` ≤250 lines · `WIP_OPEN.md` ≤8192 bytes · 0 stranded `refinement-*`/`claude/*` branches on origin · close-out conformance 100%.
 
-**Stranded branches awaiting operator disposition (flagged 2026-05-18, not deleted):**
-- `dc-anchors-refresh-3/4/5/6` — DC-anchors auto-refresh LLM-in-the-loop `dc_anchors_proposed.json` proposals, never reviewed/applied. 3/4/5 superseded by the 2026-05-18 run; 6 is the latest proposal. Decision: review/apply/discard, then delete.
-- `refinement-chat127-drilling-permits-point` — 726 lines real unmerged work (`drilling_permits` scraper + parser + smoke test + `layers.yaml` stanza), parked on the RRC MFT-source block. Decision: revive (if MFT path now viable) or archive the work, then delete.
+**Stranded branches — resolved 2026-05-18 (operator decision):** `dc-anchors-refresh-3/4/5/6` deleted (stale unreviewed proposals; canonical `dc_anchors` is on main). `refinement-chat127-drilling-permits-point` archived to `docs/archive/chat127-drilling-permits-point.patch` (full `drilling_permits` scaffolding; re-apply via `git am`), branch deleted. Origin stranded-branch count → 0.
 
 ---
 
