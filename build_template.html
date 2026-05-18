@@ -1306,7 +1306,7 @@ const StatsPanel = (() => {
       <button data-action="xlsx" data-layer="${L.id}">XLSX</button>
       <button data-action="markdown" data-layer="${L.id}">Copy MD</button>
       <button data-action="pdf">Print PDF</button>
-      ${L.id === 'wells_permian6' ? '<button data-action="thesis-xlsx" data-layer="wells_permian6">Spud thesis XLSX</button><button data-action="thesis-pdf" data-layer="wells_permian6">Spud thesis PDF</button>' : ''}
+      ${L.id === 'wells_permian6' ? '<button data-action="spuds-pdf" data-layer="wells_permian6">Spuds Summary (PDF)</button>' : ''}
     </div></div>`;
     return html;
   }
@@ -1413,7 +1413,7 @@ const StatsPanel = (() => {
         <button data-action="xlsx" data-layer="${L.id}">XLSX</button>
         <button data-action="markdown" data-layer="${L.id}">Copy MD</button>
         <button data-action="pdf">Print PDF</button>
-        ${L.id === 'wells_permian6' ? '<button data-action="thesis-xlsx" data-layer="wells_permian6">Spud thesis XLSX</button><button data-action="thesis-pdf" data-layer="wells_permian6">Spud thesis PDF</button>' : ''}
+        ${L.id === 'wells_permian6' ? '<button data-action="spuds-pdf" data-layer="wells_permian6">Spuds Summary (PDF)</button>' : ''}
       </div>
     </div>`;
   }
@@ -1588,7 +1588,7 @@ const StatsPanel = (() => {
     });
   }
 
-  // ---- Wells spud thesis summary (Pecos drilling-decline exhibit) ----
+  // ---- Wells Spuds Summary export (Pecos drilling-decline exhibit) ----
   // Always county-split across the 6 Permian counties so the Pecos-vs-peers
   // comparison survives any active filter; reflects the current filter via
   // applyFilters. XLSX (multi-sheet) + a dedicated print-to-PDF view.
@@ -1688,17 +1688,6 @@ const StatsPanel = (() => {
     };
   }
 
-  function exportThesisXlsx(L) {
-    return Promise.all([loadCache(L.id), ensureSheetJS()]).then(([rows, XLSX]) => {
-      const tables = buildThesisTables(L, applyFilters(rows, L));
-      const wb = XLSX.utils.book_new();
-      Object.entries(tables).forEach(([name, t]) => {
-        XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(t), name.slice(0, 31));
-      });
-      XLSX.writeFile(wb, `wells_spud_thesis_${new Date().toISOString().slice(0, 10)}.xlsx`);
-    }).catch(err => alert(`Thesis XLSX export failed: ${err.message}`));
-  }
-
   function thesisHtmlTable(t) {
     const esc = s => escapeHtmlLocal(String(s == null ? '' : s));
     const head = '<tr>' + t[0].map(h => `<th>${esc(h)}</th>`).join('') + '</tr>';
@@ -1708,7 +1697,7 @@ const StatsPanel = (() => {
 
   function exportThesisPdf(L) {
     const w = window.open('', '_blank');
-    if (w) w.document.write('<!doctype html><title>Generating…</title><p style="font:14px sans-serif;padding:24px">Generating wells spud thesis summary…</p>');
+    if (w) w.document.write('<!doctype html><title>Generating…</title><p style="font:14px sans-serif;padding:24px">Generating Spuds Summary…</p>');
     return loadCache(L.id).then(rows => {
       const fr = applyFilters(rows, L);
       const tables = buildThesisTables(L, fr);
@@ -1725,17 +1714,17 @@ const StatsPanel = (() => {
         + '.meta{color:#475569;font-size:11px;margin-bottom:6px}.lead{background:#f1f5f9;border:1px solid #cbd5e1;border-radius:5px;padding:8px 10px;margin:8px 0;line-height:1.5}'
         + 'table{border-collapse:collapse;width:100%;margin:4px 0 10px;font-size:11px}th,td{border:1px solid #cbd5e1;padding:3px 6px;text-align:left}'
         + 'td.n{text-align:right;font-variant-numeric:tabular-nums}thead th{background:#e2e8f0}';
-      const doc = `<!doctype html><html><head><meta charset="utf-8"><title>Wells spud thesis ${new Date().toISOString().slice(0,10)}</title><style>${css}</style></head><body>`
-        + `<h1>RRC Wells Spud — Pecos Drilling-Decline Thesis</h1>`
+      const doc = `<!doctype html><html><head><meta charset="utf-8"><title>Wells Spud Summary ${new Date().toISOString().slice(0,10)}</title><style>${css}</style></head><body>`
+        + `<h1>RRC Wells Spud Summary — Pecos vs. Permian peers</h1>`
         + `<div class="meta">Filter: ${escapeHtmlLocal(filterSummaryText(L))} · Window ${THESIS_Y0}-${THESIS_Y1} · Generated ${new Date().toISOString()}</div>`
         + `<div class="lead">${narrative}</div>`
         + `<h2>Summary by county</h2>${thesisHtmlTable(tables['Summary by county'])}`
         + `<h2>Wells spud per year by county (total)</h2>${thesisHtmlTable(tables['Spud per year (total)'])}`
-        + `<p class="meta">Per-year oil &amp; gas matrices + methodology are in the XLSX export. Caramba North wells excluded at build.</p>`
+        + `<p class="meta">Oil/gas split &amp; plugged % are in the Summary-by-county table above. Caramba North wells excluded at build.</p>`
         + `</body></html>`;
       if (w) { w.document.open(); w.document.write(doc); w.document.close(); w.focus(); setTimeout(() => w.print(), 350); }
-      else { downloadBlob(new Blob([doc], { type: 'text/html' }), `wells_spud_thesis_${new Date().toISOString().slice(0,10)}.html`); }
-    }).catch(err => { if (w) w.close(); alert(`Thesis PDF export failed: ${err.message}`); });
+      else { downloadBlob(new Blob([doc], { type: 'text/html' }), `wells_spuds_summary_${new Date().toISOString().slice(0,10)}.html`); }
+    }).catch(err => { if (w) w.close(); alert(`Spuds Summary PDF export failed: ${err.message}`); });
   }
 
   function wireDownloadButtons() {
@@ -1749,8 +1738,7 @@ const StatsPanel = (() => {
         if (act === 'csv') exportCsv(L);
         else if (act === 'xlsx') exportXlsx(L);
         else if (act === 'markdown') exportMarkdown(L);
-        else if (act === 'thesis-xlsx') exportThesisXlsx(L);
-        else if (act === 'thesis-pdf') exportThesisPdf(L);
+        else if (act === 'spuds-pdf') exportThesisPdf(L);
       });
     });
   }
