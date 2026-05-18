@@ -778,6 +778,12 @@ def compute_filter_stats(layers_config, split_dir):
         lid = L['id']
         nd = split_dir / f'{lid}.ndjson'
         if not nd.exists():
+            # Standalone-file layers (wells_permian6, permits_permian6,
+            # hifld_*) are tiled from TMP/<lid>.ndjson, not SPLIT_DIR — that
+            # ndjson exists by now (build_layer loop runs before this). Fall
+            # back to it so their declared filterable_fields populate too.
+            nd = TMP / f'{lid}.ndjson'
+        if not nd.exists():
             continue
         # Per-field accumulators
         numeric = {}   # field -> [min, max]
