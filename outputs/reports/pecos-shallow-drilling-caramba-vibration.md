@@ -8,7 +8,7 @@ This memorandum summarizes the historical and recent record of shallow oil-and-g
 
 ## Summary of findings
 
-Shallow (<3,000 ft) drilling at and around the Caramba North tract is a legacy activity that has effectively ceased in the immediate vicinity of the site. No well of any kind has been spudded within two miles of the tract since 2020; no shallow well within two miles since 2002; and the few nearby legacy shallow wells are predominantly plugged and abandoned. Drilling does continue across Pecos County, but it is concentrated well away from the site — about 83% of the wells spudded county-wide since 2020 are more than fifteen miles from the tract (median ≈ 30 miles), and no drilling permit has been filed within ten miles of the tract since 2020. That modern activity is, per the Railroad Commission's wellbore-profile record, overwhelmingly **horizontal, deep** development — roughly 87% of Pecos drilling permits since 2020 — not shallow vertical drilling, and in any case it is not occurring at or adjacent to the site.
+Shallow (<3,000 ft) drilling at and around the Caramba North tract is a legacy activity that has effectively ceased in the immediate vicinity of the site. No well of any kind has been spudded within two miles of the tract in over a decade (none since before 2015); no shallow well within two miles since 2002; and the few nearby legacy shallow wells are predominantly plugged and abandoned. Drilling does continue across Pecos County, but it is concentrated well away from the site — about 83% of the wells spudded county-wide since 2020 are more than fifteen miles from the tract (median ≈ 30 miles), and no drilling permit has been filed within ten miles of the tract since 2020. That modern activity is, per the Railroad Commission's wellbore-profile record, overwhelmingly **horizontal, deep** development — roughly 87% of Pecos drilling permits since 2020 — not shallow vertical drilling, and in any case it is not occurring at or adjacent to the site.
 
 ## Findings
 
@@ -34,15 +34,18 @@ Three wellbores of any depth lie within one mile of the tract; **none is shallow
 
 Of about 46 wellbores within two miles, the ten shallow wells were spudded between 1960 and 2002. The most recent shallow spud within two miles was in 2002, and most of these wells are plugged and abandoned. No shallow well has been spudded within two miles in roughly a quarter-century.
 
-### 4. Within 5, 10, and 15 miles
+### 4. Recent drilling (wells *spudded* since 2020), by distance
 
-| Radius | Wells (all depths) | Shallow (<3,000 ft) | Shallow spudded ≥ 2020 | Of shallow, plugged | Shallow spud-year range |
-|---|---|---|---|---|---|
-| ≤ 5 mi | 496 | 131 | 3 | 88 | 1954–2022 |
-| ≤ 10 mi | 1,152 | 239 | 7 | 148 | 1953–2025 |
-| ≤ 15 mi | 1,757 | 268 | 14 | 166 | 1953–2025 |
+These are wells **spudded since 2020** — new drilling, not cumulative historical totals:
 
-Recent (post-2015) shallow wells appear only beyond about two miles. The nearest recent shallow well is 2.2 miles from the tract (2022). Within five miles, only three shallow wells have been drilled since 2015.
+| Radius | Wells spudded ≥ 2020 | Shallow (<3,000 ft) | Deep (≥3,000 ft) | Shallow share |
+|---|---|---|---|---|
+| ≤ 2 mi | **0** | 0 | 0 | — |
+| ≤ 5 mi | 8 | 3 | 5 | 38% |
+| ≤ 10 mi | 23 | 7 | 16 | 30% |
+| ≤ 15 mi | 190 | 14 | 176 | 7% |
+
+Two points stand out. First, **no well of any kind has been spudded within two miles of the tract since before 2015** — recent drilling does not reach the site. Second, the recent drilling that does occur farther out is **predominantly deep**, not shallow (62% deep within five miles, 93% deep within fifteen miles), consistent with the county-wide horizontal program in Finding 7. By spud year within fifteen miles, the activity is a 2020–2022 burst (70, 38, and 45 wells — overwhelmingly deep) tapering to single digits since; within ten miles it is never more than a handful in any year; within two miles it is zero throughout.
 
 ### 5. The nearest active wells are decades-old completions
 
