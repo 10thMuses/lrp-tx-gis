@@ -807,25 +807,42 @@ def write_stats_attrs(layers_config):
     out_dir = DIST / 'data'
     out_dir.mkdir(parents=True, exist_ok=True)
     for lid, fields in STATS_ATTRS_FIELDS.items():
+        # Prefer the post-build split ndjson so the client stats cache exactly
+        # matches the tiled/mapped features (lat-lon-valid + any exclude_within),
+        # not the raw CSV. Falls back to the CSV if the ndjson is unavailable.
+        nd = SPLIT_DIR / f'{lid}.ndjson'
         src = ROOT / 'data' / f'{lid}.csv'
-        if not src.exists():
+        if not nd.exists() and not src.exists():
             continue
-        rows = []
-        with open(src, newline='', encoding='utf-8') as fin:
-            for r in csv.DictReader(fin):
-                rec = {}
-                for f in fields:
-                    v = r.get(f, '')
-                    if v == '' or v is None:
-                        continue
-                    if f in NUMERIC_KEYS:
-                        num = fnum(v)
-                        if num is not None:
-                            rec[f] = num
+
+        def _iter_props(_nd=nd, _src=src):
+            if _nd.exists():
+                with open(_nd, 'r', encoding='utf-8') as fin:
+                    for line in fin:
+                        try:
+                            yield json.loads(line).get('properties') or {}
+                        except Exception:
                             continue
-                    rec[f] = v
-                if rec:
-                    rows.append(rec)
+            else:
+                with open(_src, newline='', encoding='utf-8') as fin:
+                    for r in csv.DictReader(fin):
+                        yield r
+
+        rows = []
+        for r in _iter_props():
+            rec = {}
+            for f in fields:
+                v = r.get(f, '')
+                if v == '' or v is None:
+                    continue
+                if f in NUMERIC_KEYS:
+                    num = fnum(v)
+                    if num is not None:
+                        rec[f] = num
+                        continue
+                rec[f] = v
+            if rec:
+                rows.append(rec)
         dst = out_dir / f'{lid}.json'
         with open(dst, 'w', encoding='utf-8') as fout:
             json.dump(rows, fout, separators=(',', ':'))
