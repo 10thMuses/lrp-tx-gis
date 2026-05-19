@@ -572,6 +572,39 @@ def _filter_min_spud_year(nd_path, minyear):
     return removed
 
 
+def _filter_exclude_recompletions(nd_path):
+    """Drop ndjson point features that are recompletion / re-entry re-stamps,
+    i.e. an existing wellbore whose `spud_year` was repopulated to a recent
+    value by later workover activity. Signal: a completion_year that PRECEDES
+    the spud_year is physically impossible for a genuinely new well, so the
+    record is an old well re-stamped — not new drilling. Kept: features whose
+    completion_year is missing/unparseable OR >= spud_year. Atomic rewrite.
+    (Canonical 'genuine new drill' rule, applied uniformly across counties so
+    the mapped wells, summary tables and time series reflect new wellbores.)"""
+    removed = 0
+    tmp = str(nd_path) + '.tmp'
+    with open(nd_path, 'r', encoding='utf-8') as fin, \
+         open(tmp, 'w', encoding='utf-8') as fout:
+        for line in fin:
+            try:
+                p = json.loads(line).get('properties') or {}
+                sy = int(float(p.get('spud_year')))
+            except Exception:
+                fout.write(line)
+                continue
+            try:
+                cy = int(float(p.get('completion_year')))
+            except Exception:
+                fout.write(line)
+                continue
+            if cy < sy:
+                removed += 1
+                continue
+            fout.write(line)
+    os.replace(tmp, nd_path)
+    return removed
+
+
 def _filter_tax_keep(nd_path, techs, counties):
     """tax_abatements declutter: keep a feature only if its `technology` is in
     `techs` (natural_gas/renewable) OR its `county` is in `counties` (the
@@ -825,6 +858,10 @@ def build_layer(layer, report, split_stats):
             n_drop = _filter_min_spud_year(nd, int(msy))
             n_written -= n_drop
             print(f'  {lid}: min_spud_year {msy} removed {n_drop} features')
+        if layer.get('exclude_recompletions'):
+            n_rc = _filter_exclude_recompletions(nd)
+            n_written -= n_rc
+            print(f'  {lid}: exclude_recompletions removed {n_rc} re-stamped features')
         if n_written == 0:
             report.append((lid, n_total, 0, 'EMPTY', src.name))
             return None

@@ -969,13 +969,14 @@ layers:
   file: data/wells_permian6.csv
   geom: point
   group: Oil & Gas Spud Wells
-  label: Wells (1964-present, active + plugged)
-  description: "RRC oil & gas wellbores spudded 1964-present (active + plugged/abandoned). Plugged wells are visible legacy drilling-era infrastructure. Filter by spud year (multi-select), county, oil/gas, plug status. Source: RRC dbf900 Full Wellbore ASCII (weekly)."
+  label: Wells — new drilling (1964-present)
+  description: "RRC oil & gas wellbores, new drilling 1964-present (active + plugged/abandoned). Recompletion / re-entry re-stamps (completion_year before spud_year) are excluded so counts reflect genuine new wellbores, not workovers of existing wells. Filter by spud year (multi-select), county, oil/gas, plug status. Source: RRC dbf900 Full Wellbore ASCII (weekly)."
   color: '#6b21a8'
   default_on: false
   min_zoom: 7
   radius: 2
   min_spud_year: 1964
+  exclude_recompletions: true
   popup:
   - api_no
   - county_name
