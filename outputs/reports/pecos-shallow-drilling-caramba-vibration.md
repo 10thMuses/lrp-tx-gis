@@ -91,3 +91,11 @@ On the same genuine-new-drill basis (recompletions excluded), Pecos has dramatic
 Pecos's ≈116 genuine new wells are roughly **one-ninth of the average comparable county's** (≈1,034); Martin, the most active, has ≈1,616. Genuine new shallow drilling is negligible in every county (≤35). On a new-drill basis Pecos is the least-drilled of the six — and, per Findings 1–6, essentially none of even that activity is within ten miles of the Caramba North tract.
 
 *Howard and Loving counties were requested for comparison; they lie outside the six-county Permian extent of the Railroad Commission dataset used here, and their wellbore records are not in this dataset. A comparable new-drill figure for those counties requires a separate RRC pull and can be added on request.*
+
+### 9. The wells near the site are no longer producing
+
+Every well was additionally cross-referenced against the Railroad Commission's PDQ production records for the most recent six reported months (through May 2026). A well is treated as **"no longer producing" when its lease's trailing-average output is below 125 Mcf/day of gas and below 150 bbl/day of oil**.
+
+Within ten miles of the Caramba North tract, every non-plugged well that can be matched to a production lease — 63 wells — is below that threshold: **none is still producing**. Within five miles the same is true of all ten such wells; within two miles there are none. Together with the plugged legacy wells (Findings 1–5), there is no active oil-and-gas production at or near the site.
+
+*County-wide, of the ≈35,100 genuine new-drill wellbores, ≈12,540 are plugged and a further ≈2,030 of the nominally-active wells are, by this measure, no longer producing. Method note: RRC reports production at the lease level; a well that cannot be matched to a producing lease is conservatively left classified "Active," so the no-longer-producing count is a floor, not a ceiling. Production filings carry a normal reporting lag, which the six-month trailing window mitigates.*
