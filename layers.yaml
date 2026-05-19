@@ -977,6 +977,7 @@ layers:
   radius: 2
   min_spud_year: 1964
   exclude_recompletions: true
+  reclassify_inactive_production: true
   popup:
   - api_no
   - county_name
@@ -990,6 +991,7 @@ layers:
   - newest_permit_no
   - plug_flag
   - active_flag
+  - well_status
   popup_labels:
     api_no: API
     county_name: County
@@ -1003,7 +1005,11 @@ layers:
     newest_permit_no: Newest drilling permit
     plug_flag: Plug status
     active_flag: Active flag
+    well_status: Status (production-based)
   filterable_fields:
+  - field: well_status
+    type: categorical
+    label: Well status
   - field: county_name
     type: categorical
     label: County

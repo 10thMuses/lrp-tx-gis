@@ -623,12 +623,18 @@ function layerPaint(L) {
     // Wells: plugged/abandoned wells render with a dark center but keep their
     // oil/gas color as the outline ring — status readable at a glance, the
     // oil-vs-gas encoding preserved. Active wells keep the oil/gas fill.
+    let wellsOpacity = null;
     if (L.id === 'wells_permian6') {
-      // Plugged/abandoned: solid BLACK center, oil/gas color as the outline
-      // ring. Active: solid oil/gas fill with a thin white ring.
-      fillColor = ['case', ['==', ['get', 'plug_flag'], 'Y'], '#000000', oilGasColorExpr()];
-      strokeColor = ['case', ['==', ['get', 'plug_flag'], 'Y'], oilGasColorExpr(), '#ffffff'];
-      strokeWidth = ['case', ['==', ['get', 'plug_flag'], 'Y'], 2.4, 1.2];
+      // Three states, in precedence order:
+      //  Plugged (plug_flag=Y): solid BLACK center, oil/gas color ring.
+      //  No longer producing (well_status): muted grey, de-emphasized.
+      //  Active: solid oil/gas fill, thin white ring.
+      const INACT = ['==', ['get', 'well_status'], 'Inactive - no longer producing'];
+      const PLUG = ['==', ['get', 'plug_flag'], 'Y'];
+      fillColor = ['case', PLUG, '#000000', INACT, '#9ca3af', oilGasColorExpr()];
+      strokeColor = ['case', PLUG, oilGasColorExpr(), INACT, '#6b7280', '#ffffff'];
+      strokeWidth = ['case', PLUG, 2.4, INACT, 1, 1.2];
+      wellsOpacity = ['case', INACT, 0.5, 1];
     }
     const radius = (L.id === 'wells_permian6')
       // Zoom ramp so the black center is clearly readable when zoomed to a
@@ -642,8 +648,8 @@ function layerPaint(L) {
       'circle-stroke-color': strokeColor,
       'circle-stroke-opacity': 1,
       // Wells solid (opacity 1) so the black plugged center reads as black on
-      // the satellite basemap rather than a translucent grey.
-      'circle-opacity': (L.id === 'wells_permian6') ? 1 : opacity,
+      // the satellite basemap; no-longer-producing wells muted to 0.5.
+      'circle-opacity': (L.id === 'wells_permian6') ? wellsOpacity : opacity,
     };
   }
   if (L.geom === 'line') {
