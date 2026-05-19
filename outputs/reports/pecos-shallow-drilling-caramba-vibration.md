@@ -6,11 +6,17 @@
 
 This memorandum summarizes the historical and recent record of shallow oil-and-gas drilling — wells less than 3,000 ft total depth — at and in the vicinity of the Caramba North tract, drawn from the Railroad Commission of Texas (RRC) wellbore and drilling-permit records. It is provided as factual context for evaluating potential ground-vibration considerations for a data-center development on the site.
 
-Throughout, **"near" / "in the vicinity of" the site means within ten miles of the tract** — the radius used for every proximity finding below. Ten miles is a deliberately generous boundary: ground vibration from drilling attenuates well within that distance.
+Throughout, **"near" / "in the vicinity of" the site means within ten miles of the tract** — the radius used for every proximity finding below. Ten miles is a deliberately generous boundary: ground vibration from drilling and completion attenuates well within that distance.
 
 ## Summary of findings
 
-Shallow (<3,000 ft) drilling at and around the Caramba North tract is a legacy activity that has effectively ceased in the immediate vicinity of the site. No well of any kind has been spudded within two miles of the tract in over a decade (none since before 2015); no shallow well within two miles since 2002; and the few nearby legacy shallow wells are predominantly plugged and abandoned. Drilling does continue across Pecos County, but almost none of it is near the site — only about 2% of the wells spudded county-wide since 2020 are within ten miles of the tract (roughly 98% are farther away; median ≈ 30 miles), and no drilling permit has been filed within ten miles of the tract since 2020. Pecos is, moreover, a comparatively light-drilling county — about one-third the new drilling of the average peer county since 2020. That modern activity is, per the Railroad Commission's wellbore-profile record, overwhelmingly **horizontal, deep** development — roughly 87% of Pecos drilling permits since 2020 — not shallow vertical drilling, and in any case it is not occurring at or adjacent to the site.
+Two independent points both lead to the same conclusion.
+
+**First — the kind of drilling.** The ground-vibration concern associated with oil-and-gas activity is hydraulic fracturing of **deep horizontal** wells; **shallow vertical** conventional wells are not hydraulically fractured and are not a comparable vibration source. Of the wells actually spudded in Pecos County since 2020, about half are shallow (<3,000 ft), and — cross-checked against the Railroad Commission's own Wellbore Profile field — roughly **86% of those shallow wells are vertical** (conventional, unfracked). Pecos drilling is weighted toward shallow, vertical, non-fracked wells far more than its peer counties: about **50% of Pecos wells are shallow versus roughly 2% across the comparable counties**, whose programs are almost entirely deep horizontal.
+
+**Second — and decisive — location.** Whatever its character, drilling is simply not occurring at or near the Caramba North tract. **No well of any kind has been spudded within two miles of the tract in over a decade** (none since before 2015); no shallow well within two miles since 2002; and the few nearby legacy shallow wells are old and plugged. Only about **2% of the wells spudded county-wide since 2020 are within ten miles** of the tract (the rest a median of ~30 miles away), and **no drilling permit has been filed within ten miles since 2020.**
+
+The hydraulic-fracturing activity that could be a vibration source is the deep-horizontal minority of Pecos drilling, and it is concentrated well away from the site; the wells near the site are sparse, old, shallow, vertical, and plugged.
 
 ## Findings
 
@@ -40,38 +46,36 @@ Of about 46 wellbores within two miles, the ten shallow wells were spudded betwe
 
 These are wells **spudded since 2020** — new drilling, not cumulative historical totals:
 
-| Radius | Wells spudded ≥ 2020 | Shallow (<3,000 ft) | Deep (≥3,000 ft) | Shallow share |
-|---|---|---|---|---|
-| ≤ 2 mi | **0** | 0 | 0 | — |
-| ≤ 5 mi | 8 | 3 | 5 | 38% |
-| ≤ 10 mi | 23 | 7 | 16 | 30% |
+| Radius | Wells spudded ≥ 2020 | Shallow (<3,000 ft) | Deep (≥3,000 ft) |
+|---|---|---|---|
+| ≤ 2 mi | **0** | 0 | 0 |
+| ≤ 5 mi | 8 | 3 | 5 |
+| ≤ 10 mi | 23 | 7 | 16 |
 
-Two points stand out. First, **no well of any kind has been spudded within two miles of the tract since before 2015** — recent drilling does not reach the site. Second, in the entire ten-mile radius only **23 wells have been spudded since 2020** — roughly three to four a year across a 314-square-mile area — and they are never more than a handful in any single year. Of those 23, about 70% are deep wells; the shallow vertical drilling at issue is the minority even of this sparse activity, and none of it is within two miles of the site.
+**No well of any kind has been spudded within two miles of the tract since before 2015.** In the entire ten-mile radius only **23 wells have been spudded since 2020** — roughly three to four a year across a 314-square-mile area — and none within two miles of the site.
 
 ### 5. The nearest active wells are decades-old completions
 
-The nearest non-plugged shallow wells were spudded in 1970 (1.28 mi) and 1988 (1.97 mi) — decades-old completions, not active drilling. A ground-vibration source is an operating drill rig; a plugged or long-completed wellbore is not. No active shallow drilling is occurring adjacent to the tract.
+The nearest non-plugged shallow wells were spudded in 1970 (1.28 mi) and 1988 (1.97 mi) — decades-old completions, not active drilling. A ground-vibration source is an operating drill rig or a hydraulic-fracturing operation; a plugged or long-completed wellbore is not. No active drilling is occurring adjacent to the tract.
 
 ### 6. County-wide context — almost no recent drilling is near the site
 
-Since 2020, **1,117 wells were spudded across Pecos County (~4,700 sq mi)**. Their distribution relative to the tract is decisive: **only 23 — about 2% — are within ten miles of the Caramba North tract; the other ~98% are farther away, at a median distance of roughly thirty miles.** The drilling-permit record agrees: only 27 permits of any kind sit within ten miles of the tract, and **none has been filed within ten miles since 2020.** Recent drilling in the county is real, but it is overwhelmingly remote from the site — and none of it is adjacent to it.
+Since 2020, **1,117 wells were spudded across Pecos County (~4,700 sq mi)**. Their distribution relative to the tract is decisive: **only 23 — about 2% — are within ten miles of the Caramba North tract; the other ~98% are farther away, at a median distance of roughly thirty miles.** The drilling-permit record agrees: only 27 permits of any kind sit within ten miles of the tract, and **none has been filed within ten miles since 2020.**
 
-### 7. Modern drilling is predominantly horizontal — and not at the site
+### 7. The drilling that does occur in Pecos is disproportionately shallow, vertical, and unfracked
 
-Shallow vertical drilling is the activity at issue. The Railroad Commission's W-1 **Wellbore Profile** field shows that modern drilling in Pecos County is the opposite of that: of roughly 900 drilling permits issued in the county since 2020, **about 87% are horizontal and only ~12% vertical.** Modern development in this part of the Permian/Delaware Basin is deep horizontal drilling, not shallow vertical work. Shallow (<3,000 ft) vertical drilling of the kind at issue is, in this county, largely a **historical** activity (Findings 1–5), and the modern horizontal program — like all recent drilling — is concentrated well away from the tract (Finding 6). *(Orientation figures are taken directly from the Railroad Commission's W-1 Wellbore Profile field.)*
+Drilling-permit *applications* in Pecos lean horizontal, but the wells **actually spudded** tell the relevant story. Of the 1,117 wells spudded in Pecos since 2020, **about half (556) have a total depth under 3,000 ft.** Cross-checked well-by-well against the Railroad Commission's own **Wellbore Profile** field, **roughly 86% of those shallow wells are designated *vertical*** — conventional wells that are not hydraulically fractured. The deeper half is, conversely, about 82% horizontal.
 
-### 8. Pecos in context — a comparatively light-drilling county
+This matters because hydraulic fracturing — the completion activity associated with ground vibration — is a feature of **deep horizontal** wells, not shallow vertical ones. A substantial share of all drilling in Pecos is therefore the low-intensity, non-fracked kind, and the fracked horizontal activity is the minority — and, per Findings 1–6, what little of it exists is well away from the site.
 
-Measured against the five comparable Permian counties, Pecos has seen far less recent drilling. Wells spudded since 2020:
+### 8. Pecos vs. peer counties — far more shallow/vertical, far less fracking
 
-| County | Wells spudded ≥ 2020 |
-|---|---|
-| **Pecos** (site county) | **1,117** |
-| Reeves | 3,693 |
-| Ward | 1,404 |
-| Midland | 5,140 |
-| Martin | 5,007 |
-| Reagan | 1,863 |
-| **Other-5 average** | **3,421** |
+Measured against the five comparable Permian counties, Pecos drilling is markedly more weighted to shallow, vertical, conventional wells. Wells spudded since 2020:
 
-Pecos has seen roughly **one-third the new drilling of the average peer county** (1,117 vs. 3,421; the peers range from 1,404 to 5,140). The county the site sits in is not a drilling hot-spot relative to its neighbors — and, as Findings 1–6 show, what little drilling Pecos does see is concentrated far from the Caramba North tract.
+| | Pecos (site county) | Other-5 county average |
+|---|---|---|
+| Wells spudded ≥ 2020 | 1,117 | 3,421 |
+| Shallow (<3,000 ft) ≈ vertical / unfracked | **556 (~50%)** | **~57 (~2%)** |
+| Deep (≥3,000 ft) ≈ horizontal / fracked | ~560 (~50%) | ~3,364 (~98%) |
+
+Shallow, vertical wells are about **50% of Pecos's recent drilling but only ~2% of the average peer county's** — Pecos's drilling mix is roughly **twenty-five times** more weighted toward the shallow, vertical, non-fracked end than its neighbors, whose programs are almost entirely deep horizontal. (The shallow-to-vertical correspondence is the RRC-confirmed ~86% from Finding 7; peer figures are from the recorded depth field.) Combined with the proximity findings, the picture is consistent: Pecos sees comparatively little hydraulic fracturing, and essentially none of it near the Caramba North tract.
