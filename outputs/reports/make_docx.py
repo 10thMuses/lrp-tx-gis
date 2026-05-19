@@ -156,5 +156,13 @@ table(doc, ["", "Pecos (site county)", "Other-5 county average"], [
 ], row_styles={1: {'fill': 'EAF5EA', 'cellfill': {1: 'CFECCF'}, 'boldcells': {1: True}}})
 para(doc, [("Shallow, vertical wells are about 50% of Pecos's recent drilling but only about 2% of the average peer county's — Pecos's drilling mix is roughly twenty-five times more weighted toward the shallow, vertical, non-fracked end than its neighbors, whose programs are almost entirely deep horizontal. (The shallow-to-vertical correspondence is the RRC-confirmed 86% from Finding 7; peer figures are from the recorded depth field.) Combined with the proximity findings, the picture is consistent: Pecos sees comparatively little hydraulic fracturing, and essentially none of it within ten miles of the Caramba North tract.", False)])
 
+doc.add_heading("9. Who is drilling, and what kind of activity", level=2)
+para(doc, [("The wellbore record carries no operator field; operator and filing purpose were taken from the RRC W-1 permit record (≈897 Pecos permits since 2020). Two facts follow.", False)])
+para(doc, [("First, filing purpose: about 53% of permits are “New Drill” and about 45% are “Recompletion.” ", True),
+           ("Recompletions are rework of an existing wellbore — no new hole, no new drilling, and no hydraulic fracturing. Headline permit counts therefore materially overstate new drilling.", False)])
+para(doc, [("Second, the single largest permit filer is not drilling new wells. ", True),
+           ("Kinder Morgan accounts for ≈44% of Pecos permits since 2020, but every one is a recompletion on an existing shallow (<3,000 ft) wellbore — the signature of legacy field rework / enhanced oil recovery, the lowest-intensity activity in the sector. The genuine new-drill program is a smaller, operator-concentrated set — Diamondback, XTO, Continental, Gordy, Pioneer, PRI — whose permits are predominantly horizontal, ≥10,000 ft, “New Drill,” and oil-targeted. Across all Pecos permits the target is about 98% oil, ~2% gas.", False)])
+para(doc, [("The implication reinforces Findings 1–8: the deep-horizontal, hydraulically fractured new-drill activity — the only activity relevant to ground vibration — is a minority of Pecos permitting, is concentrated among a few operators, and (per the proximity findings) is not occurring at or within ten miles of the Caramba North tract. (Operator, filing purpose, and oil/gas were recovered by joining the permit and wellbore records on API number; “Recompletion” denotes rework of an existing wellbore.)", False)], italic=True)
+
 doc.save(OUT)
 print("WROTE", OUT)

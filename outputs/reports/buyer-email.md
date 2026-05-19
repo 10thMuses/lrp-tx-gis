@@ -1,53 +1,33 @@
 # Email — sender → buyer (draft, not sent)
 
 **To:** [Buyer contact]
-**From:** [Your name], on behalf of the owner of Caramba North
-**Subject:** Caramba North — drilling / ground-vibration review, with supporting data and an interactive map
+**From:** [Your name], for the owner of Caramba North
+**Subject:** Caramba North — oil-and-gas drilling and ground-vibration assessment; supporting data tool
 **Attachment:** Pecos-Shallow-Drilling-Caramba-Vibration.pdf
 
 ---
 
-Hi [Name],
+[Name],
 
-Thank you for raising the question of whether nearby oil-and-gas drilling could create ground vibration affecting a data-center development on the Caramba North tract. We took it seriously and went to the underlying public record. The attached memorandum sets out what we found, drawn entirely from the Railroad Commission of Texas wellbore and drilling-permit data.
+This transmits our assessment of the oil-and-gas drilling record at and within ten miles of the Caramba North tract, prepared in response to the ground-vibration question raised in connection with the proposed data-center development. The analysis relies exclusively on Railroad Commission of Texas (RRC) primary records — the dbo900 wellbore database and the W-1 drilling-permit record — and is fully reproducible from those sources. The memorandum is attached; the findings are summarized below.
 
-In brief, and as the memo details:
+**Proximity.** No well of any kind has been spudded within two miles of the tract since before 2015, and no shallow (<3,000 ft) well within two miles since 2002. Within ten miles, 23 wells have been spudded since 2020 — approximately 2% of the county total — none within two miles, with the nearest recent well ~2.2 miles out and county drilling at a median distance of ~30 miles.
 
-- **No well of any kind has been spudded within two miles of the tract in over a decade** (none since before 2015; no shallow well within two miles since 2002). The only wells within two miles are old (1950s–2002), plugged, shallow vertical legacy wells.
-- **Within ten miles, drilling is sparse** — about 23 wells since 2020, roughly 2% of the county's total, none within two miles, with the bulk of Pecos drilling a median of ~30 miles away.
-- The drilling Pecos does see is disproportionately **shallow, vertical, conventional** wells — confirmed against the Commission's own Wellbore Profile field — i.e., not the deep horizontal, hydraulically fractured activity associated with ground vibration.
+**Character of activity.** Wellbore orientation is taken directly from the RRC Wellbore Profile field, not inferred. The deep-horizontal, hydraulically fractured program — the only activity materially associated with ground vibration — is a minority of Pecos drilling, operator-concentrated, oil-directed (~98%), and absent from the site's vicinity. Approximately 45% of permits since 2020 are recompletions of existing wellbores rather than new wells; the single largest filer (~44% of permits) is shallow recompletion / enhanced-recovery rework, not new drilling.
 
-We've also built an interactive map so you can examine the same data yourself rather than take our summary on faith, and so you can see the broader energy-infrastructure picture around the site.
+**Conclusion.** The drilling record does not indicate a drilling- or hydraulic-fracturing-related ground-vibration exposure at the Caramba North site.
 
-**LRP Texas Energy GIS — interactive map:** https://lrp-tx-gis.netlify.app
+**Interactive data tool — independent validation.** The complete record is available at **https://lrp-tx-gis.netlify.app**. It now incorporates the full RRC wellbore record (1964–present, active and plugged) and the W-1 permit record, alongside the surrounding energy-infrastructure datasets. The capabilities most relevant to this assessment:
 
-*What it is:* a browser-based map (no install) of Texas energy infrastructure focused on the Permian Basin and the Caramba North area, built on satellite imagery.
+- **Summary tables.** A live panel that, for any selection, tabulates well counts and annual averages by era, Pecos against the combined peer counties, with oil/gas and plugged-well breakdowns — the same tabulations that underlie the memorandum.
+- **Time series.** A year-by-year scrubber rendering the cumulative spud history, so the trend and spatial concentration of activity are directly observable.
+- **Reproducible views.** One-click saved views (e.g., Pecos shallow wells; Pecos vs. peer counties by depth band) that regenerate each figure in the memorandum, with per-feature attribute detail (API, spud/completion, depth, operator, status, source) and filtering by county, spud year, depth, and wellbore profile.
 
-*Key features:*
+Every figure in the memorandum is reproducible in the tool, and we invite your technical team to validate the underlying records directly. We are available to review the analysis and the data tool with your team at your convenience.
 
-- **Layered, toggleable content** — turn any data set on or off from the grouped sidebar.
-- **Filters on every layer** — for wells, filter by county, spud year (single years or decade ranges), oil vs. gas, plug status, and total depth, so you can isolate exactly "shallow wells near Caramba since 2020," etc.
-- **One-click saved views** — preset combinations (e.g., *Spud wells — Pecos — <3,000 ft*, *Pecos vs. other-5 counties*, by depth band) that reproduce the memo's cuts directly.
-- **Live summary panel** — when wells are shown, a panel reports totals and per-era breakdowns, Pecos vs. the combined peer counties side by side, with a plugged-well count and small bar charts.
-- **Click any feature for full detail** — each well, pipeline, plant, or parcel shows its complete attributes (API number, spud/completion dates, depth, operator, plug status, source) in a popup.
-- **Time scrubber, measure tool, basemap switcher, print, and a shareable link** that encodes the exact view, layers, and filters so a specific picture can be sent and reopened identically.
-
-*What's on it (content):*
-
-- The **Caramba North tract** itself, and the surrounding **wells (1964–present, active and plugged)** — the full Railroad Commission wellbore record for the six-county Permian area — plus **drilling permits**.
-- **Pipelines** (RRC oil-and-gas and HIFLD/EIA natural-gas, crude, and HGL), **natural-gas processing plants** and gas turbines.
-- **Power generation** — power plants, wind, solar, and battery storage — and the **transmission grid** (high-voltage lines, substations, and planned upgrades).
-- **Other large land/energy and data-center / power-campus developments** in the vicinity, for context on how comparable projects sit relative to this infrastructure.
-- County, city, highway, and rail reference layers, with sources attributed in each feature's popup.
-
-For the question at hand, the most direct path: open the map, turn on **Wells**, filter to **Pecos County**, and use the depth and spud-year filters (or the saved views) — you'll see for yourself how little recent drilling sits anywhere near the tract.
-
-I'm happy to walk you and your team through both the memo and the map on a call, and to answer any questions or run additional cuts of the data you'd find useful.
-
-Best regards,
 [Your name]
-[Title / contact]
+[Title]
 
 ---
 
-*Notes (delete before sending): fill in recipient and your name/title; attach `Pecos-Shallow-Drilling-Caramba-Vibration.pdf` (or the .docx). The map link is the public production URL. I have not sent anything. This buyer-facing email is separate from the internal `owner-email.md`.*
+*Notes (delete before sending): fill in recipient and your name/title; attach `Pecos-Shallow-Drilling-Caramba-Vibration.pdf` (or the .docx). The map link is the public production URL. Not sent. Separate from the internal `owner-email.md`.*
