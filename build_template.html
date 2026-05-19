@@ -1266,6 +1266,13 @@ const StatsPanel = (() => {
   function escapeHtmlLocal(s) { return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
 
   function renderLayerStats(L, panelLabel, rows) {
+    // Spud wells: the dedicated summary panel (era table, Pecos vs. the rest
+    // of the counties combined) is the single wells data table. Suppress the
+    // verbose per-layer stats (per-county table, by-spud-year sparkline, etc.)
+    // here so the wells view is just that top table.
+    if (L.id === 'wells_permian6') {
+      return `<div class="sp-layer"><h4>${panelLabel} <span class="sp-n">— see the Spud-wells summary panel</span></h4></div>`;
+    }
     if (rows.length === 0) {
       return `<div class="sp-layer"><h4>${panelLabel} <span class="sp-n">— 0 in view</span></h4></div>`;
     }
@@ -1438,6 +1445,9 @@ const StatsPanel = (() => {
   let compareMode = false;
 
   function renderCompareSection(L, panelLabel, rows) {
+    // Wells: defer entirely to the dedicated summary panel (Pecos vs. the
+    // rest of the counties combined). No separate compare table here.
+    if (L.id === 'wells_permian6') return '';
     const { subject, peer } = splitByRole(rows);
     const tfield = L.id === 'permits_permian6' ? 'permit_year' : 'spud_year';
     const tk = (arr) => tukeyDepth(arr, 'total_depth') || { mean: 0, p50: 0, n_below: 0, n_above: 0 };
