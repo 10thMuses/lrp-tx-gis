@@ -606,7 +606,7 @@ def _filter_exclude_recompletions(nd_path):
 
 
 def _reclassify_no_longer_producing(nd_path, status_csv,
-                                    gas_thresh_mcfd=125.0, oil_guard_bpd=5.0):
+                                    gas_thresh_mcfd=125.0, oil_guard_bpd=150.0):
     """Set a derived `well_status` on every wells feature and reclassify
     "active" wells that are effectively no longer producing.
 

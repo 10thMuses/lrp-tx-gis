@@ -5,10 +5,9 @@ producing.
 
 Rule (set by the owner's advisor): take the trailing 6 full months of PDQ
 production for each lease; if the average **natural gas** rate is below
-125 Mcf/day (= 125,000 cubic feet/day) the wells on that lease are flagged
-"no longer producing." A conservative oil guard (avg oil < 5 bbl/day) is also
-required before applying the label, so a lease still producing meaningful oil
-is never mislabeled — flagged here for review; both counts are reported.
+125 Mcf/day (= 125,000 cubic feet/day) AND average oil is below 150 bbl/day,
+the wells on that lease are flagged "no longer producing." Both the gas-only
+count and the gas+oil count are reported.
 
 RRC reports production at the LEASE level (oil) and lease/gas-well level (gas);
 PDQ's finest grain is (oil_gas, district, lease) x cycle-month. Wells join to a
@@ -27,7 +26,7 @@ DELIM = "}"
 SCOPE = {"PECOS", "REEVES", "WARD", "MIDLAND", "MARTIN", "REAGAN"}
 TRAIL_MONTHS = 6
 GAS_THRESH_MCFD = 125.0      # 125,000 cf/day
-OIL_GUARD_BPD = 5.0          # conservative: still-producing-oil leases excluded
+OIL_GUARD_BPD = 150.0        # oil also below this/day to count as no-longer-producing
 
 
 def stream_dsv(z, name):
