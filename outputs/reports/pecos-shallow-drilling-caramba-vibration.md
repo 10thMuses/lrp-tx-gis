@@ -1,6 +1,6 @@
 # Shallow (<3,000 ft) Oil-and-Gas Drilling at and Within Ten Miles of the Caramba North Tract — Historical and Recent Record
 
-**Prepared:** 2026-05-18 · **Subject site:** Caramba North tract (≈1,300 ac), Pecos County, TX — centroid ≈ 30.9032° N, 102.9747° W · **Classification:** Confidential
+**Prepared:** 2026-05-19 · **Subject site:** Caramba North tract (≈1,300 ac), Pecos County, TX — centroid ≈ 30.9032° N, 102.9747° W · **Classification:** Confidential
 
 ## Purpose
 
@@ -10,7 +10,7 @@ Proximity is reported at explicit distances from the tract centroid — principa
 
 ## Summary of findings
 
-**No new drilling is occurring at or near the Caramba North site.** Counting only genuine new wells (RRC "New Drill" permits, excluding recompletions): **no well of any kind has been spudded within two miles of the tract in over a decade**, **no new-drill well lies within five miles**, and only **three new-drill wells sit within ten miles** across all of 2020–2025 (nearest ≈ 6.9 miles; all three are deep ≥9,200 ft, spud 2020 and 2025). The only wells within two miles are old (1950s–2002), plugged, shallow vertical legacy wells — not active, not fracked, not a vibration source.
+**No new drilling is occurring at or near the Caramba North site.** Counting only genuine new wells (RRC "New Drill" permits, excluding recompletions): **no well of any kind has been spudded within two miles of the tract in over a decade**, **no new-drill well lies within five miles**, and only **three new-drill wells sit within ten miles** across all of 2020–2025 (nearest ≈ 6.9 miles; all three are deep ≥9,200 ft, spud 2020 and 2025). The wells within two miles are all decades-old legacy completions (drilled 1950s–2002) — mostly plugged shallow verticals plus a handful of long-completed deep wells — none representing active drilling, hydraulic fracturing, or a vibration source.
 
 **Two further points reinforce this:**
 
@@ -53,7 +53,7 @@ Counting only genuine new wells (RRC "New Drill" permits — recompletions of ex
 
 The three genuine new wells within ten miles, across all of 2020–2025, are 6.9–9.4 miles out and all deep (≈9,200–9,500 ft; spudded 2020 and 2025) — none shallow, none within five miles. Even on the *loosest* possible count — every record with a 2020-or-later spud date, including recompletion-restamped records — it is still **zero within two miles** and only ≈23 within ten miles across the whole period. New drilling does not reach the site under any reading of the data.
 
-### 5. The nearest active wells are decades-old completions
+### 5. The nearest non-plugged shallow wells are decades-old completions
 
 The nearest non-plugged shallow wells were spudded in 1970 (1.28 mi) and 1988 (1.97 mi) — decades-old completions, not active drilling. A ground-vibration source is an operating drill rig or a hydraulic-fracturing operation; a plugged or long-completed wellbore is not. No active drilling is occurring adjacent to the tract.
 
@@ -94,10 +94,10 @@ Pecos's ≈116 genuine new wells are roughly **one-ninth of the average comparab
 
 *Howard and Loving counties were pulled from the Railroad Commission's full dbf900 wellbore file and integrated on the same genuine-new-drill basis. They lie outside the six-county sale-area set and well away from the tract; they are included here only to broaden the comparison.*
 
-### 9. Production near the site is decades-old deep gas — no shallow, new, or hydraulically-fractured production
+### 9. The only production near the site is legacy deep gas — no shallow, new, or hydraulically-fractured production
 
 Every well was additionally cross-referenced against the Railroad Commission's PDQ production records for the most recent six reported months (through May 2026), joined by **API number** through the RRC's authoritative API-to-lease crosswalk — a match covering **≈99.6% of all non-plugged wells**. A well is treated as **"no longer producing" when its lease's trailing-average output is below 125 Mcf/day of gas and below 150 bbl/day of oil**.
 
-Within ten miles of the Caramba North tract there are 291 non-plugged genuine-new-drill wells; **275 — about 95% — are no longer producing**. The 16 that still produce are not new or shallow activity: each is a decades-old (mostly 1965–1978 spud), very deep (≈17,000–22,800 ft) conventional **gas** well at a modest rate — the legacy deep-gas play, not the shallow or hydraulically-fractured drilling at issue. Within five miles, of 86 non-plugged wells 83 are no longer producing and the 3 that remain are likewise old, deep gas wells; within two miles, of 5 non-plugged wells 4 are no longer producing and the single producer is a 1975, ≈22,100-ft gas well. A producing wellhead on a completion drilled half a century ago is not a drill rig or a hydraulic-fracturing spread; together with the plugged legacy wells (Findings 1–5), there is no shallow, new, or hydraulically-fractured production at or near the site.
+Of the 291 non-plugged genuine-new-drill wells within ten miles of the Caramba North tract, **275 (about 95%) are no longer producing**. The 16 that still produce are not new or shallow activity: each is a decades-old (mostly 1965–1978 spud), very deep (≈17,000–22,800 ft) conventional **gas** well at a modest rate — the legacy deep-gas play, not the shallow or hydraulically-fractured drilling at issue. Within five miles, 83 of 86 non-plugged wells are no longer producing; the 3 that remain are likewise old, deep gas wells. Within two miles, 4 of 5 are no longer producing; the single producer is a 1975, ≈22,100-ft gas well. A producing wellhead on a completion drilled half a century ago is not a drill rig or a hydraulic-fracturing spread; together with the plugged legacy wells discussed above, there is no shallow, new, or hydraulically-fractured production at or near the site.
 
 *County-wide, of the ≈35,100 genuine new-drill wellbores, ≈12,540 are plugged, ≈13,770 are no longer producing by this measure, and ≈8,780 remain active. The API-to-lease crosswalk matches ≈99.6% of non-plugged wells; the ≈90 that do not match are conservatively left classified "Active." Production filings carry a normal reporting lag, which the six-month trailing window mitigates.*

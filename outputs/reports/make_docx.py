@@ -55,7 +55,7 @@ p = doc.add_paragraph(); r = p.add_run("CONFIDENTIAL — PECOS COUNTY · CARAMBA
 r.bold = True; r.font.size = Pt(9); r.font.color.rgb = RGBColor(0xB0, 0, 0)
 
 doc.add_heading("Shallow (<3,000 ft) Oil-and-Gas Drilling at and Within Ten Miles of the Caramba North Tract — Historical and Recent Record", level=0)
-para(doc, [("Prepared: 2026-05-18  ·  Subject site: Caramba North tract (≈1,300 ac), Pecos County, TX — centroid ≈ 30.9032° N, 102.9747° W  ·  Classification: Confidential", False)], size=9)
+para(doc, [("Prepared: 2026-05-19  ·  Subject site: Caramba North tract (≈1,300 ac), Pecos County, TX — centroid ≈ 30.9032° N, 102.9747° W  ·  Classification: Confidential", False)], size=9)
 
 doc.add_heading("Purpose", level=1)
 para(doc, [("This memorandum summarizes the historical and recent record of oil-and-gas drilling — with attention to shallow (<3,000 ft) wells — at and within ten miles of the Caramba North tract, drawn from the Railroad Commission of Texas (RRC) wellbore and drilling-permit records. It is provided as context for evaluating potential ground-vibration considerations for a data-center development on the site. Throughout, ", False),
@@ -70,7 +70,7 @@ para(doc, [
     ("no well of any kind has been spudded within two miles of the tract in over a decade", True),
     (", ", False), ("no new-drill well lies within five miles", True),
     (", and only ", False), ("three new-drill wells sit within ten miles", True),
-    (" across all of 2020–2025 (nearest ≈ 6.9 miles; all three are deep ≥9,200 ft, spud 2020 and 2025). The only wells within two miles are old (1950s–2002), plugged, shallow vertical legacy wells — not active, not fracked, not a vibration source.", False),
+    (" across all of 2020–2025 (nearest ≈ 6.9 miles; all three are deep ≥9,200 ft, spud 2020 and 2025). The wells within two miles are all decades-old legacy completions (drilled 1950s–2002) — mostly plugged shallow verticals plus a handful of long-completed deep wells — none representing active drilling, hydraulic fracturing, or a vibration source.", False),
 ], fill='EAF2FF', space_after=8)
 
 para(doc, [("Two further points reinforce this:", True)], space_after=2)
@@ -109,7 +109,7 @@ para(doc, [("The three genuine new wells within ten miles, across all of 2020–
            ("zero within two miles", True),
            (" and only ≈23 within ten miles across the whole period. New drilling does not reach the site under any reading of the data.", False)])
 
-doc.add_heading("5. The nearest active wells are decades-old completions", level=2)
+doc.add_heading("5. The nearest non-plugged shallow wells are decades-old completions", level=2)
 para(doc, [("The nearest non-plugged shallow wells were spudded in 1970 (1.28 mi) and 1988 (1.97 mi) — decades-old completions, not active drilling. A ground-vibration source is an operating drill rig or a hydraulic-fracturing operation; a plugged or long-completed wellbore is not. No active drilling is occurring adjacent to the tract.", False)])
 
 doc.add_heading("6. County-wide context — new drilling is deep, and remote from the site", level=2)
@@ -145,7 +145,7 @@ table(doc, ["County", "New-drill wells since 2020", "of which shallow (<3,000 ft
 para(doc, [("Pecos's ≈116 genuine new wells are roughly one-ninth of the average comparable county's (≈1,040); Martin, the most active, has ≈1,616, and even the next-lowest county (Ward) has ≈396. Genuine new shallow drilling is negligible in every county (≤35). On a new-drill basis Pecos is by far the least-drilled of the eight — and, per Findings 1–6, essentially none of even that activity is within ten miles of the Caramba North tract.", False)])
 para(doc, [("Howard and Loving counties were pulled from the Railroad Commission's full dbf900 wellbore file and integrated on the same genuine-new-drill basis. They lie outside the six-county sale-area set and well away from the tract; they are included here only to broaden the comparison.", False)], italic=True)
 
-doc.add_heading("9. Production near the site is decades-old deep gas — no shallow, new, or hydraulically-fractured production", level=2)
+doc.add_heading("9. The only production near the site is legacy deep gas — no shallow, new, or hydraulically-fractured production", level=2)
 para(doc, [("Every well was additionally cross-referenced against the Railroad Commission's PDQ production records for the most recent six reported months (through May 2026), joined by ", False),
            ("API number", True),
            (" through the RRC's authoritative API-to-lease crosswalk — a match covering ", False),
@@ -153,9 +153,9 @@ para(doc, [("Every well was additionally cross-referenced against the Railroad C
            (". A well is treated as ", False),
            ("“no longer producing” when its lease's trailing-average output is below 125 Mcf/day of gas and below 150 bbl/day of oil", True),
            (".", False)])
-para(doc, [("Within ten miles of the Caramba North tract there are 291 non-plugged genuine-new-drill wells; ", False),
-           ("275 — about 95% — are no longer producing", True),
-           (". The 16 that still produce are not new or shallow activity: each is a decades-old (mostly 1965–1978 spud), very deep (≈17,000–22,800 ft) conventional gas well at a modest rate — the legacy deep-gas play, not the shallow or hydraulically-fractured drilling at issue. Within five miles, of 86 non-plugged wells 83 are no longer producing and the 3 that remain are likewise old, deep gas wells; within two miles, of 5 non-plugged wells 4 are no longer producing and the single producer is a 1975, ≈22,100-ft gas well. A producing wellhead on a completion drilled half a century ago is not a drill rig or a hydraulic-fracturing spread; together with the plugged legacy wells (Findings 1–5), there is no shallow, new, or hydraulically-fractured production at or near the site.", False)],
+para(doc, [("Of the 291 non-plugged genuine-new-drill wells within ten miles of the Caramba North tract, ", False),
+           ("275 (about 95%) are no longer producing", True),
+           (". The 16 that still produce are not new or shallow activity: each is a decades-old (mostly 1965–1978 spud), very deep (≈17,000–22,800 ft) conventional gas well at a modest rate — the legacy deep-gas play, not the shallow or hydraulically-fractured drilling at issue. Within five miles, 83 of 86 non-plugged wells are no longer producing; the 3 that remain are likewise old, deep gas wells. Within two miles, 4 of 5 are no longer producing; the single producer is a 1975, ≈22,100-ft gas well. A producing wellhead on a completion drilled half a century ago is not a drill rig or a hydraulic-fracturing spread; together with the plugged legacy wells discussed above, there is no shallow, new, or hydraulically-fractured production at or near the site.", False)],
      fill='EAF2FF')
 para(doc, [("County-wide, of the ≈35,100 genuine new-drill wellbores, ≈12,540 are plugged, ≈13,770 are no longer producing by this measure, and ≈8,780 remain active. The API-to-lease crosswalk matches ≈99.6% of non-plugged wells; the ≈90 that do not match are conservatively left classified “Active.” Production filings carry a normal reporting lag, which the six-month trailing window mitigates.", False)], italic=True)
 
