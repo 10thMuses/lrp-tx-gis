@@ -10,7 +10,7 @@ Proximity is reported at explicit distances from the tract centroid — principa
 
 ## Summary of findings
 
-**No hydraulic-fracturing or horizontal-drilling activity is occurring at or within ten miles of the Caramba North site.** The ground-vibration concern associated with oil-and-gas activity is hydraulic fracturing of deep horizontal wells — and at this site that activity is absent: **no drilling permit of any kind has been filed within ten miles of the tract since 2020**, and **no well of any kind has been spudded within two miles in over a decade** (none since before 2015; no shallow well within two miles since 2002). Only about **2% of the wells spudded across Pecos County since 2020 are within ten miles** of the tract — the rest a median of roughly thirty miles away. **The only wells within two miles of the tract are old (1950s–2002), plugged, shallow vertical legacy wells** — not active, not hydraulically fractured, and not a vibration source.
+**No drilling of any kind is occurring at or immediately adjacent to the Caramba North site.** The ground-vibration concern associated with oil-and-gas activity is hydraulic fracturing of deep horizontal wells, and such vibration attenuates well within ten miles — so what matters is activity close to the site. **No well of any kind has been spudded within two miles of the tract in over a decade** (none since before 2015; no shallow well within two miles since 2002), and the only wells within two miles are old (1950s–2002), plugged, shallow vertical legacy wells — not active, not hydraulically fractured, and not a vibration source. Within ten miles, drilling is sparse: only **23 wells have been spudded since 2020 — about 2% of the county's total** — none of them within two miles, the nearest recent well about 2.2 miles away (2022). The bulk of Pecos drilling sits a median of roughly thirty miles from the tract.
 
 **Two further points reinforce this:**
 
@@ -51,7 +51,7 @@ These are wells **spudded since 2020** — new drilling, not cumulative historic
 | ≤ 5 mi | 8 | 3 | 5 |
 | ≤ 10 mi | 23 | 7 | 16 |
 
-**No well of any kind has been spudded within two miles of the tract since before 2015.** In the entire ten-mile radius only **23 wells have been spudded since 2020** — roughly three to four a year across a 314-square-mile area — and none within two miles of the site.
+**No well of any kind has been spudded within two miles of the tract since before 2015.** In the entire ten-mile radius only **23 wells have been spudded since 2020** — roughly three to four a year across a 314-square-mile area — and none within two miles of the site. About 70% of the 23 are deeper wells; the shallow vertical wells at issue are the minority even of this sparse activity.
 
 ### 5. The nearest active wells are decades-old completions
 
@@ -59,7 +59,7 @@ The nearest non-plugged shallow wells were spudded in 1970 (1.28 mi) and 1988 (1
 
 ### 6. County-wide context — almost no recent drilling within ten miles of the site
 
-Since 2020, **1,117 wells were spudded across Pecos County (≈4,700 sq mi)**. Their distribution relative to the tract is decisive: **only 23 — about 2% — are within ten miles of the Caramba North tract; the other ≈98% are farther away, at a median distance of roughly thirty miles.** The drilling-permit record agrees: only 27 permits of any kind sit within ten miles of the tract, and **none has been filed within ten miles since 2020.**
+Since 2020, **1,117 wells were spudded across Pecos County (≈4,700 sq mi)**. Their distribution relative to the tract is decisive: **only 23 — about 2% — are within ten miles of the Caramba North tract; the other ≈98% are farther away, at a median distance of roughly thirty miles.** Of those 23, none is within two miles of the site, and the nearest recent well is about 2.2 miles away (spudded 2022). Recent drilling in the county is real, but it is overwhelmingly remote from the tract.
 
 ### 7. The drilling that does occur in Pecos is disproportionately shallow, vertical, and unfracked
 
