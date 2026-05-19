@@ -52,9 +52,21 @@ Two points stand out. First, **no well of any kind has been spudded within two m
 
 The nearest non-plugged shallow wells were spudded in 1970 (1.28 mi) and 1988 (1.97 mi) — decades-old completions, not active drilling. A ground-vibration source is an operating drill rig; a plugged or long-completed wellbore is not. No active shallow drilling is occurring adjacent to the tract.
 
-### 6. County-wide context — almost no recent drilling is near the site
+### 6. County-wide context — Pecos vs. peer counties, and proximity to the site
 
-Since 2020, **1,117 wells were spudded across Pecos County (~4,700 sq mi)**. Their distribution relative to the tract is decisive: **only 23 — about 2% — are within ten miles of the Caramba North tract; the other ~98% are farther away, at a median distance of roughly thirty miles.** The drilling-permit record agrees: only 27 permits of any kind sit within ten miles of the tract, and **none has been filed within ten miles since 2020.** Recent drilling in the county is real, but it is overwhelmingly remote from the site — and none of it is adjacent to it.
+Measured against the five comparable Permian counties, Pecos is a **low-activity county for new drilling.** Wells spudded since 2020:
+
+| County | Wells spudded ≥ 2020 |
+|---|---|
+| **Pecos** (site county) | **1,117** |
+| Reeves | 3,693 |
+| Ward | 1,404 |
+| Midland | 5,140 |
+| Martin | 5,007 |
+| Reagan | 1,863 |
+| **Other-5 average** | **3,421** |
+
+Pecos has seen roughly **one-third the new drilling of the average peer county** (1,117 vs. 3,421; the peers range from 1,404 to 5,140). And of those 1,117 Pecos wells, **only 23 — about 2% — are within ten miles of the Caramba North tract**; the rest are a median of roughly thirty miles away. The drilling-permit record agrees: only 27 permits of any kind sit within ten miles of the tract, and **none has been filed within ten miles since 2020.** In short, the county the site sits in is comparatively lightly drilled, and what drilling there is sits well away from the tract.
 
 ### 7. Modern drilling is predominantly horizontal — and not at the site
 
@@ -66,6 +78,7 @@ Shallow vertical drilling is the activity at issue. The Railroad Commission's W-
 - **"Shallow" = total reported depth < 3,000 ft.** A < 2,000-ft cut and a ≤ 3,000-ft cut were also run and do not change the conclusions.
 - **"Near" = within ten miles of the tract centroid.** All proximity findings use this radius; the within-one-mile and within-two-mile cuts are reported as the innermost detail. A fifteen-mile cut was also examined and is not relied on here.
 - **Well orientation.** Orientation figures are taken directly from the Railroad Commission's W-1 **"Wellbore Profile"** field (Horizontal | Vertical | Directional), retrieved from the agency's public drilling-permit system; for Pecos permits since 2020 this field is populated for essentially all records (n ≈ 900). **Total-depth values in these extracts are not a reliable proxy for orientation** — the permit extract places a large majority of clearly-horizontal permits below 3,000 ft — so no depth-based orientation inference is used in this memorandum; the profile field is used directly. The RRC dbo900 wellbore (drilled-well) extract used for the proximity and recency findings does not carry an orientation field, but those findings (location, spud year, plug status) do not depend on orientation.
+- **Peer comparison.** "Other-5 counties" are Reeves, Ward, Midland, Martin, and Reagan; the peer comparison uses spudded-well counts since 2020 (a robust, directly recorded measure). An authoritative *orientation* comparison across the peer counties is not presented: the RRC W-1 Wellbore Profile field was retrieved for Pecos through the present but for the peer counties only through 2017, so a like-for-like horizontal/vertical comparison since 2020 is not yet available for them.
 - **Data completeness.** Roughly 40% of Pecos wellbore records in the RRC extract lack a recorded total depth, and a small number lack a spud year. County-wide shallow *counts* are therefore conservative lower bounds among depth-known wells. The proximity and recency findings rely on the geolocated records directly and are robust to the missing-depth records (a well with no recorded depth is not counted as shallow).
 - **Drilling-record analysis, not a geotechnical study.** This memorandum quantifies the location, depth, recency, and status of drilling at and near the site. It does not model vibration propagation through site soils; that is a separate engineering analysis.
 
