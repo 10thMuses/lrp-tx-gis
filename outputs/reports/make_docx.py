@@ -145,15 +145,19 @@ table(doc, ["County", "New-drill wells since 2020", "of which shallow (<3,000 ft
 para(doc, [("Pecos's ≈116 genuine new wells are roughly one-ninth of the average comparable county's (≈1,040); Martin, the most active, has ≈1,616, and even the next-lowest county (Ward) has ≈396. Genuine new shallow drilling is negligible in every county (≤35). On a new-drill basis Pecos is by far the least-drilled of the eight — and, per Findings 1–6, essentially none of even that activity is within ten miles of the Caramba North tract.", False)])
 para(doc, [("Howard and Loving counties were pulled from the Railroad Commission's full dbf900 wellbore file and integrated on the same genuine-new-drill basis. They lie outside the six-county sale-area set and well away from the tract; they are included here only to broaden the comparison.", False)], italic=True)
 
-doc.add_heading("9. The wells near the site are no longer producing", level=2)
-para(doc, [("Every well was additionally cross-referenced against the Railroad Commission's PDQ production records for the most recent six reported months (through May 2026). A well is treated as ", False),
+doc.add_heading("9. Production near the site is decades-old deep gas — no shallow, new, or hydraulically-fractured production", level=2)
+para(doc, [("Every well was additionally cross-referenced against the Railroad Commission's PDQ production records for the most recent six reported months (through May 2026), joined by ", False),
+           ("API number", True),
+           (" through the RRC's authoritative API-to-lease crosswalk — a match covering ", False),
+           ("≈99.6% of all non-plugged wells", True),
+           (". A well is treated as ", False),
            ("“no longer producing” when its lease's trailing-average output is below 125 Mcf/day of gas and below 150 bbl/day of oil", True),
            (".", False)])
-para(doc, [("Within ten miles of the Caramba North tract, every non-plugged well that can be matched to a production lease — 63 wells — is below that threshold: ", False),
-           ("none is still producing", True),
-           (". Within five miles the same is true of all ten such wells; within two miles there are none. Together with the plugged legacy wells (Findings 1–5), there is no active oil-and-gas production at or near the site.", False)],
+para(doc, [("Within ten miles of the Caramba North tract there are 291 non-plugged genuine-new-drill wells; ", False),
+           ("275 — about 95% — are no longer producing", True),
+           (". The 16 that still produce are not new or shallow activity: each is a decades-old (mostly 1965–1978 spud), very deep (≈17,000–22,800 ft) conventional gas well at a modest rate — the legacy deep-gas play, not the shallow or hydraulically-fractured drilling at issue. Within five miles, of 86 non-plugged wells 83 are no longer producing and the 3 that remain are likewise old, deep gas wells; within two miles, of 5 non-plugged wells 4 are no longer producing and the single producer is a 1975, ≈22,100-ft gas well. A producing wellhead on a completion drilled half a century ago is not a drill rig or a hydraulic-fracturing spread; together with the plugged legacy wells (Findings 1–5), there is no shallow, new, or hydraulically-fractured production at or near the site.", False)],
      fill='EAF2FF')
-para(doc, [("County-wide, of the ≈35,100 genuine new-drill wellbores, ≈12,540 are plugged and a further ≈2,030 of the nominally-active wells are, by this measure, no longer producing. Method note: RRC reports production at the lease level; a well that cannot be matched to a producing lease is conservatively left classified “Active,” so the no-longer-producing count is a floor, not a ceiling. Production filings carry a normal reporting lag, which the six-month trailing window mitigates.", False)], italic=True)
+para(doc, [("County-wide, of the ≈35,100 genuine new-drill wellbores, ≈12,540 are plugged, ≈13,770 are no longer producing by this measure, and ≈8,780 remain active. The API-to-lease crosswalk matches ≈99.6% of non-plugged wells; the ≈90 that do not match are conservatively left classified “Active.” Production filings carry a normal reporting lag, which the six-month trailing window mitigates.", False)], italic=True)
 
 doc.save(OUT)
 print("WROTE", OUT)

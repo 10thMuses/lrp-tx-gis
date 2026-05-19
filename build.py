@@ -610,36 +610,34 @@ def _reclassify_no_longer_producing(nd_path, status_csv,
     """Set a derived `well_status` on every wells feature and reclassify
     "active" wells that are effectively no longer producing.
 
-    Joins each well to its RRC lease via (oil_gas, district, lease_no) against
-    the precomputed `data/lease_status.csv` (trailing-6-month PDQ averages).
+    Joins each well to its RRC production by **API number** via the authoritative
+    RRC API->lease crosswalk (OG_WELL_COMPLETION_DATA_TABLE), precomputed into
+    `data/well_prod_status.csv` (api8 -> trailing-6-month gas/oil). API matching
+    covers ~99.6% of non-plugged wells (the old lease_no guess matched ~31%).
     well_status:
       - "Plugged"                          if plug_flag == Y
-      - "Inactive - no longer producing"   if (not plugged) and the lease's
-            trailing gas < gas_thresh_mcfd AND trailing oil < oil_guard_bpd,
-            OR the lease has no PDQ production in the trailing window at all
-            (and the well is not brand-new)
-      - "Active"                           otherwise
-    The oil guard prevents a lease still producing meaningful oil from being
-    mislabeled. Returns (n_inactive, n_inactive_gas_only) for reporting."""
-    status = {}
-    latest_year = 0
+      - "Inactive - no longer producing"   if (not plugged) and trailing
+            gas < gas_thresh_mcfd AND trailing oil < oil_guard_bpd
+      - "Active"                           otherwise (still producing, or the
+            ~0.4% with no production record)
+    Returns (n_inactive, n_unmatched)."""
+    import re as _re
+    prod = {}
     if os.path.exists(status_csv):
         with open(status_csv, newline='', encoding='utf-8') as fh:
             for r in csv.DictReader(fh):
-                og = (r.get('oil_gas') or '').strip().upper()[:1]
-                dist = (r.get('district') or '').strip().lstrip('0')
-                ln = (r.get('lease_no') or '').strip().lstrip('0')
+                a = (r.get('api8') or '').strip()
                 try:
-                    g = float(r.get('gas_mcf_d') or 0)
-                    o = float(r.get('oil_bbl_d') or 0)
+                    prod[a] = (float(r.get('gas_mcf_d') or 0),
+                               float(r.get('oil_bbl_d') or 0))
                 except ValueError:
-                    g, o = 0.0, 0.0
-                status[(og, dist, ln)] = (g, o)
-                w = (r.get('window') or '')
-                for tok in w.replace('-', ' ').split():
-                    if len(tok) >= 4 and tok[:4].isdigit():
-                        latest_year = max(latest_year, int(tok[:4]))
-    n_inact = n_inact_gas_only = 0
+                    pass
+
+    def api8(s):
+        d = _re.sub(r'\D', '', s or '')
+        return d[-8:] if len(d) >= 8 else d
+
+    n_inact = n_unmatched = 0
     tmp = str(nd_path) + '.tmp'
     with open(nd_path, 'r', encoding='utf-8') as fin, \
          open(tmp, 'w', encoding='utf-8') as fout:
@@ -650,40 +648,22 @@ def _reclassify_no_longer_producing(nd_path, status_csv,
                 fout.write(line)
                 continue
             p = obj.get('properties') or {}
-            plug = str(p.get('plug_flag') or '').strip().upper()
-            if plug == 'Y':
+            if str(p.get('plug_flag') or '').strip().upper() == 'Y':
                 p['well_status'] = 'Plugged'
             else:
-                og = str(p.get('oil_gas') or '').strip().upper()[:1]
-                dist = str(p.get('district') or '').strip().lstrip('0')
-                ln = str(p.get('lease_no') or '').strip().lstrip('0')
-                rec = status.get((og, dist, ln))
-                try:
-                    sy = int(float(p.get('spud_year')))
-                except Exception:
-                    sy = 0
+                rec = prod.get(api8(p.get('api_no')))
                 if rec is None:
-                    # Conservative: the wellbore lease_no does not always map
-                    # cleanly to the PDQ lease key, so a join miss is NOT
-                    # evidence of non-production. Only POSITIVE production
-                    # evidence below threshold downgrades a well; unmatched
-                    # wells stay "Active" (status unverified).
+                    n_unmatched += 1
                     p['well_status'] = 'Active'
+                elif rec[0] < gas_thresh_mcfd and rec[1] < oil_guard_bpd:
+                    p['well_status'] = 'Inactive - no longer producing'
+                    n_inact += 1
                 else:
-                    g, o = rec
-                    if g < gas_thresh_mcfd:
-                        n_inact_gas_only += 1
-                        if o < oil_guard_bpd:
-                            p['well_status'] = 'Inactive - no longer producing'
-                            n_inact += 1
-                        else:
-                            p['well_status'] = 'Active'
-                    else:
-                        p['well_status'] = 'Active'
+                    p['well_status'] = 'Active'
             obj['properties'] = p
             fout.write(json.dumps(obj) + '\n')
     os.replace(tmp, nd_path)
-    return n_inact, n_inact_gas_only
+    return n_inact, n_unmatched
 
 
 def _filter_tax_keep(nd_path, techs, counties):
@@ -944,10 +924,10 @@ def build_layer(layer, report, split_stats):
             n_written -= n_rc
             print(f'  {lid}: exclude_recompletions removed {n_rc} re-stamped features')
         if layer.get('reclassify_inactive_production'):
-            n_inact, n_gas = _reclassify_no_longer_producing(
-                nd, str(ROOT / 'data' / 'lease_status.csv'))
+            n_inact, n_unmatched = _reclassify_no_longer_producing(
+                nd, str(ROOT / 'data' / 'well_prod_status.csv'))
             print(f'  {lid}: reclassify_inactive_production -> {n_inact} active wells '
-                  f'flagged no-longer-producing (gas-only screen alone: {n_gas})')
+                  f'flagged no-longer-producing ({n_unmatched} unmatched -> kept Active)')
         if n_written == 0:
             report.append((lid, n_total, 0, 'EMPTY', src.name))
             return None
