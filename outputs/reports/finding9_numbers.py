@@ -44,9 +44,11 @@ def api8(s):
     d = re.sub(r"\D", "", s or "")
     return d[-8:] if len(d) >= 8 else d
 
-GAS, OIL = 125.0, 150.0
+# New "marginal or end-of-life" threshold: gas <= 125 Mcf/d AND oil <= 25 bbl/d
+# Computed independently of the (older) well_status baked into ND below.
+GAS, OIL = 125.0, 25.0
 
-tot = plug = nolong = active = unmatched_np = 0
+tot = plug = marginal = producing_cnt = unmatched_np = 0
 rings = {2: [], 5: [], 10: []}
 near_producers = []
 
@@ -57,14 +59,8 @@ with open(ND, encoding="utf-8") as fh:
         except Exception:
             continue
         p = o.get("properties") or {}
-        st = p.get("well_status")
+        is_plugged = str(p.get("plug_flag") or "").strip().upper() == "Y"
         tot += 1
-        if st == "Plugged":
-            plug += 1
-        elif st == "Inactive - no longer producing":
-            nolong += 1
-        else:
-            active += 1
         geom = o.get("geometry") or {}
         c = geom.get("coordinates") or [None, None]
         try:
@@ -73,34 +69,49 @@ with open(ND, encoding="utf-8") as fh:
             continue
         mi = miles(lon, lat)
         rec = prod.get(api8(p.get("api_no")))
-        is_np = st != "Plugged"
-        matched = rec is not None
-        if is_np and not matched:
-            unmatched_np += 1
-        producing = is_np and matched and not (rec[0] < GAS and rec[1] < OIL)
+        if is_plugged:
+            plug += 1
+            cat = "Plugged"
+        else:
+            matched = rec is not None
+            if not matched:
+                unmatched_np += 1
+                cat = "Active"   # conservatively kept Active when unmatched
+                producing_cnt += 1
+            elif rec[0] <= GAS and rec[1] <= OIL:
+                cat = "Marginal or end-of-life"
+                marginal += 1
+            else:
+                cat = "Active"
+                producing_cnt += 1
         for R in (2, 5, 10):
             if mi <= R:
-                rings[R].append((mi, st, matched, producing, rec, p.get("api_no")))
-        if mi <= 10 and producing:
+                rings[R].append((mi, cat, rec is not None, cat == "Active" and not is_plugged, rec, p.get("api_no")))
+        if mi <= 10 and not is_plugged and cat == "Active":
             near_producers.append((mi, p.get("api_no"), rec, p.get("oil_gas"), p.get("spud_year"), p.get("total_depth")))
 
+print(f"THRESHOLD: gas <= {GAS} Mcf/d AND oil <= {OIL} bbl/d  =>  Marginal or end-of-life")
 print(f"centroid lon={cx:.5f} lat={cy:.5f}")
 print(f"LAYER TOTAL (genuine-new-drill, map population): {tot:,}")
 print(f"  Plugged:                      {plug:,}")
-print(f"  Inactive - no longer producing:{nolong:,}")
-print(f"  Active:                       {active:,}")
+print(f"  Marginal or end-of-life:       {marginal:,}")
+print(f"  Still producing:               {producing_cnt:,}")
 print(f"  (non-plugged unmatched, kept Active): {unmatched_np:,}")
 print()
 for R in (2, 5, 10):
     rr = rings[R]
     np_ = [x for x in rr if x[1] != "Plugged"]
-    npm = [x for x in np_ if x[2]]
+    matched_n = [x for x in np_ if x[2]]
     prod_ = [x for x in np_ if x[3]]
-    nol = [x for x in np_ if x[2] and not x[3]]
+    margn = [x for x in np_ if x[1] == "Marginal or end-of-life"]
     pl = [x for x in rr if x[1] == "Plugged"]
     print(f"<= {R} mi: total={len(rr)}  plugged={len(pl)}  non-plugged={len(np_)}  "
-          f"matched={len(npm)}  STILL PRODUCING={len(prod_)}  no-longer={len(nol)}")
+          f"matched={len(matched_n)}  STILL PRODUCING={len(prod_)}  marginal/EoL={len(margn)}")
 print()
 print("STILL-PRODUCING wells within 10 mi (mi, api, gas_mcfd, oil_bbld, og, spud, depth):")
 for mi, api, rec, og, sy, td in sorted(near_producers):
-    print(f"  {mi:5.2f} mi  api={api}  gas={rec[0]:.1f} Mcf/d  oil={rec[1]:.1f} bbl/d  og={og}  spud={sy}  depth={td}")
+    g, o = (rec[0], rec[1]) if rec else (None, None)
+    if rec is None:
+        print(f"  {mi:5.2f} mi  api={api}  (unmatched -> kept Active)  og={og}  spud={sy}  depth={td}")
+    else:
+        print(f"  {mi:5.2f} mi  api={api}  gas={g:.1f} Mcf/d  oil={o:.1f} bbl/d  og={og}  spud={sy}  depth={td}")

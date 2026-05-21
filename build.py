@@ -606,21 +606,21 @@ def _filter_exclude_recompletions(nd_path):
 
 
 def _reclassify_no_longer_producing(nd_path, status_csv,
-                                    gas_thresh_mcfd=125.0, oil_guard_bpd=150.0):
-    """Set a derived `well_status` on every wells feature and reclassify
-    "active" wells that are effectively no longer producing.
+                                    gas_thresh_mcfd=125.0, oil_guard_bpd=25.0):
+    """Set a derived `well_status` on every wells feature, flagging
+    marginal-or-end-of-life wells against a strict stripper threshold.
 
     Joins each well to its RRC production by **API number** via the authoritative
     RRC API->lease crosswalk (OG_WELL_COMPLETION_DATA_TABLE), precomputed into
     `data/well_prod_status.csv` (api8 -> trailing-6-month gas/oil). API matching
     covers ~99.6% of non-plugged wells (the old lease_no guess matched ~31%).
     well_status:
-      - "Plugged"                          if plug_flag == Y
-      - "Inactive - no longer producing"   if (not plugged) and trailing
-            gas < gas_thresh_mcfd AND trailing oil < oil_guard_bpd
-      - "Active"                           otherwise (still producing, or the
-            ~0.4% with no production record)
-    Returns (n_inactive, n_unmatched)."""
+      - "Plugged"               if plug_flag == Y
+      - "Marginal or end-of-life"  if (not plugged) and trailing
+            gas <= gas_thresh_mcfd AND trailing oil <= oil_guard_bpd
+      - "Active"                otherwise (still producing above the threshold,
+            or the ~0.4% with no production record)
+    Returns (n_marginal, n_unmatched)."""
     import re as _re
     prod = {}
     if os.path.exists(status_csv):
@@ -655,8 +655,8 @@ def _reclassify_no_longer_producing(nd_path, status_csv,
                 if rec is None:
                     n_unmatched += 1
                     p['well_status'] = 'Active'
-                elif rec[0] < gas_thresh_mcfd and rec[1] < oil_guard_bpd:
-                    p['well_status'] = 'Inactive - no longer producing'
+                elif rec[0] <= gas_thresh_mcfd and rec[1] <= oil_guard_bpd:
+                    p['well_status'] = 'Marginal or end-of-life'
                     n_inact += 1
                 else:
                     p['well_status'] = 'Active'
@@ -926,8 +926,8 @@ def build_layer(layer, report, split_stats):
         if layer.get('reclassify_inactive_production'):
             n_inact, n_unmatched = _reclassify_no_longer_producing(
                 nd, str(ROOT / 'data' / 'well_prod_status.csv'))
-            print(f'  {lid}: reclassify_inactive_production -> {n_inact} active wells '
-                  f'flagged no-longer-producing ({n_unmatched} unmatched -> kept Active)')
+            print(f'  {lid}: reclassify_inactive_production -> {n_inact} non-plugged wells '
+                  f'flagged marginal-or-end-of-life ({n_unmatched} unmatched -> kept Active)')
         if n_written == 0:
             report.append((lid, n_total, 0, 'EMPTY', src.name))
             return None

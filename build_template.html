@@ -627,9 +627,9 @@ function layerPaint(L) {
     if (L.id === 'wells_permian6') {
       // Three states, in precedence order:
       //  Plugged (plug_flag=Y): solid BLACK center, oil/gas color ring.
-      //  No longer producing (well_status): muted grey, de-emphasized.
+      //  Marginal or end-of-life (well_status): muted grey, de-emphasized.
       //  Active: solid oil/gas fill, thin white ring.
-      const INACT = ['==', ['get', 'well_status'], 'Inactive - no longer producing'];
+      const INACT = ['==', ['get', 'well_status'], 'Marginal or end-of-life'];
       const PLUG = ['==', ['get', 'plug_flag'], 'Y'];
       fillColor = ['case', PLUG, '#000000', INACT, '#9ca3af', oilGasColorExpr()];
       strokeColor = ['case', PLUG, oilGasColorExpr(), INACT, '#6b7280', '#ffffff'];
