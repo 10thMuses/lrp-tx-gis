@@ -88,9 +88,11 @@ plt.savefig(OUT / "ch_status_mix.png", dpi=200, bbox_inches="tight", facecolor="
 plt.close()
 print(f"wrote {OUT/'ch_status_mix.png'}")
 
-# ---------- Chart 4: FracFocus disclosures by ring band around Caramba ----------
+# ---------- Chart 4: FracFocus NEW-DRILL fracks by ring band around Caramba ----------
+# (Each FracFocus disclosure cross-referenced against the wellbore record;
+#  re-fracs on existing wells excluded. These are confirmed new-drill fracks.)
 labels4 = ["0–2 mi", "2–5 mi", "5–10 mi", "10–20 mi"]
-vals4 = [0, 9, 20, 464]         # ring-band counts (not cumulative)
+vals4 = [0, 9, 19, 450]         # new-drill only
 recents = ["—", "2015", "2025", "2026"]
 colors4 = ["#A6A6A6"] + [NEW] * 3
 
@@ -100,11 +102,11 @@ for b, v, rec in zip(bars, vals4, recents):
     lbl = f"  {v}  (most recent: {rec})" if v > 0 else "  0  (none, ever)"
     ax.text(v + 6 if v > 0 else 4, b.get_y() + b.get_height() / 2, lbl,
             va="center", ha="left", fontsize=10, color="#1F3864", fontweight="bold")
-ax.set_xlabel("FracFocus disclosures (2011 – present)", fontsize=10)
+ax.set_xlabel("New-drill frack disclosures (FracFocus, 2011 – present)", fontsize=10)
 ax.set_xlim(0, max(vals4) * 1.25)
 ax.invert_yaxis()
-ax.set_title("Hydraulic-fracturing disclosures by distance from Caramba North\n"
-             "(Pecos County, all years on FracFocus)",
+ax.set_title("New-drill hydraulic-fracturing disclosures by distance from Caramba North\n"
+             "(Pecos County, all years; re-fracs on existing wells excluded)",
              fontsize=11, color="#1F3864", fontweight="bold", pad=12)
 ax.spines["top"].set_visible(False); ax.spines["right"].set_visible(False)
 ax.set_axisbelow(True)

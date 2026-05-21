@@ -26,7 +26,7 @@ Proximity is reported at explicit distances from the tract centroid — principa
    7. [County-wide context — new drilling is deep, and remote from the site](#7-county-wide-context--new-drilling-is-deep-and-remote-from-the-site)
    8. [Pecos vs. peer counties — the least new drilling of the group](#8-pecos-vs-peer-counties--the-least-new-drilling-of-the-group)
    9. [Production near the site is decades-old completions — no active drilling or hydraulic-fracturing operations](#9-production-near-the-site-is-decades-old-completions--no-active-drilling-or-hydraulic-fracturing-operations)
-   10. [The public fracking record (FracFocus) confirms: no fracking jobs within two miles of the tract, ever](#10-the-public-fracking-record-fracfocus-confirms-no-fracking-jobs-within-two-miles-of-the-tract-ever)
+   10. [The public fracking record (FracFocus) confirms: no new-drill fracking jobs within two miles of the tract, ever](#10-the-public-fracking-record-fracfocus-confirms-no-new-drill-fracking-jobs-within-two-miles-of-the-tract-ever)
 
 ## Summary of findings
 
@@ -34,7 +34,7 @@ Proximity is reported at explicit distances from the tract centroid — principa
 
 The wells within two miles are all decades-old legacy completions (drilled 1950s–2002) — mostly plugged shallow verticals plus a handful of long-completed deep wells — **none representing active drilling, hydraulic fracturing, or a vibration source.**
 
-Independently confirmed by the public hydraulic-fracturing disclosure record (FracFocus, 2011–present): **no frack job has ever been filed within two miles of the tract, and the most recent within five miles was 2015.** See Finding 10.
+Independently confirmed against the public hydraulic-fracturing disclosure record (FracFocus, 2011–present, cross-referenced to the wellbore record to exclude re-fracs on existing wells): **no new-drill frack has ever been filed within two miles of the tract, and the most recent within five miles was 2015.** See Finding 10.
 
 **Two further points reinforce this:**
 
@@ -178,21 +178,21 @@ A pumping wellhead or low-rate gas well on a decades-old completion is not a dri
 
 *County-wide, of the ≈35,100 non-plugged wellbores in the six sale-area counties, ≈12,540 are plugged, ≈12,490 are marginal or end-of-life by this measure, and ≈10,060 are still producing above the threshold. The API-to-lease crosswalk matches ≈99.6% of non-plugged wells; the ≈90 that do not match are conservatively left classified "Active." Production filings carry a normal reporting lag, which the six-month trailing window mitigates.*
 
-### 10. The public fracking record (FracFocus) confirms: no fracking jobs within two miles of the tract, ever
+### 10. The public fracking record (FracFocus) confirms: no new-drill fracking jobs within two miles of the tract, ever
 
-The Texas **FracFocus disclosure database** ([fracfocus.org](https://fracfocus.org)) is the public record of every hydraulic-fracturing job that operators have filed in Texas since 2011. Cross-referencing every Pecos County disclosure (949 in total) against the Caramba North tract:
+The Texas **FracFocus disclosure database** ([fracfocus.org](https://fracfocus.org)) is the public record of every hydraulic-fracturing job that operators have filed in Texas since 2011. Every Pecos County disclosure (949 in total) was cross-referenced against the RRC wellbore record by API number to **exclude re-fracs on existing wells** — the figures below are confirmed **new-drill fracks only** (a frack performed at the original completion of a newly drilled wellbore):
 
-| Distance band from tract | Frack disclosures (2011 – present) | Most recent year |
+| Distance band from tract | New-drill fracks (2011 – present) | Most recent year |
 |---|---|---|
 | **0 – 2 mi** | **0** | — none, ever |
 | 2 – 5 mi | 9 | 2015 (most recent) |
-| 5 – 10 mi | 20 | 2025 |
-| 10 – 20 mi | 464 | 2026 |
+| 5 – 10 mi | 19 | 2025 |
+| 10 – 20 mi | 450 | 2026 |
 
-**No hydraulic-fracturing job has ever been performed within two miles of the Caramba North tract.** Within five miles there have been 9 fracks, all between 2012 and 2015 — the most recent over a decade ago. Eight of the nine were Apache Corporation's 2012 multi-well program (FSSU wells, 2.75–4.85 mi out); the ninth was Flamingo Operating in 2015. Within ten miles, 29 fracks over the entire 2012–2025 period, the closest to the site being the 2025 Mongoose Energy Viper wells at 6.94 mi out.
+**No new-drill hydraulic-fracturing job has ever been performed within two miles of the Caramba North tract.** Within five miles there have been 9 new-drill fracks, all between 2012 and 2015 — the most recent over a decade ago. Eight were Apache Corporation's 2012 multi-well program (FSSU wells, 2.75–4.85 mi out); the ninth was Flamingo Operating in 2015. Within ten miles, 28 new-drill fracks over the entire 2012–2025 period, the closest to the site being the 2025 Mongoose Energy Viper wells at 6.94 mi out.
 
-![FracFocus disclosures around Caramba North: 0 within 2 mi (ever), 9 within 2–5 mi (all 2012–2015), 20 within 5–10 mi, 464 within 10–20 mi.](charts/ch_fracfocus_rings.png)
+![New-drill fracks around Caramba North: 0 within 2 mi (ever), 9 within 2–5 mi (all 2012–2015), 19 within 5–10 mi, 450 within 10–20 mi. Re-fracs on existing wells are excluded.](charts/ch_fracfocus_rings.png)
 
-The broader Permian fracking program does exist — 493 fracks within twenty miles since 2011, dominated by the deep-horizontal unconventional players (Diamondback, XTO/ExxonMobil, Gordy). But that activity is concentrated well outside the 10-mile buffer, almost entirely at unconventional depths (median TVD ≈ 9,800 ft within 20 mi), and even there annual volume has been declining (39 fracks in Pecos in 2023, 6 in 2024, 21 in 2025, 11 year-to-date 2026 vs. a 2018–2019 peak of 113–167/year).
+The broader Permian new-drill fracking program does exist — 478 new-drill fracks within twenty miles since 2011, dominated by the deep-horizontal unconventional players (Diamondback 194, XTO/ExxonMobil 53, Gordy 45). But that activity is concentrated well outside the 10-mile buffer, almost entirely at unconventional depths, and annual volume has been declining (39 disclosed fracks in Pecos in 2023, 6 in 2024, 21 in 2025, 11 year-to-date 2026 vs. a 2018–2019 peak of 113–167/year).
 
-This is direct, evidence-based confirmation of what the wellbore-and-production record already implied: **no active hydraulic-fracturing operation is occurring at or near the Caramba North tract — neither on horizontal wellbores nor on vertical wellbores, and the closest disclosed frack within five miles is over a decade old.**
+This is direct, evidence-based confirmation of what the wellbore-and-production record already implied: **no active new-drill hydraulic-fracturing operation is occurring at or near the Caramba North tract, and the closest disclosed new-drill frack within five miles is over a decade old.**
