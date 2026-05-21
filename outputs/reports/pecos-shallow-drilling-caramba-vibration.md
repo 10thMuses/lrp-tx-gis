@@ -1,4 +1,6 @@
-# Shallow (<3,000 ft) Oil-and-Gas Drilling at and Within Ten Miles of the Caramba North Tract — Historical and Recent Record
+# Pecos County Drilling Activity — Historical & Recent Record
+
+**CONFIDENTIAL — PECOS COUNTY · CARAMBA NORTH**
 
 **Prepared:** 2026-05-19 · **Subject site:** Caramba North tract (≈1,300 ac), Pecos County, TX — centroid ≈ 30.9032° N, 102.9747° W · **Classification:** Confidential
 
@@ -7,6 +9,23 @@
 This memorandum summarizes the historical and recent record of oil-and-gas drilling — with attention to shallow (<3,000 ft) wells — at and within ten miles of the Caramba North tract, drawn from the Railroad Commission of Texas (RRC) wellbore and drilling-permit records. It is provided as context for evaluating potential ground-vibration considerations for a data-center development on the site. Throughout, **new drilling (a new wellbore) is distinguished from recompletions (rework of an existing wellbore — no new hole drilled)**; only new drilling involves a drilling rig and the hydraulic-fracturing completion associated with ground vibration.
 
 Proximity is reported at explicit distances from the tract centroid — principally **within two miles** and **within ten miles**. Ten miles is a deliberately generous boundary: ground vibration from drilling and completion attenuates well within that distance.
+
+*This report is intended to accompany and utilizes the data underlying the interactive map of Caramba North, which can be accessed through [this link](https://lrp-tx-gis.netlify.app).*
+
+## Table of Contents
+
+1. [Purpose](#purpose)
+2. [Summary of findings](#summary-of-findings)
+3. [Findings](#findings)
+   1. [On the Caramba North tract](#1-on-the-caramba-north-tract)
+   2. [Within 1 mile — no shallow wells](#2-within-1-mile--no-shallow-wells)
+   3. [Within 2 miles — drilling ended over two decades ago](#3-within-2-miles--drilling-ended-over-two-decades-ago)
+   4. [New drilling since 2020, by distance](#4-new-drilling-since-2020-by-distance)
+   5. [The nearest non-plugged shallow wells are decades-old completions](#5-the-nearest-non-plugged-shallow-wells-are-decades-old-completions)
+   6. [County-wide context — new drilling is deep, and remote from the site](#6-county-wide-context--new-drilling-is-deep-and-remote-from-the-site)
+   7. [The shallow activity in Pecos is recompletions of existing wells — not new drilling](#7-the-shallow-activity-in-pecos-is-recompletions-of-existing-wells--not-new-drilling)
+   8. [Pecos vs. peer counties — the least new drilling of the group](#8-pecos-vs-peer-counties--the-least-new-drilling-of-the-group)
+   9. [Production near the site is decades-old completions — no active drilling or hydraulic-fracturing operations](#9-production-near-the-site-is-decades-old-completions--no-active-drilling-or-hydraulic-fracturing-operations)
 
 ## Summary of findings
 

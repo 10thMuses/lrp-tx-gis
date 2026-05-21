@@ -4,6 +4,7 @@ from docx.oxml.ns import qn
 from docx.oxml import OxmlElement
 
 OUT = "/home/andreahimmel/lrp-tx-gis/outputs/reports/Pecos-Shallow-Drilling-Caramba-Vibration.docx"
+MAP_URL = "https://lrp-tx-gis.netlify.app"
 
 def shade(el, fill):
     pr = el.get_or_add_pPr() if el.tag.endswith('}p') else el.get_or_add_tcPr()
@@ -48,13 +49,44 @@ def table(doc, headers, rows, hdr_fill='DBE8FD', row_styles=None):
             cell_text(cells[ci], val, bold=st.get('bold', False), fill=cf, color=col)
     return t
 
+def add_hyperlink(paragraph, url, text, color=(0x05, 0x63, 0xC1)):
+    """Insert a clickable hyperlink in a paragraph."""
+    part = paragraph.part
+    r_id = part.relate_to(url, 'http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink', is_external=True)
+    hyperlink = OxmlElement('w:hyperlink'); hyperlink.set(qn('r:id'), r_id)
+    new_run = OxmlElement('w:r')
+    rPr = OxmlElement('w:rPr')
+    c = OxmlElement('w:color'); c.set(qn('w:val'), '%02X%02X%02X' % color); rPr.append(c)
+    u = OxmlElement('w:u'); u.set(qn('w:val'), 'single'); rPr.append(u)
+    sz = OxmlElement('w:sz'); sz.set(qn('w:val'), '22'); rPr.append(sz)
+    new_run.append(rPr)
+    t = OxmlElement('w:t'); t.text = text; new_run.append(t)
+    hyperlink.append(new_run)
+    paragraph._p.append(hyperlink)
+
+def add_toc(doc):
+    """Insert a Word TOC field. Word auto-populates on open (or via Right-click -> Update Field)."""
+    p = doc.add_paragraph(); run = p.add_run()
+    f1 = OxmlElement('w:fldChar'); f1.set(qn('w:fldCharType'), 'begin')
+    instr = OxmlElement('w:instrText'); instr.set(qn('xml:space'), 'preserve')
+    instr.text = 'TOC \\o "1-3" \\h \\z \\u'
+    f2 = OxmlElement('w:fldChar'); f2.set(qn('w:fldCharType'), 'separate')
+    ft = OxmlElement('w:t'); ft.text = "Table of Contents — right-click and choose 'Update Field' in Word to populate."
+    f3 = OxmlElement('w:fldChar'); f3.set(qn('w:fldCharType'), 'end')
+    for el in (f1, instr, f2, ft, f3):
+        run._r.append(el)
+    p.paragraph_format.space_after = Pt(12)
+
 doc = Document()
 s = doc.styles['Normal']; s.font.name = 'Georgia'; s.font.size = Pt(11)
 
-p = doc.add_paragraph(); r = p.add_run("CONFIDENTIAL — PECOS COUNTY · CARAMBA NORTH")
-r.bold = True; r.font.size = Pt(9); r.font.color.rgb = RGBColor(0xB0, 0, 0)
+# Running header (every page): CONFIDENTIAL classification stripe.
+hdr = doc.sections[0].header
+hp = hdr.paragraphs[0]
+hr = hp.add_run("CONFIDENTIAL — PECOS COUNTY · CARAMBA NORTH")
+hr.bold = True; hr.font.size = Pt(9); hr.font.color.rgb = RGBColor(0xB0, 0, 0)
 
-doc.add_heading("Shallow (<3,000 ft) Oil-and-Gas Drilling at and Within Ten Miles of the Caramba North Tract — Historical and Recent Record", level=0)
+doc.add_heading("Pecos County Drilling Activity — Historical & Recent Record", level=0)
 para(doc, [("Prepared: 2026-05-19  ·  Subject site: Caramba North tract (≈1,300 ac), Pecos County, TX — centroid ≈ 30.9032° N, 102.9747° W  ·  Classification: Confidential", False)], size=9)
 
 doc.add_heading("Purpose", level=1)
@@ -62,6 +94,17 @@ para(doc, [("This memorandum summarizes the historical and recent record of oil-
            ("new drilling (a new wellbore) is distinguished from recompletions (rework of an existing wellbore — no new hole drilled)", True),
            ("; only new drilling involves a drilling rig and the hydraulic-fracturing completion associated with ground vibration.", False)])
 para(doc, [("Proximity is reported at explicit distances from the tract centroid — principally ", False), ("within two miles", True), (" and ", False), ("within ten miles", True), (". Ten miles is a deliberately generous boundary: ground vibration from drilling and completion attenuates well within that distance.", False)])
+_map_p = doc.add_paragraph()
+_map_p.paragraph_format.space_after = Pt(6)
+_r_intro = _map_p.add_run("This report is intended to accompany and utilizes the data underlying the interactive map of Caramba North, which can be accessed through ")
+_r_intro.italic = True; _r_intro.font.size = Pt(11)
+add_hyperlink(_map_p, MAP_URL, "this link")
+_r_close = _map_p.add_run(".")
+_r_close.italic = True; _r_close.font.size = Pt(11)
+
+doc.add_heading("Table of Contents", level=1)
+add_toc(doc)
+doc.add_page_break()
 
 doc.add_heading("Summary of findings", level=1)
 para(doc, [
