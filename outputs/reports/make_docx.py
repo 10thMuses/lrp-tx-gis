@@ -254,10 +254,8 @@ para(doc, [("Of the 291 ", False), ("non-plugged wellbores", True),
            (" within ten miles of the Caramba North tract (recompletion re-stamps already excluded — these are physical wellbores, not paperwork records), ", False),
            ("241 (about 83%) are marginal or end-of-life", True),
            (".", False)], fill='DEEAF6')
-para(doc, [("Why so many are end-of-life: ", True),
-           ("most of these wellbores were drilled decades ago and are naturally depleted. The “genuine new drill” filter only removes recompletion re-stamps; it does ", False),
-           ("not", True),
-           (" restrict by spud date. The 291 wellbores within ten miles span the 1960s through 2020s, with the bulk drilled in the 1980s:", False)], space_after=4)
+para(doc, [("To be clear, the 241 marginal wells are not new drilling.", True),
+           (" They are decades-old completions that have naturally depleted over 30–60 years of production. (The “non-plugged wellbores” count includes every physical wellbore in the area regardless of when it was drilled — recompletion paperwork re-stamps are excluded, but spud date is not restricted.) The 291 wellbores within ten miles span the 1960s through 2020s, with the bulk drilled in the 1980s:", False)], space_after=4)
 table(doc, ["Spud decade", "Wellbores within 10 mi (non-plugged)"], [
     ["1960s", "29"],
     ["1970s", "57"],

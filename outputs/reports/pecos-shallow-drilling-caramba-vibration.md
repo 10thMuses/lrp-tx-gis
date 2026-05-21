@@ -147,7 +147,7 @@ A well is treated as **"marginal or end-of-life" when its lease's trailing-avera
 
 Of the 291 **non-plugged wellbores** within ten miles of the Caramba North tract (recompletion re-stamps already excluded — these are physical wellbores, not paperwork records), **241 (about 83%) are marginal or end-of-life**.
 
-**Why so many are end-of-life:** most of these wellbores were drilled decades ago and are naturally depleted. The "genuine new drill" filter only removes recompletion re-stamps; it does *not* restrict by spud date. The 291 wellbores within ten miles span the 1960s through 2020s, with the bulk drilled in the 1980s:
+**To be clear, the 241 marginal wells are not new drilling.** They are decades-old completions that have naturally depleted over 30–60 years of production. (The "non-plugged wellbores" count includes every physical wellbore in the area regardless of when it was drilled — recompletion paperwork re-stamps are excluded, but spud date is not restricted.) The 291 wellbores within ten miles span the 1960s through 2020s, with the bulk drilled in the 1980s:
 
 | Spud decade | Wellbores within 10 mi (non-plugged) |
 |---|---|
