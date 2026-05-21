@@ -6,7 +6,7 @@
 
 ## Purpose
 
-This memorandum summarizes the historical and recent record of oil-and-gas drilling — with attention to shallow (<3,000 ft) wells — at and within ten miles of the Caramba North tract, drawn from the Railroad Commission of Texas (RRC) wellbore and drilling-permit records. It is provided as context for evaluating potential ground-vibration considerations for a data-center development on the site. Throughout, **new drilling (a new wellbore) is distinguished from recompletions (rework of an existing wellbore — no new hole drilled)**; only new drilling involves a drilling rig and the hydraulic-fracturing completion associated with ground vibration.
+This memorandum summarizes the historical and recent record of oil-and-gas drilling — with attention to shallow (<3,000 ft) wells — at and within ten miles of the Caramba North tract, drawn from the Railroad Commission of Texas (RRC) wellbore record (dbf900) and, in Findings 9 and 10, the RRC PDQ production record and the public FracFocus hydraulic-fracturing disclosure database. It is provided as context for evaluating potential ground-vibration considerations for a data-center development on the site. Throughout, **new drilling (a new wellbore) is distinguished from recompletions (rework of an existing wellbore — no new hole drilled)**; only new drilling involves a drilling rig and the hydraulic-fracturing completion associated with ground vibration.
 
 Proximity is reported at explicit distances from the tract centroid — principally **within two miles** and **within ten miles**. Ten miles is a deliberately generous boundary: ground vibration from drilling and completion attenuates well within that distance.
 
@@ -118,7 +118,7 @@ The nearest non-plugged shallow wells were spudded in 1970 (1.28 mi) and 1988 (1
 
 ### 7. County-wide context — new drilling is deep, and remote from the site
 
-Of the **116 genuine new wells drilled in Pecos County since 2020** (Pecos is ≈4,700 sq mi), about **95% are deep (≥3,000 ft)** — the modern Permian unconventional program, operator-concentrated in Diamondback, XTO, Continental, and Gordy. Only **three** lie within ten miles of the Caramba North tract, and none within five; the activity is overwhelmingly remote from the site (median 20 miles out — see Finding 5).
+Of the **116 genuine new wells drilled in Pecos County since 2020** (Pecos is ≈4,700 sq mi), about **95% are deep (≥3,000 ft)** — the modern Permian unconventional program, operator-concentrated in the deep-horizontal players (Diamondback, XTO, Gordy — see Finding 10). Only **three** lie within ten miles of the Caramba North tract, and none within five; the activity is overwhelmingly remote from the site (median 20 miles out — see Finding 5).
 
 ### 8. Pecos vs. peer counties — the least new drilling of the group
 
