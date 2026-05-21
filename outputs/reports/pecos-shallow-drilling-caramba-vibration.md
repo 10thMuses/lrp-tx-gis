@@ -29,7 +29,9 @@ Proximity is reported at explicit distances from the tract centroid — principa
 
 ## Summary of findings
 
-**No new drilling is occurring at or near the Caramba North site.** Counting only genuine new wells (RRC "New Drill" permits, excluding recompletions): **no well of any kind has been spudded within two miles of the tract in over a decade**, **no new-drill well lies within five miles**, and only **three new-drill wells sit within ten miles** across all of 2020–2025 (nearest ≈ 6.9 miles; all three are deep ≥9,200 ft, spud 2020 and 2025). The wells within two miles are all decades-old legacy completions (drilled 1950s–2002) — mostly plugged shallow verticals plus a handful of long-completed deep wells — none representing active drilling, hydraulic fracturing, or a vibration source.
+**No new drilling is occurring at or near the Caramba North site.** Counting only genuine new wells (RRC "New Drill" permits, excluding recompletions): **no well of any kind has been spudded within two miles of the tract in over a decade**, **no new-drill well lies within five miles**, and only **three new-drill wells sit within ten miles** across all of 2020–2025 (nearest ≈ 6.9 miles; all three are deep ≥9,200 ft, spud 2020 and 2025).
+
+The wells within two miles are all decades-old legacy completions (drilled 1950s–2002) — mostly plugged shallow verticals plus a handful of long-completed deep wells — **none representing active drilling, hydraulic fracturing, or a vibration source.**
 
 **Two further points reinforce this:**
 
@@ -70,11 +72,15 @@ Counting only genuine new wells (RRC "New Drill" permits — recompletions of ex
 | ≤ 5 mi | **0** |
 | ≤ 10 mi | **3** (0 shallow, 3 deep; nearest ≈ 6.9 mi) |
 
-The three genuine new wells within ten miles, across all of 2020–2025, are 6.9–9.4 miles out and all deep (≈9,200–9,500 ft; spudded 2020 and 2025) — none shallow, none within five miles. Even on the *loosest* possible count — every record with a 2020-or-later spud date, including recompletion-restamped records — it is still **zero within two miles** and only ≈23 within ten miles across the whole period. New drilling does not reach the site under any reading of the data.
+The three genuine new wells within ten miles, across all of 2020–2025, are 6.9–9.4 miles out and all deep (≈9,200–9,500 ft; spudded 2020 and 2025) — none shallow, none within five miles.
+
+Even on the *loosest* possible count — every record with a 2020-or-later spud date, including recompletion-restamped records — it is still **zero within two miles** and only ≈23 within ten miles across the whole period. New drilling does not reach the site under any reading of the data.
 
 ### 5. The nearest non-plugged shallow wells are decades-old completions
 
-The nearest non-plugged shallow wells were spudded in 1970 (1.28 mi) and 1988 (1.97 mi) — decades-old completions, not active drilling. A ground-vibration source is an operating drill rig or a hydraulic-fracturing operation; a plugged or long-completed wellbore is not. No active drilling is occurring adjacent to the tract.
+The nearest non-plugged shallow wells were spudded in 1970 (1.28 mi) and 1988 (1.97 mi) — decades-old completions, not active drilling. A ground-vibration source is an operating drill rig or a hydraulic-fracturing operation; a plugged or long-completed wellbore is not.
+
+**No active drilling is occurring adjacent to the tract.**
 
 ### 6. County-wide context — new drilling is deep, and remote from the site
 
@@ -91,7 +97,11 @@ This is the crux of the data. Permit filings in Pecos since 2020 split roughly *
 
 **96% of every recompletion is one operator — Kinder Morgan Production** — reworking existing CO₂-flood fields. The genuine *new-drill* operators are a different, all-deep set: Diamondback (≈30% of new drills), XTO (≈14%), Continental (≈13%), Gordy (≈11%), each essentially 100% deep.
 
-The significance for ground vibration: a recompletion is a workover on an *existing* bore — no rig drilling a new hole, no new hydraulic-fracturing program of the kind associated with vibration. The large "shallow" footprint in Pecos is this rework activity, not drilling. Genuine new drilling — overwhelmingly the deep modern-Permian program (predominantly horizontal in this region, though hydraulic-fracturing completions are not limited to horizontal wellbores) — is the minority share, and — per Findings 1–6 — essentially none of it is near the Caramba North tract. Whether the question is framed as shallow drilling, fracking, or new drilling of any kind, the record points the same way: it is not happening at or near this site.
+The significance for ground vibration: a recompletion is a workover on an *existing* bore — no rig drilling a new hole, no new hydraulic-fracturing program of the kind associated with vibration. The large "shallow" footprint in Pecos is this rework activity, not drilling.
+
+Genuine new drilling — overwhelmingly the deep modern-Permian program (predominantly horizontal in this region, though hydraulic-fracturing completions are not limited to horizontal wellbores) — is the minority share, and — per Findings 1–6 — essentially none of it is near the Caramba North tract.
+
+Whether the question is framed as shallow drilling, fracking, or new drilling of any kind, the record points the same way: **it is not happening at or near this site.**
 
 ### 8. Pecos vs. peer counties — the least new drilling of the group
 
@@ -114,8 +124,21 @@ Pecos's ≈116 genuine new wells are roughly **one-tenth of the average comparab
 
 ### 9. Production near the site is decades-old completions — no active drilling or hydraulic-fracturing operations
 
-Every well was additionally cross-referenced against the Railroad Commission's PDQ production records for the most recent six reported months (through May 2026), joined by **API number** through the RRC's authoritative API-to-lease crosswalk — a match covering **≈99.6% of all non-plugged wells**. A well is treated as **"marginal or end-of-life" when its lease's trailing-average output is at or below 125 Mcf/day of gas AND at or below 25 bbl/day of oil** — a strict marginal-well threshold.
+Every well was additionally cross-referenced against the Railroad Commission's PDQ production records for the most recent six reported months (through May 2026), joined by **API number** through the RRC's authoritative API-to-lease crosswalk — a match covering **≈99.6% of all non-plugged wells**.
 
-Of the 291 non-plugged genuine-new-drill wells within ten miles of the Caramba North tract, **241 (about 83%) are marginal or end-of-life**. The 50 still producing above that threshold are not active drilling activity: they are decades-old completions, in four groups — **about 15 legacy deep-gas wells** (mostly 1965–1978 spud, ≈17,000–22,800 ft); **a cluster of ~31 low-rate vertical conventional oil wells** at ≈3,150–3,440 ft depth (spud 1986–2012, mostly 2007–2012; all on a unitized lease producing roughly 37.5 bbl/day per well — a stripper-grade pumping operation); **3 truly shallow (&lt;3,000 ft) oil wells** at 2,824–2,945 ft (spud 2004–2011, also at stripper rates just above the threshold); and **the single 2020 deep-horizontal new-drill noted in Finding 4** (9,237 ft, 9.37 mi out). Within five miles, 52 of 86 non-plugged wells are marginal or end-of-life and the 34 still producing are 3 of the legacy deep-gas wells plus 31 of the shallow vertical oil cluster — none from the modern Permian horizontal program. Within two miles, 3 of 5 non-plugged wells are marginal or end-of-life and the 2 still producing are the 1.13-mi 1975/≈22,100-ft legacy gas well (125.7 Mcf/d) and a 1.97-mi 2008/≈3,275-ft vertical oil well (37.5 bbl/d). A pumping wellhead or low-rate gas well on a decades-old completion is not a drill rig or a hydraulic-fracturing spread; together with the plugged legacy wells discussed above, there is no active drilling or hydraulic-fracturing operation at or near the site.
+A well is treated as **"marginal or end-of-life" when its lease's trailing-average output is at or below 125 Mcf/day of gas AND at or below 25 bbl/day of oil** — a strict marginal-well threshold.
+
+Of the 291 non-plugged genuine-new-drill wells within ten miles of the Caramba North tract, **241 (about 83%) are marginal or end-of-life**. The 50 still producing above that threshold are not active drilling activity: they are decades-old completions, in four groups —
+
+- about 15 **legacy deep-gas wells** (mostly 1965–1978 spud, ≈17,000–22,800 ft);
+- a cluster of ~31 **low-rate vertical conventional oil wells** at ≈3,150–3,440 ft depth (spud 1986–2012, mostly 2007–2012; all on a unitized lease producing roughly 37.5 bbl/day per well — a stripper-grade pumping operation);
+- 3 **truly shallow (&lt;3,000 ft) oil wells** at 2,824–2,945 ft (spud 2004–2011, also at stripper rates just above the threshold); and
+- the single **2020 deep-horizontal new-drill** noted in Finding 4 (9,237 ft, 9.37 mi out).
+
+Within five miles, **52 of 86 non-plugged wells are marginal or end-of-life** and the 34 still producing are 3 of the legacy deep-gas wells plus 31 of the shallow vertical oil cluster — none from the modern Permian horizontal program.
+
+Within two miles, **3 of 5 non-plugged wells are marginal or end-of-life** and the 2 still producing are the 1.13-mi 1975/≈22,100-ft legacy gas well (125.7 Mcf/d) and a 1.97-mi 2008/≈3,275-ft vertical oil well (37.5 bbl/d).
+
+A pumping wellhead or low-rate gas well on a decades-old completion is not a drill rig or a hydraulic-fracturing spread; together with the plugged legacy wells discussed above, **there is no active drilling or hydraulic-fracturing operation at or near the site.**
 
 *County-wide, of the ≈35,100 genuine new-drill wellbores, ≈12,540 are plugged, ≈12,490 are marginal or end-of-life by this measure, and ≈10,060 are still producing above the threshold. The API-to-lease crosswalk matches ≈99.6% of non-plugged wells; the ≈90 that do not match are conservatively left classified "Active." Production filings carry a normal reporting lag, which the six-month trailing window mitigates.*

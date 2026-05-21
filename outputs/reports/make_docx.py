@@ -13,19 +13,21 @@ def shade(el, fill):
 
 def runs(p, segs, size=11, color=None):
     for text, bold in segs:
-        r = p.add_run(text); r.bold = bold; r.font.size = Pt(size)
+        r = p.add_run(text); r.bold = bold; r.font.size = Pt(size); r.font.name = 'Calibri'
         if color: r.font.color.rgb = RGBColor(*color)
 
 def para(doc, segs, size=11, fill=None, space_after=6, italic=False):
     p = doc.add_paragraph(); p.paragraph_format.space_after = Pt(space_after)
+    p.paragraph_format.line_spacing = 1.2
     runs(p, segs, size)
     if italic:
         for r in p.runs: r.italic = True
     if fill: shade(p._p, fill)
     return p
 
-def bullet(doc, segs, fill=None):
-    p = doc.add_paragraph(style='List Bullet'); p.paragraph_format.space_after = Pt(4)
+def bullet(doc, segs, fill=None, space_after=4):
+    p = doc.add_paragraph(style='List Bullet'); p.paragraph_format.space_after = Pt(space_after)
+    p.paragraph_format.line_spacing = 1.2
     runs(p, segs, 11)
     if fill: shade(p._p, fill)
     return p
@@ -78,7 +80,18 @@ def add_toc(doc):
     p.paragraph_format.space_after = Pt(12)
 
 doc = Document()
-s = doc.styles['Normal']; s.font.name = 'Georgia'; s.font.size = Pt(11)
+s = doc.styles['Normal']
+s.font.name = 'Calibri'; s.font.size = Pt(11)
+s.paragraph_format.line_spacing = 1.2
+# Apply Calibri across heading styles too (Word defaults Headings to Calibri Light;
+# we keep the same family for consistency).
+for hn in ('Heading 1', 'Heading 2', 'Title', 'List Bullet'):
+    try:
+        st = doc.styles[hn]
+        if st.font is not None:
+            st.font.name = 'Calibri'
+    except KeyError:
+        pass
 
 # Running header (every page): CONFIDENTIAL classification stripe.
 hdr = doc.sections[0].header
@@ -113,7 +126,11 @@ para(doc, [
     ("no well of any kind has been spudded within two miles of the tract in over a decade", True),
     (", ", False), ("no new-drill well lies within five miles", True),
     (", and only ", False), ("three new-drill wells sit within ten miles", True),
-    (" across all of 2020–2025 (nearest ≈ 6.9 miles; all three are deep ≥9,200 ft, spud 2020 and 2025). The wells within two miles are all decades-old legacy completions (drilled 1950s–2002) — mostly plugged shallow verticals plus a handful of long-completed deep wells — none representing active drilling, hydraulic fracturing, or a vibration source.", False),
+    (" across all of 2020–2025 (nearest ≈ 6.9 miles; all three are deep ≥9,200 ft, spud 2020 and 2025).", False),
+], fill='EAF2FF', space_after=6)
+para(doc, [
+    ("The wells within two miles are all decades-old legacy completions (drilled 1950s–2002) — mostly plugged shallow verticals plus a handful of long-completed deep wells — ", False),
+    ("none representing active drilling, hydraulic fracturing, or a vibration source.", True),
 ], fill='EAF2FF', space_after=8)
 
 para(doc, [("Two further points reinforce this:", True)], space_after=2)
@@ -153,7 +170,8 @@ para(doc, [("The three genuine new wells within ten miles, across all of 2020–
            (" and only ≈23 within ten miles across the whole period. New drilling does not reach the site under any reading of the data.", False)])
 
 doc.add_heading("5. The nearest non-plugged shallow wells are decades-old completions", level=2)
-para(doc, [("The nearest non-plugged shallow wells were spudded in 1970 (1.28 mi) and 1988 (1.97 mi) — decades-old completions, not active drilling. A ground-vibration source is an operating drill rig or a hydraulic-fracturing operation; a plugged or long-completed wellbore is not. No active drilling is occurring adjacent to the tract.", False)])
+para(doc, [("The nearest non-plugged shallow wells were spudded in 1970 (1.28 mi) and 1988 (1.97 mi) — decades-old completions, not active drilling. A ground-vibration source is an operating drill rig or a hydraulic-fracturing operation; a plugged or long-completed wellbore is not.", False)])
+para(doc, [("No active drilling is occurring adjacent to the tract.", True)], fill='E2EFDA')
 
 doc.add_heading("6. County-wide context — new drilling is deep, and remote from the site", level=2)
 para(doc, [("Since 2020 the RRC issued roughly ", False), ("478 New Drill permits", True),
@@ -170,7 +188,12 @@ table(doc, ["Activity (Pecos permits, since 2020)", "Count", "Character"], [
     ["Recompletion", "≈405", "rework of existing wellbores — no new hole"],
 ], row_styles={1: {'fill': 'EAF5EA'}})
 para(doc, [("96% of every recompletion is one operator — Kinder Morgan Production — reworking existing CO₂-flood fields. The genuine new-drill operators are a different, all-deep set: Diamondback (≈30% of new drills), XTO (≈14%), Continental (≈13%), Gordy (≈11%), each essentially 100% deep.", False)])
-para(doc, [("The significance for ground vibration: a recompletion is a workover on an existing bore — no rig drilling a new hole, no new hydraulic-fracturing program of the kind associated with vibration. The large “shallow” footprint in Pecos is this rework activity, not drilling. Genuine new drilling — overwhelmingly the deep modern-Permian program (predominantly horizontal in this region, though hydraulic-fracturing completions are not limited to horizontal wellbores) — is the minority share, and — per Findings 1–6 — essentially none of it is near the Caramba North tract. Whether the question is framed as shallow drilling, fracking, or new drilling of any kind, the record points the same way: it is not happening at or near this site.", False)])
+para(doc, [("The significance for ground vibration: a recompletion is a workover on an ", False),
+           ("existing", True),
+           (" bore — no rig drilling a new hole, no new hydraulic-fracturing program of the kind associated with vibration. The large “shallow” footprint in Pecos is this rework activity, not drilling.", False)])
+para(doc, [("Genuine new drilling — overwhelmingly the deep modern-Permian program (predominantly horizontal in this region, though hydraulic-fracturing completions are not limited to horizontal wellbores) — is the minority share, and — per Findings 1–6 — essentially none of it is near the Caramba North tract.", False)])
+para(doc, [("Whether the question is framed as shallow drilling, fracking, or new drilling of any kind, the record points the same way: ", False),
+           ("it is not happening at or near this site.", True)])
 
 doc.add_heading("8. Pecos vs. peer counties — the least new drilling of the group", level=2)
 para(doc, [("On the same genuine-new-drill basis (recompletions excluded), Pecos has dramatically less new drilling than comparable Permian counties. Wells spudded since 2020:", False)], space_after=4)
@@ -197,8 +220,23 @@ para(doc, [("Every well was additionally cross-referenced against the Railroad C
            (" — a strict marginal-well threshold.", False)])
 para(doc, [("Of the 291 non-plugged genuine-new-drill wells within ten miles of the Caramba North tract, ", False),
            ("241 (about 83%) are marginal or end-of-life", True),
-           (". The 50 still producing above that threshold are not active drilling activity: they are decades-old completions, in four groups — about 15 legacy deep-gas wells (mostly 1965–1978 spud, ≈17,000–22,800 ft); a cluster of ~31 low-rate vertical conventional oil wells at ≈3,150–3,440 ft depth (spud 1986–2012, mostly 2007–2012; all on a unitized lease producing roughly 37.5 bbl/day per well — a stripper-grade pumping operation); 3 truly shallow (<3,000 ft) oil wells at 2,824–2,945 ft (spud 2004–2011, also at stripper rates just above the threshold); and the single 2020 deep-horizontal new-drill noted in Finding 4 (9,237 ft, 9.37 mi out). Within five miles, 52 of 86 non-plugged wells are marginal or end-of-life and the 34 still producing are 3 of the legacy deep-gas wells plus 31 of the shallow vertical oil cluster — none from the modern Permian horizontal program. Within two miles, 3 of 5 non-plugged wells are marginal or end-of-life and the 2 still producing are the 1.13-mi 1975/≈22,100-ft legacy gas well (125.7 Mcf/d) and a 1.97-mi 2008/≈3,275-ft vertical oil well (37.5 bbl/d). A pumping wellhead or low-rate gas well on a decades-old completion is not a drill rig or a hydraulic-fracturing spread; together with the plugged legacy wells discussed above, there is no active drilling or hydraulic-fracturing operation at or near the site.", False)],
-     fill='EAF2FF')
+           (". The 50 still producing above that threshold are not active drilling activity: they are decades-old completions, in four groups —", False)],
+     fill='DEEAF6', space_after=4)
+bullet(doc, [("about 15 ", False), ("legacy deep-gas wells", True), (" (mostly 1965–1978 spud, ≈17,000–22,800 ft);", False)])
+bullet(doc, [("a cluster of ~31 ", False), ("low-rate vertical conventional oil wells", True), (" at ≈3,150–3,440 ft depth (spud 1986–2012, mostly 2007–2012; all on a unitized lease producing roughly 37.5 bbl/day per well — a stripper-grade pumping operation);", False)])
+bullet(doc, [("3 ", False), ("truly shallow (<3,000 ft) oil wells", True), (" at 2,824–2,945 ft (spud 2004–2011, also at stripper rates just above the threshold); and", False)])
+bullet(doc, [("the single ", False), ("2020 deep-horizontal new-drill", True), (" noted in Finding 4 (9,237 ft, 9.37 mi out).", False)], space_after=8)
+para(doc, [("Within five miles, ", False),
+           ("52 of 86 non-plugged wells are marginal or end-of-life", True),
+           (" and the 34 still producing are 3 of the legacy deep-gas wells plus 31 of the shallow vertical oil cluster — none from the modern Permian horizontal program.", False)],
+     fill='DEEAF6')
+para(doc, [("Within two miles, ", False),
+           ("3 of 5 non-plugged wells are marginal or end-of-life", True),
+           (" and the 2 still producing are the 1.13-mi 1975/≈22,100-ft legacy gas well (125.7 Mcf/d) and a 1.97-mi 2008/≈3,275-ft vertical oil well (37.5 bbl/d).", False)],
+     fill='DEEAF6')
+para(doc, [("A pumping wellhead or low-rate gas well on a decades-old completion is not a drill rig or a hydraulic-fracturing spread; together with the plugged legacy wells discussed above, ", False),
+           ("there is no active drilling or hydraulic-fracturing operation at or near the site.", True)],
+     fill='DEEAF6', space_after=8)
 para(doc, [("County-wide, of the ≈35,100 genuine new-drill wellbores, ≈12,540 are plugged, ≈12,490 are marginal or end-of-life by this measure, and ≈10,060 are still producing above the threshold. The API-to-lease crosswalk matches ≈99.6% of non-plugged wells; the ≈90 that do not match are conservatively left classified “Active.” Production filings carry a normal reporting lag, which the six-month trailing window mitigates.", False)], italic=True)
 
 doc.save(OUT)
