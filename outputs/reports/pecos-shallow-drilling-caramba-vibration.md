@@ -72,7 +72,7 @@ This is the crux of the data. Permit filings in Pecos since 2020 split roughly *
 
 **96% of every recompletion is one operator — Kinder Morgan Production** — reworking existing CO₂-flood fields. The genuine *new-drill* operators are a different, all-deep set: Diamondback (≈30% of new drills), XTO (≈14%), Continental (≈13%), Gordy (≈11%), each essentially 100% deep.
 
-The significance for ground vibration: a recompletion is a workover on an *existing* bore — no rig drilling a new hole, no new hydraulic-fracturing program of the kind associated with vibration. The large "shallow" footprint in Pecos is this rework activity, not drilling. Genuine new drilling is the deep-horizontal minority, and — per Findings 1–6 — essentially none of it is near the Caramba North tract. Whether the question is framed as shallow drilling, fracking, or new drilling of any kind, the record points the same way: it is not happening at or near this site.
+The significance for ground vibration: a recompletion is a workover on an *existing* bore — no rig drilling a new hole, no new hydraulic-fracturing program of the kind associated with vibration. The large "shallow" footprint in Pecos is this rework activity, not drilling. Genuine new drilling — overwhelmingly the deep modern-Permian program (predominantly horizontal in this region, though hydraulic-fracturing completions are not limited to horizontal wellbores) — is the minority share, and — per Findings 1–6 — essentially none of it is near the Caramba North tract. Whether the question is framed as shallow drilling, fracking, or new drilling of any kind, the record points the same way: it is not happening at or near this site.
 
 ### 8. Pecos vs. peer counties — the least new drilling of the group
 
