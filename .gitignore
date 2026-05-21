@@ -49,3 +49,4 @@ data/abatements/abatement_hits_*.csv
 # committed layer source). Ignored so the unattended daily-refresh routine and
 # accidental `git add` cannot commit them.
 outputs/refresh/rrc_w1_*
+data/fracfocus/FracFocusCSV.zip

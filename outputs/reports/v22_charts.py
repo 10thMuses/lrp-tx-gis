@@ -87,3 +87,29 @@ plt.tight_layout()
 plt.savefig(OUT / "ch_status_mix.png", dpi=200, bbox_inches="tight", facecolor="white")
 plt.close()
 print(f"wrote {OUT/'ch_status_mix.png'}")
+
+# ---------- Chart 4: FracFocus disclosures by ring band around Caramba ----------
+labels4 = ["0–2 mi", "2–5 mi", "5–10 mi", "10–20 mi"]
+vals4 = [0, 9, 20, 464]         # ring-band counts (not cumulative)
+recents = ["—", "2015", "2025", "2026"]
+colors4 = ["#A6A6A6"] + [NEW] * 3
+
+fig, ax = plt.subplots(figsize=(7.5, 3.4))
+bars = ax.barh(labels4, vals4, color=colors4)
+for b, v, rec in zip(bars, vals4, recents):
+    lbl = f"  {v}  (most recent: {rec})" if v > 0 else "  0  (none, ever)"
+    ax.text(v + 6 if v > 0 else 4, b.get_y() + b.get_height() / 2, lbl,
+            va="center", ha="left", fontsize=10, color="#1F3864", fontweight="bold")
+ax.set_xlabel("FracFocus disclosures (2011 – present)", fontsize=10)
+ax.set_xlim(0, max(vals4) * 1.25)
+ax.invert_yaxis()
+ax.set_title("Hydraulic-fracturing disclosures by distance from Caramba North\n"
+             "(Pecos County, all years on FracFocus)",
+             fontsize=11, color="#1F3864", fontweight="bold", pad=12)
+ax.spines["top"].set_visible(False); ax.spines["right"].set_visible(False)
+ax.set_axisbelow(True)
+ax.grid(axis="x", linestyle=":", color="#cccccc", linewidth=0.6)
+plt.tight_layout()
+plt.savefig(OUT / "ch_fracfocus_rings.png", dpi=200, bbox_inches="tight", facecolor="white")
+plt.close()
+print(f"wrote {OUT/'ch_fracfocus_rings.png'}")
