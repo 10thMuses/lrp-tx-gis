@@ -134,15 +134,14 @@ para(doc, [("On the same genuine-new-drill basis (recompletions excluded), Pecos
 table(doc, ["County", "New-drill wells since 2020", "of which shallow (<3,000 ft)"], [
     ["Pecos (site county)", "116", "6"],
     ["Reeves", "1,044", "35"],
-    ["Ward", "396", "7"],
     ["Midland", "1,487", "15"],
     ["Martin", "1,616", "19"],
     ["Reagan", "629", "9"],
     ["Howard", "990", "1"],
     ["Loving", "1,121", "25"],
-    ["Other-7 average", "≈1,040", "≈16"],
-], row_styles={0: {'fill': 'CFECCF', 'bold': True}, 8: {'fill': 'EAF5EA', 'bold': True}})
-para(doc, [("Pecos's ≈116 genuine new wells are roughly one-ninth of the average comparable county's (≈1,040); Martin, the most active, has ≈1,616, and even the next-lowest county (Ward) has ≈396. Genuine new shallow drilling is negligible in every county (≤35). On a new-drill basis Pecos is by far the least-drilled of the eight — and, per Findings 1–6, essentially none of even that activity is within ten miles of the Caramba North tract.", False)])
+    ["Other-6 average", "≈1,148", "≈17"],
+], row_styles={0: {'fill': 'CFECCF', 'bold': True}, 7: {'fill': 'EAF5EA', 'bold': True}})
+para(doc, [("Pecos's ≈116 genuine new wells are roughly one-tenth of the average comparable county's (≈1,148); Martin, the most active, has ≈1,616, and even the next-lowest comparison county (Reagan) has ≈629. Genuine new shallow drilling is negligible in every county (≤35). On a new-drill basis Pecos is by far the least-drilled of the seven — and, per Findings 1–6, essentially none of even that activity is within ten miles of the Caramba North tract.", False)])
 para(doc, [("Howard and Loving counties were pulled from the Railroad Commission's full dbf900 wellbore file and integrated on the same genuine-new-drill basis. They lie outside the six-county sale-area set and well away from the tract; they are included here only to broaden the comparison.", False)], italic=True)
 
 doc.add_heading("9. The only production near the site is legacy deep gas — no shallow, new, or hydraulically-fractured production", level=2)
