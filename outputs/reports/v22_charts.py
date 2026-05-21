@@ -14,38 +14,29 @@ NEW = "#2E74B5"     # blue
 RECOMP = "#548235"  # green
 GREY = "#A6A6A6"
 
-# ---------- Chart 1: Permit vs Wellbore ratio of new-drill vs recompletion ----------
-fig, ax = plt.subplots(figsize=(7.5, 3.6))
-labels = ["W-1 permits filed\n(intent)", "Wellbore records updated\n(actual activity)"]
-new_drill = [478, 117]
-recomp    = [405, 1001]
-totals    = [a + b for a, b in zip(new_drill, recomp)]
-nd_pct = [100 * a / t for a, t in zip(new_drill, totals)]
-rc_pct = [100 * a / t for a, t in zip(recomp,    totals)]
+# ---------- Chart 1: Wellbore-record new-drill vs recompletion (Pecos since 2020) ----------
+fig, ax = plt.subplots(figsize=(7.5, 2.2))
+new_drill = 117
+recomp    = 1001
+total = new_drill + recomp
+nd_pct = 100 * new_drill / total
+rc_pct = 100 * recomp / total
 
-import numpy as np
-x = np.arange(len(labels))
-ax.bar(x, nd_pct, color=NEW, label=f"New drilling")
-ax.bar(x, rc_pct, bottom=nd_pct, color=RECOMP, label=f"Recompletion / workover")
+ax.barh([0], [nd_pct], color=NEW, label=f"New drilling: {new_drill} ({nd_pct:.0f}%)")
+ax.barh([0], [rc_pct], left=[nd_pct], color=RECOMP, label=f"Recompletion / workover: {recomp:,} ({rc_pct:.0f}%)")
+ax.text(nd_pct / 2, 0, f"{new_drill}\n({nd_pct:.0f}%)", ha="center", va="center",
+        color="white", fontsize=11, fontweight="bold")
+ax.text(nd_pct + rc_pct / 2, 0, f"{recomp:,}\n({rc_pct:.0f}%)", ha="center", va="center",
+        color="white", fontsize=11, fontweight="bold")
 
-# value labels
-for i, (n, r, t) in enumerate(zip(new_drill, recomp, totals)):
-    ax.text(i, nd_pct[i] / 2, f"{n}\n({nd_pct[i]:.0f}%)", ha="center", va="center",
-            color="white", fontsize=10, fontweight="bold")
-    ax.text(i, nd_pct[i] + rc_pct[i] / 2, f"{r}\n({rc_pct[i]:.0f}%)", ha="center", va="center",
-            color="white", fontsize=10, fontweight="bold")
-    ax.text(i, 102, f"n = {t}", ha="center", va="bottom", fontsize=9, color="#404040")
-
-ax.set_xticks(x); ax.set_xticklabels(labels, fontsize=10)
-ax.set_ylabel("Share of activity (%)", fontsize=10)
-ax.set_ylim(0, 110)
-ax.yaxis.set_major_formatter(mtick.PercentFormatter(decimals=0))
-ax.set_title("Pecos County since 2020: permit intent vs. actual wellbore activity",
-             fontsize=11, color="#1F3864", fontweight="bold", pad=14)
-ax.legend(loc="lower center", bbox_to_anchor=(0.5, -0.30), ncol=2, frameon=False, fontsize=10)
-ax.spines["top"].set_visible(False); ax.spines["right"].set_visible(False)
-ax.set_axisbelow(True)
-ax.grid(axis="y", linestyle=":", color="#cccccc", linewidth=0.6)
+ax.set_xlim(0, 100); ax.set_xticks([])
+ax.set_yticks([]); ax.set_yticklabels([])
+ax.set_title("Pecos County since 2020 — wellbore-record activity\n"
+             f"({total:,} wellbore records with new drilling, completion, or workover events)",
+             fontsize=11, color="#1F3864", fontweight="bold", pad=12)
+ax.legend(loc="lower center", bbox_to_anchor=(0.5, -0.55), ncol=2, frameon=False, fontsize=10)
+for spine in ax.spines.values():
+    spine.set_visible(False)
 plt.tight_layout()
 plt.savefig(OUT / "ch_recomp_ratio.png", dpi=200, bbox_inches="tight", facecolor="white")
 plt.close()

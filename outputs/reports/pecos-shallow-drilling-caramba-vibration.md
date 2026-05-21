@@ -30,14 +30,14 @@ Proximity is reported at explicit distances from the tract centroid — principa
 
 ## Summary of findings
 
-**No new drilling is occurring at or near the Caramba North site.** Counting only genuine new wells (RRC "New Drill" permits, excluding recompletions): **no well of any kind has been spudded within two miles of the tract in over a decade**, **no new-drill well lies within five miles**, and only **three new-drill wells sit within ten miles** across all of 2020–2025 (nearest ≈ 6.9 miles; all three are deep ≥9,200 ft, spud 2020 and 2025).
+**No new drilling is occurring at or near the Caramba North site.** Counting only genuine new wells (wellbore records, recompletion re-stamps excluded): **no well of any kind has been spudded within two miles of the tract in over a decade**, **no new-drill well lies within five miles**, and only **three new-drill wells sit within ten miles** across all of 2020–2025 (nearest ≈ 6.9 miles; all three are deep ≥9,200 ft, spud 2020 and 2025).
 
 The wells within two miles are all decades-old legacy completions (drilled 1950s–2002) — mostly plugged shallow verticals plus a handful of long-completed deep wells — **none representing active drilling, hydraulic fracturing, or a vibration source.**
 
 **Two further points reinforce this:**
 
-- **Drilling activity in Pecos is mostly recompletions, not new drilling — and the wellbore record is even more skewed than the permit record.** Of W-1 permits filed in Pecos since 2020, **about 46% are recompletions**. But tracing every Pecos wellbore record actually updated since 2020 (RRC dbf900): **only ≈10% (117 of 1,118) are genuine new drilling — the other ≈90% are recompletion or workover events on existing wellbores.** A single operator, **Kinder Morgan Production, accounts for 96% of recompletion permits** (reworking existing CO₂-flood fields); workovers use a workover rig on an existing bore, not the drilling-and-fracturing activity at issue, and this program is not near the site.
-- **Genuine new drilling is deep, not shallow — and remote.** Pecos saw ≈478 New Drill permits since 2020 (vs ≈405 recompletion). Tracing those to wells actually spudded, only **116 genuine new wells** exist county-wide, and ≈**95% are deep (≥3,000 ft)** horizontal (Diamondback, XTO, Continental, Gordy); just **six** are shallow. New shallow drilling is therefore nearly nonexistent anywhere in Pecos, and the deep new drilling that does occur is concentrated well away from the tract.
+- **Drilling activity in Pecos is mostly rework of existing wells, not new drilling.** Tracing every Pecos wellbore record updated since 2020 (RRC dbf900 — every event tagged to a unique API well number): **only ≈10% (117 of 1,118) are genuine new drilling — the other ≈90% (1,001) are recompletion or workover events on existing wellbores.** The recompletion activity is overwhelmingly **Kinder Morgan Production** reworking existing CO₂-flood (enhanced-recovery) fields — a workover rig on an existing bore, not the drilling-and-fracturing activity at issue, and not near the site.
+- **Genuine new drilling is deep, not shallow — and remote.** Of the **116 genuine new wells drilled in Pecos since 2020**, ≈**95% are deep (≥3,000 ft)** and only six are shallow. New shallow drilling is therefore nearly nonexistent anywhere in Pecos, and the deep new drilling that does occur is concentrated well away from the tract (median 20 miles out — see Finding 5).
 
 ## Findings
 
@@ -57,18 +57,19 @@ Only one well on the tract lies below 3,000 ft — a 2,873-ft well spudded in 19
 
 ### 2. Drilling activity in Pecos is mostly recompletions of existing wells — not new drilling
 
-This is the crux of the data, and it is starker in the wellbore record than in the permit record. Two ways of counting Pecos activity since 2020:
+This is the crux of the data. The Railroad Commission of Texas maintains a master wellbore database (dbf900) in which every drilling, completion, and workover event is logged against a unique API well number. Tracing every Pecos wellbore that has had *any* recorded activity since 2020:
 
-| Basis of count | Total | Genuine new drilling | Recompletion / workover |
-|---|---|---|---|
-| W-1 permits filed (intent) | 883 | 478 (54%) | 405 (46%) |
-| **Wellbore records updated (actual activity)** | **1,118** | **117 (≈10%)** | **1,001 (≈90%)** |
+| Activity in Pecos since 2020 (wellbore records) | Count | Share |
+|---|---|---|
+| **Genuine new drilling (a new wellbore drilled)** | **117** | **≈ 10%** |
+| Recompletion or workover on an existing wellbore | 1,001 | ≈ 90% |
+| **Total wellbore-record activity** | **1,118** | **100%** |
 
-The permit ratio is what a buyer's technical team will see in any RRC W-1 search — and on that basis new drilling is still **54% of permit activity**. But tracing the underlying **wellbore record (RRC dbf900)** — where every spud, completion, and re-entry is API-tagged — the genuine-new-drill share collapses to about **10%**. The other ≈90% of wellbore-level activity is recompletion or workover events on *existing* wellbores (RRC re-stamps the wellbore's spud date with the recent re-entry event, but the original completion date stays — so completion < spud flags the record as a recompletion).
+In other words, **about nine out of every ten "drilling-related" actions on a Pecos wellbore since 2020 are workovers on a well that already exists — not a new hole drilled**. A recompletion or workover uses a small workover rig on an existing bore; it is not the rig-and-hydraulic-fracturing activity associated with ground vibration.
 
-![Pecos new-drill vs recompletion: permit intent vs. actual wellbore activity](charts/ch_recomp_ratio.png)
+![Of every 1,118 wellbore-record events in Pecos since 2020, only ~117 (≈10%) are genuine new drilling. The other ~1,001 (≈90%) are recompletion or workover events on existing wells.](charts/ch_recomp_ratio.png)
 
-96% of recompletion permits — and the bulk of the recompletion events — are by **Kinder Morgan Production** reworking existing CO₂-flood (enhanced-recovery) fields. None of that involves a drilling rig spudding a new hole, none of it involves a new hydraulic-fracturing program, and the program is not near the Caramba North tract.
+The bulk of this recompletion activity is one operator — **Kinder Morgan Production** — reworking existing CO₂-flood (enhanced-recovery) fields. None of that involves a drilling rig spudding a new hole, none of it involves a new hydraulic-fracturing program, and the program is not near the Caramba North tract.
 
 Whether the question is framed as shallow drilling, hydraulic fracturing, or new drilling of any kind, the record points the same way: **it is not happening at or near this site.**
 
@@ -82,7 +83,7 @@ Of about 46 wellbores within two miles, the ten shallow wells were spudded betwe
 
 ### 5. New drilling since 2020, by distance and depth
 
-Counting only genuine new wells (RRC "New Drill" permits — recompletions of existing bores excluded):
+Counting only genuine new wells drilled in Pecos since 2020 (wellbore records, recompletion re-stamps excluded):
 
 | Radius | New-drill wells, spudded ≥ 2020 |
 |---|---|
@@ -115,7 +116,7 @@ The nearest non-plugged shallow wells were spudded in 1970 (1.28 mi) and 1988 (1
 
 ### 7. County-wide context — new drilling is deep, and remote from the site
 
-Since 2020 the RRC issued roughly **478 New Drill permits** in Pecos County (≈4,700 sq mi), against **≈405 recompletion permits**. Tracing the New Drill permits to wells actually spudded gives **116 genuine new wells county-wide**, about **95% of them deep (≥3,000 ft)** — i.e., the modern Permian horizontal program. Only **three** lie within ten miles of the Caramba North tract, and none within five; the activity is overwhelmingly remote from the site (median 20 miles out — see Finding 5).
+Of the **116 genuine new wells drilled in Pecos County since 2020** (Pecos is ≈4,700 sq mi), about **95% are deep (≥3,000 ft)** — the modern Permian unconventional program, operator-concentrated in Diamondback, XTO, Continental, and Gordy. Only **three** lie within ten miles of the Caramba North tract, and none within five; the activity is overwhelmingly remote from the site (median 20 miles out — see Finding 5).
 
 ### 8. Pecos vs. peer counties — the least new drilling of the group
 

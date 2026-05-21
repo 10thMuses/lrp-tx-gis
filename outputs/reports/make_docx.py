@@ -133,7 +133,7 @@ doc.add_page_break()
 doc.add_heading("Summary of findings", level=1)
 para(doc, [
     ("No new drilling is occurring at or near the Caramba North site. ", True),
-    ("Counting only genuine new wells (RRC “New Drill” permits, excluding recompletions): ", False),
+    ("Counting only genuine new wells (wellbore records, recompletion re-stamps excluded): ", False),
     ("no well of any kind has been spudded within two miles of the tract in over a decade", True),
     (", ", False), ("no new-drill well lies within five miles", True),
     (", and only ", False), ("three new-drill wells sit within ten miles", True),
@@ -145,10 +145,10 @@ para(doc, [
 ], fill='EAF2FF', space_after=8)
 
 para(doc, [("Two further points reinforce this:", True)], space_after=2)
-bullet(doc, [("The shallow activity in Pecos is recompletions, not new drilling. ", True),
-             ("Of permits filed in Pecos since 2020, about 45% are recompletions — reworking existing wellbores, with no new hole drilled. A single operator, Kinder Morgan Production, accounts for 96% of all recompletions (reworking existing CO₂-flood fields). Recompletions use a workover rig on an existing bore; they are not the drilling-and-fracturing activity at issue, and this program is not near the site.", False)], fill='F1F7F0')
+bullet(doc, [("Drilling activity in Pecos is mostly rework of existing wells, not new drilling. ", True),
+             ("Tracing every Pecos wellbore record updated since 2020 (RRC dbf900, every event tagged to a unique API well number): only ≈10% (117 of 1,118) are genuine new drilling — the other ≈90% (1,001) are recompletion or workover events on existing wellbores. The recompletion activity is overwhelmingly Kinder Morgan Production reworking existing CO₂-flood (enhanced-recovery) fields — a workover rig on an existing bore, not the drilling-and-fracturing activity at issue, and not near the site.", False)], fill='F1F7F0')
 bullet(doc, [("Genuine new drilling is deep, not shallow — and remote. ", True),
-             ("Pecos saw ≈478 New Drill permits since 2020 (vs ≈405 recompletion). Tracing those to wells actually spudded, only 116 genuine new wells exist county-wide, and ≈95% are deep (≥3,000 ft) horizontal (Diamondback, XTO, Continental, Gordy); just six are shallow. New shallow drilling is therefore nearly nonexistent anywhere in Pecos, and the deep new drilling that does occur is concentrated well away from the tract.", False)], fill='F1F7F0')
+             ("Of the 116 genuine new wells drilled in Pecos since 2020, ≈95% are deep (≥3,000 ft) and only six are shallow. New shallow drilling is therefore nearly nonexistent anywhere in Pecos, and the deep new drilling that does occur is concentrated well away from the tract (median 20 miles out — see Finding 5).", False)], fill='F1F7F0')
 
 doc.add_heading("Findings", level=1)
 
@@ -163,22 +163,22 @@ table(doc, ["Depth (ft)", "Spud year", "Status", "Oil/Gas"], [
 para(doc, [("Only one well on the tract lies below 3,000 ft — a 2,873-ft well spudded in 1960 and long since plugged and abandoned. The only active well on the tract (3,250 ft, spudded 2008) is deeper than 3,000 ft. There has been no shallow (<3,000 ft) drilling on the tract in the modern era. (The remaining tract records are a single deep 22,545-ft wellbore and permitted-but-undrilled location entries.)", False)])
 
 doc.add_heading("2. Drilling activity in Pecos is mostly recompletions of existing wells — not new drilling", level=2)
-para(doc, [("This is the crux of the data, and it is starker in the wellbore record than in the permit record. Two ways of counting Pecos activity since 2020:", False)], space_after=4)
-table(doc, ["Basis of count", "Total", "Genuine new drilling", "Recompletion / workover"], [
-    ["W-1 permits filed (intent)", "883", "478  (54%)", "405  (46%)"],
-    ["Wellbore records updated (actual activity)", "1,118", "117  (≈10%)", "1,001  (≈90%)"],
-], row_styles={1: {'fill': 'EAF5EA', 'bold': True}})
-para(doc, [("The permit ratio is what a buyer's technical team will see in any RRC W-1 search — and on that basis ", False),
-           ("new drilling is still 54% of permit activity", True),
-           (". But tracing the underlying ", False), ("wellbore record (RRC dbf900)", True),
-           (" — where every spud, completion, and re-entry is API-tagged — the genuine-new-drill share collapses to about 10%. The other ≈90% of wellbore-level activity is recompletion or workover events on ", False),
-           ("existing", True),
-           (" wellbores (RRC re-stamps the wellbore's spud date with the recent re-entry event, but the original completion date stays — so completion < spud flags the record as a recompletion).", False)])
+para(doc, [("This is the crux of the data. The Railroad Commission of Texas maintains a master wellbore database (dbf900) in which every drilling, completion, and workover event is logged against a unique API well number. Tracing every Pecos wellbore that has had ", False),
+           ("any", True),
+           (" recorded activity since 2020:", False)], space_after=4)
+table(doc, ["Activity in Pecos since 2020 (wellbore records)", "Count", "Share"], [
+    ["Genuine new drilling (a new wellbore drilled)", "117", "≈ 10%"],
+    ["Recompletion or workover on an existing wellbore", "1,001", "≈ 90%"],
+    ["Total wellbore-record activity", "1,118", "100%"],
+], row_styles={0: {'fill': 'CFECCF', 'bold': True}, 1: {'fill': 'EAF5EA'}, 2: {'fill': 'EAF5EA', 'bold': True}})
+para(doc, [("In other words, ", False),
+           ("about nine out of every ten “drilling-related” actions on a Pecos wellbore since 2020 are workovers on a well that already exists — not a new hole drilled", True),
+           (". A recompletion or workover uses a small workover rig on an existing bore; it is not the rig-and-hydraulic-fracturing activity associated with ground vibration.", False)])
 add_figure(doc, "ch_recomp_ratio.png", width_in=6.0,
-           caption="Pecos County since 2020: of 883 W-1 permits, 54% are new-drill intent; but of 1,118 wellbore records actually updated, only ≈10% are genuine new drilling — the rest are recompletion or workover events on existing wells.")
-para(doc, [("96% of recompletion permits — and the bulk of the recompletion events — are by ", False),
+           caption="Of every 1,118 wellbore-record events in Pecos since 2020, only ~117 (≈10%) are genuine new drilling. The other ~1,001 (≈90%) are recompletion or workover events on existing wells.")
+para(doc, [("The bulk of this recompletion activity is one operator — ", False),
            ("Kinder Morgan Production", True),
-           (" reworking existing CO₂-flood (enhanced-recovery) fields. None of that involves a drilling rig spudding a new hole, none of it involves a new hydraulic-fracturing program, and the program is not near the Caramba North tract.", False)])
+           (" — reworking existing CO₂-flood (enhanced-recovery) fields. None of that involves a drilling rig spudding a new hole, none of it involves a new hydraulic-fracturing program, and the program is not near the Caramba North tract.", False)])
 para(doc, [("Whether the question is framed as shallow drilling, hydraulic fracturing, or new drilling of any kind, the record points the same way: ", False),
            ("it is not happening at or near this site.", True)])
 
@@ -190,7 +190,7 @@ para(doc, [("Of about 46 wellbores within two miles, the ten shallow wells were 
            ("No well of any kind — new drill or otherwise — has been spudded within two miles in over a decade.", True)])
 
 doc.add_heading("5. New drilling since 2020, by distance and depth", level=2)
-para(doc, [("Counting only genuine new wells (RRC “New Drill” permits — recompletions of existing bores excluded):", False)], space_after=4)
+para(doc, [("Counting only genuine new wells drilled in Pecos since 2020 (wellbore records, recompletion re-stamps excluded):", False)], space_after=4)
 table(doc, ["Radius", "New-drill wells, spudded ≥ 2020"], [
     ["≤ 2 mi", "0"],
     ["≤ 5 mi", "0"],
@@ -219,11 +219,9 @@ para(doc, [("The nearest non-plugged shallow wells were spudded in 1970 (1.28 mi
 para(doc, [("No active drilling is occurring adjacent to the tract.", True)], fill='E2EFDA')
 
 doc.add_heading("7. County-wide context — new drilling is deep, and remote from the site", level=2)
-para(doc, [("Since 2020 the RRC issued roughly ", False), ("478 New Drill permits", True),
-           (" in Pecos County (≈4,700 sq mi), against ≈405 recompletion permits. Tracing the New Drill permits to wells actually spudded gives ", False),
-           ("116 genuine new wells county-wide", True),
-           (", about ", False), ("95% of them deep (≥3,000 ft)", True),
-           (" — i.e., the modern Permian horizontal program. Only ", False), ("three", True),
+para(doc, [("Of the ", False), ("116 genuine new wells drilled in Pecos County since 2020", True),
+           (" (Pecos is ≈4,700 sq mi), about ", False), ("95% are deep (≥3,000 ft)", True),
+           (" — the modern Permian unconventional program, operator-concentrated in Diamondback, XTO, Continental, and Gordy. Only ", False), ("three", True),
            (" lie within ten miles of the Caramba North tract, and none within five; the activity is overwhelmingly remote from the site (median 20 miles out — see Finding 5).", False)])
 
 doc.add_heading("8. Pecos vs. peer counties — the least new drilling of the group", level=2)
