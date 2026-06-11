@@ -1,0 +1,197 @@
+/* Grid Wire — locked print stylesheet.
+   Palette and metrics reverse-engineered from the Vol 16 gold-standard PDF:
+   navy #1b2a4a, crimson #b0413e, charcoal #2a2f3a, slate #3c4250,
+   box tint #f1f3f7, zebra #f4f6f9, hairline #d8dce3.
+   Letter 612x792pt. Jost throughout (static-weight TTFs in fonts/). */
+
+@font-face { font-family: "Jost"; src: url("../fonts/Jost-Regular.ttf");  font-weight: 400; font-style: normal; }
+@font-face { font-family: "Jost"; src: url("../fonts/Jost-Medium.ttf");   font-weight: 500; font-style: normal; }
+@font-face { font-family: "Jost"; src: url("../fonts/Jost-SemiBold.ttf"); font-weight: 600; font-style: normal; }
+@font-face { font-family: "Jost"; src: url("../fonts/Jost-Bold.ttf");     font-weight: 700; font-style: normal; }
+@font-face { font-family: "Jost"; src: url("../fonts/Jost-Italic.ttf");   font-weight: 400; font-style: italic; }
+
+@page {
+  size: letter;
+  margin: 61pt 57pt 58pt 57pt;
+
+  /* explicit widths so the three border-bottoms form one continuous
+     hairline across the content width */
+  @top-left {
+    content: string(runleft);
+    width: 40%;
+    font-family: "Jost"; font-size: 7.5pt; font-weight: 400;
+    color: #6b7280; letter-spacing: 1.4pt;
+    vertical-align: bottom; text-align: left;
+    border-bottom: 0.6pt solid #d8dce3;
+    padding-bottom: 7pt; margin-bottom: 14pt;
+  }
+  @top-center {
+    content: " ";
+    width: 30%;
+    vertical-align: bottom;
+    border-bottom: 0.6pt solid #d8dce3;
+    padding-bottom: 7pt; margin-bottom: 14pt;
+  }
+  @top-right {
+    content: string(runright);
+    width: 50%;
+    font-family: "Jost"; font-size: 7.5pt; font-weight: 400;
+    color: #6b7280; letter-spacing: 1.4pt;
+    vertical-align: bottom; text-align: right;
+    border-bottom: 0.6pt solid #d8dce3;
+    padding-bottom: 7pt; margin-bottom: 14pt;
+  }
+  @bottom-left {
+    content: "Land Resource Partners | Capital Markets and Infrastructure Briefing";
+    font-family: "Jost"; font-size: 7.5pt; color: #9095a0;
+    vertical-align: top; padding-top: 10pt;
+  }
+  @bottom-right {
+    content: "Page " counter(page) " of " counter(pages);
+    font-family: "Jost"; font-size: 7.5pt; color: #9095a0;
+    vertical-align: top; padding-top: 10pt;
+  }
+}
+
+@page :first {
+  margin-top: 60pt;
+  @top-left  { content: none; border-bottom: none; }
+  @top-center{ content: none; border-bottom: none; }
+  @top-right { content: none; border-bottom: none; }
+}
+
+html { font-family: "Jost"; }
+body {
+  font-family: "Jost";
+  font-size: 9.4pt;
+  line-height: 1.5;
+  color: #2a2f3a;
+  margin: 0; padding: 0;
+}
+
+/* hidden carriers for the running-header strings; display:none would
+   suppress string-set, so collapse the box instead */
+#runstrings { height: 0; overflow: hidden; line-height: 0; font-size: 0; }
+#runleft  { string-set: runleft content(); }
+#runright { string-set: runright content(); }
+
+/* ---------- masthead (page 1) ---------- */
+#masthead { border-top: 2.4pt solid #b0413e; padding-top: 11pt; margin-bottom: 26pt; }
+#masthead .kicker {
+  font-size: 8pt; font-weight: 600; color: #1b2a4a;
+  letter-spacing: 2.1pt; margin: 0 0 13pt 0;
+}
+#masthead h1 {
+  font-size: 25pt; font-weight: 700; color: #1b2a4a;
+  letter-spacing: 1.2pt; margin: 0 0 8pt 0; line-height: 1.1;
+}
+#masthead .meta {
+  font-size: 9pt; color: #3c4250; line-height: 1.55; margin: 0;
+}
+
+/* ---------- sections ---------- */
+h2 {
+  font-size: 12.5pt; font-weight: 700; color: #1b2a4a;
+  margin: 22pt 0 9pt 0; line-height: 1.3;
+  page-break-after: avoid;
+}
+h2 .n { color: #b0413e; margin-right: 5pt; }
+
+h3 {
+  font-size: 9.4pt; font-weight: 700; color: #1b2a4a;
+  margin: 13pt 0 4pt 0;
+  page-break-after: avoid;
+}
+
+p { margin: 0 0 8pt 0; text-align: justify; }
+.lead p { font-size: 10.2pt; line-height: 1.52; }
+
+b, strong { font-weight: 600; }
+b.hot { color: #b0413e; font-weight: 600; }
+
+sup {
+  font-size: 0.66em;
+  vertical-align: super;
+  line-height: 0;
+  letter-spacing: 0.2pt;
+}
+
+/* ---------- tables ---------- */
+.tbl table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  margin: 6pt 0 10pt 0;
+  font-size: 8.4pt; line-height: 1.45;
+}
+.tbl th, .tbl tr.th td {
+  background: #1b2a4a; color: #ffffff;
+  font-size: 8pt; font-weight: 600;
+  text-align: left; padding: 4.5pt 8pt;
+}
+.tbl td { padding: 5pt 8pt; vertical-align: top; text-align: left; }
+.tbl tbody tr { border-bottom: 0.6pt solid #e3e6eb; page-break-inside: avoid; }
+.tbl tbody tr.th { border-bottom: none; }
+/* header row is demoted into tbody as tr.th (child 1), so even data rows
+   are odd children */
+.tbl tbody tr:nth-child(odd):not(.th) { background: #f4f6f9; }
+.tbl td b, .tbl td strong { font-weight: 600; color: #1b2a4a; }
+.tbl td b.hot { color: #b0413e; }
+
+/* column widths, per table class (content width = 498pt) */
+.t-tape  td:nth-child(1), .t-tape  th:nth-child(1) { width: 112pt; }
+.t-tape  td:nth-child(2), .t-tape  th:nth-child(2) { width: 96pt; }
+.t-deals td:nth-child(1), .t-deals th:nth-child(1) { width: 64pt; }
+.t-deals td:nth-child(2), .t-deals th:nth-child(2) { width: 110pt; }
+.t-wide2 td:nth-child(1), .t-wide2 th:nth-child(1) { width: 128pt; }
+.t-stat2 td:nth-child(1), .t-stat2 th:nth-child(1) { width: 148pt; }
+
+/* ---------- ANGLE callout ---------- */
+.angle {
+  background: #f1f3f7;
+  padding: 9pt 12pt 8pt 12pt;
+  margin: 13pt 0 14pt 0;
+  page-break-inside: avoid;
+}
+.angle .angle-label {
+  font-size: 8pt; font-weight: 700; color: #b0413e;
+  letter-spacing: 1.8pt; margin: 0 0 4pt 0;
+}
+.angle p { font-size: 8.4pt; line-height: 1.5; margin: 0 0 5pt 0; }
+.angle p:last-child { margin-bottom: 0; }
+.angle b, .angle strong { font-weight: 600; color: #2a2f3a; }
+
+/* ---------- charts ---------- */
+figure { margin: 12pt 0 12pt 0; page-break-inside: avoid; }
+figure.chartbox {
+  border: 0.8pt solid #d8dce3;
+  border-radius: 3pt;
+  padding: 12pt 14pt 10pt 14pt;
+}
+figure .chart-title {
+  font-size: 10.2pt; font-weight: 700; color: #1b2a4a;
+  margin: 0 0 8pt 0; text-align: left;
+}
+figure.chart-pair .chart-title { font-size: 9.4pt; }
+figcaption {
+  font-size: 7.9pt; color: #6b7280; line-height: 1.45;
+  margin-top: 7pt; text-align: left;
+}
+figcaption.center { text-align: center; }
+.chart-row { width: 100%; }
+.chart-row td { vertical-align: top; padding: 0 6pt; }
+svg text { font-family: "Jost"; }
+
+/* ---------- footnotes & colophon ---------- */
+.footnotes ol {
+  font-size: 7.9pt; line-height: 1.45;
+  margin: 4pt 0 0 0; padding-left: 16pt;
+}
+.footnotes li { margin-bottom: 2.5pt; text-align: left; }
+
+.colophon {
+  margin-top: 16pt;
+  font-size: 7.9pt; line-height: 1.5; color: #555a63;
+  text-align: justify;
+}
+.colophon b { color: #2a2f3a; }
