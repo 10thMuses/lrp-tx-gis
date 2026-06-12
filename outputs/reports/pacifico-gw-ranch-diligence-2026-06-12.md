@@ -1,167 +1,168 @@
-# Pacifico Energy — GW Ranch (Pecos County, TX) — Diligence Report
+# Pacifico Energy / GW Ranch — Counterparty Diligence Memorandum
 
-**Date:** June 12, 2026
-**Prepared by:** Land Resource Partners
-**Subject:** GW Ranch power + data center campus, Pecos County — financing, capital stack, structure, land tenure, status, risks, differentiators
-**Note:** All sources public (English + Japanese). Every load-bearing claim is cited; developer claims are labeled as such.
+**7.65 GW permitted off-grid gas campus, Pecos County, Texas — project structure, land position, capital stack, ownership, status, risk**
+**Prepared June 12, 2026 · Land Resource Partners · Internal and counterparty-restricted circulation · Not investment advice**
 
 ---
 
-## TL;DR
+## I. Executive Summary
 
-GW Ranch is the largest fully air-permitted power-for-AI campus in the US — 7.65 GW gas + 1.8 GW BESS + 750 MWac solar, fully off-grid (zero ERCOT/SB6/FERC exposure), on 8,000+ acres essentially on top of the Waha hub. The permit position, regulatory insulation, and gas logistics are genuinely best-in-class. But as of June 2026, **every commercial load-bearing element is undisclosed and unverified**: no named tenant, no named turbine OEM, no announced project financing, no confirmed groundbreaking, and land tenure (fee vs. option/lease) cannot be confirmed from public sources.
+**The asset is real; the company behind it is thin.** GW Ranch holds the largest air authorization on record in the United States: TCEQ application **396366**, issued on or about January 26, 2026, authorizing **7.65 GW of gas-fired generation plus 1.8 GW of battery storage and 750 MWac of solar** on 8,000+ acres on Highway 18, approximately 17 miles north of Fort Stockton (coordinates 31.1621, -102.8964). The design is deliberately off-grid — no ERCOT interconnection, no new transmission, Waha-adjacent gas via a planned 15-mile, 1 Bcf/d lateral. The permit is a genuine moat. Everything commercial behind it is absent: **no named offtaker, no disclosed financing, no confirmed turbine OEM, no executed tax abatement, and no public record of land tenure.**
 
-The capital stack behind the company is thinner than the marketing suggests. Pacifico is a **founder/family-controlled private company with no institutional sponsor at parent level** — the "backed by Goldman Sachs, Sumitomo, GE EFS, Shinsei, Dragon Capital" line maps to historical project- and fund-level relationships, not parent equity. The flagship monetization event that would seed the US pivot — Bank of America's sale of the Japanese solar platform — **publicly failed to clear**: KKR, Macquarie, and Copenhagen Infrastructure Partners all passed, the ask was cut ~70% (¥100bn → ¥30bn+), and no closing has been reported through June 2026. Forbes pegs GW Ranch's capital need at ~$12B; Pacifico's largest publicized US raise is $93M.
+**Ownership: founder-controlled, no institutional sponsor.** Pacifico Energy Group LLC is controlled by founder Nate Franklin. Outside capital has only ever entered at project and fund level (GE Energy Financial Services, MUFG and Japanese bank syndicates, Goldman/Nomura-placed solar funds, Sumitomo tax equity) — never as disclosed holdco equity. The widely cited "$5B+ raised" is a cumulative gross debt-plus-equity tally across 14 years and four countries, not balance-sheet capacity. The marquee backer list in GW Ranch press releases unpacks into placement agents, tax-equity buyers, and exited project co-investors.
 
-Until a turbine OEM, a financing close, or a creditworthy anchor lease lands, GW Ranch is an option on the Permian power thesis, not an executing project. The nearest analogs for permit-rich/tenant-poor off-grid campuses — Fermi (-80%+ post-IPO, class actions) and Poolside/CoreWeave Horizon in the same county (anchor lease terminated March 2026) — show where this model breaks: tenants and capital, not permits or gas. A second signal: Pacifico's other Texas project ("Fort Spunky," Hood County) had its concept plan revoked by commissioners in 2026 after a water-utility denial, and Pacifico is now suing the county.
+**The war chest is impaired.** Pacifico's central liquidity event — Bank of America's sale of the Japanese solar platform, launched September 2024 — has stalled: KKR, Macquarie, and Copenhagen Infrastructure Partners all walked, and price expectations collapsed ~70% from ~¥100bn (~$678M) to "offers above ¥30bn," with no closing announced through June 2026. Full GW Ranch build is framed at ~$12B (Forbes, Feb 2026, quoting Franklin's own position: he needs "the $12 billion … and the hyperscalers").
 
----
+**Verdict: a permitted development option — tenant-contingent and pre-capitalized — not a financed project.** FID requires an anchor tenant plus JV equity plus project debt that do not yet exist. The Poolside/CoreWeave Project Horizon collapse on the adjacent Longfellow Ranch (March 2026) is the live demonstration that tenant credit, not permits, is the binding constraint in this county.
 
-## 1. Project structure
+## II. Project Structure
 
-| Element | Detail | Source |
+| Attribute | Finding | Source |
 |---|---|---|
-| Generation | 7.65 GW gas turbines (mix of small + large frames) + 1.8 GW BESS + 750 MWac solar | TCEQ permit coverage: [DCD Jan 2026](https://www.datacenterdynamics.com/en/news/pacifico-secures-765gw-air-permit-for-gw-ranch-project-in-west-texas/), [Turbomachinery Mag](https://www.turbomachinerymag.com/view/pacifico-energy-obtains-air-permit-for-gw-ranch-project-in-texas) |
-| Grid status | Fully islanded private grid, "completely unconnected to ERCOT" — deliberate bypass of interconnection queue and PUCT/SB6 | [Power Engineering Aug 2025](https://www.power-eng.com/onsite-power/pacifico-energy-plans-5-gw-off-grid-facility-in-texas-for-hyperscale-data-centers/), [EnergyTech](https://www.energytech.com/data-center-power/article/55311675/pacifico-unveils-5-gw-off-grid-texas-power-for-data-centers) |
-| Site | 8,000+ acres (Forbes: 8,400), Hwy 18 ~17 mi north of Fort Stockton | [TCEQ notice 181033](https://www.tceq.texas.gov/downloads/permitting/air/bilingual/pending-permit-notices/181033-pls-english.pdf), [Big Bend Sentinel Feb 4, 2026](https://bigbendsentinel.com/2026/02/04/massive-ai-data-center-coming-to-pecos-county/), [KCBD Feb 1, 2026](https://www.kcbd.com/2026/02/01/texas-approves-largest-permitted-data-center-campus-us/) |
-| Gas | Multiple laterals incl. dedicated 15-mile, 1 Bcf/d pipeline to Waha; full-build burn ~1–2 Bcf/d (4–7% of 2025 Permian output) | [Businesswire Jan 26, 2026](https://www.businesswire.com/news/home/20260126236053/en/Pacifico-Energy-Secures-7.65-GW-Power-Generation-Permit-for-GW-Ranch-Project), [Texas Tribune Feb 2, 2026](https://www.texastribune.org/2026/02/02/texas-permian-basin-power-plant-project-data-centers/) |
-| Business model | "Bring-your-own-power" / powered campus: Pacifico builds generation + private utility grid, co-locates customer data centers behind the fence. Lease vs. build-to-suit mechanics undisclosed. | [RCR Tech](https://rcrtech.com/ai-infrastructure/7-65-gw-ranch-is-biggest-byop-project-in-u-s/), Franklin quotes in Jan 2026 PR |
-| Entities | Project SPV: **Pacifico GW LLC** (TCEQ applicant; same San Juan Capistrano address as parent). TCEQ regulated entity RN112259775, notice 181033. Parent: Pacifico Energy Group (private, founder-led). | [TCEQ pending permit notice](https://www.tceq.texas.gov/downloads/permitting/air/bilingual/pending-permit-notices/181033-napd-english.pdf) |
-| Phasing | First power Q1/H1 2027 → 1 GW 2028 → 5+ GW by 2031 | Jan 2026 PR |
-| Water | Developer claims "no major external water sources" — air-cooled, with combustion water recovery feeding DC cooling (marketing claim, mechanism unverified) | [Big Bend Sentinel](https://bigbendsentinel.com/2026/02/04/massive-ai-data-center-coming-to-pecos-county/) (VP Constantyn Gieskes quote) |
+| Project entity | Pacifico GW LLC (TCEQ regulated entity RN112259775); parent Pacifico Energy Group LLC, San Juan Capistrano, CA | TCEQ permit record |
+| Location | Pecos County, Hwy 18 ~17 mi N of Fort Stockton; 31.1621, -102.8964 | TCEQ notice 181033; GEM; KCBD |
+| Site | 8,000+ acres (Forbes: 8,400), "build-ready," room to expand | Pacifico PR (consistent) |
+| Permitted capacity | 7.65 GW gas + 1.8 GW BESS + 750 MWac solar | TCEQ 396366; DCD |
+| Deliverable capacity | "Over 5 GW" private-grid; N+2 redundancy, five-nines availability target | Developer claim |
+| Grid status | Off-grid / islanded; explicitly not ERCOT-interconnected; no new transmission | Pacifico (repeated) |
+| Gas supply | Multiple laterals incl. planned 15-mi, 1 Bcf/d pipeline direct to Waha; full operation est. 1–2 Bcf/d, ~4–7% of 2025 Permian output | Pacifico PR; Rice/Baker Institute |
+| Water | "Self-sufficient, no major external sources" — combustion byproduct + closed-loop cooling. Unverified; no Middle Pecos GCD permit located | Gieskes statements |
+| Phasing | Phase 1 = 1 GW; first power Q1/H1 2027 (inconsistent across releases); 1 GW in 2028; 5+ GW by 2030–31 (slipped from 2030) | Pacifico (dates conflict) |
+| Turbines | "Secured" per VP Constantyn Gieskes; OEM, count, delivery schedule all undisclosed | Unverifiable |
+| EPC / offtaker / financing | None announced on all three | Confirmed absence |
 | Fiber | No disclosed provider or route | — |
 
-The small/large turbine mix implies aeroderivative or recip bridging for the first GW with frame machines later — a common 2025-vintage structure for hitting an early first-power date while frame slots are scarce.
+**Angle.** The off-grid design is the strategy, not a feature. It converts a 5–7 year ERCOT interconnection queue into a speed claim and sidesteps the entire SB6 / PUCT Project 58481 large-load regime — the $50,000/MW security posting, the $50,000/MW non-refundable interconnection fee, the site-control proof, and the curtailment kill switch. The cost of that bypass is zero grid backup: reliability rests entirely on on-site gas-plus-BESS redundancy, and the five-nines claim has never been demonstrated by this developer at any scale. The small/large turbine mix implies aeroderivative or reciprocating bridging for the first GW with frame machines later.
 
-## 2. Company and project financing
+## III. Land Position — Unresolved
 
-### 2.1 Corporate structure and who actually stands behind Pacifico
+No primary source establishes whether Pacifico **owns, options, or leases** the GW Ranch acreage. Pecos County Appraisal District records show no parcel under "Pacifico GW LLC" or "Pacifico" in searchable indices; no recorded deed, purchase price, or lease/option terms appear anywhere. Sixteen months of company materials use only possession-neutral language ("sited within 8,000+ acres," "build-ready land") — never owns, acquired, optioned, or leased. "GW Ranch" is gigawatt branding, not a verified pre-existing ranch name, so the underlying instrument likely sits against a differently-named ranch. Gieskes told the Midland Reporter-Telegram the company "needed to find thousands of acres in one spot … relatively unscathed from previous development" — implying acquisition or control without specifying form.
 
-Pacifico Energy Group: privately held holding company, HQ San Juan Capistrano, CA; founded 2009 by Nate (William) Franklin (UCLA Anderson MBA '08; ex-Edison Mission, ex-BP Solar director of solar development). Built its base as Japan's largest utility-scale solar developer via Pacifico Energy K.K. (Tokyo, est. 2012): 1,750+ MW developed, company-claimed $4–5B+ in cumulative equity/debt raised (unaudited).
+**Angle.** This is the single most important unverified fact in the file. If Pacifico holds an option or lease rather than fee title, its position is weaker, more time-constrained, and more contestable than the marketing suggests — and the permit becomes the dominant asset rather than the land.
 
-**Ownership chain (the key clarity item):**
+**Verification steps (~30 minutes):**
 
-- The historical chain runs **Jamieson Group → Virginia Solar Group → Pacifico Energy K.K.** Business Wire releases from 2016 describe Pacifico Energy as "a subsidiary of Virginia Solar Group," and Virginia Solar Group as "an affiliate of the **Jamieson Group, a California-based oil & gas / real estate enterprise with annual revenues of over USD $800 million**" ([Business Wire Oct 11, 2016](https://www.businesswire.com/news/home/20161011005920/en/GE-Energy-Financial-Services-and-Virginia-Solar-Group-Commission-Mimasaka-Musashi-Solar-Project-in-Okayama-Prefecture-Japan); [Power Mag 2016](https://www.powermag.com/press-releases/ge-energy-financial-services-and-virginia-solar-group-commission-pacifico-energy-kumenan-mega-solar-plant-in-okayama-prefecture-japan/)). Franklin was a partner of Virginia Solar Group ([LinkedIn](https://www.linkedin.com/in/nate-franklin-b8362a4/)).
-- Since a **July 11, 2022 shareholder change**, Pacifico Energy K.K. is owned **66.7% by "Pacifico Energy AM Holdings L.P."** and **33.3% by president/CEO Hiroki Matsuo** (松尾大樹) — the 33.3% was transferred *from* AM Holdings to Matsuo, i.e., a management equity grant, not outside capital ([AtPress July 2022](https://www.atpress.ne.jp/news/317649); [pacificoenergy.jp shareholder notice](https://www.pacificoenergy.jp/news/detail/%E3%83%91%E3%82%B7%E3%83%95%E3%82%A3%E3%82%B3%E3%83%BB%E3%82%A8%E3%83%8A%E3%82%B8%E3%83%BC-%E6%A0%AA%E4%B8%BB%E5%A4%89%E6%9B%B4%E3%81%AE%E3%81%8A%E7%9F%A5%E3%82%89%E3%81%9B/); corroborated by [Infralogic Oct 2024](https://ionanalytics.com/insights/infralogic/pacifico-energy-selling-japanese-solar-platform/)). Matsuo is an operator (ex-Toyota Tsusho, ex-Eurus Energy; Pacifico since 2013; president since June 2019), not a capital source.
-- **AM Holdings L.P. is unregistered in any US state** (no OpenCorporates hit; the "L.P." suffix plus registry absence is consistent with a Cayman vehicle — unverified). Its GP/LP roster and beneficial owners are undisclosed. Inference, flagged as such: AM Holdings is the successor holding vehicle for the Franklin/Jamieson/Virginia Solar Group side of the chain.
-- **Bottom line: founder/family-controlled, no institutional sponsor at parent level.** Institutional capital has only ever entered at project or fund level.
-
-### 2.2 The Japan capital stack — how the platform was actually financed
-
-**Project-level equity (strategics and GE):**
-- **GE Energy Financial Services** was project-level equity co-investor (with Virginia Solar Group) in three Japan projects — Kumenan (majority stake), Hosoe (¥7.5bn commitment), Mimasaka Musashi — 2014–2016 ([GE News](https://www.ge.com/news/press-releases/ge-energy-financial-services-invests-japans-renewable-energy-power-market); [Business Wire Dec 2014](https://www.businesswire.com/news/home/20141210005230/en)). GE EFS never held equity in the Pacifico corporate entity. Disposition of GE's project stakes post-2018 is an open item.
-- **Kansai Electric and ENEOS took 50/50 equity** in the Banshu project GK (~77 MWdc, COD Jan 2023) — project-level recycling to Japanese strategics ([Nikkei BP](https://project.nikkeibp.co.jp/ms/atcl/19/news/00001/01392/?ST=msb); [Kankyo Business](https://www.kankyo-business.jp/news/026925.php)).
-
-**Project-level debt (Japanese banks, non-recourse):**
-- Kumenan (32 MW): **¥11bn (~$101M) non-recourse from Bank of Tokyo-Mitsubishi UFJ and Chugoku Bank** — among the first international-standard non-recourse solar PF in Japan ([Business Wire May 2016](https://www.businesswire.com/news/home/20160516005413/en/GE-Energy-Financial-Services-Virginia-Solar-Group)).
-- Hosoe (96.2 MW): **BTMU plus a 12-bank syndicate**; Kyushu Electric offtake ([Power Engineering](https://www.power-eng.com/renewables/gefs-virginia-solar-group-start-operations-at-japan-solar-power-plant/)). Setouchi Kirei (231 MW) closed at ~$1.1B with an $867M non-recourse syndicate loan ([Recharge](https://www.rechargenews.com/solar/870405/in-depth-ge-energy-financial-services-breaks-down-japan-barriers)).
-- Shunan Nagaho: development-stage loan from **Bank of Yokohama** (Dec 2023) ([pacificoenergy.jp](https://www.pacificoenergy.jp/en/news/detail/20231226/)).
-- Not found: any Mizuho, SMBC, SocGen, or Shinsei loan to a specific Pacifico project — the "Shinsei Bank" name in GW Ranch PRs has no traceable deal behind it in public sources.
-
-**Asset-recycling funds (the sell-down machine):**
-- **Fund I** (closed Sept 2017): **¥15.5bn (~$141M)** from Japanese institutional investors; 5 plants >100 MWdc; **Mitsubishi UFJ Morgan Stanley Securities sole placement agent** ([Business Wire Jan 2018](https://www.businesswire.com/news/home/20180131005563/en/Pacifico-Energy-Raises-15.5-Billion-Yen-Solar)).
-- **Fund II** (Dec 2019): **¥29bn (~$266M)**; 5 plants >216 MWdc; **Nomura Securities and Goldman Sachs Japan co-placement agents** — Goldman's role was distribution, not principal ([Business Wire Dec 2019](https://www.businesswire.com/news/home/20191201005231/en/Pacifico-Energy-Raises-29-Billion-Yen-Solar); [pv magazine](https://www.pv-magazine.com/2019/12/03/pacifico-energy-raises-265-6m-with-new-pv-investment-fund-picks-up-35-mw-project-in-japan/)).
-- Model confirmed by Japanese trade press: build, then transfer completed plants to its own private funds ("完工後はファンドに譲渡"). Individual LP identities were never disclosed. **No Fund III was ever raised** — consistent with the 2024 pivot to an outright platform sale.
-
-**Offshore wind monetization:**
-- **SSE Renewables paid $208M for 80%** of the Japan offshore wind platform (Oct/Nov 2021), **including $30M deferred consideration subject to conditions**; Pacifico retained 20% (SSE Pacifico JV, ~10 GW early-stage portfolio) ([Renewables Now](https://renewablesnow.com/news/sse-renewables-pacifico-set-up-japanese-offshore-wind-jv-759432/); [offshorewind.biz Nov 2021](https://www.offshorewind.biz/2021/11/01/sse-pacifico-emerges-in-japan/)). Caution: 4C Offshore lists the JV's Murakami–Tainai project as **cancelled**, consistent with broader Japan offshore wind distress (Mitsubishi exited three projects Aug 2025). Whether the $30M deferred was ever paid is unknown.
-
-**BESS buildout (2023–2026):** first two grid BESS supported by a METI subsidy (2023); the Koganai BESS (COD Dec 9, 2025) was explicitly **"fully self-funded," subsidy-free merchant** — the 660 MW / 2.9 GWh-by-2030 program is riding on the K.K.'s own balance sheet, with no external lender or equity partner identified ([Business Wire Dec 8, 2025](https://www.businesswire.com/news/home/20251208564853/en/Pacifico-Energy-Commences-Operation-of-Grid-scale-Battery-Storage); [ESS News Dec 23, 2025](https://www.ess-news.com/2025/12/23/pacifico-energy-targets-2-9-gwh-of-bess-installations-in-japan-by-2030/)).
-
-**Vietnam:** Dragon Capital is a project-level strategic partner on the 40 MWp Mui Ne solar plant only (non-recourse debt from Vietnam's OCB); no parent-level stake ([Business Wire Jun 2019](https://www.businesswire.com/news/home/20190623005057/en/Pacifico-Energy-Commences-Operation-of-a-40-MWp-Mui-Ne-Solar-Power-Plant-in-Vietnam)).
-
-### 2.3 The failed platform sale — the impaired war chest
-
-**Bank of America launched a sale of Pacifico Energy K.K. in late Sept 2024** — billed "USD 1bn-plus": 10 operating solar plants (317 MW), a 6.2 GW / 50-project pipeline, 2 GW BESS pipeline, SSE Pacifico carved out ([Infralogic Oct 2024](https://ionanalytics.com/insights/infralogic/pacifico-energy-selling-japanese-solar-platform/)). Then, per [Infralogic July 20, 2025 ("Infra managers walk away from Pacifico's Japan sale")](https://ionanalytics.com/insights/infralogic/infra-managers-walk-away-from-pacificos-japan-sale/):
-
-- Initial bids missed expectations; the process stalled in early 2025.
-- **KKR was interested but put off by price; Macquarie dropped out; Copenhagen Infrastructure Partners walked away in May 2025** on valuation gap.
-- Pacifico originally wanted **~¥100bn (~$678M)** but, after reviving the process in May 2025, would "entertain offers above **¥30bn**" (~$200M) — a ~70% cut Infralogic attributes to "Pacifico's overly optimistic initial view of the value of its pipeline." BofA targeted final offers by Sept 2025.
-- **No closing, buyer, or price has been reported through June 2026** (English or Japanese). Circumstantially, the platform was still operating independently under the Pacifico brand in Dec 2025 (self-funded BESS CODs and a 2030 growth target) — behavior inconsistent with a completed sale.
-
-**Why it matters for GW Ranch:** the implicit equity story — recycle Japan proceeds into Texas — is impaired. Even a cleared sale at the reduced ask contributes ~$200M against a ~$12B build. And a publicly stalled sale process is itself a diligence datapoint on how the platform's pipeline value holds up under institutional scrutiny (KKR/Macquarie/CIP all looked and passed).
-
-### 2.4 GW Ranch project financing — what's public
-
-Zero disclosure: no company capex figure, no project-finance facility, no equity raise, **no SEC Form D found for any Pacifico US entity** (worth confirming directly in EDGAR full-text search). External reference points: **Forbes (Feb 2026): "all he needs is the $12 billion to build it and the hyperscalers"** ([Forbes](https://x.com/Forbes/status/2025510977341632931)); 7.65 GW of gas capacity alone implies $12–19B at $1,500–2,500/kW before DC shells. The Pecos County abatement was reported against a "$5.5B"/"$6.4B" project value ([Fort Stockton Pioneer](https://www.fortstocktonpioneer.com/news/pecos-county-commissioners-approve-major-property-tax-relief-cemented-64-billion-data-center)) — likely a phase or DC-only figure. Franklin's Senate EPW response (Mar 2026) cites "$200B of AI supercomputers" supportable on site — demand-side framing, not capex.
-
-**Read:** balance-sheet development funding (land, permitting, turbine deposits) from founder/family capital and recycled Asia proceeds, with construction capital intended as customer-anchored project finance once leases sign. The **Nov 2025 hire of Dhiraj Shangari as CFO / Head of Capital Markets & Investments** ([Pacifico news](https://www.pacificoenergy.com/news)) signals the raise is ahead, not behind. "Turbines secured" (Jan 2026 PR) implies funded deposits — but no OEM, count, or schedule has ever been disclosed. The "backed by Sumitomo, Goldman Sachs, GE EFS, Shinsei Bank, Dragon Capital" line in GW Ranch PRs maps to the historical project/fund relationships in §2.2 — **treat as marketing, not as a sponsor list**. US-side precedent: Pacifico Power's $93M 2024 financing (Sumitomo $40M tax equity, MUFG $29M debt, $24M ITC-transfer bridge) for 27 MW solar + 25 MWh BESS — three orders of magnitude below GW Ranch's need ([Business Wire Jun 2024](https://www.businesswire.com/news/home/20240627982661/en/)).
-
-## 3. Land: owned or optioned?
-
-**Unconfirmed — likely controlled, ownership unproven.** Across 16 months of PR, the project page, Forbes, and all coverage, Pacifico uses only possession-neutral language ("sited within 8,000+ acres," "build-ready land") — never "acquired/owns/optioned/leased." No seller, prior ranch name, or price reported; "GW" is gigawatt branding, so the deed/lease likely sits under an SPV against a differently-named ranch. The Chapter 312 abatement (approved Jan 12, 2026) is consistent with fee ownership but also covers leasehold improvements — not dispositive. Sweeps of Pecos CAD, deed aggregators, and Middle Pecos GCD filings surface no records tying "Pacifico"/"Pacifico GW LLC" to a parcel, deed, or water permit — weak evidence given how thinly those databases are indexed, but it means there is no easy public confirmation of fee ownership.
-
-## 4. Land-tenure verification steps (~30 min)
-
-| # | Step | What to do |
+| # | Step | What it resolves |
 |---|---|---|
-| 1 | Pecos CAD owner search (free) | [esearch.pecoscad.org](https://esearch.pecoscad.org/) → Property Search → Owner Name → "Pacifico", then "GW". If nothing: a 2024–25 purchase shows on the 2025/2026 roll — use the map search along Hwy 18 ~17 mi north of Fort Stockton and note the owner of the large tracts. That name is either the seller or the lessor. |
-| 2 | TexasFile deed search (~$5–10) | [texasfile.com → Pecos County Clerk records](https://www.texasfile.com/search/texas/pecos-county/county-clerk-records/) → Grantee = "Pacifico", 2024-01-01 → today. A **warranty deed** = owned; a **memorandum of option/lease** = optioned/leased. Also run Grantee = the owner name from step 1. |
-| 3 | Abatement agreement (best single document) | (a) Comptroller Chapter 312 registry — search "Pecos County" at [comptroller.texas.gov → tax abatements](https://comptroller.texas.gov/economy/development/prop-tax/abatements/); (b) TPIA request to the County Judge's office via [co.pecos.tx.us](https://www.co.pecos.tx.us/): "the tax abatement agreement and reinvestment zone designation approved by Commissioners Court on January 12, 2026, including the application and property description." The recitals state Pacifico's property interest verbatim. |
-| 4 | Forbes profile + video | Forbes Feb 2026 (Amy Feldman; teased via [@Forbes](https://x.com/Forbes/status/2025510977341632931)) and ["This Daring Developer Wants To Power America's AI Future"](https://www.youtube.com/watch?v=5OMGS2pfKPs) — transcript-search "land," "bought," "lease." |
-| 5 | Middle Pecos GCD (free + one call) | Scan [agendas/minutes](https://www.middlepecosgcd.org/agendas-and-minutes/) and [public notices](https://www.middlepecosgcd.org/public-notices/) 2024–26; faster, call the Fort Stockton district office — any non-exempt well application lists the **landowner of record**. |
-| + | Bonus (free, 2 min) | [Comptroller franchise tax entity search](https://mycpa.cpa.state.tx.us/coa/) for "Pacifico GW LLC" — Texas registration, formation date, registered agent, officers, without SOSDirect fees. |
+| 1 | Pecos CAD owner search (esearch.pecoscad.org): "Pacifico," "Pacifico GW LLC"; failing that, map-search the large tracts on Hwy 18 ~17 mi N of Fort Stockton — that owner is the seller or the lessor | Fee vs. option/lease, counterparty |
+| 2 | TexasFile grantee search, Pecos County Clerk records, "Pacifico," 2024–present | Warranty deed = owned; memorandum of option/lease = controlled |
+| 3 | Pull TCEQ permit 396366 in full: turbine count/type, emission limits | Replication cost/time of the permit moat |
+| 4 | Middle Pecos GCD board minutes/permit log for GW Ranch well filings | Water claim support; applications list the landowner of record |
+| 5 | Monitor Commissioners Court agendas for an executed Ch. 312 reinvestment zone/abatement; once executed, the agreement recites the property interest verbatim | Tenure + FID intent |
+| 6 | Comptroller franchise tax search (mycpa.cpa.state.tx.us/coa/): "Pacifico GW LLC" | Registration, agent, officers — free |
 
-## 5. Status (June 2026) and milestone scorecard
+## IV. Ownership and Capital Stack
 
-| Milestone | Status |
+### Ultimate ownership: founder-controlled, opaque
+
+Pacifico Energy K.K. (Japan) is held **66.7% by Pacifico Energy AM Holdings L.P.** and **33.3% by Japan president/CEO Hiroki Matsuo** following a July 2022 shareholder change — Matsuo's stake is executive co-ownership (ex-Toyota Tsusho, ex-Eurus; operator, not a capital source), not institutional. The AM Holdings vehicle — unregistered in any US state, GP/LPs undisclosed — traces to **Pacifico Energy Group LLC**, the California holding company controlled by Franklin (William Nathan Franklin, UCLA Anderson MBA, ex-BP Solar / Edison Mission Energy), who describes his stake as "significant" without disclosing a percentage. The early-era parent was the **Jamieson family's Virginia Solar Group**, an affiliate of the Jamieson Group (Bakersfield oil & gas / real estate, ~$800M revenues, tied to Jaco Oil Company, where Franklin was VP of Alternative Energy 2010–11); GE/Business Wire releases from 2014–16 name Virginia Solar Group as the K.K.'s parent. By the 2022 shareholder change Virginia Solar Group had exited the record; whether bought out or wound down is undisclosed. EDGAR full-text search returns **zero Form D filings** for Pacifico Energy, Pacifico Power, or Pacifico GW: capital formation has been project/fund-level, often offshore, never US corporate equity rounds. (No TPG connection — the "Texas Pacific" association is a name coincidence.)
+
+### Where outside capital actually sits
+
+| Layer | Capital source | Detail |
+|---|---|---|
+| Holdco equity | Franklin (founder) | No disclosed institutional shareholder; exact % undisclosed |
+| Japan opco minority | Hiroki Matsuo | 33.3% of the K.K. since 2022; management equity |
+| Japan solar funds | Japanese institutional LPs (names undisclosed) | Fund I (Sep 2017): ¥15.5bn, five plants >100 MWdc, MUMSS sole placement. Fund II (Dec 2019): ¥29bn, 216 MWdc, Nomura + Goldman Sachs Japan co-placement. No Fund III; stated ¥150bn ambition unrealized |
+| Japan project equity | GE Energy Financial Services (+ Virginia Solar Group); Kansai Electric + ENEOS | GE: Kumenan 32 MW, Mimasaka Musashi 42 MW, Hosoe 96 MW (GE EFS's first Japan investments; disposition of stakes post-2018 undisclosed). Kansai/ENEOS: 50/50 in Banshu GK (~77 MWdc, COD 2023) |
+| Japan project debt | MUFG/BTMU, Chugoku Bank, Sumitomo Mitsui Trust, Bank of Fukuoka, Bank of Yokohama | Non-recourse: ¥11bn Kumenan, ¥13bn Mimasaka Musashi, Hosoe 13-bank syndicate; Setouchi Kirei ~$1.1B incl. $867M syndicate loan; Toyo Engineering recurring EPC |
+| US tax equity / debt | Sumitomo Corp of Americas; MUFG | Jun 2024: $40M tax equity within $93M total incl. $29M MUFG construction-to-perm + $24M IRA transferability bridge — Pacifico's largest publicized US financing |
+| Korea | Hana Bank / Hana Securities | MOU (Jun 12, 2026) on 3.2 GW Jindo offshore cluster; MOU stage only, construction ~2030 |
+| Vietnam | Dragon Capital JV | Mui Ne 40 MWp solar JV; project-level only, no parent stake |
+
+### Asset sales and capital recycling
+
+| Event | Date | Terms |
+|---|---|---|
+| SSE Pacifico carve-out | Oct 2021 | SSE Renewables bought 80% of the Japan offshore wind platform for $208M (incl. $30M deferred); Pacifico retained 20%. JV's Murakami–Tainai project since listed cancelled |
+| Sumitomo tax equity | Jun 2024 | $40M on 27 MW US DG portfolio (part of $93M package) |
+| **Japan solar platform sale** | Launched Sep 2024; **open** | Bank of America mandate; ~317 MW operating + 6.2 GW pipeline. Initial ask ~¥100bn (~$678M); **KKR (price), Macquarie, and CIP (valuation gap) all walked**; by Jul 2025 Pacifico would entertain offers above ¥30bn. **No closing, buyer, or value announced as of June 2026** |
+| CleanCapital sale | Jun 2025 | 27.3 MW solar / 25.2 MWh storage US DG portfolio (MA SMART + CA BTM); Marathon Capital advised; price undisclosed |
+
+**Angle.** The Japan sale is the tell. A 70% collapse in price expectations, with three marquee infrastructure buyers passing, prices the 6.2 GW pipeline at near zero and signals the market does not pay for Pacifico's development optionality. Even a clean close at ¥30–40bn yields perhaps $200–450M gross — before tax, debt, and Matsuo's 33.3% minority leakage. Against a ~$12B GW Ranch build, or even a $2–2.5B Phase 1 at current gas-plant costs ($2,200–2,500/kW), the parent's recyclable equity is a rounding error. Pacifico is structurally a developer and capital assembler, not a balance-sheet principal. The November 2025 hire of CFO **Dhiraj Shangari** (ex-Northland Power; C$11B+ of arranged project financing across offshore wind, storage, and conventional generation) confirms the company knows it: the financing apparatus is being built because it does not yet exist. No GW Ranch financing mandate, bank engagement, or raise has been announced.
+
+## V. Status and Milestones
+
+| Item | Status (June 2026) |
 |---|---|
-| TCEQ air permit (7.65 GW) | ✅ Issued ~Jan 26, 2026 — largest US power-gen air permit; ~5 months from public launch. Authorizes 12,000+ tpy criteria pollutants, up to 33 Mt/yr CO2e. No contested-case hearing or lawsuit found. |
-| County tax abatement | ✅ Approved Jan 12, 2026 (+200-unit workforce housing) |
-| Land delineation | ✅ "All site delineations complete" (developer claim, Jan 2026) |
-| Turbines | ⚠️ "Secured" per PR — no OEM, count, or delivery schedule ever disclosed |
-| Groundbreaking / construction | ❌ Not confirmed. "Construction can start Q1 2026" — Q1 passed with no reported site work; GEM lists pre-construction; Pacifico still presenting to Commissioners Court May 11, 2026 |
-| EPC contractor | ❌ None announced |
-| Anchor tenant | ❌ None announced, 10 months post-launch |
-| Project financing | ❌ None announced |
-| ERCOT queue | N/A by design (off-grid) |
-| Timeline drift | Full buildout slipped 2030 → 2031 between Aug 2025 and Jan 2026; first power softened Q1 → H1 2027 within weeks |
+| TCEQ air permit | **Achieved.** Application 396366, issued ~Jan 26, 2026, ~5 months from public launch. Authorizes >12,000 t/yr regulated pollutants, up to 33 Mt/yr GHG — largest US air permit on record (developer characterization, echoed by trade press). No contested case or lawsuit found |
+| Tax abatement | **Not executed.** Jan 12, 2026 local coverage reported commissioners approving property-tax relief tied to a "$5.5–6.4B" data center project, but no executed Ch. 312 agreement for a Pacifico entity appears in public registries, and the May 11, 2026 agenda shows only a Pacifico "presentation." Peers (Glass Mountain Solar, APEX, CoreWeave/Longfellow REZ) hold executed agreements — GW Ranch is earlier in the process |
+| Turbines | "Secured" per Gieskes; OEM/count/schedule undisclosed; unverifiable |
+| Offtaker / EPC / FID / financing | None announced |
+| Construction | "Can start Q1 2026" per company; Q1 passed with no confirmed groundbreaking; GEM lists pre-construction |
+| Targets | First power Q1/H1 2027; 1 GW 2028; 5+ GW 2030–31 — internally inconsistent across Pacifico's own releases; full buildout already slipped 2030 → 2031 |
+| Local posture | County Judge Shuster and EDD director Ramos on record favorably; 200-unit workforce housing greenlit alongside |
+| Federal posture | Senate EPW minority letter to Franklin (Mar 13, 2026, Whitehouse/Heinrich/Van Hollen) over the "largest air pollution permit in US history" — one of twelve projects probed; Franklin's response cites "$200B of AI supercomputers" supportable on site |
 
-**Upcoming milestones to watch (de-risking signals, in order of importance):** (1) creditworthy anchor lease/offtake; (2) project-finance close or Form D; (3) named turbine OEM with delivery schedule; (4) EPC award and visible groundbreaking; (5) confirmation/outcome of the Japan platform sale; (6) MPGCD filings or fiber route agreements. Each is falsifiable and near-term if H1 2027 first power is real.
+**Next 12–24 month milestones to watch:** executed Ch. 312 reinvestment zone/abatement (signals FID intent); named anchor tenant; named turbine OEM with delivery dates; project-finance mandate or JV announcement; MPGCD well filings; Japan platform sale closing.
 
-**Pipeline note — Fort Spunky (Hood County).** Pacifico's second Texas project: a ~560–862-acre data center + power development near Granbury, requesting 100 MW from the grid and ~20,000 gal/day of water. The local water utility board denied its water request; Hood County commissioners then **revoked the previously-approved concept plan 3-2**, and Pacifico (via Husch Blackwell) **sued the county**, calling the revocation "unlawful and premature" and seeking ≥$250k ([Texas Scorecard](https://texasscorecard.com/local/hood-county-rejects-data-center-concept-plan/); [Hood County News](https://www.hcnews.com/stories/pacifico-demands-revocation-reversal,120041); [Texas Tribune via Salon, Jun 6, 2026](https://www.salon.com/2026/06/06/officials-powerless-to-stop-8-new-data-centers-that-could-transform-small-texas-county-partner/)). Datapoints: (a) GW Ranch is not the only US project; (b) Pacifico litigates local friction quickly; (c) grid-tied + water-dependent siting fails where GW Ranch's off-grid/dry-cooled design is precisely engineered not to.
+**Pipeline note — Fort Spunky (Hood County).** Pacifico's other US project: a ~560–862-acre, 456 MW data center + power development near Granbury, grid-tied (100 MW requested) and water-dependent (~20,000 gal/day). The local water utility board denied its water request; Hood County commissioners revoked the previously-approved concept plan 3-2; Pacifico (via Husch Blackwell) is suing the county, calling the revocation "unlawful and premature," seeking ≥$250k. Read-across: (a) GW Ranch is not the only US project but the pipeline is thin and pre-operational; (b) Pacifico litigates local friction quickly; (c) grid-tied + water-dependent siting failed exactly where GW Ranch's off-grid/dry-cooled design is engineered not to.
 
-## 6. Hurdles and risks
+## VI. Risk Register
 
-1. **Customer risk — the biggest hole.** No tenant after 10 months of marketing. Hyperscalers still publicly prefer grid-tied; remote Permian campuses attract credit-fragile AI tenants — the cautionary case is in the same county (CoreWeave terminated its 250 MW Project Horizon lease in March 2026 after Poolside's Series C failed). Counter-signals: Microsoft's reported 2,500 MW Reeves County DC (Apr 2026) and LandBridge/PowerBridge's 2 GW Waha campus validate the geography.
-2. **Financing.** ~$12B+ needed vs. $93M largest disclosed US raise; no thermal track record; the Japan platform sale that would seed the equity publicly stalled at a ~70% valuation cut with KKR/Macquarie/CIP passing; Fermi's collapse has repriced the whole permit-rich/tenant-poor category.
-3. **Turbines.** GE Vernova slots are 2029–2030, Siemens says 2030+; "secured" with no OEM contrasts with Fermi (600 MW publicized) and Crusoe (4.5 GW via Engine No. 1/GE Vernova JV). H1 2027 plausible only for an aero/recip bridge tranche; 7.65 GW by 2031 collides with slot math unless reservations predate the announcement.
-4. **Labor/execution.** Pecos County pop. ~15k; peak construction competes with oilfield wages; solar developer building GW-scale thermal for the first time.
-5. **Political tail.** Senate EPW minority letter (Mar 13, 2026, Whitehouse/Heinrich/Van Hollen) over the "largest air pollution permit in US history" — one of twelve projects probed; the 2027 Legislature could extend oversight to off-grid loads (utilities already lobbying on cost-shift from grid defection); any future ERCOT tie forfeits the SB6 exemption.
-6. **Gas basis erosion.** Waha at -$7.15 records and 47 straight negative days into April 2026 is real today, but new takeaway in late 2026 relieves the glut — underwrite normalized basis, not -$5.
-7. **Water.** Mitigated if dry cooling holds — but it costs capacity on 100°F+ days, and any drift toward evaporative cooling lands in the most water-litigious GCD in West Texas (Middle Pecos; Fort Stockton Holdings precedent). Fort Spunky shows what happens to Pacifico projects when water access is contested.
+| Risk | Rating | Substance |
+|---|---|---|
+| Execution experience | HIGH | Entire operating history is solar PV and BESS, mostly Japan (~1,750 MW built). Zero gas-turbine or hyperscale data-center delivery; the leap from 2 MW BESS units to a 7.65 GW gas campus is unprecedented for this team |
+| Offtaker / counterparty | HIGH | No tenant. Live county comparable: Poolside's 2 GW Project Horizon on the adjacent Longfellow Ranch collapsed late March 2026 when CoreWeave exited the 15-yr anchor role — the $2B Series C at $14B pre-money (Nvidia NVentures slated up to $1B) fell apart, the 40,000-GB300 GPU contract unwound, site idle. Counter-signals nearby: Microsoft's reported 2,500 MW Reeves County site (Apr 2026); LandBridge/PowerBridge 2 GW at Waha |
+| Financing | HIGH | ~$12B full build; no committed capital; new CFO; parent simultaneously selling legacy assets at distressed expectations to recycle capital |
+| Turbine supply | HIGH/MED | GE Vernova ending 2025 with ~80 GW backlog into 2029, ~3-yr lead times, ~10 GW of 2029–30 slots remaining, CEO Strazik predicting sell-out through 2030; Siemens orders deliver 2030+. "Turbines secured" is asserted, undisclosed, and central to the H1 2027 first-power claim. Contrast: Fermi publicized a 600 MW turbine acquisition; Crusoe locked 4.5 GW via an Engine No. 1/GE Vernova JV |
+| Water / MPGCD | MED/HIGH | Middle Pecos GCD (coterminous with Pecos County): wells >17.5 gpm non-exempt; large volumes need board findings of no adverse aquifer impact. "Self-supplied / no major external water" is unverified and aggressive — even closed loops need initial fill and refills. No MPGCD permit located. The district fought Fort Stockton Holdings for a decade; most water-litigious GCD in West Texas |
+| Regulatory / political | LOW by design, tail risk | Off-grid status avoids the SB6 large-load regime entirely; bites only if the project later seeks interconnection or co-location netting. Tail: Senate EPW scrutiny; the 2027 Legislature could extend oversight to off-grid loads (utilities lobbying on cost-shift from grid defection) |
+| Permit vs. reality | Structural | Collins (Baker Institute): Texas mega-projects "oversell their technical and financial capacities"; few reach full permitted capacity; those built come online "100 MW at a time" |
+| Gas-basis dependence | Structural | Economics rest on stranded associated gas: Waha hit a record -$7.15/MMBtu Mar 10, 2026, ran 47 consecutive negative days through mid-April; YTD 2026 average -$0.37 vs +$1.15 in 2025. Basis compresses as Blackcomb, GCX expansion, and Hugh Brinson ramp through 2026–27. Do not underwrite perpetual negative Waha |
 
-## 7. Differentiators and learnings
+## VII. Differentiators and Vulnerabilities
 
-**Differentiators vs. the Texas GW-class set:**
-- Largest single fully-permitted site in the US — one TCEQ permit covering 7.65 GW with claimed headroom to scale "without further regulatory approvals"
-- Cleanest regulatory position in the class: zero ERCOT queue, zero SB6 curtailment exposure, zero FERC jurisdiction
-- Sited essentially on top of Waha with a dedicated 1 Bcf/d lateral — a demand sink at the constrained hub needing no long-haul firm transport, with basis-distressed producers as natural supply counterparties
-- 8,000+ contiguous, delineated, build-ready acres
+**What Pacifico is doing differently**
 
-**What it lacks vs. peers:** Stargate Abilene's tenant (OpenAI/Oracle) and $11.6B committed capital; Crusoe's and Fermi's disclosed turbine positions; Sailfish's DFW market proximity; Lancium's grid-interactive optionality.
+- **Permit-maximalist land banking.** Secure the largest-ever air authorization on contiguous acreage, then market a "partner-ready, de-risked, modular" platform hyperscalers can plug into without further regulatory approvals. Permitted headroom (7.65 GW) deliberately exceeds marketed deliverable (5 GW), maximizing optionality and resale/JV value.
+- **Off-grid by design**, converting the interconnection queue into a speed advantage and sidestepping SB6 economics — the cleanest regulatory position in the Texas GW class (zero ERCOT queue, zero SB6, zero FERC).
+- **Source co-location at the Waha/Permian wellhead**, monetizing structurally negative basis as near-zero fuel cost, with basis-distressed producers as natural firm-supply counterparties.
 
-**Competitive set snapshot (June 2026):**
+**Where Pacifico is vulnerable**
+
+The scarce asset is the **permit plus contiguous, build-ready, gas-adjacent acreage with water** — not the developer. A 12,000+ t/yr TCEQ authorization is a genuine moat that takes time to replicate; the company holding it is replaceable. Vulnerabilities: no offtaker, no financing, no gas execution record, undisclosed land tenure, aggressive water claims. If Pacifico cannot land an anchor or close capital, the permit plus site control becomes an acquisition or JV target — the Longfellow/Poolside aftermath, where hyperscalers were reported circling distressed assets for the underlying land, gas, and water rights, is the template.
+
+**Positioning note:** adjacent powered-land positions are two-sided — (a) expansion parcel / JV counterpart if GW Ranch lands a tenant; (b) competing or successor site if it stalls. A distressed-asset scenario keys off the company's own H1 2027 first-power target.
+
+**Texas GW-class comparative set (June 2026):**
 
 | Project | Scale | Status | Model |
 |---|---|---|---|
-| GW Ranch (Pacifico, Pecos Co.) | 7.65 GW permitted; 5+ GW by 2031 | Permitted 1/2026; no tenant, no named OEM, no disclosed financing | Fully off-grid gas+BESS+solar |
-| Stargate Abilene (Crusoe/Lancium/Oracle→OpenAI) | 1.2 GW campus; $11.6B raised; 4.5 GW gas JV | Phase 2 energizing mid-2026 | Grid-tied + BTM gas |
-| Fermi "Matador" (Amarillo) | 11 GW HyperGrid; 6 GW gas | Stock -80%+ from IPO, class actions, tenant walkaway | Off-grid "power island" |
-| Poolside/CoreWeave Horizon (Pecos Co.) | 2 GW | Anchor lease terminated 3/2026 | BTM Permian gas |
+| GW Ranch (Pacifico, Pecos Co.) | 7.65 GW permitted; 5+ GW by 2031 | Permitted; no tenant, OEM, or financing | Fully off-grid gas+BESS+solar |
+| Stargate Abilene (Crusoe/Oracle→OpenAI) | 1.2 GW campus; $11.6B raised; 4.5 GW gas JV | Phase 2 energizing mid-2026 | Grid-tied + BTM gas |
+| Fermi "Matador" (Amarillo) | 11 GW HyperGrid | Stock -80%+ from IPO; class actions; tenant walkaway | Off-grid "power island" |
+| Poolside/CoreWeave Horizon (Pecos Co.) | 2 GW | Anchor lease terminated 3/2026; site idle | BTM Permian gas |
 | LandBridge/PowerBridge Alpha (Reeves Co.) | 2 GW | First power 2027 | Co-located gas near Waha |
-| Sailfish Comanche Circle (Hood Co.) | 5 GW / 2,600 acres | Phase 1 planned | Hybrid BTM + grid, metro-adjacent |
 | Lancium (Abilene/Childress/Ft. Stockton) | 1.2 GW+ portfolio | Operating/expanding | Grid-interactive BTM |
 
-**Learnings for LRP:**
-1. **Permits are now the cheap, fast part.** A first-time thermal developer got the largest air permit in US history in ~5 months from public launch. TCEQ air permitting is not the moat; the moat is tenants, turbines, and capital — in that order.
-2. **Sequencing inversion is the category's defining bet.** Pacifico (like Fermi, unlike Crusoe/Stargate) is building power first and marketing capacity second. The market has started pricing that bet: Fermi -80%+, CoreWeave/Poolside walkaway.
-3. **Possession-neutral land language is a tell.** When a developer never says "owns" or "acquired" across 16 months of PR, assume optioned/staged control until county records prove otherwise.
-4. **Marketing backer lists ≠ capital stacks.** "Backed by Goldman Sachs / Sumitomo / GE EFS" unpacked into placement agents, tax-equity buyers, and exited project co-investors. Always trace each name to the instrument, level (parent vs. project), and date.
-5. **The abatement agreement is the best diligence document in any Texas county deal.** One open-records request beats weeks of press parsing — it names the real counterparty entity and recites the property interest.
-6. **Off-grid is regulatory arbitrage with a legislative half-life.** Track the 2027 session for off-grid load oversight; it would reprice every BYOP campus in the state simultaneously.
-7. **Failed sale processes are public-record stress tests.** KKR, Macquarie, and CIP looking at Pacifico's Japan pipeline and passing at -70% is the closest thing to an institutional mark on this sponsor's asset quality.
+## VIII. Falsification Conditions
 
-## 8. Source quality caveats
+- **On "founder-controlled, no institutional sponsor":** disclosure of a committed institutional/PE equity partner at the PEG holdco level; or evidence Jamieson/Virginia Solar Group retains a stake; or a Form D showing a US holdco raise.
+- **On "tenant-contingent, pre-capitalized option":** a signed investment-grade hyperscaler offtake at GW Ranch; or a closed project-debt facility; or a confirmed OEM turbine order with delivery dates. Any one materially de-risks; all three flip the assessment.
+- **On "distressed Japan platform":** sale closing at or above ~¥80–100bn refutes the over-marketed-pipeline read and provides real recycled equity.
+- **On the bearish base case:** triggers confirming it are no offtaker/FID by end-2026, missed H1 2027 first power, CFO turnover, or parent liquidity strain from a further-delayed Japan sale.
 
-Sourcing on this project is dominated by Pacifico's own releases; trade press has been largely stenographic. Independently corroborated: the TCEQ permit and its emissions parameters (Inside Climate News / Texas Observer read the permit documents), the county abatement (Fort Stockton Pioneer), the Senate EPW letter, the Japan sale process (Infralogic, two reports), the 2022 shareholder structure (company notice + Infralogic), location/acreage, the Hood County revocation and lawsuit. Developer claims with no independent verification: "turbines secured," H1 2027 first power, "no external water," "five nines" reliability, "$5B raised," and the backer list as applied to GW Ranch. Single-source items: the Jamieson Group chain (2016 Business Wire + one Japanese profile), the Tesla Megapack BESS detail, the Murakami–Tainai cancellation. Items not yet confirmed in county and state records — land tenure, the abatement counterparty, and any Form D — are covered by the verification steps in §4.
+## IX. Action Items and Decision Thresholds
+
+| # | Action | Window | Decision threshold |
+|---|---|---|---|
+| 1 | Pull PCAD parcel + Pecos County Clerk deed records for the site; establish fee/option/lease and counterparty | 0–30 days | Option/lease = weaker, contestable position; fee = stronger principal |
+| 2 | Pull TCEQ permit 396366 in full: permit number, turbine count/type, emission limits | 0–30 days | Defines replication cost/time of their moat |
+| 3 | Check MPGCD board minutes/permit log for GW Ranch well registrations | 0–30 days | No permits filed = water claim unsupported |
+| 4 | Monitor Commissioners Court agendas for an executed Ch. 312 reinvestment zone/abatement | 30–90 days | Executed abatement + named EPC/OEM = genuine FID intent; upgrade view |
+| 5 | Track offtaker/JV/financing announcements; confirm Japan platform sale status, net proceeds, earmarking | Ongoing | Named IG offtake or closed debt = de-risked; raises comparable land values county-wide |
+| 6 | If engaging directly: demand the PEG cap table and AM Holdings L.P. LP register; engage CFO Shangari on mandates, ECA involvement, vendor finance, FID timing | If/when | Holdco opacity is the largest unknown; no co-investment without it |
+| 7 | Keep crude and natural gas economics strictly separate in underwriting; the stranded-gas dynamic is a takeaway phenomenon driven by oil-directed drilling and compresses with 2026–27 pipeline ramps | Standing | — |
+
+## X. Caveats and Undisclosed-Items Register
+
+- **All undisclosed (none estimated):** land tenure, purchase price, SPV capital structure, project financing, EPC, turbine OEM/quantity, offtaker, Franklin's exact ownership %, AM Holdings L.P. LPs, Fund I/II LP names, Japan-sale mechanics.
+- Pacifico's own releases conflict on founding year (2009 vs 2012), Japan solar built (1.3/1.5/1.6 GW), capital raised ($3.5B in 2019; $5B+/over $6B in 2024), and first-power timing (Q1 vs H1 2027). Treat "raised" figures as marketing approximations.
+- Emissions figures and the 1–2 Bcf/d gas estimate key off the maximum permitted 7.65 GW, not the ~5 GW marketed deliverable; the gas figure is one academic's calculation.
+- Japan-sale figures and buyer withdrawals rely on Infralogic/ION Analytics reporting from unnamed sources; Pacifico and Bank of America declined comment.
+- "Largest US air permit / largest power project" is the developer's characterization, echoed but not independently audited.
+- Do not conflate with unrelated entities: Pacifico Energy Partners GmbH (Munich) and the LatAm/West Africa "Pacifico Energy Group" consortium have no connection to Franklin's company.
+- $12B total cost is the Forbes figure; $2–2.5B per-GW phase costs are analyst estimates at current gas-plant pricing, not Pacifico disclosures.
+
+**Sources:** TCEQ air permit application 396366 and issuance record; TCEQ public notice 181033; Pecos County Commissioners Court agendas (incl. Jan 12 and May 11, 2026) and Fort Stockton Pioneer coverage; Pacifico Energy press releases (Business Wire, Aug 20, 2025; Jan 26, 2026; Nov 2025 CFO appointment) and gw-ranch project page; Infralogic/ION Analytics (Japan platform sale, Oct 2024 and Jul 2025); SSE plc disclosures (Oct 2021); Sumitomo Corporation of Americas (Jun 2024); CleanCapital/Marathon Capital (Jun 2025); GE EFS/Business Wire releases 2014–16 (Virginia Solar Group parentage); Pacifico Energy K.K. shareholder-change notice (Jul 2022); Global Energy Monitor; Forbes (Feb 2026); Inside Climate News (Jan 29, 2026); Texas Observer; Texas Tribune (Feb 2, 2026); Big Bend Sentinel (Feb 4, 2026); DataCenterDynamics (incl. Project Horizon collapse, Apr 2026); Utility Dive (GE Vernova backlog); Reuters/BOE Report and Pipeline & Gas Journal (Waha pricing, Feb–Apr 2026); Rice University Baker Institute (Gabriel Collins); Middle Pecos GCD rules; PUCT Projects 58481/58479 and draft 16 TAC §25.194 (Mar 12, 2026); US Senate EPW minority letter (Mar 13, 2026); Texas Scorecard / Hood County News / Texas Tribune (Fort Spunky, 2026); SEC EDGAR full-text search (Form D negative finding); Pecos County Appraisal District (negative finding). English- and Japanese-language sourcing. Trade press cited for data only. Nothing herein is investment advice or an offer to transact.
