@@ -4,27 +4,35 @@ Single source of truth for vol/cut state. Update every cut.
 
 ## Last published
 
-**Vol 16 — Wednesday, June 10, 2026 — 6:00 PM ET cut** (expanded full
-edition, updated through the close). Produced from claude.ai chat
-(pre-bootstrap); reconstruction archived under `issues/vol16/600pm/`, gold
-standard under `reference/`. The June 10 9:00 PM cut announced in the Vol 16
-colophon did not ship; the next cut is the first of a new publication day.
+**Vol 17 — Friday, June 12, 2026 — 9:30 AM ET cut** (expanded full edition by
+operator request, covering June 10 close through June 12 open). Archived under
+`issues/vol17/930am/`. First live cut produced from Code.
 
 ## Next cut
 
-- Next trigger is `vol.` + first cut of the day -> **Vol 17**.
-- Bootstrap completed in Code; do NOT produce a live cut until operator
-  go-ahead.
+- Next trigger: `cut <time>.` continues **Vol 17** (next slot 12:00 PM ET).
+- Queue for the next window: Baker Hughes rig count (June 12, 1:00 PM ET);
+  SpaceX SPCX first prints and close; ORCL day-two tape; CRWV unsecured
+  notes when-issued trading; ceasefire signing (possibly this weekend,
+  Europe); APLD notes close ~June 16; FOMC June 17; PUCT Batch Zero +
+  Reeves GCD board + CRWV notes close June 18; Russell add June 26.
 
 ## Open falsification register (carry forward, update each cut)
 
-| Thesis | Trigger (falsifies) | Status at Vol 16 |
+| Thesis | Trigger (falsifies) | Status at Vol 17, 9:30 AM June 12 |
 |---|---|---|
-| Hiking-cycle lead thesis | Core CPI <=2.7% AND June 17 FOMC hike odds <40% | Core printed 2.9%: not triggered. Remaining test: hike odds through June 17 FOMC. |
-| APLD rating-as-transferable-asset | Notes wide of 7.5%, or Building 3 assignment fails | Half resolved: ELN-04 priced 7.000% at par, inside threshold. Remaining test: Building 3 lease assignment closing without subsidiary IG rating. |
-| CoreWeave equity-vs-credit divergence | Sustained founder buying, or clean 2027 DSCR with spreads through SOFR+200 | Open. $2.3B founder sales vs A3/A(low) DDTL 4.0. Russell add June 26. |
-| Batch Zero / SB6 enforcement | PUCT rejects or waters Batch Zero June 18, or GEV Q2 slot capacity expands | Open. PUCT vote June 18. |
-| Electrification fence-line bottleneck | Eaton/Vertiv Q2 backlogs flat-to-down, or transformer lead times <24 months | Open. |
+| Hiking-cycle lead thesis | Core CPI <=2.7% AND hike odds <40% (Vol 16); decay path added Vol 17: July CPI energy negative M/M AND 2026 hike odds <40% | Not triggered. June 17 ~96.5% hold; no 2026 cuts priced; hike-within-a-year probability rising June 11. Named risk: executed Hormuz reopening deflates the energy leg; long-end leg (~5% 30Y) independent. |
+| APLD rating-as-transferable-asset | Notes wide of 7.5%, or Building 3 assignment fails | Unchanged. Notes close ~June 16; Building 3 subsidiary-IG condition open. |
+| CoreWeave equity-vs-credit divergence | Sustained founder buying, or clean 2027 DSCR with spreads through SOFR+200 | Open; no new Form 4s in window. NEW marker: $3.5B senior unsecured priced June 11 at 9.625% USD / 8.500% EUR due 2032 (370 bps over own secured). Watch: unsecured trading through 8.5% yield into DSCR season = corporate claim re-rating. Russell add June 26. |
+| Oracle claim-layer funding test (added Vol 17) | ORCL funds FY27 capex (<=$95B guided) without material net new issuance, or ROIC inflects up while RPO converts | Open. RPO $638B (+363%), $75B prepaid/customer-supplied GPU portions; FY26 FCF -$23.7B; ROIC 14.8%->10.7%; equity -9.4% on +930 Dow day. |
+| Batch Zero / SB6 enforcement | PUCT rejects or waters Batch Zero June 18, or GEV Q2 slot capacity expands | Open. PUCT vote June 18; batch forecast mid-Aug; reliability report Dec; market decisions H1 2027. |
+| Electrification fence-line bottleneck | Eaton/Vertiv Q2 backlogs flat-to-down, or transformer lead times <24 months | Open; no in-window prints. |
+
+## Corrections ledger
+
+- Vol 17 corrected Vol 16 §IX: NextEra/Dominion was a definitive $66.8B
+  all-stock merger announced May 18 (SEC Form 425), not exploratory talks.
+  Virginia hearings opened June 10; ~130 GW combined large-load pipeline.
 
 ## Standing coverage threads
 
