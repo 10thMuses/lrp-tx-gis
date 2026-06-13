@@ -58,6 +58,34 @@ reset the incremental baseline. First cut of the day proceeds as above.
   footnotes/sources -> colophon. Footnotes are a numbered list; every body
   claim carries a superscript ref.
 
+## Comprehensive edition format (green)
+
+The long-form Weekend / Close / Special / multi-day-sweep edition is the
+operator's comprehensiveness standard (set from the Vol 16 reference
+editions). It renders through the same `render_pdf.py` gate.
+
+- Front matter sets `format: edition` and the keys: `vol`, `date_compact`,
+  `edition_slug` (filename token, e.g. `Weekend`), `edition_label`
+  (e.g. `Saturday, June 13, 2026 - Weekend Edition`), `byline`, `timestamp`
+  (the shaded intro box; `**bold**` is honored). Filename:
+  `Grid_Wire_Vol{N}_{YYYYMMDD}_{edition_slug}_ET.pdf`.
+- Template/CSS: `templates/gridwire-edition.html` + `gridwire-edition.css`
+  (green `#1f4d3f`, ink `#1a2722`, callout tint `#eaf0ec`, hairline
+  `#c8d3cc`). Jost throughout, same pdffonts gate.
+- The **Table of Contents is auto-built** from the `## ` section headings in
+  draft order — write the sections, the TOC follows.
+- Callouts: `::: box` ... `:::` for "Practitioner read." / "Angle." /
+  "Composite implication." (author supplies the bold lead-in);
+  `::: quote` ... `:::` for italic on-record pull-quotes. `::: angle` still
+  works for the daily format.
+- Tables: `t-tape` (4-col tape), `t-src` (3-col with Source), `t-2col`
+  (label + state-of-play), `t-deals`. Header rows are demoted so they do not
+  repeat across page breaks; rows are atomic.
+- Required topic coverage and the LRP-content rule are in `STYLE.md`. Cover
+  the full topic union every edition; mark `n/d` rather than dropping a
+  section. Quotes in the transcript-highlights section must be named and
+  on-record. Close with the data-gaps/confidence-flags list.
+
 ## Email pipeline (locked)
 
 - Two files per cut: `Grid_Wire_Vol{N}_email_DRAFT_Mel.txt` / `..._Mark.txt`.

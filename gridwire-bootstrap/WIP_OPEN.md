@@ -4,18 +4,29 @@ Single source of truth for vol/cut state. Update every cut.
 
 ## Last published
 
-**Vol 17 — Friday, June 12, 2026 — 9:30 AM ET cut** (expanded full edition by
-operator request, covering June 10 close through June 12 open). Archived under
-`issues/vol17/930am/`. First live cut produced from Code.
+**Vol 17 — Saturday, June 13, 2026 — Weekend Edition** (comprehensive
+green long-form, through the June 12 close). Archived under
+`issues/vol17/weekend_0613/`. First comprehensive edition in the green
+format; established as the comprehensiveness standard per operator.
+Prior: Vol 17 9:30 AM cut (June 12, `issues/vol17/930am/`, daily format).
 
-## Next cut
+## Formats
 
-- Next trigger: `cut <time>.` continues **Vol 17** (next slot 12:00 PM ET).
-- Queue for the next window: Baker Hughes rig count (June 12, 1:00 PM ET);
-  SpaceX SPCX first prints and close; ORCL day-two tape; CRWV unsecured
-  notes when-issued trading; ceasefire signing (possibly this weekend,
-  Europe); APLD notes close ~June 16; FOMC June 17; PUCT Batch Zero +
-  Reeves GCD board + CRWV notes close June 18; Russell add June 26.
+- **Daily cut** (navy/crimson, `gridwire.css`): trigger `cut <time>.`
+- **Comprehensive edition** (green, `gridwire-edition.css`): Weekend /
+  Close / Special / sweep; covers the full topic union in STYLE.md.
+- LRP-content rule (June 2026): branding yes, body references no. See STYLE.md.
+
+## Next
+
+- Next trigger: `cut <time>.` (daily) or a named edition continues **Vol 17**.
+- Queue: Islamabad-declaration signing (Geneva, expected within days);
+  June 17 FOMC (Warsh's first); APLD $1.59B notes close (~June 16); first
+  AI-infra deal to price after the CRWV 9.625% unsecured mark; June 18
+  four-event day (PUCT Batch Zero vote + Reeves GCD board + CRWV notes close
+  + Oncor 765 kV CCN window); PUCT 58481 final rule (July); July 4 OBBBA
+  cliff; June PJM BRA; CRWV Russell add (June 26); Nvidia next 10-Q
+  ($3.5B land/power/shell guarantee line).
 
 ## Open falsification register (carry forward, update each cut)
 
