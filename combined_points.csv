@@ -21,11 +21,11 @@ ercot_queue,26.216361,-97.628061,Aegle Power,,Cameron,CC,,,27INR0084,GAS,1536.4,
 ercot_queue,31.531258,-103.355686,Aggie Solar Project SLF,,Reeves,PV,,,26INR0388,SOL,103.7,WEST,"POI: COYOTE SPRINGS SUBSTATION - 138KV
 BUS NUMBER : 38113
 COUNTY : REEVES
-POI LOCATION: 31.396675, -103.6252777",reNRG TX 8 LLC,1_no_ia,AGGIE__REEVES,No,No,103.7,,,,,,,,,,,,substation_match
+POI LOCATION: 31.396675, -103.6252777",reNRG TX 8 LLC,1_no_ia,AGGIE__REEVES,No,No,103.7,,,,,,,,,,,,county_centroid
 ercot_queue,31.531258,-103.355686,AGGIE STORAGE PROJECT SLF,,Reeves,BA,,,26INR0389,OTH,,WEST,"POI: COYOTE SPRINGS SUBSTATION - 138KV
 BUS NUMBER: 38113
 POI LOCATION: 31.396675, -103.6252777
-COUNTY: REEVES",reNRG TX 8 LLC,1_no_ia,AGGIE__REEVES,No,No,,,,,,,,,,,,,substation_match
+COUNTY: REEVES",reNRG TX 8 LLC,1_no_ia,AGGIE__REEVES,No,No,,,,,,,,,,,,,county_centroid
 ercot_queue,28.732446,-100.328006,Senator Aggreko Solar,,Maverick,PV,,,26INR0311,SOL,251.0,SOUTH,138 kV Sunglow Substation (#78016),Senator Aggreko Solar LLC,2_ia_fis_pending,AGGREKO__MAVERICK,No,No,251.0,,,,,,,,,,,,county_centroid
 ercot_queue,28.755354,-100.311911,Senator Aggreko Storage,,Maverick,BA,,,26INR0312,OTH,153.1,SOUTH,138 kV Sunglow Substation (#78016),Senator Aggreko Storage LLC,2_ia_fis_pending,AGGREKO__MAVERICK,No,No,153.1,,,,,,,,,,,,county_centroid
 ercot_queue,29.891978,-96.284897,Agricola BESS,,Austin,BA,,,28INR0265,OTH,,SOUTH,Tap 138kV GEBHARDT (#44700) - Wallis (#44740),Agricola BESS LLC,1_no_ia,AGRICOLA__AUSTIN,No,No,,,,,,,,,,,,,county_centroid
@@ -421,7 +421,7 @@ ercot_queue,29.172226,-95.421,Clutch City Solar Phase I,,Brazoria,PV,,,22INR0279
 ercot_queue,29.179655,-95.421939,Clutch City Solar Phase II,,Brazoria,PV,,,25INR0330,SOL,251.27,COASTAL,tap 138kV 42960 Mustang Bayou – 42100 Hudson CKT#04,"HZ SOLAR I, LLC",2_ia_fis_pending,CITY__BRAZORIA,No,No,251.27,,,,,,,,,,,,county_centroid
 ercot_queue,28.798046,-96.012196,City Breeze BESS,,Matagorda,BA,,,25INR0271,OTH,143.1,COASTAL,8111 MAGILL4A 138KV,City Breeze BESS LLC,2_ia_fis_pending,CITY__MATAGORDA,No,No,143.1,,,,,,,,,,,,county_centroid
 ercot_queue,28.783487,-95.993943,Solar Star Bay City Storage,,Matagorda,BA,,,27INR0120,OTH,206.27,COASTAL,Tap 138kV Conoco (#8138) – Black Cat (#80124),Solar Star Bay City Storage,1_no_ia,CITY__MATAGORDA,No,No,206.27,,,,,,,,,,,,county_centroid
-ercot_queue,32.209493,-102.228980,Energy City BESS,,Midland,BA,,,26INR0231,OTH,204.9,WEST,Tap 138kV 1179 Texaco Mabee Tap - 1200 Mariensfield,Energy City BESS LLC,1_no_ia,CITY__MIDLAND,No,No,204.9,,,,,,,,,,,,substation_match
+ercot_queue,32.209493,-102.228980,Energy City BESS,,Midland,BA,,,26INR0231,OTH,204.9,WEST,Tap 138kV 1179 Texaco Mabee Tap - 1200 Mariensfield,Energy City BESS LLC,1_no_ia,CITY__MIDLAND,No,No,204.9,,,,,,,,,,,,county_centroid
 ercot_queue,29.258878,-96.227885,Space City Solar,,Wharton,PV,,,21INR0341,SOL,366.0,SOUTH,44200 Hillje 345kV,"Apollo Solar Ranch, LLC",2_ia_fis_pending,CITY__WHARTON,No,No,366.0,,,,,,,,,,,,county_centroid
 ercot_queue,29.209729,-96.029597,Lane City Wind,,Wharton,WT,,,22INR0517,WIN,199.5,SOUTH,44040 Bailey 345kV,"RWE Clean Energy, LLC",5_commissioned,CITY__WHARTON,No,Yes,199.5,,,,,,,,,,,,eia860
 ercot_queue,33.371565,-100.975821,Clairemont Solar 1,,Kent,PV,,,27INR0435,SOL,251.75,WEST,59908 Novaprime 345kV,Clairemont Solar LLC,2_ia_fis_pending,CLAIREMONT__KENT,No,No,251.75,,,,,,,,,,,,eia860
@@ -787,7 +787,7 @@ ercot_queue,32.32864,-98.844805,Star Grass Renewable Energy Solar SLF,,Eastland,
 ercot_queue,32.331486,-98.824476,Star Grass Renewable Energy Storage SLF,,Eastland,BA,,,28INR0197,OTH,,NORTH,Tap 138kV 6310 Putnam - 3378 Carbon_8,Star Grass Renewable Energy LLC,1_no_ia,GRASS__EASTLAND,No,No,,,,,,,,,,,,,county_centroid
 ercot_queue,32.293496,-100.931293,Johnson Grass Solar,,Mitchell,PV,,,27INR0348,SOL,195.8,WEST,Tap 138kV (#11395) Navigation - (#10054) Cattlemen,"Johnson Grass Solar ,LLC",1_no_ia,GRASS__MITCHELL,No,No,195.8,,,,,,,,,,,,county_centroid
 ercot_queue,34.075951,-99.252605,Grayback Solar,,Wilbarger,PV,,,28INR0464,SOL,221.81,WEST,To Riley7A Substation (#6101),"Grayback Solar, LLC",1_no_ia,GRAYBACK__WILBARGER,No,No,221.81,,,,,,,,,,,,county_centroid
-ercot_queue,30.727000,-102.666594,Tierra Bonita BESS SLF,,Pecos,BA,,,26INR0715,OTH,,WEST,860 GIRVINSW 345kV,Greasewood II BESS LLC,1_no_ia,GREASEWOOD__PECOS,No,No,,,,,,,,,,,,,abatement_match
+ercot_queue,30.727000,-102.666594,Tierra Bonita BESS SLF,,Pecos,BA,,,26INR0715,OTH,,WEST,860 GIRVINSW 345kV,Greasewood II BESS LLC,1_no_ia,GREASEWOOD__PECOS,No,No,,,,,,,,,,,,,county_centroid
 ercot_queue,30.948320,-103.361714,Larrea Solar,,Pecos,PV,,,27INR0146,SOL,231.6,WEST,Tap 345kV 76002 Bakerfield - 60404 Solstice CKT#1,Greasewood IV LLC,1_no_ia,GREASEWOOD__PECOS,No,No,231.6,,,,,,,,,,,,tpit_poi
 ercot_queue,28.905422,-98.540611,Great Hambino BESS,,Atascosa,BA,,,26INR0654,OTH,122.98,SOUTH,#5700 Miracle Lake Substation 138kV,"Atascosa BESS, LLC",1_no_ia,GREAT__ATASCOSA,No,No,122.98,,,,,,,,,,,,county_centroid
 ercot_queue,31.296811,-95.996617,Great Rock BESS,,Leon,BA,,,25INR0230,OTH,300.9,NORTH,Tap 345kV 46020 Limestone - 967 Gibbon Creek Ckt 18,Black Mountain Energy Storage II,4_construction,GREAT__LEON,Yes,No,300.9,,,,,,,,,,,,county_centroid
@@ -796,8 +796,8 @@ ercot_queue,28.783629,-96.991128,HyFuels Green Lake Solar,,Calhoun,PV,,,26INR001
 ercot_queue,26.945104,-97.637504,Green Ocelot Solar,,Kenedy,PV,,,28INR0180,SOL,357.0,COASTAL,Tap 345kV 80076 Ajo  - 8601 Cebolla,Ocelot Solar LLC,1_no_ia,GREEN__KENEDY,No,No,357.0,,,,,,,,,,,,county_centroid
 ercot_queue,26.918294,-97.647865,Green Ocelot Storage,,Kenedy,BA,,,28INR0189,OTH,178.5,COASTAL,Tap 345kV 80076 Ajo 80076 - 8601 Cebolla,Ocelot Solar LLC,1_no_ia,GREEN__KENEDY,No,No,178.5,,,,,,,,,,,,county_centroid
 ercot_queue,30.824618,-102.032415,Grand Mesa BESS,,Pecos,BA,,,26INR0550,OTH,253.28,WEST,76582 MESA VIEW SWITCH 138kV,PERRY GREEN POWER LLC,1_no_ia,GREEN__PECOS,No,No,253.28,,,,,,,,,,,,tpit_poi
-ercot_queue,31.083061,-102.393637,Wisdom Solar SLF,,Pecos,PV,,,27INR0438,SOL,299.37,WEST,Tap 138 kV #38455 HOLIDAY SUB TNP -  #38450 SOAPTREE TNP,Wisdom Green Energy LLC,1_no_ia,GREEN__PECOS,No,No,299.37,,,,,,,,,,,,substation_match
-ercot_queue,31.083061,-102.393637,Wisdom BESS SLF,,Pecos,BA,,,27INR0440,OTH,102.88,WEST,Tap 138 kV #38455 HOLIDAY SUB TNP - 138 kV #38450 SOAPTREE TNP,Wisdom Green Energy LLC,1_no_ia,GREEN__PECOS,No,No,102.88,,,,,,,,,,,,substation_match
+ercot_queue,31.083061,-102.393637,Wisdom Solar SLF,,Pecos,PV,,,27INR0438,SOL,299.37,WEST,Tap 138 kV #38455 HOLIDAY SUB TNP -  #38450 SOAPTREE TNP,Wisdom Green Energy LLC,1_no_ia,GREEN__PECOS,No,No,299.37,,,,,,,,,,,,county_centroid
+ercot_queue,31.083061,-102.393637,Wisdom BESS SLF,,Pecos,BA,,,27INR0440,OTH,102.88,WEST,Tap 138 kV #38455 HOLIDAY SUB TNP - 138 kV #38450 SOAPTREE TNP,Wisdom Green Energy LLC,1_no_ia,GREEN__PECOS,No,No,102.88,,,,,,,,,,,,county_centroid
 ercot_queue,28.810823,-96.972961,Crossroads Wind,,Victoria,WT,,,26INR0021,WIN,276.8,SOUTH,80090 Dokmai 138 KV,HyFuels Green Lake Wind LLC,2_ia_fis_pending,GREEN__VICTORIA,No,No,276.8,,,,,,,,,,,,county_centroid
 ercot_queue,27.889290,-97.258417,Gregory Power Development SLF,,San Patricio,CC,,,29INR0068,GAS,469.9,COASTAL,8580 Resnick 138kV,Gregory Power Partners LLC,1_no_ia,GREGORY__SAN_PATRICIO,No,No,469.9,,,,,,,,,,,,eia860
 ercot_queue,31.813270,-102.495544,Greyhound Solar,,Ector,PV,,,21INR0268,SOL,335.45,WEST,Tap 345kV 11010 Wolf - 1018 Moss,"Rockhound Solar 2, LLC dba ""Greyhound Solar""",3_ia_fis_complete,GREYHOUND__ECTOR,No,No,335.45,,,,,,,,,,,,tpit_poi
@@ -1016,7 +1016,7 @@ ercot_queue,28.947973,-99.067186,Morrow Lake Storage,,Frio,BA,,,21INR0483,OTH,20
 ercot_queue,30.538442,-95.977398,Smith Lake Solar DC,,Grimes,PV,,,24INR0172,SOL,402.0,NORTH,TAP 345 KV  44645 SINGLETON - 44900 ZENITH Ckt #99,Smith Lake Solar,1_no_ia,LAKE__GRIMES,No,No,402.0,,,,,,,,,,,,county_centroid
 ercot_queue,30.55572,-95.972157,Smith Lake Storage DC,,Grimes,BA,,,25INR0045,OTH,65.0,NORTH,Tap 345kV 44645 Singleton - 44900 Zenith Ckt #99,Smith Lake Solar,1_no_ia,LAKE__GRIMES,No,No,65.0,,,,,,,,,,,,county_centroid
 ercot_queue,33.161796,-99.743511,Max 4 Wind,,Haskell,WT,,,28INR0408,WIN,352.6,WEST,Tap 345 kV Gauss7D (Bus# 60703) to Quasar7A (Bus# 60712) Transmission Line,"Lake Creek Wind, LLC",1_no_ia,LAKE__HASKELL,No,No,352.6,,,,,,,,,,,,county_centroid
-ercot_queue,31.766046,-101.531499,Slager Lake Wind,,Reagan,WT,,,29INR0042,WIN,310.2,WEST,Tap 345kV 59903 Bearkat – 76000 NORTMC5_1Y; Badger 345 kV Station,"NextEra Energy Resources Interconnection Holdings, LLC",1_no_ia,LAKE__REAGAN,No,No,310.2,,,,,,,,,,,,substation_match
+ercot_queue,31.766046,-101.531499,Slager Lake Wind,,Reagan,WT,,,29INR0042,WIN,310.2,WEST,Tap 345kV 59903 Bearkat – 76000 NORTMC5_1Y; Badger 345 kV Station,"NextEra Energy Resources Interconnection Holdings, LLC",1_no_ia,LAKE__REAGAN,No,No,310.2,,,,,,,,,,,,county_centroid
 ercot_queue,33.67361,-95.565485,Lamar Unit 1 Repower,,Lamar,CC,,,23INR0486,GAS,66.0,NORTH,1692 Paris Switch Station 345kV,"La Frontera Holdings, LLC",1_no_ia,LAMAR__LAMAR,No,No,66.0,,,,,,,,,,,,county_centroid
 ercot_queue,31.94873,-98.561861,Lamkin Solar,,Comanche,PV,,,22INR0220,SOL,101.5,NORTH,tap 69kV 258 Hamilton - 273 Gustine,"Commanche Solar, LLC",3_ia_fis_complete,LAMKIN__COMANCHE,No,No,101.5,,,,,,,,,,,,county_centroid
 ercot_queue,30.310524,-96.478870,Lampe Solar,,Washington,PV,,,24INR0101,SOL,60.24,SOUTH,Tap 138 kV 7572 Gay Hill - 7573 Lyons,Gransolar Texas Seven LLC,1_no_ia,LAMPE__WASHINGTON,No,No,60.24,,,,,,,,,,,,eia860
@@ -1544,7 +1544,7 @@ ercot_queue,34.957933,-101.37099,Serenity Wind,,Armstrong,WT,,,27INR0443,WIN,473
 ercot_queue,34.967618,-101.366624,Complex Serenity Wind,,Armstrong,WT,,,28INR0215,WIN,971.0,PANHANDLE,Double tap 345 kV Alibates (bus# 23900) to Tule Canyon (bus# 23914) and the Alibates (bus# 23900) to Midpoint Switch (bus# 23931),"Serenity Wind, LLC",1_no_ia,SERENITY__ARMSTRONG,No,No,971.0,,,,,,,,,,,,county_centroid
 ercot_queue,28.837905,-100.548728,Serrano Storage,,Maverick,BA,,,24INR0617,OTH,185.59,SOUTH,8267 GANSO Substation 138kV,"Maverick ESS, LLC",1_no_ia,SERRANO__MAVERICK,No,No,185.59,,,,,,,,,,,,eia860
 ercot_queue,32.732676,-99.365022,Shackleford BESS,,Shackelford,BA,,,26INR0500,OTH,206.5,WEST,1442 CFRSW 345kV,Shackelford County BESS LLC,1_no_ia,SHACKLEFORD__SHACKELFORD,No,No,206.5,,,,,,,,,,,,county_centroid
-ercot_queue,31.262947,-102.961820,Shallow Valley Storage,,Ward,BA,,,27INR0202,OTH,103.39,WEST,Tap 138kV 1239 Coyanosa - 11238 Blair Lake Sub,"Shallow Valley Storage, LLC",1_no_ia,SHALLOW__WARD,No,No,103.39,,,,,,,,,,,,substation_match
+ercot_queue,31.262947,-102.961820,Shallow Valley Storage,,Ward,BA,,,27INR0202,OTH,103.39,WEST,Tap 138kV 1239 Coyanosa - 11238 Blair Lake Sub,"Shallow Valley Storage, LLC",1_no_ia,SHALLOW__WARD,No,No,103.39,,,,,,,,,,,,county_centroid
 ercot_queue,29.100579,-97.353268,Shaula I Solar,,DeWitt,PV,,,22INR0251,SOL,205.2,SOUTH,tap 345kV 5133 Elm Creek - 5915 SO TEX ckt 1,"Shaula Energy Project, LLC",2_ia_fis_pending,SHAULA__DEWITT,No,No,205.2,,,,,,,,,,,,county_centroid
 ercot_queue,29.073475,-97.375731,Shaula II Solar,,DeWitt,PV,,,22INR0267,SOL,205.2,SOUTH,tap 345kV 5133 Elm Creek - 5915 SO TEX ckt 1,"Shaula Energy Project II, LLC",2_ia_fis_pending,SHAULA__DEWITT,No,No,205.2,,,,,,,,,,,,county_centroid
 ercot_queue,29.068514,-97.352437,Shaula III Solar,,DeWitt,PV,,,23INR0009,SOL,205.2,SOUTH,tap 345kV 5133 Elm Creek - 5915 SO TEX ckt 1,"Shaula Energy Project III, LLC",1_no_ia,SHAULA__DEWITT,No,No,205.2,,,,,,,,,,,,county_centroid
@@ -1686,8 +1686,8 @@ ercot_queue,30.917306,-100.525556,Cashel BESS,,Schleicher,BA,,,27INR0364,OTH,150
 ercot_queue,29.295043,-96.215763,TOCE BESS 1,,Wharton,BA,,,25INR0293,OTH,205.2,SOUTH,138 kV Danevang Switching Station (Bus# 5546),"TOCE BESS 1, LLC",3_ia_fis_complete,TOCE__WHARTON,No,No,205.2,,,,,,,,,,,,county_centroid
 ercot_queue,32.356039,-96.776191,Tokyo TxHSR TPSS EW-1,,Ellis,OT,,,25INR0005,OTH,50.0,NORTH,tap 138kV 2241 Ennis W - 2321 Waxahachie,"Texas Central Rail Holdings, LLC",1_no_ia,TOKYO__ELLIS,No,No,50.0,,,,,,,,,,,,county_centroid
 ercot_queue,32.431845,-97.835985,Tolar Energy Center,,Hood,CC,,,29INR0180,GAS,1252.0,NORTH,Tap 345 KV circuit 1 from 1440 Comanche Switch to 1900 Comanche Peak SES.,NRG Tolar Power LLC,1_no_ia,TOLAR__HOOD,No,No,1252.0,,,,,,,,,,,,county_centroid
-ercot_queue,31.381500,-103.645106,Tolivar Power Plant (TEF- Due Diligence),,Reeves,IC,,,27INR0297,GAS,224.5,WEST,Tap 138 KV 38045 IH20-38043 COWPEN,"Pecos Power Plant, LLC",3_ia_fis_complete,TOLIVAR__REEVES,No,No,224.5,,,,,,,,,,,,abatement_match
-ercot_queue,31.381500,-103.645106,Tolivar Power Plant Phase 2,,Reeves,IC,,,28INR0413,GAS,224.5,WEST,Tap 138 KV 38055 Saltdraw-38043 COWPEN,"Pecos Power Plant, LLC",1_no_ia,TOLIVAR__REEVES,No,No,224.5,,,,,,,,,,,,abatement_match
+ercot_queue,31.381500,-103.645106,Tolivar Power Plant (TEF- Due Diligence),,Reeves,IC,,,27INR0297,GAS,224.5,WEST,Tap 138 KV 38045 IH20-38043 COWPEN,"Pecos Power Plant, LLC",3_ia_fis_complete,TOLIVAR__REEVES,No,No,224.5,,,,,,,,,,,,county_centroid
+ercot_queue,31.381500,-103.645106,Tolivar Power Plant Phase 2,,Reeves,IC,,,28INR0413,GAS,224.5,WEST,Tap 138 KV 38055 Saltdraw-38043 COWPEN,"Pecos Power Plant, LLC",1_no_ia,TOLIVAR__REEVES,No,No,224.5,,,,,,,,,,,,county_centroid
 ercot_queue,32.033918,-96.482018,TORMES SOLAR,,Navarro,PV,,,22INR0437,SOL,356.6,NORTH,tap 345kV 1906 Venus - 68091 Navarro,BDPU SOLAR TORMES LLC,2_ia_fis_pending,TORMES__NAVARRO,No,No,356.6,,,,,,,,,,,,county_centroid
 ercot_queue,30.563171,-95.981531,Treehouse Solar,,Grimes,PV,,,28INR0394,SOL,281.77,NORTH,Tap the 345 kV Jewett (#3390) - Singleton (#44645) line,"Treehouse Solar, LLC",1_no_ia,TREEHOUSE__GRIMES,No,No,281.77,,,,,,,,,,,,county_centroid
 ercot_queue,30.560552,-95.998329,Treehouse Storage,,Grimes,BA,,,28INR0395,OTH,209.21,NORTH,"Tap the 345 kV Jewett (#3390) - Singleton (#44645) line, ONCOR","Treehouse Solar, LLC",1_no_ia,TREEHOUSE__GRIMES,No,No,209.21,,,,,,,,,,,,county_centroid
