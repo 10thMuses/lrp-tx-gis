@@ -44,6 +44,9 @@ s_bullet = mk("wBullet", parent=s_body, leftIndent=12, bulletIndent=2,
               spaceAfter=5)
 s_src = mk("wSrc", fontName="Helvetica-Oblique", fontSize=8, leading=10.5,
            textColor=MUTED, leftIndent=12)
+s_quote = mk("wQuote", fontName="Helvetica-Oblique", fontSize=8, leading=11,
+             textColor=MUTED, leftIndent=10, spaceBefore=2, spaceAfter=6,
+             borderColor=RULE, borderWidth=0, leftPadding=6)
 
 def esc(t):
     return t.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
@@ -100,7 +103,7 @@ def coalesce(start):
     while j < n:
         nxt = lines[j]
         if (nxt.strip() == "" or nxt.startswith("#") or nxt.startswith("- ")
-                or nxt.startswith("---")):
+                or nxt.startswith("---") or nxt.startswith(">")):
             break
         buf.append(nxt.strip())
         j += 1
@@ -132,6 +135,16 @@ while i < n:
         flow.append(HRFlowable(width="100%", thickness=0.6, color=RULE,
                                spaceBefore=4, spaceAfter=4))
         i += 1
+        continue
+    if stripped.startswith(">"):
+        # blockquote: coalesce consecutive ">" lines
+        buf = [stripped.lstrip(">").strip()]
+        j = i + 1
+        while j < n and lines[j].strip().startswith(">"):
+            buf.append(lines[j].strip().lstrip(">").strip())
+            j += 1
+        flow.append(Paragraph(inline(" ".join(buf)), s_quote))
+        i = j
         continue
     if stripped.startswith("- "):
         block, j = coalesce(i)
