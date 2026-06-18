@@ -110,7 +110,7 @@ card(
         ("$5B", "Brookfield financing commitment — fuel cells are now an asset class", AMBER),
     ],
     "2026-06-18",
-    "The deployable bridge isn't nuclear (that's 2030+). For 36 months it's fuel cells.",
+    "Nuclear is the destination (2030+). Until the gas turbines arrive, fuel cells fill the gap.",
     accent=TEAL,
 )
 
