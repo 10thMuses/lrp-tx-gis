@@ -102,15 +102,15 @@ def card(path, kicker, claim, support, stats, footer, punch, accent=TEAL):
 card(
     "outputs/reports/li-fuelcells-2026-06-18.png",
     "POWER · AI INFRASTRUCTURE",
-    "The AI power bridge isn't nuclear.",
-    "SMRs land ~2030. Restarts are stuck on paperwork. Turbines are sold out "
-    "to 2029. What actually ships into the gap:",
+    "Gas is the bridge. The bridge is sold out to 2029.",
+    "Sign a gas-fired PPA today and the turbine shows up in 2029. So what bridges "
+    "the bridge? On-site generation that ships now:",
     [
         ("2.8 GW", "Bloom × Oracle on-site fuel cells (1.2 GW already underway)", TEAL),
         ("$5B", "Brookfield financing commitment — fuel cells are now an asset class", AMBER),
     ],
     "2026-06-18",
-    "The reprice signal: the next hyperscaler fuel-cell deal, not the next reactor.",
+    "The deployable bridge isn't nuclear (that's 2030+). For 36 months it's fuel cells.",
     accent=TEAL,
 )
 
