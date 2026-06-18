@@ -49,44 +49,44 @@ def card(path, kicker, claim, support, stats, footer, punch, accent=TEAL):
 
     y = 110
     y = draw_kicker(d, M, y, kicker)
-    y += 22
-
-    # claim (hero heading)
-    fh = f(FB, 78)
-    for ln in wrap(d, claim, fh, W - 2 * M):
-        d.text((M, y), ln, font=fh, fill=INK)
-        y += 90
     y += 18
 
+    # claim (hero heading)
+    fh = f(FB, 74)
+    for ln in wrap(d, claim, fh, W - 2 * M):
+        d.text((M, y), ln, font=fh, fill=INK)
+        y += 86
+    y += 14
+
     # support line
-    fs = f(FR, 34)
+    fs = f(FR, 32)
     for ln in wrap(d, support, fs, W - 2 * M):
         d.text((M, y), ln, font=fs, fill=MUTED)
-        y += 48
-    y += 40
+        y += 45
+    y += 30
 
     # stat blocks
     for value, label, col in stats:
-        fv = f(FB, 92)
+        fv = f(FB, 80)
         d.text((M, y), value, font=fv, fill=col)
         vw = d.textlength(value, font=fv)
-        fl = f(FR, 30)
-        # label wrapped to the right of the number
-        lx = M + vw + 34
-        ly = y + 14
-        for ln in wrap(d, label, fl, W - M - lx):
+        fl = f(FR, 28)
+        lx = M + vw + 30
+        ly = y + 16
+        lab_lines = wrap(d, label, fl, W - M - lx)
+        for ln in lab_lines:
             d.text((lx, ly), ln, font=fl, fill=INK)
-            ly += 40
-        y += max(112, (ly - y) + 24)
+            ly += 37
+        y += max(100, (ly - y) + 18)
+    y += 14
 
-    # punch line (lower third), with a short accent tick above it
-    py = 880
-    d.rectangle([M, py, M + 70, py + 8], fill=accent)
-    py += 34
-    fp = f(FB, 44)
+    # punch line (flows after stats), with a short accent tick above it
+    d.rectangle([M, y, M + 70, y + 8], fill=accent)
+    y += 30
+    fp = f(FB, 40)
     for ln in wrap(d, punch, fp, W - 2 * M):
-        d.text((M, py), ln, font=fp, fill=INK)
-        py += 56
+        d.text((M, y), ln, font=fp, fill=INK)
+        y += 52
 
     # footer rule + caption
     d.line([(M, H - 95), (W - M, H - 95)], fill=RULE, width=2)
@@ -101,16 +101,17 @@ def card(path, kicker, claim, support, stats, footer, punch, accent=TEAL):
 # ---- Card 1: fuel cells ----
 card(
     "outputs/reports/li-fuelcells-2026-06-18.png",
-    "POWER · AI INFRASTRUCTURE",
-    "The most overlooked trade in AI power is a fuel cell.",
-    "Gas turbines are sold out to 2029. Nuclear lands 2030+. The only generation "
-    "that ships into the gap — no queue, no turbine slot:",
+    "POWER · THE OVERLOOKED AI-POWER TRADE",
+    "A fuel cell skips the turbine and the flame.",
+    "It doesn't burn gas — it pulls electrons off the same pipeline molecule by "
+    "chemical reaction. So it dodges two bottlenecks at once. Time to first power:",
     [
-        ("2.8 GW", "Bloom × Oracle on-site fuel cells (1.2 GW already underway)", TEAL),
-        ("$5B", "Brookfield financing — institutions underwriting fuel cells as an asset class", AMBER),
+        ("90 days", "on-site fuel cell — and ~60% efficient", TEAL),
+        ("18–24 mo", "simple-cycle gas peaker — the fast workaround (burns ~55% more gas)", INK),
+        ("5–7 yr", "combined-cycle turbine — the efficient one, backlogged", AMBER),
     ],
     "2026-06-18",
-    "The overlooked asset is the one with no waiting line.",
+    "Bloom × Oracle 2.8 GW. Brookfield $5B. The capital already moved.",
     accent=TEAL,
 )
 
