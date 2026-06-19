@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="hz:canvas-width" content="816">
+<title>Energy + AI Infrastructure Deal-Terms Compendium</title>
+<style>
+  :root{
+    --navy:#16213e; --gold:#b08d57; --teal:#2f6f6f;
+    --ink:#1b1b1b; --mute:#6b6b6b; --line:#d9d9d9; --soft:#f4f1ea; --zebra:#faf8f4;
+  }
+  @page{ size:Letter; margin:0; }
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; padding:0; }
+  body{
+    font-family:"DejaVu Sans","Helvetica Neue",Arial,sans-serif;
+    color:var(--ink); font-size:10.5px; line-height:1.5;
+    -webkit-print-color-adjust:exact; print-color-adjust:exact;
+  }
+  .page{ width:816px; padding:50px 60px 56px; margin:0 auto; }
+
+  .masthead{ border-top:6px solid var(--navy); padding-top:14px; margin-bottom:6px; }
+  .masthead .kicker{ font-size:10px; letter-spacing:.22em; text-transform:uppercase; color:var(--gold); font-weight:700; }
+  .masthead h1{ font-size:27px; line-height:1.12; color:var(--navy); margin:6px 0 8px; font-weight:700; letter-spacing:-.01em; }
+  .masthead .lede{ font-size:11.5px; color:#33384a; max-width:680px; margin:0; }
+  .dateline{ display:flex; justify-content:space-between; align-items:baseline;
+    border-top:1px solid var(--line); border-bottom:2px solid var(--gold);
+    margin-top:14px; padding:6px 0; font-size:9.5px; color:var(--mute); text-transform:uppercase; letter-spacing:.1em; }
+  .dateline b{ color:var(--navy); }
+
+  .whatsnew{ background:var(--soft); border-left:4px solid var(--gold); padding:12px 16px; margin:16px 0 6px; }
+  .whatsnew h3{ margin:0 0 6px; font-size:10px; letter-spacing:.16em; text-transform:uppercase; color:var(--navy); }
+  .whatsnew ul{ margin:0; padding-left:16px; }
+  .whatsnew li{ margin:3px 0; }
+
+  h2.sec{ display:flex; align-items:center; gap:10px; color:var(--teal);
+    font-size:16px; margin:24px 0 4px; padding-bottom:6px; border-bottom:2px solid var(--navy); font-weight:700; }
+  h2.sec .num{ display:inline-flex; align-items:center; justify-content:center;
+    width:24px; height:24px; background:var(--gold); color:#fff; font-size:13px; font-weight:700; border-radius:3px; flex:0 0 auto; }
+  h2.sec .unit{ margin-left:auto; font-size:9.5px; font-weight:600; color:var(--mute); letter-spacing:.04em; }
+  h3.sub{ color:var(--navy); font-size:12px; margin:15px 0 3px; font-weight:700; }
+  p{ margin:6px 0; }
+  .summary{ color:#2a2f3e; }
+
+  table{ width:100%; border-collapse:collapse; margin:8px 0 4px; font-size:9.1px; }
+  thead th{ background:var(--navy); color:#fff; text-align:left; padding:5px 7px; font-weight:600;
+    font-size:8.4px; letter-spacing:.03em; text-transform:uppercase; vertical-align:bottom; }
+  tbody td{ padding:4px 7px; border-bottom:1px solid var(--line); vertical-align:top; }
+  tbody tr:nth-child(even){ background:var(--zebra); }
+  td.num, th.num{ text-align:right; font-variant-numeric:tabular-nums; white-space:nowrap; }
+  td.deal{ font-weight:600; color:var(--navy); }
+  .nd{ color:var(--mute); font-style:italic; }
+  caption,.tnote{ text-align:left; color:var(--mute); font-size:8.3px; padding-top:3px; font-style:italic; }
+  tfoot td{ font-size:8.3px; color:var(--mute); font-style:italic; padding-top:4px; }
+
+  figure{ margin:12px 0; page-break-inside:avoid; }
+  figure img{ width:100%; height:auto; border:1px solid var(--line); }
+  figcaption{ font-size:8.6px; color:var(--mute); margin-top:4px; font-style:italic; }
+
+  .chips{ display:flex; flex-wrap:wrap; gap:8px; margin:12px 0; }
+  .chip{ border:1px solid var(--line); border-top:3px solid var(--teal); padding:7px 11px; min-width:118px; flex:1; }
+  .chip .v{ font-size:15px; font-weight:700; color:var(--navy); }
+  .chip .l{ font-size:8.2px; color:var(--mute); text-transform:uppercase; letter-spacing:.05em; }
+
+  .thesis{ background:var(--navy); color:#eef0f5; padding:16px 18px; margin:20px 0 8px; page-break-inside:avoid; }
+  .thesis h3{ color:var(--gold); margin:0 0 6px; font-size:11px; letter-spacing:.14em; text-transform:uppercase; }
+  .thesis p{ margin:5px 0; font-size:10px; color:#dfe3ec; }
+
+  .foot{ border-top:2px solid var(--gold); margin-top:22px; padding-top:10px; font-size:8.1px; color:var(--mute); }
+  .foot b{ color:var(--navy); }
+  .foot p{ margin:4px 0; }
+  .srcgrid{ column-count:2; column-gap:22px; font-size:7.9px; line-height:1.45; }
+  .srcgrid p{ margin:0 0 4px; break-inside:avoid; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ===================== MASTHEAD ===================== -->
+  <header class="masthead">
+    <div class="kicker">Deal-Transaction Comps Reference</div>
+    <h1>Energy &amp; AI&nbsp;Infrastructure Deal-Terms Compendium</h1>
+    <p class="lede">Per-unit economics across the physical power and compute stack &mdash; each sector priced in its native unit so the same question can be asked everywhere: <b>what does one unit of capacity transact for today?</b> Power leases in $/MW and $/MW&#8209;yr; generation fleets in $/kW; nuclear and geothermal in $/kW installed; compression in $/hp; power purchases in $/MWh and $/MW&#8209;day; land in $/acre; water in $/AF, converted to barrels of water per day (bbl/d).</p>
+    <div class="dateline">
+      <span>Updated through <b>June&nbsp;19,&nbsp;2026</b></span>
+      <span>Executed &amp; announced transactions &middot; primary sources &middot; n/d = not disclosed</span>
+    </div>
+  </header>
+
+  <!-- ===================== WHAT'S NEW ===================== -->
+  <div class="whatsnew">
+    <h3>What changed recently</h3>
+    <ul>
+      <li><b>Gas-fleet consolidation closed.</b> NRG closed its $12.0B / 13&nbsp;GW gas-fleet purchase from LS Power (Jan&nbsp;30, 2026; ~$923/kW); Constellation closed its ~$26.6B Calpine acquisition (2026), forming the largest U.S. generator (~60&nbsp;GW); AES agreed to a $33.4B take-private by GIP/EQT (Mar&nbsp;2, 2026).</li>
+      <li><b>AI-lease stack repriced upward.</b> Cipher&ndash;AWS Black Pearl ($5.5B / 15&nbsp;yr / 300&nbsp;MW) and Cipher&ndash;Fluidstack Barber Lake (&rarr;~$9B with extensions) anchor a $1.22&ndash;2.26M/MW&#8209;yr band; hyperscaler credit backstops (Google, AWS) are now standard.</li>
+      <li><b>Nuclear went from restarts to fleets.</b> Meta committed to up to 6.6&nbsp;GW (Oklo/Vistra/TerraPower, Jan&nbsp;9, 2026); DOE issued a $26.5B Southern Co. financing (Feb&nbsp;2026) and $2.7B of enrichment task orders (Jan&nbsp;6, 2026); Westinghouse&rsquo;s $80B AP1000 fleet pledge (Oct&nbsp;2025) implies ~$7,300/kW vs Vogtle&rsquo;s realized ~$16,500/kW.</li>
+      <li><b>Capacity scarcity priced in.</b> PJM&rsquo;s 2026/2027 auction cleared at the $329.17/MW&#8209;day cap; North-America solar/wind PPAs rose to $64.49 / $79.40/MWh (LevelTen Q1&nbsp;2026).</li>
+      <li><b>Late-window (Jun&nbsp;13&ndash;19, 2026):</b> no major Texas land, lease, or fleet closings; activity was early-stage (Centrus&ndash;Oklo HALEU supply LOI Jun&nbsp;18; CIM Grape 246&nbsp;MWac solar+storage financing ~$600M Jun&nbsp;18; a cluster of geothermal venture rounds).</li>
+    </ul>
+  </div>
+
+  <!-- ============================================================= -->
+  <!-- SECTION A — LAND & POWER LEASES -->
+  <!-- ============================================================= -->
+  <h2 class="sec"><span class="num">A</span> Land &amp; Power Leases <span class="unit">$/MW &middot; $/MW&#8209;yr &middot; $/acre &middot; $/AF &rarr; bbl/d</span></h2>
+  <p class="summary">The lease contract is the fundamental unit of value in AI infrastructure: a hyperscaler or neocloud tenant commits 10&ndash;15 years of rent against a landlord&rsquo;s powered shell, and that annual rent &mdash; <b>$1.22&ndash;2.26&nbsp;million per MW-year</b> across executed deals &mdash; sets the asset&rsquo;s worth more than the dirt beneath it. The defining 2025&ndash;26 feature is <b>credit support</b>: investment-grade backstops (Google for Cipher and TeraWulf; AWS as ultimate guarantor at Black Pearl) convert a former bitcoin miner&rsquo;s lease into financeable, near-utility cash flow. Land trades at a wide spread &mdash; from ~$8,000/acre for raw municipal parcels bought ahead of the boom to $480,000/acre to buy out an already-powered site &mdash; and water, increasingly the binding constraint, is benchmarked here in barrels per day.</p>
+
+  <h3 class="sub">A.1&nbsp;&nbsp;AI / data-center power leases (colocation &amp; hosting)</h3>
+  <table>
+    <thead><tr>
+      <th>Date</th><th>Lessor &rarr; Tenant</th><th>Site</th>
+      <th class="num">Gross MW</th><th class="num">IT MW</th><th class="num">Contract $</th><th class="num">Term</th><th class="num">$/MW-yr</th>
+    </tr></thead>
+    <tbody>
+      <tr><td class="num">Mar&nbsp;28&nbsp;2025</td><td class="deal">Galaxy &rarr; CoreWeave (Ph&nbsp;1)</td><td>Helios, Dickens Co. TX</td>
+        <td class="num">200</td><td class="num">133</td><td class="num">~$4.5B</td><td class="num">15&nbsp;yr NNN</td><td class="num">$2.26M <span class="nd">IT</span></td></tr>
+      <tr><td class="num">Oct&nbsp;28&nbsp;2025</td><td class="deal">TeraWulf/Fluidstack JV</td><td>Abernathy, Lubbock Co. TX</td>
+        <td class="num">240</td><td class="num">168</td><td class="num">~$9.5B</td><td class="num">25&nbsp;yr</td><td class="num">$2.26M <span class="nd">IT</span></td></tr>
+      <tr><td class="num">Nov&nbsp;20&nbsp;2025</td><td class="deal">Cipher &rarr; Fluidstack (exp.)</td><td>Barber Lake, Colorado City TX</td>
+        <td class="num">+56</td><td class="num">+39</td><td class="num">+$830M</td><td class="num">10&nbsp;yr</td><td class="num">$2.13M <span class="nd">IT</span></td></tr>
+      <tr><td class="num">May&nbsp;2025</td><td class="deal">Applied Digital &rarr; CoreWeave</td><td>Polaris Forge 1, Ellendale ND</td>
+        <td class="num"><span class="nd">n/d</span></td><td class="num">~250</td><td class="num">~$7.0B</td><td class="num">~15&nbsp;yr</td><td class="num">$1.87M <span class="nd">IT</span></td></tr>
+      <tr><td class="num">May&nbsp;6&nbsp;2026</td><td class="deal">Hut 8 &rarr; IG hyperscaler</td><td>Beacon Point, Nueces Co. TX</td>
+        <td class="num"><span class="nd">n/d</span></td><td class="num">352</td><td class="num">$9.8B<span class="nd"> (&rarr;$25.1B)</span></td><td class="num">15&nbsp;yr, 3%</td><td class="num">$1.86M <span class="nd">IT</span></td></tr>
+      <tr><td class="num">Aug&nbsp;14&nbsp;2025</td><td class="deal">TeraWulf &rarr; Fluidstack</td><td>Lake Mariner, NY</td>
+        <td class="num">~250</td><td class="num">200+</td><td class="num">~$3.7B</td><td class="num">10&nbsp;yr</td><td class="num">$1.85M <span class="nd">IT</span></td></tr>
+      <tr><td class="num">Sep&nbsp;25&nbsp;2025</td><td class="deal">Cipher &rarr; Fluidstack</td><td>Barber Lake, Colorado City TX</td>
+        <td class="num">244</td><td class="num">168</td><td class="num">~$3.0B<span class="nd"> (&rarr;$7B w/ext)</span></td><td class="num">10&nbsp;yr</td><td class="num">$1.79M <span class="nd">IT</span></td></tr>
+      <tr><td class="num">Jun&nbsp;2024</td><td class="deal">Core Scientific &rarr; CoreWeave</td><td>multi-site (TX &amp;c.)</td>
+        <td class="num"><span class="nd">n/d</span></td><td class="num">~200</td><td class="num">~$3.5B<span class="nd"> ($290M/yr)</span></td><td class="num">12&nbsp;yr</td><td class="num">$1.46M <span class="nd">IT</span></td></tr>
+      <tr><td class="num">Nov&nbsp;3&nbsp;2025</td><td class="deal">Cipher &rarr; AWS</td><td>Black Pearl, Wink TX</td>
+        <td class="num">300</td><td class="num"><span class="nd">n/d</span></td><td class="num">$5.5B</td><td class="num">15&nbsp;yr&nbsp;(+3&times;5)</td><td class="num">$1.22M <span class="nd">gross</span></td></tr>
+    </tbody>
+    <tfoot><tr><td colspan="8">$/MW-yr = initial-term contracted revenue &divide; term &divide; MW (IT or gross as marked). The market clears in a tight $1.79&ndash;1.87M/MW-yr IT band for 10&ndash;15-yr deals; longer terms (TeraWulf Abernathy, 25&nbsp;yr) and high-escalator deals reach $2.26M. Galaxy bought Helios from Argo Blockchain (~$65M, 2022); CoreWeave later committed the full 800&nbsp;MW gross / 526&nbsp;MW IT. Black Pearl: ~620-ac, 1&nbsp;GW Colchis JV (~95% Cipher), AEP direct-connect, $2.0B 6.125% notes (Feb&nbsp;2026, due 2031), rent from Oct&nbsp;1&nbsp;2026, AWS ultimate guarantor. Excludes GPU compute-cloud contracts (IREN&ndash;Microsoft $9.7B, Nebius&ndash;Microsoft $17.4B) &mdash; those bundle GPU capex and are not real-estate leases.</td></tr></tfoot>
+  </table>
+
+  <h3 class="sub">A.2&nbsp;&nbsp;Credit support &amp; lease structure</h3>
+  <p class="summary"><b>Google&ndash;Cipher:</b> backstops $1.4B of Fluidstack&rsquo;s obligations (rising to ~$1.73B with the Nov expansion) for ~24M warrants (~5.4% pro-forma). <b>Google&ndash;TeraWulf:</b> backstops $1.8B (then +$1.4B on the CB-5 expansion &rarr; ~$3.2B total) for ~41M warrants (~14%). <b>AWS&ndash;Cipher:</b> ultimate guarantor of Black Pearl rent (per $2B Black Pearl Compute LLC notes, Feb&nbsp;2026, due 2031). Common terms: 10&ndash;15-yr initial, 3&times;5-yr extensions, ~3% annual escalators, triple-net. The backstops &mdash; not the miners&rsquo; own balance sheets &mdash; are what make these leases financeable.</p>
+
+  <figure>
+    <img src="assets/c2_per_mw_yr.png" alt="Annual rent per MW-year by lease">
+    <figcaption>Fig.&nbsp;1 &mdash; Annual rent per MW-year, executed AI/DC leases. Basis (critical-IT vs gross) marked per bar; band spans $1.22M (Cipher&ndash;AWS, gross) to $2.26M (Galaxy&ndash;CoreWeave &amp; TeraWulf Abernathy, IT), clustering near $1.8M for 10&ndash;15-yr deals.</figcaption>
+  </figure>
+
+  <h3 class="sub">A.3&nbsp;&nbsp;Landlord contracted-revenue backlog</h3>
+  <p class="summary">The miners&rsquo; pivot has produced multi-billion contracted backlogs &mdash; company-stated initial-term revenue, not market value. Applied Digital leads at ~$36B base ($86B with renewals; Jun&nbsp;2026) across 1.4&nbsp;GW / five campuses; Hut&nbsp;8 reached $16.8B after its 352&nbsp;MW Beacon Point lease; TeraWulf $12.8B (522 IT&nbsp;MW), Cipher ~$11.4B, Core Scientific ~$10.2B. (CoreWeave&rsquo;s $9B bid for Core Scientific was terminated Oct&nbsp;30&nbsp;2025; CORZ remains standalone.)</p>
+  <figure>
+    <img src="assets/c5_backlog.png" alt="Landlord contracted-revenue backlog">
+    <figcaption>Fig.&nbsp;2 &mdash; Contracted-revenue backlog (initial lease terms; company-stated except Galaxy, derived from &gt;$1B avg annual revenue &times; 15&nbsp;yr). Figures as of Q1&ndash;Q2 2026.</figcaption>
+  </figure>
+
+  <h3 class="sub">A.4&nbsp;&nbsp;Texas powered land &mdash; executed, &le;2&nbsp;years</h3>
+  <table>
+    <thead><tr>
+      <th>Date</th><th>Buyer</th><th>Site / County</th><th class="num">Acres</th><th class="num">Price</th><th class="num">$/acre</th><th>Power / note</th>
+    </tr></thead>
+    <tbody>
+      <tr><td class="num">Jan&nbsp;16&nbsp;2026</td><td class="deal">Riot Platforms</td><td>Rockdale, Milam Co.</td><td class="num">200</td><td class="num">$96.0M</td><td class="num">$480,000</td><td>fee-simple buyout of powered 700&nbsp;MW site; AMD lease</td></tr>
+      <tr><td class="num">2025</td><td class="deal">Blueprint</td><td>Taylor, Williamson Co.</td><td class="num">87.97</td><td class="num">$10.0M</td><td class="num">$113,675</td><td>infill parcel from city EDC</td></tr>
+      <tr><td class="num">Mar&nbsp;17&nbsp;2026</td><td class="deal">1606 Corp</td><td>Lufkin, Angelina Co.</td><td class="num">132</td><td class="num">$11.2M <span class="nd">PSA</span></td><td class="num">~$84,848</td><td>incl. warehouse + captive power; PSA, not yet closed</td></tr>
+      <tr><td class="num">Dec&nbsp;29&nbsp;2023</td><td class="deal">Meta</td><td>NE El Paso, El Paso Co.</td><td class="num">1,039</td><td class="num">$8.5M</td><td class="num">~$8,180</td><td>raw land from City; project announced Oct&nbsp;2025</td></tr>
+      <tr><td class="num">May&nbsp;7&nbsp;2025</td><td class="deal">Tract</td><td>Caldwell Co.</td><td class="num">1,515</td><td class="num"><span class="nd">n/d</span></td><td class="num"><span class="nd">n/d</span></td><td>2&nbsp;GW planned; 360&nbsp;MW by 2028</td></tr>
+      <tr><td class="num">~Apr&nbsp;29&nbsp;2025</td><td class="deal">Cawley Partners</td><td>South Creek Ranch, Dallas/Ellis</td><td class="num">5,200</td><td class="num"><span class="nd">n/d</span></td><td class="num"><span class="nd">n/d</span></td><td>data-center ranch S. of Dallas</td></tr>
+      <tr><td class="num">May&nbsp;1&nbsp;2026</td><td class="deal">Amazon Data Services</td><td>Cedar Creek, Bastrop Co.</td><td class="num">&ge;1,300</td><td class="num"><span class="nd">n/d</span></td><td class="num"><span class="nd">n/d</span></td><td>"Creekside" parcels from CTX Capital</td></tr>
+      <tr><td class="num">Jan&nbsp;14&nbsp;2026</td><td class="deal">CleanSpark</td><td>Brazoria Co.</td><td class="num">447</td><td class="num"><span class="nd">n/d</span></td><td class="num"><span class="nd">n/d</span></td><td>600&nbsp;MW AI/HPC campus (2nd TX site)</td></tr>
+      <tr><td class="num">Dec&nbsp;23&nbsp;2025</td><td class="deal">New Era Energy &amp; Digital</td><td>TCDC, Ector Co. (Odessa)</td><td class="num">203</td><td class="num"><span class="nd">n/d</span></td><td class="num"><span class="nd">n/d</span></td><td>full ownership of TX Critical Data Centers</td></tr>
+      <tr><td class="num">~2024</td><td class="deal">Google</td><td>Red Oak, Ellis Co.</td><td class="num">165</td><td class="num"><span class="nd">n/d</span></td><td class="num"><span class="nd">n/d</span></td><td>$600M project</td></tr>
+    </tbody>
+    <tfoot><tr><td colspan="7">Only four executed fee-simple deals carry a true $/acre; mega-acreage assemblages and ground-lease structures are price-undisclosed. Powered land that traded via lease/option (no $/acre): LandBridge&ndash;PowerBridge Reeves Co. (option, up to 3,400 ac, 2&nbsp;GW, Apr&nbsp;2026); Fermi America "HyperGrid" Carson/Potter Co. (5,800 ac, 11&nbsp;GW incl. 4&nbsp;GW nuclear); Vantage "Frontier" Shackelford Co. (1,200 ac, 1.4&nbsp;GW, $25B); IREN Sweetwater (2,200 ac, 2&nbsp;GW); Poolside/CoreWeave "Project Horizon" Pecos Co. (568 ac; CoreWeave lease terminated Mar&nbsp;2026); Crusoe ground-lease at Lancium Clean Campus, Abilene (Stargate Site&nbsp;1).</td></tr></tfoot>
+  </table>
+
+  <h3 class="sub">A.5&nbsp;&nbsp;Water &mdash; volumes in barrels per day</h3>
+  <p class="summary">Conversions: 1 acre-foot = 7,758&nbsp;bbl; 1&nbsp;AF/yr &asymp; 21.3&nbsp;bbl/d; 1&nbsp;million gal = 23,810&nbsp;bbl. Water is moving from afterthought to gating constraint; the cleanest disclosed Texas price is the Vista Ridge / SAWS groundwater contract at <b>$460/AF</b> raw ($2,300/AF all-in delivered).</p>
+  <table>
+    <thead><tr>
+      <th>Deal / site</th><th>County / source</th><th class="num">Volume (native)</th><th class="num">bbl/d</th><th>Date</th>
+    </tr></thead>
+    <tbody>
+      <tr><td class="deal">Sandow Lakes Ranch &mdash; permitted</td><td>Milam/Lee, Simsboro Aquifer</td><td class="num">44,000 AF/yr</td><td class="num">~937,200</td><td>pre-2024</td></tr>
+      <tr><td class="deal">Sandow Lakes &mdash; additional permittable</td><td>Milam/Lee</td><td class="num">14,000 AF/yr</td><td class="num">~298,200</td><td>2024</td></tr>
+      <tr><td class="deal">San Antonio DCs (Microsoft + Army Corps)</td><td>Bexar Co.</td><td class="num">463M gal &rsquo;23&ndash;24</td><td class="num">~15,100</td><td>2023&ndash;24</td></tr>
+      <tr><td class="deal">Comanche Circle DC &mdash; ongoing</td><td>Hood Co.</td><td class="num">150,000 gal/d</td><td class="num">~3,572</td><td>Jun&nbsp;2&nbsp;2026</td></tr>
+      <tr><td class="deal">Stargate Abilene &mdash; initial fill</td><td>Taylor Co. (closed-loop)</td><td class="num">8M gal one-time</td><td class="num">~190,480 <span class="nd">one-time</span></td><td>2025</td></tr>
+      <tr><td class="deal">Benchmark &mdash; mid-size DC</td><td>&mdash;</td><td class="num">~300,000 gal/d</td><td class="num">~7,140</td><td>&mdash;</td></tr>
+      <tr><td class="deal">Benchmark &mdash; large DC</td><td>&mdash;</td><td class="num">~4.5M gal/d</td><td class="num">~107,145</td><td>&mdash;</td></tr>
+      <tr><td class="deal">TX data-center fleet (today)</td><td>statewide</td><td class="num">~25B gal/yr</td><td class="num">~1.63M</td><td>2025</td></tr>
+      <tr><td class="deal">Vista Ridge / SAWS &mdash; <b>$460/AF</b> raw</td><td>Burleson Co., Simsboro/Carrizo</td><td class="num">50,000 AF/yr</td><td class="num">~1.07M</td><td>$3.4B / 30&nbsp;yr</td></tr>
+    </tbody>
+    <tfoot><tr><td colspan="5">Vista Ridge is the cleanest disclosed Texas groundwater price benchmark: $460/AF raw (10% landowner royalty = $46/AF), ~$2,300/AF all-in delivered. Sandow also holds 48,379&nbsp;AF in storage (~375M bbl one-time). Vantage "Frontier" runs closed-loop, near-zero water-use-effectiveness (volume n/d).</td></tr></tfoot>
+  </table>
+
+  <!-- ============================================================= -->
+  <!-- SECTION B — GENERATION FLEET M&A -->
+  <!-- ============================================================= -->
+  <h2 class="sec"><span class="num">B</span> Power Generation Fleet M&amp;A <span class="unit">$/kW of capacity</span></h2>
+  <p class="summary">Operating thermal fleets are changing hands at <b>~$900&ndash;1,320/kW</b> &mdash; roughly 40&ndash;65% of new-build CCGT replacement cost (~$2,000&ndash;2,500/kW) &mdash; as buyers race to own existing, interconnected capacity rather than wait years to build it. NRG explicitly framed its LS Power buy at 50% of replacement cost; Talen and NRG both cited mid-single-digit EV/EBITDA multiples.</p>
+  <table>
+    <thead><tr>
+      <th>Date</th><th>Buyer &rarr; Seller / Target</th><th class="num">Capacity</th><th class="num">EV / Price</th><th class="num">$/kW</th><th>Note</th>
+    </tr></thead>
+    <tbody>
+      <tr><td class="num">closed&nbsp;2026</td><td class="deal">Constellation &rarr; Calpine</td><td class="num">~27&nbsp;GW gas+geo</td><td class="num">~$26.6B EV</td><td class="num">~$985</td><td>$16.4B equity; combined ~60&nbsp;GW (largest U.S. generator); ann. Jan&nbsp;10&nbsp;2025</td></tr>
+      <tr><td class="num">Jan&nbsp;30&nbsp;2026</td><td class="deal">NRG &rarr; LS Power</td><td class="num">13&nbsp;GW gas (+6&nbsp;GW VPP)</td><td class="num">$12.0B EV</td><td class="num">~$923</td><td>7.5&times; 2026 EV/EBITDA; ~50% of new-build cost; doubles NRG fleet</td></tr>
+      <tr><td class="num">Nov&nbsp;25&nbsp;2025</td><td class="deal">Talen &rarr; Freedom + Guernsey</td><td class="num">2,881&nbsp;MW CCGT</td><td class="num">$3.8B gross</td><td class="num">~$1,319</td><td>6.7&times; 2026 EV/EBITDA; PJM; discount to new-build CCGT</td></tr>
+      <tr><td class="num">Mar&nbsp;1&nbsp;2024</td><td class="deal">Vistra &rarr; Energy Harbor</td><td class="num">4,000&nbsp;MW nuclear</td><td class="num">~$3.4B</td><td class="num">~$850</td><td>+~1M retail customers (so $/kW overstates generation-only)</td></tr>
+    </tbody>
+    <tfoot><tr><td colspan="6">$/kW = EV &divide; MW &divide; 1,000. Fleet $/kW is a gross headline metric; nuclear (Vistra) and gas (NRG, Talen) are not directly comparable to one another. See Section&nbsp;E for nuclear new-build $/kW (~$16,500/kW at Vogtle) &mdash; the gulf to ~$900/kW fleet deals is the core "buy vs build" arbitrage.</td></tr></tfoot>
+  </table>
+
+  <!-- ============================================================= -->
+  <!-- SECTION C — SOLAR & STORAGE -->
+  <!-- ============================================================= -->
+  <h2 class="sec"><span class="num">C</span> Solar &amp; Storage <span class="unit">$/MWh PPA &middot; $/kW installed</span></h2>
+  <p class="summary">Renewable PPAs are the marginal procurement tool for data-center load, and prices are rising on policy uncertainty, permitting bottlenecks, and that very demand. The clean price signal is the LevelTen index; project financings give a $/kW-installed read where solar and storage are bundled.</p>
+  <table>
+    <thead><tr>
+      <th>Date</th><th>Benchmark / deal</th><th class="num">Size</th><th class="num">Price / value</th><th class="num">Unit price</th><th>Source basis</th>
+    </tr></thead>
+    <tbody>
+      <tr><td class="num">Q1&nbsp;2026</td><td class="deal">LevelTen N. America solar PPA (P25)</td><td class="num">&mdash;</td><td class="num">&mdash;</td><td class="num">$64.49/MWh</td><td>+13% YoY; +4.6% QoQ</td></tr>
+      <tr><td class="num">Q1&nbsp;2026</td><td class="deal">LevelTen N. America wind PPA (P25)</td><td class="num">&mdash;</td><td class="num">&mdash;</td><td class="num">$79.40/MWh</td><td>+~24% YoY</td></tr>
+      <tr><td class="num">Jun&nbsp;18&nbsp;2026</td><td class="deal">CIM Group / Permanent Power &mdash; Grape</td><td class="num">246&nbsp;MWac solar + 150&nbsp;MWac BESS</td><td class="num">~$600M fin.</td><td class="num">~$2,435/kWac <span class="nd">blended</span></td><td>construction financing; IG offtaker PPA (price n/d)</td></tr>
+      <tr><td class="num">Jun&nbsp;17&nbsp;2026</td><td class="deal">Chrysalis (Morrison) &larr; Hanwha (Atlas V/VI)</td><td class="num">357&nbsp;MWdc</td><td class="num"><span class="nd">n/d</span></td><td class="num"><span class="nd">n/d</span></td><td>AZ; 15-yr PPAs with SCE</td></tr>
+      <tr><td class="num">Jun&nbsp;17&nbsp;2026</td><td class="deal">Nautilus Solar &mdash; debt facility</td><td class="num">~200&nbsp;MW community</td><td class="num">$600M</td><td class="num"><span class="nd">n/d</span></td><td>construction debt renewal (bank syndicate)</td></tr>
+    </tbody>
+    <tfoot><tr><td colspan="6">PPA $/MWh is the comparable price; project-financing $/kW blends solar + storage and reflects financing size, not all-in capex. Texas-specific solar PPAs in June 2026 (Meta&ndash;RWE 298&nbsp;MW; Meta&ndash;Zelestra 180&nbsp;MWdc) fell just outside the dateline window.</td></tr></tfoot>
+  </table>
+
+  <!-- ============================================================= -->
+  <!-- SECTION D — GEOTHERMAL -->
+  <!-- ============================================================= -->
+  <h2 class="sec"><span class="num">D</span> Geothermal <span class="unit">$/kW installed</span></h2>
+  <p class="summary">Next-gen geothermal is the only firm, 24/7 clean resource attracting hyperscaler offtake at scale. PPA prices are universally undisclosed; the one disclosed capex curve is Fervo&rsquo;s Cape Station, falling from <b>$7,000/kW</b> (Phase&nbsp;1) toward a $3,000/kW target as drilling repeats.</p>
+  <table>
+    <thead><tr>
+      <th>Date</th><th>Project / deal</th><th class="num">MW</th><th class="num">Value</th><th class="num">$/kW</th><th>Offtake</th>
+    </tr></thead>
+    <tbody>
+      <tr><td class="num">2025&ndash;26</td><td class="deal">Fervo &mdash; Cape Station (Utah)</td><td class="num">500</td><td class="num">capex n/d</td><td class="num">$7,000 &rarr; $5,500</td><td>Ph1 $7,000/kW, Ph2 $5,500/kW, target $3,000/kW; all 500&nbsp;MW contracted</td></tr>
+      <tr><td class="num">Jun&nbsp;28&nbsp;2024</td><td class="deal">Fervo &rarr; Southern California Edison</td><td class="num">320</td><td class="num"><span class="nd">n/d</span></td><td class="num"><span class="nd">$/MWh n/d</span></td><td>two 15-yr PPAs (largest geothermal PPA)</td></tr>
+      <tr><td class="num">Aug&nbsp;2024</td><td class="deal">Sage Geosystems &rarr; Meta</td><td class="num">up to 150</td><td class="num"><span class="nd">n/d</span></td><td class="num"><span class="nd">$/MWh n/d</span></td><td>geopressured; Phase&nbsp;1 target 2027</td></tr>
+      <tr><td class="num">Jun&nbsp;12&nbsp;2025</td><td class="deal">XGS Energy &rarr; Meta</td><td class="num">150</td><td class="num"><span class="nd">n/d</span></td><td class="num"><span class="nd">$/MWh n/d</span></td><td>New Mexico, via PNM; online by 2030</td></tr>
+      <tr><td class="num">Feb&nbsp;17&nbsp;2026</td><td class="deal">Ormat &rarr; Google</td><td class="num">up to 150</td><td class="num"><span class="nd">n/d</span></td><td class="num"><span class="nd">$/MWh n/d</span></td><td>NV Energy clean-transition tariff; 2028&ndash;30</td></tr>
+    </tbody>
+    <tfoot><tr><td colspan="6">Fervo financings (context, not $/kW): $462M Series E (Dec&nbsp;2025, Google/CalSTRS/B&nbsp;Capital); $421M non-recourse project financing (Mar&nbsp;19&nbsp;2026). Total project capex undisclosed, so no project-level $/kW is computable beyond the company&rsquo;s stated curve.</td></tr></tfoot>
+  </table>
+
+  <!-- ============================================================= -->
+  <!-- SECTION E — NUCLEAR -->
+  <!-- ============================================================= -->
+  <h2 class="sec"><span class="num">E</span> Nuclear <span class="unit">$/kW installed</span></h2>
+  <p class="summary">Nuclear spans an order of magnitude in $/kW: greenfield AP1000 (Vogtle) landed at <b>~$16,500/kW</b>; first-of-kind SMRs pencil at ~$8,000&ndash;11,600/kW; Westinghouse&rsquo;s $80B fleet pledge bets scale drives that to ~$7,300/kW; and plant <b>restarts run ~$1,900/kW</b> &mdash; the cheapest new firm megawatts available. Hyperscaler PPA prices ($/MWh) are undisclosed across every deal below.</p>
+  <table>
+    <thead><tr>
+      <th>Date</th><th>Deal / project</th><th class="num">MW</th><th class="num">Cost / value</th><th class="num">$/kW</th><th>Basis</th>
+    </tr></thead>
+    <tbody>
+      <tr><td class="num">2023&ndash;24 COD</td><td class="deal">Vogtle 3 &amp; 4 (new-build)</td><td class="num">2,234</td><td class="num">~$36.8B</td><td class="num">~$16,500</td><td>realized all-in (regulated rate base)</td></tr>
+      <tr><td class="num">Mar&nbsp;9&nbsp;2026</td><td class="deal">TerraPower Natrium &mdash; Kemmerer</td><td class="num">345 / 500&nbsp;pk</td><td class="num">~$4.0B</td><td class="num">~$11,600 <span class="nd">FOAK</span></td><td>NRC permit; DOE ARDP 50/50; Meta offtake (Jan&nbsp;2026)</td></tr>
+      <tr><td class="num">Oct&nbsp;27&nbsp;2025</td><td class="deal">Westinghouse AP1000 fleet pledge</td><td class="num">~11,000 <span class="nd">indic.</span></td><td class="num">&ge;$80B</td><td class="num">~$7,300 <span class="nd">indic.</span></td><td>US Gov + Brookfield + Cameco; 10&times;AP1000 (unit count n/d)</td></tr>
+      <tr><td class="num">Nov&nbsp;18&nbsp;2025</td><td class="deal">Crane / TMI-1 restart (Constellation)</td><td class="num">835</td><td class="num">~$1.6B</td><td class="num">~$1,916</td><td>capex; DOE $1B loan; Microsoft 20-yr PPA (2024)</td></tr>
+      <tr><td class="num">2024&ndash;25</td><td class="deal">Palisades restart (Holtec)</td><td class="num">800</td><td class="num">$1.52B</td><td class="num">~$1,900</td><td>DOE loan guarantee basis</td></tr>
+    </tbody>
+  </table>
+  <table>
+    <thead><tr>
+      <th>Date</th><th>Offtake / award</th><th class="num">MW</th><th class="num">Term / value</th><th>Counterparties &amp; note</th>
+    </tr></thead>
+    <tbody>
+      <tr><td class="num">Jan&nbsp;9&nbsp;2026</td><td class="deal">Meta multi-developer nuclear</td><td class="num">up to 6,600</td><td class="num">20-yr PPAs</td><td>Vistra (~2.6&nbsp;GW) + Oklo (~1.2&nbsp;GW) + TerraPower (~2.8&nbsp;GW); $/MWh n/d</td></tr>
+      <tr><td class="num">Jun&nbsp;11&nbsp;2025</td><td class="deal">AWS &rarr; Talen (Susquehanna)</td><td class="num">1,920</td><td class="num">through 2042</td><td>front-of-meter ramp to 2032; prior 960&nbsp;MW campus $650M (2024)</td></tr>
+      <tr><td class="num">Jun&nbsp;3&nbsp;2025</td><td class="deal">Meta &rarr; Constellation (Clinton)</td><td class="num">1,121</td><td class="num">20&nbsp;yr</td><td>relicensing; $/MWh n/d</td></tr>
+      <tr><td class="num">Oct&nbsp;16&nbsp;2024</td><td class="deal">Amazon &rarr; X-energy (SMR)</td><td class="num">320 &rarr; 960</td><td class="num">~$500M inv.</td><td>Cascade, WA (Energy Northwest); Xe-100 &times;4&ndash;12</td></tr>
+      <tr><td class="num">Oct&nbsp;14&nbsp;2024</td><td class="deal">Google &rarr; Kairos Power (SMR)</td><td class="num">up to 500</td><td class="num">offtake</td><td>6&ndash;7 reactors; first ~2030; Hermes&nbsp;2 50&nbsp;MW PPA via TVA (Aug&nbsp;2025)</td></tr>
+    </tbody>
+    <tfoot><tr><td colspan="5">DOE 2025&ndash;26 nuclear actions: $26.5B Southern Co. financing (Feb&nbsp;2026, multi-asset); $2.7B uranium enrichment task orders (Jan&nbsp;6&nbsp;2026, $900M each to ACO/General Matter/Orano); $800M Gen&nbsp;III+ SMR cost-share (TVA + Holtec, Dec&nbsp;2&nbsp;2025); Reactor Pilot Program (Aug&nbsp;2025, $0 federal &mdash; authorization pathway only). Late-window: Centrus&ndash;Oklo HALEU supply LOI (Jun&nbsp;18&nbsp;2026).</td></tr></tfoot>
+  </table>
+
+  <!-- ============================================================= -->
+  <!-- SECTION F — UTILITIES & INFRASTRUCTURE M&A -->
+  <!-- ============================================================= -->
+  <h2 class="sec"><span class="num">F</span> Utilities &amp; Infrastructure M&amp;A <span class="unit">EV &middot; stake &middot; multiple</span></h2>
+  <p class="summary">The dominant 2023&ndash;26 pattern is the <b>~19.9% minority stake</b> sold to an infrastructure fund &mdash; structured to fund enormous capex plans while keeping operating control and dodging change-of-control review &mdash; alongside outright take-privates. Issuers disclose P/E or rate-base multiples, not premium-to-rate-base (n/d throughout).</p>
+  <table>
+    <thead><tr>
+      <th>Date</th><th>Buyer &rarr; Target</th><th class="num">Stake</th><th class="num">Price</th><th class="num">Implied EV</th><th>Multiple / note</th>
+    </tr></thead>
+    <tbody>
+      <tr><td class="num">Mar&nbsp;2&nbsp;2026</td><td class="deal">GIP + EQT &rarr; AES Corp</td><td class="num">100%</td><td class="num">$15.00/sh</td><td class="num">$33.4B</td><td>take-private (all-cash)</td></tr>
+      <tr><td class="num">Sep&nbsp;23&nbsp;2025</td><td class="deal">KKR + CPP &rarr; Sempra Infrastructure</td><td class="num">45%</td><td class="num">$10.0B</td><td class="num">~$31.7B</td><td>LNG/Mexico infra (not regulated utility)</td></tr>
+      <tr><td class="num">May&nbsp;19&nbsp;2025</td><td class="deal">Blackstone Infra &rarr; TXNM Energy</td><td class="num">100%</td><td class="num">$61.25/sh</td><td class="num">$11.5B</td><td>take-private; 23% premium to VWAP; PNM + TNMP (TX)</td></tr>
+      <tr><td class="num">Aug&nbsp;5&nbsp;2025</td><td class="deal">Brookfield &rarr; Duke Energy Florida</td><td class="num">19.7%</td><td class="num">$6.0B</td><td class="num">~$30.5B</td><td>staged 2026&ndash;28; funds $87B capex plan</td></tr>
+      <tr><td class="num">Oct&nbsp;21&nbsp;2025</td><td class="deal">National Fuel &rarr; CenterPoint Ohio gas</td><td class="num">100%</td><td class="num">$2.62B</td><td class="num">&mdash;</td><td>~1.9&times; rate base (rate base ~$1.38B)</td></tr>
+      <tr><td class="num">Jun&nbsp;5&nbsp;2025</td><td class="deal">KKR + PSP &rarr; AEP transcos (OH, I&amp;M)</td><td class="num">19.9%</td><td class="num">$2.82B</td><td class="num">&mdash;</td><td>30.3&times; LTM P/E; AEP Texas excluded</td></tr>
+      <tr><td class="num">Jan&nbsp;2&nbsp;2024</td><td class="deal">Blackstone Infra &rarr; NIPSCO (NiSource)</td><td class="num">19.9%</td><td class="num">$2.15B</td><td class="num">~$14.3B</td><td>+$250M capex commitment</td></tr>
+      <tr><td class="num">Apr&nbsp;1&nbsp;2025</td><td class="deal">Bernhard/Delta &rarr; CenterPoint LA+MS gas</td><td class="num">100%</td><td class="num">$1.2B</td><td class="num">&mdash;</td><td>~32&times; 2023 LDC earnings</td></tr>
+    </tbody>
+    <tfoot><tr><td colspan="6">Also: Dominion sold its Ohio/Utah/North Carolina gas utilities to Enbridge for ~$14B total EV (closed through Oct&nbsp;2024). Oncor saw no equity transaction; the Sempra-level KKR/CPP deal funds Oncor capex without transferring its equity.</td></tr></tfoot>
+  </table>
+
+  <!-- ============================================================= -->
+  <!-- SECTION G — GAS COMPRESSION -->
+  <!-- ============================================================= -->
+  <h2 class="sec"><span class="num">G</span> Gas Compression <span class="unit">$/horsepower</span></h2>
+  <p class="summary">Contract compression &mdash; the backbone of Permian gas gathering and increasingly of behind-the-meter power for data centers &mdash; consolidated hard in 2024. The clean per-unit comp is Archrock&rsquo;s TOPS purchase at <b>~$1,695/hp</b> for young electric-drive fleet.</p>
+  <table>
+    <thead><tr>
+      <th>Date</th><th>Buyer &rarr; Target</th><th class="num">Horsepower</th><th class="num">Value</th><th class="num">$/hp</th><th>Note</th>
+    </tr></thead>
+    <tbody>
+      <tr><td class="num">Q4&nbsp;2024</td><td class="deal">Archrock &rarr; TOPS</td><td class="num">580,000</td><td class="num">$983M</td><td class="num">~$1,695</td><td>electric motor-drive; Permian; cash+stock</td></tr>
+      <tr><td class="num">Apr&nbsp;1&nbsp;2024</td><td class="deal">Kodiak &rarr; CSI Compressco</td><td class="num">4.3M <span class="nd">combined fleet</span></td><td class="num">$854M</td><td class="num"><span class="nd">deal n/d</span></td><td>all-equity (incl. $619M net debt); largest contract fleet</td></tr>
+    </tbody>
+    <tfoot><tr><td colspan="6">$/hp = value &divide; horsepower. On TOPS&rsquo;s ~500,000 operating hp the figure is ~$1,966/hp. The Kodiak&ndash;CSI per-unit $/hp is n/d because CSI&rsquo;s standalone fleet horsepower is not separately disclosed (4.3M hp is the post-deal combined fleet, &gt;2.8M in the Permian).</td></tr></tfoot>
+  </table>
+
+  <!-- ============================================================= -->
+  <!-- SECTION H — TRANSMISSION -->
+  <!-- ============================================================= -->
+  <h2 class="sec"><span class="num">H</span> Transmission <span class="unit">$/mile &middot; program capex</span></h2>
+  <p class="summary">Transmission rarely produces clean asset-trade comps; the market is expressed instead as multi-billion buildout programs and financings. The closest per-unit reads come from line-build commitments.</p>
+  <table>
+    <thead><tr>
+      <th>Date</th><th>Program / financing</th><th class="num">Scope</th><th class="num">Value</th><th class="num">$/mile</th><th>Note</th>
+    </tr></thead>
+    <tbody>
+      <tr><td class="num">2025</td><td class="deal">AEP Transmission &mdash; DOE loan guarantee</td><td class="num">~5,000 mi upgrade</td><td class="num">$1.6B</td><td class="num">~$320k <span class="nd">loan basis</span></td><td>IN/MI/OH/OK/WV; rebuild/upgrade</td></tr>
+      <tr><td class="num">2025&ndash;26</td><td class="deal">Grain Belt Express (Invenergy)</td><td class="num">800-mi HVDC</td><td class="num">~$11B+ <span class="nd">project</span></td><td class="num"><span class="nd">n/d</span></td><td>$1.7B contractor awards (Quanta, Kiewit); largest US line</td></tr>
+      <tr><td class="num">2026</td><td class="deal">PJM RTEP expansion plan</td><td class="num">multi-project</td><td class="num">$11.8B</td><td class="num"><span class="nd">n/d</span></td><td>board-approved; load-growth driven</td></tr>
+      <tr><td class="num">2025&ndash;26</td><td class="deal">ERCOT STEP / Permian reliability</td><td class="num">statewide / W. TX</td><td class="num">~$33B / &ge;$13B</td><td class="num"><span class="nd">n/d</span></td><td>regulated capex (not M&amp;A)</td></tr>
+    </tbody>
+    <tfoot><tr><td colspan="6">These are buildout/financing commitments, not asset acquisitions; $/mile shown only where directly derivable (AEP loan &divide; miles). The 19.9% AEP transco stake sale to KKR/PSP (Section&nbsp;F) is the nearest thing to a transmission asset-price comp.</td></tr></tfoot>
+  </table>
+
+  <!-- ============================================================= -->
+  <!-- SECTION I — POWER MARKET -->
+  <!-- ============================================================= -->
+  <h2 class="sec"><span class="num">I</span> Power Market <span class="unit">$/MWh energy &middot; $/MW&#8209;day capacity</span></h2>
+  <p class="summary">The wholesale signals that underwrite every deal above: PJM capacity hit its administrative cap on load-growth scarcity, while ERCOT energy stays moderate on average with a fattening high-price tail.</p>
+  <table>
+    <thead><tr>
+      <th>Date</th><th>Market / index</th><th class="num">Price</th><th>Note</th>
+    </tr></thead>
+    <tbody>
+      <tr><td class="num">2026/2027</td><td class="deal">PJM Base Residual Auction (capacity)</td><td class="num">$329.17/MW-day</td><td>cleared at FERC-approved cap, footprint-wide</td></tr>
+      <tr><td class="num">2025/2026</td><td class="deal">PJM Base Residual Auction (capacity)</td><td class="num">$269.92/MW-day</td><td>prior-year reference</td></tr>
+      <tr><td class="num">2025</td><td class="deal">ERCOT wholesale energy (avg)</td><td class="num">~$30&ndash;36/MWh</td><td>North hub ~$35.88 (Dec&nbsp;2025); scarcity in upper tail</td></tr>
+      <tr><td class="num">Q1&nbsp;2026</td><td class="deal">LevelTen N. America solar PPA (P25)</td><td class="num">$64.49/MWh</td><td>see Section&nbsp;C</td></tr>
+      <tr><td class="num">Q1&nbsp;2026</td><td class="deal">LevelTen N. America wind PPA (P25)</td><td class="num">$79.40/MWh</td><td>see Section&nbsp;C</td></tr>
+    </tbody>
+    <tfoot><tr><td colspan="4">PJM capacity at the cap signals acute load-growth-driven scarcity (data centers); ERCOT&rsquo;s moderate average masks a widening tail of &gt;$500/MWh intervals during peak demand &mdash; the volatility that makes firm, dispatchable capacity (Sections&nbsp;B, E) valuable.</td></tr></tfoot>
+  </table>
+
+  <!-- ===================== READ-THROUGH ===================== -->
+  <figure>
+    <img src="assets/c1_per_mw.png" alt="Capacity cost per kW across the stack">
+    <figcaption>Fig.&nbsp;3 &mdash; What one kW of firm capacity costs across the stack: operating gas fleets and nuclear restarts are an order of magnitude cheaper per kW than greenfield nuclear (Vogtle). Sources: Sections&nbsp;B, D, E.</figcaption>
+  </figure>
+
+  <div class="thesis">
+    <h3>Read-through across the stack</h3>
+    <p>One pattern recurs at every layer: the scarce, financeable unit is <b>firm, interconnected capacity under long-term contract</b>, and its price is climbing. An AI lease throws off $1.22&ndash;2.26M/MW-yr once a hyperscaler&rsquo;s credit backstops it; an operating gas fleet trades at ~$900&ndash;1,320/kW, less than half of new-build; a nuclear restart delivers firm megawatts at ~$1,900/kW versus ~$16,500/kW to build them new; PJM capacity clears at its cap. The cheapest path to a contracted megawatt is almost never greenfield construction &mdash; it is buying, restarting, or re-leasing capacity that already exists and already touches the grid.</p>
+    <p>Land and water are the gating inputs, not the value. Powered Texas dirt spans ~$8,000/acre (raw, pre-boom) to $480,000/acre (to capture an energized site), and the constraint increasingly binds on water &mdash; benchmarked here at $460/AF (Vista Ridge raw) and in barrels per day &mdash; rather than on acreage.</p>
+  </div>
+
+  <!-- ===================== STAT CHIPS ===================== -->
+  <div class="chips">
+    <div class="chip"><div class="v">$1.22&ndash;2.26M</div><div class="l">AI lease, per MW-year</div></div>
+    <div class="chip"><div class="v">~$900&ndash;1,320</div><div class="l">Gas fleet, per kW</div></div>
+    <div class="chip"><div class="v">~$1,900/kW</div><div class="l">Nuclear restart vs ~$16,500 new-build</div></div>
+    <div class="chip"><div class="v">$329.17</div><div class="l">PJM capacity, per MW-day (cap)</div></div>
+    <div class="chip"><div class="v">$460/AF</div><div class="l">Vista Ridge raw groundwater</div></div>
+  </div>
+
+  <!-- ===================== FOOTER / SOURCES ===================== -->
+  <div class="foot">
+    <p><b>Methodology.</b> Executed and announced transactions from primary and named sources only. Per-unit figures are computed from disclosed totals (formula shown per section); &ldquo;n/d&rdquo; marks any figure not disclosed and is never estimated. Water conversions: 1&nbsp;acre-foot = 7,758&nbsp;bbl; 1&nbsp;AF/yr &asymp; 21.3&nbsp;bbl/d; 1&nbsp;million gallons = 23,810&nbsp;bbl. Internal use; not investment advice.</p>
+    <div class="srcgrid">
+      <p><b>AI/DC leases &amp; land:</b> Cipher Mining 8-Ks &amp; PRs (Sep&nbsp;25, Nov&nbsp;3, Nov&nbsp;20 &rsquo;25; Black Pearl Compute notes Feb&nbsp;&rsquo;26); Galaxy Digital PR (Mar &amp; Aug&nbsp;15 &rsquo;25), Delphi Digital; TeraWulf PRs/8-K (Aug&nbsp;14 &amp; 18 &rsquo;25); Applied Digital IR/8-K (Q3&nbsp;FY26); Riot GlobeNewswire (Jan&nbsp;16 &rsquo;26); Tract GlobeNewswire (May&nbsp;7 &rsquo;25); Amazon/Bastrop &amp; Cawley (The Real Deal); Meta El Paso (about.fb.com, City of El Paso); 1606 Corp PR (Mar&nbsp;17 &rsquo;26); CleanSpark, New Era, Google (DCD/TAMU TRERC); Fermi America (ANS); Poolside/CoreWeave; IREN.</p>
+      <p><b>Water:</b> POSGCD/Sandow filings; Crusoe/Stargate Abilene tour; San Antonio Current; Texas Tribune (Hood Co., Jun&nbsp;2 &rsquo;26); SAWS Vista Ridge.</p>
+      <p><b>Generation &amp; utilities:</b> Constellation, NRG, Talen, Vistra 8-Ks/PRs &amp; Utility Dive; Blackstone, KKR, Brookfield, GIP/EQT, National Fuel, Bernhard, Dominion/Enbridge releases &amp; SEC 8-Ks.</p>
+      <p><b>Solar, geothermal, nuclear:</b> LevelTen Q1&nbsp;2026 PPA Index; CIM/Permanent Power, Nautilus, Chrysalis (Business Wire); Fervo, Sage, XGS, Ormat releases &amp; Utility Dive; DOE/energy.gov, World Nuclear News, ANS, POWER; Constellation, Talen, Meta, Amazon, Google, Westinghouse/Cameco/Brookfield releases &amp; SEC filings.</p>
+      <p><b>Compression, transmission, power market:</b> Archrock &amp; Kodiak 8-Ks/PRs; AEP, Invenergy Grain Belt Express, PJM RTEP, ERCOT releases; PJM RPM auction reports (2026/27, 2025/26); EIA STEO/ERCOT system-wide prices.</p>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
