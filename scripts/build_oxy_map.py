@@ -12,6 +12,7 @@ import json, os, sys, math, collections
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
+import matplotlib.patheffects as pe
 from matplotlib.patches import Polygon as MplPoly
 from matplotlib.lines import Line2D
 
@@ -99,20 +100,36 @@ def load_assets(path):
     return out
 
 assets = load_assets(sys.argv[1] if len(sys.argv) > 1 else None)
-used = set()
+cc = collections.Counter(); skipped = []; keyrows = []; num = 0
 for a in assets:
     lon, lat = a.get("lon"), a.get("lat")
     if lon is None and a.get("county"):
-        c = cent.get(a["county"].upper())
-        if c: lon, lat = c
-    if lon is None: continue
+        co = a["county"].upper(); c = cent.get(co)
+        if not c:
+            skipped.append(f"{a.get('name')} [county {co} not in map]"); continue
+        k = cc[co]; cc[co] += 1
+        if k:  # spiral successive same-county assets off the centroid
+            ang = k * 2.39996; r = 0.17
+            lon = c[0] + r*math.cos(ang)/coslat; lat = c[1] + r*math.sin(ang)
+        else:
+            lon, lat = c
+    if lon is None:
+        skipped.append(f"{a.get('name')} [no location]"); continue
+    if not (xmin-0.1 <= lon <= xmax+0.1 and ymin-0.1 <= lat <= ymax+0.1):
+        skipped.append(f"{a.get('name')} [out of Permian-TX extent]"); continue
     col, mk, sz, _ = STYLE.get(a.get("type", "gas"), STYLE["gas"])
-    inside = xmin-0.1 <= lon <= xmax+0.1 and ymin-0.1 <= lat <= ymax+0.1
-    if not inside: continue
-    ax.scatter([lon], [lat], c=col, marker=mk, s=sz, edgecolors="#0b1220", linewidths=0.8, zorder=5)
-    if a.get("type") != "sub" and a.get("label"):
-        ax.annotate(a["label"], (lon, lat), xytext=(5, 4), textcoords="offset points",
-                    color="#e2e8f0", fontsize=6.2, fontweight="bold", zorder=6)
+    ax.scatter([lon], [lat], c=col, marker=mk, s=sz, edgecolors="#0b1220", linewidths=0.9, zorder=5)
+    if a.get("type") != "sub":
+        num += 1
+        ax.annotate(str(num), (lon, lat), xytext=(6, 5), textcoords="offset points",
+                    color="#ffffff", fontsize=8, fontweight="bold", zorder=7,
+                    path_effects=[pe.withStroke(linewidth=2.6, foreground=col)])
+        keyrows.append({"n": num, "label": a.get("label") or a.get("name"), "type": a.get("type")})
+if skipped:
+    print("NOTE — not on Permian-TX map (shown in text / separate region):")
+    for s in skipped: print("   -", s)
+json.dump(keyrows, open(os.path.join(ROOT, "outputs", "reports", "oxy_map_key.json"), "w"), indent=1, ensure_ascii=False)
+print("KEY:", " · ".join(f"{r['n']}={r['label']}" for r in keyrows))
 
 ax.set_xlim(xmin-0.15, xmax+0.15); ax.set_ylim(ymin-0.15, ymax+0.15)
 ax.set_xticks([]); ax.set_yticks([])

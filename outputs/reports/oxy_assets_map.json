@@ -1,0 +1,19 @@
+[
+  {"name":"Century gas/CO2 plant","label":"Century gas/CO₂ (Pecos)","type":"gas","lon":-102.5809,"lat":30.6075},
+  {"name":"Block 31 gas plant","label":"Block 31 (Crane)","type":"gas","lon":-102.4623,"lat":31.4415},
+  {"name":"Wasson CO2-EOR plant","label":"Wasson CO₂-EOR (Yoakum)","type":"gas","lon":-102.7569,"lat":33.0099},
+  {"name":"Denver City CO2 hub","label":"Denver City CO₂ hub","type":"gas","county":"GAINES"},
+  {"name":"WES North Loving gas plant","label":"WES Loving plant","type":"gas","county":"LOVING"},
+  {"name":"WES DBM processing","label":"WES DBM (Delaware)","type":"gas","county":"REEVES"},
+  {"name":"Athena plant (OXY-dedicated)","label":"Athena plant (2026)","type":"gas","county":"MIDLAND"},
+  {"name":"Goldsmith Solar","label":"Goldsmith Solar 16 MW","type":"power","lon":-102.6337,"lat":32.0015},
+  {"name":"NET Power first plant","label":"NET Power 80 MW (2029)","type":"netpower","county":"ECTOR"},
+  {"name":"STRATOS DAC","label":"STRATOS DAC (2026)","type":"dac","county":"ECTOR"},
+  {"name":"South Curtis Ranch recycling","label":"S. Curtis Ranch recycle","type":"water","county":"MIDLAND"},
+  {"name":"Pathfinder PW pipeline","label":"Pathfinder PW (2027)","type":"water","county":"LOVING"},
+  {"name":"WES desal pilot (JIP2)","label":"WES desal pilot","type":"water","county":"REEVES"},
+  {"name":"North Cowden substation","type":"sub","lon":-102.51677,"lat":32.006051},
+  {"name":"South Curtis Ranch substation","type":"sub","lon":-102.159612,"lat":32.129845},
+  {"name":"Welch substation","type":"sub","lon":-102.13773,"lat":32.896391},
+  {"name":"Cogdell substation","type":"sub","lon":-100.886409,"lat":32.942344}
+]

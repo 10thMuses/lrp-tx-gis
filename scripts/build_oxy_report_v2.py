@@ -1,0 +1,378 @@
+"""Build the OXY infrastructure & financial intelligence report (portrait A4, paginated)
+and render to PDF via WeasyPrint. Subject-company-only; no third-party/deal framing.
+
+Content is sourced from the deep-research workstreams (midstream, power/NET Power,
+water, financials, Berkshire, carbon, team). The Permian infrastructure map
+(oxy_permian_map.png) + key (oxy_map_key.json) are embedded.
+
+Run: python3 scripts/build_oxy_report_v2.py   (writes HTML; render PDF separately)
+"""
+import json, os
+
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+RPT = os.path.join(ROOT, "outputs", "reports")
+OUT = os.path.join(RPT, "oxy-intelligence-report.html")
+KEY = json.load(open(os.path.join(RPT, "oxy_map_key.json"), encoding="utf-8"))
+
+TYPE_LABEL = {"gas": "Gas processing / CO₂", "power": "Power / solar", "netpower": "NET Power",
+              "dac": "DAC / CO₂ capture", "water": "Water / recycling"}
+keyhtml = "".join(
+    f'<div class="kr"><span class="kn">{r["n"]}</span><span class="kt">{r["label"]}'
+    f'<span class="kk"> · {TYPE_LABEL.get(r["type"], r["type"])}</span></span></div>' for r in KEY)
+
+CSS = """
+@font-face{font-family:'Inter';font-weight:400;src:url('https://cdn.jsdelivr.net/fontsource/fonts/inter@latest/latin-400-normal.woff2') format('woff2');}
+@font-face{font-family:'Inter';font-weight:500;src:url('https://cdn.jsdelivr.net/fontsource/fonts/inter@latest/latin-500-normal.woff2') format('woff2');}
+@font-face{font-family:'Inter';font-weight:600;src:url('https://cdn.jsdelivr.net/fontsource/fonts/inter@latest/latin-600-normal.woff2') format('woff2');}
+@font-face{font-family:'Inter';font-weight:700;src:url('https://cdn.jsdelivr.net/fontsource/fonts/inter@latest/latin-700-normal.woff2') format('woff2');}
+@font-face{font-family:'Inter';font-weight:800;src:url('https://cdn.jsdelivr.net/fontsource/fonts/inter@latest/latin-800-normal.woff2') format('woff2');}
+@font-face{font-family:'Inter';font-weight:900;src:url('https://cdn.jsdelivr.net/fontsource/fonts/inter@latest/latin-900-normal.woff2') format('woff2');}
+:root{--ink:#15202b;--mut:#5b6b7a;--faint:#8a98a6;--red:#b91c1c;--rule:#e2e8ef;--tint:#f6f8fb;--amber:#b45309;--teal:#0f766e;}
+@page{size:A4;margin:18mm 15mm 16mm 15mm;
+  @top-left{content:"OCCIDENTAL PETROLEUM (NYSE: OXY) — INFRASTRUCTURE & FINANCIAL INTELLIGENCE";font-family:'Inter';font-size:6.7pt;font-weight:700;color:#9aa7b4;letter-spacing:.6pt;}
+  @top-right{content:"CONFIDENTIAL";font-family:'Inter';font-size:6.7pt;font-weight:700;color:#b91c1c;letter-spacing:1.2pt;}
+  @bottom-left{content:"Prepared 19 June 2026 · subject-company profile · sources inline";font-family:'Inter';font-size:6.5pt;color:#9aa7b4;}
+  @bottom-right{content:counter(page) " / " counter(pages);font-family:'Inter';font-size:7.5pt;font-weight:600;color:#7e8c9a;}}
+@page cover{margin:0;@top-left{content:none}@top-right{content:none}@bottom-left{content:none}@bottom-right{content:none}}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{font-family:'Inter','DejaVu Sans',sans-serif;color:var(--ink);font-size:9.4pt;line-height:1.46;font-feature-settings:"tnum" 1;}
+p{margin:0 0 7pt;}
+.cover{page:cover;height:297mm;position:relative;background:linear-gradient(160deg,#0c1726 0%,#13243b 52%,#0a1320 100%);color:#eaf0f7;padding:30mm 22mm;}
+.cover .bar{width:54pt;height:5pt;background:linear-gradient(90deg,#b91c1c,#f59e0b);margin-bottom:20pt;}
+.cover .ey{font-size:9pt;font-weight:700;letter-spacing:3pt;color:#fca5a5;text-transform:uppercase;}
+.cover h1{font-size:33pt;font-weight:900;line-height:1.05;letter-spacing:-.8pt;margin:14pt 0 0;}
+.cover h1 span{color:#f8b4b4;}
+.cover .sub{font-size:12pt;color:#aebccd;margin-top:14pt;max-width:150mm;line-height:1.5;}
+.cover .meta{position:absolute;left:22mm;bottom:26mm;font-size:8.5pt;color:#8ea0b3;line-height:1.7;}
+.cover .scope{position:absolute;right:22mm;bottom:26mm;text-align:right;font-size:8pt;color:#8ea0b3;line-height:1.7;}
+h2{font-size:16.5pt;font-weight:800;letter-spacing:-.3pt;color:var(--ink);margin:0 0 2pt;padding-top:5pt;border-top:2.4pt solid var(--red);display:inline-block;}
+.secnum{font-size:8pt;font-weight:800;color:var(--red);letter-spacing:2pt;display:block;margin-bottom:3pt;padding-top:8pt;}
+.sec{margin-bottom:13pt;}
+.pageb{break-before:page;}
+h3{font-size:11pt;font-weight:800;color:var(--ink);margin:11pt 0 3pt;}
+h4{font-size:9.6pt;font-weight:800;color:var(--red);margin:8pt 0 2pt;letter-spacing:.2pt;}
+.lead{font-size:10pt;color:#27323d;line-height:1.5;margin-bottom:8pt;}
+b,strong{font-weight:700;color:#0d1620;}
+.mut{color:var(--mut);}
+small,.src{font-size:7.2pt;color:var(--faint);line-height:1.4;}
+ul{margin:2pt 0 8pt 0;list-style:none;}
+li{position:relative;padding-left:11pt;margin-bottom:3.5pt;font-size:9.2pt;line-height:1.42;}
+li:before{content:"";position:absolute;left:0;top:5pt;width:4pt;height:4pt;border-radius:1pt;background:var(--red);}
+table{width:100%;border-collapse:collapse;margin:5pt 0 4pt;font-size:8.1pt;}
+th{text-align:left;font-size:6.8pt;font-weight:800;text-transform:uppercase;letter-spacing:.5pt;color:#6b7a89;border-bottom:1.2pt solid #cbd5e1;padding:3.5pt 4pt;}
+td{padding:3.5pt 4pt;border-bottom:.6pt solid var(--rule);vertical-align:top;line-height:1.32;}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums;}
+tr:nth-child(even) td{background:var(--tint);}
+.cs{border:.8pt solid var(--rule);border-left:3pt solid var(--red);border-radius:5pt;background:#fcfdfe;padding:9pt 11pt;margin:8pt 0;page-break-inside:avoid;}
+.cs .lab{font-size:6.8pt;font-weight:800;letter-spacing:1.5pt;color:var(--red);text-transform:uppercase;}
+.cs h3{margin:1pt 0 5pt;font-size:11.5pt;}
+.cs p{font-size:8.7pt;line-height:1.45;margin-bottom:5pt;}
+.cs .row{display:flex;gap:9pt;}
+.kbox{border:.8pt solid var(--rule);border-radius:5pt;padding:8pt 10pt;background:var(--tint);margin:7pt 0;page-break-inside:avoid;}
+.kbox .h{font-size:7pt;font-weight:800;letter-spacing:1.4pt;color:#6b7a89;text-transform:uppercase;margin-bottom:4pt;}
+.quote{border-left:2.4pt solid #cbd5e1;padding:2pt 0 2pt 9pt;margin:5pt 0;font-style:italic;color:#33414e;font-size:8.8pt;}
+.maprow{display:flex;gap:10pt;align-items:flex-start;}
+.maprow img{width:118mm;border:.8pt solid var(--rule);border-radius:4pt;}
+.keytab{flex:1;font-size:7.4pt;}
+.kr{display:flex;gap:5pt;margin-bottom:2.6pt;align-items:baseline;}
+.kn{flex:none;width:13pt;height:13pt;border-radius:50%;background:var(--ink);color:#fff;font-size:6.6pt;font-weight:800;text-align:center;line-height:13pt;}
+.kt{color:#27323d;font-weight:600;line-height:1.25;}
+.kk{color:var(--faint);font-weight:500;}
+.tag{display:inline-block;font-size:6.4pt;font-weight:800;letter-spacing:.4pt;padding:1pt 4pt;border-radius:3pt;text-transform:uppercase;vertical-align:middle;}
+.tag.ex{background:#dcfce7;color:#166534;} .tag.pl{background:#fef9c3;color:#854d0e;} .tag.dv{background:#f1f5f9;color:#64748b;}
+.toc{font-size:9.2pt;} .toc div{display:flex;justify-content:space-between;border-bottom:.6pt dotted #cbd5e1;padding:3.5pt 0;}
+.toc .t{font-weight:600;} .toc .s{color:var(--faint);}
+.note{background:#fff7ed;border-left:2.4pt solid var(--amber);padding:6pt 9pt;font-size:8.4pt;color:#5b4524;border-radius:0 4pt 4pt 0;margin:6pt 0;}
+.two{display:flex;gap:12pt;}
+h2,h3,h4{break-after:avoid;}
+table,.maprow,.two{break-inside:avoid;}
+.toc .s{display:none;}
+.lead{break-after:avoid;}
+"""
+
+def chip(s):
+    s=s.upper()
+    if s.startswith("EXIST"): return '<span class="tag ex">existing</span>'
+    if s.startswith("PLAN") or s.startswith("PERMIT"): return '<span class="tag pl">planned</span>'
+    return '<span class="tag dv">divested</span>'
+
+HTML = f"""<!doctype html><html lang="en"><head><meta charset="utf-8">
+<title>Occidental Petroleum — Infrastructure & Financial Intelligence</title>
+<style>{CSS}</style></head><body>
+
+<section class="cover">
+  <div class="bar"></div>
+  <div class="ey">Confidential · Subject-Company Intelligence</div>
+  <h1>Occidental Petroleum<br><span>OXY</span> — Permian infrastructure,<br>water, power &amp; financial profile</h1>
+  <div class="sub">A deep-dive intelligence dossier on Occidental's midstream, pipeline, gas-processing, power and water infrastructure across West Texas and the entire Permian Basin — with full financials (net debt, cash flow, capex, guidance), the Berkshire Hathaway financing relationship, the NET Power carbon-capture-on-gas program, and profiles of key personnel.</div>
+  <div class="meta">Prepared 19 June 2026<br>Subject company: Occidental Petroleum Corp. (NYSE: OXY)<br>Scope: West Texas + Permian Basin (TX + NM)<br>Sources: SEC filings &amp; earnings calls · OXY / WES / 1PointFive / NET Power releases · DOE / EPA · trade press — cited inline</div>
+</section>
+
+<!-- TOC -->
+<div class="sec brk pageb">
+  <span class="secnum">CONTENTS</span><h2>Contents</h2>
+  <div class="toc" style="margin-top:8pt">
+    <div><span class="t">1 · OXY at a glance — financials (net debt, cash flow, capex, 2026 guidance)</span><span class="s">p.3</span></div>
+    <div><span class="t">2 · The Berkshire Hathaway financing relationship (exact terms)</span><span class="s">p.4</span></div>
+    <div><span class="t">3 · OXY infrastructure map — Permian / West Texas</span><span class="s">p.5</span></div>
+    <div><span class="t">4 · Midstream, pipelines &amp; gas processing — incl. CO₂-EOR network</span><span class="s">p.6</span></div>
+    <div><span class="t">5 · Water infrastructure — produced water, recycling, desalination, DLE</span><span class="s">p.9</span></div>
+    <div><span class="t">6 · Power generation &amp; the NET Power carbon-capture-on-gas program</span><span class="s">p.12</span></div>
+    <div><span class="t">7 · Carbon capture (1PointFive) — context &amp; economics</span><span class="s">p.14</span></div>
+    <div><span class="t">8 · Key personnel — profiles</span><span class="s">p.15</span></div>
+    <div><span class="t">9 · Caveats, data gaps &amp; verification flags</span><span class="s">p.17</span></div>
+  </div>
+  <div class="note" style="margin-top:12pt"><b>Reading note.</b> This is a subject-company profile of Occidental only. Every infrastructure asset is tagged Existing / Planned / Permitted with its county, capacity and status. Figures carry inline sourcing; where a figure is genuinely not in public disclosure it is marked "not disclosed" rather than estimated.</div>
+</div>
+
+<!-- 1 FINANCIALS -->
+<div class="sec brk">
+  <span class="secnum">SECTION 1</span><h2>OXY at a glance — financials</h2>
+  <p class="lead" style="margin-top:6pt">Post-OxyChem (sold to Berkshire Hathaway, closed 2 Jan 2026), Occidental reports three segments — <b>Oil &amp; Gas</b> (upstream; Permian-anchored), <b>Midstream &amp; Marketing</b> (incl. its Western Midstream stake), and <b>Low Carbon Ventures / 1PointFive</b>. The story of the last 22 months is deleveraging: net debt roughly halved and principal debt fell from the post-CrownRock peak toward a $10B target, restoring investment grade.</p>
+  <table>
+    <tr><th>Metric ($M unless noted)</th><th class="n">FY2024</th><th class="n">FY2025</th><th class="n">Q1 2026</th><th class="n">FY2026 guidance</th></tr>
+    <tr><td><b>Net debt</b> (total debt − cash)</td><td class="n">23,992</td><td class="n">20,428</td><td class="n"><b>11,860</b></td><td class="n">—</td></tr>
+    <tr><td>Principal debt (OXY headline)</td><td class="n">~24.9B</td><td class="n">~15.0B</td><td class="n">13.3B*</td><td class="n">target $10B</td></tr>
+    <tr><td>Cash &amp; equivalents</td><td class="n">2,125</td><td class="n">1,968</td><td class="n">3,811</td><td class="n">—</td></tr>
+    <tr><td>Operating cash flow</td><td class="n">11,439</td><td class="n">10,532</td><td class="n">~2,000</td><td class="n">not disclosed</td></tr>
+    <tr><td>Free cash flow</td><td class="n">5,176</td><td class="n">4,105</td><td class="n">1,700**</td><td class="n">&gt;$1.2B incremental</td></tr>
+    <tr><td>Capital expenditure</td><td class="n">6,263</td><td class="n">6,427</td><td class="n">~1,450</td><td class="n"><b>5,500–5,900</b></td></tr>
+    <tr><td>Net income to common</td><td class="n">2,377</td><td class="n">1,647</td><td class="n">3,175***</td><td class="n">—</td></tr>
+    <tr><td>Total production (Mboe/d)</td><td class="n">—</td><td class="n">1,460 (Q4)</td><td class="n">1,426</td><td class="n">1,410–1,460</td></tr>
+    <tr><td>Permian production (Mboe/d)</td><td class="n">—</td><td class="n">~800 (Q4)</td><td class="n">787 (55%)</td><td class="n">Q2: 783–803</td></tr>
+    <tr><td>Dividend / share (qtr)</td><td class="n">0.22</td><td class="n">0.24→0.26</td><td class="n">0.26</td><td class="n">growing</td></tr>
+  </table>
+  <p class="src">*Principal debt as of 5 May 2026, down from ~$20.8B at Q3-2025; $15.6B retired over 22 months, lowest since 2019. **FCF before working capital, +52% YoY. ***Q1-2026 net income includes a ~$3.1B gain on the OxyChem sale; continuing-ops adjusted income ≈ $1.07B. OXY does not report EBITDA. Sources: OXY Q1-2026 earnings call &amp; slides (5 May 2026); OXY Q4/FY2025 release (18 Feb 2026); FY2024/FY2025 8-Ks; rendered GAAP via stockanalysis.com tying to the 10-K/10-Q. EDGAR returned HTTP 403 to automated fetch.</p>
+  <div class="two">
+    <div class="kbox" style="flex:1"><div class="h">Capex detail (2026)</div>
+      <ul><li>FY2026 capex guidance <b>$5.5–5.9B</b>, cut ~8% from the initial $6.3–6.7B frame; ~70% to US onshore.</li>
+      <li><b>Low Carbon Ventures / 1PointFive capex ~$100M for 2026</b> as STRATOS DAC spend rolls off.</li>
+      <li>Full per-segment 2026 capex split and <b>FY2027 capex/production guidance: not disclosed.</b></li></ul></div>
+    <div class="kbox" style="flex:1"><div class="h">Ratings &amp; allocation</div>
+      <ul><li><b>Fitch upgraded OXY to BBB</b> (investment grade) from BBB−, Stable, on 26 Feb 2026, citing accelerated debt reduction.</li>
+      <li>Capital priority: (1) debt to $10B principal; (2) growing dividend (raised ~8% to $0.26/qtr, Feb 2026); (3) build cash ahead of the 2029 preferred redemption. Buybacks de-emphasized.</li>
+      <li>Current Moody's/S&amp;P notches not re-confirmed this cycle (OXY regained IG at all three in 2023–24).</li></ul></div>
+  </div>
+  <h4>Divestitures → debt paydown</h4>
+  <table>
+    <tr><th>Asset → buyer</th><th>Proceeds</th><th>Closed</th><th>Use</th></tr>
+    <tr><td><b>OxyChem → Berkshire Hathaway</b></td><td>$9.7B cash</td><td>2 Jan 2026</td><td>$6.5B earmarked to debt; principal → $15.0B then $13.3B</td></tr>
+    <tr><td>Delaware upstream → Permian Resources; DJ minerals → Elk Range</td><td>~$1.2B</td><td>Q1 2025</td><td>2025 debt maturities</td></tr>
+    <tr><td>Midland-Basin gas gathering → Enterprise Products</td><td>$580M</td><td>22 Aug 2025</td><td>Debt reduction</td></tr>
+    <tr><td>Various non-core / non-op Permian upstream</td><td>~$370M</td><td>Apr–Jul 2025</td><td>Debt reduction</td></tr>
+  </table>
+</div>
+
+<!-- 2 BERKSHIRE -->
+<div class="sec brk">
+  <span class="secnum">SECTION 2</span><h2>The Berkshire Hathaway financing relationship</h2>
+  <p class="lead" style="margin-top:6pt">Berkshire's exposure to OXY has four distinct layers — an $8.5B preferred, ~83.9M warrants, a ~27% common stake, and (since Jan 2026) the OxyChem operating business it bought outright. The preferred is the structural anchor and the most misunderstood piece, so its exact terms are set out below.</p>
+  <h4>1) The 2019 preferred stock — $10B at 8%</h4>
+  <ul>
+    <li>To fund the 2019 Anadarko acquisition, Berkshire bought <b>100,000 shares of cumulative perpetual preferred at $100,000 liquidation value each = $10.0B</b>, carrying an <b>8% annual dividend</b> (cash, or in-kind at OXY's option). At ~$8.5B remaining, the dividend burden is ~<b>$680M/yr</b>.</li>
+    <li><b>Mandatory partial redemption</b> triggers whenever OXY's trailing-12-month common distributions (dividends + buybacks) exceed <b>$4.00/share</b>; the triggered amount is redeemed at a <b>10% premium (110% of face)</b>.</li>
+    <li><b>Optional redemption</b> of the <b>entire</b> balance begins <b>August 2029</b> at <b>105%</b> — independent of the $4.00 trigger.</li>
+  </ul>
+  <h4>2) Redemption progress — only ~$1.5B retired, all in 2023</h4>
+  <table>
+    <tr><th>Year</th><th class="n">Preferred redeemed (face)</th><th>Note</th></tr>
+    <tr><td>2022</td><td class="n">$0</td><td>Trigger not yet crossed</td></tr>
+    <tr><td><b>2023</b></td><td class="n"><b>~$1.5B</b> (+~$151M premiums)</td><td>First trigger Mar 2023 ($647M face + $65M premium); cumulative ~15% by Q3</td></tr>
+    <tr><td>2024 / 2025 / 2026-YTD</td><td class="n">$0</td><td>OXY cut buybacks (post-CrownRock) → distributions stayed below $4.00/sh → mandatory redemptions paused</td></tr>
+  </table>
+  <p>Remaining liquidation value ≈ <b>$8.5B</b> (carrying value $8,287M at 31 Mar 2026). OXY's stated plan, per CFO Sunil Mathew on the Q1-2026 call, is to first reach $10B principal debt, then build cash to redeem the preferred at the first penalty-free window:</p>
+  <div class="quote">"…build cash on the balance sheet to redeem the preferred in August of 2029, when we can redeem the preferred without the $4 per share return of capital trigger." <span class="mut">— Sunil Mathew, CFO, OXY Q1-2026 call, 6 May 2026</span></div>
+  <p class="src">Redeeming the preferred is expected to improve cash flow ~$1.2B/yr vs. 2025. Note the circularity flagged by analysts: Berkshire's $9.7B OxyChem purchase helps OXY de-lever, while Berkshire separately still holds the ~$8.5B preferred OXY will eventually redeem at 105%. OxyChem cash is going to <b>debt</b>, not the preferred. (Sources: OXY Q3-2023 release; Q1-2026 call/transcript, 6 May 2026; Berkshire 10-Qs via Morningstar; stockanalysis.com.)</p>
+  <div class="two">
+    <div class="kbox" style="flex:1"><div class="h">3) Warrants</div><ul>
+      <li><b>83,858,824 (~83.9M) warrants</b> on OXY common at <b>$59.624/share</b> (originally $62.50, adjusted for dividends).</li>
+      <li><b>Unexercised</b>; expire <b>one year after the preferred is fully redeemed</b>. Full exercise would lift Berkshire to ~33.8% of common.</li></ul></div>
+    <div class="kbox" style="flex:1"><div class="h">4) Common stake &amp; FERC</div><ul>
+      <li><b>264,941,431 common shares</b> — flat since 7 Feb 2025; <b>28.1%</b> (30 Jun 2025), ~26.6% now after warrant-driven share-count dilution. Cost basis ~low-$50s. Last buy 7 Feb 2025.</li>
+      <li><b>FERC authorized up to 50%</b> (order 19 Aug 2022, docket EC22-87-000) — driven by shared Louisiana FERC-jurisdictional grid assets.</li></ul></div>
+  </div>
+  <h4>What Buffett has said (verbatim, 2023 letter)</h4>
+  <div class="quote">"At yearend, Berkshire owned 27.8% of Occidental Petroleum's common shares… <b>Berkshire has no interest in purchasing or managing Occidental.</b> We particularly like its vast oil and gas holdings in the United States, as well as its leadership in carbon-capture initiatives, <b>though the economic feasibility of this technique has yet to be proven.</b>"</div>
+  <div class="quote">"But Vicki does know how to separate oil from rock, and that's an uncommon talent, valuable to her shareholders and to her country." <span class="mut">— Berkshire 2023 letter (pub. Feb 2024)</span></div>
+  <p class="src">Buffett disclaimed control again at the May 2023 meeting ("we're not going to buy control"). The 2025 letter (Feb 2026) is Greg Abel's — it treats OXY as OxyChem + an equity-method holding and disclosed a $4.5B write-down on Berkshire's Kraft Heinz + Occidental stakes. (Sources: berkshirehathaway.com/letters 2022–2025 PDFs; CNBC/Yahoo May 2023.)</p>
+</div>
+
+<!-- 3 MAP -->
+<div class="sec brk">
+  <span class="secnum">SECTION 3</span><h2>OXY infrastructure map — Permian / West Texas</h2>
+  <p class="lead" style="margin-top:6pt">OXY-owned/operated and OXY-affiliated (WES) infrastructure across the Permian, plotted on Census-TIGER county geography over the regional pipeline grid (HIFLD/EIA, shown for context — public pipeline GIS is not operator-tagged to OXY/WES, so OXY's CO₂ trunk lines are described in §4 rather than drawn).</p>
+  <div class="maprow">
+    <img src="oxy_permian_map.png" alt="OXY Permian infrastructure map">
+    <div class="keytab"><div style="font-size:6.8pt;font-weight:800;letter-spacing:1pt;color:#6b7a89;text-transform:uppercase;margin-bottom:5pt">Map key</div>{keyhtml}
+    <div style="margin-top:7pt;font-size:7pt;color:#8a98a6;line-height:1.35">Substations (blue dots) are OXY-named field substations: North Cowden (Ector), Curtis Ranch (Midland), Welch (Dawson), Cogdell (Scurry/Kent).</div></div>
+  </div>
+  <div class="note"><b>Off-map OXY assets (outside the Permian-TX frame).</b> Santa Garcias Solar 265 MW (Kleberg Co., S. Texas); 1PointFive South Texas DAC hub / King Ranch (Kleberg Co.); Bravo Dome CO₂ source field &amp; Bravo Pipeline origin (Harding/Union Cos., NE New Mexico); Lost Tank water recycling (Lea Co., NM); NET Power La Porte demo (Harris Co.); TerraLithium DLE (Imperial Co., California). Each is detailed in the relevant section.</div>
+</div>
+
+<!-- 4 MIDSTREAM -->
+<div class="sec brk">
+  <span class="secnum">SECTION 4</span><h2>Midstream, pipelines &amp; gas processing</h2>
+  <p class="lead" style="margin-top:6pt">OXY is the Permian's #1 CO₂-EOR operator, and its midstream footprint is built around that: a hub-and-spoke CO₂ grid centered on the Denver City hub, the Century capture complex in Pecos County, and — for gas, crude and produced water — a controlling ~41.9% interest in Western Midstream (WES). OXY has been a net <b>seller</b> of conventional gathering (Enterprise, 2025) while retaining the CO₂ network and WES.</p>
+  <table>
+    <tr><th>Asset</th><th>County / state</th><th>Capacity</th><th>Status</th><th>OXY role</th></tr>
+    <tr><td><b>Century gas/CO₂ plant</b></td><td>Pecos, TX</td><td>800 MMcf/d treating; ~8.4 Mt/yr CO₂</td><td>{chip("existing")}</td><td>Owns CO₂ facilities (~$1.1B); SandRidge-built</td></tr>
+    <tr><td>Block 31 gas plant</td><td>Crane, TX</td><td>not disclosed</td><td>{chip("existing")}</td><td>OXY-operated (Block 31 CO₂ flood)</td></tr>
+    <tr><td>Bravo Dome CO₂ field</td><td>Harding/Union, NM</td><td>~99% pure CO₂ source</td><td>{chip("existing")}</td><td>OXY operator (+ KM CO₂, XTO)</td></tr>
+    <tr><td>Bravo Pipeline (CO₂)</td><td>NM → Denver City, TX</td><td>218 mi · 382 MMcf/d</td><td>{chip("existing")}</td><td>Co-owned (Oxy/KM/XTO)</td></tr>
+    <tr><td>Cortez Pipeline (CO₂)</td><td>SW Colorado → Denver City</td><td>~500 mi · 1.3–1.5 Bcf/d</td><td>{chip("existing")}</td><td><b>Not OXY-owned</b> (KM 50%/Exxon 37%); OXY is shipper</td></tr>
+    <tr><td>Midland gas gathering → Enterprise</td><td>4 Midland-Basin cos., TX</td><td>~200 mi · 73,000 ac</td><td>{chip("divested")}</td><td>Sold $580M (Aug 2025); OXY now shipper</td></tr>
+    <tr><td>Athena gas plant (Enterprise-built)</td><td>Midland Basin, TX</td><td>300 MMcf/d · 40,000 bbl/d NGL</td><td>{chip("planned")}</td><td>Processes OXY gas (long-term deal); Q4-2026</td></tr>
+    <tr><td>WES Delaware (DBM) G&amp;P</td><td>Culberson/Loving/Reeves/Ward TX; Eddy/Lea NM</td><td>~2,190 → 2,490 MMcf/d</td><td>{chip("existing")}</td><td>via WES (~41.9%)</td></tr>
+    <tr><td>WES North Loving plant + Train II</td><td>Loving, TX</td><td>250 MMcf/d (2024) + 300 (Q2-2027)</td><td>{chip("existing")}/{chip("planned")}</td><td>via WES</td></tr>
+  </table>
+
+  <div class="cs"><div class="lab">Case study · Pecos County</div><h3>Century gas/CO₂ plant — the largest single-source industrial CO₂ capture in North America</h3>
+  <p>Under a June 2008 agreement, <b>SandRidge built and operates the plant while OXY funded construction (~$1.1B) and owns the CO₂-handling facilities</b>, taking 100% of the extracted CO₂ for Permian EOR (SandRidge keeps and sells the separated methane). Inlet <b>treating capacity is 800 MMcf/d</b> of high-CO₂ Val Verde gas, built in two trains (Train 1 started 26 Sep 2010; Train 2 in 2011). At full rate it captures <b>~8.4–8.7 Mt CO₂/yr</b> (~450 MMcf/d takeaway, +~50 MMcf/d from legacy SandRidge plants), moved ~160 mi via McCamey to the Denver City hub. OXY projected the stream would lift Permian output up to ~50,000 boe/d. A billion-dollar OXY CO₂-capture/processing complex inside Pecos County.</p>
+  <p class="src">Sources: Oil &amp; Gas Journal (plant start-up); SandRidge release, 30 Jun 2008; MIT Sequestration; GEM. "800 MMcf/d" is inlet treating capacity; "~450 MMcf/d" is CO₂ takeaway — different metrics, both correct.</p></div>
+
+  <div class="cs"><div class="lab">Case study · CO₂-EOR network</div><h3>The Denver City CO₂ hub-and-spoke grid</h3>
+  <p>OXY runs &gt;3.5 Tcf of CO₂ through Permian EOR and anchors a CO₂ grid centered on the <b>Denver City hub (Gaines/Yoakum Cos., TX)</b>, fed by natural and anthropogenic CO₂. <b>Bravo Dome (Harding/Union Cos., NE New Mexico)</b> is a ~99%-pure natural CO₂ field, OXY-operated, feeding the <b>Bravo Pipeline (218 mi, 20-in, 382 MMcf/d)</b> to Denver City and on into the Slaughter (Cochran/Hockley) and Wasson (Yoakum) units. <b>Correction to a common error:</b> the ~500-mi <b>Cortez Pipeline</b> (McElmo Dome, CO → Denver City; ~1.3–1.5 Bcf/d) is <b>Kinder Morgan-operated (KM 50% / ExxonMobil 37% / Cortez Vickers 13%) — not an OXY asset</b>; OXY participates only as a CO₂ shipper/buyer. Century (above) supplies the industrial-capture CO₂ leg of the same grid.</p>
+  <p class="src">Sources: GEM (Bravo Dome &amp; pipeline); Kinder Morgan CO₂ ops; Four Corners Free Press.</p></div>
+
+  <div class="cs"><div class="lab">Case study · Midstream equity</div><h3>Western Midstream (WES) — OXY's retained midstream engine</h3>
+  <p>OXY holds <b>~41.9% of WES as of YE-2025 (39.7% LP + 2.2% GP)</b> and controls it through the 100%-owned general partner; OXY supplied ~60% of WES revenue in 2025. (The widely cited "~49%" is dated — a 3 Feb 2026 redemption of 15.3M units (~$610M) alongside a Delaware gas-contract reset stepped OXY to ~39.5%.) WES's Delaware core (DBM) spans Culberson/Loving/Reeves/Ward (TX) and Eddy/Lea (NM), scaling gas processing to ~2,490 MMcf/d. <b>OXY has explored a full WES exit (stake ~$20B, JPMorgan advising) to cut debt; no sale has closed</b> — confirm ownership before treating WES as a fixed OXY asset. WES's produced-water build-out is covered in §5.</p>
+  <p class="src">Sources: WES 2025 10-K (filed 18 Feb 2026); SEC 13D/A &amp; 8-K (Jan–Feb 2026); Hart Energy.</p></div>
+
+  <div class="cs"><div class="lab">Case study · Transaction</div><h3>The Enterprise gathering sale (Aug 2025) — OXY converts owner → shipper</h3>
+  <p>OXY sold its <b>Midland-Basin gas-gathering affiliate to Enterprise Products for $580M cash, debt-free</b> (signed 6 Aug, closed 22 Aug 2025): ~200 mi of gathering across a ~73,000-acre, four-county dedication (&gt;1,000 locations; the four counties were not named in the releases). OXY simultaneously signed a long-term G&amp;P agreement keeping its gas dedicated to Enterprise, which is building the <b>Athena cryogenic plant (300 MMcf/d, 40,000 bbl/d NGL, in-service Q4-2026)</b>. OXY retains no gathering here — the rationale was deleveraging after the $12B CrownRock acquisition. OXY's earlier crude-terminal asset, the <b>Oxy Ingleside Energy Center (San Patricio Co.)</b>, was likewise divested (to Moda 2018 → Enbridge $3.0B, Oct 2021).</p>
+  <p class="src">Sources: Enterprise/BusinessWire (6 Aug 2025); OGJ; Rigzone (close, 27 Aug 2025); OGJ/Enbridge (Ingleside).</p></div>
+</div>
+
+<!-- 5 WATER -->
+<div class="sec brk">
+  <span class="secnum">SECTION 5</span><h2>Water infrastructure</h2>
+  <p class="lead" style="margin-top:6pt">The Permian produced <b>&gt;20 MMbbl/d of water in 2024</b> (water-to-oil ratio ~3.5:1, Delaware approaching 4:1), projected to exceed 26 MMbbl/d by 2030. OXY's own total produced-water volume is <b>not separately disclosed</b>; its water is handled through (a) a named recycling partnership with Select Water Solutions and (b) Western Midstream's large produced-water system. Seismicity-driven disposal curtailment is the structural driver pushing OXY toward recycling and, increasingly, desalination.</p>
+  <table>
+    <tr><th>Facility / asset</th><th>County / state</th><th>Capacity / size</th><th>Status</th><th>Partner</th></tr>
+    <tr><td><b>South Curtis Ranch</b> recycling</td><td>Midland Basin, TX</td><td>bbl/d n/d; &gt;50 MM bbl reused (May '24)</td><td>{chip("existing")}</td><td>Select Water (since Mar 2021)</td></tr>
+    <tr><td><b>Lost Tank</b> recycling</td><td>Lea, NM</td><td>up to 180,000 bbl/d; 1.9 MM bbl storage</td><td>{chip("existing")}</td><td>Select Water (2022); 13-mi line to Mesa Verde</td></tr>
+    <tr><td>WES "JIP 2" desalination pilot</td><td>Reeves, TX</td><td>2,000 bbl/d in → ~1,000 bbl/d freshwater</td><td>{chip("existing")}</td><td>WES + Chevron/COP/Devon/Exxon</td></tr>
+    <tr><td>Aris produced-water system (acquired)</td><td>Loving/Reeves/Ward TX; Eddy/Lea NM</td><td>1,812 Mbbl/d handle · 830 mi · 1,560 Mbbl/d recycle · 625k ac</td><td>{chip("existing")}</td><td>via WES (closed 15 Oct 2025)</td></tr>
+    <tr><td>WES Pathfinder PW pipeline</td><td>E. Loving, TX</td><td>42 mi · 30-in · &gt;800 Mbbl/d</td><td>{chip("planned")}</td><td>via WES; in-service 1 Jan 2027</td></tr>
+    <tr><td>TerraLithium DLE (commercial)</td><td>Imperial, CA <b>(not Permian)</b></td><td>tons-LCE/yr n/d</td><td>{chip("planned")}</td><td>OXY + BHE Renewables 50/50</td></tr>
+  </table>
+
+  <div class="cs"><div class="lab">Case study · Recycling network</div><h3>South Curtis Ranch &amp; Lost Tank — OXY's named recycle-into-completions footprint</h3>
+  <p>OXY's disclosed, operator-attributable recycling capacity sits in a long partnership with <b>Select Water Solutions (NYSE: WTTR)</b> across both sub-basins. <b>South Curtis Ranch (Midland Basin)</b>, operational since March 2021, surpassed <b>50 MM bbl treated and reused by May 2024</b> (Select cites the partnership reaching ~97 MM bbl combined by Q1-2026), cycling recycled water back into OXY completions to displace freshwater; daily capacity and the specific county are not disclosed. <b>Lost Tank (Lea Co., NM)</b>, launched 2022, scaled to <b>up to ~180,000 bbl/d</b> with <b>1.9 MM bbl storage</b> and a 13-mi pipeline into OXY's "Mesa Verde" development area, reaching 50 MM bbl recycled by Sept 2024. Two basins, one vendor — a direct hedge against the disposal-curtailment risk below.</p>
+  <p class="src">Sources: Select Water Solutions releases (20 May 2024; Sept 2024); selectwater.com.</p></div>
+
+  <div class="cs"><div class="lab">Case study · Desalination</div><h3>WES produced-water desalination pilots (JIP)</h3>
+  <p>OXY's only disclosed Permian <b>desalination</b> activity runs through Western Midstream's joint-industry program. <b>JIP 2</b> (Reeves Co., near Red Bluff Reservoir) <b>started up 17 Jun 2026</b>, taking 2,000 bbl/d of produced water and yielding ~1,000 bbl/d of reclaimed freshwater (10× the 2023 JIP 1 pilot) targeted at industrial cooling, irrigation and surface discharge, to guide commercial-scale design. The Oct-2025 Aris acquisition explicitly added "beneficial reuse and desalination" expertise WES intends to accelerate. Permian produced water is hypersaline (~120,000–130,000+ mg/L TDS vs. seawater ~35,000); brine management (ZLD/crystallization) is the core unsolved cost driver, and the Texas Produced Water Consortium target is treatment to &lt;200 TDS at ≤$1/bbl.</p>
+  <p class="src">Sources: WES release, 17 Jun 2026; TxPWC 2024 report; TWDB desalination cost study.</p></div>
+
+  <div class="cs"><div class="lab">Case study · Lithium / brine</div><h3>TerraLithium direct lithium extraction (DLE) — capability, with a scope boundary</h3>
+  <p><b>TerraLithium is a wholly-owned OXY subsidiary</b> commercializing DLE: it strips lithium chloride from hypersaline brine and converts it to battery-grade product without evaporation ponds, returning spent brine — functionally a brine-treatment train. The IP traces to Simbol Materials via OXY's 2022 acquisition of All-American Lithium. On <b>25 Jun 2024 OXY and BHE Renewables (Berkshire Hathaway Energy) formed a 50/50 JV</b> to deploy DLE at BHE's ten geothermal plants in California's <b>Imperial Valley / Salton Sea</b>; TerraLithium retains worldwide licensing rights. <b>Scope boundary:</b> all concrete TerraLithium activity is California geothermal brine — there is <b>no announced Permian/Texas produced-water DLE facility</b>; OXY frames lithium-from-oilfield-brine as strategic intent only. Deal value, plant capacity and start-up date are not disclosed.</p>
+  <p class="src">Sources: OXY TerraLithium page; OXY release &amp; Reuters, 25 Jun 2024; Mining.com.</p></div>
+
+  <h4>Regulatory context shaping OXY's water strategy</h4>
+  <ul>
+    <li><b>RRC overhaul:</b> Statewide Rule 8 replaced by 16 TAC Chapter 4 (effective 1 Jul 2025) — operators may recycle produced water for completions without a permit, subject to siting rules.</li>
+    <li><b>Surface discharge:</b> SB 1145 (effective 1 Sep 2025) moved permitting of treated-produced-water land application/surface discharge from RRC to TCEQ; HB 49 expanded reuse liability protection; TCEQ rulemaking is in progress (targeted adoption 2027).</li>
+    <li><b>Seismicity / disposal curtailment</b> — the structural recycling driver: three Permian Seismic Response Areas (Gardendale; Northern Culberson-Reeves — all deep permits suspended Jan 2024, re-suspended after a M5.4 quake May 2025; Stanton — ~84,000 bbl/d cut), plus a tightened SWD permitting regime (effective 1 Jun 2025).</li>
+  </ul>
+</div>
+
+<!-- 6 POWER / NET POWER -->
+<div class="sec brk">
+  <span class="secnum">SECTION 6</span><h2>Power generation &amp; the NET Power program</h2>
+  <p class="lead" style="margin-top:6pt">OXY is fundamentally a large power <b>consumer</b> — CO₂-EOR compression and direct-air-capture are electricity-intensive — and its generation strategy is built around decarbonized self-supply. Three layers: renewables it builds to power its own operations, a controlling-influence equity stake in NET Power (carbon-capture-on-gas), and the cogeneration it shed with OxyChem.</p>
+  <table>
+    <tr><th>Asset</th><th>County/state</th><th>Capacity</th><th>Status</th><th>Notes</th></tr>
+    <tr><td>Goldsmith Solar</td><td>Ector, TX</td><td>16 MW · ~174,000 panels</td><td>{chip("existing")}</td><td>COD Oct 2019; powers EOR; 12-yr PPA</td></tr>
+    <tr><td>Santa Garcias Solar</td><td>Kleberg, TX</td><td>265 MW</td><td>{chip("planned")}</td><td>Interconnection agreement Feb 2026; COD slipped to Jan 2029</td></tr>
+    <tr><td>STRATOS dedicated solar (Origis)</td><td>Ector area, TX</td><td>145 MW on-site (of 500 MW DC)</td><td>{chip("existing")}</td><td>Contracted to power the STRATOS DAC plant</td></tr>
+    <tr><td><b>NET Power first plant</b></td><td>Ector (nr Odessa), TX</td><td><b>re-scoped 300 MW → 80 MW</b></td><td>{chip("planned")}</td><td>OXY hosts site + CO₂ offtake + power offtake; FID 2H-2026; COD ~2029</td></tr>
+    <tr><td>NET Power La Porte demo</td><td>Harris, TX</td><td>50 MWth</td><td>{chip("existing")}</td><td>First fire 2018; first ERCOT power Nov 2021</td></tr>
+    <tr><td>OxyChem cogeneration <span class="mut">(divested)</span></td><td>KS / LA (non-Permian)</td><td>2 plants</td><td>{chip("divested")}</td><td>Left OXY with the OxyChem sale (Jan 2026)</td></tr>
+  </table>
+
+  <div class="cs"><div class="lab">Case study · NET Power (NYSE: NPWR) — OXY owns 46.46%</div><h3>The carbon-capture-on-gas template — and its 2026 pivot</h3>
+  <p><b>The technology.</b> NET Power commercializes the <b>Allam-Fetvedt cycle</b>: natural gas burned with pure oxygen using high-pressure supercritical CO₂ as the working fluid, so the exhaust is a nearly pure, pipeline-pressure CO₂ stream — <b>capture is inherent, not bolted on</b> (~97% capture, near-zero air emissions, air-cooled / very low water). The proof point is the <b>La Porte, TX demonstration plant (50 MWth; first fire 2018; first ERCOT grid power 16 Nov 2021)</b>.</p>
+  <p><b>The flagship — and its escalation.</b> The first utility-scale plant ("Project Permian" / SN1), on an <b>OXY-leased site near Odessa (Ector Co.)</b>, was originally ~<b>300 MW</b> Allam-cycle (Baker Hughes turboexpander; Air Liquide ASU; Zachry FEED), with OXY providing the site (lease Q1-2024), CO₂ transport/sequestration, and power offtake. Cost escalated from ~$750–950M to ~$1B (Nov 2023) to <b>$1.7–2.0B+ (Mar 2025)</b>, and the schedule slipped from 2026 toward 2027–28.</p>
+  <p><b>The pivot (YE-2025 update, 9 Mar 2026):</b> NET Power <b>paused the Allam-cycle 300 MW design and re-scoped the same site to an 80 MW plant using Siemens gas turbines + Entropy post-combustion capture (PCC)</b> — i.e., a conventional turbine with bolt-on amine capture, not the inherent-capture Allam cycle. <b>FID targeted 2H-2026; commercial operations ~early 2029.</b> The Allam-cycle commercialization is deferred, not cancelled; OXY's host-site and CO₂-offtake role persist.</p>
+  <p><b>Ownership.</b> NET Power went public via the Rice Acquisition Corp. II SPAC (June 2023; NYSE: NPWR; ~$1.5B EV). <b>OXY is the largest shareholder at 46.46%</b> (held via OLCV; +$250M follow-on), alongside 8 Rivers (~22%), Constellation and Baker Hughes.</p>
+  <p><b>The data-center template — stated plainly.</b> A NET Power-style plant delivers <b>firm, 24/7, low-/zero-emission gas baseload with the CO₂ captured for sequestration or EOR</b>, air-cooled (minimal water), behind-the-meter, on fast red-state siting that bypasses multi-year grid queues — the profile AI data centers are seeking (CEO Danny Rice: "high demand for clean baseload power into next decade"). <b>Caveat:</b> there is no primary OXY/NET Power statement pairing the Odessa plant with a <i>named</i> hyperscaler — the data-center linkage is the category thesis, not a signed contract. OXY does hold gas <b>gathering</b> across the same West-Texas geography as several third-party data-center developments (factual proximity only; no specific third-party project is an OXY power template).</p>
+  <p class="src">Sources: NET Power Q4/YE-2025 results &amp; business update (9 Mar 2026); POWER Mag; E&amp;E News; Power Engineering; BusinessWire (SPAC, 8 Jun 2023); Energy Intelligence (46.46%); Oxy Goldsmith release (Oct 2019).</p></div>
+</div>
+
+<!-- 7 CARBON -->
+<div class="sec brk">
+  <span class="secnum">SECTION 7</span><h2>Carbon capture (1PointFive) — context &amp; economics</h2>
+  <p class="lead" style="margin-top:6pt">Included for completeness, but right-sized: direct air capture is <b>barely economic today</b> — a subsidy- and premium-buyer-dependent business, not a near-term value driver. 1PointFive is OXY's wholly-owned DAC subsidiary, built on Carbon Engineering technology (acquired ~$1.1B, closed Nov 2023).</p>
+  <div class="two">
+    <div style="flex:1.15">
+      <h4>Projects</h4>
+      <ul>
+        <li><b>STRATOS (Ector Co., TX):</b> up to 500,000 t CO₂/yr; ~$1.3B; BlackRock $550M JV (~40%); EPA Class VI permits 7 Apr 2025; <b>online targeted Q2-2026</b> after repeated delays (from end-2024/2025).</li>
+        <li><b>South Texas DAC hub / King Ranch (Kleberg Co.):</b> DOE award up to $500M (Sep 2024, $50M initial); initial 500,000 t/yr → &gt;1M, site potential ~30M t/yr; ADNOC/XRG to consider up to $500M (May 2025); Class VI pending. Pre-construction.</li>
+      </ul>
+      <h4>DAC economics — candid</h4>
+      <p style="font-size:8.7pt">Cost today runs ~<b>$385–690/t</b> (WRI avg ~$490/t). The 45Q credit pays <b>$180/t</b> for DAC + saline storage ($130/t DAC+EOR) vs $85/t for point-source. Voluntary durable-CDR prices run ~$200–350/t. The math — ~$400–600+/t cost minus ~$180/t credit — leaves a <b>~$220–420/t gap</b> closeable only by stacking 45Q with top-of-market voluntary buyers. No official STRATOS per-tonne cost is disclosed.</p>
+    </div>
+    <div style="flex:1">
+      <h4>Verified 1PointFive CDR offtake</h4>
+      <table style="font-size:7.4pt">
+        <tr><th>Buyer</th><th class="n">Tonnes</th><th>Date</th></tr>
+        <tr><td>Microsoft</td><td class="n">500,000</td><td>Jul 2024</td></tr>
+        <tr><td>Amazon</td><td class="n">250,000</td><td>Sep 2023</td></tr>
+        <tr><td>Airbus</td><td class="n">400,000</td><td>Mar 2022</td></tr>
+        <tr><td>JPMorganChase</td><td class="n">50,000*</td><td>Jun 2025</td></tr>
+        <tr><td>All Nippon Airways</td><td class="n">30,000</td><td>Aug 2023</td></tr>
+        <tr><td>TD</td><td class="n">27,500</td><td>Nov 2023</td></tr>
+        <tr><td>BCG</td><td class="n">21,000</td><td>Jan 2024</td></tr>
+        <tr><td>Palo Alto Networks</td><td class="n">10,000</td><td>Jul 2025</td></tr>
+        <tr><td>Bain &amp; Co.</td><td class="n">9,000</td><td>Jan 2026</td></tr>
+        <tr><td>AT&amp;T · Trafigura · Astros · NYK</td><td class="n">n/d</td><td>2023–25</td></tr>
+      </table>
+      <p class="src">*cumulative/10 yr. All confirmed 1PointFive CDR deals. <b>SK Trading (~100k t/yr) is excluded — it is a "net-zero oil" deal, not CDR.</b></p>
+    </div>
+  </div>
+</div>
+
+<!-- 8 TEAM -->
+<div class="sec brk">
+  <span class="secnum">SECTION 8</span><h2>Key personnel — profiles</h2>
+  <p class="lead" style="margin-top:6pt">Public-source profiles (company/1PointFive press, SEC, conference and legislative records, professional directories). LinkedIn/ZoomInfo/RocketReach block automated retrieval, so dated role-by-role timelines and credentials sit behind those walls; confidence is marked and gaps are flagged rather than filled.</p>
+
+  <h3>David Woest — Director, Surface Land, Occidental</h3>
+  <p><b>Role (confidence: high).</b> Surface-land leader at OXY, based in <b>Katy, Texas</b> (rendered "Surface Land Manager" / "Director, Surface Land" across directories). Scope is the surface side of the land department — surface-use agreements, surface-damage settlements, rights-of-way, easements and landowner relations across OXY's operated footprint.</p>
+  <p><b>Strongest primary data point.</b> In the 86th Texas Legislature (2019), Woest appears on the official witness list for <b>Senate Bill 421</b> (the Kolkhorst eminent-domain reform bill) before the House Committee on Land &amp; Resource Management, registered <b>"Against," representing Occidental Petroleum</b> (capitol.texas.gov, 25 Apr 2019). This independently confirms his OXY employment as of 2019 and a remit centered on pipeline/right-of-way and condemnation policy — squarely the surface-land function.</p>
+  <p><b>Gaps (flagged).</b> A possible Anadarko tenure (plausible given OXY's 2019 acquisition) <b>could not be verified</b> in any public source. Education, certifications (e.g., AAPL CPL/RPL) and prior employers were not found — they sit behind blocked LinkedIn. <span class="src">Sources: TheOrg; Wiza; Texas Legislature SB 421 witness lists (2019).</span></p>
+
+  <h3>John Cranfill — Sr. Director, Business Development, US Onshore Resources &amp; Carbon Management, Occidental</h3>
+  <p><b>Role (confidence: high; spelling resolved — "Cranfill," not "Cranifill").</b> Houston-based; per his bio, "over 16 years of experience," responsible for <b>securing anthropogenic CO₂ offtake supply agreements and optimizing OXY's upstream oil &amp; gas portfolio</b> — a dual commercial mandate bridging conventional upstream and the CCUS/carbon-management business. Skills listed: M&amp;A, CCUS, EOR, net-zero strategy.</p>
+  <p><b>Career (confidence: medium).</b> Reservoir Engineer, Deepwater Gulf of Mexico, <b>Hess Corporation (~2008–2012)</b>; Senior Reservoir Engineer, Permian Primary Non-Operated JVs, <b>Occidental (~2012–2013)</b>; thereafter progressing into business development and carbon management. <b>Education (confidence: high on institutions):</b> B.S. Petroleum Engineering, <b>The University of Texas at Austin</b>; professional certificate in <b>CCUS, University of Houston</b>.</p>
+  <p><b>Deal association.</b> His function is the commercial engine behind 1PointFive's anthropogenic-CO₂ offtake/supply agreements (the category that includes the 25-year CF Industries sequestration agreement and the 2022 EnLink CO₂ LOI), though no release names him personally on a specific signed deal — attribute to function, not a single transaction. No patents/papers found. <span class="src">Sources: TheOrg; Wiza; 1PointFive/EnLink releases.</span></p>
+
+  <h3>Jeffrey "Jeff" Noto — Land Team Lead, Occidental</h3>
+  <p><b>Disambiguation (high).</b> This is the Greater-Houston oil-&amp;-gas Jeff Noto at OXY — <b>not</b> the Jeff Noto who is CFO of Zayo Group (a different person; exclude telecom/finance material).</p>
+  <p><b>Role &amp; career (confidence: medium).</b> <b>Land Team Lead</b> at OXY, supervising negotiation and administration of oil-&amp;-gas (and carbon-storage) property rights — leasing, surface/subsurface agreements, title, division-order and regulatory coordination. Prior: <b>Senior Land Negotiator at Oxy Low Carbon Ventures (OLCV)</b> — directly tied to OLCV's 2021–22 pore-space/CO₂-sequestration land assembly (e.g., the Gulf-Coast hubs and the &gt;30,000-acre Louisiana pore-space and Weyerhaeuser CCS leases, attributable to the function not a named-personal deal). Earlier, multiple roles at <b>Sheridan Production Company</b> (Division Order Analyst, Land Tech III, Landman, Supervisor–Regulatory) — a classic landman trajectory.</p>
+  <p><b>Gaps (flagged).</b> Education, certifications and dated timeline not found (behind blocked LinkedIn/ZoomInfo). <span class="src">Sources: ZoomInfo &amp; LinkedIn headline snippets; Hart Energy; 1PointFive Louisiana CCS release.</span></p>
+</div>
+
+<!-- 9 CAVEATS -->
+<div class="sec brk">
+  <span class="secnum">SECTION 9</span><h2>Caveats, data gaps &amp; verification flags</h2>
+  <p class="lead" style="margin-top:6pt">Each item below is flagged because it is either <b>not publicly disclosed</b>, <b>recently changed</b>, or <b>commonly mis-stated</b> — and each is material enough that relying on a wrong version would mislead.</p>
+  <ul>
+    <li><b>NET Power Odessa plant is no longer 300 MW Allam-cycle.</b> <i>Why it's a caveat:</i> the YE-2025 update (Mar 2026) re-scoped it to <b>80 MW (Siemens GT + Entropy post-combustion capture)</b>; all 2022–2024 "300 MW Allam SN1" reporting is superseded. Using the old figure overstates both scale and the "inherent capture" technology.</li>
+    <li><b>OXY's WES stake is ~41.9% (YE-2025), not "49%."</b> <i>Why:</i> unit redemptions (incl. 3 Feb 2026) stepped it down; OXY also <b>may sell the WES stake entirely</b> (~$20B, explored). Treating WES as a fixed ~half-owned OXY asset would be wrong on both count and durability.</li>
+    <li><b>Cortez Pipeline is not an OXY asset.</b> <i>Why:</i> it is Kinder Morgan-operated (KM 50% / Exxon 37%); OXY is only a CO₂ shipper. The Bravo Pipeline/Dome (NE New Mexico) <i>is</i> OXY-operated — the two are routinely conflated.</li>
+    <li><b>TerraLithium DLE is California-only.</b> <i>Why:</i> there is no announced Permian produced-water DLE facility; the Permian-lithium angle is stated <b>intent</b>, not an operating asset.</li>
+    <li><b>DAC is barely economic.</b> <i>Why:</i> ~$400–600+/t cost vs ~$180/t max 45Q credit; the business depends on subsidy-stacking and premium voluntary buyers. Even Buffett's 2023 letter calls the economic feasibility "yet to be proven."</li>
+    <li><b>The Berkshire preferred is largely un-redeemed.</b> <i>Why:</i> only ~$1.5B of $10B retired (all 2023); ~$8.5B remains at an ~$680M/yr 8% cost; redemption is deferred to <b>August 2029</b>. OxyChem proceeds went to <b>debt</b>, not the preferred.</li>
+    <li><b>Several figures are genuinely not disclosed:</b> OXY-only Permian produced-water volume; South Curtis Ranch daily capacity/county; Block 31 plant capacity; FY2027 capex/production guidance; per-segment 2026 capex (beyond LCV ~$100M); TerraLithium JV value/capacity; STRATOS per-tonne cost; and personnel education/credentials. Marked "not disclosed" throughout rather than estimated.</li>
+    <li><b>Sourcing constraint.</b> SEC EDGAR returned HTTP 403 to automated retrieval this cycle; financial figures are sourced to OXY/WES/Berkshire press releases, earnings calls, and rendered GAAP data that ties to the filings — confirm against the 10-K (filed Feb 2026) and Q1-2026 10-Q before use.</li>
+  </ul>
+</div>
+
+</body></html>"""
+
+with open(OUT, "w", encoding="utf-8") as f:
+    f.write(HTML)
+print("wrote", OUT, "·", len(HTML), "bytes ·", len(KEY), "map-key rows")
