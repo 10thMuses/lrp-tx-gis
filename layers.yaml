@@ -1169,3 +1169,45 @@ layers:
   tippecanoe:
   - -Z0
   - -z14
+- id: oxy_assets
+  file: data/oxy/oxy_assets.geojson
+  geom: point
+  group: Energy Infrastructure
+  label: OXY / Occidental Footprint
+  description: "Curated Occidental (OXY) infrastructure & generation across the Permian and South Texas, extracted from existing LRP map layers (EIA-860, OSM, ERCOT queue, HIFLD/EIA). Partnership-view overlay for the Caramba North / OXY collaboration: Century gas/CO2 plant substation (Pecos), Block 31 gas plant (Crane), Goldsmith solar (Ector), Wasson CO2-EOR (Yoakum), Santa Garcias solar (Kleberg, ERCOT queue), and OXY field substations. Coordinates trace to the underlying public datasets; no hand-coded points."
+  color: '#e11d48'
+  default_on: false
+  radius: 7
+  stroke_width: 2
+  stroke_color: '#ffffff'
+  popup:
+  - name
+  - category
+  - operator
+  - county
+  - capacity_mw
+  - detail
+  - relevance
+  - source
+  popup_labels:
+    name: Asset
+    category: Type
+    operator: Operator
+    county: County
+    capacity_mw: Capacity (MW)
+    detail: Detail
+    relevance: Why it matters
+    source: Source
+  filterable_fields:
+  - field: category
+    type: categorical
+    label: Asset type
+  - field: county
+    type: categorical
+    label: County
+  - field: operator
+    type: categorical
+    label: Operator
+  tippecanoe:
+  - -Z0
+  - -z14

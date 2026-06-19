@@ -1,0 +1,199 @@
+{
+ "type": "FeatureCollection",
+ "metadata": {
+  "layer": "oxy_assets",
+  "note": "Curated OXY/Occidental footprint; coordinates extracted from existing sourced LRP map layers.",
+  "feature_count": 9
+ },
+ "features": [
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.580857,
+     30.607472
+    ]
+   },
+   "properties": {
+    "name": "Century Plant Substation",
+    "category": "Substation (OXY-operated)",
+    "operator": "Occidental Petroleum",
+    "county": "",
+    "capacity_mw": "",
+    "detail": "138000",
+    "source_layer": "substations",
+    "source": "LRP map layer (ERCOT/EIA-860/OSM) — see ARCHITECTURE.md",
+    "relevance": "138 kV substation at OXY's Century cryogenic gas/CO2 plant — OXY grid infrastructure in Pecos County."
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -100.886409,
+     32.942344
+    ]
+   },
+   "properties": {
+    "name": "Oxy Cogdell Substation",
+    "category": "Substation (OXY-operated)",
+    "operator": "Occidental Petroleum",
+    "county": "",
+    "capacity_mw": "",
+    "detail": "69000",
+    "source_layer": "substations",
+    "source": "LRP map layer (ERCOT/EIA-860/OSM) — see ARCHITECTURE.md",
+    "relevance": "OXY-operated 69 kV substation; Cogdell/Kelly-Snyder CO2-EOR area."
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.51677,
+     32.006051
+    ]
+   },
+   "properties": {
+    "name": "OXY North Cowden Substation",
+    "category": "Substation (OXY field)",
+    "operator": "Oncor",
+    "county": "",
+    "capacity_mw": "",
+    "detail": "138000",
+    "source_layer": "substations",
+    "source": "LRP map layer (ERCOT/EIA-860/OSM) — see ARCHITECTURE.md",
+    "relevance": "138 kV; North Cowden Unit (Ector Co.) OXY field operations."
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.159612,
+     32.129845
+    ]
+   },
+   "properties": {
+    "name": "Oxy South Curtis Ranch Substation",
+    "category": "Substation (OXY field)",
+    "operator": "Oncor",
+    "county": "",
+    "capacity_mw": "",
+    "detail": "138000",
+    "source_layer": "substations",
+    "source": "LRP map layer (ERCOT/EIA-860/OSM) — see ARCHITECTURE.md",
+    "relevance": "138 kV; co-located with OXY's South Curtis Ranch produced-water recycling facility."
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.13773,
+     32.896391
+    ]
+   },
+   "properties": {
+    "name": "Oxy Welch Substation",
+    "category": "Substation (OXY field)",
+    "operator": "Oncor",
+    "county": "",
+    "capacity_mw": "",
+    "detail": "69000",
+    "source_layer": "substations",
+    "source": "LRP map layer (ERCOT/EIA-860/OSM) — see ARCHITECTURE.md",
+    "relevance": "69 kV; OXY Welch field operations."
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.6337,
+     32.0015
+    ]
+   },
+   "properties": {
+    "name": "Oxy Renewable Energy - Goldsmith",
+    "category": "Solar — operating (OXY)",
+    "operator": "Occidental (OXY)",
+    "county": "Ector",
+    "capacity_mw": "20.8",
+    "detail": "",
+    "source_layer": "solar",
+    "source": "LRP map layer (ERCOT/EIA-860/OSM) — see ARCHITECTURE.md",
+    "relevance": "Oxy Renewable Energy Goldsmith solar farm (Ector Co.) powering OXY Permian operations."
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.756945,
+     33.009944
+    ]
+   },
+   "properties": {
+    "name": "Wasson CO2 Removal Plant",
+    "category": "Gas turbine / CO2-EOR (CCS lineage)",
+    "operator": "Occidental Permian Ltd",
+    "county": "YOAKUM",
+    "capacity_mw": "23.4",
+    "detail": "",
+    "source_layer": "eia860_plants",
+    "source": "LRP map layer (ERCOT/EIA-860/OSM) — see ARCHITECTURE.md",
+    "relevance": "Occidental Permian Ltd — Wasson/Denver Unit CO2-EOR, the franchise behind OXY's CCS credibility."
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -97.650076,
+     27.417088
+    ]
+   },
+   "properties": {
+    "name": "Santa Garcias Solar",
+    "category": "Solar — ERCOT queue (OXY)",
+    "operator": "Oxy Renewable Energy LLC",
+    "county": "Kleberg",
+    "capacity_mw": "265.0",
+    "detail": "",
+    "source_layer": "ercot_queue",
+    "source": "LRP map layer (ERCOT/EIA-860/OSM) — see ARCHITECTURE.md",
+    "relevance": "265 MW solar, developer Oxy Renewable Energy LLC (Kleberg Co.) — co-located with the 1PointFive South Texas DAC hub."
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.46233,
+     31.44153
+    ]
+   },
+   "properties": {
+    "name": "Block 31 Plant",
+    "category": "Gas processing (OXY)",
+    "operator": "Oxy",
+    "county": "Crane",
+    "capacity_mw": "",
+    "detail": "41 MMcfd",
+    "source_layer": "hifld_ng_processing",
+    "source": "HIFLD/EIA-757 Natural Gas Processing Plant Survey",
+    "relevance": "OXY-owned gas processing plant in Crane County, abutting Pecos."
+   }
+  }
+ ]
+}
