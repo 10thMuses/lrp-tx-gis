@@ -30,22 +30,36 @@ def A(name, tag, fields, narr, src, tall=False):
     return (f'<div class="{cls}"><h3>{name} {chip(tag)}</h3>{rows}'
             f'<p class="an">{narr}</p><p class="src">Sources: {src}</p></div>')
 
+SEC_ACCENT = {"fin":("#0f766e","#ecfdf5"),"bk":("#6d28d9","#f5f3ff"),"map":("#b45309","#fffbeb"),
+              "mid":("#b91c1c","#fef2f2"),"wat":("#0369a1","#eff6ff"),"pow":("#c2410c","#fff7ed"),
+              "dac":("#15803d","#f0fdf4"),"team":("#7e22ce","#faf5ff"),"cav":("#9a3412","#fef6f3")}
+def keyfind(key, bullets):
+    a, bg = SEC_ACCENT[key]
+    lis = "".join(f"<li>{b}</li>" for b in bullets)
+    return (f'<div class="keyfind" style="--kfc:{a};background:{bg};border-left-color:{a};">'
+            f'<div class="kh">Key findings</div><ul>{lis}</ul></div>')
+
 # ---------------- SECTION 4 — MIDSTREAM, PIPELINES & PROCESSING ----------------
 S4 = '<div class="sec brk"><span class="secnum">SECTION 4</span><h2>Midstream, pipelines &amp; gas processing</h2>'
+S4 += keyfind("mid", [
+ "<b>Century (Pecos)</b> is the largest single-source industrial CO₂-capture plant in North America — 800 MMcf/d, ~8.4 Mt CO₂/yr — anchoring the Denver City CO₂ grid.",
+ "<b>Cortez Pipeline is Kinder Morgan-owned</b> — OXY is a shipper, not an owner; OXY owns the parallel Bravo Dome / Bravo system.",
+ "OXY sold its Midland gas gathering to Enterprise ($580M, 2025) — owner becomes shipper; the Athena plant (Q4'26) processes its gas.",
+ "Western Midstream (OXY <b>~39.5%</b>, GP control) is the retained gas/crude/water engine; a full ~$20B WES exit was explored but not done."])
 S4 += ('<p class="lead" style="margin-top:6pt">OXY is the Permian\'s #1 CO₂-EOR operator, and its owned midstream is built around CO₂: the Century capture complex, the Bravo source/pipeline, and the Denver City hub that feeds its EOR floods. For gas, crude and produced water OXY now works largely through a controlling ~39.5% interest in Western Midstream (WES), having sold its conventional Midland gathering to Enterprise in 2025. Each asset is profiled below.</p>')
 
 S4 += A("Century gas/CO₂ plant", "existing",
  [("Location","Pecos Co., TX — Gardendale area, ~NW of McCamey/Fort Stockton"),
-  ("Owner / op","OXY owns &amp; operates the CO₂-handling facilities; built and gas-operated by SandRidge Energy under a 2008 contract"),
-  ("Capacity","800 MMcf/d inlet treating (2 trains); captures ~8.4–8.7 Mt CO₂/yr; ~450 MMcf/d CO₂ takeaway (+~50 MMcf/d legacy SandRidge plants)"),
-  ("In-service","Train 1 first gas 26 Sep 2010; Train 2 2011"),
-  ("Cost","~$1.1B, OXY-funded construction"),
-  ("Throughput","Processes high-CO₂ Val Verde gas; OXY takes 100% of separated CO₂ for EOR, SandRidge keeps/sells the methane (~350 MMcf/d gross)"),
-  ("Status","EXISTING; no announced expansion"),
-  ("Regulatory","EPA GHGRP-reporting; CO₂ routed to Class VI-/MRV-covered EOR units (Wasson). Specific GHGRP facility ID not retrieved this pass"),
+  ("Owner / op","Built &amp; gas-operated by SandRidge (2008 contract); OXY funded construction (~$1.1B) and historically owned the CO₂-handling facilities. One source reports OXY sold the plant in Jan 2022 (~$200M, Mitchell-group buyer) and now takes the captured CO₂ as offtaker — VERIFY. OXY (Occidental Permian Ltd) operates the CO₂ takeaway line, PHMSA OPID 31502"),
+  ("Capacity","800 MMcf/d inlet treating (2 trains); nameplate capture 8.4 Mt CO₂/yr (Train 1 = 5.0, Train 2 = 3.4); ~450 MMcf/d CO₂ takeaway via a ~160-mi, 24-in line to Denver City"),
+  ("In-service","Century I ~Sep–Nov 2010; Century II late 2012"),
+  ("Throughput","Processes high-CO₂ Val Verde gas; OXY takes 100% of separated CO₂ for EOR; historically underutilized (&lt;800 kt/yr 2018–22, often one train); SandRidge keeps/sells the methane (~350 MMcf/d gross)"),
+  ("Status","EXISTING"),
+  ("Emissions / GHGRP","EPA GHGRP facility 1004301 (30.6104, −102.5794), Subparts C + PP + W. The plant's *reported* CO₂e is small (~6 kt/yr combustion) because under Subpart PP the separated CO₂ is logged as a supplied product, not a stack emission — so GHGRP understates the ~Mt-scale CO₂ Century actually captures"),
+  ("Regulatory","EPA GHGRP 1004301; captured CO₂ routed to OXY's Subpart-RR MRV-covered EOR units (Wasson). TCEQ regulated entity RN105567218, air account / program ID 85488 (the specific NSR permit number is gated behind TCEQ Central Registry); EIA-757 plant ID not publicly exposed for this CO₂-treating site"),
   ("Role","Largest single-source industrial CO₂-capture facility in North America; the anthropogenic leg of OXY's Denver City CO₂ grid")],
- "The flagship in-county asset: a billion-dollar CO₂-capture/gas-treating complex physically in Pecos County, projected at announcement to add up to ~50,000 boe/d to OXY's Permian EOR within five years.",
- "Oil &amp; Gas Journal (start-up); SandRidge release 30 Jun 2008; MIT Sequestration; GEM. ‘800 MMcf/d’ = inlet treating; ‘~450 MMcf/d’ = CO₂ takeaway — different metrics.")
+ "The flagship in-county asset: a billion-dollar CO₂-capture/gas-treating complex in Pecos County (EPA GHGRP 1004301). OXY funded and long owned the CO₂ facilities; a reported 2022 plant sale shifted OXY's role toward CO₂ offtake, though OXY still operates the takeaway pipeline (OPID 31502).",
+ "EPA Envirofacts GHGRP (facility 1004301); Oil &amp; Gas Journal (start-up); SandRidge release 30 Jun 2008; MIT Sequestration; energyconnects (2022 sale — single source); PHMSA (OPID 31502). ‘800 MMcf/d’ = inlet treating; ‘~450 MMcf/d’ = CO₂ takeaway.")
 
 S4 += A("Block 31 gas plant &amp; (Devonian) CO₂-flood unit", "existing",
  [("Location","Crane Co., TX — 1501 FM 1601, ~5 mi N of Crane (~31.647°N, 102.529°W)"),
@@ -61,14 +75,15 @@ S4 += A("Block 31 gas plant &amp; (Devonian) CO₂-flood unit", "existing",
 
 S4 += A("Wasson field / Denver Unit CO₂-EOR &amp; CO₂-removal plant", "existing",
  [("Location","Wasson (San Andres) field — Gaines/Yoakum Cos., TX; Denver Unit ~27,000 ac"),
-  ("Owner / op","Occidental Permian Ltd (operator)"),
+  ("Owner / op","Occidental Permian Ltd (RRC operator #617544); Wasson San Andres = RRC field #95397"),
   ("Capacity","CO₂ injection ~420 MMcf/d (~200 MMcf/d purchased + ~220 recycled); the world's largest CO₂-EOR project"),
   ("In-service","Tertiary CO₂ flood began 1984 on completion of the Cortez line; CO₂-removal/recompression plant ~1988"),
+  ("GHGRP / MRV","EPA GHGRP facility 1011767 (Denver Unit). Subpart RR MRV plan 1011767-1 approved 27 Dec 2015 — EPA's first-ever approved CO₂-EOR MRV plan — amended 1011767-2 on 20 Jul 2023. 2023 net CO₂ sequestered 3,669,743 mt; cumulative CO₂ injected ~212.8 MMt. Co-located Wasson CO₂-removal/recompression plant = GHGRP 1002629 (~136,530 mt, 2023), TCEQ Title V O553 / RN100226687; the Denver Unit CO₂-recovery plant holds TCEQ Title V O3051 / RN102413861"),
   ("Throughput","Decades of CO₂ flood; supplied via the Denver City hub from McElmo Dome (Cortez) and Bravo Dome (Bravo)"),
-  ("Status","EXISTING; one of OXY's 6 EPA Subpart RR MRV plans (Wasson, Seminole, West Seminole, Hobbs NM, South Plains, Brown Pelican); 2023 Wasson San Andres MRV report on file"),
+  ("Status","EXISTING; the Denver Unit is the flagship of OXY's Subpart-RR MRV-covered EOR units (with South Plains, Hobbs NM and the new Brown Pelican / STRATOS hub). The Seminole San Andres Unit, GHGRP 1009861, now reports under a Hess parent — consistent with OXY's 2023 divestiture of that field"),
   ("Role","OXY's anchor EOR sink and the demand center that justifies the entire Denver City CO₂ grid")],
- "The Denver Unit is the reason the CO₂ network exists: ~27,000 acres of San Andres flood consuming hundreds of MMcf/d of CO₂, the original 1984 destination for McElmo Dome CO₂.",
- "EPA Wasson San Andres MRV report (2023); GEM CO₂-EOR; Oil &amp; Gas Journal EOR surveys.")
+ "The Denver Unit (EPA GHGRP 1011767) is the reason the CO₂ network exists: ~27,000 acres of San Andres flood, ~3.67 MMt net-sequestered in 2023 and ~212.8 MMt injected cumulatively, the original 1984 destination for McElmo Dome CO₂ and holder of EPA's first-ever approved MRV plan.",
+ "EPA Envirofacts GHGRP (facility 1011767, MRV plans 1011767-1 / -2; plant 1002629); EPA Wasson San Andres MRV report (2023); RRC (field #95397, operator #617544); TCEQ Central Registry (O553 / RN100226687; O3051 / RN102413861); GEM CO₂-EOR; Oil &amp; Gas Journal EOR surveys.")
 
 S4 += A("Denver City CO₂ hub", "existing",
  [("Location","Gaines/Yoakum Cos., TX (Denver City)"),
@@ -80,26 +95,30 @@ S4 += A("Denver City CO₂ hub", "existing",
  "Kinder Morgan CO₂ operations; GEM; Oil &amp; Gas Journal.")
 
 S4 += A("Bravo Dome CO₂ field", "existing",
- [("Location","Harding/Union Cos., NE New Mexico"),
-  ("Owner / op","Occidental Permian (operator); co-owned with Kinder Morgan CO₂ and XTO Energy"),
-  ("Capacity","~99%-pure natural CO₂ source; multi-Tcf in place"),
-  ("Status","EXISTING long-life producing field"),
-  ("Role","The OXY-operated natural-CO₂ source feeding the Bravo Pipeline to Denver City")],
- "OXY's owned, operated natural-CO₂ supply — the equity counterweight to its purchased Cortez volumes. ~99% purity feeds the Bravo line south into the Texas Permian.",
- "GEM Bravo Dome; 350SantaFe; Oil &amp; Gas Journal. (Deeper field metrics pending a re-run that was rate-limited.)")
+ [("Location","Harding/Union (&amp; Quay) Cos., NE New Mexico — ~800k–1M-acre unit (NM OCD ‘Bravo Dome Carbon Dioxide Gas Unit’; facility OGRID 16696)"),
+  ("Owner / op","OXY USA Inc. operator (since ~2000, ex-BP Amoco); Kinder Morgan CO₂ ~11% non-op; XTO WI not separately disclosed"),
+  ("Reservoir","Tubb sandstone (~1,900–2,950 ft), Cimarron Anhydrite seal; documented sub-hydrostatic depletion"),
+  ("Resource","98–99% CO₂; recoverable &gt;10 Tcf (1989 est.); Bravo Dome unit ~801 Bcf recoverable; ~626 Bcf cumulative by YE1989"),
+  ("Production","~300 MMcf/d (2012); ~272 wells (1989), reported up to ~627 recently; CO₂ found 1916, commercial 1982–83"),
+  ("Status","EXISTING long-life depletion asset"),
+  ("Role","OXY's owned, operated natural-CO₂ supply feeding the Bravo Pipeline to Denver City — the equity counterweight to its purchased Cortez volumes")],
+ "Fully resolved from NM OCD + literature: OXY operates the ~800k-acre Bravo Dome unit (Kinder Morgan ~11% non-op), a 98–99%-pure Tubb-sandstone CO₂ field producing ~300 MMcf/d into the Bravo line — the original natural-CO₂ leg of OXY's Permian EOR supply.",
+ "NM OCD imaging (Bravo Dome CO₂ Gas Unit; OGRID 16696); AAPG #91004 (Broadhead 1991); Kinder Morgan 10-Ks; GEM; PNAS 2014.")
 
 S4 += A("Bravo Pipeline (CO₂)", "existing",
- [("Location","Bravo Dome, NM → Denver City hub, TX (via Yoakum/Cochran/Hockley)"),
-  ("Owner / op","Co-owned: Occidental Permian + Kinder Morgan CO₂ + XTO"),
-  ("Capacity","218 mi · 20-in · 382 MMcf/d"),
+ [("Location","Bravo Dome, NM → Denver City hub, TX; deliveries to Wasson (Yoakum) &amp; Slaughter (Cochran/Hockley)"),
+  ("Owner / op","Operator ‘Bravo Pipeline Company’ / ‘OXY Bravo Pipeline’ (Occidental); co-owned Occidental Permian + Kinder Morgan CO₂ + XTO — split not publicly disclosed; PHMSA OPID gated (not found)"),
+  ("Capacity","218 mi · 20-in · 382 MMcf/d (≈7.3 Mt CO₂/yr), delivered ~1,800–1,900 psi"),
+  ("In-service","1984 (orig. BP Amoco → Occidental ~2000)"),
+  ("Safety","One PHMSA incident on record: 28 Jun 2004, Levelland TX (3,608 bbl, no injuries)"),
   ("Status","EXISTING"),
-  ("Role","Delivers OXY-equity natural CO₂ from Bravo Dome to the Denver City hub and on to the Slaughter and Wasson floods")],
- "OXY's owned CO₂ trunkline — distinct from (and parallel to) the Kinder Morgan-controlled Cortez line. 218 miles of 20-inch pipe at 382 MMcf/d.",
- "GEM Bravo Dome; Kinder Morgan CO₂.")
+  ("Role","OXY's owned CO₂ trunkline — distinct from the Kinder Morgan-controlled Cortez line")],
+ "OXY's owned CO₂ trunkline (operated since ~2000), parallel to Cortez: 218 mi of 20-inch pipe at 382 MMcf/d from Bravo Dome to Denver City. The exact ownership split and PHMSA OPID are not public.",
+ "Kinder Morgan CO₂; IPCC SRCCS Ch.4 (1984, 7.3 Mt); PHMSA incident 271436; GEM.")
 
 S4 += A("Cortez Pipeline (CO₂) — OXY is a shipper, not an owner", "existing",
  [("Location","McElmo Dome (Montezuma Co., CO) &amp; Doe Canyon (Dolores Co.) → Denver City, TX — three states"),
-  ("Owner / op","Cortez Pipeline Co.: Kinder Morgan ~50% (operator), ExxonMobil ~37%, Cortez Vickers ~13%. OXY owns NO equity"),
+  ("Owner / op","Cortez Pipeline Co.: Kinder Morgan ~50% (operator), ExxonMobil ~37%, Cortez Vickers ~13%. OXY owns NO equity. PHMSA operator KM CO2 Co. LLC, OPID 31555"),
   ("Capacity","~500–505 mi (1983 build spec) · 30-in · ~1.5 Bcf/d — the largest CO₂ pipeline in the U.S., ~80% of Permian-EOR CO₂"),
   ("In-service","1984"),
   ("OXY role","Downstream CO₂ buyer/shipper-customer at Denver City for its Denver Unit flood; OXY also acquired the Doe Canyon source via a 2007 BP swap"),
@@ -133,7 +152,8 @@ S4 += A("Athena cryogenic gas plant (Enterprise-built; processes OXY gas)", "pla
 S4 += A("Western Midstream (WES) — Delaware Basin gas G&amp;P system", "existing",
  [("Location","Culberson/Loving/Reeves/Ward Cos., TX; Eddy/Lea Cos., NM"),
   ("Owner / op","OXY owns ~39.5% of WES (38.3% LP + 2.2% GP) and controls it via its wholly-owned general partner; WES operates independently and is not consolidated"),
-  ("Capacity","DBM gas processing ~2,190 MMcf/d scaling to ~2,490 MMcf/d on Train II"),
+  ("Capacity","West Texas (Delaware) complex ~2.09 Bcf/d (YE2024) → &gt;2.75 Bcf/d after acquisitions — a 5-plant complex"),
+  ("Plants","Mentone Train III 300 MMcf/d (Loving, Q4 2023); North Loving I 250 (Loving, Feb 2025) + II 300 (Q2 2027); Ramsey complex ~500 (Reeves; ex-Nuevo Midstream, 2014)"),
   ("Status","EXISTING / EXPANDING"),
   ("Ownership history","Inherited via Anadarko (2019, ~55%); cut below 50% in 2020; 19.5M units sold Aug 2024 (~$697M); 15.3M units redeemed Feb 2026 (~$610M). OXY explored a full ~$20B WES exit (JPMorgan) — not consummated"),
   ("Role","OXY's principal retained midstream engine for gas, crude and produced water in the Delaware")],
@@ -143,7 +163,7 @@ S4 += A("Western Midstream (WES) — Delaware Basin gas G&amp;P system", "existi
 S4 += A("WES North Loving gas plant + Train II", "existing",
  [("Location","Loving Co., TX (Delaware Basin)"),
   ("Owner / op","Western Midstream (OXY ~39.5%)"),
-  ("Capacity","North Loving 250 MMcf/d (online Q4 2024) + Train II 300 MMcf/d (targeted Q2 2027)"),
+  ("Capacity","North Loving I 250 MMcf/d (in service late-Feb 2025) + Train II 300 MMcf/d (targeted early Q2 2027 → ~2.5 Bcf/d base)"),
   ("Status","EXISTING (250) + PLANNED (300)"),
   ("Role","Incremental Delaware processing capacity for WES/OXY's growing Loving/Reeves gas")],
  "A concrete near-term WES expansion: 250 MMcf/d live, another 300 MMcf/d in 2027 — part of the ~$850M–$1.0B 2026 WES program funding North Loving II and Pathfinder.",
@@ -152,6 +172,11 @@ S4 += '</div>'
 
 # ---------------- SECTION 5 — WATER ----------------
 S5 = '<div class="sec brk"><span class="secnum">SECTION 5</span><h2>Water infrastructure</h2>'
+S5 += keyfind("wat", [
+ "Recycling with Select Water — <b>South Curtis Ranch (Martin Co.)</b> and <b>Lost Tank (Lea Co., NM; up to 180k bbl/d)</b> each ~97 MM bbl recycled by Q1'26.",
+ "WES/Aris ($2.0B EV, closed Oct 2025) made WES the #2 Permian water midstream; the OXY-anchored Pathfinder pipeline (&gt;800 Mbbl/d) lands 2027.",
+ "<b>OXY is not a named partner in the WES desalination JIP</b> — its only tie is its ~40% ownership of WES.",
+ "TerraLithium DLE is <b>California-only</b> (demonstration); no announced Permian produced-water lithium asset."])
 S5 += ('<p class="lead" style="margin-top:6pt">The Permian produced &gt;20 MMbbl/d of water in 2024 (~3.5:1 water-to-oil), heading past 26 MMbbl/d by 2030. OXY\'s own total volume is not disclosed; its water runs through (a) a named Select Water recycling partnership and (b) Western Midstream\'s large produced-water system (incl. Aris). Seismicity-driven disposal curtailment is the structural push toward recycling and, increasingly, desalination. Each asset below.</p>')
 
 S5 += A("South Curtis Ranch produced-water recycling facility", "existing",
@@ -224,22 +249,26 @@ S5 += '</div>'
 
 # ---------------- SECTION 6 — POWER ----------------
 S6 = '<div class="sec brk"><span class="secnum">SECTION 6</span><h2>Power generation &amp; the NET Power program</h2>'
+S6 += keyfind("pow", [
+ "OXY is mainly a power <b>consumer</b>; owned generation is thin — Goldsmith 16 MW operating, Santa Garcias 265 MW planned ~2029.",
+ "<b>NET Power (OXY 46.46%): the Odessa flagship was re-scoped (Mar 2026) from a 300 MW Allam-cycle plant to an 80 MW Siemens + Entropy capture plant</b>; FID 2H'26, COD ~2029.",
+ "The ‘CCS-on-gas for data centers’ template is real in concept but has <b>no named hyperscaler offtake</b>."])
 S6 += ('<p class="lead" style="margin-top:6pt">OXY is mainly a large power consumer — CO₂-EOR compression and DAC are electricity-intensive — and builds decarbonized self-supply: solar for its own operations, plus a controlling-influence equity stake in NET Power (carbon-capture-on-gas). The OxyChem cogeneration left with the Jan-2026 sale. Each asset below.</p>')
 
 S6 += A("Goldsmith Solar facility", "existing",
  [("Location","Ector Co., TX (near Goldsmith)"),
-  ("Owner / op","Oxy Renewable Energy LLC; EIA-860 plant code 63388"),
-  ("Capacity","~16 MW; ~174,000 First Solar thin-film panels; ~120 acres"),
-  ("In-service","October 2019"),
-  ("Contract","12-year PPA structure (OLCV / First Solar / Macquarie)"),
-  ("Status","EXISTING"),
+  ("Owner / op","Oxy Renewable Energy LLC — EIA-860 plant code 63388; ERCOT INR 19INR0184 (filed 30 Jan 2019)"),
+  ("Capacity","16.8 MW nameplate; ~174,000 First Solar thin-film panels; ~120 acres"),
+  ("In-service","Built 2019; initial operation Apr 2020"),
+  ("Contract","Long-term PPA (OLCV / First Solar / Macquarie GIG)"),
+  ("Status","EXISTING — OXY's only EIA-coded operating generator"),
   ("Role","Powers OXY EOR operations and eliminates &gt;20,000 t CO₂/yr — OXY's first owned utility-scale solar")],
  "Small but strategically symbolic: OXY's first solar farm, built to power its own Permian EOR rather than for merchant sale.",
  "OXY release (Oct 2019); EIA-860; Power Technology.")
 
 S6 += A("Santa Garcias Solar", "planned",
  [("Location","Kleberg Co., TX (South Texas)"),
-  ("Owner / op","Oxy Renewable Energy LLC (developer)"),
+  ("Owner / op","Oxy Renewable Energy LLC (developer) — ERCOT INR 26INR0143"),
   ("Capacity","265 MW"),
   ("In-service","Interconnection agreement Feb 2026; COD slipped to ~31 Jan 2029"),
   ("Status","PLANNED (ERCOT queue)"),
@@ -247,14 +276,15 @@ S6 += A("Santa Garcias Solar", "planned",
  "OXY's largest renewable project — a 265 MW solar build in South Texas, co-located with the King Ranch DAC hub and very likely intended to power it.",
  "ERCOT interconnection queue; LRP map data (developer = Oxy Renewable Energy LLC).")
 
-S6 += A("STRATOS dedicated solar (Origis)", "existing",
- [("Location","Ector Co. area, TX"),
-  ("Owner / op","Origis Energy (developer); contracted to OXY/STRATOS"),
-  ("Capacity","~145 MW contracted to STRATOS (of a larger ~500 MW DC project)"),
-  ("Status","EXISTING / contracted"),
-  ("Role","Provides low-carbon power to the STRATOS DAC plant, lowering the plant's lifecycle emissions")],
- "Dedicated renewable supply for the STRATOS DAC plant — the power-intensity of DAC is exactly why OXY pairs each project with contracted solar.",
- "Origis Energy / 1PointFive disclosures.")
+S6 += A("STRATOS dedicated solar — ‘Swift Air’ (Origis)", "existing",
+ [("Location","Ector Co., TX"),
+  ("Owner / op","Origis Energy develops &amp; owns; OXY is the OFFTAKER (not owner) — so it carries Origis, not Oxy, EIA/ERCOT IDs"),
+  ("Capacity","500 MW DC across 3 phases (~145–167 MW each); ~145 MW dedicated to STRATOS"),
+  ("In-service","Completed Feb 2026 (final phase)"),
+  ("Status","EXISTING"),
+  ("Role","Provides low-carbon power to the STRATOS DAC plant, lowering its lifecycle emissions")],
+ "Dedicated renewable supply for STRATOS — but owned by Origis, with OXY only as offtaker. The 500 MW-DC ‘Swift Air’ portfolio (3 phases) finished in Feb 2026; DAC's power-intensity is why each plant is paired with contracted solar.",
+ "Origis Energy (‘Swift Air’); Solar Power World (Feb 2026); PV-Tech.")
 
 S6 += A("NET Power (NYSE: NPWR) — Allam-cycle carbon-capture-on-gas; OXY owns 46.46%", "planned",
  [("Tech","Allam-Fetvedt cycle: oxy-combustion of natural gas with a supercritical-CO₂ working fluid → ~97% inherent CO₂ capture at pipeline pressure, near-zero air emissions, air-cooled / very low water (fundamentally unlike post-combustion amine capture)"),
@@ -279,30 +309,34 @@ S6 += '</div>'
 
 # ---------------- SECTION 7 — DAC ----------------
 S7 = '<div class="sec brk"><span class="secnum">SECTION 7</span><h2>Carbon capture (1PointFive) — assets &amp; economics</h2>'
+S7 += keyfind("dac", [
+ "<b>DAC is barely economic</b> — ~$400–600/t cost vs ≤$180/t 45Q credit; subsidy- and premium-buyer-dependent.",
+ "STRATOS (Ector) is the world's largest DAC — 500k t/yr, ~$1.3B, BlackRock $550M JV, EPA Class VI permits Apr 2025; commissioning 2026.",
+ "Verified 1PointFive CDR buyers led by <b>Microsoft (500k t)</b> and Amazon (250k t); SK Trading excluded (net-zero oil, not removal)."])
 S7 += ('<p class="lead" style="margin-top:6pt">Right-sized: direct air capture is barely economic today — subsidy- and premium-buyer-dependent — so it is profiled but not emphasized. 1PointFive is OXY\'s wholly-owned DAC subsidiary (built on Carbon Engineering technology, acquired ~$1.1B, closed Nov 2023).</p>')
 
-S7 += A("STRATOS DAC plant", "planned",
- [("Location","Ector Co., TX (near Notrees/Goldsmith)"),
-  ("Owner / op","1PointFive (OXY) + BlackRock JV ($550M; ~40%); EPC Worley; technology Carbon Engineering"),
-  ("Capacity","Up to 500,000 t CO₂/yr (modular 2×250k) — the world's largest DAC"),
-  ("Cost","~$1.3B"),
-  ("Regulatory","EPA Class VI sequestration permits issued 7 Apr 2025"),
-  ("In-service","Targeted online Q2-2026 after repeated slips (from end-2024/2025)"),
-  ("Power","~145 MW dedicated solar (Origis)"),
+S7 += A("STRATOS DAC plant + Brown Pelican Class VI wells", "planned",
+ [("Location","Ector Co., TX — Shoe Bar Ranch, ~20 mi SW of Odessa (Notrees); 65-acre plant footprint"),
+  ("Owner / op","1PointFive (OXY) + BlackRock JV ($550M ≈ 40% of the ~$1.3B JV); EPC Worley; technology Carbon Engineering"),
+  ("Capacity","Up to 500,000 t CO₂/yr (2×250k modules) — the world's largest DAC; ~$1.3B"),
+  ("Sequestration","Brown Pelican CCS — RRC Class VI UIC Permit 55294 (Dist. 08); EPA docket EPA-R06-OW-2024-0410, wells R6-TX-135-C6-0001/-0002/-0003 (CCS1–3); Lower San Andres saline, 4,402–5,177' TVD; 8.5 Mt over 12 yr"),
+  ("Permits","EPA Class VI issued 7 Apr 2025 (first-ever for a DAC project); Subpart RR MRV plan approved 15 Jul 2025; RRC primacy 16 Oct 2025"),
+  ("In-service","Phase 1 final startup + Phase 2 commissioning Q2-2026 (slipped from mid-2025); ramping through 2026"),
   ("Status","PLANNED / commissioning"),
   ("Role","OXY's DAC flagship and the proof case for the 70-plant-by-2035 ambition")],
- "The world's largest DAC plant, commissioning in 2026 with first-ever DAC Class VI permits — but per-tonne cost is undisclosed and, like all DAC, depends on 45Q + premium buyers.",
- "1PointFive/OXY &amp; BlackRock releases; Texas Tribune 8 Apr 2025; Worley.")
+ "The world's largest DAC plant, commissioning in 2026 with the first-ever DAC Class VI permits (RRC #55294; 3 saline wells in the Lower San Andres). Per-tonne cost is undisclosed and, like all DAC, depends on 45Q + premium buyers.",
+ "RRC Class VI list &amp; Oxy Brown Pelican fact sheet; EPA permit release 7 Apr 2025; EPA Subpart RR approval 15 Jul 2025; Bloomberg (BlackRock JV); OGJ/RBN (2026 ramp).")
 
 S7 += A("South Texas DAC Hub / King Ranch", "permitted",
- [("Location","Kleberg Co., TX"),
-  ("Owner / op","1PointFive (OXY)"),
-  ("Capacity","~106,000 leased pore-space acres; ~3 Bt estimated storage; first plant up to 500k → 1M t/yr; site potential ~30M t/yr"),
-  ("Funding","DOE Regional DAC Hub award up to $500M (Sept 2024, $50M initial); ADNOC/XRG to consider up to $500M (May 2025)"),
-  ("Status","PERMITTED / pre-construction (Class VI pending)"),
-  ("Role","OXY's multi-megatonne sequestration build-out; the likely power source is the co-located 265 MW Santa Garcias solar")],
- "The hub behind OXY's DAC scale ambition — DOE- and ADNOC-backed, with 3 billion tonnes of estimated storage, still pre-construction.",
- "1PointFive hub page; DOE OCED; OXY/XRG release (May 2025).")
+ [("Location","Kleberg Co., TX (King Ranch lease)"),
+  ("Owner / op","1PointFive / Kleberg Sequestration Hub, LLC (OXY)"),
+  ("Capacity","~106,000 leased pore-space acres; ~3 Bt estimated saline storage; first plant 500k → 1M t/yr; hub potential ~30M t/yr"),
+  ("Sequestration","RRC Class VI applicant Kleberg Sequestration Hub LLC — Tracking #58220 (Dist. 04); Frio saline; 6 wells, 6,302–9,638' TVD; status ‘Pending RAD Response’ (filed 19 Nov 2024)"),
+  ("Funding","DOE Regional DAC Hub award up to $500M ($50M initial, expandable to $650M; Sept 2024); ADNOC/XRG framework — up to $500M for a 500k t/yr plant (May 2025)"),
+  ("Status","PERMITTING / pre-construction (Class VI pending RAD response)"),
+  ("Role","OXY's multi-megatonne sequestration build-out; likely powered by the co-located 265 MW Santa Garcias solar")],
+ "The hub behind OXY's DAC scale ambition — DOE- and ADNOC-backed, ~3 Bt storage, with a 6-well Frio Class VI application (RRC #58220) pending. Still pre-construction.",
+ "RRC Class VI list (#58220); DOE OCED award 12 Sep 2024; OXY/XRG release (May 2025); 1PointFive.")
 
 S7 += ('<div class="kbox"><div class="h">1PointFive DAC economics &amp; verified CDR offtake</div>'
  '<p style="font-size:8.6pt;margin-bottom:5pt">DAC costs ~$385–690/t today (WRI avg ~$490/t). 45Q pays $180/t (DAC+saline), $130/t (DAC+EOR), $85/t (point-source). Voluntary durable-CDR runs ~$200–350/t. The ~$220–420/t gap closes only by stacking 45Q with top-of-market voluntary buyers — hence "barely economic." Verified 1PointFive CDR buyers: '
@@ -323,6 +357,12 @@ ASSET_CSS = """
 .asset .fv{flex:1;font-size:8.5pt;line-height:1.34;}
 .asset .an{font-size:8.6pt;line-height:1.42;margin:5pt 0 3pt;color:#27323d;}
 .asset .src{font-size:6.8pt;color:var(--faint);margin:0;line-height:1.3;}
+.keyfind{border-left:4pt solid #b91c1c;border-radius:0 6pt 6pt 0;padding:8pt 13pt 7pt;margin:7pt 0 11pt;break-inside:avoid;}
+.keyfind .kh{font-size:7.3pt;font-weight:900;letter-spacing:1.7pt;text-transform:uppercase;color:var(--kfc,#b91c1c);margin-bottom:4pt;}
+.keyfind ul{margin:0;list-style:none;}
+.keyfind li{position:relative;padding-left:12pt;margin-bottom:2.8pt;font-size:8.5pt;line-height:1.36;color:#27323d;}
+.keyfind li:before{content:"▸";position:absolute;left:1pt;top:.2pt;color:var(--kfc,#b91c1c);font-size:7.5pt;}
+.keyfind li b{color:#0d1620;font-weight:700;}
 """
 
 # inject CSS + swap sections
@@ -331,6 +371,29 @@ html = re.sub(r"<!-- 4 MIDSTREAM -->.*?<!-- 8 TEAM -->",
               "<!-- 4 MIDSTREAM -->\n" + PERASSET + "\n<!-- 8 TEAM -->", html, flags=re.S)
 # correct the WES figure retained in the §9 caveats
 html = html.replace("~41.9% (YE-2025), not", "~39.5% (Feb-2026), not").replace("is 41.9% not", "is ~39.5% not")
+
+# Key Findings boxes for the kept v2 sections (1, 2, 3, 8, 9)
+for h2, key, bullets in [
+ ('<h2>OXY at a glance — financials</h2>', "fin", [
+   "Net debt roughly halved — ~$24.0B (FY24) → <b>~$11.9B (Q1'26)</b>; principal debt $13.3B, target $10B.",
+   "FY2025 operating cash flow $10.5B, free cash flow $4.1B; <b>FY2026 capex guided $5.5–5.9B</b>.",
+   "Fitch upgraded OXY to BBB (investment grade), Feb 2026; OxyChem sold to Berkshire ($9.7B) → three segments."]),
+ ('<h2>The Berkshire Hathaway financing relationship</h2>', "bk", [
+   "$10B 8% preferred: <b>only ~$1.5B redeemed</b> (all 2023); ~$8.5B remains (~$680M/yr); redemption deferred to <b>Aug 2029</b>.",
+   "Berkshire holds 83.86M warrants at $59.624 (unexercised) + ~27% common; FERC-cleared to acquire up to 50%.",
+   "Buffett (2023 letter): ‘no interest in purchasing or managing Occidental’; calls DAC economics ‘yet to be proven’."]),
+ ('<h2>OXY infrastructure map — Permian / West Texas</h2>', "map", [
+   "13 OXY/affiliated assets plotted on real Permian county geography over the regional pipeline grid.",
+   "Off-map OXY assets: Santa Garcias solar &amp; King Ranch DAC hub (S. Texas), Bravo Dome (NE NM), Lost Tank (Lea NM), TerraLithium (CA)."]),
+ ('<h2>Key personnel — profiles</h2>', "team", [
+   "All three contacts are Land/commercial: <b>Woest</b> (Surface Land), <b>Cranfill</b> (BD — US Onshore &amp; Carbon Mgmt, UT Austin), <b>Noto</b> (Land Team Lead, ex-OLCV).",
+   "Public-source only; LinkedIn/ZoomInfo block automated access, so credentials/timelines are flagged, not fabricated."]),
+ ('<h2>Caveats, data gaps &amp; verification flags</h2>', "cav", [
+   "Superseded figures: NET Power Odessa is <b>80 MW</b> (not 300 MW Allam); WES stake <b>~39.5%</b> (not 49%); Cortez is not an OXY asset.",
+   "TerraLithium is California-only; DAC is barely economic; the $10B Berkshire preferred is largely un-redeemed.",
+   "Several figures are genuinely not disclosed (flagged in-text); EPA/EDGAR blocked automated fetch — confirm against primary filings."]),
+]:
+    html = html.replace(h2, h2 + keyfind(key, bullets), 1)
 
 with open(OUT, "w", encoding="utf-8") as f:
     f.write(html)
