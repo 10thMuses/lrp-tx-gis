@@ -45,13 +45,13 @@ TYPE_LABEL = {"gas": "Gas / CO₂", "power": "Power / solar", "netpower": "NET P
 
 # section id -> (number label, title, accent, accent-bg, map key, map file, caption)
 SECTIONS = [
-    ("midstream", "Section 2", "Midstream, pipelines &amp; gas processing", "#b91c1c", "#fef2f2",
+    ("midstream", "Section 3", "Midstream, pipelines &amp; gas processing", "#b91c1c", "#fef2f2",
      "midstream", "oxy_map_midstream.png", "OXY-owned CO₂ / gas-processing assets and WES processing plants."),
-    ("water", "Section 3", "Water infrastructure", "#0369a1", "#eff6ff",
+    ("water", "Section 4", "Water infrastructure", "#0369a1", "#eff6ff",
      "water", "oxy_map_water.png", "OXY and Western Midstream produced-water recycling and desalination assets."),
-    ("power", "Section 4", "Power generation &amp; NET Power", "#c2410c", "#fff7ed",
+    ("power", "Section 5", "Power generation &amp; NET Power", "#c2410c", "#fff7ed",
      "power", "oxy_map_power.png", "Solar OXY uses to power its operations, plus the NET Power gas-to-power site near Odessa."),
-    ("dac", "Section 5", "Carbon capture", "#15803d", "#f0fdf4",
+    ("dac", "Section 6", "Carbon capture", "#15803d", "#f0fdf4",
      "dac", "oxy_map_dac.png", "The Odessa low-carbon cluster: STRATOS direct-air-capture with co-located solar and NET Power."),
 ]
 
@@ -78,14 +78,15 @@ def asset_card(a):
         f'<div class="jv"><span class="jvl">Why it matters for a data-center JV</span>{a["jv"]}</div>'
         f'</div></div>')
 
-def keytable(mapkey):
+def mapblock(mapfile, mapkey, caption):
+    """Full-content-width map with its numbered key wrapping below."""
     rows = KEYS.get(mapkey, [])
-    out = []
-    for r in rows:
-        out.append(
-            f'<div class="kr"><span class="kn">{r["n"]}</span>'
-            f'<span class="kt">{r["label"]}<span class="kk"> · {TYPE_LABEL.get(r["type"], r["type"])}</span></span></div>')
-    return "".join(out)
+    items = "".join(
+        f'<span class="ki"><span class="kn">{r["n"]}</span>{r["label"]}'
+        f'<span class="kk"> · {TYPE_LABEL.get(r["type"], r["type"])}</span></span>' for r in rows)
+    key = f'<div class="keyflow">{items}</div>' if items else ""
+    return (f'<div class="mapfig"><img src="{mapfile}" alt="{caption}"></div>'
+            f'<div class="mapcap">{caption}</div>{key}')
 
 # ===================== CSS =====================
 CSS = """
@@ -147,21 +148,25 @@ h4{font-size:9.2pt;font-weight:800;color:var(--acc);margin:7pt 0 2pt;letter-spac
 .chip.con{background:#ffedd5;color:#9a3412;} .chip.demo{background:#dbeafe;color:#1e40af;}
 .chip.dv{background:#eef1f5;color:#64748b;}
 
-/* maps */
-.mapfig{margin:6pt 0 4pt;break-inside:avoid;}
+/* maps — full content width, key wraps below */
+.mapfig{margin:6pt 0 3pt;break-inside:avoid;}
 .mapfig img{width:100%;border:.8pt solid var(--rule);border-radius:5pt;display:block;}
-.mapcap{font-size:7pt;color:#94a3b8;margin-top:2.5pt;line-height:1.3;}
-.maprow{display:flex;gap:10pt;align-items:flex-start;}
-.maprow .mapfig{flex:none;width:112mm;}
-.keytab{flex:1;font-size:7.3pt;padding-top:2pt;}
-.keyh{font-size:6.6pt;font-weight:800;letter-spacing:1pt;color:#6b7a89;text-transform:uppercase;margin-bottom:4pt;}
-.kr{display:flex;gap:5pt;margin-bottom:2.6pt;align-items:baseline;}
-.kn{flex:none;width:12pt;height:12pt;border-radius:50%;background:var(--ink);color:#fff;font-size:6.2pt;font-weight:800;text-align:center;line-height:12pt;}
-.kt{color:#27323d;font-weight:600;line-height:1.22;} .kk{color:var(--faint);font-weight:500;}
+.mapcap{font-size:7.4pt;color:#94a3b8;margin:2.5pt 0 4pt;line-height:1.3;}
+.keyflow{display:flex;flex-wrap:wrap;gap:3.5pt 11pt;margin:0 0 7pt;}
+.ki{font-size:7.9pt;color:#27323d;display:flex;align-items:baseline;gap:4pt;}
+.kn{flex:none;width:13pt;height:13pt;border-radius:50%;background:var(--ink);color:#fff;font-size:6.6pt;font-weight:800;text-align:center;line-height:13pt;}
+.kk{color:var(--faint);font-weight:500;}
 
 /* intro page */
-.exec{font-size:9.8pt;line-height:1.5;color:#1f2933;margin:5pt 0 9pt;}
-.exec b{color:#0d1620;}
+.bl{background:#0f766e;color:#fff;padding:9pt 12pt;border-radius:6pt;font-size:10.5pt;line-height:1.46;margin:4pt 0 8pt;font-weight:500;}
+.bl b{font-weight:800;background:rgba(255,255,255,.16);padding:0 3pt;border-radius:2pt;}
+.ing{display:flex;gap:8pt;margin:0 0 8pt;}
+.ingc{flex:1;border:.8pt solid var(--rule);border-top:3pt solid var(--c);border-radius:5pt;padding:7pt 9pt;background:#fcfdfe;}
+.ingc .it{font-size:8.4pt;font-weight:800;text-transform:uppercase;letter-spacing:.5pt;color:var(--c);margin-bottom:3pt;}
+.ingc p{font-size:8.5pt;line-height:1.4;margin:0;color:#1f2933;}
+.ingc p b{color:#0d1620;}
+.prox{background:#fffbeb;border-left:3pt solid #b45309;padding:7pt 11pt;border-radius:0 5pt 5pt 0;font-size:9pt;line-height:1.45;color:#4b3a1a;margin:0 0 6pt;}
+.prox b{color:#7a2e0e;}
 .toc{font-size:9pt;margin:2pt 0 9pt;}
 .toc a{display:flex;justify-content:space-between;text-decoration:none;color:#1f2933;border-bottom:.6pt dotted #cbd5e1;padding:3.2pt 0;}
 .toc a .tt{font-weight:600;} .toc a .tn{color:var(--faint);font-weight:700;}
@@ -202,19 +207,50 @@ parts = []
 parts.append(section_open("s-footprint", "Section 1",
              "OXY's footprint &amp; proximity to Caramba North", "#0f766e", "#f0fdfa"))
 parts.append('<div class="lead">For a hyperscale data center, what sits nearby in energy infrastructure decides how fast and how cheaply it can be powered, cooled and connected. This section maps OXY\'s physical footprint across West Texas and shows what lies within reach of the Williams family\'s Caramba North tract in Pecos County — the starting point for judging whether OXY\'s assets are close enough to be additive to a jointly-developed campus.</div>')
-parts.append(
-    '<div class="maprow"><div class="mapfig"><img src="oxy_map_overview.png" alt="OXY overview map">'
-    '<div class="mapcap">All OXY-owned and affiliated (Western Midstream) assets across the Permian. Substations (blue) shown for orientation.</div></div>'
-    f'<div class="keytab"><div class="keyh">Map key</div>{keytable("overview")}</div></div>')
+parts.append(mapblock("oxy_map_overview.png", "overview",
+    "All OXY-owned and affiliated (Western Midstream) assets across the Permian, shown relative to Caramba North (green star). Substations (blue) for orientation."))
 parts.append('<h3>What is actually near the Williams land</h3>')
-parts.append(
-    '<div class="mapfig"><img src="oxy_map_caramba.png" alt="50-mile proximity map">'
-    '<div class="mapcap">OXY assets with a precise location, within 50 miles of Caramba North. County-level assets are excluded here to avoid implying false nearness.</div></div>')
-PROX = """<div class="kbox"><div class="h">The proximity read</div><p style="font-size:8.7pt">OXY's two nearest major assets to Caramba North are the <b>Century gas &amp; CO&#8322; plant (~31 miles)</b> and the <b>Block 31 CO&#8322;-flood complex (~48 miles)</b>. The rest of OXY's footprint &mdash; its largest CO&#8322; field (Wasson), its gas-processing plants, and its power and carbon-capture projects around Odessa &mdash; sits 90&ndash;130 miles north in the Midland Basin and the Gaines/Yoakum CO&#8322; corridor. The practical conclusion: physical adjacency to the Williams tract is limited to OXY's CO&#8322; system, while the assets most relevant to a data center (power and water) are a basin away. The strategic fit, developed in the following sections, is therefore about OXY's <b>capabilities and contracts</b>, not its pipe within sight of the property.</p></div>"""
+PROX = """<div class="kbox"><div class="h">The proximity read</div><p style="font-size:8.7pt">OXY's two nearest major assets to Caramba North are the <b>Century gas &amp; CO&#8322; plant (~31 miles)</b> and the <b>Block 31 CO&#8322;-flood complex (~48 miles)</b>, both shown below. The rest of OXY's footprint &mdash; its largest CO&#8322; field (Wasson), its gas-processing plants, and its power and carbon-capture projects around Odessa &mdash; sits 90&ndash;130 miles north in the Midland Basin and the Gaines/Yoakum CO&#8322; corridor. The practical conclusion: physical adjacency to the Williams tract is limited to OXY's CO&#8322; system, while the assets most relevant to a data center (power and water) are a basin away. The strategic fit, developed in the following sections, is therefore about OXY's <b>capabilities and contracts</b>, not its pipe within sight of the property.</p></div>"""
 parts.append(PROX)
+parts.append(mapblock("oxy_map_caramba.png", "caramba",
+    "OXY assets with a precise location within 50 miles of Caramba North; county-level assets are excluded here to avoid implying false nearness."))
 parts.append('</div>')
 
-# --- §2-§5 asset-type sections ---
+# --- §2 Public databases: ERCOT queue, generation & air permits ---
+fn_db = fn('ERCOT GIS interconnection queue (INR numbers); EIA-860 generation inventory (plant codes); TCEQ Central Registry air permits; EPA Greenhouse Gas Reporting Program. These are the source layers behind the map (ercot_queue, eia860_plants, substations). "Divested" = transferred with the OxyChem sale to Berkshire Hathaway (closed 2 Jan 2026).')
+parts.append(section_open("s-db", "Section 2",
+    "OXY in the public databases — ERCOT queue, generation &amp; air permits", "#7c3aed", "#f5f3ff"))
+parts.append('<div class="lead">The map is built on public databases — the ERCOT interconnection queue, EIA\'s generation inventory, and Texas air-permit records — and they show what OXY has actually <b>filed to build, generate and emit</b>. For a data-center JV these are leading indicators: the queue shows where OXY is trying to add power; the permits show the carbon and air footprint a partner would work alongside. Two records stand out — a <b>453&nbsp;MW NET&nbsp;Power-affiliated gas project in Midland\'s queue</b> (far larger than the re-scoped 80&nbsp;MW Odessa plant) and <b>265&nbsp;MW of OXY solar</b> already advancing toward interconnection.<sup class="fnref">' + str(fn_db) + '</sup></div>')
+parts.append('<h4>ERCOT interconnection queue — OXY &amp; affiliated filings</h4>')
+parts.append("""<table>
+<tr><th>Project</th><th class="n">MW</th><th>Type</th><th>County / zone</th><th>Filing entity</th><th>Queue status</th><th>INR</th></tr>
+<tr><td><b>TRIFECTA Gas</b></td><td class="n">453</td><td>Gas turbine</td><td>Midland / West</td><td>NET Power Canaveral, LLC</td><td>No IA yet</td><td>26INR0183</td></tr>
+<tr><td>Santa Garcias Solar</td><td class="n">265</td><td>Solar PV</td><td>Kleberg / Coastal</td><td>Oxy Renewable Energy, LLC</td><td>IA / facilities study pending</td><td>26INR0143</td></tr>
+<tr><td>Titus Low-Carbon Ventures Solar&nbsp;1</td><td class="n">338</td><td>Solar PV</td><td>San Patricio / Coastal</td><td>Vaquero Solar, LLC</td><td>No IA yet</td><td>26INR0211</td></tr>
+<tr><td>NET Power Demonstration plant</td><td class="n">25.5</td><td>Gas turbine</td><td>Harris / Houston</td><td>NET Power, LLC</td><td>No IA yet</td><td>26INR0345</td></tr>
+</table>""")
+parts.append('<div class="prox"><b>Why TRIFECTA matters:</b> a 453&nbsp;MW gas filing under "NET Power Canaveral" is the largest single OXY-linked power project in the Texas queue — evidence the gas-with-built-in-capture model is being pursued at utility scale well beyond the 80&nbsp;MW Odessa plant. It is the most direct read on OXY\'s appetite for exactly the firm, low-emission power a hyperscale campus needs.</div>')
+parts.append('<h4>Operating &amp; recently-divested generation (EIA-860)</h4>')
+parts.append("""<table>
+<tr><th>Plant</th><th class="n">MW</th><th>Type</th><th>County</th><th>Operator</th><th>Online</th><th>EIA code</th></tr>
+<tr><td>Wasson CO₂-Removal plant</td><td class="n">23.4</td><td>Gas turbine (captive)</td><td>Yoakum</td><td>Occidental Permian</td><td>1988</td><td>52122</td></tr>
+<tr><td>Goldsmith Solar</td><td class="n">16.8</td><td>Solar PV</td><td>Ector</td><td>Oxy Renewable Energy</td><td>2020</td><td>63388</td></tr>
+<tr><td>NET Power La&nbsp;Porte demo</td><td class="n">—</td><td>Gas turbine (demo)</td><td>Harris</td><td>NET Power</td><td>2018</td><td>60910</td></tr>
+<tr><td>Battleground (Houston Chem.) <span class="mut">· divested</span></td><td class="n">381</td><td>Gas combined-cycle</td><td>Harris</td><td>Oxy Vinyls</td><td>1982</td><td>50043</td></tr>
+<tr><td>Deer Park <span class="mut">· divested</span></td><td class="n">n/d</td><td>—</td><td>Harris</td><td>Oxy Vinyls</td><td>—</td><td>50471</td></tr>
+</table>""")
+parts.append('<h4>Air &amp; emissions permits (TCEQ + EPA)</h4>')
+parts.append("""<table>
+<tr><th>Facility</th><th>County</th><th>TCEQ air permit</th><th>EPA GHGRP</th><th>What it covers</th></tr>
+<tr><td>Century gas / CO₂ plant</td><td>Pecos</td><td>RN105567218 (acct 85488)</td><td>1004301</td><td>CO₂ treating; reports as a CO₂ <i>supplier</i></td></tr>
+<tr><td>Block 31 plant</td><td>Crane</td><td>RN100223569; NSR 73238; Title V 547</td><td>1001132</td><td>Gas processing + CO₂-flood emissions</td></tr>
+<tr><td>Wasson CO₂-removal plant</td><td>Yoakum</td><td>Title V O553 (RN100226687)</td><td>1011767 / 1002629</td><td>CO₂ removal + permanent storage (1st U.S. MRV plan)</td></tr>
+<tr><td>Denver Unit CO₂-recovery plant</td><td>Yoakum</td><td>Title V O3051 (RN102413861)</td><td>—</td><td>CO₂ recovery / recompression</td></tr>
+</table>""")
+parts.append('<p class="src" style="margin-top:4pt">Grid footprint: the map also carries <b>10 OXY-named substations</b> — North Cowden, South Curtis Ranch, Welch, Cogdell and Century Plant (the last two operator-tagged "Occidental Petroleum"), plus four Goldsmith substations and an Oxy Tap — the physical points where OXY ties into the Oncor / LCRA grid.</p>')
+parts.append('</div>')
+
+# --- §3-§6 asset-type sections ---
 by_sec = {}
 for a in ASSETS:
     by_sec.setdefault(a["section"], []).append(a)
@@ -222,14 +258,7 @@ for a in ASSETS:
 for sid_key, snum, title, acc, accbg, mapkey, mapfile, cap in SECTIONS:
     parts.append(section_open("s-" + sid_key, snum, title, acc, accbg))
     parts.append(f'<div class="lead">{SEC_INTRO[sid_key]}</div>')
-    nkey = KEYS.get(mapkey, [])
-    if nkey:
-        parts.append(
-            f'<div class="maprow"><div class="mapfig"><img src="{mapfile}" alt="{title} map">'
-            f'<div class="mapcap">{cap}</div></div>'
-            f'<div class="keytab"><div class="keyh">Map key</div>{keytable(mapkey)}</div></div>')
-    else:
-        parts.append(f'<div class="mapfig"><img src="{mapfile}" alt="{title} map"><div class="mapcap">{cap}</div></div>')
+    parts.append(mapblock(mapfile, mapkey, cap))
     for a in by_sec.get(sid_key, []):
         parts.append(asset_card(a))
     parts.append('</div>')
@@ -313,10 +342,11 @@ fn_noto = fn("Jeffrey Noto — ZoomInfo & LinkedIn headline snippets; Hart Energ
 
 TOC = [
     ("§1 · OXY's footprint &amp; proximity to Caramba North", "#s-footprint"),
-    ("§2 · Midstream, pipelines &amp; gas processing", "#s-midstream"),
-    ("§3 · Water infrastructure", "#s-water"),
-    ("§4 · Power generation &amp; NET Power", "#s-power"),
-    ("§5 · Carbon capture", "#s-dac"),
+    ("§2 · OXY in the public databases — ERCOT queue, generation &amp; permits", "#s-db"),
+    ("§3 · Midstream, pipelines &amp; gas processing", "#s-midstream"),
+    ("§4 · Water infrastructure", "#s-water"),
+    ("§5 · Power generation &amp; NET Power", "#s-power"),
+    ("§6 · Carbon capture", "#s-dac"),
     ("Appendix A · Financial profile", "#appx-fin"),
     ("Appendix B · The Berkshire Hathaway relationship", "#appx-bk"),
     ("Appendix C · Caveats &amp; confidence", "#appx-cav"),
@@ -327,7 +357,13 @@ toc_html = "".join(f'<a href="{href}"><span class="tt">{t}</span><span class="tn
 INTRO = f"""
 <div class="section" id="intro" style="--acc:#0f766e;--accbg:#f0fdfa;break-before:auto;">
   <span class="snum">Executive summary</span><h2>Occidental as a data-center JV partner</h2>
-  <div class="exec">Occidental Petroleum is the Permian Basin's largest carbon-dioxide and enhanced-oil-recovery operator, and over the last five years it has quietly assembled the three ingredients a hyperscale data center needs most: <b>dispatchable power, large-scale water handling, and carbon management.</b> Its NET Power venture is building one of the first natural-gas power plants designed to capture nearly all of its own CO₂ — the single most relevant asset to a behind-the-meter campus that must avoid the multi-year ERCOT grid queue. Its produced-water and recycling network across West Texas is among the largest in private hands, a potential source of cooling water that doesn't draw on scarce freshwater. And its STRATOS plant near Odessa is the world's largest direct-air-capture facility, offering a turnkey route to credible carbon-neutral claims. For the Williams family's Caramba North site in Pecos County, OXY's <b>nearest</b> major infrastructure is the Century CO₂ plant (~31 miles) and the Block 31 complex (~48 miles); the <b>deeper</b> fit is OXY's power-and-carbon platform, which maps directly onto the needs of a co-developed AI campus — capabilities and contracts more than pipe within sight of the property.</div>
+  <div class="bl">Occidental is the Permian's largest CO₂ and enhanced-oil-recovery operator, and over five years it has quietly assembled the three things a hyperscale data center needs most — <b>dispatchable power, large-scale water handling, and carbon management.</b></div>
+  <div class="ing">
+    <div class="ingc" style="--c:#c2410c"><div class="it">Power</div><p>NET Power builds gas plants that capture nearly all their own CO₂ — firm, 24/7, behind-the-meter power that <b>skips the multi-year ERCOT grid queue</b>. OXY also has 265&nbsp;MW of solar advancing and a 453&nbsp;MW NET&nbsp;Power-affiliated gas project in the Midland queue.</p></div>
+    <div class="ingc" style="--c:#0369a1"><div class="it">Water</div><p>One of the larger <b>produced-water and recycling networks</b> in private hands, plus a working desalination pilot — a path to cooling water that doesn't draw down scarce West-Texas freshwater.</p></div>
+    <div class="ingc" style="--c:#15803d"><div class="it">Carbon</div><p>STRATOS, the <b>world's largest direct-air-capture plant</b>, plus permanent CO₂ storage at scale — a turnkey route to credible carbon-neutral claims for gas-fired power.</p></div>
+  </div>
+  <div class="prox"><b>Proximity to Caramba North:</b> OXY's nearest major assets are the Century CO₂ plant (~31&nbsp;miles) and Block 31 (~48&nbsp;miles); the rest of its footprint sits 90–130&nbsp;miles north. The deeper fit is OXY's power-and-carbon platform — <b>capabilities and contracts more than pipe within sight of the property.</b></div>
 
   <h3>Contents</h3>
   <div class="toc">{toc_html}</div>
