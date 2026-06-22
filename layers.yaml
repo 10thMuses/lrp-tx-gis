@@ -49,6 +49,166 @@ layers:
     Name: Tract
     arableLandSize: Arable acres
     cropType: Land type
+- id: oxy_power
+  file: data/oxy/oxy_power.geojson
+  geom: point
+  group: 'OXY — Occidental Footprint'
+  label: OXY power & NET Power
+  description: "OXY power generation + NET Power assets and OXY-named grid substations. Generation from EIA-860 (Goldsmith solar, Wasson CO2-removal captive turbine, NET Power La Porte demo, and the divested OxyChem cogen at Battleground/Deer Park); substations from OSM/HIFLD. Coordinates trace to public datasets."
+  color: '#ca8a04'
+  default_on: true
+  radius: 6
+  stroke_width: 1.5
+  stroke_color: '#ffffff'
+  popup: [name, asset, status, fuel, technology, capacity_mw, county, operator, online, voltage, source]
+  popup_labels:
+    name: Asset
+    asset: Class
+    status: Status
+    fuel: Fuel
+    technology: Technology
+    capacity_mw: Capacity (MW)
+    county: County
+    operator: Operator
+    online: Online
+    voltage: Voltage
+    source: Source
+  filterable_fields:
+  - {field: asset, type: categorical, label: Class}
+  - {field: status, type: categorical, label: Status}
+  - {field: fuel, type: categorical, label: Fuel}
+  - {field: county, type: categorical, label: County}
+  - {field: capacity_mw, type: numeric, label: Capacity (MW)}
+  tippecanoe: [-Z0, -z14]
+- id: oxy_midstream
+  file: data/oxy/oxy_midstream.geojson
+  geom: point
+  group: 'OXY — Occidental Footprint'
+  label: OXY midstream / pipeline / processing
+  description: "OXY midstream, pipeline and gas/CO2-processing facilities: Century gas/CO2 plant (Pecos), Block 31 (Crane), Wasson/Denver Unit CO2-EOR (Yoakum), Denver City CO2 hub. Coordinates from sourced LRP layers; the hub is placed at county centroid and flagged approximate."
+  color: '#b45309'
+  default_on: true
+  radius: 7
+  stroke_width: 1.5
+  stroke_color: '#ffffff'
+  popup: [name, facility, status, operator, detail, county, accuracy, source]
+  popup_labels:
+    name: Asset
+    facility: Facility type
+    status: Status
+    operator: Operator
+    detail: Detail
+    county: County
+    accuracy: Location accuracy
+    source: Source
+  filterable_fields:
+  - {field: facility, type: categorical, label: Facility type}
+  - {field: county, type: categorical, label: County}
+  - {field: status, type: categorical, label: Status}
+  tippecanoe: [-Z0, -z14]
+- id: oxy_ercot
+  file: data/oxy/oxy_ercot.geojson
+  geom: point
+  group: 'OXY — Occidental Footprint'
+  label: OXY in the ERCOT queue
+  description: "OXY & affiliated generation in the ERCOT interconnection queue: Santa Garcias Solar (Oxy Renewable Energy, IA signed Feb 2026), NET Power Demonstration plant (active), and TRIFECTA Gas (NET Power Canaveral, withdrawn Apr 2026). Coordinates from the ERCOT GIS queue."
+  color: '#7c3aed'
+  default_on: true
+  radius: 7
+  stroke_width: 1.5
+  stroke_color: '#ffffff'
+  popup: [name, status, capacity_mw, fuel, technology, county, zone, filing_entity, source]
+  popup_labels:
+    name: Project
+    status: Queue status
+    capacity_mw: Capacity (MW)
+    fuel: Fuel
+    technology: Technology
+    county: County
+    zone: Zone
+    filing_entity: Filing entity
+    source: Source
+  filterable_fields:
+  - {field: status, type: categorical, label: Queue status}
+  - {field: fuel, type: categorical, label: Fuel}
+  - {field: county, type: categorical, label: County}
+  - {field: capacity_mw, type: numeric, label: Capacity (MW)}
+  tippecanoe: [-Z0, -z14]
+- id: oxy_permits
+  file: data/oxy/oxy_permits.geojson
+  geom: point
+  group: 'OXY — Occidental Footprint'
+  label: OXY air & emission permits (TCEQ)
+  description: "OXY facilities with TCEQ air / emission authorizations: Century (NSR), Block 31 (Title V renewed Jul 2025), Wasson CO2-removal (Title V O553, Nov 2025), Denver Unit CO2-recovery (Title V O3051, Oct 2025). Coordinates from sourced facility points; Denver Unit co-located near Wasson."
+  color: '#475569'
+  default_on: true
+  radius: 7
+  stroke_width: 1.5
+  stroke_color: '#ffffff'
+  popup: [name, permit_type, status, county, accuracy, source]
+  popup_labels:
+    name: Facility
+    permit_type: Permit type
+    status: Status
+    county: County
+    accuracy: Location accuracy
+    source: Source
+  filterable_fields:
+  - {field: permit_type, type: categorical, label: Permit type}
+  - {field: status, type: categorical, label: Status}
+  - {field: county, type: categorical, label: County}
+  tippecanoe: [-Z0, -z14]
+- id: oxy_water
+  file: data/oxy/oxy_water.geojson
+  geom: point
+  group: 'OXY — Occidental Footprint'
+  label: OXY water infrastructure
+  description: "OXY / Western Midstream produced-water recycling, desalination and water pipelines: South Curtis Ranch recycling (co-located with the OXY substation, precise), Pathfinder PW pipeline (Loving) and the WES desalination pilot (Reeves). Produced-water sites lacking a precise public coordinate are placed at county centroid and flagged approximate."
+  color: '#0891b2'
+  default_on: true
+  radius: 7
+  stroke_width: 1.5
+  stroke_color: '#ffffff'
+  popup: [name, water_type, status, operator, detail, county, accuracy, source]
+  popup_labels:
+    name: Asset
+    water_type: Water type
+    status: Status
+    operator: Operator
+    detail: Detail
+    county: County
+    accuracy: Location accuracy
+    source: Source
+  filterable_fields:
+  - {field: water_type, type: categorical, label: Water type}
+  - {field: county, type: categorical, label: County}
+  - {field: accuracy, type: categorical, label: Location accuracy}
+  tippecanoe: [-Z0, -z14]
+- id: oxy_carbon
+  file: data/oxy/oxy_carbon.geojson
+  geom: point
+  group: 'OXY — Occidental Footprint'
+  label: OXY carbon infrastructure
+  description: "OXY carbon-management assets: Century CO2 capture (Pecos), Wasson/Denver Unit CO2 storage (Yoakum, first U.S. Subpart RR MRV plan), and STRATOS direct-air-capture (Ector, under construction). STRATOS is placed at county centroid pending a precise public coordinate and flagged approximate."
+  color: '#15803d'
+  default_on: true
+  radius: 7
+  stroke_width: 1.5
+  stroke_color: '#ffffff'
+  popup: [name, carbon_type, status, detail, county, accuracy, source]
+  popup_labels:
+    name: Asset
+    carbon_type: Carbon type
+    status: Status
+    detail: Detail
+    county: County
+    accuracy: Location accuracy
+    source: Source
+  filterable_fields:
+  - {field: carbon_type, type: categorical, label: Carbon type}
+  - {field: county, type: categorical, label: County}
+  - {field: status, type: categorical, label: Status}
+  tippecanoe: [-Z0, -z14]
 - id: solstice_substation
   file: combined_geoms.geojson
   geom: point
@@ -1169,163 +1329,3 @@ layers:
   tippecanoe:
   - -Z0
   - -z14
-- id: oxy_power
-  file: data/oxy/oxy_power.geojson
-  geom: point
-  group: 'OXY — Occidental Footprint'
-  label: OXY power & NET Power
-  description: "OXY power generation + NET Power assets and OXY-named grid substations. Generation from EIA-860 (Goldsmith solar, Wasson CO2-removal captive turbine, NET Power La Porte demo, and the divested OxyChem cogen at Battleground/Deer Park); substations from OSM/HIFLD. Coordinates trace to public datasets."
-  color: '#ca8a04'
-  default_on: true
-  radius: 6
-  stroke_width: 1.5
-  stroke_color: '#ffffff'
-  popup: [name, asset, status, fuel, technology, capacity_mw, county, operator, online, voltage, source]
-  popup_labels:
-    name: Asset
-    asset: Class
-    status: Status
-    fuel: Fuel
-    technology: Technology
-    capacity_mw: Capacity (MW)
-    county: County
-    operator: Operator
-    online: Online
-    voltage: Voltage
-    source: Source
-  filterable_fields:
-  - {field: asset, type: categorical, label: Class}
-  - {field: status, type: categorical, label: Status}
-  - {field: fuel, type: categorical, label: Fuel}
-  - {field: county, type: categorical, label: County}
-  - {field: capacity_mw, type: numeric, label: Capacity (MW)}
-  tippecanoe: [-Z0, -z14]
-- id: oxy_midstream
-  file: data/oxy/oxy_midstream.geojson
-  geom: point
-  group: 'OXY — Occidental Footprint'
-  label: OXY midstream / pipeline / processing
-  description: "OXY midstream, pipeline and gas/CO2-processing facilities: Century gas/CO2 plant (Pecos), Block 31 (Crane), Wasson/Denver Unit CO2-EOR (Yoakum), Denver City CO2 hub. Coordinates from sourced LRP layers; the hub is placed at county centroid and flagged approximate."
-  color: '#b45309'
-  default_on: true
-  radius: 7
-  stroke_width: 1.5
-  stroke_color: '#ffffff'
-  popup: [name, facility, status, operator, detail, county, accuracy, source]
-  popup_labels:
-    name: Asset
-    facility: Facility type
-    status: Status
-    operator: Operator
-    detail: Detail
-    county: County
-    accuracy: Location accuracy
-    source: Source
-  filterable_fields:
-  - {field: facility, type: categorical, label: Facility type}
-  - {field: county, type: categorical, label: County}
-  - {field: status, type: categorical, label: Status}
-  tippecanoe: [-Z0, -z14]
-- id: oxy_ercot
-  file: data/oxy/oxy_ercot.geojson
-  geom: point
-  group: 'OXY — Occidental Footprint'
-  label: OXY in the ERCOT queue
-  description: "OXY & affiliated generation in the ERCOT interconnection queue: Santa Garcias Solar (Oxy Renewable Energy, IA signed Feb 2026), NET Power Demonstration plant (active), and TRIFECTA Gas (NET Power Canaveral, withdrawn Apr 2026). Coordinates from the ERCOT GIS queue."
-  color: '#7c3aed'
-  default_on: true
-  radius: 7
-  stroke_width: 1.5
-  stroke_color: '#ffffff'
-  popup: [name, status, capacity_mw, fuel, technology, county, zone, filing_entity, source]
-  popup_labels:
-    name: Project
-    status: Queue status
-    capacity_mw: Capacity (MW)
-    fuel: Fuel
-    technology: Technology
-    county: County
-    zone: Zone
-    filing_entity: Filing entity
-    source: Source
-  filterable_fields:
-  - {field: status, type: categorical, label: Queue status}
-  - {field: fuel, type: categorical, label: Fuel}
-  - {field: county, type: categorical, label: County}
-  - {field: capacity_mw, type: numeric, label: Capacity (MW)}
-  tippecanoe: [-Z0, -z14]
-- id: oxy_permits
-  file: data/oxy/oxy_permits.geojson
-  geom: point
-  group: 'OXY — Occidental Footprint'
-  label: OXY air & emission permits (TCEQ)
-  description: "OXY facilities with TCEQ air / emission authorizations: Century (NSR), Block 31 (Title V renewed Jul 2025), Wasson CO2-removal (Title V O553, Nov 2025), Denver Unit CO2-recovery (Title V O3051, Oct 2025). Coordinates from sourced facility points; Denver Unit co-located near Wasson."
-  color: '#475569'
-  default_on: true
-  radius: 7
-  stroke_width: 1.5
-  stroke_color: '#ffffff'
-  popup: [name, permit_type, status, county, accuracy, source]
-  popup_labels:
-    name: Facility
-    permit_type: Permit type
-    status: Status
-    county: County
-    accuracy: Location accuracy
-    source: Source
-  filterable_fields:
-  - {field: permit_type, type: categorical, label: Permit type}
-  - {field: status, type: categorical, label: Status}
-  - {field: county, type: categorical, label: County}
-  tippecanoe: [-Z0, -z14]
-- id: oxy_water
-  file: data/oxy/oxy_water.geojson
-  geom: point
-  group: 'OXY — Occidental Footprint'
-  label: OXY water infrastructure
-  description: "OXY / Western Midstream produced-water recycling, desalination and water pipelines: South Curtis Ranch recycling (co-located with the OXY substation, precise), Pathfinder PW pipeline (Loving) and the WES desalination pilot (Reeves). Produced-water sites lacking a precise public coordinate are placed at county centroid and flagged approximate."
-  color: '#0891b2'
-  default_on: true
-  radius: 7
-  stroke_width: 1.5
-  stroke_color: '#ffffff'
-  popup: [name, water_type, status, operator, detail, county, accuracy, source]
-  popup_labels:
-    name: Asset
-    water_type: Water type
-    status: Status
-    operator: Operator
-    detail: Detail
-    county: County
-    accuracy: Location accuracy
-    source: Source
-  filterable_fields:
-  - {field: water_type, type: categorical, label: Water type}
-  - {field: county, type: categorical, label: County}
-  - {field: accuracy, type: categorical, label: Location accuracy}
-  tippecanoe: [-Z0, -z14]
-- id: oxy_carbon
-  file: data/oxy/oxy_carbon.geojson
-  geom: point
-  group: 'OXY — Occidental Footprint'
-  label: OXY carbon infrastructure
-  description: "OXY carbon-management assets: Century CO2 capture (Pecos), Wasson/Denver Unit CO2 storage (Yoakum, first U.S. Subpart RR MRV plan), and STRATOS direct-air-capture (Ector, under construction). STRATOS is placed at county centroid pending a precise public coordinate and flagged approximate."
-  color: '#15803d'
-  default_on: true
-  radius: 7
-  stroke_width: 1.5
-  stroke_color: '#ffffff'
-  popup: [name, carbon_type, status, detail, county, accuracy, source]
-  popup_labels:
-    name: Asset
-    carbon_type: Carbon type
-    status: Status
-    detail: Detail
-    county: County
-    accuracy: Location accuracy
-    source: Source
-  filterable_fields:
-  - {field: carbon_type, type: categorical, label: Carbon type}
-  - {field: county, type: categorical, label: County}
-  - {field: status, type: categorical, label: Status}
-  tippecanoe: [-Z0, -z14]
