@@ -1,0 +1,67 @@
+[
+ {
+  "n": 1,
+  "label": "Century gas/CO₂ (Pecos)",
+  "type": "gas"
+ },
+ {
+  "n": 2,
+  "label": "Block 31 (Crane)",
+  "type": "gas"
+ },
+ {
+  "n": 3,
+  "label": "Wasson CO₂-EOR (Yoakum)",
+  "type": "gas"
+ },
+ {
+  "n": 4,
+  "label": "Denver City CO₂ hub",
+  "type": "gas"
+ },
+ {
+  "n": 5,
+  "label": "WES Loving plant",
+  "type": "gas"
+ },
+ {
+  "n": 6,
+  "label": "WES DBM (Delaware)",
+  "type": "gas"
+ },
+ {
+  "n": 7,
+  "label": "Athena plant (2026)",
+  "type": "gas"
+ },
+ {
+  "n": 8,
+  "label": "Goldsmith Solar 16 MW",
+  "type": "power"
+ },
+ {
+  "n": 9,
+  "label": "NET Power 80 MW (2029)",
+  "type": "netpower"
+ },
+ {
+  "n": 10,
+  "label": "STRATOS DAC (2026)",
+  "type": "dac"
+ },
+ {
+  "n": 11,
+  "label": "S. Curtis Ranch recycle",
+  "type": "water"
+ },
+ {
+  "n": 12,
+  "label": "Pathfinder PW (2027)",
+  "type": "water"
+ },
+ {
+  "n": 13,
+  "label": "WES desal pilot",
+  "type": "water"
+ }
+]
