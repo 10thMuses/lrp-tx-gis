@@ -40,9 +40,9 @@
     "water_type": "Produced-water pipeline",
     "county": "Loving",
     "operator": "Western Midstream",
-    "detail": "42 mi · 30-in · >800 Mbbl/d (2027)",
+    "detail": "42 mi · 30-in · >800 Mbbl/d (in service 2027)",
     "status": "Planned/pilot",
-    "source": "county centroid (Loving) — precise pending",
+    "source": "county centroid (Loving) — linear asset, precise route not published",
     "accuracy": "approximate (county centroid)"
    }
   },
@@ -51,8 +51,8 @@
    "geometry": {
     "type": "Point",
     "coordinates": [
-     -103.62521,
-     31.61568
+     -103.92,
+     31.9
     ]
    },
    "properties": {
@@ -60,10 +60,10 @@
     "water_type": "Desalination pilot",
     "county": "Reeves",
     "operator": "Western Midstream",
-    "detail": "2,000 bbl/d in → ~1,000 bbl/d fresh",
+    "detail": "2,000 bbl/d in → ~1,000 bbl/d fresh; near Red Bluff Reservoir",
     "status": "Planned/pilot",
-    "source": "county centroid (Reeves) — precise pending",
-    "accuracy": "approximate (county centroid)"
+    "source": "near Red Bluff Reservoir (WES release 17 Jun 2026); USGS Red Bluff Dam gage 08410100",
+    "accuracy": "approximate (near Red Bluff Reservoir, Reeves Co.; exact site not published)"
    }
   }
  ]

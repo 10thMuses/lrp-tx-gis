@@ -192,16 +192,22 @@ def main():
             "operator": "OXY + Select Water", "detail": ">50 MM bbl reused (2024)", "status": "Operating",
             "source": "OXY South Curtis Ranch substation (OSM way 457948592); RRC lease 08-40691",
             "accuracy": "approximate (at OXY substation; recycling plant within ~1-3 mi, no published coordinate)"}))
-    # approximate placements (precise coords pending research) — clearly flagged
-    for nm, county, wtype, detail in [
-        ("Pathfinder produced-water pipeline", "Loving", "Produced-water pipeline", "42 mi · 30-in · >800 Mbbl/d (2027)"),
-        ("WES desalination pilot (JIP 2)", "Reeves", "Desalination pilot", "2,000 bbl/d in → ~1,000 bbl/d fresh"),
-    ]:
-        c = cc(county)
-        if c[0]:
-            wf.append(feat(*c, {"name": nm, "water_type": wtype, "county": county,
+    # remaining sites — best sourced anchor where research found one, else county centroid; all flagged
+    water_extra = [
+        ("Pathfinder produced-water pipeline", "Loving", None, "Produced-water pipeline",
+         "42 mi · 30-in · >800 Mbbl/d (in service 2027)",
+         "county centroid (Loving) — linear asset, precise route not published", "approximate (county centroid)"),
+        ("WES desalination pilot (JIP 2)", "Reeves", (-103.92, 31.90), "Desalination pilot",
+         "2,000 bbl/d in → ~1,000 bbl/d fresh; near Red Bluff Reservoir",
+         "near Red Bluff Reservoir (WES release 17 Jun 2026); USGS Red Bluff Dam gage 08410100",
+         "approximate (near Red Bluff Reservoir, Reeves Co.; exact site not published)"),
+    ]
+    for nm, county, xy, wtype, detail, src, acc in water_extra:
+        c = xy if xy else cc(county)
+        if c and c[0]:
+            wf.append(feat(c[0], c[1], {"name": nm, "water_type": wtype, "county": county,
                 "operator": "Western Midstream", "detail": detail, "status": "Planned/pilot",
-                "source": f"county centroid ({county}) — precise pending", "accuracy": "approximate (county centroid)"}))
+                "source": src, "accuracy": acc}))
     P["oxy_water"] = wf
 
     for name, feats in P.items():
