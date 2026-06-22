@@ -1,0 +1,200 @@
+{
+ "overview": [
+  {
+   "n": 1,
+   "label": "Century plant (Pecos)",
+   "type": "gas",
+   "within": null
+  },
+  {
+   "n": 2,
+   "label": "Block 31 (Crane)",
+   "type": "gas",
+   "within": null
+  },
+  {
+   "n": 3,
+   "label": "Wasson CO₂-EOR",
+   "type": "gas",
+   "within": null
+  },
+  {
+   "n": 4,
+   "label": "Denver City hub",
+   "type": "gas",
+   "within": null
+  },
+  {
+   "n": 5,
+   "label": "WES DBM processing",
+   "type": "gas",
+   "within": null
+  },
+  {
+   "n": 6,
+   "label": "Athena plant (2026)",
+   "type": "gas",
+   "within": null
+  },
+  {
+   "n": 7,
+   "label": "S. Curtis Ranch recycle",
+   "type": "water",
+   "within": null
+  },
+  {
+   "n": 8,
+   "label": "WES desal pilot",
+   "type": "water",
+   "within": null
+  },
+  {
+   "n": 9,
+   "label": "Pathfinder PW (2027)",
+   "type": "water",
+   "within": null
+  },
+  {
+   "n": 10,
+   "label": "NET Power (Ector)",
+   "type": "netpower",
+   "within": null
+  },
+  {
+   "n": 11,
+   "label": "Goldsmith Solar 16 MW",
+   "type": "power",
+   "within": null
+  },
+  {
+   "n": 12,
+   "label": "STRATOS solar",
+   "type": "power",
+   "within": null
+  },
+  {
+   "n": 13,
+   "label": "STRATOS DAC (Ector)",
+   "type": "dac",
+   "within": null
+  }
+ ],
+ "caramba": [
+  {
+   "n": 1,
+   "label": "Century plant (Pecos)",
+   "type": "gas",
+   "within": true
+  },
+  {
+   "n": 2,
+   "label": "Block 31 (Crane)",
+   "type": "gas",
+   "within": true
+  }
+ ],
+ "midstream": [
+  {
+   "n": 1,
+   "label": "Century plant (Pecos)",
+   "type": "gas",
+   "within": null
+  },
+  {
+   "n": 2,
+   "label": "Block 31 (Crane)",
+   "type": "gas",
+   "within": null
+  },
+  {
+   "n": 3,
+   "label": "Wasson CO₂-EOR",
+   "type": "gas",
+   "within": null
+  },
+  {
+   "n": 4,
+   "label": "Denver City hub",
+   "type": "gas",
+   "within": null
+  },
+  {
+   "n": 5,
+   "label": "WES DBM processing",
+   "type": "gas",
+   "within": null
+  },
+  {
+   "n": 6,
+   "label": "Athena plant (2026)",
+   "type": "gas",
+   "within": null
+  }
+ ],
+ "water": [
+  {
+   "n": 1,
+   "label": "S. Curtis Ranch recycle",
+   "type": "water",
+   "within": null
+  },
+  {
+   "n": 2,
+   "label": "WES desal pilot",
+   "type": "water",
+   "within": null
+  },
+  {
+   "n": 3,
+   "label": "Pathfinder PW (2027)",
+   "type": "water",
+   "within": null
+  }
+ ],
+ "power": [
+  {
+   "n": 1,
+   "label": "NET Power (Ector)",
+   "type": "netpower",
+   "within": null
+  },
+  {
+   "n": 2,
+   "label": "Goldsmith Solar 16 MW",
+   "type": "power",
+   "within": null
+  },
+  {
+   "n": 3,
+   "label": "STRATOS solar",
+   "type": "power",
+   "within": null
+  }
+ ],
+ "dac": [
+  {
+   "n": 1,
+   "label": "NET Power (Ector)",
+   "type": "netpower",
+   "within": null
+  },
+  {
+   "n": 2,
+   "label": "Goldsmith Solar 16 MW",
+   "type": "power",
+   "within": null
+  },
+  {
+   "n": 3,
+   "label": "STRATOS solar",
+   "type": "power",
+   "within": null
+  },
+  {
+   "n": 4,
+   "label": "STRATOS DAC (Ector)",
+   "type": "dac",
+   "within": null
+  }
+ ]
+}
