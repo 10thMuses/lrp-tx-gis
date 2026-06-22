@@ -192,22 +192,25 @@ def main():
             "operator": "OXY + Select Water", "detail": ">50 MM bbl reused (2024)", "status": "Operating",
             "source": "OXY South Curtis Ranch substation (OSM way 457948592); RRC lease 08-40691",
             "accuracy": "approximate (at OXY substation; recycling plant within ~1-3 mi, no published coordinate)"}))
-    # remaining sites — best sourced anchor where research found one, else county centroid; all flagged
+    # remaining sites — precise regulator coordinate where research found one, else county centroid; all flagged
     water_extra = [
-        ("Pathfinder produced-water pipeline", "Loving", None, "Produced-water pipeline",
-         "42 mi · 30-in · >800 Mbbl/d (in service 2027)",
-         "county centroid (Loving) — linear asset, precise route not published", "approximate (county centroid)"),
-        ("WES desalination pilot (JIP 2)", "Reeves", (-103.92, 31.90), "Desalination pilot",
-         "2,000 bbl/d in → ~1,000 bbl/d fresh; near Red Bluff Reservoir",
+        ("Lost Tank produced-water recycling", "Lea (NM)", (-103.72052, 32.39144), "OXY + Select Water",
+         "Produced-water recycling", "up to 180,000 bbl/d; 1.9 MMbbl storage; 13-mi line to OXY's Mesa Verde", "Operating",
+         "NM OCD Facilities (Select Water 'Lost Tank Recycling Facility', ID fVV2203540475, permit 1RF-479-0)",
+         "precise (NM OCD facilities database)"),
+        ("WES desalination pilot (JIP 2)", "Reeves", (-103.92, 31.90), "Western Midstream",
+         "Desalination pilot", "2,000 bbl/d in → ~1,000 bbl/d fresh; near Red Bluff Reservoir", "Pilot",
          "near Red Bluff Reservoir (WES release 17 Jun 2026); USGS Red Bluff Dam gage 08410100",
          "approximate (near Red Bluff Reservoir, Reeves Co.; exact site not published)"),
+        ("Pathfinder produced-water pipeline", "Loving", None, "Western Midstream",
+         "Produced-water pipeline", "42 mi · 30-in · >800 Mbbl/d (in service 2027)", "Planned",
+         "county centroid (Loving) — linear asset, precise route not published", "approximate (county centroid)"),
     ]
-    for nm, county, xy, wtype, detail, src, acc in water_extra:
+    for nm, county, xy, op, wtype, detail, status, src, acc in water_extra:
         c = xy if xy else cc(county)
         if c and c[0]:
             wf.append(feat(c[0], c[1], {"name": nm, "water_type": wtype, "county": county,
-                "operator": "Western Midstream", "detail": detail, "status": "Planned/pilot",
-                "source": src, "accuracy": acc}))
+                "operator": op, "detail": detail, "status": status, "source": src, "accuracy": acc}))
     P["oxy_water"] = wf
 
     for name, feats in P.items():
