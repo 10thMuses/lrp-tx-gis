@@ -1,14 +1,14 @@
-"""Transform the OXY intelligence report HTML into a clean, editable Word (.docx).
+"""Transform the OXY dossier HTML into a clean, editable Word (.docx).
 
-The report HTML (scripts/build_oxy_report_v3.py) is print-CSS heavy: label/value
-flex rows, shaded "Key findings" boxes, status chips, a styled cover and a TOC with
-page numbers. pandoc ignores CSS, so we first rewrite those constructs into plain
-semantic HTML (paragraphs, bold runs, lists) and then let pandoc emit a Word file
-that is genuinely editable rather than a wall of unstyled spans.
+The report HTML (build_oxy_report.py) is print-CSS heavy: shaded section intros,
+structured asset cards (label/value rows + a "JV relevance" callout), status
+chips, map-key lists, bios and a footnotes appendix. pandoc ignores CSS, so we
+first rewrite those constructs into plain semantic HTML (headings, bold runs,
+blockquotes, paragraphs) and then let pandoc emit a genuinely editable Word file.
 
-pandoc runs from outputs/reports/ so the relative oxy_permian_map.png embeds.
+pandoc runs from outputs/reports/ so the relative map PNGs embed.
 
-Usage: python3 scripts/build_oxy_docx.py
+Run: python3 scripts/build_oxy_docx.py
 """
 import os, re, subprocess, sys
 
@@ -16,38 +16,51 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 RDIR = os.path.join(ROOT, "outputs", "reports")
 SRC = os.path.join(RDIR, "oxy-intelligence-report.html")
 TMP = os.path.join(RDIR, "_oxy_docx_src.html")
-OUT = "OXY-Intelligence-Report.docx"  # written into RDIR by pandoc
+OUT = "OXY-Intelligence-Report.docx"
 
 h = open(SRC, encoding="utf-8").read()
+S = re.S
 
-# 1) shaded "Key findings" boxes -> bold heading + bullet list
-h = re.sub(r'<div class="keyfind"[^>]*>\s*<div class="kh">(.*?)</div>\s*<ul>(.*?)</ul>\s*</div>',
-           r'<p><strong>\1</strong></p><ul>\2</ul>', h, flags=re.S)
-# any stray kh wrapper
-h = re.sub(r'<div class="kh">(.*?)</div>', r'<p><strong>\1</strong></p>', h, flags=re.S)
+# section eyebrow ("Section 2", "Appendix B") -> bold lead-in
+h = re.sub(r'<span class="snum">(.*?)</span>', r'<p><strong>\1</strong></p>', h, flags=S)
 
-# 2) label/value flex rows -> "Label: value" paragraphs
-h = re.sub(r'<div class="f"><span class="fl">(.*?)</span><span class="fv">(.*?)</span></div>',
-           r'<p><strong>\1:</strong> \2</p>', h, flags=re.S)
-
-# 3) status chips -> bracketed text next to the heading
-h = re.sub(r'<span class="tag [^"]*">(.*?)</span>', r' [\1]', h, flags=re.S)
-
-# 4) TOC page-number spans are meaningless once Word reflows -> drop
-h = re.sub(r'<span class="s">.*?</span>', '', h, flags=re.S)
-
-# 5) section eyebrow ("SECTION 4") -> keep as small bold lead-in
-h = re.sub(r'<span class="secnum">(.*?)</span>', r'<strong>\1</strong><br>', h, flags=re.S)
+# asset card header: name (+ footnote sup) + status chip -> H3 with [status]
+h = re.sub(r'<div class="ah"><span class="an">(.*?)</span><span class="chip[^"]*">(.*?)</span></div>',
+           r'<h3>\1 [\2]</h3>', h, flags=S)
+# one-liner -> italic paragraph
+h = re.sub(r'<div class="one">(.*?)</div>', r'<p><em>\1</em></p>', h, flags=S)
+# label/value rows -> "Label: value"
+h = re.sub(r'<div class="arow"><span class="al">(.*?)</span><span class="av">(.*?)</span></div>',
+           r'<p><strong>\1:</strong> \2</p>', h, flags=S)
+# JV callout -> bold-labelled paragraph
+h = re.sub(r'<div class="jv"><span class="jvl">(.*?)</span>(.*?)</div>',
+           r'<p><strong>\1:</strong> \2</p>', h, flags=S)
+# section intro / lead -> blockquote
+h = re.sub(r'<div class="lead">(.*?)</div>', r'<blockquote>\1</blockquote>', h, flags=S)
+# kbox heading -> bold paragraph
+h = re.sub(r'<div class="h">(.*?)</div>', r'<p><strong>\1</strong></p>', h, flags=S)
+# key-table heading + rows -> simple list
+h = re.sub(r'<div class="keyh">(.*?)</div>', r'<p><strong>\1</strong></p>', h, flags=S)
+h = re.sub(r'<div class="kr"><span class="kn">(.*?)</span><span class="kt">(.*?)</span></div>',
+           r'<p>\1 — \2</p>', h, flags=S)
+h = re.sub(r'<span class="kk">(.*?)</span>', r'\1', h, flags=S)
+# bios
+h = re.sub(r'<span class="bn">(.*?)</span>', r'<strong>\1</strong>', h, flags=S)
+h = re.sub(r'<span class="br">(.*?)</span>', r' — <em>\1</em>', h, flags=S)
+# TOC arrows -> drop
+h = re.sub(r'<span class="tn">.*?</span>', '', h, flags=S)
+h = re.sub(r'<span class="tt">(.*?)</span>', r'\1', h, flags=S)
+# any stray chips -> bracketed
+h = re.sub(r'<span class="chip[^"]*">(.*?)</span>', r' [\1]', h, flags=S)
 
 open(TMP, "w", encoding="utf-8").write(h)
 
 cmd = ["pandoc", os.path.basename(TMP), "-f", "html", "-t", "docx",
-       "--metadata", "title=OXY — Permian Infrastructure, Water, Power & Financial Profile",
+       "--metadata", "title=Occidental Petroleum — Infrastructure for a Hyperscale Data-Center JV",
        "-o", OUT]
 r = subprocess.run(cmd, cwd=RDIR, capture_output=True, text=True)
 if r.returncode != 0:
-    sys.stderr.write(r.stderr)
-    sys.exit(r.returncode)
+    sys.stderr.write(r.stderr); sys.exit(r.returncode)
 os.remove(TMP)
 p = os.path.join(RDIR, OUT)
 print("wrote", p, "·", os.path.getsize(p), "bytes")
