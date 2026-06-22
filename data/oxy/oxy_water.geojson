@@ -2,7 +2,7 @@
  "type": "FeatureCollection",
  "metadata": {
   "layer": "oxy_water",
-  "feature_count": 3,
+  "feature_count": 4,
   "note": "OXY footprint; coords from sourced LRP layers (ERCOT/EIA/OSM) + oxy_assets.geojson; approximate points flagged."
  },
  "features": [
@@ -31,19 +31,19 @@
    "geometry": {
     "type": "Point",
     "coordinates": [
-     -103.74868,
-     31.84073
+     -103.72052,
+     32.39144
     ]
    },
    "properties": {
-    "name": "Pathfinder produced-water pipeline",
-    "water_type": "Produced-water pipeline",
-    "county": "Loving",
-    "operator": "Western Midstream",
-    "detail": "42 mi · 30-in · >800 Mbbl/d (in service 2027)",
-    "status": "Planned/pilot",
-    "source": "county centroid (Loving) — linear asset, precise route not published",
-    "accuracy": "approximate (county centroid)"
+    "name": "Lost Tank produced-water recycling",
+    "water_type": "Produced-water recycling",
+    "county": "Lea (NM)",
+    "operator": "OXY + Select Water",
+    "detail": "up to 180,000 bbl/d; 1.9 MMbbl storage; 13-mi line to OXY's Mesa Verde",
+    "status": "Operating",
+    "source": "NM OCD Facilities (Select Water 'Lost Tank Recycling Facility', ID fVV2203540475, permit 1RF-479-0)",
+    "accuracy": "precise (NM OCD facilities database)"
    }
   },
   {
@@ -61,9 +61,29 @@
     "county": "Reeves",
     "operator": "Western Midstream",
     "detail": "2,000 bbl/d in → ~1,000 bbl/d fresh; near Red Bluff Reservoir",
-    "status": "Planned/pilot",
+    "status": "Pilot",
     "source": "near Red Bluff Reservoir (WES release 17 Jun 2026); USGS Red Bluff Dam gage 08410100",
     "accuracy": "approximate (near Red Bluff Reservoir, Reeves Co.; exact site not published)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -103.74868,
+     31.84073
+    ]
+   },
+   "properties": {
+    "name": "Pathfinder produced-water pipeline",
+    "water_type": "Produced-water pipeline",
+    "county": "Loving",
+    "operator": "Western Midstream",
+    "detail": "42 mi · 30-in · >800 Mbbl/d (in service 2027)",
+    "status": "Planned",
+    "source": "county centroid (Loving) — linear asset, precise route not published",
+    "accuracy": "approximate (county centroid)"
    }
   }
  ]
