@@ -79,12 +79,17 @@ def asset_card(a):
         f'</div></div>')
 
 def mapblock(mapfile, mapkey, caption):
-    """Full-content-width map with its numbered key wrapping below."""
+    """Height-capped map with its numbered key as an aligned table (2 entries/row)."""
     rows = KEYS.get(mapkey, [])
-    items = "".join(
-        f'<span class="ki"><span class="kn">{r["n"]}</span>{r["label"]}'
-        f'<span class="kk"> · {TYPE_LABEL.get(r["type"], r["type"])}</span></span>' for r in rows)
-    key = f'<div class="keyflow">{items}</div>' if items else ""
+    items = [(r["n"], r["label"], TYPE_LABEL.get(r["type"], r["type"])) for r in rows]
+    per, trs = 2, ""
+    for i in range(0, len(items), per):
+        chunk = items[i:i + per]
+        tds = "".join(f'<td class="kn">{n}</td><td class="kl">{l}</td><td class="kty">{t}</td>'
+                      for n, l, t in chunk)
+        tds += '<td></td><td></td><td></td>' * (per - len(chunk))
+        trs += f'<tr>{tds}</tr>'
+    key = f'<table class="keytab">{trs}</table>' if items else ""
     return (f'<div class="mapfig"><img src="{mapfile}" alt="{caption}"></div>'
             f'<div class="mapcap">{caption}</div>{key}')
 
@@ -122,7 +127,7 @@ sup.fnref{font-size:5.6pt;font-weight:800;color:#2563eb;vertical-align:super;mar
 /* section frame */
 .section{break-before:page;}
 .snum{font-size:7.3pt;font-weight:800;letter-spacing:2pt;color:var(--acc);display:block;margin-bottom:2pt;}
-h2{font-size:15.5pt;font-weight:800;letter-spacing:-.2pt;color:#0f172a;margin:0 0 2pt;border-top:2.4pt solid var(--acc);padding-top:5pt;display:inline-block;}
+h2{font-size:13pt;font-weight:800;letter-spacing:-.2pt;color:#0f172a;margin:0 0 3pt;border-top:2.4pt solid var(--acc);padding-top:5pt;display:block;}
 h3{font-size:11pt;font-weight:800;color:#0f172a;margin:9pt 0 3pt;}
 h4{font-size:9.2pt;font-weight:800;color:var(--acc);margin:7pt 0 2pt;letter-spacing:.2pt;}
 .lead{background:var(--accbg);border-left:3pt solid var(--acc);padding:7pt 11pt;border-radius:0 5pt 5pt 0;margin:5pt 0 8pt;font-size:9.6pt;line-height:1.45;color:#1f2933;}
@@ -148,18 +153,19 @@ h4{font-size:9.2pt;font-weight:800;color:var(--acc);margin:7pt 0 2pt;letter-spac
 .chip.con{background:#ffedd5;color:#9a3412;} .chip.demo{background:#dbeafe;color:#1e40af;}
 .chip.dv{background:#eef1f5;color:#64748b;}
 
-/* maps — full content width, key wraps below */
-.mapfig{margin:6pt 0 3pt;break-inside:avoid;}
-.mapfig img{width:100%;border:.8pt solid var(--rule);border-radius:5pt;display:block;}
-.mapcap{font-size:7.4pt;color:#94a3b8;margin:2.5pt 0 4pt;line-height:1.3;}
-.keyflow{display:flex;flex-wrap:wrap;gap:3.5pt 11pt;margin:0 0 7pt;}
-.ki{font-size:7.9pt;color:#27323d;display:flex;align-items:baseline;gap:4pt;}
-.kn{flex:none;width:13pt;height:13pt;border-radius:50%;background:var(--ink);color:#fff;font-size:6.6pt;font-weight:800;text-align:center;line-height:13pt;}
-.kk{color:var(--faint);font-weight:500;}
+/* maps — height-capped so caption + map + key fit one page; key as aligned table */
+.mapfig{margin:5pt 0 3pt;break-inside:avoid;text-align:center;}
+.mapfig img{max-width:100%;max-height:150mm;border:.8pt solid var(--rule);border-radius:5pt;display:block;margin:0 auto;}
+.mapcap{font-size:7.4pt;color:#94a3b8;margin:3pt 0 3pt;line-height:1.3;text-align:left;}
+.keytab{width:100%;border-collapse:collapse;font-size:7.6pt;margin:0 0 6pt;}
+.keytab td{padding:1.7pt 6pt 1.7pt 0;border-bottom:.4pt solid #eef2f6;vertical-align:baseline;}
+.keytab .kn{width:14pt;text-align:right;font-weight:800;color:var(--acc);font-variant-numeric:tabular-nums;}
+.keytab .kl{font-weight:600;color:#27323d;}
+.keytab .kty{color:var(--faint);white-space:nowrap;}
 
 /* intro page */
 .bl{background:#0f766e;color:#fff;padding:9pt 12pt;border-radius:6pt;font-size:10.5pt;line-height:1.46;margin:4pt 0 8pt;font-weight:500;}
-.bl b{font-weight:800;background:rgba(255,255,255,.16);padding:0 3pt;border-radius:2pt;}
+.bl b{font-weight:800;color:#fde68a;}
 .ing{display:flex;gap:8pt;margin:0 0 8pt;}
 .ingc{flex:1;border:.8pt solid var(--rule);border-top:3pt solid var(--c);border-radius:5pt;padding:7pt 9pt;background:#fcfdfe;}
 .ingc .it{font-size:8.4pt;font-weight:800;text-transform:uppercase;letter-spacing:.5pt;color:var(--c);margin-bottom:3pt;}
@@ -167,9 +173,11 @@ h4{font-size:9.2pt;font-weight:800;color:var(--acc);margin:7pt 0 2pt;letter-spac
 .ingc p b{color:#0d1620;}
 .prox{background:#fffbeb;border-left:3pt solid #b45309;padding:7pt 11pt;border-radius:0 5pt 5pt 0;font-size:9pt;line-height:1.45;color:#4b3a1a;margin:0 0 6pt;}
 .prox b{color:#7a2e0e;}
-.toc{font-size:9pt;margin:2pt 0 9pt;}
-.toc a{display:flex;justify-content:space-between;text-decoration:none;color:#1f2933;border-bottom:.6pt dotted #cbd5e1;padding:3.2pt 0;}
-.toc a .tt{font-weight:600;} .toc a .tn{color:var(--faint);font-weight:700;}
+.toc{font-size:9.2pt;margin:4pt 0 6pt;}
+.toc a{display:flex;align-items:center;justify-content:space-between;text-decoration:none;color:#1f2933;background:var(--tint);border-left:3pt solid var(--acc);border-radius:0 4pt 4pt 0;padding:4.5pt 9pt;margin-bottom:3pt;}
+.toc a .tt{font-weight:600;}
+.toc a::after{content:target-counter(attr(href), page);font-weight:800;color:var(--acc);font-variant-numeric:tabular-nums;margin-left:10pt;}
+.idiv{border:0;border-top:.8pt solid var(--rule);margin:13pt 0 9pt;}
 .bio{border-left:2.4pt solid #94a3b8;padding:2pt 0 2pt 9pt;margin:6pt 0;}
 .bio .bn{font-size:9.6pt;font-weight:800;color:#0f172a;}
 .bio .br{font-size:7.6pt;font-weight:700;color:var(--mut);text-transform:uppercase;letter-spacing:.3pt;}
@@ -181,6 +189,8 @@ th{text-align:left;font-size:6.6pt;font-weight:800;text-transform:uppercase;lett
 td{padding:3.4pt 4pt;border-bottom:.6pt solid var(--rule);vertical-align:top;line-height:1.3;}
 td.n,th.n{text-align:right;font-variant-numeric:tabular-nums;}
 tr:nth-child(even) td{background:var(--tint);}
+table.wide{font-size:6.9pt;} table.wide th,table.wide td{padding:2.6pt 3.5pt;line-height:1.28;}
+table.wide th{font-size:6pt;}
 .two{display:flex;gap:12pt;} .two>*{flex:1;}
 .kbox{border:.8pt solid var(--rule);border-radius:5pt;padding:7pt 9pt;background:var(--tint);margin:6pt 0;break-inside:avoid;}
 .kbox .h{font-size:6.8pt;font-weight:800;letter-spacing:1.2pt;color:#6b7a89;text-transform:uppercase;margin-bottom:4pt;}
@@ -210,44 +220,44 @@ parts.append('<div class="lead">For a hyperscale data center, what sits nearby i
 parts.append(mapblock("oxy_map_overview.png", "overview",
     "All OXY-owned and affiliated (Western Midstream) assets across the Permian, shown relative to Caramba North (green star). Substations (blue) for orientation."))
 parts.append('<h3>What is actually near the Williams land</h3>')
-PROX = """<div class="kbox"><div class="h">The proximity read</div><p style="font-size:8.7pt">OXY's two nearest major assets to Caramba North are the <b>Century gas &amp; CO&#8322; plant (~31 miles)</b> and the <b>Block 31 CO&#8322;-flood complex (~48 miles)</b>, both shown below. The rest of OXY's footprint &mdash; its largest CO&#8322; field (Wasson), its gas-processing plants, and its power and carbon-capture projects around Odessa &mdash; sits 90&ndash;130 miles north in the Midland Basin and the Gaines/Yoakum CO&#8322; corridor. The practical conclusion: physical adjacency to the Williams tract is limited to OXY's CO&#8322; system, while the assets most relevant to a data center (power and water) are a basin away. The strategic fit, developed in the following sections, is therefore about OXY's <b>capabilities and contracts</b>, not its pipe within sight of the property.</p></div>"""
+PROX = """<div class="kbox"><div class="h">The proximity read</div><p style="font-size:8.7pt">OXY's two nearest major assets to Caramba North are the <b>Century gas &amp; CO&#8322; plant (~31 miles)</b> and the <b>Block 31 CO&#8322;-flood complex (~48 miles)</b>, both shown below. The rest of OXY's footprint &mdash; its largest CO&#8322; field (Wasson), its gas-processing plants, and its power and carbon-capture projects around Odessa &mdash; sits 90&ndash;130 miles north, in the Midland Basin and the Gaines/Yoakum CO&#8322; corridor.</p></div>"""
 parts.append(PROX)
 parts.append(mapblock("oxy_map_caramba.png", "caramba",
     "OXY assets with a precise location within 50 miles of Caramba North; county-level assets are excluded here to avoid implying false nearness."))
 parts.append('</div>')
 
 # --- §2 Public databases: ERCOT queue, generation & air permits ---
-fn_db = fn('ERCOT GIS interconnection queue (INR numbers); EIA-860 generation inventory (plant codes); TCEQ Central Registry air permits; EPA Greenhouse Gas Reporting Program. These are the source layers behind the map (ercot_queue, eia860_plants, substations). "Divested" = transferred with the OxyChem sale to Berkshire Hathaway (closed 2 Jan 2026).')
+fn_db = fn('Sources: ERCOT interconnection queue (via interconnection.fyi); EIA-860 / gridinfo; TCEQ Title V Federal Operating Permit agendas (2025 renewals); EPA GHGRP Subpart RR. Queue "queued" dates are the original ERCOT interconnection-request dates — the "26INR" prefix is the 2026 report-snapshot series, not the entry year. "Divested" = transferred to Berkshire Hathaway with the OxyChem sale (announced 2 Oct 2025, closed 2 Jan 2026).')
 parts.append(section_open("s-db", "Section 2",
-    "OXY in the public databases — ERCOT queue, generation &amp; air permits", "#7c3aed", "#f5f3ff"))
-parts.append('<div class="lead">The map is built on public databases — the ERCOT interconnection queue, EIA\'s generation inventory, and Texas air-permit records — and they show what OXY has actually <b>filed to build, generate and emit</b>. For a data-center JV these are leading indicators: the queue shows where OXY is trying to add power; the permits show the carbon and air footprint a partner would work alongside. Two records stand out — a <b>453&nbsp;MW NET&nbsp;Power-affiliated gas project in Midland\'s queue</b> (far larger than the re-scoped 80&nbsp;MW Odessa plant) and <b>265&nbsp;MW of OXY solar</b> already advancing toward interconnection.<sup class="fnref">' + str(fn_db) + '</sup></div>')
+    "OXY in the public databases", "#7c3aed", "#f5f3ff"))
+parts.append('<div class="lead">The map is built on public databases — the ERCOT interconnection queue, EIA\'s generation inventory, and Texas air-permit records — which show what OXY has actually <b>filed to build, generate and emit</b>. They are leading indicators of where OXY is adding power and the carbon/air footprint a partner would work alongside. The honest read: OXY\'s only utility-scale generation filing of its own is a <b>265&nbsp;MW South Texas solar project</b> (interconnection agreement signed Feb&nbsp;2026); its retained operating generation is small and captive; and its large cogeneration plants left with the OxyChem sale to Berkshire.<sup class="fnref">' + str(fn_db) + '</sup></div>')
 parts.append('<h4>ERCOT interconnection queue — OXY &amp; affiliated filings</h4>')
-parts.append("""<table>
-<tr><th>Project</th><th class="n">MW</th><th>Type</th><th>County / zone</th><th>Filing entity</th><th>Queue status</th><th>INR</th></tr>
-<tr><td><b>TRIFECTA Gas</b></td><td class="n">453</td><td>Gas turbine</td><td>Midland / West</td><td>NET Power Canaveral, LLC</td><td>No IA yet</td><td>26INR0183</td></tr>
-<tr><td>Santa Garcias Solar</td><td class="n">265</td><td>Solar PV</td><td>Kleberg / Coastal</td><td>Oxy Renewable Energy, LLC</td><td>IA / facilities study pending</td><td>26INR0143</td></tr>
-<tr><td>Titus Low-Carbon Ventures Solar&nbsp;1</td><td class="n">338</td><td>Solar PV</td><td>San Patricio / Coastal</td><td>Vaquero Solar, LLC</td><td>No IA yet</td><td>26INR0211</td></tr>
-<tr><td>NET Power Demonstration plant</td><td class="n">25.5</td><td>Gas turbine</td><td>Harris / Houston</td><td>NET Power, LLC</td><td>No IA yet</td><td>26INR0345</td></tr>
+parts.append("""<table class="wide">
+<tr><th>Project</th><th class="n">MW</th><th>Type</th><th>County</th><th>Filing entity</th><th>Queued</th><th>Target COD</th><th>Status</th><th>Associated project / offtaker</th></tr>
+<tr><td><b>Santa Garcias Solar</b></td><td class="n">265</td><td>Solar PV</td><td>Kleberg</td><td>Oxy Renewable Energy, LLC</td><td>Jun 2023</td><td>~May 2028</td><td><b>IA signed Feb 2026</b></td><td>Believed (not confirmed) to power OXY's King Ranch S. Texas DAC hub; Hollub has said that hub will be solar-powered</td></tr>
+<tr><td>NET Power Demonstration plant</td><td class="n">25.5</td><td>Gas (Allam)</td><td>Harris</td><td>NET Power, LLC</td><td>Dec 2023</td><td>Aug 2027</td><td>Active in queue</td><td>La Porte 50 MWth Allam-cycle demo; repaired &amp; resumed testing 2025</td></tr>
+<tr><td>TRIFECTA Gas</td><td class="n">453</td><td>Gas</td><td>Midland</td><td>NET Power Canaveral, LLC</td><td>Jun 2023</td><td>(Feb 2030)</td><td><b>Withdrawn Apr 2026</b></td><td>Unannounced placeholder, now pulled; separate from NET Power's 80 MW "Project Permian" (Oncor)</td></tr>
 </table>""")
-parts.append('<div class="prox"><b>Why TRIFECTA matters:</b> a 453&nbsp;MW gas filing under "NET Power Canaveral" is the largest single OXY-linked power project in the Texas queue — evidence the gas-with-built-in-capture model is being pursued at utility scale well beyond the 80&nbsp;MW Odessa plant. It is the most direct read on OXY\'s appetite for exactly the firm, low-emission power a hyperscale campus needs.</div>')
-parts.append('<h4>Operating &amp; recently-divested generation (EIA-860)</h4>')
-parts.append("""<table>
-<tr><th>Plant</th><th class="n">MW</th><th>Type</th><th>County</th><th>Operator</th><th>Online</th><th>EIA code</th></tr>
-<tr><td>Wasson CO₂-Removal plant</td><td class="n">23.4</td><td>Gas turbine (captive)</td><td>Yoakum</td><td>Occidental Permian</td><td>1988</td><td>52122</td></tr>
-<tr><td>Goldsmith Solar</td><td class="n">16.8</td><td>Solar PV</td><td>Ector</td><td>Oxy Renewable Energy</td><td>2020</td><td>63388</td></tr>
-<tr><td>NET Power La&nbsp;Porte demo</td><td class="n">—</td><td>Gas turbine (demo)</td><td>Harris</td><td>NET Power</td><td>2018</td><td>60910</td></tr>
-<tr><td>Battleground (Houston Chem.) <span class="mut">· divested</span></td><td class="n">381</td><td>Gas combined-cycle</td><td>Harris</td><td>Oxy Vinyls</td><td>1982</td><td>50043</td></tr>
-<tr><td>Deer Park <span class="mut">· divested</span></td><td class="n">n/d</td><td>—</td><td>Harris</td><td>Oxy Vinyls</td><td>—</td><td>50471</td></tr>
+parts.append('<div class="prox"><b>Reading the queue:</b> OXY\'s only utility-scale generation filing of its own is <b>Santa Garcias Solar</b> (265&nbsp;MW, South Texas), whose interconnection agreement was signed February&nbsp;2026 and which is widely believed — though not publicly confirmed — to be intended to power OXY\'s King Ranch direct-air-capture hub. Its NET&nbsp;Power affiliate keeps the 25.5&nbsp;MW La&nbsp;Porte demonstration plant active; a larger 453&nbsp;MW Midland placeholder (TRIFECTA / NET&nbsp;Power Canaveral) was <b>withdrawn in April 2026</b> and was never publicly announced. NET&nbsp;Power\'s actual Permian project remains the 80&nbsp;MW plant near Odessa.</div>')
+parts.append('<h4>Generation — operating &amp; recently divested</h4>')
+parts.append("""<table class="wide">
+<tr><th>Plant</th><th class="n">MW</th><th>Type</th><th>County</th><th>Operator</th><th>Online</th><th>Status</th><th>Role / notes</th></tr>
+<tr><td>Wasson CO₂-Removal plant</td><td class="n">23.4</td><td>Gas turbine</td><td>Yoakum</td><td>Occidental Permian</td><td>1988</td><td><b>Operating</b></td><td>Captive power for the Denver Unit CO₂-EOR; ~33&nbsp;GWh in the latest reported quarter</td></tr>
+<tr><td>Goldsmith Solar</td><td class="n">16.8</td><td>Solar PV</td><td>Ector</td><td>Oxy Renewable Energy (First Solar-built)</td><td>Oct 2019</td><td><b>Operating</b></td><td>~12-yr PPA; power dedicated behind-the-meter to OXY enhanced-oil-recovery</td></tr>
+<tr><td>NET Power La&nbsp;Porte demo</td><td class="n">50<span class="mut"> MWth</span></td><td>Gas (Allam demo)</td><td>Harris</td><td>NET Power</td><td>2018</td><td>Operating (testing)</td><td>Allam-cycle demonstration plant; OXY ~46% owner of NET Power</td></tr>
+<tr><td>Battleground / La&nbsp;Porte cogen</td><td class="n">381</td><td>Gas combined-cycle</td><td>Harris</td><td>Oxy Vinyls → Berkshire</td><td>1982</td><td><b>Divested Jan 2026</b></td><td>Captive cogen for the chlor-alkali complex; transferred to Berkshire with OxyChem</td></tr>
+<tr><td>Deer Park</td><td class="n">n/d</td><td>Cogen</td><td>Harris</td><td>Oxy Vinyls → Berkshire</td><td>—</td><td><b>Divested Jan 2026</b></td><td>Transferred to Berkshire with OxyChem</td></tr>
 </table>""")
-parts.append('<h4>Air &amp; emissions permits (TCEQ + EPA)</h4>')
-parts.append("""<table>
-<tr><th>Facility</th><th>County</th><th>TCEQ air permit</th><th>EPA GHGRP</th><th>What it covers</th></tr>
-<tr><td>Century gas / CO₂ plant</td><td>Pecos</td><td>RN105567218 (acct 85488)</td><td>1004301</td><td>CO₂ treating; reports as a CO₂ <i>supplier</i></td></tr>
-<tr><td>Block 31 plant</td><td>Crane</td><td>RN100223569; NSR 73238; Title V 547</td><td>1001132</td><td>Gas processing + CO₂-flood emissions</td></tr>
-<tr><td>Wasson CO₂-removal plant</td><td>Yoakum</td><td>Title V O553 (RN100226687)</td><td>1011767 / 1002629</td><td>CO₂ removal + permanent storage (1st U.S. MRV plan)</td></tr>
-<tr><td>Denver Unit CO₂-recovery plant</td><td>Yoakum</td><td>Title V O3051 (RN102413861)</td><td>—</td><td>CO₂ recovery / recompression</td></tr>
+parts.append('<h4>Air &amp; emissions permits</h4>')
+parts.append("""<table class="wide">
+<tr><th>Facility</th><th>County</th><th>Permit type</th><th>Status</th><th>Notes</th></tr>
+<tr><td>Century gas / CO₂ plant</td><td>Pecos</td><td>TCEQ New Source Review (air)</td><td>Active — no pending Title V action</td><td>Routes captured CO₂ to OXY EOR; SandRidge operates day-to-day</td></tr>
+<tr><td>Block 31 plant</td><td>Crane</td><td>TCEQ Title V + NSR</td><td><b>Title V renewed 10 Jul 2025</b></td><td>One resolved TCEQ deviation-report penalty (2022, ~$6,500); no open hearings</td></tr>
+<tr><td>Wasson CO₂-removal plant</td><td>Yoakum</td><td>TCEQ Title V</td><td><b>Renewed 25 Nov 2025</b></td><td>Serves the Wasson / Denver Unit CO₂-EOR complex</td></tr>
+<tr><td>Denver Unit CO₂-recovery plant</td><td>Yoakum</td><td>TCEQ Title V</td><td><b>Renewed 15 Oct 2025</b></td><td>CO₂ recovery / recompression for the EOR flood</td></tr>
+<tr><td>Denver Unit — CO₂ storage</td><td>Yoakum</td><td>EPA Subpart RR (MRV plan)</td><td>Approved Dec 2015; amended Aug 2023</td><td>EPA's first-ever approved CO₂-storage monitoring plan; ~3.67&nbsp;Mt stored in 2023</td></tr>
 </table>""")
-parts.append('<p class="src" style="margin-top:4pt">Grid footprint: the map also carries <b>10 OXY-named substations</b> — North Cowden, South Curtis Ranch, Welch, Cogdell and Century Plant (the last two operator-tagged "Occidental Petroleum"), plus four Goldsmith substations and an Oxy Tap — the physical points where OXY ties into the Oncor / LCRA grid.</p>')
+parts.append('<p class="src" style="margin-top:4pt">Grid footprint: the map also carries <b>10 OXY-named substations</b> — North Cowden, South Curtis Ranch, Welch, Cogdell and Century Plant (the last two operator-tagged "Occidental Petroleum"), plus four Goldsmith substations and an Oxy Tap — the physical points where OXY ties into the Oncor / LCRA grid. Detailed identifiers (TCEQ, EPA, EIA, RRC, PHMSA) are in the per-asset footnotes, Appendix D.</p>')
 parts.append('</div>')
 
 # --- §3-§6 asset-type sections ---
@@ -352,22 +362,24 @@ TOC = [
     ("Appendix C · Caveats &amp; confidence", "#appx-cav"),
     ("Appendix D · Sources &amp; notes", "#appx-fn"),
 ]
-toc_html = "".join(f'<a href="{href}"><span class="tt">{t}</span><span class="tn">→</span></a>' for t, href in TOC)
+toc_html = "".join(f'<a href="{href}"><span class="tt">{t}</span></a>' for t, href in TOC)
 
 INTRO = f"""
 <div class="section" id="intro" style="--acc:#0f766e;--accbg:#f0fdfa;break-before:auto;">
   <span class="snum">Executive summary</span><h2>Occidental as a data-center JV partner</h2>
   <div class="bl">Occidental is the Permian's largest CO₂ and enhanced-oil-recovery operator, and over five years it has quietly assembled the three things a hyperscale data center needs most — <b>dispatchable power, large-scale water handling, and carbon management.</b></div>
   <div class="ing">
-    <div class="ingc" style="--c:#c2410c"><div class="it">Power</div><p>NET Power builds gas plants that capture nearly all their own CO₂ — firm, 24/7, behind-the-meter power that <b>skips the multi-year ERCOT grid queue</b>. OXY also has 265&nbsp;MW of solar advancing and a 453&nbsp;MW NET&nbsp;Power-affiliated gas project in the Midland queue.</p></div>
+    <div class="ingc" style="--c:#c2410c"><div class="it">Power</div><p>NET Power builds gas plants that capture nearly all their own CO₂ — firm, 24/7, behind-the-meter power that <b>skips the multi-year ERCOT grid queue</b>. OXY also has its own 265&nbsp;MW solar project (Santa Garcias) advancing through interconnection in South Texas.</p></div>
     <div class="ingc" style="--c:#0369a1"><div class="it">Water</div><p>One of the larger <b>produced-water and recycling networks</b> in private hands, plus a working desalination pilot — a path to cooling water that doesn't draw down scarce West-Texas freshwater.</p></div>
     <div class="ingc" style="--c:#15803d"><div class="it">Carbon</div><p>STRATOS, the <b>world's largest direct-air-capture plant</b>, plus permanent CO₂ storage at scale — a turnkey route to credible carbon-neutral claims for gas-fired power.</p></div>
   </div>
-  <div class="prox"><b>Proximity to Caramba North:</b> OXY's nearest major assets are the Century CO₂ plant (~31&nbsp;miles) and Block 31 (~48&nbsp;miles); the rest of its footprint sits 90–130&nbsp;miles north. The deeper fit is OXY's power-and-carbon platform — <b>capabilities and contracts more than pipe within sight of the property.</b></div>
+  <div class="prox"><b>Proximity to Caramba North:</b> OXY's nearest major assets are the Century CO₂ plant (~31&nbsp;miles) and Block 31 (~48&nbsp;miles); the rest of its footprint sits 90–130&nbsp;miles north, in the Midland Basin and the Gaines/Yoakum CO₂ corridor.</div>
 
+  <hr class="idiv">
   <h3>Contents</h3>
   <div class="toc">{toc_html}</div>
 
+  <hr class="idiv">
   <h3>Key personnel</h3>
   <div class="bio"><span class="bn">David Woest<sup class="fnref">{fn_woest}</sup></span> &nbsp;<span class="br">Director, Surface Land — OXY</span>
     <p>Leads OXY's surface-land function (surface-use agreements, rights-of-way, easements, landowner relations) out of Katy, Texas. Independently confirmed in 2019 Texas Legislature records testifying for OXY on eminent-domain / right-of-way reform — squarely the surface-land remit a landowner negotiation would touch.</p></div>

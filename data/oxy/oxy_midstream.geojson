@@ -1,0 +1,89 @@
+{
+ "type": "FeatureCollection",
+ "metadata": {
+  "layer": "oxy_midstream",
+  "feature_count": 4,
+  "note": "OXY footprint; coords from sourced LRP layers (ERCOT/EIA/OSM) + oxy_assets.geojson; approximate points flagged."
+ },
+ "features": [
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.580857,
+     30.607472
+    ]
+   },
+   "properties": {
+    "name": "Century gas & CO₂ plant",
+    "facility": "CO₂-capture / gas treating",
+    "county": "Pecos",
+    "operator": "Occidental (SandRidge-operated)",
+    "detail": "800 MMcf/d treating; ~8.4 Mt CO₂/yr",
+    "status": "Operating",
+    "source": "oxy_assets (substations layer) @ Century",
+    "accuracy": "precise"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.46233,
+     31.44153
+    ]
+   },
+   "properties": {
+    "name": "Block 31 gas plant",
+    "facility": "Gas processing / CO₂ flood",
+    "county": "Crane",
+    "operator": "OXY USA",
+    "detail": "41 MMcf/d",
+    "status": "Operating",
+    "source": "HIFLD/EIA-757 processing",
+    "accuracy": "precise"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.756945,
+     33.009944
+    ]
+   },
+   "properties": {
+    "name": "Wasson / Denver Unit CO₂-EOR",
+    "facility": "CO₂-EOR field & recovery plant",
+    "county": "Yoakum",
+    "operator": "Occidental Permian",
+    "detail": "world's largest CO₂ flood",
+    "status": "Operating",
+    "source": "EIA-860 @ Wasson CO₂-Removal",
+    "accuracy": "precise"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.63033,
+     32.6695
+    ]
+   },
+   "properties": {
+    "name": "Denver City CO₂ hub",
+    "facility": "CO₂ trunkline interconnect",
+    "county": "Gaines",
+    "operator": "multi-party (OXY offtaker)",
+    "status": "Operating",
+    "source": "county centroid (Gaines)",
+    "accuracy": "approximate (county centroid)"
+   }
+  }
+ ]
+}

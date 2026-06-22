@@ -1,0 +1,70 @@
+{
+ "type": "FeatureCollection",
+ "metadata": {
+  "layer": "oxy_water",
+  "feature_count": 3,
+  "note": "OXY footprint; coords from sourced LRP layers (ERCOT/EIA/OSM) + oxy_assets.geojson; approximate points flagged."
+ },
+ "features": [
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.159612,
+     32.129845
+    ]
+   },
+   "properties": {
+    "name": "South Curtis Ranch produced-water recycling",
+    "water_type": "Produced-water recycling",
+    "county": "Martin (straddles Midland line)",
+    "operator": "OXY + Select Water",
+    "detail": ">50 MM bbl reused (2024)",
+    "status": "Operating",
+    "source": "OXY South Curtis Ranch substation (OSM way 457948592); RRC lease 08-40691",
+    "accuracy": "approximate (at OXY substation; recycling plant within ~1-3 mi, no published coordinate)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -103.74868,
+     31.84073
+    ]
+   },
+   "properties": {
+    "name": "Pathfinder produced-water pipeline",
+    "water_type": "Produced-water pipeline",
+    "county": "Loving",
+    "operator": "Western Midstream",
+    "detail": "42 mi · 30-in · >800 Mbbl/d (in service 2027)",
+    "status": "Planned/pilot",
+    "source": "county centroid (Loving) — linear asset, precise route not published",
+    "accuracy": "approximate (county centroid)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -103.92,
+     31.9
+    ]
+   },
+   "properties": {
+    "name": "WES desalination pilot (JIP 2)",
+    "water_type": "Desalination pilot",
+    "county": "Reeves",
+    "operator": "Western Midstream",
+    "detail": "2,000 bbl/d in → ~1,000 bbl/d fresh; near Red Bluff Reservoir",
+    "status": "Planned/pilot",
+    "source": "near Red Bluff Reservoir (WES release 17 Jun 2026); USGS Red Bluff Dam gage 08410100",
+    "accuracy": "approximate (near Red Bluff Reservoir, Reeves Co.; exact site not published)"
+   }
+  }
+ ]
+}
