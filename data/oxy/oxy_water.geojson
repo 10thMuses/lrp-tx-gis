@@ -18,12 +18,12 @@
    "properties": {
     "name": "South Curtis Ranch produced-water recycling",
     "water_type": "Produced-water recycling",
-    "county": "Midland (basin)",
+    "county": "Martin (straddles Midland line)",
     "operator": "OXY + Select Water",
     "detail": ">50 MM bbl reused (2024)",
     "status": "Operating",
-    "source": "co-located w/ South Curtis Ranch substation (OSM)",
-    "accuracy": "precise (co-located)"
+    "source": "OXY South Curtis Ranch substation (OSM way 457948592); RRC lease 08-40691",
+    "accuracy": "approximate (at OXY substation; recycling plant within ~1-3 mi, no published coordinate)"
    }
   },
   {

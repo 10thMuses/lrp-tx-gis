@@ -188,9 +188,10 @@ def main():
     wf = []
     if scr_sub[0]:
         wf.append(feat(*scr_sub, {"name": "South Curtis Ranch produced-water recycling",
-            "water_type": "Produced-water recycling", "county": "Midland (basin)",
+            "water_type": "Produced-water recycling", "county": "Martin (straddles Midland line)",
             "operator": "OXY + Select Water", "detail": ">50 MM bbl reused (2024)", "status": "Operating",
-            "source": "co-located w/ South Curtis Ranch substation (OSM)", "accuracy": "precise (co-located)"}))
+            "source": "OXY South Curtis Ranch substation (OSM way 457948592); RRC lease 08-40691",
+            "accuracy": "approximate (at OXY substation; recycling plant within ~1-3 mi, no published coordinate)"}))
     # approximate placements (precise coords pending research) — clearly flagged
     for nm, county, wtype, detail in [
         ("Pathfinder produced-water pipeline", "Loving", "Produced-water pipeline", "42 mi · 30-in · >800 Mbbl/d (2027)"),
