@@ -1,0 +1,76 @@
+{
+ "type": "FeatureCollection",
+ "metadata": {
+  "layer": "oxy_ercot",
+  "feature_count": 3,
+  "note": "OXY footprint; coords from sourced LRP layers (ERCOT/EIA/OSM) + oxy_assets.geojson; approximate points flagged."
+ },
+ "features": [
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.246257,
+     32.037379
+    ]
+   },
+   "properties": {
+    "name": "TRIFECTA Gas",
+    "capacity_mw": "453.0",
+    "fuel": "GAS",
+    "technology": "GT",
+    "county": "Midland",
+    "zone": "WEST",
+    "filing_entity": "NET Power Canaveral, LLC",
+    "status": "Withdrawn Apr 2026",
+    "source": "ERCOT interconnection queue",
+    "accuracy": "precise"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -95.407576,
+     29.87125
+    ]
+   },
+   "properties": {
+    "name": "NET Power Demonstration plant",
+    "capacity_mw": "25.5",
+    "fuel": "GAS",
+    "technology": "GT",
+    "county": "Harris",
+    "zone": "HOUSTON",
+    "filing_entity": "NET Power LLC",
+    "status": "Active in queue",
+    "source": "ERCOT interconnection queue",
+    "accuracy": "precise"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -97.650076,
+     27.417088
+    ]
+   },
+   "properties": {
+    "name": "Santa Garcias Solar",
+    "capacity_mw": "265.0",
+    "fuel": "SOL",
+    "technology": "PV",
+    "county": "Kleberg",
+    "zone": "COASTAL",
+    "filing_entity": "Oxy Renewable Energy LLC",
+    "status": "IA signed Feb 2026",
+    "source": "ERCOT interconnection queue",
+    "accuracy": "precise"
+   }
+  }
+ ]
+}

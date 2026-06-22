@@ -1,0 +1,70 @@
+{
+ "type": "FeatureCollection",
+ "metadata": {
+  "layer": "oxy_water",
+  "feature_count": 3,
+  "note": "OXY footprint; coords from sourced LRP layers (ERCOT/EIA/OSM) + oxy_assets.geojson; approximate points flagged."
+ },
+ "features": [
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.159612,
+     32.129845
+    ]
+   },
+   "properties": {
+    "name": "South Curtis Ranch produced-water recycling",
+    "water_type": "Produced-water recycling",
+    "county": "Midland (basin)",
+    "operator": "OXY + Select Water",
+    "detail": ">50 MM bbl reused (2024)",
+    "status": "Operating",
+    "source": "co-located w/ South Curtis Ranch substation (OSM)",
+    "accuracy": "precise (co-located)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -103.74868,
+     31.84073
+    ]
+   },
+   "properties": {
+    "name": "Pathfinder produced-water pipeline",
+    "water_type": "Produced-water pipeline",
+    "county": "Loving",
+    "operator": "Western Midstream",
+    "detail": "42 mi · 30-in · >800 Mbbl/d (2027)",
+    "status": "Planned/pilot",
+    "source": "county centroid (Loving) — precise pending",
+    "accuracy": "approximate (county centroid)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -103.62521,
+     31.61568
+    ]
+   },
+   "properties": {
+    "name": "WES desalination pilot (JIP 2)",
+    "water_type": "Desalination pilot",
+    "county": "Reeves",
+    "operator": "Western Midstream",
+    "detail": "2,000 bbl/d in → ~1,000 bbl/d fresh",
+    "status": "Planned/pilot",
+    "source": "county centroid (Reeves) — precise pending",
+    "accuracy": "approximate (county centroid)"
+   }
+  }
+ ]
+}

@@ -1,0 +1,82 @@
+{
+ "type": "FeatureCollection",
+ "metadata": {
+  "layer": "oxy_permits",
+  "feature_count": 4,
+  "note": "OXY footprint; coords from sourced LRP layers (ERCOT/EIA/OSM) + oxy_assets.geojson; approximate points flagged."
+ },
+ "features": [
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.580857,
+     30.607472
+    ]
+   },
+   "properties": {
+    "name": "Century gas / CO₂ plant",
+    "county": "Pecos",
+    "permit_type": "TCEQ New Source Review (air)",
+    "status": "Active — no pending Title V",
+    "source": "oxy_assets @ Century",
+    "accuracy": "precise"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.46233,
+     31.44153
+    ]
+   },
+   "properties": {
+    "name": "Block 31 plant",
+    "county": "Crane",
+    "permit_type": "TCEQ Title V + NSR",
+    "status": "Title V renewed 10 Jul 2025",
+    "source": "HIFLD @ Block 31",
+    "accuracy": "precise"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.756945,
+     33.009944
+    ]
+   },
+   "properties": {
+    "name": "Wasson CO₂-removal plant",
+    "county": "Yoakum",
+    "permit_type": "TCEQ Title V (O553)",
+    "status": "Renewed 25 Nov 2025",
+    "source": "EIA-860 @ Wasson",
+    "accuracy": "precise"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.736945,
+     32.989944
+    ]
+   },
+   "properties": {
+    "name": "Denver Unit CO₂-recovery plant",
+    "county": "Yoakum",
+    "permit_type": "TCEQ Title V (O3051)",
+    "status": "Renewed 15 Oct 2025",
+    "source": "near Wasson (Yoakum)",
+    "accuracy": "approximate (co-located, Yoakum)"
+   }
+  }
+ ]
+}

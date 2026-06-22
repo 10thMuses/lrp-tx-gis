@@ -1,0 +1,315 @@
+{
+ "type": "FeatureCollection",
+ "metadata": {
+  "layer": "oxy_power",
+  "feature_count": 15,
+  "note": "OXY footprint; coords from sourced LRP layers (ERCOT/EIA/OSM) + oxy_assets.geojson; approximate points flagged."
+ },
+ "features": [
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -95.0839,
+     29.7314
+    ]
+   },
+   "properties": {
+    "name": "Houston Chemical Complex Battleground",
+    "asset": "Generation",
+    "fuel": "NG",
+    "technology": "Natural Gas Fired Combined Cycle",
+    "capacity_mw": "380.7",
+    "county": "HARRIS",
+    "operator": "Oxy Vinyls LP",
+    "online": "1982",
+    "status": "Divested to Berkshire (Jan 2026)",
+    "source": "EIA-860",
+    "accuracy": "precise"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -95.112777,
+     29.71
+    ]
+   },
+   "properties": {
+    "name": "Deer Park Plant",
+    "asset": "Generation",
+    "fuel": "",
+    "technology": "",
+    "capacity_mw": "",
+    "county": "HARRIS",
+    "operator": "Oxy Vinyls LP",
+    "online": "",
+    "status": "Divested to Berkshire (Jan 2026)",
+    "source": "EIA-860",
+    "accuracy": "precise"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.756945,
+     33.009944
+    ]
+   },
+   "properties": {
+    "name": "Wasson CO2 Removal Plant",
+    "asset": "Generation",
+    "fuel": "NG",
+    "technology": "Natural Gas Fired Combustion Turbine",
+    "capacity_mw": "23.4",
+    "county": "YOAKUM",
+    "operator": "Occidental Permian Ltd",
+    "online": "1988",
+    "status": "Operating",
+    "source": "EIA-860",
+    "accuracy": "precise"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -95.054145,
+     29.646791
+    ]
+   },
+   "properties": {
+    "name": "NET Power La Porte Station",
+    "asset": "Generation",
+    "fuel": "",
+    "technology": "",
+    "capacity_mw": "",
+    "county": "HARRIS",
+    "operator": "NET Power, LLC",
+    "online": "",
+    "status": "Operating",
+    "source": "EIA-860",
+    "accuracy": "precise"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.6337,
+     32.0015
+    ]
+   },
+   "properties": {
+    "name": "Oxy Renewable Energy - Goldsmith",
+    "asset": "Generation",
+    "fuel": "SUN",
+    "technology": "Solar Photovoltaic",
+    "capacity_mw": "16.8",
+    "county": "ECTOR",
+    "operator": "Oxy Renewable Energy LLC",
+    "online": "2020",
+    "status": "Operating",
+    "source": "EIA-860",
+    "accuracy": "precise"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.297912,
+     31.119225
+    ]
+   },
+   "properties": {
+    "name": "Oxy Tap Substation",
+    "asset": "Substation",
+    "voltage": "138000",
+    "operator": "Lower Colorado River Authority",
+    "status": "Operating",
+    "source": "OSM/HIFLD substations",
+    "accuracy": "precise"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.51677,
+     32.006051
+    ]
+   },
+   "properties": {
+    "name": "OXY North Cowden Substation",
+    "asset": "Substation",
+    "voltage": "138000",
+    "operator": "Oncor",
+    "status": "Operating",
+    "source": "OSM/HIFLD substations",
+    "accuracy": "precise"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.636513,
+     31.975005
+    ]
+   },
+   "properties": {
+    "name": "Goldsmith Substation",
+    "asset": "Substation",
+    "voltage": "138000;12500",
+    "operator": "Oncor",
+    "status": "Operating",
+    "source": "OSM/HIFLD substations",
+    "accuracy": "precise"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.636032,
+     31.973719
+    ]
+   },
+   "properties": {
+    "name": "Goldsmith Gulf Substation",
+    "asset": "Substation",
+    "voltage": "138000",
+    "operator": "Oncor",
+    "status": "Operating",
+    "source": "OSM/HIFLD substations",
+    "accuracy": "precise"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.614862,
+     31.929953
+    ]
+   },
+   "properties": {
+    "name": "Goldsmith South Substation",
+    "asset": "Substation",
+    "voltage": "138000",
+    "operator": "Oncor",
+    "status": "Operating",
+    "source": "OSM/HIFLD substations",
+    "accuracy": "precise"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.159612,
+     32.129845
+    ]
+   },
+   "properties": {
+    "name": "Oxy South Curtis Ranch Substation",
+    "asset": "Substation",
+    "voltage": "138000",
+    "operator": "Oncor",
+    "status": "Operating",
+    "source": "OSM/HIFLD substations",
+    "accuracy": "precise"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.13773,
+     32.896391
+    ]
+   },
+   "properties": {
+    "name": "Oxy Welch Substation",
+    "asset": "Substation",
+    "voltage": "69000",
+    "operator": "Oncor",
+    "status": "Operating",
+    "source": "OSM/HIFLD substations",
+    "accuracy": "precise"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.653124,
+     31.990658
+    ]
+   },
+   "properties": {
+    "name": "Goldsmith Amoco Substation",
+    "asset": "Substation",
+    "voltage": "138000",
+    "operator": "",
+    "status": "Operating",
+    "source": "OSM/HIFLD substations",
+    "accuracy": "precise"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -100.886409,
+     32.942344
+    ]
+   },
+   "properties": {
+    "name": "Oxy Cogdell Substation",
+    "asset": "Substation",
+    "voltage": "69000",
+    "operator": "Occidental Petroleum",
+    "status": "Operating",
+    "source": "OSM/HIFLD substations",
+    "accuracy": "precise"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.580857,
+     30.607472
+    ]
+   },
+   "properties": {
+    "name": "Century Plant Substation",
+    "asset": "Substation",
+    "voltage": "138000",
+    "operator": "Occidental Petroleum",
+    "status": "Operating",
+    "source": "OSM/HIFLD substations",
+    "accuracy": "precise"
+   }
+  }
+ ]
+}

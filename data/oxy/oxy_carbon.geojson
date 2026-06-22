@@ -1,0 +1,67 @@
+{
+ "type": "FeatureCollection",
+ "metadata": {
+  "layer": "oxy_carbon",
+  "feature_count": 3,
+  "note": "OXY footprint; coords from sourced LRP layers (ERCOT/EIA/OSM) + oxy_assets.geojson; approximate points flagged."
+ },
+ "features": [
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.580857,
+     30.607472
+    ]
+   },
+   "properties": {
+    "name": "Century CO₂ capture",
+    "carbon_type": "Industrial CO₂ capture",
+    "county": "Pecos",
+    "detail": "~8.4 Mt CO₂/yr to EOR",
+    "status": "Operating",
+    "source": "oxy_assets @ Century",
+    "accuracy": "precise"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.756945,
+     33.009944
+    ]
+   },
+   "properties": {
+    "name": "Wasson / Denver Unit CO₂ storage",
+    "carbon_type": "CO₂ storage (Subpart RR MRV)",
+    "county": "Yoakum",
+    "detail": "first U.S. MRV plan; ~3.67 Mt stored 2023",
+    "status": "Operating",
+    "source": "EIA-860 @ Wasson",
+    "accuracy": "precise"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.54333,
+     31.7985
+    ]
+   },
+   "properties": {
+    "name": "STRATOS DAC",
+    "carbon_type": "Direct air capture",
+    "county": "Ector",
+    "detail": "world's largest DAC; up to 500 kt/yr",
+    "status": "Under construction",
+    "source": "county centroid (Ector) — precise pending",
+    "accuracy": "approximate (county centroid)"
+   }
+  }
+ ]
+}
