@@ -145,14 +145,27 @@ def render(assets, out_path, title, ctx, extent=None, center=None,
         ymin, ymax = clat - dlat * pad, clat + dlat * pad
     elif extent:
         xmin, xmax, ymin, ymax = extent
-    else:  # fit to plotted assets
-        xs = [c[0] for c in coords if c[0] is not None]
-        ys = [c[1] for c in coords if c[1] is not None]
-        mx = (max(xs) - min(xs)) or 1.0
-        my = (max(ys) - min(ys)) or 1.0
-        padx, pady = mx * 0.16 + 0.12, my * 0.16 + 0.12
-        xmin, xmax = min(xs) - padx, max(xs) + padx
-        ymin, ymax = min(ys) - pady, max(ys) + pady
+    else:  # fit to the PRIMARY (non-substation) assets; subs decorate, don't drive extent
+        pts = [c for c, a in zip(coords, assets)
+               if c[0] is not None and a.get("type") != "sub"]
+        if not pts:
+            pts = [c for c in coords if c[0] is not None]
+        xs = [p[0] for p in pts]; ys = [p[1] for p in pts]
+        cx, cy = (min(xs) + max(xs)) / 2, (min(ys) + max(ys)) / 2
+        spanx = (max(xs) - min(xs)) * 1.5 + 0.25
+        spany = (max(ys) - min(ys)) * 1.5 + 0.25
+        # minimum window so a tight cluster still gets county context
+        spanx = max(spanx, 1.6); spany = max(spany, 1.15)
+        # clamp geographic aspect so a few near-coincident points can't make a
+        # grotesquely tall/narrow map
+        cl0 = math.cos(math.radians(cy))
+        ageo = (spanx * cl0) / spany
+        if ageo < 0.85:
+            spanx = 0.85 * spany / cl0
+        elif ageo > 1.7:
+            spany = (spanx * cl0) / 1.7
+        xmin, xmax = cx - spanx / 2, cx + spanx / 2
+        ymin, ymax = cy - spany / 2, cy + spany / 2
 
     coslat = math.cos(math.radians((ymin + ymax) / 2))
     fig_h = fig_w * ((ymax - ymin) / ((xmax - xmin) * coslat))
@@ -264,9 +277,6 @@ def render(assets, out_path, title, ctx, extent=None, center=None,
                   edgecolor="#e2e8f0", facecolor="#ffffff", fontsize=7.0, labelcolor="#334155")
 
     ax.set_title(title, color="#0f172a", fontsize=12.5, fontweight="bold", loc="left", pad=6)
-    if subtitle:
-        ax.text(0.0, 1.012, subtitle, transform=ax.transAxes, color="#64748b",
-                fontsize=7.5, ha="left", va="bottom")
     fig.text(0.012, 0.012, "Counties & roads: Census TIGER · pipelines (context): HIFLD/EIA · OXY assets: OXY filings + public facility databases",
              color="#94a3b8", fontsize=5.0)
     plt.subplots_adjust(left=0.01, right=0.99, top=0.94, bottom=0.04)
