@@ -85,7 +85,7 @@ layers:
   geom: point
   group: 'OXY — Occidental Footprint'
   label: OXY midstream / pipeline / processing
-  description: "OXY midstream, pipeline and gas/CO2-processing facilities: Century gas/CO2 plant (Pecos), Block 31 (Crane), Wasson/Denver Unit CO2-EOR (Yoakum), Denver City CO2 hub. Coordinates from sourced LRP layers; the hub is placed at county centroid and flagged approximate."
+  description: "OXY midstream, pipeline and gas/CO2-processing facilities: Century gas/CO2 plant (Pecos), Block 31 (Crane), Wasson/Denver Unit CO2-EOR (Yoakum), and the Denver City CO2 hub where the Cortez, Bravo and Sheep Mountain trunklines converge (Yoakum, precise from EPA FRS). All coordinates trace to public datasets."
   color: '#b45309'
   default_on: true
   radius: 7
@@ -189,7 +189,7 @@ layers:
   geom: point
   group: 'OXY — Occidental Footprint'
   label: OXY carbon infrastructure
-  description: "OXY carbon-management assets: Century CO2 capture (Pecos), Wasson/Denver Unit CO2 storage (Yoakum, first U.S. Subpart RR MRV plan), and STRATOS direct-air-capture (Ector, under construction). STRATOS is placed at county centroid pending a precise public coordinate and flagged approximate."
+  description: "OXY carbon-management assets: Century CO2 capture (Pecos), Wasson/Denver Unit CO2 storage (Yoakum, first U.S. Subpart RR MRV plan), STRATOS direct-air-capture (Ector, under construction, located at its EPA Class VI injection wells), and the King Ranch / South Texas DAC + storage hub (Kleberg, located at its RRC stratigraphic test wells). All coordinates trace to public datasets."
   color: '#15803d'
   default_on: true
   radius: 7
@@ -208,6 +208,34 @@ layers:
   - {field: carbon_type, type: categorical, label: Carbon type}
   - {field: county, type: categorical, label: County}
   - {field: status, type: categorical, label: Status}
+  tippecanoe: [-Z0, -z14]
+- id: oxy_drilling_permits
+  file: data/oxy/oxy_drilling_permits.geojson
+  geom: point
+  group: 'OXY — Occidental Footprint'
+  label: OXY drilling permits (RRC W-1)
+  description: "OXY / Occidental approved RRC drilling permits, 2020-2026, plotted at the operator-reported surface coordinate from the RRC Drilling Permit Master+Lat/Lon (daf420 EOM) file. Filers: OXY USA Inc. (#630591), Occidental Permian Ltd. (#617544), OXY USA WTP LP. Concentrated in the Midland Basin core (Gaines, Howard, Martin, Midland, Glasscock, Andrews). De-duplicated by permit number; every coordinate is public RRC data. Off by default — toggle on to see OXY's drilling footprint."
+  color: '#e11d48'
+  default_on: false
+  radius: 4
+  stroke_width: 0.8
+  stroke_color: '#ffffff'
+  popup: [permit_no, operator, lease, well_no, county, district, approved_date, submitted_date, accuracy, source]
+  popup_labels:
+    permit_no: Permit no.
+    operator: Operator
+    lease: Lease
+    well_no: Well no.
+    county: County
+    district: RRC district
+    approved_date: Approved
+    submitted_date: Submitted
+    accuracy: Location accuracy
+    source: Source
+  filterable_fields:
+  - {field: operator, type: categorical, label: Operator}
+  - {field: county, type: categorical, label: County}
+  - {field: permit_year, type: categorical, label: Permit year}
   tippecanoe: [-Z0, -z14]
 - id: solstice_substation
   file: combined_geoms.geojson

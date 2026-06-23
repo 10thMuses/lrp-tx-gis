@@ -1,0 +1,7067 @@
+{
+ "type": "FeatureCollection",
+ "metadata": {
+  "layer": "oxy_drilling_permits",
+  "feature_count": 294,
+  "coverage": "RRC approved drilling permits 2020-2026",
+  "note": "OXY/Occidental RRC W-1 drilling permits (daf420 EOM master+lat/lon); operator-reported surface coordinates; de-duplicated by permit_no."
+ },
+ "features": [
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.500229,
+     32.03971
+    ]
+   },
+   "properties": {
+    "permit_no": "1276299135",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "CITROEN 2292OP",
+    "well_no": "7544",
+    "county": "Ector",
+    "county_fips": "135",
+    "district": "09",
+    "approved_date": "2026-02-18",
+    "submitted_date": "2026-01-12",
+    "permit_year": "2026",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.801965,
+     32.947738
+    ]
+   },
+   "properties": {
+    "permit_no": "1311899165",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "DENVER UNIT",
+    "well_no": "7544",
+    "county": "Gaines",
+    "county_fips": "165",
+    "district": "09",
+    "approved_date": "2026-02-02",
+    "submitted_date": "2026-01-27",
+    "permit_year": "2026",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.686911,
+     32.784133
+    ]
+   },
+   "properties": {
+    "permit_no": "1317699165",
+    "operator": "OXY USA INC.",
+    "lease": "SEMINOLE SAN ANDRES UNIT",
+    "well_no": "591",
+    "county": "Gaines",
+    "county_fips": "165",
+    "district": "09",
+    "approved_date": "2026-02-05",
+    "submitted_date": "2026-01-30",
+    "permit_year": "2026",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.717609,
+     32.776623
+    ]
+   },
+   "properties": {
+    "permit_no": "1312199165",
+    "operator": "OXY USA INC.",
+    "lease": "SEMINOLE SAN ANDRES UNIT",
+    "well_no": "591",
+    "county": "Gaines",
+    "county_fips": "165",
+    "district": "09",
+    "approved_date": "2026-02-02",
+    "submitted_date": "2026-01-27",
+    "permit_year": "2026",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.712703,
+     32.772925
+    ]
+   },
+   "properties": {
+    "permit_no": "1312399165",
+    "operator": "OXY USA INC.",
+    "lease": "SEMINOLE SAN ANDRES UNIT",
+    "well_no": "591",
+    "county": "Gaines",
+    "county_fips": "165",
+    "district": "09",
+    "approved_date": "2026-02-02",
+    "submitted_date": "2026-01-27",
+    "permit_year": "2026",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.707914,
+     32.78325
+    ]
+   },
+   "properties": {
+    "permit_no": "1364299165",
+    "operator": "OXY USA INC.",
+    "lease": "SEMINOLE SAN ANDRES UNIT",
+    "well_no": "591",
+    "county": "Gaines",
+    "county_fips": "165",
+    "district": "09",
+    "approved_date": "2026-02-24",
+    "submitted_date": "2026-02-19",
+    "permit_year": "2026",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.700227,
+     32.77646
+    ]
+   },
+   "properties": {
+    "permit_no": "1361799165",
+    "operator": "OXY USA INC.",
+    "lease": "SEMINOLE SAN ANDRES UNIT",
+    "well_no": "591",
+    "county": "Gaines",
+    "county_fips": "165",
+    "district": "09",
+    "approved_date": "2026-02-24",
+    "submitted_date": "2026-02-19",
+    "permit_year": "2026",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.704032,
+     32.773143
+    ]
+   },
+   "properties": {
+    "permit_no": "1342199165",
+    "operator": "OXY USA INC.",
+    "lease": "SEMINOLE SAN ANDRES UNIT",
+    "well_no": "591",
+    "county": "Gaines",
+    "county_fips": "165",
+    "district": "09",
+    "approved_date": "2026-02-12",
+    "submitted_date": "2026-02-11",
+    "permit_year": "2026",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.691223,
+     32.76957
+    ]
+   },
+   "properties": {
+    "permit_no": "1314299165",
+    "operator": "OXY USA INC.",
+    "lease": "SEMINOLE SAN ANDRES UNIT",
+    "well_no": "591",
+    "county": "Gaines",
+    "county_fips": "165",
+    "district": "09",
+    "approved_date": "2026-02-02",
+    "submitted_date": "2026-01-27",
+    "permit_year": "2026",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.704112,
+     32.765672
+    ]
+   },
+   "properties": {
+    "permit_no": "1364099165",
+    "operator": "OXY USA INC.",
+    "lease": "SEMINOLE SAN ANDRES UNIT",
+    "well_no": "591",
+    "county": "Gaines",
+    "county_fips": "165",
+    "district": "09",
+    "approved_date": "2026-02-24",
+    "submitted_date": "2026-02-19",
+    "permit_year": "2026",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.695477,
+     32.765679
+    ]
+   },
+   "properties": {
+    "permit_no": "1313599165",
+    "operator": "OXY USA INC.",
+    "lease": "SEMINOLE SAN ANDRES UNIT",
+    "well_no": "591",
+    "county": "Gaines",
+    "county_fips": "165",
+    "district": "09",
+    "approved_date": "2026-02-02",
+    "submitted_date": "2026-01-27",
+    "permit_year": "2026",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.678412,
+     32.751219
+    ]
+   },
+   "properties": {
+    "permit_no": "1363899165",
+    "operator": "OXY USA INC.",
+    "lease": "SEMINOLE SAN ANDRES UNIT",
+    "well_no": "591",
+    "county": "Gaines",
+    "county_fips": "165",
+    "district": "09",
+    "approved_date": "2026-02-24",
+    "submitted_date": "2026-02-19",
+    "permit_year": "2026",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -100.869378,
+     33.249747
+    ]
+   },
+   "properties": {
+    "permit_no": "1330099263",
+    "operator": "OXY USA WTP LP",
+    "lease": "SALT CREEK FIELD UNIT",
+    "well_no": "555",
+    "county": "Kent",
+    "county_fips": "263",
+    "district": "09",
+    "approved_date": "2026-02-09",
+    "submitted_date": "2026-02-04",
+    "permit_year": "2026",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.731164,
+     33.029817
+    ]
+   },
+   "properties": {
+    "permit_no": "1302999501",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "WASSON ODC UNIT",
+    "well_no": "7544",
+    "county": "Yoakum",
+    "county_fips": "501",
+    "district": "09",
+    "approved_date": "2026-02-02",
+    "submitted_date": "2026-01-21",
+    "permit_year": "2026",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.500416,
+     32.039666
+    ]
+   },
+   "properties": {
+    "permit_no": "1276199135",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "CITROEN 2290OP",
+    "well_no": "7544",
+    "county": "Ector",
+    "county_fips": "135",
+    "district": "09",
+    "approved_date": "2026-03-19",
+    "submitted_date": "2026-01-12",
+    "permit_year": "2026",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.492683,
+     32.045481
+    ]
+   },
+   "properties": {
+    "permit_no": "1284599135",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "CITROEN 2294OP",
+    "well_no": "7544",
+    "county": "Ector",
+    "county_fips": "135",
+    "district": "09",
+    "approved_date": "2026-03-12",
+    "submitted_date": "2026-01-13",
+    "permit_year": "2026",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.492497,
+     32.045524
+    ]
+   },
+   "properties": {
+    "permit_no": "1284399135",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "CITROEN 2296OP",
+    "well_no": "7544",
+    "county": "Ector",
+    "county_fips": "135",
+    "district": "09",
+    "approved_date": "2026-03-12",
+    "submitted_date": "2026-01-13",
+    "permit_year": "2026",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.851583,
+     32.923064
+    ]
+   },
+   "properties": {
+    "permit_no": "1415999165",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "DENVER UNIT",
+    "well_no": "7544",
+    "county": "Gaines",
+    "county_fips": "165",
+    "district": "09",
+    "approved_date": "2026-03-20",
+    "submitted_date": "2026-03-16",
+    "permit_year": "2026",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.726094,
+     32.776519
+    ]
+   },
+   "properties": {
+    "permit_no": "1422099165",
+    "operator": "OXY USA INC.",
+    "lease": "SEMINOLE SAN ANDRES UNIT",
+    "well_no": "591",
+    "county": "Gaines",
+    "county_fips": "165",
+    "district": "09",
+    "approved_date": "2026-03-20",
+    "submitted_date": "2026-03-18",
+    "permit_year": "2026",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.712789,
+     32.780244
+    ]
+   },
+   "properties": {
+    "permit_no": "1400099165",
+    "operator": "OXY USA INC.",
+    "lease": "SEMINOLE SAN ANDRES UNIT",
+    "well_no": "591",
+    "county": "Gaines",
+    "county_fips": "165",
+    "district": "09",
+    "approved_date": "2026-03-13",
+    "submitted_date": "2026-03-09",
+    "permit_year": "2026",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.695345,
+     32.780265
+    ]
+   },
+   "properties": {
+    "permit_no": "1392799165",
+    "operator": "OXY USA INC.",
+    "lease": "SEMINOLE SAN ANDRES UNIT",
+    "well_no": "591",
+    "county": "Gaines",
+    "county_fips": "165",
+    "district": "09",
+    "approved_date": "2026-03-09",
+    "submitted_date": "2026-03-05",
+    "permit_year": "2026",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.711422,
+     32.759046
+    ]
+   },
+   "properties": {
+    "permit_no": "1399999165",
+    "operator": "OXY USA INC.",
+    "lease": "SEMINOLE SAN ANDRES UNIT",
+    "well_no": "591",
+    "county": "Gaines",
+    "county_fips": "165",
+    "district": "09",
+    "approved_date": "2026-03-12",
+    "submitted_date": "2026-03-09",
+    "permit_year": "2026",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.700135,
+     32.762047
+    ]
+   },
+   "properties": {
+    "permit_no": "1423199165",
+    "operator": "OXY USA INC.",
+    "lease": "SEMINOLE SAN ANDRES UNIT",
+    "well_no": "591",
+    "county": "Gaines",
+    "county_fips": "165",
+    "district": "09",
+    "approved_date": "2026-03-20",
+    "submitted_date": "2026-03-18",
+    "permit_year": "2026",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.704124,
+     32.758241
+    ]
+   },
+   "properties": {
+    "permit_no": "1413599165",
+    "operator": "OXY USA INC.",
+    "lease": "SEMINOLE SAN ANDRES UNIT",
+    "well_no": "591",
+    "county": "Gaines",
+    "county_fips": "165",
+    "district": "09",
+    "approved_date": "2026-03-16",
+    "submitted_date": "2026-03-13",
+    "permit_year": "2026",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.691429,
+     32.76185
+    ]
+   },
+   "properties": {
+    "permit_no": "1413699165",
+    "operator": "OXY USA INC.",
+    "lease": "SEMINOLE SAN ANDRES UNIT",
+    "well_no": "591",
+    "county": "Gaines",
+    "county_fips": "165",
+    "district": "09",
+    "approved_date": "2026-03-16",
+    "submitted_date": "2026-03-13",
+    "permit_year": "2026",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.686889,
+     32.765767
+    ]
+   },
+   "properties": {
+    "permit_no": "1392698165",
+    "operator": "OXY USA INC.",
+    "lease": "SEMINOLE SAN ANDRES UNIT",
+    "well_no": "591",
+    "county": "Gaines",
+    "county_fips": "165",
+    "district": "09",
+    "approved_date": "2026-03-09",
+    "submitted_date": "2026-03-10",
+    "permit_year": "2026",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.686889,
+     32.765767
+    ]
+   },
+   "properties": {
+    "permit_no": "1392699165",
+    "operator": "OXY USA INC.",
+    "lease": "SEMINOLE SAN ANDRES UNIT",
+    "well_no": "591",
+    "county": "Gaines",
+    "county_fips": "165",
+    "district": "09",
+    "approved_date": "2026-03-09",
+    "submitted_date": "2026-03-05",
+    "permit_year": "2026",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.674635,
+     32.755324
+    ]
+   },
+   "properties": {
+    "permit_no": "1400299165",
+    "operator": "OXY USA INC.",
+    "lease": "SEMINOLE SAN ANDRES UNIT",
+    "well_no": "591",
+    "county": "Gaines",
+    "county_fips": "165",
+    "district": "09",
+    "approved_date": "2026-03-12",
+    "submitted_date": "2026-03-09",
+    "permit_year": "2026",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.695414,
+     32.750817
+    ]
+   },
+   "properties": {
+    "permit_no": "1414799165",
+    "operator": "OXY USA INC.",
+    "lease": "SEMINOLE SAN ANDRES UNIT",
+    "well_no": "591",
+    "county": "Gaines",
+    "county_fips": "165",
+    "district": "09",
+    "approved_date": "2026-03-16",
+    "submitted_date": "2026-03-14",
+    "permit_year": "2026",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.695457,
+     32.743819
+    ]
+   },
+   "properties": {
+    "permit_no": "1414699165",
+    "operator": "OXY USA INC.",
+    "lease": "SEMINOLE SAN ANDRES UNIT",
+    "well_no": "591",
+    "county": "Gaines",
+    "county_fips": "165",
+    "district": "09",
+    "approved_date": "2026-03-16",
+    "submitted_date": "2026-03-14",
+    "permit_year": "2026",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.678239,
+     32.729083
+    ]
+   },
+   "properties": {
+    "permit_no": "1421399165",
+    "operator": "OXY USA INC.",
+    "lease": "SEMINOLE SAN ANDRES UNIT",
+    "well_no": "591",
+    "county": "Gaines",
+    "county_fips": "165",
+    "district": "09",
+    "approved_date": "2026-03-20",
+    "submitted_date": "2026-03-17",
+    "permit_year": "2026",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.678239,
+     32.729083
+    ]
+   },
+   "properties": {
+    "permit_no": "1421699165",
+    "operator": "OXY USA INC.",
+    "lease": "SEMINOLE SAN ANDRES UNIT",
+    "well_no": "591",
+    "county": "Gaines",
+    "county_fips": "165",
+    "district": "09",
+    "approved_date": "2026-03-20",
+    "submitted_date": "2026-03-17",
+    "permit_year": "2026",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.5693,
+     33.253425
+    ]
+   },
+   "properties": {
+    "permit_no": "1415399445",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "JOHNNY",
+    "well_no": "7544",
+    "county": "Terry",
+    "county_fips": "445",
+    "district": "09",
+    "approved_date": "2026-03-24",
+    "submitted_date": "2026-03-16",
+    "permit_year": "2026",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.722558,
+     33.045861
+    ]
+   },
+   "properties": {
+    "permit_no": "1386999501",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "WASSON ODC UNIT",
+    "well_no": "7544",
+    "county": "Yoakum",
+    "county_fips": "501",
+    "district": "09",
+    "approved_date": "2026-03-06",
+    "submitted_date": "2026-03-03",
+    "permit_year": "2026",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.715764,
+     33.046989
+    ]
+   },
+   "properties": {
+    "permit_no": "1387399501",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "WASSON ODC UNIT",
+    "well_no": "7544",
+    "county": "Yoakum",
+    "county_fips": "501",
+    "district": "09",
+    "approved_date": "2026-03-06",
+    "submitted_date": "2026-03-03",
+    "permit_year": "2026",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.71565,
+     33.046989
+    ]
+   },
+   "properties": {
+    "permit_no": "1387499501",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "WASSON ODC UNIT",
+    "well_no": "7544",
+    "county": "Yoakum",
+    "county_fips": "501",
+    "district": "09",
+    "approved_date": "2026-03-06",
+    "submitted_date": "2026-03-03",
+    "permit_year": "2026",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.722567,
+     33.045669
+    ]
+   },
+   "properties": {
+    "permit_no": "1386699501",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "WASSON ODC UNIT",
+    "well_no": "7544",
+    "county": "Yoakum",
+    "county_fips": "501",
+    "district": "09",
+    "approved_date": "2026-03-06",
+    "submitted_date": "2026-03-03",
+    "permit_year": "2026",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.722561,
+     33.045764
+    ]
+   },
+   "properties": {
+    "permit_no": "1386899501",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "WASSON ODC UNIT",
+    "well_no": "7544",
+    "county": "Yoakum",
+    "county_fips": "501",
+    "district": "09",
+    "approved_date": "2026-03-06",
+    "submitted_date": "2026-03-03",
+    "permit_year": "2026",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.715536,
+     33.046986
+    ]
+   },
+   "properties": {
+    "permit_no": "1387899501",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "WASSON ODC UNIT",
+    "well_no": "7544",
+    "county": "Yoakum",
+    "county_fips": "501",
+    "district": "09",
+    "approved_date": "2026-03-06",
+    "submitted_date": "2026-03-03",
+    "permit_year": "2026",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.725706,
+     33.042256
+    ]
+   },
+   "properties": {
+    "permit_no": "1389299501",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "WASSON ODC UNIT",
+    "well_no": "7544",
+    "county": "Yoakum",
+    "county_fips": "501",
+    "district": "09",
+    "approved_date": "2026-03-06",
+    "submitted_date": "2026-03-03",
+    "permit_year": "2026",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.725761,
+     33.042169
+    ]
+   },
+   "properties": {
+    "permit_no": "1389399501",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "WASSON ODC UNIT",
+    "well_no": "7544",
+    "county": "Yoakum",
+    "county_fips": "501",
+    "district": "09",
+    "approved_date": "2026-03-06",
+    "submitted_date": "2026-03-03",
+    "permit_year": "2026",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.725928,
+     33.041917
+    ]
+   },
+   "properties": {
+    "permit_no": "1388199501",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "WASSON ODC UNIT",
+    "well_no": "7544",
+    "county": "Yoakum",
+    "county_fips": "501",
+    "district": "09",
+    "approved_date": "2026-03-06",
+    "submitted_date": "2026-03-03",
+    "permit_year": "2026",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.725872,
+     33.042
+    ]
+   },
+   "properties": {
+    "permit_no": "1389499501",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "WASSON ODC UNIT",
+    "well_no": "7544",
+    "county": "Yoakum",
+    "county_fips": "501",
+    "district": "09",
+    "approved_date": "2026-03-06",
+    "submitted_date": "2026-03-03",
+    "permit_year": "2026",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.725817,
+     33.042086
+    ]
+   },
+   "properties": {
+    "permit_no": "1389599501",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "WASSON ODC UNIT",
+    "well_no": "7544",
+    "county": "Yoakum",
+    "county_fips": "501",
+    "district": "09",
+    "approved_date": "2026-03-06",
+    "submitted_date": "2026-03-03",
+    "permit_year": "2026",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.736189,
+     33.035489
+    ]
+   },
+   "properties": {
+    "permit_no": "1390899501",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "WASSON ODC UNIT",
+    "well_no": "7544",
+    "county": "Yoakum",
+    "county_fips": "501",
+    "district": "09",
+    "approved_date": "2026-03-18",
+    "submitted_date": "2026-03-04",
+    "permit_year": "2026",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.736192,
+     33.035394
+    ]
+   },
+   "properties": {
+    "permit_no": "1390699501",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "WASSON ODC UNIT",
+    "well_no": "7544",
+    "county": "Yoakum",
+    "county_fips": "501",
+    "district": "09",
+    "approved_date": "2026-03-06",
+    "submitted_date": "2026-03-04",
+    "permit_year": "2026",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.730175,
+     33.031328
+    ]
+   },
+   "properties": {
+    "permit_no": "1389699501",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "WASSON ODC UNIT",
+    "well_no": "7544",
+    "county": "Yoakum",
+    "county_fips": "501",
+    "district": "09",
+    "approved_date": "2026-03-06",
+    "submitted_date": "2026-03-03",
+    "permit_year": "2026",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.722556,
+     33.045956
+    ]
+   },
+   "properties": {
+    "permit_no": "1386499501",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "WASSON ODC UNIT",
+    "well_no": "7544",
+    "county": "Yoakum",
+    "county_fips": "501",
+    "district": "09",
+    "approved_date": "2026-03-06",
+    "submitted_date": "2026-03-03",
+    "permit_year": "2026",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.730289,
+     33.031328
+    ]
+   },
+   "properties": {
+    "permit_no": "1389799501",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "WASSON ODC UNIT",
+    "well_no": "7544",
+    "county": "Yoakum",
+    "county_fips": "501",
+    "district": "09",
+    "approved_date": "2026-03-06",
+    "submitted_date": "2026-03-03",
+    "permit_year": "2026",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.800661,
+     33.034658
+    ]
+   },
+   "properties": {
+    "permit_no": "1416099501",
+    "operator": "OXY USA WTP LP",
+    "lease": "WILLARD UNIT",
+    "well_no": "555",
+    "county": "Yoakum",
+    "county_fips": "501",
+    "district": "09",
+    "approved_date": "2026-03-20",
+    "submitted_date": "2026-03-16",
+    "permit_year": "2026",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.428415,
+     32.129805
+    ]
+   },
+   "properties": {
+    "permit_no": "0402798003",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "MIDLAND FARMS DEEP UNIT",
+    "well_no": "7544",
+    "county": "Andrews",
+    "county_fips": "003",
+    "district": "09",
+    "approved_date": "2024-11-18",
+    "submitted_date": "2026-04-02",
+    "permit_year": "2024",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.823435,
+     32.944976
+    ]
+   },
+   "properties": {
+    "permit_no": "0865899165",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "GAINES WASSON CLEARFORK UNIT",
+    "well_no": "7544",
+    "county": "Gaines",
+    "county_fips": "165",
+    "district": "09",
+    "approved_date": "2025-06-17",
+    "submitted_date": "2025-06-17",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.823438,
+     32.944879
+    ]
+   },
+   "properties": {
+    "permit_no": "0866099165",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "GAINES WASSON CLEARFORK UNIT",
+    "well_no": "7544",
+    "county": "Gaines",
+    "county_fips": "165",
+    "district": "09",
+    "approved_date": "2025-06-19",
+    "submitted_date": "2025-06-17",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.7323,
+     32.771604
+    ]
+   },
+   "properties": {
+    "permit_no": "0859899165",
+    "operator": "OXY USA INC.",
+    "lease": "SEMINOLE SAN ANDRES UNIT",
+    "well_no": "591",
+    "county": "Gaines",
+    "county_fips": "165",
+    "district": "09",
+    "approved_date": "2025-06-13",
+    "submitted_date": "2025-06-12",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.740372,
+     32.777697
+    ]
+   },
+   "properties": {
+    "permit_no": "0827899165",
+    "operator": "OXY USA INC.",
+    "lease": "SEMINOLE SAN ANDRES UNIT",
+    "well_no": "591",
+    "county": "Gaines",
+    "county_fips": "165",
+    "district": "09",
+    "approved_date": "2025-06-05",
+    "submitted_date": "2025-05-28",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.7323,
+     32.771507
+    ]
+   },
+   "properties": {
+    "permit_no": "0827999165",
+    "operator": "OXY USA INC.",
+    "lease": "SEMINOLE SAN ANDRES UNIT",
+    "well_no": "591",
+    "county": "Gaines",
+    "county_fips": "165",
+    "district": "09",
+    "approved_date": "2025-06-18",
+    "submitted_date": "2025-05-28",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.731651,
+     32.767574
+    ]
+   },
+   "properties": {
+    "permit_no": "0828099165",
+    "operator": "OXY USA INC.",
+    "lease": "SEMINOLE SAN ANDRES UNIT",
+    "well_no": "591",
+    "county": "Gaines",
+    "county_fips": "165",
+    "district": "09",
+    "approved_date": "2025-06-05",
+    "submitted_date": "2025-05-28",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.723444,
+     32.767475
+    ]
+   },
+   "properties": {
+    "permit_no": "0840399165",
+    "operator": "OXY USA INC.",
+    "lease": "SEMINOLE SAN ANDRES UNIT",
+    "well_no": "591",
+    "county": "Gaines",
+    "county_fips": "165",
+    "district": "09",
+    "approved_date": "2025-06-04",
+    "submitted_date": "2025-06-03",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.722429,
+     32.764465
+    ]
+   },
+   "properties": {
+    "permit_no": "0825599165",
+    "operator": "OXY USA INC.",
+    "lease": "SEMINOLE SAN ANDRES UNIT",
+    "well_no": "591",
+    "county": "Gaines",
+    "county_fips": "165",
+    "district": "09",
+    "approved_date": "2025-06-02",
+    "submitted_date": "2025-05-27",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.715643,
+     32.758494
+    ]
+   },
+   "properties": {
+    "permit_no": "0819099165",
+    "operator": "OXY USA INC.",
+    "lease": "SEMINOLE SAN ANDRES UNIT",
+    "well_no": "591",
+    "county": "Gaines",
+    "county_fips": "165",
+    "district": "09",
+    "approved_date": "2025-06-02",
+    "submitted_date": "2025-05-22",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.722426,
+     32.764369
+    ]
+   },
+   "properties": {
+    "permit_no": "0828199165",
+    "operator": "OXY USA INC.",
+    "lease": "SEMINOLE SAN ANDRES UNIT",
+    "well_no": "591",
+    "county": "Gaines",
+    "county_fips": "165",
+    "district": "09",
+    "approved_date": "2025-06-02",
+    "submitted_date": "2025-05-28",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.715643,
+     32.758398
+    ]
+   },
+   "properties": {
+    "permit_no": "0827799165",
+    "operator": "OXY USA INC.",
+    "lease": "SEMINOLE SAN ANDRES UNIT",
+    "well_no": "591",
+    "county": "Gaines",
+    "county_fips": "165",
+    "district": "09",
+    "approved_date": "2025-06-02",
+    "submitted_date": "2025-05-28",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.715832,
+     32.752524
+    ]
+   },
+   "properties": {
+    "permit_no": "0823399165",
+    "operator": "OXY USA INC.",
+    "lease": "SEMINOLE SAN ANDRES UNIT",
+    "well_no": "591",
+    "county": "Gaines",
+    "county_fips": "165",
+    "district": "09",
+    "approved_date": "2025-06-02",
+    "submitted_date": "2025-05-27",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.715832,
+     32.75262
+    ]
+   },
+   "properties": {
+    "permit_no": "0823299165",
+    "operator": "OXY USA INC.",
+    "lease": "SEMINOLE SAN ANDRES UNIT",
+    "well_no": "591",
+    "county": "Gaines",
+    "county_fips": "165",
+    "district": "09",
+    "approved_date": "2025-06-02",
+    "submitted_date": "2025-05-27",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.702663,
+     32.735023
+    ]
+   },
+   "properties": {
+    "permit_no": "0792799165",
+    "operator": "OXY USA INC.",
+    "lease": "SEMINOLE SAN ANDRES UNIT",
+    "well_no": "591",
+    "county": "Gaines",
+    "county_fips": "165",
+    "district": "09",
+    "approved_date": "2025-06-30",
+    "submitted_date": "2025-05-12",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.815867,
+     32.756456
+    ]
+   },
+   "properties": {
+    "permit_no": "0840499165",
+    "operator": "OXY USA INC.",
+    "lease": "WEST SEMINOLE SA UNIT",
+    "well_no": "591",
+    "county": "Gaines",
+    "county_fips": "165",
+    "district": "09",
+    "approved_date": "2025-06-06",
+    "submitted_date": "2025-06-03",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -101.673465,
+     31.931386
+    ]
+   },
+   "properties": {
+    "permit_no": "0831799173",
+    "operator": "OXY USA INC.",
+    "lease": "ELK POWELL 0895OP",
+    "well_no": "591",
+    "county": "Glasscock",
+    "county_fips": "173",
+    "district": "09",
+    "approved_date": "2025-06-03",
+    "submitted_date": "2025-05-29",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -101.673242,
+     31.931361
+    ]
+   },
+   "properties": {
+    "permit_no": "0844599173",
+    "operator": "OXY USA INC.",
+    "lease": "ELK POWELL 0897OP",
+    "well_no": "591",
+    "county": "Glasscock",
+    "county_fips": "173",
+    "district": "09",
+    "approved_date": "2025-06-10",
+    "submitted_date": "2025-06-05",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -101.680286,
+     31.934217
+    ]
+   },
+   "properties": {
+    "permit_no": "0883199173",
+    "operator": "OXY USA INC.",
+    "lease": "POWELL, E.L.",
+    "well_no": "591",
+    "county": "Glasscock",
+    "county_fips": "173",
+    "district": "09",
+    "approved_date": "2025-06-26",
+    "submitted_date": "2025-06-24",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -101.501783,
+     32.196386
+    ]
+   },
+   "properties": {
+    "permit_no": "0790798227",
+    "operator": "OXY USA INC.",
+    "lease": "MINERAL SPRINGS 1440DP",
+    "well_no": "591",
+    "county": "Howard",
+    "county_fips": "227",
+    "district": "09",
+    "approved_date": "2025-05-14",
+    "submitted_date": "2025-06-04",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -101.501564,
+     32.196436
+    ]
+   },
+   "properties": {
+    "permit_no": "0791898227",
+    "operator": "OXY USA INC.",
+    "lease": "MINERAL SPRINGS 1481CP",
+    "well_no": "591",
+    "county": "Howard",
+    "county_fips": "227",
+    "district": "09",
+    "approved_date": "2025-05-14",
+    "submitted_date": "2025-06-04",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -103.648444,
+     31.976322
+    ]
+   },
+   "properties": {
+    "permit_no": "0871099301",
+    "operator": "OXY USA WTP LP",
+    "lease": "EL MAR /DELAWARE/ UNIT",
+    "well_no": "555",
+    "county": "Loving",
+    "county_fips": "301",
+    "district": "09",
+    "approved_date": "2025-06-19",
+    "submitted_date": "2025-06-19",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.104534,
+     32.112598
+    ]
+   },
+   "properties": {
+    "permit_no": "0770698317",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "SOUTH CURTIS RANCH",
+    "well_no": "7544",
+    "county": "Martin",
+    "county_fips": "317",
+    "district": "09",
+    "approved_date": "2025-05-02",
+    "submitted_date": "2025-05-09",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.831628,
+     32.985375
+    ]
+   },
+   "properties": {
+    "permit_no": "0866999501",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "YOAKUM WASSON CLEARFORK UNIT",
+    "well_no": "7544",
+    "county": "Yoakum",
+    "county_fips": "501",
+    "district": "09",
+    "approved_date": "2025-06-18",
+    "submitted_date": "2025-06-17",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.831628,
+     32.985278
+    ]
+   },
+   "properties": {
+    "permit_no": "0867199501",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "YOAKUM WASSON CLEARFORK UNIT",
+    "well_no": "7544",
+    "county": "Yoakum",
+    "county_fips": "501",
+    "district": "09",
+    "approved_date": "2025-06-18",
+    "submitted_date": "2025-06-17",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.484814,
+     31.743176
+    ]
+   },
+   "properties": {
+    "permit_no": "0936399135",
+    "operator": "OXY USA WTP LP",
+    "lease": "TXL AC",
+    "well_no": "555",
+    "county": "Ector",
+    "county_fips": "135",
+    "district": "09",
+    "approved_date": "2025-07-23",
+    "submitted_date": "2025-07-21",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.730098,
+     32.780214
+    ]
+   },
+   "properties": {
+    "permit_no": "0940499165",
+    "operator": "OXY USA INC.",
+    "lease": "SEMINOLE SAN ANDRES UNIT",
+    "well_no": "591",
+    "county": "Gaines",
+    "county_fips": "165",
+    "district": "09",
+    "approved_date": "2025-07-23",
+    "submitted_date": "2025-07-23",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.683762,
+     32.764658
+    ]
+   },
+   "properties": {
+    "permit_no": "0908699165",
+    "operator": "OXY USA INC.",
+    "lease": "SEMINOLE SAN ANDRES UNIT SWDD",
+    "well_no": "591",
+    "county": "Gaines",
+    "county_fips": "165",
+    "district": "09",
+    "approved_date": "2025-07-08",
+    "submitted_date": "2025-07-08",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.683043,
+     32.764771
+    ]
+   },
+   "properties": {
+    "permit_no": "0908899165",
+    "operator": "OXY USA INC.",
+    "lease": "SEMINOLE SAN ANDRES UNIT SWDD",
+    "well_no": "591",
+    "county": "Gaines",
+    "county_fips": "165",
+    "district": "09",
+    "approved_date": "2025-07-08",
+    "submitted_date": "2025-07-08",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.717609,
+     32.776623
+    ]
+   },
+   "properties": {
+    "permit_no": "0943699165",
+    "operator": "OXY USA WTP LP",
+    "lease": "SEMINOLE SAN ANDRES UNIT",
+    "well_no": "555",
+    "county": "Gaines",
+    "county_fips": "165",
+    "district": "09",
+    "approved_date": "2025-07-24",
+    "submitted_date": "2025-07-23",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.815867,
+     32.756456
+    ]
+   },
+   "properties": {
+    "permit_no": "0840498165",
+    "operator": "OXY USA WTP LP",
+    "lease": "WEST SEMINOLE SA UNIT",
+    "well_no": "555",
+    "county": "Gaines",
+    "county_fips": "165",
+    "district": "09",
+    "approved_date": "2025-06-06",
+    "submitted_date": "2025-07-23",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -101.680256,
+     31.934122
+    ]
+   },
+   "properties": {
+    "permit_no": "0918399173",
+    "operator": "OXY USA INC.",
+    "lease": "ELK POWELL 0893OP",
+    "well_no": "591",
+    "county": "Glasscock",
+    "county_fips": "173",
+    "district": "09",
+    "approved_date": "2025-07-14",
+    "submitted_date": "2025-07-10",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -101.487369,
+     32.171978
+    ]
+   },
+   "properties": {
+    "permit_no": "0790898227",
+    "operator": "OXY USA INC.",
+    "lease": "MINERAL SPRINGS 2642DP",
+    "well_no": "591",
+    "county": "Howard",
+    "county_fips": "227",
+    "district": "09",
+    "approved_date": "2025-05-14",
+    "submitted_date": "2025-06-04",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -101.485525,
+     32.172389
+    ]
+   },
+   "properties": {
+    "permit_no": "0791098227",
+    "operator": "OXY USA INC.",
+    "lease": "MINERAL SPRINGS 2644DP",
+    "well_no": "591",
+    "county": "Howard",
+    "county_fips": "227",
+    "district": "09",
+    "approved_date": "2025-05-14",
+    "submitted_date": "2025-06-04",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -101.487259,
+     32.172003
+    ]
+   },
+   "properties": {
+    "permit_no": "0790998227",
+    "operator": "OXY USA INC.",
+    "lease": "MINERAL SPRINGS 2680CP",
+    "well_no": "591",
+    "county": "Howard",
+    "county_fips": "227",
+    "district": "09",
+    "approved_date": "2025-05-14",
+    "submitted_date": "2025-06-04",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -101.4854,
+     32.172417
+    ]
+   },
+   "properties": {
+    "permit_no": "0791798227",
+    "operator": "OXY USA INC.",
+    "lease": "MINERAL SPRINGS 2682CP",
+    "well_no": "591",
+    "county": "Howard",
+    "county_fips": "227",
+    "district": "09",
+    "approved_date": "2025-05-14",
+    "submitted_date": "2025-06-04",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.721388,
+     32.787924
+    ]
+   },
+   "properties": {
+    "permit_no": "0967799165",
+    "operator": "OXY USA INC.",
+    "lease": "SEMINOLE SAN ANDRES UNIT",
+    "well_no": "591",
+    "county": "Gaines",
+    "county_fips": "165",
+    "district": "09",
+    "approved_date": "2025-08-05",
+    "submitted_date": "2025-08-05",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.710514,
+     32.778394
+    ]
+   },
+   "properties": {
+    "permit_no": "1010499165",
+    "operator": "OXY USA INC.",
+    "lease": "SEMINOLE SAN ANDRES UNIT",
+    "well_no": "591",
+    "county": "Gaines",
+    "county_fips": "165",
+    "district": "09",
+    "approved_date": "2025-08-27",
+    "submitted_date": "2025-08-27",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.700227,
+     32.77646
+    ]
+   },
+   "properties": {
+    "permit_no": "1011999165",
+    "operator": "OXY USA INC.",
+    "lease": "SEMINOLE SAN ANDRES UNIT",
+    "well_no": "591",
+    "county": "Gaines",
+    "county_fips": "165",
+    "district": "09",
+    "approved_date": "2025-08-28",
+    "submitted_date": "2025-08-28",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.708875,
+     32.762042
+    ]
+   },
+   "properties": {
+    "permit_no": "1000999165",
+    "operator": "OXY USA INC.",
+    "lease": "SEMINOLE SAN ANDRES UNIT",
+    "well_no": "591",
+    "county": "Gaines",
+    "county_fips": "165",
+    "district": "09",
+    "approved_date": "2025-08-25",
+    "submitted_date": "2025-08-22",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.715832,
+     32.752716
+    ]
+   },
+   "properties": {
+    "permit_no": "0819299165",
+    "operator": "OXY USA INC.",
+    "lease": "SEMINOLE SAN ANDRES UNIT",
+    "well_no": "591",
+    "county": "Gaines",
+    "county_fips": "165",
+    "district": "09",
+    "approved_date": "2025-08-22",
+    "submitted_date": "2025-05-22",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.693292,
+     32.749269
+    ]
+   },
+   "properties": {
+    "permit_no": "0994199165",
+    "operator": "OXY USA INC.",
+    "lease": "SEMINOLE SAN ANDRES UNIT",
+    "well_no": "591",
+    "county": "Gaines",
+    "county_fips": "165",
+    "district": "09",
+    "approved_date": "2025-08-20",
+    "submitted_date": "2025-08-19",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.691172,
+     32.747318
+    ]
+   },
+   "properties": {
+    "permit_no": "0982299165",
+    "operator": "OXY USA INC.",
+    "lease": "SEMINOLE SAN ANDRES UNIT",
+    "well_no": "591",
+    "county": "Gaines",
+    "county_fips": "165",
+    "district": "09",
+    "approved_date": "2025-08-14",
+    "submitted_date": "2025-08-13",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.682874,
+     32.747492
+    ]
+   },
+   "properties": {
+    "permit_no": "1007699165",
+    "operator": "OXY USA INC.",
+    "lease": "SEMINOLE SAN ANDRES UNIT",
+    "well_no": "591",
+    "county": "Gaines",
+    "county_fips": "165",
+    "district": "09",
+    "approved_date": "2025-08-26",
+    "submitted_date": "2025-08-26",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.824489,
+     32.756447
+    ]
+   },
+   "properties": {
+    "permit_no": "1013499165",
+    "operator": "OXY USA WTP LP",
+    "lease": "WEST SEMINOLE SA UNIT",
+    "well_no": "555",
+    "county": "Gaines",
+    "county_fips": "165",
+    "district": "09",
+    "approved_date": "2025-08-29",
+    "submitted_date": "2025-08-28",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -101.680256,
+     31.934122
+    ]
+   },
+   "properties": {
+    "permit_no": "0918398173",
+    "operator": "OXY USA INC.",
+    "lease": "ELK POWELL 0893OP",
+    "well_no": "591",
+    "county": "Glasscock",
+    "county_fips": "173",
+    "district": "09",
+    "approved_date": "2025-07-14",
+    "submitted_date": "2025-07-15",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -101.673465,
+     31.931386
+    ]
+   },
+   "properties": {
+    "permit_no": "0831798173",
+    "operator": "OXY USA INC.",
+    "lease": "ELK POWELL 0895OP",
+    "well_no": "591",
+    "county": "Glasscock",
+    "county_fips": "173",
+    "district": "09",
+    "approved_date": "2025-06-03",
+    "submitted_date": "2025-07-08",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -101.673242,
+     31.931361
+    ]
+   },
+   "properties": {
+    "permit_no": "0844598173",
+    "operator": "OXY USA INC.",
+    "lease": "ELK POWELL 0897OP",
+    "well_no": "591",
+    "county": "Glasscock",
+    "county_fips": "173",
+    "district": "09",
+    "approved_date": "2025-06-10",
+    "submitted_date": "2025-07-08",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -101.680286,
+     31.934217
+    ]
+   },
+   "properties": {
+    "permit_no": "0883198173",
+    "operator": "OXY USA INC.",
+    "lease": "POWELL, E.L.",
+    "well_no": "591",
+    "county": "Glasscock",
+    "county_fips": "173",
+    "district": "09",
+    "approved_date": "2025-06-26",
+    "submitted_date": "2025-07-08",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -101.673353,
+     31.931372
+    ]
+   },
+   "properties": {
+    "permit_no": "0822898173",
+    "operator": "OXY USA INC.",
+    "lease": "POWELL, E.L.",
+    "well_no": "591",
+    "county": "Glasscock",
+    "county_fips": "173",
+    "district": "09",
+    "approved_date": "2025-05-30",
+    "submitted_date": "2025-07-07",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.219992,
+     32.120308
+    ]
+   },
+   "properties": {
+    "permit_no": "1044499003",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "WEST CROSS BAR RANCH-B",
+    "well_no": "7544",
+    "county": "Andrews",
+    "county_fips": "003",
+    "district": "09",
+    "approved_date": "2025-09-16",
+    "submitted_date": "2025-09-14",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.2199,
+     32.120328
+    ]
+   },
+   "properties": {
+    "permit_no": "1044599003",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "WEST CROSS BAR RANCH-B",
+    "well_no": "7544",
+    "county": "Andrews",
+    "county_fips": "003",
+    "district": "09",
+    "approved_date": "2025-09-16",
+    "submitted_date": "2025-09-14",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.219806,
+     32.12035
+    ]
+   },
+   "properties": {
+    "permit_no": "1044699003",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "WEST CROSS BAR RANCH-B",
+    "well_no": "7544",
+    "county": "Andrews",
+    "county_fips": "003",
+    "district": "09",
+    "approved_date": "2025-09-16",
+    "submitted_date": "2025-09-14",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.718107,
+     32.75382
+    ]
+   },
+   "properties": {
+    "permit_no": "1053199165",
+    "operator": "OXY USA INC.",
+    "lease": "AMERADA-COFFEY",
+    "well_no": "591",
+    "county": "Gaines",
+    "county_fips": "165",
+    "district": "09",
+    "approved_date": "2025-09-18",
+    "submitted_date": "2025-09-17",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.727749,
+     32.789334
+    ]
+   },
+   "properties": {
+    "permit_no": "1046099165",
+    "operator": "OXY USA INC.",
+    "lease": "SEMINOLE SAN ANDRES UNIT",
+    "well_no": "591",
+    "county": "Gaines",
+    "county_fips": "165",
+    "district": "09",
+    "approved_date": "2025-09-17",
+    "submitted_date": "2025-09-15",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.712972,
+     32.788244
+    ]
+   },
+   "properties": {
+    "permit_no": "1046499165",
+    "operator": "OXY USA INC.",
+    "lease": "SEMINOLE SAN ANDRES UNIT",
+    "well_no": "591",
+    "county": "Gaines",
+    "county_fips": "165",
+    "district": "09",
+    "approved_date": "2025-09-17",
+    "submitted_date": "2025-09-15",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.732025,
+     32.774712
+    ]
+   },
+   "properties": {
+    "permit_no": "1045999165",
+    "operator": "OXY USA INC.",
+    "lease": "SEMINOLE SAN ANDRES UNIT",
+    "well_no": "591",
+    "county": "Gaines",
+    "county_fips": "165",
+    "district": "09",
+    "approved_date": "2025-09-16",
+    "submitted_date": "2025-09-15",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.731879,
+     32.767572
+    ]
+   },
+   "properties": {
+    "permit_no": "0981399165",
+    "operator": "OXY USA INC.",
+    "lease": "SEMINOLE SAN ANDRES UNIT",
+    "well_no": "591",
+    "county": "Gaines",
+    "county_fips": "165",
+    "district": "09",
+    "approved_date": "2025-09-17",
+    "submitted_date": "2025-08-13",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.703775,
+     32.780245
+    ]
+   },
+   "properties": {
+    "permit_no": "1021499165",
+    "operator": "OXY USA INC.",
+    "lease": "SEMINOLE SAN ANDRES UNIT",
+    "well_no": "591",
+    "county": "Gaines",
+    "county_fips": "165",
+    "district": "09",
+    "approved_date": "2025-09-04",
+    "submitted_date": "2025-09-04",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.691693,
+     32.776274
+    ]
+   },
+   "properties": {
+    "permit_no": "1049399165",
+    "operator": "OXY USA INC.",
+    "lease": "SEMINOLE SAN ANDRES UNIT",
+    "well_no": "591",
+    "county": "Gaines",
+    "county_fips": "165",
+    "district": "09",
+    "approved_date": "2025-09-17",
+    "submitted_date": "2025-09-16",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.712751,
+     32.766161
+    ]
+   },
+   "properties": {
+    "permit_no": "1042799165",
+    "operator": "OXY USA INC.",
+    "lease": "SEMINOLE SAN ANDRES UNIT",
+    "well_no": "591",
+    "county": "Gaines",
+    "county_fips": "165",
+    "district": "09",
+    "approved_date": "2025-09-16",
+    "submitted_date": "2025-09-12",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.731765,
+     32.767573
+    ]
+   },
+   "properties": {
+    "permit_no": "0940699165",
+    "operator": "OXY USA INC.",
+    "lease": "SEMINOLE SAN ANDRES UNIT",
+    "well_no": "591",
+    "county": "Gaines",
+    "county_fips": "165",
+    "district": "09",
+    "approved_date": "2025-09-03",
+    "submitted_date": "2025-07-23",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.69999,
+     32.762097
+    ]
+   },
+   "properties": {
+    "permit_no": "1039699165",
+    "operator": "OXY USA INC.",
+    "lease": "SEMINOLE SAN ANDRES UNIT",
+    "well_no": "591",
+    "county": "Gaines",
+    "county_fips": "165",
+    "district": "09",
+    "approved_date": "2025-09-16",
+    "submitted_date": "2025-09-12",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.697747,
+     32.767419
+    ]
+   },
+   "properties": {
+    "permit_no": "1047499165",
+    "operator": "OXY USA INC.",
+    "lease": "SEMINOLE SAN ANDRES UNIT",
+    "well_no": "591",
+    "county": "Gaines",
+    "county_fips": "165",
+    "district": "09",
+    "approved_date": "2025-09-17",
+    "submitted_date": "2025-09-16",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.691345,
+     32.765635
+    ]
+   },
+   "properties": {
+    "permit_no": "1045899165",
+    "operator": "OXY USA INC.",
+    "lease": "SEMINOLE SAN ANDRES UNIT",
+    "well_no": "591",
+    "county": "Gaines",
+    "county_fips": "165",
+    "district": "09",
+    "approved_date": "2025-09-16",
+    "submitted_date": "2025-09-15",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.691337,
+     32.762001
+    ]
+   },
+   "properties": {
+    "permit_no": "1050099165",
+    "operator": "OXY USA INC.",
+    "lease": "SEMINOLE SAN ANDRES UNIT",
+    "well_no": "591",
+    "county": "Gaines",
+    "county_fips": "165",
+    "district": "09",
+    "approved_date": "2025-09-17",
+    "submitted_date": "2025-09-16",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.686905,
+     32.758362
+    ]
+   },
+   "properties": {
+    "permit_no": "1051499165",
+    "operator": "OXY USA INC.",
+    "lease": "SEMINOLE SAN ANDRES UNIT",
+    "well_no": "591",
+    "county": "Gaines",
+    "county_fips": "165",
+    "district": "09",
+    "approved_date": "2025-09-17",
+    "submitted_date": "2025-09-17",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.691335,
+     32.740295
+    ]
+   },
+   "properties": {
+    "permit_no": "1046799165",
+    "operator": "OXY USA INC.",
+    "lease": "SEMINOLE SAN ANDRES UNIT",
+    "well_no": "591",
+    "county": "Gaines",
+    "county_fips": "165",
+    "district": "09",
+    "approved_date": "2025-09-17",
+    "submitted_date": "2025-09-15",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.676125,
+     32.749593
+    ]
+   },
+   "properties": {
+    "permit_no": "1032299165",
+    "operator": "OXY USA INC.",
+    "lease": "SEMINOLE SAN ANDRES UNIT",
+    "well_no": "591",
+    "county": "Gaines",
+    "county_fips": "165",
+    "district": "09",
+    "approved_date": "2025-09-10",
+    "submitted_date": "2025-09-09",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.4654,
+     32.760436
+    ]
+   },
+   "properties": {
+    "permit_no": "1052099165",
+    "operator": "OXY USA WTP LP",
+    "lease": "H & J SEC. 127-B",
+    "well_no": "555",
+    "county": "Gaines",
+    "county_fips": "165",
+    "district": "09",
+    "approved_date": "2025-09-17",
+    "submitted_date": "2025-09-17",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.473989,
+     32.760428
+    ]
+   },
+   "properties": {
+    "permit_no": "1051999165",
+    "operator": "OXY USA WTP LP",
+    "lease": "MAY, TOM",
+    "well_no": "555",
+    "county": "Gaines",
+    "county_fips": "165",
+    "district": "09",
+    "approved_date": "2025-09-17",
+    "submitted_date": "2025-09-17",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.206894,
+     32.140142
+    ]
+   },
+   "properties": {
+    "permit_no": "1043899317",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "WEST CROSS BAR RANCH-B",
+    "well_no": "7544",
+    "county": "Martin",
+    "county_fips": "317",
+    "district": "09",
+    "approved_date": "2025-09-16",
+    "submitted_date": "2025-09-14",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.206986,
+     32.140119
+    ]
+   },
+   "properties": {
+    "permit_no": "1043999317",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "WEST CROSS BAR RANCH-B",
+    "well_no": "7544",
+    "county": "Martin",
+    "county_fips": "317",
+    "district": "09",
+    "approved_date": "2025-09-16",
+    "submitted_date": "2025-09-14",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.2068,
+     32.140164
+    ]
+   },
+   "properties": {
+    "permit_no": "1044099317",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "WEST CROSS BAR RANCH-B",
+    "well_no": "7544",
+    "county": "Martin",
+    "county_fips": "317",
+    "district": "09",
+    "approved_date": "2025-09-16",
+    "submitted_date": "2025-09-14",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.205086,
+     32.140564
+    ]
+   },
+   "properties": {
+    "permit_no": "1044199317",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "WEST CROSS BAR RANCH-B",
+    "well_no": "7544",
+    "county": "Martin",
+    "county_fips": "317",
+    "district": "09",
+    "approved_date": "2025-09-16",
+    "submitted_date": "2025-09-14",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.2049,
+     32.140606
+    ]
+   },
+   "properties": {
+    "permit_no": "1044299317",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "WEST CROSS BAR RANCH-B",
+    "well_no": "7544",
+    "county": "Martin",
+    "county_fips": "317",
+    "district": "09",
+    "approved_date": "2025-09-16",
+    "submitted_date": "2025-09-14",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.204992,
+     32.140583
+    ]
+   },
+   "properties": {
+    "permit_no": "1044399317",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "WEST CROSS BAR RANCH-B",
+    "well_no": "7544",
+    "county": "Martin",
+    "county_fips": "317",
+    "district": "09",
+    "approved_date": "2025-09-16",
+    "submitted_date": "2025-09-14",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.210133,
+     32.117603
+    ]
+   },
+   "properties": {
+    "permit_no": "1044799317",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "WEST CROSS BAR RANCH-B",
+    "well_no": "7544",
+    "county": "Martin",
+    "county_fips": "317",
+    "district": "09",
+    "approved_date": "2025-09-16",
+    "submitted_date": "2025-09-14",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.210225,
+     32.117581
+    ]
+   },
+   "properties": {
+    "permit_no": "1044899317",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "WEST CROSS BAR RANCH-B",
+    "well_no": "7544",
+    "county": "Martin",
+    "county_fips": "317",
+    "district": "09",
+    "approved_date": "2025-09-16",
+    "submitted_date": "2025-09-14",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.409143,
+     32.179615
+    ]
+   },
+   "properties": {
+    "permit_no": "1150799003",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "KTM 4791OP",
+    "well_no": "7544",
+    "county": "Andrews",
+    "county_fips": "003",
+    "district": "09",
+    "approved_date": "2025-10-31",
+    "submitted_date": "2025-10-30",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.409049,
+     32.179636
+    ]
+   },
+   "properties": {
+    "permit_no": "1150899003",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "KTM 4793OP",
+    "well_no": "7544",
+    "county": "Andrews",
+    "county_fips": "003",
+    "district": "09",
+    "approved_date": "2025-10-31",
+    "submitted_date": "2025-10-30",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.431303,
+     32.156716
+    ]
+   },
+   "properties": {
+    "permit_no": "1095799003",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "MIDLAND FARMS DEEP UNIT",
+    "well_no": "7544",
+    "county": "Andrews",
+    "county_fips": "003",
+    "district": "09",
+    "approved_date": "2025-10-07",
+    "submitted_date": "2025-10-07",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.431209,
+     32.156737
+    ]
+   },
+   "properties": {
+    "permit_no": "1095999003",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "MIDLAND FARMS DEEP UNIT",
+    "well_no": "7544",
+    "county": "Andrews",
+    "county_fips": "003",
+    "district": "09",
+    "approved_date": "2025-10-08",
+    "submitted_date": "2025-10-07",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.421759,
+     32.156498
+    ]
+   },
+   "properties": {
+    "permit_no": "1096299003",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "MIDLAND FARMS DEEP UNIT",
+    "well_no": "7544",
+    "county": "Andrews",
+    "county_fips": "003",
+    "district": "09",
+    "approved_date": "2025-10-08",
+    "submitted_date": "2025-10-07",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.421479,
+     32.156564
+    ]
+   },
+   "properties": {
+    "permit_no": "1096599003",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "MIDLAND FARMS DEEP UNIT",
+    "well_no": "7544",
+    "county": "Andrews",
+    "county_fips": "003",
+    "district": "09",
+    "approved_date": "2025-10-08",
+    "submitted_date": "2025-10-07",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.415358,
+     32.156861
+    ]
+   },
+   "properties": {
+    "permit_no": "1097599003",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "MIDLAND FARMS DEEP UNIT",
+    "well_no": "7544",
+    "county": "Andrews",
+    "county_fips": "003",
+    "district": "09",
+    "approved_date": "2025-10-08",
+    "submitted_date": "2025-10-07",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.415264,
+     32.156882
+    ]
+   },
+   "properties": {
+    "permit_no": "1100299003",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "MIDLAND FARMS DEEP UNIT",
+    "well_no": "7544",
+    "county": "Andrews",
+    "county_fips": "003",
+    "district": "09",
+    "approved_date": "2025-10-13",
+    "submitted_date": "2025-10-08",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.421852,
+     32.156475
+    ]
+   },
+   "properties": {
+    "permit_no": "1096199003",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "MIDLAND FARMS DEEP UNIT 0190OP",
+    "well_no": "7544",
+    "county": "Andrews",
+    "county_fips": "003",
+    "district": "09",
+    "approved_date": "2025-10-14",
+    "submitted_date": "2025-10-07",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.421666,
+     32.15652
+    ]
+   },
+   "properties": {
+    "permit_no": "1096499003",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "MIDLAND FARMS DEEP UNIT 0192OP",
+    "well_no": "7544",
+    "county": "Andrews",
+    "county_fips": "003",
+    "district": "09",
+    "approved_date": "2025-10-08",
+    "submitted_date": "2025-10-07",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.421572,
+     32.156542
+    ]
+   },
+   "properties": {
+    "permit_no": "1096799003",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "MIDLAND FARMS DEEP UNIT 0194OP",
+    "well_no": "7544",
+    "county": "Andrews",
+    "county_fips": "003",
+    "district": "09",
+    "approved_date": "2025-10-08",
+    "submitted_date": "2025-10-07",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.415452,
+     32.156839
+    ]
+   },
+   "properties": {
+    "permit_no": "1097699003",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "MIDLAND FARMS DEEP UNIT 4891OP",
+    "well_no": "7544",
+    "county": "Andrews",
+    "county_fips": "003",
+    "district": "09",
+    "approved_date": "2025-10-09",
+    "submitted_date": "2025-10-07",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.415545,
+     32.156818
+    ]
+   },
+   "properties": {
+    "permit_no": "1100199003",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "MIDLAND FARMS DEEP UNIT 4896OP",
+    "well_no": "7544",
+    "county": "Andrews",
+    "county_fips": "003",
+    "district": "09",
+    "approved_date": "2025-10-14",
+    "submitted_date": "2025-10-08",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.788109,
+     32.949423
+    ]
+   },
+   "properties": {
+    "permit_no": "1149099165",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "DENVER UNIT",
+    "well_no": "7544",
+    "county": "Gaines",
+    "county_fips": "165",
+    "district": "09",
+    "approved_date": "2025-10-31",
+    "submitted_date": "2025-10-29",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.782741,
+     32.957476
+    ]
+   },
+   "properties": {
+    "permit_no": "1149199165",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "DENVER UNIT",
+    "well_no": "7544",
+    "county": "Gaines",
+    "county_fips": "165",
+    "district": "09",
+    "approved_date": "2025-10-31",
+    "submitted_date": "2025-10-29",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.721264,
+     32.780237
+    ]
+   },
+   "properties": {
+    "permit_no": "1097999165",
+    "operator": "OXY USA INC.",
+    "lease": "SEMINOLE SAN ANDRES UNIT",
+    "well_no": "591",
+    "county": "Gaines",
+    "county_fips": "165",
+    "district": "09",
+    "approved_date": "2025-10-10",
+    "submitted_date": "2025-10-08",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.709049,
+     32.768757
+    ]
+   },
+   "properties": {
+    "permit_no": "1132399165",
+    "operator": "OXY USA INC.",
+    "lease": "SEMINOLE SAN ANDRES UNIT",
+    "well_no": "591",
+    "county": "Gaines",
+    "county_fips": "165",
+    "district": "09",
+    "approved_date": "2025-10-23",
+    "submitted_date": "2025-10-23",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.709049,
+     32.768757
+    ]
+   },
+   "properties": {
+    "permit_no": "1132999165",
+    "operator": "OXY USA INC.",
+    "lease": "SEMINOLE SAN ANDRES UNIT",
+    "well_no": "591",
+    "county": "Gaines",
+    "county_fips": "165",
+    "district": "09",
+    "approved_date": "2025-10-23",
+    "submitted_date": "2025-10-23",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.709049,
+     32.768757
+    ]
+   },
+   "properties": {
+    "permit_no": "1132599165",
+    "operator": "OXY USA INC.",
+    "lease": "SEMINOLE SAN ANDRES UNIT",
+    "well_no": "591",
+    "county": "Gaines",
+    "county_fips": "165",
+    "district": "09",
+    "approved_date": "2025-10-23",
+    "submitted_date": "2025-10-23",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.680739,
+     32.729525
+    ]
+   },
+   "properties": {
+    "permit_no": "0042098165",
+    "operator": "OXY USA INC.",
+    "lease": "SEMINOLE SAN ANDRES UNIT",
+    "well_no": "591",
+    "county": "Gaines",
+    "county_fips": "165",
+    "district": "09",
+    "approved_date": "2024-06-14",
+    "submitted_date": "2025-10-15",
+    "permit_year": "2024",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.680536,
+     32.729581
+    ]
+   },
+   "properties": {
+    "permit_no": "1117299165",
+    "operator": "OXY USA INC.",
+    "lease": "SEMINOLE SAN ANDRES UNIT",
+    "well_no": "591",
+    "county": "Gaines",
+    "county_fips": "165",
+    "district": "09",
+    "approved_date": "2025-10-17",
+    "submitted_date": "2025-10-15",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.680649,
+     32.72958
+    ]
+   },
+   "properties": {
+    "permit_no": "1116199165",
+    "operator": "OXY USA INC.",
+    "lease": "SEMINOLE SAN ANDRES UNIT",
+    "well_no": "591",
+    "county": "Gaines",
+    "county_fips": "165",
+    "district": "09",
+    "approved_date": "2025-10-16",
+    "submitted_date": "2025-10-15",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.799356,
+     32.755836
+    ]
+   },
+   "properties": {
+    "permit_no": "1117699165",
+    "operator": "OXY USA WTP LP",
+    "lease": "WEST SEMINOLE SA UNIT",
+    "well_no": "555",
+    "county": "Gaines",
+    "county_fips": "165",
+    "district": "09",
+    "approved_date": "2025-10-17",
+    "submitted_date": "2025-10-15",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -101.673465,
+     31.931386
+    ]
+   },
+   "properties": {
+    "permit_no": "0831797173",
+    "operator": "OXY USA INC.",
+    "lease": "ELK POWELL 0895OP",
+    "well_no": "591",
+    "county": "Glasscock",
+    "county_fips": "173",
+    "district": "09",
+    "approved_date": "2025-06-03",
+    "submitted_date": "2025-10-09",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -101.673242,
+     31.931361
+    ]
+   },
+   "properties": {
+    "permit_no": "0844597173",
+    "operator": "OXY USA INC.",
+    "lease": "ELK POWELL 0897OP",
+    "well_no": "591",
+    "county": "Glasscock",
+    "county_fips": "173",
+    "district": "09",
+    "approved_date": "2025-06-10",
+    "submitted_date": "2025-10-09",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -101.665404,
+     31.936202
+    ]
+   },
+   "properties": {
+    "permit_no": "0329297173",
+    "operator": "OXY USA INC.",
+    "lease": "POWELL 0991OP",
+    "well_no": "591",
+    "county": "Glasscock",
+    "county_fips": "173",
+    "district": "09",
+    "approved_date": "2024-10-16",
+    "submitted_date": "2025-10-02",
+    "permit_year": "2024",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -101.665181,
+     31.936092
+    ]
+   },
+   "properties": {
+    "permit_no": "0329397173",
+    "operator": "OXY USA INC.",
+    "lease": "POWELL 0993OP",
+    "well_no": "591",
+    "county": "Glasscock",
+    "county_fips": "173",
+    "district": "09",
+    "approved_date": "2024-10-16",
+    "submitted_date": "2025-10-02",
+    "permit_year": "2024",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -101.655443,
+     31.935141
+    ]
+   },
+   "properties": {
+    "permit_no": "1085599173",
+    "operator": "OXY USA INC.",
+    "lease": "POWELL 0999OP",
+    "well_no": "591",
+    "county": "Glasscock",
+    "county_fips": "173",
+    "district": "09",
+    "approved_date": "2025-10-07",
+    "submitted_date": "2025-10-02",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -101.673353,
+     31.931372
+    ]
+   },
+   "properties": {
+    "permit_no": "0822897173",
+    "operator": "OXY USA INC.",
+    "lease": "POWELL, E.L.",
+    "well_no": "591",
+    "county": "Glasscock",
+    "county_fips": "173",
+    "district": "09",
+    "approved_date": "2025-05-30",
+    "submitted_date": "2025-10-09",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -101.665292,
+     31.936147
+    ]
+   },
+   "properties": {
+    "permit_no": "0328997173",
+    "operator": "OXY USA INC.",
+    "lease": "POWELL, E.L.",
+    "well_no": "591",
+    "county": "Glasscock",
+    "county_fips": "173",
+    "district": "09",
+    "approved_date": "2024-10-16",
+    "submitted_date": "2025-10-02",
+    "permit_year": "2024",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -101.658939,
+     31.937108
+    ]
+   },
+   "properties": {
+    "permit_no": "0329097173",
+    "operator": "OXY USA INC.",
+    "lease": "POWELL, E.L.",
+    "well_no": "591",
+    "county": "Glasscock",
+    "county_fips": "173",
+    "district": "09",
+    "approved_date": "2024-10-16",
+    "submitted_date": "2025-10-02",
+    "permit_year": "2024",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -101.658817,
+     31.937069
+    ]
+   },
+   "properties": {
+    "permit_no": "0329197173",
+    "operator": "OXY USA INC.",
+    "lease": "POWELL, E.L.",
+    "well_no": "591",
+    "county": "Glasscock",
+    "county_fips": "173",
+    "district": "09",
+    "approved_date": "2024-10-16",
+    "submitted_date": "2025-10-02",
+    "permit_year": "2024",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -100.856881,
+     33.207942
+    ]
+   },
+   "properties": {
+    "permit_no": "9986897263",
+    "operator": "OXY USA WTP LP",
+    "lease": "SALT CREEK FIELD UNIT",
+    "well_no": "555",
+    "county": "Kent",
+    "county_fips": "263",
+    "district": "08",
+    "approved_date": "2024-05-23",
+    "submitted_date": "2025-10-15",
+    "permit_year": "2024",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -100.856883,
+     33.207847
+    ]
+   },
+   "properties": {
+    "permit_no": "9987597263",
+    "operator": "OXY USA WTP LP",
+    "lease": "SALT CREEK FIELD UNIT",
+    "well_no": "555",
+    "county": "Kent",
+    "county_fips": "263",
+    "district": "08",
+    "approved_date": "2024-05-23",
+    "submitted_date": "2025-10-15",
+    "permit_year": "2024",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -100.856886,
+     33.20775
+    ]
+   },
+   "properties": {
+    "permit_no": "9988098263",
+    "operator": "OXY USA WTP LP",
+    "lease": "SALT CREEK FIELD UNIT",
+    "well_no": "555",
+    "county": "Kent",
+    "county_fips": "263",
+    "district": "08",
+    "approved_date": "2024-05-23",
+    "submitted_date": "2025-10-15",
+    "permit_year": "2024",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -100.856886,
+     33.207653
+    ]
+   },
+   "properties": {
+    "permit_no": "1116899263",
+    "operator": "OXY USA WTP LP",
+    "lease": "SALT CREEK FIELD UNIT",
+    "well_no": "555",
+    "county": "Kent",
+    "county_fips": "263",
+    "district": "09",
+    "approved_date": "2025-10-16",
+    "submitted_date": "2025-10-15",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -100.870057,
+     33.249104
+    ]
+   },
+   "properties": {
+    "permit_no": "1117399263",
+    "operator": "OXY USA WTP LP",
+    "lease": "SALT CREEK FIELD UNIT",
+    "well_no": "555",
+    "county": "Kent",
+    "county_fips": "263",
+    "district": "09",
+    "approved_date": "2025-10-22",
+    "submitted_date": "2025-10-15",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -100.869942,
+     33.249104
+    ]
+   },
+   "properties": {
+    "permit_no": "1117499263",
+    "operator": "OXY USA WTP LP",
+    "lease": "SALT CREEK FIELD UNIT",
+    "well_no": "555",
+    "county": "Kent",
+    "county_fips": "263",
+    "district": "09",
+    "approved_date": "2025-10-22",
+    "submitted_date": "2025-10-15",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -100.869827,
+     33.249103
+    ]
+   },
+   "properties": {
+    "permit_no": "1117599263",
+    "operator": "OXY USA WTP LP",
+    "lease": "SALT CREEK FIELD UNIT",
+    "well_no": "555",
+    "county": "Kent",
+    "county_fips": "263",
+    "district": "09",
+    "approved_date": "2025-10-22",
+    "submitted_date": "2025-10-15",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -103.631809,
+     31.944512
+    ]
+   },
+   "properties": {
+    "permit_no": "1129899301",
+    "operator": "OXY USA WTP LP",
+    "lease": "EL MAR /DELAWARE/ UNIT",
+    "well_no": "555",
+    "county": "Loving",
+    "county_fips": "301",
+    "district": "09",
+    "approved_date": "2025-10-22",
+    "submitted_date": "2025-10-22",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.408955,
+     32.179658
+    ]
+   },
+   "properties": {
+    "permit_no": "1150999003",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "KTM 4795OP",
+    "well_no": "7544",
+    "county": "Andrews",
+    "county_fips": "003",
+    "district": "09",
+    "approved_date": "2025-11-06",
+    "submitted_date": "2025-10-30",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.716951,
+     32.784295
+    ]
+   },
+   "properties": {
+    "permit_no": "1168599165",
+    "operator": "OXY USA INC.",
+    "lease": "SEMINOLE SAN ANDRES UNIT",
+    "well_no": "591",
+    "county": "Gaines",
+    "county_fips": "165",
+    "district": "09",
+    "approved_date": "2025-11-12",
+    "submitted_date": "2025-11-10",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -101.680256,
+     31.934122
+    ]
+   },
+   "properties": {
+    "permit_no": "0918397173",
+    "operator": "OXY USA INC.",
+    "lease": "ELK POWELL 0893OP",
+    "well_no": "591",
+    "county": "Glasscock",
+    "county_fips": "173",
+    "district": "09",
+    "approved_date": "2025-07-14",
+    "submitted_date": "2025-10-09",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -101.685008,
+     31.933942
+    ]
+   },
+   "properties": {
+    "permit_no": "1085499173",
+    "operator": "OXY USA INC.",
+    "lease": "POWELL 08 UNIT",
+    "well_no": "591",
+    "county": "Glasscock",
+    "county_fips": "173",
+    "district": "09",
+    "approved_date": "2025-11-07",
+    "submitted_date": "2025-10-02",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -101.680286,
+     31.934217
+    ]
+   },
+   "properties": {
+    "permit_no": "0883197173",
+    "operator": "OXY USA INC.",
+    "lease": "POWELL, E.L.",
+    "well_no": "591",
+    "county": "Glasscock",
+    "county_fips": "173",
+    "district": "09",
+    "approved_date": "2025-06-26",
+    "submitted_date": "2025-10-09",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.784624,
+     32.759138
+    ]
+   },
+   "properties": {
+    "permit_no": "6646899165",
+    "operator": "OXY USA WTP LP",
+    "lease": "RILEY C",
+    "well_no": "555",
+    "county": "Gaines",
+    "county_fips": "165",
+    "district": "08",
+    "approved_date": "2020-12-11",
+    "submitted_date": "2020-12-10",
+    "permit_year": "2020",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -101.66346,
+     32.486538
+    ]
+   },
+   "properties": {
+    "permit_no": "6624699227",
+    "operator": "OXY USA INC.",
+    "lease": "ADAMS D 3143DP",
+    "well_no": "591",
+    "county": "Howard",
+    "county_fips": "227",
+    "district": "08",
+    "approved_date": "2020-12-10",
+    "submitted_date": "2020-11-30",
+    "permit_year": "2020",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -101.663586,
+     32.486513
+    ]
+   },
+   "properties": {
+    "permit_no": "6599999227",
+    "operator": "OXY USA INC.",
+    "lease": "ADAMS H",
+    "well_no": "591",
+    "county": "Howard",
+    "county_fips": "227",
+    "district": "08",
+    "approved_date": "2020-12-01",
+    "submitted_date": "2020-11-09",
+    "permit_year": "2020",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -101.663838,
+     32.486463
+    ]
+   },
+   "properties": {
+    "permit_no": "6600199227",
+    "operator": "OXY USA INC.",
+    "lease": "ADAMS H",
+    "well_no": "591",
+    "county": "Howard",
+    "county_fips": "227",
+    "district": "08",
+    "approved_date": "2020-12-01",
+    "submitted_date": "2020-11-09",
+    "permit_year": "2020",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -101.663712,
+     32.486487
+    ]
+   },
+   "properties": {
+    "permit_no": "6600299227",
+    "operator": "OXY USA INC.",
+    "lease": "ADAMS H",
+    "well_no": "591",
+    "county": "Howard",
+    "county_fips": "227",
+    "district": "08",
+    "approved_date": "2020-12-08",
+    "submitted_date": "2020-11-09",
+    "permit_year": "2020",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -101.500059,
+     32.194912
+    ]
+   },
+   "properties": {
+    "permit_no": "6616798227",
+    "operator": "OXY USA INC.",
+    "lease": "MAY NORTH 1482CP",
+    "well_no": "591",
+    "county": "Howard",
+    "county_fips": "227",
+    "district": "08",
+    "approved_date": "2020-11-20",
+    "submitted_date": "2020-11-23",
+    "permit_year": "2020",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -101.566873,
+     32.388307
+    ]
+   },
+   "properties": {
+    "permit_no": "6614098227",
+    "operator": "OXY USA INC.",
+    "lease": "STARLORD EAST",
+    "well_no": "591",
+    "county": "Howard",
+    "county_fips": "227",
+    "district": "08",
+    "approved_date": "2020-11-20",
+    "submitted_date": "2020-11-23",
+    "permit_year": "2020",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -101.566623,
+     32.388363
+    ]
+   },
+   "properties": {
+    "permit_no": "6613698227",
+    "operator": "OXY USA INC.",
+    "lease": "STARLORD EAST",
+    "well_no": "591",
+    "county": "Howard",
+    "county_fips": "227",
+    "district": "08",
+    "approved_date": "2020-11-20",
+    "submitted_date": "2020-11-23",
+    "permit_year": "2020",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -101.566749,
+     32.388335
+    ]
+   },
+   "properties": {
+    "permit_no": "6614198227",
+    "operator": "OXY USA INC.",
+    "lease": "STARLORD EAST",
+    "well_no": "591",
+    "county": "Howard",
+    "county_fips": "227",
+    "district": "08",
+    "approved_date": "2020-11-20",
+    "submitted_date": "2020-11-23",
+    "permit_year": "2020",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -101.568995,
+     32.387825
+    ]
+   },
+   "properties": {
+    "permit_no": "6613398227",
+    "operator": "OXY USA INC.",
+    "lease": "STARLORD EAST",
+    "well_no": "591",
+    "county": "Howard",
+    "county_fips": "227",
+    "district": "08",
+    "approved_date": "2020-11-20",
+    "submitted_date": "2020-11-23",
+    "permit_year": "2020",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.83277,
+     33.014935
+    ]
+   },
+   "properties": {
+    "permit_no": "6620299501",
+    "operator": "OXY USA WTP LP",
+    "lease": "WILLARD UNIT",
+    "well_no": "555",
+    "county": "Yoakum",
+    "county_fips": "501",
+    "district": "08",
+    "approved_date": "2020-12-01",
+    "submitted_date": "2020-11-24",
+    "permit_year": "2020",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.831334,
+     33.030842
+    ]
+   },
+   "properties": {
+    "permit_no": "6126798501",
+    "operator": "OXY USA WTP LP",
+    "lease": "WILLARD UNIT",
+    "well_no": "555",
+    "county": "Yoakum",
+    "county_fips": "501",
+    "district": "08",
+    "approved_date": "2020-01-29",
+    "submitted_date": "2020-11-24",
+    "permit_year": "2020",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.860938,
+     33.048128
+    ]
+   },
+   "properties": {
+    "permit_no": "6620399501",
+    "operator": "OXY USA WTP LP",
+    "lease": "WILLARD UNIT",
+    "well_no": "555",
+    "county": "Yoakum",
+    "county_fips": "501",
+    "district": "08",
+    "approved_date": "2020-12-01",
+    "submitted_date": "2020-11-24",
+    "permit_year": "2020",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.681433,
+     32.722658
+    ]
+   },
+   "properties": {
+    "permit_no": "7477699165",
+    "operator": "OXY USA INC.",
+    "lease": "SEMINOLE SAN ANDRES UNIT",
+    "well_no": "591",
+    "county": "Gaines",
+    "county_fips": "165",
+    "district": "08",
+    "approved_date": "2021-12-01",
+    "submitted_date": "2021-11-23",
+    "permit_year": "2021",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.806544,
+     32.77535
+    ]
+   },
+   "properties": {
+    "permit_no": "7534799165",
+    "operator": "OXY USA WTP LP",
+    "lease": "WEST SEMINOLE SA UNIT",
+    "well_no": "555",
+    "county": "Gaines",
+    "county_fips": "165",
+    "district": "08",
+    "approved_date": "2021-12-21",
+    "submitted_date": "2021-12-15",
+    "permit_year": "2021",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.807983,
+     32.757019
+    ]
+   },
+   "properties": {
+    "permit_no": "7551799165",
+    "operator": "OXY USA WTP LP",
+    "lease": "WEST SEMINOLE SA UNIT",
+    "well_no": "555",
+    "county": "Gaines",
+    "county_fips": "165",
+    "district": "08",
+    "approved_date": "2021-12-28",
+    "submitted_date": "2021-12-21",
+    "permit_year": "2021",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -101.675205,
+     32.122392
+    ]
+   },
+   "properties": {
+    "permit_no": "7456799227",
+    "operator": "OXY USA INC.",
+    "lease": "LOMAX WEST",
+    "well_no": "591",
+    "county": "Howard",
+    "county_fips": "227",
+    "district": "08",
+    "approved_date": "2021-12-03",
+    "submitted_date": "2021-11-15",
+    "permit_year": "2021",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.139928,
+     32.082804
+    ]
+   },
+   "properties": {
+    "permit_no": "7518999329",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "SOUTH CURTIS RANCH",
+    "well_no": "7544",
+    "county": "Midland",
+    "county_fips": "329",
+    "district": "08",
+    "approved_date": "2021-12-14",
+    "submitted_date": "2021-12-09",
+    "permit_year": "2021",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.13562,
+     32.08515
+    ]
+   },
+   "properties": {
+    "permit_no": "7519099329",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "SOUTH CURTIS RANCH",
+    "well_no": "7544",
+    "county": "Midland",
+    "county_fips": "329",
+    "district": "08",
+    "approved_date": "2021-12-14",
+    "submitted_date": "2021-12-09",
+    "permit_year": "2021",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.13095,
+     32.086375
+    ]
+   },
+   "properties": {
+    "permit_no": "7519299329",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "SOUTH CURTIS RANCH",
+    "well_no": "7544",
+    "county": "Midland",
+    "county_fips": "329",
+    "district": "08",
+    "approved_date": "2021-12-14",
+    "submitted_date": "2021-12-09",
+    "permit_year": "2021",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.139689,
+     32.08285
+    ]
+   },
+   "properties": {
+    "permit_no": "7519399329",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "SOUTH CURTIS RANCH",
+    "well_no": "7544",
+    "county": "Midland",
+    "county_fips": "329",
+    "district": "08",
+    "approved_date": "2021-12-14",
+    "submitted_date": "2021-12-09",
+    "permit_year": "2021",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.138844,
+     32.083039
+    ]
+   },
+   "properties": {
+    "permit_no": "7519599329",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "SOUTH CURTIS RANCH",
+    "well_no": "7544",
+    "county": "Midland",
+    "county_fips": "329",
+    "district": "08",
+    "approved_date": "2021-12-14",
+    "submitted_date": "2021-12-09",
+    "permit_year": "2021",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.135517,
+     32.085214
+    ]
+   },
+   "properties": {
+    "permit_no": "7521999329",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "SOUTH CURTIS RANCH",
+    "well_no": "7544",
+    "county": "Midland",
+    "county_fips": "329",
+    "district": "08",
+    "approved_date": "2021-12-14",
+    "submitted_date": "2021-12-10",
+    "permit_year": "2021",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.133831,
+     32.083448
+    ]
+   },
+   "properties": {
+    "permit_no": "7522299329",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "SOUTH CURTIS RANCH",
+    "well_no": "7544",
+    "county": "Midland",
+    "county_fips": "329",
+    "district": "08",
+    "approved_date": "2021-12-14",
+    "submitted_date": "2021-12-10",
+    "permit_year": "2021",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.134178,
+     32.083255
+    ]
+   },
+   "properties": {
+    "permit_no": "7522599329",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "SOUTH CURTIS RANCH",
+    "well_no": "7544",
+    "county": "Midland",
+    "county_fips": "329",
+    "district": "08",
+    "approved_date": "2021-12-14",
+    "submitted_date": "2021-12-10",
+    "permit_year": "2021",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.130578,
+     32.086467
+    ]
+   },
+   "properties": {
+    "permit_no": "7522699329",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "SOUTH CURTIS RANCH",
+    "well_no": "7544",
+    "county": "Midland",
+    "county_fips": "329",
+    "district": "08",
+    "approved_date": "2021-12-15",
+    "submitted_date": "2021-12-10",
+    "permit_year": "2021",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.130692,
+     32.086441
+    ]
+   },
+   "properties": {
+    "permit_no": "7522799329",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "SOUTH CURTIS RANCH",
+    "well_no": "7544",
+    "county": "Midland",
+    "county_fips": "329",
+    "district": "08",
+    "approved_date": "2021-12-14",
+    "submitted_date": "2021-12-10",
+    "permit_year": "2021",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.142403,
+     32.081325
+    ]
+   },
+   "properties": {
+    "permit_no": "7522999329",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "SOUTH CURTIS RANCH",
+    "well_no": "7544",
+    "county": "Midland",
+    "county_fips": "329",
+    "district": "08",
+    "approved_date": "2021-12-14",
+    "submitted_date": "2021-12-10",
+    "permit_year": "2021",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.139553,
+     32.082878
+    ]
+   },
+   "properties": {
+    "permit_no": "7523099329",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "SOUTH CURTIS RANCH",
+    "well_no": "7544",
+    "county": "Midland",
+    "county_fips": "329",
+    "district": "08",
+    "approved_date": "2021-12-14",
+    "submitted_date": "2021-12-10",
+    "permit_year": "2021",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.1385,
+     32.083125
+    ]
+   },
+   "properties": {
+    "permit_no": "7524299329",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "SOUTH CURTIS RANCH",
+    "well_no": "7544",
+    "county": "Midland",
+    "county_fips": "329",
+    "district": "08",
+    "approved_date": "2021-12-15",
+    "submitted_date": "2021-12-13",
+    "permit_year": "2021",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.135311,
+     32.085345
+    ]
+   },
+   "properties": {
+    "permit_no": "7524399329",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "SOUTH CURTIS RANCH",
+    "well_no": "7544",
+    "county": "Midland",
+    "county_fips": "329",
+    "district": "08",
+    "approved_date": "2021-12-15",
+    "submitted_date": "2021-12-13",
+    "permit_year": "2021",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.138747,
+     32.083064
+    ]
+   },
+   "properties": {
+    "permit_no": "7524699329",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "SOUTH CURTIS RANCH",
+    "well_no": "7544",
+    "county": "Midland",
+    "county_fips": "329",
+    "district": "08",
+    "approved_date": "2021-12-15",
+    "submitted_date": "2021-12-13",
+    "permit_year": "2021",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.134044,
+     32.083286
+    ]
+   },
+   "properties": {
+    "permit_no": "7524899329",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "SOUTH CURTIS RANCH",
+    "well_no": "7544",
+    "county": "Midland",
+    "county_fips": "329",
+    "district": "08",
+    "approved_date": "2021-12-15",
+    "submitted_date": "2021-12-13",
+    "permit_year": "2021",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.1398,
+     32.082819
+    ]
+   },
+   "properties": {
+    "permit_no": "7524999329",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "SOUTH CURTIS RANCH",
+    "well_no": "7544",
+    "county": "Midland",
+    "county_fips": "329",
+    "district": "08",
+    "approved_date": "2021-12-15",
+    "submitted_date": "2021-12-13",
+    "permit_year": "2021",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.135414,
+     32.085276
+    ]
+   },
+   "properties": {
+    "permit_no": "7525099329",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "SOUTH CURTIS RANCH",
+    "well_no": "7544",
+    "county": "Midland",
+    "county_fips": "329",
+    "district": "08",
+    "approved_date": "2021-12-15",
+    "submitted_date": "2021-12-13",
+    "permit_year": "2021",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.130819,
+     32.086406
+    ]
+   },
+   "properties": {
+    "permit_no": "7525299329",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "SOUTH CURTIS RANCH",
+    "well_no": "7544",
+    "county": "Midland",
+    "county_fips": "329",
+    "district": "08",
+    "approved_date": "2021-12-15",
+    "submitted_date": "2021-12-13",
+    "permit_year": "2021",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.142525,
+     32.08129
+    ]
+   },
+   "properties": {
+    "permit_no": "7525499329",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "SOUTH CURTIS RANCH",
+    "well_no": "7544",
+    "county": "Midland",
+    "county_fips": "329",
+    "district": "08",
+    "approved_date": "2021-12-15",
+    "submitted_date": "2021-12-13",
+    "permit_year": "2021",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.138625,
+     32.083097
+    ]
+   },
+   "properties": {
+    "permit_no": "7525599329",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "SOUTH CURTIS RANCH",
+    "well_no": "7544",
+    "county": "Midland",
+    "county_fips": "329",
+    "district": "08",
+    "approved_date": "2021-12-15",
+    "submitted_date": "2021-12-13",
+    "permit_year": "2021",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.133925,
+     32.083312
+    ]
+   },
+   "properties": {
+    "permit_no": "7525699329",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "SOUTH CURTIS RANCH",
+    "well_no": "7544",
+    "county": "Midland",
+    "county_fips": "329",
+    "district": "08",
+    "approved_date": "2021-12-15",
+    "submitted_date": "2021-12-13",
+    "permit_year": "2021",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.784589,
+     32.957486
+    ]
+   },
+   "properties": {
+    "permit_no": "8592399165",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "DENVER UNIT",
+    "well_no": "7544",
+    "county": "Gaines",
+    "county_fips": "165",
+    "district": "08",
+    "approved_date": "2022-12-01",
+    "submitted_date": "2022-11-21",
+    "permit_year": "2022",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -101.55121,
+     32.182628
+    ]
+   },
+   "properties": {
+    "permit_no": "8532598227",
+    "operator": "OXY USA INC.",
+    "lease": "PALM SPRINGS 1741DP",
+    "well_no": "591",
+    "county": "Howard",
+    "county_fips": "227",
+    "district": "08",
+    "approved_date": "2022-11-08",
+    "submitted_date": "2022-11-16",
+    "permit_year": "2022",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -101.546768,
+     32.183495
+    ]
+   },
+   "properties": {
+    "permit_no": "8532898227",
+    "operator": "OXY USA INC.",
+    "lease": "PALM SPRINGS 1743DP",
+    "well_no": "591",
+    "county": "Howard",
+    "county_fips": "227",
+    "district": "08",
+    "approved_date": "2022-11-08",
+    "submitted_date": "2022-11-16",
+    "permit_year": "2022",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -101.544606,
+     32.184089
+    ]
+   },
+   "properties": {
+    "permit_no": "8533098227",
+    "operator": "OXY USA INC.",
+    "lease": "PALM SPRINGS 1745DP",
+    "well_no": "591",
+    "county": "Howard",
+    "county_fips": "227",
+    "district": "08",
+    "approved_date": "2022-11-08",
+    "submitted_date": "2022-11-16",
+    "permit_year": "2022",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -101.540338,
+     32.185039
+    ]
+   },
+   "properties": {
+    "permit_no": "8533398227",
+    "operator": "OXY USA INC.",
+    "lease": "PALM SPRINGS 1747DP",
+    "well_no": "591",
+    "county": "Howard",
+    "county_fips": "227",
+    "district": "08",
+    "approved_date": "2022-11-07",
+    "submitted_date": "2022-11-16",
+    "permit_year": "2022",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -101.551085,
+     32.182656
+    ]
+   },
+   "properties": {
+    "permit_no": "8532698227",
+    "operator": "OXY USA INC.",
+    "lease": "PALM SPRINGS 1751AP",
+    "well_no": "591",
+    "county": "Howard",
+    "county_fips": "227",
+    "district": "08",
+    "approved_date": "2022-11-08",
+    "submitted_date": "2022-11-16",
+    "permit_year": "2022",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -101.544731,
+     32.184061
+    ]
+   },
+   "properties": {
+    "permit_no": "8532998227",
+    "operator": "OXY USA INC.",
+    "lease": "PALM SPRINGS 1753AP",
+    "well_no": "591",
+    "county": "Howard",
+    "county_fips": "227",
+    "district": "08",
+    "approved_date": "2022-11-09",
+    "submitted_date": "2022-11-16",
+    "permit_year": "2022",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -101.540463,
+     32.185106
+    ]
+   },
+   "properties": {
+    "permit_no": "8533298227",
+    "operator": "OXY USA INC.",
+    "lease": "PALM SPRINGS 1755AP",
+    "well_no": "591",
+    "county": "Howard",
+    "county_fips": "227",
+    "district": "08",
+    "approved_date": "2022-11-08",
+    "submitted_date": "2022-11-16",
+    "permit_year": "2022",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -101.551335,
+     32.182601
+    ]
+   },
+   "properties": {
+    "permit_no": "8532398227",
+    "operator": "OXY USA INC.",
+    "lease": "PALM SPRINGS 1781CP",
+    "well_no": "591",
+    "county": "Howard",
+    "county_fips": "227",
+    "district": "08",
+    "approved_date": "2022-11-08",
+    "submitted_date": "2022-11-16",
+    "permit_year": "2022",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -101.5468,
+     32.183601
+    ]
+   },
+   "properties": {
+    "permit_no": "8532798227",
+    "operator": "OXY USA INC.",
+    "lease": "PALM SPRINGS 1783CP",
+    "well_no": "591",
+    "county": "Howard",
+    "county_fips": "227",
+    "district": "08",
+    "approved_date": "2022-11-08",
+    "submitted_date": "2022-11-16",
+    "permit_year": "2022",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -101.540588,
+     32.184983
+    ]
+   },
+   "properties": {
+    "permit_no": "8533198227",
+    "operator": "OXY USA INC.",
+    "lease": "PALM SPRINGS 1787CP",
+    "well_no": "591",
+    "county": "Howard",
+    "county_fips": "227",
+    "district": "08",
+    "approved_date": "2022-11-08",
+    "submitted_date": "2022-11-16",
+    "permit_year": "2022",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.118378,
+     32.157628
+    ]
+   },
+   "properties": {
+    "permit_no": "8514998317",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "JOHNSON RANCH",
+    "well_no": "7544",
+    "county": "Martin",
+    "county_fips": "317",
+    "district": "08",
+    "approved_date": "2022-10-28",
+    "submitted_date": "2022-10-31",
+    "permit_year": "2022",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.137386,
+     32.123683
+    ]
+   },
+   "properties": {
+    "permit_no": "8620399317",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "SOUTH CURTIS RANCH",
+    "well_no": "7544",
+    "county": "Martin",
+    "county_fips": "317",
+    "district": "08",
+    "approved_date": "2022-12-16",
+    "submitted_date": "2022-12-05",
+    "permit_year": "2022",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.126197,
+     32.126289
+    ]
+   },
+   "properties": {
+    "permit_no": "8663499317",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "SOUTH CURTIS RANCH",
+    "well_no": "7544",
+    "county": "Martin",
+    "county_fips": "317",
+    "district": "08",
+    "approved_date": "2022-12-29",
+    "submitted_date": "2022-12-16",
+    "permit_year": "2022",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.137758,
+     32.123597
+    ]
+   },
+   "properties": {
+    "permit_no": "8663599317",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "SOUTH CURTIS RANCH",
+    "well_no": "7544",
+    "county": "Martin",
+    "county_fips": "317",
+    "district": "08",
+    "approved_date": "2022-12-29",
+    "submitted_date": "2022-12-16",
+    "permit_year": "2022",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.134722,
+     32.124306
+    ]
+   },
+   "properties": {
+    "permit_no": "8664099317",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "SOUTH CURTIS RANCH",
+    "well_no": "7544",
+    "county": "Martin",
+    "county_fips": "317",
+    "district": "08",
+    "approved_date": "2022-12-29",
+    "submitted_date": "2022-12-16",
+    "permit_year": "2022",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.132603,
+     32.124797
+    ]
+   },
+   "properties": {
+    "permit_no": "8663899317",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "SOUTH CURTIS RANCH",
+    "well_no": "7544",
+    "county": "Martin",
+    "county_fips": "317",
+    "district": "08",
+    "approved_date": "2022-12-29",
+    "submitted_date": "2022-12-16",
+    "permit_year": "2022",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.132853,
+     32.124739
+    ]
+   },
+   "properties": {
+    "permit_no": "8663999317",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "SOUTH CURTIS RANCH",
+    "well_no": "7544",
+    "county": "Martin",
+    "county_fips": "317",
+    "district": "08",
+    "approved_date": "2022-12-29",
+    "submitted_date": "2022-12-16",
+    "permit_year": "2022",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.128192,
+     32.125825
+    ]
+   },
+   "properties": {
+    "permit_no": "8664199317",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "SOUTH CURTIS RANCH",
+    "well_no": "7544",
+    "county": "Martin",
+    "county_fips": "317",
+    "district": "08",
+    "approved_date": "2022-12-29",
+    "submitted_date": "2022-12-16",
+    "permit_year": "2022",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.12595,
+     32.126347
+    ]
+   },
+   "properties": {
+    "permit_no": "8664399317",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "SOUTH CURTIS RANCH",
+    "well_no": "7544",
+    "county": "Martin",
+    "county_fips": "317",
+    "district": "08",
+    "approved_date": "2022-12-29",
+    "submitted_date": "2022-12-16",
+    "permit_year": "2022",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.137511,
+     32.123656
+    ]
+   },
+   "properties": {
+    "permit_no": "8664499317",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "SOUTH CURTIS RANCH",
+    "well_no": "7544",
+    "county": "Martin",
+    "county_fips": "317",
+    "district": "08",
+    "approved_date": "2022-12-29",
+    "submitted_date": "2022-12-16",
+    "permit_year": "2022",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.134597,
+     32.124333
+    ]
+   },
+   "properties": {
+    "permit_no": "8664599317",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "SOUTH CURTIS RANCH",
+    "well_no": "7544",
+    "county": "Martin",
+    "county_fips": "317",
+    "district": "08",
+    "approved_date": "2022-12-29",
+    "submitted_date": "2022-12-16",
+    "permit_year": "2022",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.128067,
+     32.125853
+    ]
+   },
+   "properties": {
+    "permit_no": "8664699317",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "SOUTH CURTIS RANCH",
+    "well_no": "7544",
+    "county": "Martin",
+    "county_fips": "317",
+    "district": "08",
+    "approved_date": "2022-12-29",
+    "submitted_date": "2022-12-16",
+    "permit_year": "2022",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.126075,
+     32.126317
+    ]
+   },
+   "properties": {
+    "permit_no": "8664799317",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "SOUTH CURTIS RANCH",
+    "well_no": "7544",
+    "county": "Martin",
+    "county_fips": "317",
+    "district": "08",
+    "approved_date": "2022-12-29",
+    "submitted_date": "2022-12-16",
+    "permit_year": "2022",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.134847,
+     32.124275
+    ]
+   },
+   "properties": {
+    "permit_no": "8664899317",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "SOUTH CURTIS RANCH",
+    "well_no": "7544",
+    "county": "Martin",
+    "county_fips": "317",
+    "district": "08",
+    "approved_date": "2022-12-29",
+    "submitted_date": "2022-12-16",
+    "permit_year": "2022",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.132728,
+     32.124769
+    ]
+   },
+   "properties": {
+    "permit_no": "8664999317",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "SOUTH CURTIS RANCH",
+    "well_no": "7544",
+    "county": "Martin",
+    "county_fips": "317",
+    "district": "08",
+    "approved_date": "2022-12-29",
+    "submitted_date": "2022-12-16",
+    "permit_year": "2022",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.127819,
+     32.125911
+    ]
+   },
+   "properties": {
+    "permit_no": "8665099317",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "SOUTH CURTIS RANCH",
+    "well_no": "7544",
+    "county": "Martin",
+    "county_fips": "317",
+    "district": "08",
+    "approved_date": "2022-12-29",
+    "submitted_date": "2022-12-16",
+    "permit_year": "2022",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.137636,
+     32.123625
+    ]
+   },
+   "properties": {
+    "permit_no": "8665299317",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "SOUTH CURTIS RANCH",
+    "well_no": "7544",
+    "county": "Martin",
+    "county_fips": "317",
+    "district": "08",
+    "approved_date": "2022-12-29",
+    "submitted_date": "2022-12-16",
+    "permit_year": "2022",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.134472,
+     32.124364
+    ]
+   },
+   "properties": {
+    "permit_no": "8665399317",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "SOUTH CURTIS RANCH",
+    "well_no": "7544",
+    "county": "Martin",
+    "county_fips": "317",
+    "district": "08",
+    "approved_date": "2022-12-29",
+    "submitted_date": "2022-12-16",
+    "permit_year": "2022",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.132478,
+     32.124828
+    ]
+   },
+   "properties": {
+    "permit_no": "8665799317",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "SOUTH CURTIS RANCH",
+    "well_no": "7544",
+    "county": "Martin",
+    "county_fips": "317",
+    "district": "08",
+    "approved_date": "2022-12-29",
+    "submitted_date": "2022-12-16",
+    "permit_year": "2022",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.125825,
+     32.126375
+    ]
+   },
+   "properties": {
+    "permit_no": "8665899317",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "SOUTH CURTIS RANCH",
+    "well_no": "7544",
+    "county": "Martin",
+    "county_fips": "317",
+    "district": "08",
+    "approved_date": "2022-12-29",
+    "submitted_date": "2022-12-16",
+    "permit_year": "2022",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.135561,
+     32.129189
+    ]
+   },
+   "properties": {
+    "permit_no": "8665999317",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "SOUTH CURTIS RANCH",
+    "well_no": "7544",
+    "county": "Martin",
+    "county_fips": "317",
+    "district": "08",
+    "approved_date": "2022-12-29",
+    "submitted_date": "2022-12-16",
+    "permit_year": "2022",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.135439,
+     32.129219
+    ]
+   },
+   "properties": {
+    "permit_no": "8666099317",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "SOUTH CURTIS RANCH",
+    "well_no": "7544",
+    "county": "Martin",
+    "county_fips": "317",
+    "district": "08",
+    "approved_date": "2022-12-29",
+    "submitted_date": "2022-12-16",
+    "permit_year": "2022",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.127944,
+     32.125883
+    ]
+   },
+   "properties": {
+    "permit_no": "8668299317",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "SOUTH CURTIS RANCH",
+    "well_no": "7544",
+    "county": "Martin",
+    "county_fips": "317",
+    "district": "08",
+    "approved_date": "2022-12-29",
+    "submitted_date": "2022-12-19",
+    "permit_year": "2022",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -101.661152,
+     31.572534
+    ]
+   },
+   "properties": {
+    "permit_no": "8678399383",
+    "operator": "OXY USA WTP LP",
+    "lease": "AMERIGO 0980CP",
+    "well_no": "555",
+    "county": "Reagan",
+    "county_fips": "383",
+    "district": "08",
+    "approved_date": "2022-12-22",
+    "submitted_date": "2022-12-21",
+    "permit_year": "2022",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.444671,
+     31.438066
+    ]
+   },
+   "properties": {
+    "permit_no": "9568499103",
+    "operator": "OXY USA INC.",
+    "lease": "BLOCK 31 UNIT",
+    "well_no": "591",
+    "county": "Crane",
+    "county_fips": "103",
+    "district": "08",
+    "approved_date": "2023-12-06",
+    "submitted_date": "2023-12-04",
+    "permit_year": "2023",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.419068,
+     31.856768
+    ]
+   },
+   "properties": {
+    "permit_no": "9484398135",
+    "operator": "OXY USA WTP LP",
+    "lease": "WITCHER, J. E. 19",
+    "well_no": "555",
+    "county": "Ector",
+    "county_fips": "135",
+    "district": "08",
+    "approved_date": "2023-10-27",
+    "submitted_date": "2023-10-30",
+    "permit_year": "2023",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.823828,
+     32.930313
+    ]
+   },
+   "properties": {
+    "permit_no": "9610499165",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "DENVER UNIT",
+    "well_no": "7544",
+    "county": "Gaines",
+    "county_fips": "165",
+    "district": "08",
+    "approved_date": "2023-12-27",
+    "submitted_date": "2023-12-21",
+    "permit_year": "2023",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.818552,
+     32.929254
+    ]
+   },
+   "properties": {
+    "permit_no": "9610599165",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "DENVER UNIT",
+    "well_no": "7544",
+    "county": "Gaines",
+    "county_fips": "165",
+    "district": "08",
+    "approved_date": "2023-12-27",
+    "submitted_date": "2023-12-21",
+    "permit_year": "2023",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.834705,
+     32.916458
+    ]
+   },
+   "properties": {
+    "permit_no": "9586899165",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "DENVER UNIT",
+    "well_no": "7544",
+    "county": "Gaines",
+    "county_fips": "165",
+    "district": "08",
+    "approved_date": "2023-12-19",
+    "submitted_date": "2023-12-12",
+    "permit_year": "2023",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.818631,
+     32.928847
+    ]
+   },
+   "properties": {
+    "permit_no": "9569599165",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "DENVER UNIT",
+    "well_no": "7544",
+    "county": "Gaines",
+    "county_fips": "165",
+    "district": "08",
+    "approved_date": "2023-12-08",
+    "submitted_date": "2023-12-04",
+    "permit_year": "2023",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.818631,
+     32.928942
+    ]
+   },
+   "properties": {
+    "permit_no": "9607199165",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "DENVER UNIT",
+    "well_no": "7544",
+    "county": "Gaines",
+    "county_fips": "165",
+    "district": "08",
+    "approved_date": "2023-12-27",
+    "submitted_date": "2023-12-20",
+    "permit_year": "2023",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.818631,
+     32.928751
+    ]
+   },
+   "properties": {
+    "permit_no": "9605999165",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "DENVER UNIT",
+    "well_no": "7544",
+    "county": "Gaines",
+    "county_fips": "165",
+    "district": "08",
+    "approved_date": "2023-12-27",
+    "submitted_date": "2023-12-20",
+    "permit_year": "2023",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.821144,
+     32.924847
+    ]
+   },
+   "properties": {
+    "permit_no": "9568599165",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "DENVER UNIT",
+    "well_no": "7544",
+    "county": "Gaines",
+    "county_fips": "165",
+    "district": "08",
+    "approved_date": "2023-12-06",
+    "submitted_date": "2023-12-04",
+    "permit_year": "2023",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.821322,
+     32.924736
+    ]
+   },
+   "properties": {
+    "permit_no": "9557299165",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "DENVER UNIT",
+    "well_no": "7544",
+    "county": "Gaines",
+    "county_fips": "165",
+    "district": "08",
+    "approved_date": "2023-12-04",
+    "submitted_date": "2023-11-29",
+    "permit_year": "2023",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.829717,
+     32.919972
+    ]
+   },
+   "properties": {
+    "permit_no": "9558999165",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "DENVER UNIT",
+    "well_no": "7544",
+    "county": "Gaines",
+    "county_fips": "165",
+    "district": "08",
+    "approved_date": "2023-12-04",
+    "submitted_date": "2023-11-29",
+    "permit_year": "2023",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.83523,
+     32.919593
+    ]
+   },
+   "properties": {
+    "permit_no": "9556599165",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "DENVER UNIT",
+    "well_no": "7544",
+    "county": "Gaines",
+    "county_fips": "165",
+    "district": "08",
+    "approved_date": "2023-12-04",
+    "submitted_date": "2023-11-29",
+    "permit_year": "2023",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.834707,
+     32.916362
+    ]
+   },
+   "properties": {
+    "permit_no": "9588499165",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "DENVER UNIT",
+    "well_no": "7544",
+    "county": "Gaines",
+    "county_fips": "165",
+    "district": "08",
+    "approved_date": "2023-12-20",
+    "submitted_date": "2023-12-12",
+    "permit_year": "2023",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.829717,
+     32.919875
+    ]
+   },
+   "properties": {
+    "permit_no": "9587699165",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "DENVER UNIT",
+    "well_no": "7544",
+    "county": "Gaines",
+    "county_fips": "165",
+    "district": "08",
+    "approved_date": "2023-12-20",
+    "submitted_date": "2023-12-12",
+    "permit_year": "2023",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -101.551085,
+     32.182656
+    ]
+   },
+   "properties": {
+    "permit_no": "8532697227",
+    "operator": "OXY USA INC.",
+    "lease": "�PALM SPRINGS UNIT B",
+    "well_no": "591",
+    "county": "Howard",
+    "county_fips": "227",
+    "district": "08",
+    "approved_date": "2022-11-08",
+    "submitted_date": "2023-12-19",
+    "permit_year": "2022",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -101.581467,
+     32.161136
+    ]
+   },
+   "properties": {
+    "permit_no": "9530099227",
+    "operator": "OXY USA INC.",
+    "lease": "HOT SPRINGS 2442DP",
+    "well_no": "591",
+    "county": "Howard",
+    "county_fips": "227",
+    "district": "08",
+    "approved_date": "2023-12-05",
+    "submitted_date": "2023-11-14",
+    "permit_year": "2023",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -101.581592,
+     32.161108
+    ]
+   },
+   "properties": {
+    "permit_no": "9529999227",
+    "operator": "OXY USA INC.",
+    "lease": "HOT SPRINGS 2482CP",
+    "well_no": "591",
+    "county": "Howard",
+    "county_fips": "227",
+    "district": "08",
+    "approved_date": "2023-12-05",
+    "submitted_date": "2023-11-14",
+    "permit_year": "2023",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -101.574558,
+     32.163539
+    ]
+   },
+   "properties": {
+    "permit_no": "9526999227",
+    "operator": "OXY USA INC.",
+    "lease": "HOT SPRINGS 2484CP",
+    "well_no": "591",
+    "county": "Howard",
+    "county_fips": "227",
+    "district": "08",
+    "approved_date": "2023-12-05",
+    "submitted_date": "2023-11-13",
+    "permit_year": "2023",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -101.671553,
+     32.125444
+    ]
+   },
+   "properties": {
+    "permit_no": "8316698227",
+    "operator": "OXY USA INC.",
+    "lease": "LULO 2543DP",
+    "well_no": "591",
+    "county": "Howard",
+    "county_fips": "227",
+    "district": "08",
+    "approved_date": "2022-09-15",
+    "submitted_date": "2023-11-30",
+    "permit_year": "2022",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -101.675119,
+     32.124639
+    ]
+   },
+   "properties": {
+    "permit_no": "8317198227",
+    "operator": "OXY USA INC.",
+    "lease": "LULO 2551AP",
+    "well_no": "591",
+    "county": "Howard",
+    "county_fips": "227",
+    "district": "08",
+    "approved_date": "2022-09-15",
+    "submitted_date": "2023-11-30",
+    "permit_year": "2022",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -101.675369,
+     32.124581
+    ]
+   },
+   "properties": {
+    "permit_no": "8328798227",
+    "operator": "OXY USA INC.",
+    "lease": "LULO 2581CP",
+    "well_no": "591",
+    "county": "Howard",
+    "county_fips": "227",
+    "district": "08",
+    "approved_date": "2022-09-15",
+    "submitted_date": "2023-12-19",
+    "permit_year": "2022",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -101.674903,
+     32.120558
+    ]
+   },
+   "properties": {
+    "permit_no": "8317398227",
+    "operator": "OXY USA INC.",
+    "lease": "LULO 3641DP",
+    "well_no": "591",
+    "county": "Howard",
+    "county_fips": "227",
+    "district": "08",
+    "approved_date": "2022-09-15",
+    "submitted_date": "2023-11-30",
+    "permit_year": "2022",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -101.546768,
+     32.183495
+    ]
+   },
+   "properties": {
+    "permit_no": "8532897227",
+    "operator": "OXY USA INC.",
+    "lease": "PALM SPRINGS UNIT B",
+    "well_no": "591",
+    "county": "Howard",
+    "county_fips": "227",
+    "district": "08",
+    "approved_date": "2022-11-08",
+    "submitted_date": "2023-12-19",
+    "permit_year": "2022",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -101.540588,
+     32.184983
+    ]
+   },
+   "properties": {
+    "permit_no": "8533197227",
+    "operator": "OXY USA INC.",
+    "lease": "PALM SPRINGS UNIT D",
+    "well_no": "591",
+    "county": "Howard",
+    "county_fips": "227",
+    "district": "08",
+    "approved_date": "2022-11-08",
+    "submitted_date": "2023-12-19",
+    "permit_year": "2022",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -100.870302,
+     33.246063
+    ]
+   },
+   "properties": {
+    "permit_no": "9554899263",
+    "operator": "OXY USA WTP LP",
+    "lease": "SALT CREEK FIELD UNIT",
+    "well_no": "555",
+    "county": "Kent",
+    "county_fips": "263",
+    "district": "08",
+    "approved_date": "2023-12-05",
+    "submitted_date": "2023-11-28",
+    "permit_year": "2023",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.727247,
+     33.046769
+    ]
+   },
+   "properties": {
+    "permit_no": "9583599501",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "WASSON ODC UNIT",
+    "well_no": "7544",
+    "county": "Yoakum",
+    "county_fips": "501",
+    "district": "08",
+    "approved_date": "2023-12-13",
+    "submitted_date": "2023-12-08",
+    "permit_year": "2023",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.717775,
+     33.044652
+    ]
+   },
+   "properties": {
+    "permit_no": "9604499501",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "WASSON ODC UNIT",
+    "well_no": "7544",
+    "county": "Yoakum",
+    "county_fips": "501",
+    "district": "08",
+    "approved_date": "2023-12-27",
+    "submitted_date": "2023-12-19",
+    "permit_year": "2023",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.727028,
+     33.041239
+    ]
+   },
+   "properties": {
+    "permit_no": "9562199501",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "WASSON ODC UNIT",
+    "well_no": "7544",
+    "county": "Yoakum",
+    "county_fips": "501",
+    "district": "08",
+    "approved_date": "2023-12-04",
+    "submitted_date": "2023-11-30",
+    "permit_year": "2023",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.893647,
+     32.148984
+    ]
+   },
+   "properties": {
+    "permit_no": "0455699003",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "RATLIFF & BEDFORD",
+    "well_no": "7544",
+    "county": "Andrews",
+    "county_fips": "003",
+    "district": "09",
+    "approved_date": "2024-12-11",
+    "submitted_date": "2024-12-09",
+    "permit_year": "2024",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.433297,
+     31.470838
+    ]
+   },
+   "properties": {
+    "permit_no": "0440099103",
+    "operator": "OXY USA INC.",
+    "lease": "BLOCK 31 UNIT",
+    "well_no": "591",
+    "county": "Crane",
+    "county_fips": "103",
+    "district": "09",
+    "approved_date": "2024-12-04",
+    "submitted_date": "2024-12-03",
+    "permit_year": "2024",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.743117,
+     31.758748
+    ]
+   },
+   "properties": {
+    "permit_no": "0481399135",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "EIDSON E",
+    "well_no": "7544",
+    "county": "Ector",
+    "county_fips": "135",
+    "district": "09",
+    "approved_date": "2024-12-19",
+    "submitted_date": "2024-12-18",
+    "permit_year": "2024",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.721892,
+     31.752637
+    ]
+   },
+   "properties": {
+    "permit_no": "0481499135",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "SCHARBAUER EIDSON",
+    "well_no": "7544",
+    "county": "Ector",
+    "county_fips": "135",
+    "district": "09",
+    "approved_date": "2024-12-19",
+    "submitted_date": "2024-12-18",
+    "permit_year": "2024",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.734325,
+     31.746009
+    ]
+   },
+   "properties": {
+    "permit_no": "0481599135",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "SCHARBAUER EIDSON",
+    "well_no": "7544",
+    "county": "Ector",
+    "county_fips": "135",
+    "district": "09",
+    "approved_date": "2024-12-19",
+    "submitted_date": "2024-12-18",
+    "permit_year": "2024",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.728702,
+     32.793835
+    ]
+   },
+   "properties": {
+    "permit_no": "0485599165",
+    "operator": "OXY USA INC.",
+    "lease": "SEMINOLE SAN ANDRES UNIT",
+    "well_no": "591",
+    "county": "Gaines",
+    "county_fips": "165",
+    "district": "09",
+    "approved_date": "2024-12-20",
+    "submitted_date": "2024-12-20",
+    "permit_year": "2024",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.728588,
+     32.793834
+    ]
+   },
+   "properties": {
+    "permit_no": "0484899165",
+    "operator": "OXY USA INC.",
+    "lease": "SEMINOLE SAN ANDRES UNIT",
+    "well_no": "591",
+    "county": "Gaines",
+    "county_fips": "165",
+    "district": "09",
+    "approved_date": "2024-12-20",
+    "submitted_date": "2024-12-20",
+    "permit_year": "2024",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -101.651592,
+     32.094828
+    ]
+   },
+   "properties": {
+    "permit_no": "0331998227",
+    "operator": "OXY USA INC.",
+    "lease": "LOMAX 4899OP",
+    "well_no": "591",
+    "county": "Howard",
+    "county_fips": "227",
+    "district": "09",
+    "approved_date": "2024-10-25",
+    "submitted_date": "2024-12-10",
+    "permit_year": "2024",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -101.540111,
+     32.242322
+    ]
+   },
+   "properties": {
+    "permit_no": "9820397227",
+    "operator": "OXY USA INC.",
+    "lease": "ROCK SPRINGS 2943DP",
+    "well_no": "591",
+    "county": "Howard",
+    "county_fips": "227",
+    "district": "08",
+    "approved_date": "2024-03-20",
+    "submitted_date": "2024-10-30",
+    "permit_year": "2024",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.42139,
+     32.156587
+    ]
+   },
+   "properties": {
+    "permit_no": "1207999003",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "MIDLAND FARMS DEEP UNIT",
+    "well_no": "7544",
+    "county": "Andrews",
+    "county_fips": "003",
+    "district": "09",
+    "approved_date": "2025-12-10",
+    "submitted_date": "2025-12-04",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.714596,
+     32.785915
+    ]
+   },
+   "properties": {
+    "permit_no": "1201199165",
+    "operator": "OXY USA INC.",
+    "lease": "SEMINOLE SAN ANDRES UNIT",
+    "well_no": "591",
+    "county": "Gaines",
+    "county_fips": "165",
+    "district": "09",
+    "approved_date": "2025-12-08",
+    "submitted_date": "2025-12-01",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.727791,
+     32.781944
+    ]
+   },
+   "properties": {
+    "permit_no": "1201299165",
+    "operator": "OXY USA INC.",
+    "lease": "SEMINOLE SAN ANDRES UNIT",
+    "well_no": "591",
+    "county": "Gaines",
+    "county_fips": "165",
+    "district": "09",
+    "approved_date": "2025-12-08",
+    "submitted_date": "2025-12-01",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.714937,
+     32.778447
+    ]
+   },
+   "properties": {
+    "permit_no": "1201499165",
+    "operator": "OXY USA INC.",
+    "lease": "SEMINOLE SAN ANDRES UNIT",
+    "well_no": "591",
+    "county": "Gaines",
+    "county_fips": "165",
+    "district": "09",
+    "approved_date": "2025-12-08",
+    "submitted_date": "2025-12-01",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.709742,
+     32.776489
+    ]
+   },
+   "properties": {
+    "permit_no": "1202199165",
+    "operator": "OXY USA INC.",
+    "lease": "SEMINOLE SAN ANDRES UNIT",
+    "well_no": "591",
+    "county": "Gaines",
+    "county_fips": "165",
+    "district": "09",
+    "approved_date": "2025-12-05",
+    "submitted_date": "2025-12-02",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.709742,
+     32.776489
+    ]
+   },
+   "properties": {
+    "permit_no": "1202399165",
+    "operator": "OXY USA INC.",
+    "lease": "SEMINOLE SAN ANDRES UNIT",
+    "well_no": "591",
+    "county": "Gaines",
+    "county_fips": "165",
+    "district": "09",
+    "approved_date": "2025-12-05",
+    "submitted_date": "2025-12-02",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -101.645628,
+     32.123425
+    ]
+   },
+   "properties": {
+    "permit_no": "0234798227",
+    "operator": "OXY USA INC.",
+    "lease": "SOUTH GUAVA 3145DP",
+    "well_no": "591",
+    "county": "Howard",
+    "county_fips": "227",
+    "district": "09",
+    "approved_date": "2024-08-30",
+    "submitted_date": "2025-12-15",
+    "permit_year": "2024",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.104534,
+     32.112598
+    ]
+   },
+   "properties": {
+    "permit_no": "0770697317",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "SOUTH CURTIS RANCH",
+    "well_no": "7544",
+    "county": "Martin",
+    "county_fips": "317",
+    "district": "09",
+    "approved_date": "2025-05-02",
+    "submitted_date": "2025-12-01",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -102.769997,
+     33.030247
+    ]
+   },
+   "properties": {
+    "permit_no": "1201899501",
+    "operator": "OCCIDENTAL PERMIAN LTD.",
+    "lease": "WASSON ODC UNIT",
+    "well_no": "7544",
+    "county": "Yoakum",
+    "county_fips": "501",
+    "district": "09",
+    "approved_date": "2025-12-05",
+    "submitted_date": "2025-12-02",
+    "permit_year": "2025",
+    "source": "RRC Drilling Permit Master+Lat/Lon (daf420 EOM); operator-reported surface coords",
+    "accuracy": "precise (RRC operator-reported)"
+   }
+  }
+ ]
+}

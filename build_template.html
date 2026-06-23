@@ -807,6 +807,18 @@ function addLayer(L) {
   }
 }
 
+// Keep the OXY footprint layers on top of the draw stack so their markers are
+// never occluded by the dense base layers (wells, permits, pipelines), which
+// sit lower in layers.yaml and are therefore added — and drawn — afterward.
+function raiseOxy() {
+  LAYERS.forEach(L => {
+    if (L.id.indexOf('oxy_') !== 0) return;
+    [`lyr_${L.id}`, `lyr_${L.id}__icon`].forEach(id => {
+      if (map.getLayer(id)) { try { map.moveLayer(id); } catch (e) {} }
+    });
+  });
+}
+
 function setLayerVisibility(L, visible) {
   const v = visible ? 'visible' : 'none';
   try { map.setLayoutProperty(`lyr_${L.id}`, 'visibility', v); } catch (e) {}
@@ -2635,6 +2647,7 @@ function applyBasemap(id) {
   }
   map.once('styledata', () => {
     LAYERS.forEach(addLayer);
+    raiseOxy();
     LAYERS.forEach(L => setLayerVisibility(L, active.includes(L.id)));
     LAYERS.forEach(L => { if (filterState[L.id]) applyLayerFilter(L); });
     wirePopups();
@@ -2830,6 +2843,7 @@ map.on('dblclick', e => {
 map.on('load', () => {
   ensureMeasureLayers();
   LAYERS.forEach(addLayer);
+  raiseOxy();
   if (initLayersCsv !== undefined) {
     const want = new Set(initLayersCsv.split(',').filter(Boolean));
     LAYERS.forEach(L => setLayerVisibility(L, want.has(L.id)));
