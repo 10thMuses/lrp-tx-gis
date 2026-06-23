@@ -271,9 +271,32 @@
     #print-legend .pl-sw.fill { opacity: 0.85; }
     #print-legend .pl-name { line-height: 1.25; }
   }
+  #oxy-gate{position:fixed;inset:0;z-index:99999;display:flex;align-items:center;justify-content:center;background:linear-gradient(160deg,#0c1726,#13243b 55%,#0a1320);font-family:inherit;padding:20px;}
+  #oxy-gate .oxy-gate-card{width:100%;max-width:380px;background:#0f1b2d;border:1px solid #24364f;border-radius:14px;padding:30px 28px;box-shadow:0 24px 60px rgba(0,0,0,.5);color:#e6edf5;}
+  #oxy-gate .oxy-gate-brand{font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#7f96b3;}
+  #oxy-gate h2{margin:10px 0 6px;font-size:21px;font-weight:800;color:#fff;}
+  #oxy-gate p{margin:0 0 18px;font-size:13px;line-height:1.5;color:#9fb1c8;}
+  #oxy-gate input{width:100%;box-sizing:border-box;margin-bottom:11px;padding:11px 13px;border-radius:8px;border:1px solid #2c4258;background:#0a1422;color:#fff;font-size:14px;font-family:inherit;}
+  #oxy-gate input:focus{outline:none;border-color:#3b82f6;}
+  #oxy-gate button{width:100%;padding:11px;border:0;border-radius:8px;background:#dc2626;color:#fff;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;}
+  #oxy-gate button:hover{background:#b91c1c;} #oxy-gate button:disabled{opacity:.6;cursor:default;}
+  #oxy-gate #oxy-gate-err{min-height:16px;margin-top:9px;color:#fca5a5;font-size:12.5px;}
+  #oxy-gate .oxy-gate-foot{margin-top:16px;font-size:10.5px;color:#5d728f;text-align:center;letter-spacing:.02em;}
 </style>
 </head>
 <body>
+<div id="oxy-gate"><div class="oxy-gate-card">
+  <div class="oxy-gate-brand">LRP · Texas Energy GIS</div>
+  <h2>Confidential access</h2>
+  <p>This map is restricted. Enter your email and the access password to continue.</p>
+  <form id="oxy-gate-form" autocomplete="on">
+    <input type="email" id="oxy-gate-email" placeholder="you@company.com" autocomplete="email" required>
+    <input type="password" id="oxy-gate-pass" placeholder="Access password" autocomplete="current-password" required>
+    <button type="submit" id="oxy-gate-btn">Enter</button>
+    <div id="oxy-gate-err"></div>
+  </form>
+  <div class="oxy-gate-foot">Land Resource Partners · access is logged</div>
+</div></div>
 
 <div class="print-header">
   <div class="pbrand">LRP<span class="pdot">.</span> &nbsp;Texas Energy GIS</div>
@@ -2846,6 +2869,84 @@ map.on('mousemove', e => {
   document.getElementById('coord').textContent = `${e.lngLat.lat.toFixed(4)}, ${e.lngLat.lng.toFixed(4)}`;
 });
 map.on('mouseout', () => { document.getElementById('coord').textContent = '—'; });
+</script>
+<script>
+/* OXY access gate + session analytics (Supabase Edge Functions) */
+(function(){
+  var SUPA='https://xvlpperttnedsduscgnq.supabase.co';
+  var GATE=SUPA+'/functions/v1/oxy-gate', TRACK=SUPA+'/functions/v1/oxy-track';
+  var STORE='oxy_gate_v1', MAXAGE=12*3600*1000;
+  var sess=null, queue=[], flushTimer=null;
+  function track(type, detail){
+    if(!sess) return;
+    queue.push({type:type, detail:detail||null});
+    if(queue.length>=8) flush(); else if(!flushTimer) flushTimer=setTimeout(flush,4000);
+  }
+  function flush(beacon){
+    if(flushTimer){clearTimeout(flushTimer);flushTimer=null;}
+    if(!sess||!queue.length) return;
+    var body=JSON.stringify({session_id:sess.session_id,email:sess.email,events:queue.splice(0,50)});
+    try{
+      if(beacon&&navigator.sendBeacon){navigator.sendBeacon(TRACK,new Blob([body],{type:'application/json'}));}
+      else{fetch(TRACK,{method:'POST',headers:{'content-type':'application/json'},body:body,keepalive:true}).catch(function(){});}
+    }catch(e){}
+  }
+  function startAnalytics(){
+    track('page_view',{path:location.pathname+location.hash,ref:document.referrer||null,w:innerWidth,h:innerHeight});
+    document.addEventListener('change',function(e){
+      var t=e.target;
+      if(t&&t.matches&&t.matches('label.layer input[type=checkbox]')){
+        var lab=t.closest('label.layer');
+        track('layer_toggle',{layer:lab?lab.dataset.id:null,on:!!t.checked});
+      }
+    },true);
+    try{
+      var mt=null;
+      map.on('moveend',function(){
+        clearTimeout(mt);
+        mt=setTimeout(function(){
+          try{var c=map.getCenter();track('map_move',{lat:+c.lat.toFixed(4),lon:+c.lng.toFixed(4),zoom:+map.getZoom().toFixed(2)});}catch(e){}
+        },900);
+      });
+    }catch(e){}
+    setInterval(function(){if(document.visibilityState==='visible')track('heartbeat',{});},30000);
+    document.addEventListener('visibilitychange',function(){track('visibility',{state:document.visibilityState});flush();});
+    window.addEventListener('pagehide',function(){track('leave',{});flush(true);});
+  }
+  function authed(s){
+    sess=s;
+    try{localStorage.setItem(STORE,JSON.stringify(s));}catch(e){}
+    var g=document.getElementById('oxy-gate'); if(g&&g.parentNode) g.parentNode.removeChild(g);
+    try{map.resize();}catch(e){}
+    startAnalytics();
+  }
+  function init(){
+    try{
+      var s=JSON.parse(localStorage.getItem(STORE)||'null');
+      if(s&&s.session_id&&s.ts&&(Date.now()-s.ts)<MAXAGE){authed(s);return;}
+    }catch(e){}
+    var form=document.getElementById('oxy-gate-form'),
+        err=document.getElementById('oxy-gate-err'),
+        btn=document.getElementById('oxy-gate-btn'),
+        em=document.getElementById('oxy-gate-email');
+    if(!form) return;
+    if(em){try{em.focus();}catch(e){}}
+    form.addEventListener('submit',function(ev){
+      ev.preventDefault(); err.textContent='';
+      var email=(em.value||'').trim(), pass=document.getElementById('oxy-gate-pass').value;
+      btn.disabled=true; btn.textContent='Checking…';
+      fetch(GATE,{method:'POST',headers:{'content-type':'application/json'},
+        body:JSON.stringify({email:email,password:pass,referrer:document.referrer||''})})
+      .then(function(r){return r.json().then(function(j){return {ok:r.ok,j:j};});})
+      .then(function(res){
+        if(res.ok&&res.j&&res.j.session_id){authed({session_id:res.j.session_id,email:email,ts:Date.now()});}
+        else{err.textContent=(res.j&&res.j.error)||'Access denied.';btn.disabled=false;btn.textContent='Enter';}
+      })
+      .catch(function(){err.textContent='Network error — please try again.';btn.disabled=false;btn.textContent='Enter';});
+    });
+  }
+  if(document.readyState!=='loading') init(); else document.addEventListener('DOMContentLoaded',init);
+})();
 </script>
 </body>
 </html>
