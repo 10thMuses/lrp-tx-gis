@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OXY Map — Access Analytics</title>
+<style>
+  :root{--bg:#0b1220;--panel:#0f1b2d;--border:#24364f;--ink:#e6edf5;--mut:#9fb1c8;--faint:#5d728f;--accent:#dc2626;--good:#16a34a;}
+  *{box-sizing:border-box;}
+  body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:linear-gradient(160deg,#0c1726,#0a1320);color:var(--ink);min-height:100vh;}
+  a{color:#7dd3fc;}
+  /* login */
+  #login{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;padding:20px;}
+  #login .card{width:100%;max-width:360px;background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:28px;box-shadow:0 24px 60px rgba(0,0,0,.5);}
+  #login .brand{font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--faint);}
+  #login h1{font-size:19px;margin:8px 0 4px;}
+  #login p{font-size:13px;color:var(--mut);margin:0 0 16px;}
+  #login input{width:100%;padding:11px 13px;border-radius:8px;border:1px solid #2c4258;background:#0a1422;color:#fff;font-size:14px;margin-bottom:10px;}
+  #login button{width:100%;padding:11px;border:0;border-radius:8px;background:var(--accent);color:#fff;font-size:14px;font-weight:700;cursor:pointer;}
+  #login .err{min-height:16px;margin-top:8px;color:#fca5a5;font-size:12.5px;}
+  /* dashboard */
+  #dash{display:none;max-width:1100px;margin:0 auto;padding:22px 18px 60px;}
+  .top{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:18px;}
+  .top h1{font-size:20px;margin:0;} .top .sub{font-size:12px;color:var(--faint);}
+  .btn{background:#16243a;border:1px solid var(--border);color:var(--ink);padding:7px 13px;border-radius:7px;font-size:13px;cursor:pointer;}
+  .btn:hover{background:#1d3050;}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:20px;}
+  .card{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:16px 18px;}
+  .card .n{font-size:30px;font-weight:800;letter-spacing:-.5px;}
+  .card .l{font-size:11px;color:var(--mut);text-transform:uppercase;letter-spacing:.06em;margin-top:2px;}
+  h2{font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:var(--mut);margin:24px 0 8px;}
+  table{width:100%;border-collapse:collapse;font-size:12.5px;background:var(--panel);border:1px solid var(--border);border-radius:10px;overflow:hidden;}
+  th{text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--faint);padding:8px 10px;border-bottom:1px solid var(--border);}
+  td{padding:8px 10px;border-bottom:1px solid #182740;vertical-align:top;}
+  tr:last-child td{border-bottom:0;}
+  td.n{text-align:right;font-variant-numeric:tabular-nums;}
+  .email{font-weight:600;color:#fff;}
+  .pill{display:inline-block;font-size:10px;padding:1px 6px;border-radius:10px;background:#16243a;color:#9fb1c8;}
+  .feed{font-size:12px;color:var(--mut);}
+  .feed .row{display:flex;gap:8px;padding:5px 0;border-bottom:1px solid #182740;}
+  .feed .t{color:var(--faint);white-space:nowrap;flex:none;}
+  .feed .ty{color:#7dd3fc;flex:none;width:96px;}
+  .muted{color:var(--faint);font-size:11.5px;}
+  code{background:#0a1422;padding:1px 5px;border-radius:4px;font-size:11px;}
+</style>
+</head>
+<body>
+<div id="login"><div class="card">
+  <div class="brand">LRP · Texas Energy GIS</div>
+  <h1>Access analytics</h1>
+  <p>Enter the analytics password to view who has accessed the map and what they did.</p>
+  <form id="login-form">
+    <input type="password" id="pw" placeholder="Analytics password" autocomplete="current-password" required autofocus>
+    <button type="submit" id="go">View analytics</button>
+    <div class="err" id="err"></div>
+  </form>
+</div></div>
+
+<div id="dash">
+  <div class="top">
+    <div><h1>OXY Map — Access Analytics</h1><div class="sub" id="updated"></div></div>
+    <div><button class="btn" id="refresh">Refresh</button> <button class="btn" id="logout">Sign out</button></div>
+  </div>
+  <div class="cards" id="cards"></div>
+  <h2>Sessions <span class="muted" id="scount"></span></h2>
+  <div style="overflow-x:auto"><table id="sessions"><thead><tr>
+    <th>Email</th><th>Started</th><th class="n">Min</th><th>IP</th>
+    <th class="n">Layer toggles</th><th class="n">Map moves</th><th class="n">Events</th>
+  </tr></thead><tbody></tbody></table></div>
+  <h2>Recent activity</h2>
+  <div class="feed" id="feed"></div>
+  <p class="muted" style="margin-top:24px">Data: Supabase project <code>10th-Muses</code> · tables <code>oxy_sessions</code> / <code>oxy_events</code>. Each map visitor logs in with email + the access password; this view is gated by a separate analytics password.</p>
+</div>
+
+<script>
+const FN = "https://xvlpperttnedsduscgnq.supabase.co/functions/v1/oxy-stats";
+const esc = s => String(s==null?"":s).replace(/[&<>]/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));
+const fmt = ts => { try{ const d=new Date(ts); return d.toLocaleString([], {month:"short",day:"numeric",hour:"2-digit",minute:"2-digit"}); }catch(e){ return ts; } };
+
+async function load(pw){
+  const r = await fetch(FN, {method:"POST", headers:{"content-type":"application/json"}, body:JSON.stringify({password:pw})});
+  if(!r.ok){ const j = await r.json().catch(()=>({})); throw new Error(j.error || ("HTTP "+r.status)); }
+  return r.json();
+}
+function render(d){
+  document.getElementById("login").style.display="none";
+  document.getElementById("dash").style.display="block";
+  document.getElementById("updated").textContent = "Updated " + new Date().toLocaleString();
+  const s = d.summary||{};
+  document.getElementById("cards").innerHTML =
+    card(s.sessions,"Total sessions") + card(s.emails,"Unique emails") + card(s.events,"Tracked events");
+  const sess = d.sessions||[];
+  document.getElementById("scount").textContent = "(" + sess.length + ")";
+  document.querySelector("#sessions tbody").innerHTML = sess.map(x=>`<tr>
+    <td class="email">${esc(x.email)}</td><td>${fmt(x.started_at)}</td><td class="n">${x.minutes??0}</td>
+    <td><span class="pill">${esc(x.ip||"—")}</span></td>
+    <td class="n">${x.layer_toggles||0}</td><td class="n">${x.map_moves||0}</td><td class="n">${x.events||0}</td>
+  </tr>`).join("") || `<tr><td colspan="7" class="muted">No sessions yet.</td></tr>`;
+  document.getElementById("feed").innerHTML = (d.recent||[]).map(e=>{
+    let det=""; try{ det = e.detail ? JSON.stringify(e.detail) : ""; }catch(x){}
+    return `<div class="row"><span class="t">${fmt(e.ts)}</span><span class="ty">${esc(e.type)}</span><span>${esc(e.email||"")} <span class="muted">${esc(det)}</span></span></div>`;
+  }).join("") || `<div class="muted">No activity yet.</div>`;
+}
+function card(n,l){ return `<div class="card"><div class="n">${n??0}</div><div class="l">${l}</div></div>`; }
+
+document.getElementById("login-form").addEventListener("submit", async e=>{
+  e.preventDefault();
+  const pw = document.getElementById("pw").value, err = document.getElementById("err"), go=document.getElementById("go");
+  err.textContent=""; go.disabled=true; go.textContent="Loading…";
+  try{ const d = await load(pw); sessionStorage.setItem("oxy_stats_pw", pw); render(d); }
+  catch(ex){ err.textContent = ex.message || "Access denied."; go.disabled=false; go.textContent="View analytics"; }
+});
+document.getElementById("refresh").addEventListener("click", async ()=>{
+  const pw = sessionStorage.getItem("oxy_stats_pw"); if(!pw) return;
+  try{ render(await load(pw)); }catch(ex){ alert(ex.message); }
+});
+document.getElementById("logout").addEventListener("click", ()=>{ sessionStorage.removeItem("oxy_stats_pw"); location.reload(); });
+// auto-load if password remembered this tab
+(function(){ const pw = sessionStorage.getItem("oxy_stats_pw"); if(pw) load(pw).then(render).catch(()=>{}); })();
+</script>
+</body>
+</html>
