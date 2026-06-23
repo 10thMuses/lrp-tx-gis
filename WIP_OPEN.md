@@ -9,8 +9,10 @@ item is added. Round/decision-log history is archived in
 
 ## Last deploy
 
-`6a0b359f839fe364465cc40a` — 2026-05-18. 32 layers. Build clean
-`built=32 missing=0 errored=0 tiles_total=34003 KB`.
+`6a3adddefa163a0a17902c54` — 2026-06-23. 39 layers. Build clean
+`built=39 missing=0 errored=0 tiles_total=29594 KB`. Added `oxy_drilling_permits`
+(294 OXY/Occidental RRC W-1 permits 2020-2026); upgraded 4 OXY carbon/midstream
+points to precise sourced coords; `raiseOxy()` draw-order fix.
 
 Older deploy history: `git log --merges --grep "deploy [0-9a-f]" main`.
 
@@ -65,6 +67,8 @@ confirmation the issue still exists.
 - `GITHUB_PAT` can push branches + merge, 403 on PR creation. Direct-merge-to-main is the protocol per `OPERATING.md §6`.
 
 ### Data
+- ✅ Shipped 2026-06-23: `oxy_drilling_permits` layer — `scripts/build_oxy_drilling_permits.py` filters the RRC daf420 EOM master+lat/lon snapshots (dual 0108/0109 record-format reader) to OXY operators (#630591, #617544, OXY USA WTP LP), 294 unique permits 2020-2026, operator-reported coords. Off by default; filter by operator/county/year. Refresh: `python3 scripts/fetch_rrc.py permits` (most-recent monthlies are NOT in folder-tail order — pull by parsed date) → `python3 scripts/build_oxy_drilling_permits.py`.
+- ❌ NOT feasible — `oxy_minerals_pecos` (OXY mineral ownership, Pecos): Texas mineral ownership is **not** public GIS geometry. Free public data yields only a non-spatial owner roll (Pecos CAD certified mineral roll, Pickett-appraised; or paid aggregators TexasFile/MineralHolders) keyed to abstract/survey legal descriptions — **no polygons/coords**. GLO publishes state-owned mineral geometry only; StratMap `parcels_pecos` is **surface**, not mineral. A true mineral-footprint map needs paid data + deed-by-deed title platting (hand-coding coords — barred by hard rule 3). Deliverable if wanted: a sourced OXY mineral-account *table*, optionally shaded at abstract level, not a tract-precise layer.
 - RRC permits 1976–2017 backfill: overnight W-1 scrape; scratch in `outputs/refresh/rrc_w1_*` (gitignored). When `rrc_w1_permits_with_coords.csv` is complete: `python3 scripts/parse_rrc.py permits` (auto-merges, deduped by permit_no+api_no) → `python3 build.py` → deploy.
 - HIFLD remaining layers; ERCOT deeper geocoding (FERC EQR + PUC CCN); counterparty boundary precision upgrade. Detail in `docs/sprint-plan.md` + archive.
 
