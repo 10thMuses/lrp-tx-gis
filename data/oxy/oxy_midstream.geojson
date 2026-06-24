@@ -71,18 +71,19 @@
    "geometry": {
     "type": "Point",
     "coordinates": [
-     -102.63033,
-     32.6695
+     -102.819004,
+     32.995258
     ]
    },
    "properties": {
     "name": "Denver City CO₂ hub",
-    "facility": "CO₂ trunkline interconnect",
-    "county": "Gaines",
-    "operator": "multi-party (OXY offtaker)",
+    "facility": "CO₂ trunkline interconnect / Denver Unit CO₂-recovery",
+    "county": "Yoakum",
+    "operator": "Occidental Permian (Cortez terminus)",
+    "detail": "Cortez, Bravo & Sheep Mountain CO₂ trunklines converge",
     "status": "Operating",
-    "source": "county centroid (Gaines)",
-    "accuracy": "approximate (county centroid)"
+    "source": "EPA FRS Registry 110055499713 (OXY Denver Unit CO₂ Recovery Plant), NAD83",
+    "accuracy": "precise (EPA FRS)"
    }
   }
  ]

@@ -65,8 +65,8 @@
    "geometry": {
     "type": "Point",
     "coordinates": [
-     -102.736945,
-     32.989944
+     -102.819004,
+     32.995258
     ]
    },
    "properties": {
@@ -74,8 +74,8 @@
     "county": "Yoakum",
     "permit_type": "TCEQ Title V (O3051)",
     "status": "Renewed 15 Oct 2025",
-    "source": "near Wasson (Yoakum)",
-    "accuracy": "approximate (co-located, Yoakum)"
+    "source": "EPA FRS Registry 110055499713 (OXY Denver Unit CO₂ Recovery Plant), NAD83",
+    "accuracy": "precise (EPA FRS)"
    }
   }
  ]

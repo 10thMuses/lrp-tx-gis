@@ -140,11 +140,14 @@ def main():
             "county": "Yoakum", "operator": "Occidental Permian", "detail": "world's largest CO₂ flood",
             "status": "Operating", "source": "EIA-860 @ Wasson CO₂-Removal", "accuracy": "precise"}),
     ]
-    dc = cc("Gaines")
-    if dc[0]:
-        mf.append(feat(*dc, {"name": "Denver City CO₂ hub", "facility": "CO₂ trunkline interconnect",
-            "county": "Gaines", "operator": "multi-party (OXY offtaker)", "status": "Operating",
-            "source": "county centroid (Gaines)", "accuracy": "approximate (county centroid)"}))
+    # Denver City CO₂ hub — Cortez/Bravo/Sheep Mtn trunklines converge at OXY's
+    # Denver Unit CO₂-recovery plant; precise point from EPA FRS (NAD83).
+    mf.append(feat(-102.819004, 32.995258, {"name": "Denver City CO₂ hub",
+        "facility": "CO₂ trunkline interconnect / Denver Unit CO₂-recovery",
+        "county": "Yoakum", "operator": "Occidental Permian (Cortez terminus)",
+        "detail": "Cortez, Bravo & Sheep Mountain CO₂ trunklines converge", "status": "Operating",
+        "source": "EPA FRS Registry 110055499713 (OXY Denver Unit CO₂ Recovery Plant), NAD83",
+        "accuracy": "precise (EPA FRS)"}))
     P["oxy_midstream"] = mf
 
     # ---------- 4. TCEQ AIR & EMISSION PERMITS ----------
@@ -158,9 +161,10 @@ def main():
         feat(*wasson, {"name": "Wasson CO₂-removal plant", "county": "Yoakum",
             "permit_type": "TCEQ Title V (O553)", "status": "Renewed 25 Nov 2025",
             "source": "EIA-860 @ Wasson", "accuracy": "precise"}),
-        feat(wasson[0] + 0.02, wasson[1] - 0.02, {"name": "Denver Unit CO₂-recovery plant", "county": "Yoakum",
+        feat(-102.819004, 32.995258, {"name": "Denver Unit CO₂-recovery plant", "county": "Yoakum",
             "permit_type": "TCEQ Title V (O3051)", "status": "Renewed 15 Oct 2025",
-            "source": "near Wasson (Yoakum)", "accuracy": "approximate (co-located, Yoakum)"}),
+            "source": "EPA FRS Registry 110055499713 (OXY Denver Unit CO₂ Recovery Plant), NAD83",
+            "accuracy": "precise (EPA FRS)"}),
     ]
     P["oxy_permits"] = qf
 
@@ -173,15 +177,20 @@ def main():
             "county": "Yoakum", "detail": "first U.S. MRV plan; ~3.67 Mt stored 2023", "status": "Operating",
             "source": "EIA-860 @ Wasson", "accuracy": "precise"}),
     ]
-    st = cc("Ector"); kr = cc("Kleberg")
-    if st[0]:
-        cf.append(feat(*st, {"name": "STRATOS DAC", "carbon_type": "Direct air capture",
-            "county": "Ector", "detail": "world's largest DAC; up to 500 kt/yr", "status": "Under construction",
-            "source": "county centroid (Ector) — precise pending", "accuracy": "approximate (county centroid)"}))
-    if kr[0]:
-        cf.append(feat(*kr, {"name": "King Ranch / South Texas DAC hub", "carbon_type": "DAC + storage hub",
-            "county": "Kleberg", "detail": "DOE-backed; pre-construction", "status": "Planned",
-            "source": "county centroid (Kleberg) — precise pending", "accuracy": "approximate (county centroid)"}))
+    # STRATOS DAC — co-located with its EPA Class VI CO₂-injection wells at Penwell.
+    cf.append(feat(-102.728931, 31.764793, {"name": "STRATOS DAC", "carbon_type": "Direct air capture",
+        "county": "Ector", "detail": "world's largest DAC; up to 500 kt/yr; CO₂ to adjacent Class VI wells",
+        "status": "Under construction",
+        "source": "EPA Class VI permit R6-TX-135-C6-0001 (BRP CCS1 injection well), Penwell",
+        "accuracy": "precise (EPA Class VI permit)"}))
+    # King Ranch / South Texas DAC hub — centroid of its three RRC stratigraphic
+    # test wells in eastern Kleberg County (operator-reported NAD83).
+    cf.append(feat(-97.470730, 27.507494, {"name": "King Ranch / South Texas DAC hub",
+        "carbon_type": "DAC + storage hub", "county": "Kleberg",
+        "detail": "DOE-backed; ~106k-acre pore-space lease from King Ranch; pre-construction",
+        "status": "Planned",
+        "source": "centroid of RRC strat-test wells GARCIAS IZM 1/2 + BECERRA IZM 1 (API 27332697-99), NAD83",
+        "accuracy": "precise (RRC strat-test well cluster)"}))
     P["oxy_carbon"] = cf
 
     # ---------- 5. WATER ----------

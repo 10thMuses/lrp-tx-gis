@@ -2,7 +2,7 @@
  "type": "FeatureCollection",
  "metadata": {
   "layer": "oxy_carbon",
-  "feature_count": 3,
+  "feature_count": 4,
   "note": "OXY footprint; coords from sourced LRP layers (ERCOT/EIA/OSM) + oxy_assets.geojson; approximate points flagged."
  },
  "features": [
@@ -49,18 +49,37 @@
    "geometry": {
     "type": "Point",
     "coordinates": [
-     -102.54333,
-     31.7985
+     -102.728931,
+     31.764793
     ]
    },
    "properties": {
     "name": "STRATOS DAC",
     "carbon_type": "Direct air capture",
     "county": "Ector",
-    "detail": "world's largest DAC; up to 500 kt/yr",
+    "detail": "world's largest DAC; up to 500 kt/yr; CO₂ to adjacent Class VI wells",
     "status": "Under construction",
-    "source": "county centroid (Ector) — precise pending",
-    "accuracy": "approximate (county centroid)"
+    "source": "EPA Class VI permit R6-TX-135-C6-0001 (BRP CCS1 injection well), Penwell",
+    "accuracy": "precise (EPA Class VI permit)"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -97.47073,
+     27.507494
+    ]
+   },
+   "properties": {
+    "name": "King Ranch / South Texas DAC hub",
+    "carbon_type": "DAC + storage hub",
+    "county": "Kleberg",
+    "detail": "DOE-backed; ~106k-acre pore-space lease from King Ranch; pre-construction",
+    "status": "Planned",
+    "source": "centroid of RRC strat-test wells GARCIAS IZM 1/2 + BECERRA IZM 1 (API 27332697-99), NAD83",
+    "accuracy": "precise (RRC strat-test well cluster)"
    }
   }
  ]
