@@ -24,8 +24,12 @@ surrounding six-county Permian corridor.
 
 The platform is live, password-protected, and current — core layers refresh on
 weekly-to-monthly cadences from primary public sources (EIA, ERCOT, RRC, TCEQ,
-Census, USGS). Access credentials and a navigation guide are below my
-signature.
+Census, USGS).
+
+**Access:** [https://lrp-tx-gis.netlify.app](https://lrp-tx-gis.netlify.app) —
+log in with your business email; access password: `LRP-Permian-2026`. No
+installation required; desktop browser recommended. A full navigation guide
+and source register are below my signature.
 
 **What the map covers, in brief:**
 
