@@ -33,11 +33,6 @@ signature.
   and municipal reference, interstate/US highway and mainline rail corridors,
   the Waha natural-gas hub, the AEP Solstice substation, and the Middle Pecos
   Groundwater Conservation District's Management Zone 1.
-- **The Occidental footprint.** Seven layers compiled from public filings
-  mapping OXY's regional position: power and NET Power assets, midstream and
-  processing, ERCOT interconnection-queue entries, TCEQ air permits, water
-  infrastructure, carbon-management infrastructure, and 294 RRC drilling
-  permits filed 2020–2026.
 - **Hyperscale precedent.** The three announced large-scale power/data-center
   land campuses in the immediate area — La Escalera Ranch (Apex Clean Energy),
   Longfellow Ranch, and GW Ranch (Pacifico Energy) — mapped as boundaries for
@@ -98,7 +93,7 @@ the default; Carto Light is best for dense layer work; NAIP aerial for
 site-level detail).
 
 **Layers.** Toggle any layer on/off; groups are organized by theme (Reference,
-OXY footprint, Local Focal Points, Hyperscale Campuses, Power Generation,
+Local Focal Points, Hyperscale Campuses, Power Generation,
 Transmission & Grid, Energy Infrastructure, Projects, Pipelines, Permits,
 Wells). Some high-density layers activate as you zoom in. Click any feature
 for a popup with its attributes, source, and as-of date.
@@ -113,7 +108,7 @@ well history by year.
 
 1. **Site overview** (default view): https://lrp-tx-gis.netlify.app
 2. **Regional power & grid:** https://lrp-tx-gis.netlify.app/#lat=31.1500&lon=-102.9000&zoom=8&layers=counties,county_labels,cities,tiger_highways,caramba_north,eia860_plants,eia860_battery,solar,transmission,substations,ercot_queue,dc_anchors&base=carto_light
-3. **OXY & midstream:** https://lrp-tx-gis.netlify.app/#lat=31.0000&lon=-103.0000&zoom=9&layers=counties,county_labels,cities,caramba_north,oxy_power,oxy_midstream,oxy_carbon,oxy_water,oxy_ercot,hifld_ng_pipelines,rrc_pipelines&base=carto_light
+3. **Midstream & pipelines:** https://lrp-tx-gis.netlify.app/#lat=31.0000&lon=-103.0000&zoom=9&layers=counties,county_labels,cities,caramba_north,hifld_ng_pipelines,hifld_crude_pipelines,hifld_hgl_pipelines,hifld_ng_processing,rrc_pipelines&base=carto_light
 4. **Permitting & drilling activity:** https://lrp-tx-gis.netlify.app/#lat=31.0000&lon=-103.0000&zoom=9&layers=counties,county_labels,caramba_north,permits_permian6,tax_abatements,wells_permian6&base=carto_light
 
 ## Appendix C — Data sources & refresh cadence
@@ -130,10 +125,9 @@ well history by year.
 | Planned grid upgrades | ERCOT Transmission Project Information Tracking (TPIT) | Monthly | https://www.ercot.com/gridinfo/transmission |
 | Drilling permits (W-1) & wellbore record | Railroad Commission of Texas — public datasets & permit query | Weekly | https://www.rrc.texas.gov/resource-center/research/data-sets-available-for-download/ |
 | Large-diameter pipelines | RRC digital pipeline data | Annual | https://www.rrc.texas.gov/pipeline-safety/ |
-| Air permits (gas turbines; OXY facilities) | TCEQ air permitting records | Annual | https://www.tceq.texas.gov/permitting/air |
+| Air permits (gas turbines) | TCEQ air permitting records | Annual | https://www.tceq.texas.gov/permitting/air |
 | Tax abatements (Ch. 381/312) | County commissioners-court records (compiled) | Weekly | County clerk agendas; compilation available on request |
 | Groundwater district zone | Middle Pecos GCD (boundary approximate, disclosed) | On publication | https://www.middlepecosgcd.org |
-| OXY footprint layers | Compiled from RRC, TCEQ, ERCOT, and public company disclosures | With source layers | Per-feature source citations in popups |
 
 *Confidentiality: this platform and its contents are provided solely for
 evaluation of the referenced engagement and may not be redistributed without
