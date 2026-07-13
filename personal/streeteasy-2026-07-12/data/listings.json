@@ -55,7 +55,7 @@
   "net_effective_rent": null,
   "months_free": null,
   "lease_term_months": null,
-  "security_deposit": null,
+  "security_deposit": 12500,
   "total_monthly_price": null,
   "price_changes": [
    {
@@ -443,7 +443,7 @@
   "net_effective_rent": null,
   "months_free": null,
   "lease_term_months": null,
-  "security_deposit": null,
+  "security_deposit": 16999,
   "total_monthly_price": null,
   "price_changes": [
    {
@@ -633,7 +633,7 @@
   "net_effective_rent": null,
   "months_free": null,
   "lease_term_months": null,
-  "security_deposit": null,
+  "security_deposit": 8995,
   "total_monthly_price": null,
   "price_changes": [
    {
@@ -843,7 +843,7 @@
   "net_effective_rent": null,
   "months_free": null,
   "lease_term_months": null,
-  "security_deposit": null,
+  "security_deposit": 12500,
   "total_monthly_price": null,
   "price_changes": [
    {
@@ -1099,7 +1099,7 @@
   "net_effective_rent": null,
   "months_free": null,
   "lease_term_months": null,
-  "security_deposit": null,
+  "security_deposit": 16500,
   "total_monthly_price": null,
   "price_changes": [
    {
@@ -1234,7 +1234,7 @@
   "net_effective_rent": null,
   "months_free": null,
   "lease_term_months": null,
-  "security_deposit": null,
+  "security_deposit": 14750,
   "total_monthly_price": null,
   "price_changes": [
    {
@@ -1472,7 +1472,7 @@
   "net_effective_rent": null,
   "months_free": null,
   "lease_term_months": null,
-  "security_deposit": null,
+  "security_deposit": 9500,
   "total_monthly_price": null,
   "price_changes": [
    {
@@ -1628,7 +1628,7 @@
   "net_effective_rent": null,
   "months_free": null,
   "lease_term_months": null,
-  "security_deposit": null,
+  "security_deposit": 6995,
   "total_monthly_price": null,
   "price_changes": [
    {
@@ -1752,7 +1752,7 @@
   "net_effective_rent": 9625,
   "months_free": 1,
   "lease_term_months": 12,
-  "security_deposit": null,
+  "security_deposit": 10850,
   "total_monthly_price": null,
   "price_changes": [
    {
@@ -1888,7 +1888,7 @@
   "net_effective_rent": null,
   "months_free": null,
   "lease_term_months": null,
-  "security_deposit": null,
+  "security_deposit": 0,
   "total_monthly_price": null,
   "price_changes": [
    {
@@ -2016,7 +2016,7 @@
   "net_effective_rent": null,
   "months_free": null,
   "lease_term_months": null,
-  "security_deposit": null,
+  "security_deposit": 8300,
   "total_monthly_price": null,
   "price_changes": [
    {
@@ -2190,7 +2190,7 @@
   "net_effective_rent": null,
   "months_free": null,
   "lease_term_months": null,
-  "security_deposit": null,
+  "security_deposit": 7995,
   "total_monthly_price": null,
   "price_changes": [
    {
@@ -2296,7 +2296,7 @@
   "net_effective_rent": null,
   "months_free": null,
   "lease_term_months": null,
-  "security_deposit": null,
+  "security_deposit": 7995,
   "total_monthly_price": null,
   "price_changes": [
    {
@@ -2793,7 +2793,7 @@
   "net_effective_rent": null,
   "months_free": null,
   "lease_term_months": null,
-  "security_deposit": null,
+  "security_deposit": 8995,
   "total_monthly_price": null,
   "price_changes": [
    {
@@ -2898,7 +2898,7 @@
   "net_effective_rent": null,
   "months_free": null,
   "lease_term_months": null,
-  "security_deposit": null,
+  "security_deposit": 11995,
   "total_monthly_price": null,
   "price_changes": [
    {
@@ -3010,7 +3010,7 @@
   "net_effective_rent": null,
   "months_free": null,
   "lease_term_months": null,
-  "security_deposit": null,
+  "security_deposit": 13400,
   "total_monthly_price": null,
   "price_changes": [
    {
@@ -3153,7 +3153,7 @@
   "net_effective_rent": null,
   "months_free": null,
   "lease_term_months": null,
-  "security_deposit": null,
+  "security_deposit": 4997.5,
   "total_monthly_price": null,
   "price_changes": [
    {
@@ -3316,7 +3316,7 @@
   "net_effective_rent": 9415,
   "months_free": 1,
   "lease_term_months": 13,
-  "security_deposit": null,
+  "security_deposit": 10600,
   "total_monthly_price": null,
   "price_changes": [
    {
@@ -3447,7 +3447,7 @@
   "net_effective_rent": null,
   "months_free": null,
   "lease_term_months": null,
-  "security_deposit": null,
+  "security_deposit": 8250,
   "total_monthly_price": null,
   "price_changes": [
    {
@@ -3554,7 +3554,7 @@
   "net_effective_rent": null,
   "months_free": null,
   "lease_term_months": null,
-  "security_deposit": null,
+  "security_deposit": 6995,
   "total_monthly_price": null,
   "price_changes": [
    {
@@ -3664,7 +3664,7 @@
   "net_effective_rent": null,
   "months_free": null,
   "lease_term_months": null,
-  "security_deposit": null,
+  "security_deposit": 4750,
   "total_monthly_price": null,
   "price_changes": [
    {
@@ -3765,7 +3765,7 @@
   "net_effective_rent": null,
   "months_free": null,
   "lease_term_months": null,
-  "security_deposit": null,
+  "security_deposit": 18000,
   "total_monthly_price": null,
   "price_changes": [
    {
@@ -3983,7 +3983,7 @@
   "net_effective_rent": null,
   "months_free": null,
   "lease_term_months": null,
-  "security_deposit": null,
+  "security_deposit": 14000,
   "total_monthly_price": null,
   "price_changes": [
    {
@@ -4335,7 +4335,7 @@
   "net_effective_rent": null,
   "months_free": null,
   "lease_term_months": null,
-  "security_deposit": null,
+  "security_deposit": 18000,
   "total_monthly_price": null,
   "price_changes": [
    {
@@ -4481,7 +4481,7 @@
   "net_effective_rent": null,
   "months_free": null,
   "lease_term_months": null,
-  "security_deposit": null,
+  "security_deposit": 7995,
   "total_monthly_price": null,
   "price_changes": [
    {
@@ -4582,7 +4582,7 @@
   "net_effective_rent": null,
   "months_free": null,
   "lease_term_months": null,
-  "security_deposit": null,
+  "security_deposit": 5997.5,
   "total_monthly_price": null,
   "price_changes": [
    {
@@ -4685,7 +4685,7 @@
   "net_effective_rent": null,
   "months_free": null,
   "lease_term_months": null,
-  "security_deposit": null,
+  "security_deposit": 12000,
   "total_monthly_price": null,
   "price_changes": [
    {

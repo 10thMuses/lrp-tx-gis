@@ -138,7 +138,14 @@ def parse_page(path, listing_id):
         out["net_effective_rent"] = pr.get("netEffectiveRent")
         out["months_free"] = pr.get("monthsFree")
         out["lease_term_months"] = pr.get("leaseTermMonths")
-        out["security_deposit"] = pr.get("securityDeposit")
+        dep = pr.get("securityDeposit")
+        if dep is None:
+            for f in pr.get("moveInFees") or []:
+                if (f.get("typeLabel") or "").lower() == "security deposit":
+                    calc = f.get("calculation") or {}
+                    dep = calc.get("feeQuantifier")
+                    break
+        out["security_deposit"] = dep
         out["total_monthly_price"] = pr.get("totalMonthlyPrice")
         out["price_changes"] = [
             {"price": c.get("price"), "date": (c.get("changedAt") or "")[:10]}
