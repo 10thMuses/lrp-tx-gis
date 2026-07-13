@@ -1,0 +1,4941 @@
+[
+ {
+  "listing_id": "5033049",
+  "url": "https://streeteasy.com/rental/5033049",
+  "page_title_name": "36 Bedford Street #2",
+  "ld_price": 12500,
+  "ld_valid_from": "2026-05-14",
+  "ld_availability": "InStock",
+  "latitude": 40.730225,
+  "longitude": -74.00395,
+  "address_street": "36 Bedford Street",
+  "unit": "#2",
+  "city": "New York",
+  "state": "NY",
+  "zip": "10014",
+  "full_address": "36 Bedford Street #2",
+  "status": "ACTIVE",
+  "listed_date": "2026-05-14",
+  "days_on_market": 46,
+  "available_date": "2026-07-01",
+  "off_market_date": null,
+  "created_at": "2026-05-04T17:38:12.000-04:00",
+  "updated_at": "2026-07-12T15:30:07.000-04:00",
+  "description": "36 Bedford Street #2 1200sq Plus 1000sq feet Massive Private outdoor space with Washer/Dryer\nINDOOR and OUTDOOR LIVING AT ITS BEST\nPrime West Village, The apartment is parlor floor with very high ceiling and a decorative fire place and a massive private deck that opens to the Livingroom. The apartment features two bedrooms, a separate living room, dining-room that open to the massive outdoor garden.\nThe apartment features hardwood floors, high ceilings, a decorative fireplace in the living room, a marble bathroom and a great kitchen with stainless steel appliances. The apartment is floor through with great light. This the best priced two bedroom apartment you will find in the village. I have many other great listings. Call me on my cell for a private viewing. I specialize in the downtown area: SoHo NoLita TriBeCa West Village Greenwich Village NoHo East Village Union Square Lower East Side Gramercy Flatiron Chelsea since 1989.\n\nThe application processing fee is $20 each person\nFirst Months rent $12,500\nSecurity Deposit $12,500",
+  "rooms": 4,
+  "bedrooms": 2,
+  "full_baths": 1,
+  "half_baths": 0,
+  "baths": 1.0,
+  "sqft": 1200,
+  "building_amenities": [
+   "Shared Outdoor Space"
+  ],
+  "doorman_types": [],
+  "parking_types": [],
+  "shared_outdoor_space": [
+   "Courtyard"
+  ],
+  "storage_types": [],
+  "unit_features": [
+   "Dishwasher",
+   "Hardwood Floors",
+   "Private Outdoor Space",
+   "View",
+   "Washer Dryer"
+  ],
+  "private_outdoor_space": [
+   "Garden"
+  ],
+  "views": [
+   "Garden"
+  ],
+  "fireplace_types": [],
+  "rent": 12500,
+  "net_effective_rent": null,
+  "months_free": null,
+  "lease_term_months": null,
+  "security_deposit": null,
+  "total_monthly_price": null,
+  "price_changes": [
+   {
+    "price": 12500,
+    "date": "2026-05-04"
+   }
+  ],
+  "fees": [
+   "Application fee: $20",
+   "Security deposit: $12,500"
+  ],
+  "brokerage": "Corcoran",
+  "broker_license_name": "Corcoran Group",
+  "broker_license_type": "Limited Liability Broker",
+  "broker_address": "590 Madison Avenue, New York, NY, 10022",
+  "photo_count": 12,
+  "photo_url": "https://photos.zillowstatic.com/fp/8597e45556fbe444ff330f29c53771c3-se_large_800_400.webp",
+  "video_count": 0,
+  "tour_3d_url": null,
+  "floorplan_count": 0,
+  "mls_number": null,
+  "listing_source_type": "PARTNER",
+  "open_houses": [],
+  "canonical_url": "https://streeteasy.com/building/36-bedford-street-new_york/2",
+  "unit_history": [
+   {
+    "date": "2026-07-06",
+    "price": 12500,
+    "status": "ACTIVE",
+    "listing_id": "5033049",
+    "source": "Corcoran"
+   },
+   {
+    "date": "2026-07-02",
+    "price": 12500,
+    "status": "TEMPORARILY_OFF_MARKET",
+    "listing_id": "5033049",
+    "source": "Corcoran"
+   },
+   {
+    "date": "2026-06-14",
+    "price": 12500,
+    "status": "ACTIVE",
+    "listing_id": "5033049",
+    "source": "Corcoran"
+   },
+   {
+    "date": "2026-06-13",
+    "price": 12500,
+    "status": "IN_CONTRACT",
+    "listing_id": "5033049",
+    "source": "Corcoran"
+   },
+   {
+    "date": "2026-06-10",
+    "price": 12500,
+    "status": "TEMPORARILY_OFF_MARKET",
+    "listing_id": "5033049",
+    "source": "Corcoran"
+   },
+   {
+    "date": "2026-05-26",
+    "price": 12500,
+    "status": "ACTIVE",
+    "listing_id": "5033049",
+    "source": "Corcoran"
+   },
+   {
+    "date": "2026-05-20",
+    "price": 12500,
+    "status": "IN_CONTRACT",
+    "listing_id": "5033049",
+    "source": "Corcoran"
+   },
+   {
+    "date": "2026-05-20",
+    "price": 12500,
+    "status": "TEMPORARILY_OFF_MARKET",
+    "listing_id": "5033049",
+    "source": "Corcoran"
+   },
+   {
+    "date": "2026-05-14",
+    "price": 12500,
+    "status": "ACTIVE",
+    "listing_id": "5033049",
+    "source": "Corcoran"
+   },
+   {
+    "date": "2025-06-14",
+    "price": 12500,
+    "status": "RENTED",
+    "listing_id": "4760433",
+    "source": "Corcoran"
+   },
+   {
+    "date": "2025-06-13",
+    "price": 12500,
+    "status": "NO_LONGER_AVAILABLE",
+    "listing_id": "4760433",
+    "source": "Corcoran"
+   },
+   {
+    "date": "2025-06-12",
+    "price": 12500,
+    "status": null,
+    "listing_id": "4760433",
+    "source": "Corcoran"
+   },
+   {
+    "date": "2025-06-10",
+    "price": 12000,
+    "status": null,
+    "listing_id": "4760433",
+    "source": "Corcoran"
+   },
+   {
+    "date": "2025-06-07",
+    "price": 11000,
+    "status": "ACTIVE",
+    "listing_id": "4760433",
+    "source": "Corcoran"
+   },
+   {
+    "date": "2022-04-28",
+    "price": 9850,
+    "status": "RENTED",
+    "listing_id": "3825267",
+    "source": "Corcoran"
+   },
+   {
+    "date": "2022-04-25",
+    "price": 9850,
+    "status": "IN_CONTRACT",
+    "listing_id": "3825267",
+    "source": "Corcoran"
+   },
+   {
+    "date": "2022-04-22",
+    "price": 9850,
+    "status": "ACTIVE",
+    "listing_id": "3825267",
+    "source": "Corcoran"
+   },
+   {
+    "date": "2019-05-23",
+    "price": 10000,
+    "status": "NO_LONGER_AVAILABLE",
+    "listing_id": "1068491",
+    "source": "Jalca & Associates"
+   },
+   {
+    "date": "2016-09-01",
+    "price": 9000,
+    "status": "RENTED",
+    "listing_id": "1864071",
+    "source": "Bold New York"
+   },
+   {
+    "date": "2016-08-24",
+    "price": 9000,
+    "status": null,
+    "listing_id": "1864071",
+    "source": "Bold New York"
+   },
+   {
+    "date": "2016-08-13",
+    "price": 9600,
+    "status": "ACTIVE",
+    "listing_id": "1864071",
+    "source": "Bold New York"
+   },
+   {
+    "date": "2016-08-12",
+    "price": 9750,
+    "status": "NO_LONGER_AVAILABLE",
+    "listing_id": "1802725",
+    "source": "Bond New York"
+   },
+   {
+    "date": "2016-07-22",
+    "price": 9750,
+    "status": null,
+    "listing_id": "1802725",
+    "source": "Bond New York"
+   },
+   {
+    "date": "2016-07-19",
+    "price": 11500,
+    "status": null,
+    "listing_id": "1802725",
+    "source": "Bond New York"
+   },
+   {
+    "date": "2016-07-13",
+    "price": 11800,
+    "status": null,
+    "listing_id": "1802725",
+    "source": "Bond New York"
+   },
+   {
+    "date": "2016-07-06",
+    "price": 10000,
+    "status": null,
+    "listing_id": "1802725",
+    "source": "Bond New York"
+   },
+   {
+    "date": "2016-06-27",
+    "price": 10750,
+    "status": null,
+    "listing_id": "1802725",
+    "source": "Bond New York"
+   },
+   {
+    "date": "2016-06-01",
+    "price": 11000,
+    "status": "ACTIVE",
+    "listing_id": "1802725",
+    "source": "Bond New York"
+   },
+   {
+    "date": "2013-07-22",
+    "price": 10000,
+    "status": "TEMPORARILY_OFF_MARKET",
+    "listing_id": "1068491",
+    "source": "Jalca & Associates"
+   },
+   {
+    "date": "2013-06-13",
+    "price": 10000,
+    "status": null,
+    "listing_id": "1068491",
+    "source": "Jalca & Associates"
+   },
+   {
+    "date": "2013-05-23",
+    "price": 11000,
+    "status": null,
+    "listing_id": "1068491",
+    "source": "Jalca & Associates"
+   },
+   {
+    "date": "2013-05-17",
+    "price": 12500,
+    "status": null,
+    "listing_id": "1068491",
+    "source": "Jalca & Associates"
+   },
+   {
+    "date": "2013-05-17",
+    "price": 12000,
+    "status": "ACTIVE",
+    "listing_id": "1068491",
+    "source": "Jalca & Associates"
+   },
+   {
+    "date": "2013-03-16",
+    "price": 12500,
+    "status": "NO_LONGER_AVAILABLE",
+    "listing_id": "1004311",
+    "source": "Jalca & Associates"
+   },
+   {
+    "date": "2013-02-06",
+    "price": 12500,
+    "status": "ACTIVE",
+    "listing_id": "1004311",
+    "source": "Jalca & Associates"
+   },
+   {
+    "date": "2009-07-03",
+    "price": 7500,
+    "status": "NO_LONGER_AVAILABLE",
+    "listing_id": "518235",
+    "source": "Douglas Elliman"
+   },
+   {
+    "date": "2009-06-30",
+    "price": 7500,
+    "status": "IN_CONTRACT",
+    "listing_id": "518235",
+    "source": "Douglas Elliman"
+   },
+   {
+    "date": "2009-06-03",
+    "price": 7500,
+    "status": "ACTIVE",
+    "listing_id": "518235",
+    "source": "Douglas Elliman"
+   },
+   {
+    "date": "2009-03-06",
+    "price": 7999,
+    "status": "NO_LONGER_AVAILABLE",
+    "listing_id": "447141",
+    "source": "Douglas Elliman"
+   },
+   {
+    "date": "2009-01-28",
+    "price": 7999,
+    "status": null,
+    "listing_id": "447141",
+    "source": "Douglas Elliman"
+   },
+   {
+    "date": "2008-12-21",
+    "price": 8500,
+    "status": "ACTIVE",
+    "listing_id": "447141",
+    "source": "Douglas Elliman"
+   }
+  ],
+  "area_median_rent_same_beds": 7400,
+  "building_name": "",
+  "neighborhood": "West Village",
+  "building_floors": 3,
+  "building_units": 4,
+  "year_built": 1915,
+  "building_slug": "36-bedford-street-new_york",
+  "unit_type_display": "Four-family home in West Village",
+  "unit_type": "Four-family home",
+  "broker_fee": null,
+  "borough": "Manhattan"
+ },
+ {
+  "listing_id": "5045721",
+  "url": "https://streeteasy.com/rental/5045721",
+  "page_title_name": "369 Bleecker Street #PH",
+  "ld_price": 17999,
+  "ld_valid_from": "2026-05-17",
+  "ld_availability": "InStock",
+  "latitude": 40.734848,
+  "longitude": -74.00464,
+  "address_street": "369 Bleecker Street",
+  "unit": "#PH",
+  "city": "New York",
+  "state": "NY",
+  "zip": "10014",
+  "full_address": "369 Bleecker Street #PH",
+  "status": "ACTIVE",
+  "listed_date": "2026-05-17",
+  "days_on_market": 57,
+  "available_date": "2026-05-17",
+  "off_market_date": null,
+  "created_at": "2026-05-17T22:20:28.000-04:00",
+  "updated_at": "2026-06-29T22:05:31.000-04:00",
+  "description": "A rare 2-bedroom 2.5-bath West Village penthouse duplex on iconic Bleecker Street with a private roof deck and sweeping skyline views\u2014an exceptional offering in one of Manhattan\u2019s most coveted neighborhoods.\n\nThe upper level is designed for entertaining, featuring a spacious living room with gas fireplace, wet bar with Sub-Zero wine refrigerator, and a sun-filled west-facing chef\u2019s kitchen with marble countertops and top-tier appliances. A dramatic skylight above the dining area fills the home with natural light throughout the day.\n\nThe lower level offers two bedrooms, including a serene primary suite with west-facing windows, gas fireplace, custom built-in vanity/desk, walk-in closet, and spa-like en-suite bath finished in Carrera marble with Axor/Hansgrohe fixtures. A second full en-suite bedroom completes the layout.\n\nThe private roof deck is a true showpiece with open views of the Empire State Building, Freedom Tower, and downtown skyline over landmarked gardens and historic brownstones\u2014complete with outdoor kitchen, lighting, speakers, and irrigation for seamless entertaining.\n\nAdditional features include white oak floors, central A/C, in-unit washer/dryer, recessed lighting, ADT security, integrated Sonos system, and abundant storage. Offered fully furnished or unfurnished, this is an ultra-rare turnkey penthouse on Bleecker Street in the heart of the West Village.",
+  "rooms": 2,
+  "bedrooms": 2,
+  "full_baths": 2,
+  "half_baths": 1,
+  "baths": 2.5,
+  "sqft": 1600,
+  "building_amenities": [
+   "Fios Available",
+   "Laundry",
+   "Shared Outdoor Space"
+  ],
+  "doorman_types": [],
+  "parking_types": [],
+  "shared_outdoor_space": [
+   "Roof Deck"
+  ],
+  "storage_types": [],
+  "unit_features": [
+   "Central Ac",
+   "Dishwasher",
+   "Fireplace",
+   "Furnished",
+   "Hardwood Floors",
+   "Private Outdoor Space",
+   "View",
+   "Washer Dryer"
+  ],
+  "private_outdoor_space": [
+   "Private Roof Deck"
+  ],
+  "views": [
+   "City",
+   "Skyline"
+  ],
+  "fireplace_types": [],
+  "rent": 17999,
+  "net_effective_rent": null,
+  "months_free": null,
+  "lease_term_months": null,
+  "security_deposit": null,
+  "total_monthly_price": null,
+  "price_changes": [
+   {
+    "price": 21999,
+    "date": "2026-05-17"
+   },
+   {
+    "price": 20999,
+    "date": "2026-05-28"
+   },
+   {
+    "price": 19999,
+    "date": "2026-06-07"
+   },
+   {
+    "price": 18999,
+    "date": "2026-06-22"
+   },
+   {
+    "price": 17999,
+    "date": "2026-06-25"
+   }
+  ],
+  "fees": [
+   "Application fee: $20",
+   "Security deposit: $16,999"
+  ],
+  "brokerage": "Lodger Corp",
+  "broker_license_name": "Lodgers Corp",
+  "broker_license_type": "Corporate Broker",
+  "broker_address": "4102 13th Avenue, #6a, Brooklyn, NY, 11219",
+  "photo_count": 20,
+  "photo_url": "https://photos.zillowstatic.com/fp/28c4444aba2deab0bcfce46cb32bc074-se_large_800_400.webp",
+  "video_count": 0,
+  "tour_3d_url": null,
+  "floorplan_count": 1,
+  "mls_number": null,
+  "listing_source_type": "PARTNER",
+  "open_houses": [],
+  "canonical_url": "https://streeteasy.com/building/maison-pierre-369-bleecker-street-new_york/ph",
+  "unit_history": [
+   {
+    "date": "2026-06-25",
+    "price": 17999,
+    "status": null,
+    "listing_id": "5045721",
+    "source": "Lodger Corp"
+   },
+   {
+    "date": "2026-06-22",
+    "price": 18999,
+    "status": null,
+    "listing_id": "5045721",
+    "source": "Lodger Corp"
+   },
+   {
+    "date": "2026-06-07",
+    "price": 19999,
+    "status": null,
+    "listing_id": "5045721",
+    "source": "Lodger Corp"
+   },
+   {
+    "date": "2026-05-28",
+    "price": 20999,
+    "status": null,
+    "listing_id": "5045721",
+    "source": "Lodger Corp"
+   },
+   {
+    "date": "2026-05-17",
+    "price": 21999,
+    "status": "ACTIVE",
+    "listing_id": "5045721",
+    "source": "Lodger Corp"
+   },
+   {
+    "date": "2021-02-05",
+    "price": 14000,
+    "status": "NO_LONGER_AVAILABLE",
+    "listing_id": "2973558",
+    "source": "Douglas Elliman"
+   },
+   {
+    "date": "2020-11-06",
+    "price": 14000,
+    "status": "TEMPORARILY_OFF_MARKET",
+    "listing_id": "2973558",
+    "source": "Douglas Elliman"
+   },
+   {
+    "date": "2020-01-31",
+    "price": 14000,
+    "status": "ACTIVE",
+    "listing_id": "2973558",
+    "source": "Douglas Elliman"
+   },
+   {
+    "date": "2019-06-04",
+    "price": 18000,
+    "status": "NO_LONGER_AVAILABLE",
+    "listing_id": "2605459",
+    "source": "Compass"
+   },
+   {
+    "date": "2019-04-22",
+    "price": 18000,
+    "status": null,
+    "listing_id": "2605459",
+    "source": "Compass"
+   },
+   {
+    "date": "2018-12-17",
+    "price": 20000,
+    "status": "ACTIVE",
+    "listing_id": "2605459",
+    "source": "Compass"
+   }
+  ],
+  "area_median_rent_same_beds": 7400,
+  "building_name": "Maison Pierre",
+  "neighborhood": "West Village",
+  "building_floors": 5,
+  "building_units": 5,
+  "year_built": 1905,
+  "building_slug": "maison-pierre-369-bleecker-street-new_york",
+  "unit_type_display": "Hybrid in West Village",
+  "unit_type": "Hybrid",
+  "broker_fee": null,
+  "borough": "Manhattan"
+ },
+ {
+  "listing_id": "5066572",
+  "url": "https://streeteasy.com/rental/5066572",
+  "page_title_name": "562 Hudson Street #2",
+  "ld_price": 8995,
+  "ld_valid_from": "2026-06-08",
+  "ld_availability": "InStock",
+  "latitude": 40.7355,
+  "longitude": -74.0057,
+  "address_street": "562 Hudson Street",
+  "unit": "#2",
+  "city": "New York",
+  "state": "NY",
+  "zip": "10014",
+  "full_address": "562 Hudson Street #2",
+  "status": "ACTIVE",
+  "listed_date": "2026-06-08",
+  "days_on_market": 35,
+  "available_date": "2026-08-01",
+  "off_market_date": null,
+  "created_at": "2026-06-08T16:36:18.000-04:00",
+  "updated_at": "2026-07-10T09:47:31.000-04:00",
+  "description": "Beautifully renovated 2 bedroom duplex in prime west village!\n\nThis stunning home is located in a well-maintained building and offers a thoughtfully updated interior with modern finishes throughout.\n\nApartment Features:\n\u2022 Private garden\n\u2022 In-unit washer and dryer\n\u2022 Newly renovated bathrooms\n\u2022 Modern kitchen with dishwasher\n\u2022 Hardwood flooring\n\u2022 Decorative fireplace\n\u2022 High ceilings\n\nPlease submit a tour request directly through the listing to receive a video and additional details.\n\nOpen houses are by appointment only.\n\nMore photos coming soon.",
+  "rooms": 3,
+  "bedrooms": 2,
+  "full_baths": 2,
+  "half_baths": 0,
+  "baths": 2.0,
+  "sqft": null,
+  "building_amenities": [
+   "Laundry"
+  ],
+  "doorman_types": [],
+  "parking_types": [],
+  "shared_outdoor_space": [],
+  "storage_types": [],
+  "unit_features": [
+   "Dishwasher",
+   "Fireplace",
+   "Hardwood Floors",
+   "Private Outdoor Space",
+   "View",
+   "Washer Dryer"
+  ],
+  "private_outdoor_space": [
+   "Garden"
+  ],
+  "views": [
+   "City",
+   "Garden"
+  ],
+  "fireplace_types": [
+   "Decorative"
+  ],
+  "rent": 8995,
+  "net_effective_rent": null,
+  "months_free": null,
+  "lease_term_months": null,
+  "security_deposit": null,
+  "total_monthly_price": null,
+  "price_changes": [
+   {
+    "price": 8995,
+    "date": "2026-06-08"
+   }
+  ],
+  "fees": [
+   "Application fee: $20",
+   "Security deposit: $8,995"
+  ],
+  "brokerage": "DALLAL",
+  "broker_license_name": "Dallal Group Llc",
+  "broker_license_type": "Real Estate Principal Office",
+  "broker_address": "260 Madison Avenue, 8th Floor, New York, NY, 10016",
+  "photo_count": 2,
+  "photo_url": "https://photos.zillowstatic.com/fp/ddebe4e99f4fdc03e80df0f726e17b52-se_large_800_400.webp",
+  "video_count": 0,
+  "tour_3d_url": null,
+  "floorplan_count": 0,
+  "mls_number": null,
+  "listing_source_type": "PARTNER",
+  "open_houses": [],
+  "canonical_url": "https://streeteasy.com/building/562-hudson-street-new_york/2",
+  "unit_history": [
+   {
+    "date": "2026-06-08",
+    "price": 8995,
+    "status": "ACTIVE",
+    "listing_id": "5066572",
+    "source": "DALLAL"
+   },
+   {
+    "date": "2025-07-23",
+    "price": 8250,
+    "status": "DELISTED",
+    "listing_id": "4741018",
+    "source": "Centennial Properties NY"
+   },
+   {
+    "date": "2025-07-09",
+    "price": 8250,
+    "status": null,
+    "listing_id": "4741018",
+    "source": "Centennial Properties NY"
+   },
+   {
+    "date": "2025-05-18",
+    "price": 8495,
+    "status": "ACTIVE",
+    "listing_id": "4741018",
+    "source": "Centennial Properties NY"
+   },
+   {
+    "date": "2025-04-22",
+    "price": 8495,
+    "status": "RENTED",
+    "listing_id": "4693919",
+    "source": "REAL New York"
+   },
+   {
+    "date": "2025-03-28",
+    "price": 8495,
+    "status": "ACTIVE",
+    "listing_id": "4693919",
+    "source": "REAL New York"
+   },
+   {
+    "date": "2025-03-27",
+    "price": 8495,
+    "status": "TEMPORARILY_OFF_MARKET",
+    "listing_id": "4693919",
+    "source": "REAL New York"
+   },
+   {
+    "date": "2025-03-26",
+    "price": 8495,
+    "status": "ACTIVE",
+    "listing_id": "4693919",
+    "source": "REAL New York"
+   },
+   {
+    "date": "2024-04-09",
+    "price": 5995,
+    "status": "RENTED",
+    "listing_id": "4379303",
+    "source": "REAL New York"
+   },
+   {
+    "date": "2024-04-09",
+    "price": 5995,
+    "status": "IN_CONTRACT",
+    "listing_id": "4379303",
+    "source": "REAL New York"
+   },
+   {
+    "date": "2024-04-01",
+    "price": 5995,
+    "status": "ACTIVE",
+    "listing_id": "4379303",
+    "source": "REAL New York"
+   },
+   {
+    "date": "2021-04-08",
+    "price": 4795,
+    "status": "RENTED",
+    "listing_id": "3475009",
+    "source": "Centennial Properties NY"
+   },
+   {
+    "date": "2021-04-07",
+    "price": 4795,
+    "status": "ACTIVE",
+    "listing_id": "3475009",
+    "source": "Centennial Properties NY"
+   },
+   {
+    "date": "2020-04-13",
+    "price": 5095,
+    "status": "RENTED",
+    "listing_id": "3018030",
+    "source": "Centennial Properties NY"
+   },
+   {
+    "date": "2020-04-11",
+    "price": 5095,
+    "status": "ACTIVE",
+    "listing_id": "3018030",
+    "source": "Centennial Properties NY"
+   }
+  ],
+  "area_median_rent_same_beds": 7400,
+  "building_name": "",
+  "neighborhood": "West Village",
+  "building_floors": 4,
+  "building_units": 8,
+  "year_built": null,
+  "building_slug": "562-hudson-street-new_york",
+  "unit_type_display": "Rental unit in West Village",
+  "unit_type": "Rental unit",
+  "broker_fee": null,
+  "borough": "Manhattan"
+ },
+ {
+  "listing_id": "5068611",
+  "url": "https://streeteasy.com/rental/5068611",
+  "page_title_name": "194 East 2nd Street #6D",
+  "ld_price": 12500,
+  "ld_valid_from": "2026-06-10",
+  "ld_availability": "InStock",
+  "latitude": 40.7223,
+  "longitude": -73.9837,
+  "address_street": "194 East 2nd Street",
+  "unit": "#6D",
+  "city": "New York",
+  "state": "NY",
+  "zip": "10009",
+  "full_address": "194 East 2nd Street #6D",
+  "status": "ACTIVE",
+  "listed_date": "2026-06-10",
+  "days_on_market": 33,
+  "available_date": "2026-07-01",
+  "off_market_date": null,
+  "created_at": "2026-06-10T11:31:38.000-04:00",
+  "updated_at": "2026-07-01T11:07:20.000-04:00",
+  "description": "\u2b50PENTHOUSE | TOP FLOOR | PRIVATE TERRACE | BRIGHT AND SPACIOUS | FLEX 4\u2b50\n\n194 East 2nd Street is a full-service elevator building featuring a 24-hour doorman, beautifully redesigned hallways and common areas, a high-end fitness center with an infrared sauna and yoga/pilates room, and a tenant lounge with a billiards table.\n\nPet-friendly and ideally located moments from the best dining, nightlife, cafes, parks, and transportation the East Village has to offer.\n\n\u2705 Listing Fee Disclosure Section (FARE Act Compliant)\nFees:\n- No broker fee.\n- $20 application fee per applicant.\n- First month\u2019s rent and one month security deposit due at lease signing. \n\nEqual Housing Opportunity. We support fair housing and do not discriminate based on any protected characteristic, including lawful source of income. No broker fee is payable by the tenant to the landlord\u2019s agent or listing agent in connection with this listing. Tenant-paid charges required to apply for or rent this apartment are limited to: application fee $20 per applicant; first month\u2019s rent equal to one month\u2019s rent at the lease rate; security deposit equal to one month\u2019s rent; and no other mandatory tenant-paid charges unless expressly stated in this listing. Listing media may include actual apartment photos, representative or similar-unit photos, model-unit photos, prior-date photos, virtual staging, renderings, AI-generated or AI-enhanced images, and approximate floor plans for illustrative purposes only. Prospective tenants are responsible for independently verifying all information and inspecting the apartment before lease execution.",
+  "rooms": 7,
+  "bedrooms": 3,
+  "full_baths": 2,
+  "half_baths": 0,
+  "baths": 2.0,
+  "sqft": null,
+  "building_amenities": [
+   "Bike Room",
+   "Doorman",
+   "Elevator",
+   "Fios Available",
+   "Laundry",
+   "Live In Super",
+   "Package Room",
+   "Shared Outdoor Space"
+  ],
+  "doorman_types": [],
+  "parking_types": [],
+  "shared_outdoor_space": [
+   "Courtyard",
+   "Patio"
+  ],
+  "storage_types": [],
+  "unit_features": [
+   "Central Ac",
+   "Dishwasher",
+   "Hardwood Floors",
+   "Private Outdoor Space",
+   "View"
+  ],
+  "private_outdoor_space": [
+   "Balcony",
+   "Private Roof Deck",
+   "Terrace"
+  ],
+  "views": [
+   "City"
+  ],
+  "fireplace_types": [],
+  "rent": 12500,
+  "net_effective_rent": null,
+  "months_free": null,
+  "lease_term_months": null,
+  "security_deposit": null,
+  "total_monthly_price": null,
+  "price_changes": [
+   {
+    "price": 12500,
+    "date": "2026-06-10"
+   }
+  ],
+  "fees": [
+   "Application fee: $20",
+   "Security deposit: $12,500"
+  ],
+  "brokerage": "Pure Leasing LLC",
+  "broker_license_name": "Pure Leasing Llc",
+  "broker_license_type": "Real Estate Principal Office",
+  "broker_address": "6 East 39th Street, 9th Fl, New York, NY, 10016",
+  "photo_count": 24,
+  "photo_url": "https://photos.zillowstatic.com/fp/2834231743e06e7f999fdcb6203f776b-se_large_800_400.webp",
+  "video_count": 0,
+  "tour_3d_url": null,
+  "floorplan_count": 1,
+  "mls_number": null,
+  "listing_source_type": "PARTNER",
+  "open_houses": [],
+  "canonical_url": "https://streeteasy.com/building/194-east-2nd-street-new_york/6d",
+  "unit_history": [
+   {
+    "date": "2026-06-10",
+    "price": 12500,
+    "status": "ACTIVE",
+    "listing_id": "5068611",
+    "source": "Pure Leasing LLC"
+   },
+   {
+    "date": "2016-04-02",
+    "price": 7500,
+    "status": "NO_LONGER_AVAILABLE",
+    "listing_id": "1686132",
+    "source": "Skyline Developers"
+   },
+   {
+    "date": "2015-12-01",
+    "price": 7500,
+    "status": "ACTIVE",
+    "listing_id": "1686132",
+    "source": "Skyline Developers"
+   }
+  ],
+  "area_median_rent_same_beds": 7722,
+  "building_name": "",
+  "neighborhood": "East Village",
+  "building_floors": 6,
+  "building_units": 61,
+  "year_built": 1997,
+  "building_slug": "194-east-2nd-street-new_york",
+  "unit_type_display": "Rental unit in East Village",
+  "unit_type": "Rental unit",
+  "broker_fee": null,
+  "borough": "Manhattan"
+ },
+ {
+  "listing_id": "5072794",
+  "url": "https://streeteasy.com/rental/5072794",
+  "page_title_name": "311 11th Avenue #2216",
+  "ld_price": 9395,
+  "ld_valid_from": "2026-06-14",
+  "ld_availability": "InStock",
+  "latitude": 40.753277,
+  "longitude": -74.00423,
+  "address_street": "311 11th Avenue",
+  "unit": "#2216",
+  "city": "New York",
+  "state": "NY",
+  "zip": "10001",
+  "full_address": "311 11th Avenue #2216",
+  "status": "ACTIVE",
+  "listed_date": "2026-06-14",
+  "days_on_market": 29,
+  "available_date": "2026-06-08",
+  "off_market_date": null,
+  "created_at": "2026-06-14T17:04:53.000-04:00",
+  "updated_at": "2026-07-13T03:04:59.000-04:00",
+  "description": "3 ELEVEN - CORNER TWO BEDROOM - PERFECT FOR ENTERTAINING!\nReduced security deposits for highly qualified applicants only.\n\nEvery apartment at 3ELEVEN features an intentional design where every square foot of space is beautiful and functional in equal measure. The homes are open and spacious with ample room for sofas, dining tables and nightstands. The materials and finishes rival those found in condominiums, including wide plank wood flooring, quartz Caesarstone countertops, backsplashes and island waterfalls in the kitchens and custom vanities in the baths.\n\n- Six-inch Wide-plank White Oak Floors\n- Solar Shades\n- In-residence Washer/Dryer\n- Personal safes in All Homes\n- Individually Controlled Central Heating and Cooling\n- Caesarstone Countertop and Backsplash\n- Stainless Steel Counter-Depth Refrigerators with Ice Makers\n- Stainless-Steel Gas Range\n- Bosch Panelized Dishwasher\n- Under Cabinet Kitchen Lighting\n- Custom Bathroom Vanities with Caesarstone Countertops\n- Full-height Custom Medicine Cabinets\n- Full-height Mirror and Integral Medicine Lockboxes\n\nThe size and type of amenities instantly set 3ELEVEN apart. Its nearly 30,000-square-feet of interior amenities, and over 30,000-square-feet of outdoor amenities, let you enjoy true indoor-outdoor living.\n\nOutdoor pool surrounded by comfortable lounges, tenant lounge with catering kitchen, semi-private cabanas, BBQ grills, amphitheater room, & game room\n- Fitness Center, over 5,000 square feet of fitness, aerobic, well-being and meditative spaces.\n- Pet Health and Wellness, Pamper your pooch with two outdoor dog runs and a professionally staffed full-service pet care facility.\n- Furnished and Landscaped 42nd floor sky deck with our lovely speakeasy room\n- Children's playroom\n- Stunning Doorman attended lobby with 24hr concierge\n- Package Valet with dry cleaning, laundry, housekeeping available\n- On-site bicycle storage and storage lockers, laundry room\n- Discounted parking for 3Eleven residents\n- Tenants enjoy monthly exclusive resident special events included in amenity fee\n\nOpen daily; Monday-Friday 10-6, Saturday/Sunday 9:30-5:30.\nWe're proud to be Rated #1 in Manhattan on Apartmentratings.com\n\nAny broker formally retained or informally engaged by a prospective tenant shall be acting solely on that tenants behalf. Images and videos are representative and may not be of the actual unit. This is an exclusive listing by 3Eleven Leasing Team. One to two year leases available. Equal Housing Opportunity. No Broker Fee. Unauthorized reproduction of this ad and/or its images in whole or partially is prohibited.",
+  "rooms": 4,
+  "bedrooms": 2,
+  "full_baths": 1,
+  "half_baths": 0,
+  "baths": 1.0,
+  "sqft": null,
+  "building_amenities": [
+   "Bike Room",
+   "Concierge",
+   "Doorman",
+   "Elevator",
+   "Fios Available",
+   "Gym",
+   "Laundry",
+   "Live In Super",
+   "Media Room",
+   "Package Room",
+   "Pool",
+   "Shared Outdoor Space",
+   "Storage Space"
+  ],
+  "doorman_types": [],
+  "parking_types": [],
+  "shared_outdoor_space": [
+   "Deck",
+   "Garden",
+   "Patio",
+   "Roof Deck"
+  ],
+  "storage_types": [],
+  "unit_features": [
+   "Dishwasher",
+   "Private Outdoor Space",
+   "Washer Dryer"
+  ],
+  "private_outdoor_space": [
+   "Garden",
+   "Terrace"
+  ],
+  "views": [],
+  "fireplace_types": [],
+  "rent": 9395,
+  "net_effective_rent": null,
+  "months_free": null,
+  "lease_term_months": null,
+  "security_deposit": null,
+  "total_monthly_price": null,
+  "price_changes": [
+   {
+    "price": 9395,
+    "date": "2026-06-14"
+   }
+  ],
+  "fees": [],
+  "brokerage": "Clinton Management",
+  "broker_license_name": null,
+  "broker_license_type": null,
+  "photo_count": 23,
+  "photo_url": "https://photos.zillowstatic.com/fp/f38f5bdb38d8cc892b4534bce34796db-se_large_800_400.webp",
+  "video_count": 0,
+  "tour_3d_url": null,
+  "floorplan_count": 1,
+  "mls_number": null,
+  "listing_source_type": "FEED",
+  "open_houses": [
+   {
+    "id": "20952234",
+    "startTime": "2026-07-14T11:00:00.000-04:00",
+    "endTime": "2026-07-14T14:00:00.000-04:00",
+    "appointmentOnly": true,
+    "showingNotes": null
+   },
+   {
+    "id": "20957571",
+    "startTime": "2026-07-16T11:00:00.000-04:00",
+    "endTime": "2026-07-16T14:00:00.000-04:00",
+    "appointmentOnly": true,
+    "showingNotes": null
+   },
+   {
+    "id": "20968079",
+    "startTime": "2026-07-21T11:00:00.000-04:00",
+    "endTime": "2026-07-21T14:00:00.000-04:00",
+    "appointmentOnly": true,
+    "showingNotes": null
+   },
+   {
+    "id": "20976091",
+    "startTime": "2026-07-23T11:00:00.000-04:00",
+    "endTime": "2026-07-23T14:00:00.000-04:00",
+    "appointmentOnly": true,
+    "showingNotes": null
+   }
+  ],
+  "canonical_url": "https://streeteasy.com/building/3-eleven/2216",
+  "unit_history": [
+   {
+    "date": "2026-06-14",
+    "price": 9395,
+    "status": "ACTIVE",
+    "listing_id": "5072794",
+    "source": "Clinton Management"
+   }
+  ],
+  "area_median_rent_same_beds": 8802,
+  "building_name": "3 Eleven",
+  "neighborhood": "West Chelsea",
+  "building_floors": 62,
+  "building_units": 938,
+  "year_built": 2022,
+  "building_slug": "3-eleven",
+  "unit_type_display": "Rental unit in West Chelsea",
+  "unit_type": "Rental unit",
+  "broker_fee": null,
+  "borough": "Manhattan"
+ },
+ {
+  "listing_id": "5074300",
+  "url": "https://streeteasy.com/rental/5074300",
+  "page_title_name": "83 Warren Street #5",
+  "ld_price": 16500,
+  "ld_valid_from": "2026-06-16",
+  "ld_availability": "InStock",
+  "latitude": 40.71515,
+  "longitude": -74.010605,
+  "address_street": "83 Warren Street",
+  "unit": "#5",
+  "city": "New York",
+  "state": "NY",
+  "zip": "10007",
+  "full_address": "83 Warren Street #5",
+  "status": "ACTIVE",
+  "listed_date": "2026-06-16",
+  "days_on_market": 27,
+  "available_date": "2026-06-16",
+  "off_market_date": null,
+  "created_at": "2026-06-16T08:56:35.000-04:00",
+  "updated_at": "2026-07-07T15:25:06.000-04:00",
+  "description": "For Rent: Exquisite Top-Floor Penthouse Loft with Private Roof Deck in Prime Tribeca\n\nStep into luxury with this stunning top-floor penthouse loft in the heart of Tribeca. Newly renovated and designed with modern elegance, this 3-bedroom gem offers a perfect blend of sophistication and urban convenience. Just moments from the Chambers Street subway stop, you\u2019ll enjoy effortless access to all that New York City has to offer.\n\nKey Features:\n\nLuxurious Renovation: Revel in the highest quality finishes and contemporary design throughout this newly renovated penthouse.\n\nExpansive Living Space: A generous, open-concept living area ideal for both grand entertaining and intimate relaxation.\n\nHigh-End Finishes: Impeccable craftsmanship and premium materials define the condo-level interiors.\n\nAbundant Natural Light: Floor-to-ceiling windows bathe the loft in natural light, enhancing the warm and inviting atmosphere.\n\nPrivate Roof Deck: Enjoy exclusive access to a private roof deck with breathtaking city views\u2014perfect for relaxation or entertaining.\n\nIn-Unit Washer/Dryer: Added convenience with a washer and dryer directly within your loft.\n\nEnhanced Security: Featuring a state-of-the-art Butterfly security system for your peace of mind.\n\nAdditional Storage: Includes extra storage lockers for your convenience.\n\nBike Storage: Dedicated bike storage ensures your bicycles are safe and accessible.\n\nThis exceptional penthouse loft not only offers unparalleled living space but also the highly sought-after Tribeca lifestyle. Don\u2019t miss out on the opportunity to make this luxurious residence your new home. Contact us today to arrange a private viewing!",
+  "rooms": 6,
+  "bedrooms": 3,
+  "full_baths": 2,
+  "half_baths": 1,
+  "baths": 2.5,
+  "sqft": null,
+  "building_amenities": [
+   "Bike Room",
+   "Fios Available",
+   "Shared Outdoor Space"
+  ],
+  "doorman_types": [],
+  "parking_types": [],
+  "shared_outdoor_space": [
+   "Roof Deck"
+  ],
+  "storage_types": [],
+  "unit_features": [
+   "Dishwasher",
+   "Private Outdoor Space",
+   "View",
+   "Washer Dryer"
+  ],
+  "private_outdoor_space": [
+   "Private Roof Deck"
+  ],
+  "views": [
+   "City"
+  ],
+  "fireplace_types": [],
+  "rent": 16500,
+  "net_effective_rent": null,
+  "months_free": null,
+  "lease_term_months": null,
+  "security_deposit": null,
+  "total_monthly_price": null,
+  "price_changes": [
+   {
+    "price": 17500,
+    "date": "2026-06-16"
+   },
+   {
+    "price": 16500,
+    "date": "2026-07-07"
+   }
+  ],
+  "fees": [
+   "Application fee: $20",
+   "Security deposit: $16,500"
+  ],
+  "brokerage": "City Wide Apartments",
+  "broker_license_name": "City Wide Apartments Inc",
+  "broker_license_type": "Corporate Broker",
+  "broker_address": "555 8th Avenue Ste, 2310, New York, NY, 10018",
+  "photo_count": 15,
+  "photo_url": "https://photos.zillowstatic.com/fp/20b554dc3b7312b7fe58d592e5c9cdaf-se_large_800_400.webp",
+  "video_count": 0,
+  "tour_3d_url": null,
+  "floorplan_count": 0,
+  "mls_number": null,
+  "listing_source_type": "PARTNER",
+  "open_houses": [],
+  "canonical_url": "https://streeteasy.com/building/83-warren-street-new_york/5",
+  "unit_history": [
+   {
+    "date": "2026-07-07",
+    "price": 16500,
+    "status": null,
+    "listing_id": "5074300",
+    "source": "City Wide Apartments"
+   },
+   {
+    "date": "2026-06-16",
+    "price": 17500,
+    "status": "ACTIVE",
+    "listing_id": "5074300",
+    "source": "City Wide Apartments"
+   },
+   {
+    "date": "2024-08-29",
+    "price": 16500,
+    "status": "RENTED",
+    "listing_id": "4521897",
+    "source": "City Wide Apartments"
+   },
+   {
+    "date": "2024-08-26",
+    "price": 16500,
+    "status": "ACTIVE",
+    "listing_id": "4521897",
+    "source": "City Wide Apartments"
+   }
+  ],
+  "area_median_rent_same_beds": 16000,
+  "building_name": "",
+  "neighborhood": "Tribeca",
+  "building_floors": 5,
+  "building_units": 5,
+  "year_built": 1920,
+  "building_slug": "83-warren-street-new_york",
+  "unit_type_display": "Multifamily home in Tribeca",
+  "unit_type": "Multifamily home",
+  "broker_fee": null,
+  "borough": "Manhattan"
+ },
+ {
+  "listing_id": "5077478",
+  "url": "https://streeteasy.com/rental/5077478",
+  "page_title_name": "528 East 6th Street #2",
+  "ld_price": 14500,
+  "ld_valid_from": "2026-06-19",
+  "ld_availability": "InStock",
+  "latitude": 40.72468,
+  "longitude": -73.982666,
+  "address_street": "528 East 6th Street",
+  "unit": "#2",
+  "city": "New York",
+  "state": "NY",
+  "zip": "10009",
+  "full_address": "528 East 6th Street #2",
+  "status": "ACTIVE",
+  "listed_date": "2026-06-19",
+  "days_on_market": 24,
+  "available_date": "2026-08-08",
+  "off_market_date": null,
+  "created_at": "2026-06-18T15:46:32.000-04:00",
+  "updated_at": "2026-07-07T17:57:42.000-04:00",
+  "description": "FULL-FLOOR 3 BEDROOM WITH PRIVATE GARDEN, 3 FULL BATHS & IN-UNIT WASHER/DRYER. \n\nWelcome to a rare opportunity to enjoy true indoor-outdoor living in the heart of downtown Manhattan. This expansive full-floor residence offers 3 king-sized bedrooms, 3 full bathrooms, soaring ceilings, oversized floor-to-ceiling windows, and both northern and southern exposures that fill the home with natural light throughout the day.\n\nThe spacious living and dining area opens directly onto a private garden of approximately 400 square feet, creating the perfect setting for outdoor dining, entertaining, gardening, or simply enjoying a quiet morning coffee. The primary suite features two oversized windows, a large walk-in closet with floor-to-ceiling storage, and a beautifully appointed marble en-suite bathroom. All three bedrooms can comfortably accommodate king-sized furniture and offer generous storage space. The third bedroom, located just off the living room, enjoys exceptional natural light and flexibility for use as a bedroom, guest room, or home office.\n\nAdditional features include high ceilings, an in-unit washer/dryer, three full marble bathrooms, and the privacy of occupying an entire floor. Located on the second floor of a boutique pet-friendly elevator building, residents enjoy the convenience of a virtual doorman system by Carson as well as access to a furnished roof deck with stunning skyline views.\n\nPerfectly situated at the crossroads of the East Village, Lower East Side, and Nolita, you\u2019ll be surrounded by some of downtown Manhattan\u2019s most beloved restaurants, caf\u00e9s, markets, and nightlife destinations, including Clinton Street Baking Company, Union Market, and countless neighborhood favorites.\n\nThis is a unique opportunity to enjoy the space and privacy of a townhouse with the convenience of full-service apartment living in one of Manhattan\u2019s most vibrant neighborhoods.\n\n$20 application fee per applicant. First month\u2019s rent and one month\u2019s security deposit are due at lease signing.",
+  "rooms": 7,
+  "bedrooms": 3,
+  "full_baths": 3,
+  "half_baths": 0,
+  "baths": 3.0,
+  "sqft": null,
+  "building_amenities": [
+   "Doorman",
+   "Elevator",
+   "Fios Available",
+   "Shared Outdoor Space"
+  ],
+  "doorman_types": [
+   "Virtual"
+  ],
+  "parking_types": [],
+  "shared_outdoor_space": [
+   "Roof Deck"
+  ],
+  "storage_types": [],
+  "unit_features": [
+   "Central Ac",
+   "Dishwasher",
+   "Hardwood Floors",
+   "Private Outdoor Space",
+   "View",
+   "Washer Dryer"
+  ],
+  "private_outdoor_space": [
+   "Garden",
+   "Terrace"
+  ],
+  "views": [
+   "City",
+   "Garden"
+  ],
+  "fireplace_types": [],
+  "rent": 14500,
+  "net_effective_rent": null,
+  "months_free": null,
+  "lease_term_months": null,
+  "security_deposit": null,
+  "total_monthly_price": null,
+  "price_changes": [
+   {
+    "price": 14750,
+    "date": "2026-06-19"
+   },
+   {
+    "price": 14500,
+    "date": "2026-07-07"
+   }
+  ],
+  "fees": [
+   "Application fee: $20",
+   "Security deposit: $14,750"
+  ],
+  "brokerage": "MK Realty Group LLC",
+  "broker_license_name": "Mk Realty Group Llc",
+  "broker_license_type": "Real Estate Principal Office",
+  "broker_address": "100 Carlyle Dr, Ste 3ms, Cliffside Park, NJ, 07010-3540",
+  "photo_count": 16,
+  "photo_url": "https://photos.zillowstatic.com/fp/ba6e4b111159e31858a2f67f153b3cdd-se_large_800_400.webp",
+  "video_count": 0,
+  "tour_3d_url": null,
+  "floorplan_count": 3,
+  "mls_number": null,
+  "listing_source_type": "PARTNER",
+  "open_houses": [],
+  "canonical_url": "https://streeteasy.com/building/528-east-6-street-new_york/2nd-floor",
+  "unit_history": [
+   {
+    "date": "2026-07-07",
+    "price": 14500,
+    "status": null,
+    "listing_id": "5077478",
+    "source": "MK Realty Group LLC"
+   },
+   {
+    "date": "2026-06-19",
+    "price": 14750,
+    "status": "ACTIVE",
+    "listing_id": "5077478",
+    "source": "MK Realty Group LLC"
+   },
+   {
+    "date": "2024-09-23",
+    "price": 9000,
+    "status": "NO_LONGER_AVAILABLE",
+    "listing_id": "4407440",
+    "source": "Real Broker NY LLC"
+   },
+   {
+    "date": "2024-06-24",
+    "price": 9000,
+    "status": "TEMPORARILY_OFF_MARKET",
+    "listing_id": "4407440",
+    "source": "Real Broker NY LLC"
+   },
+   {
+    "date": "2024-05-06",
+    "price": 9000,
+    "status": "ACTIVE",
+    "listing_id": "4407440",
+    "source": "Real Broker NY LLC"
+   },
+   {
+    "date": "2022-04-21",
+    "price": 8500,
+    "status": "RENTED",
+    "listing_id": "3822738",
+    "source": "Corcoran"
+   },
+   {
+    "date": "2022-04-21",
+    "price": 8500,
+    "status": "IN_CONTRACT",
+    "listing_id": "3822738",
+    "source": "Corcoran"
+   },
+   {
+    "date": "2022-04-20",
+    "price": 8500,
+    "status": "TEMPORARILY_OFF_MARKET",
+    "listing_id": "3822738",
+    "source": "Corcoran"
+   },
+   {
+    "date": "2022-04-19",
+    "price": 8500,
+    "status": "ACTIVE",
+    "listing_id": "3822738",
+    "source": "Corcoran"
+   },
+   {
+    "date": "2019-04-06",
+    "price": 7200,
+    "status": "RENTED",
+    "listing_id": "2695140",
+    "source": "Think Properties"
+   },
+   {
+    "date": "2019-04-03",
+    "price": 7200,
+    "status": null,
+    "listing_id": "2053843",
+    "source": "Think Properties"
+   },
+   {
+    "date": "2017-05-01",
+    "price": 7250,
+    "status": "RENTED",
+    "listing_id": "2053843",
+    "source": "Think Properties"
+   },
+   {
+    "date": "2014-11-26",
+    "price": 7200,
+    "status": "NO_LONGER_AVAILABLE",
+    "listing_id": "2695140",
+    "source": "Think Properties"
+   },
+   {
+    "date": "2014-11-26",
+    "price": 7200,
+    "status": "ACTIVE",
+    "listing_id": "2695140",
+    "source": "Think Properties"
+   },
+   {
+    "date": "2014-11-26",
+    "price": 7250,
+    "status": "NO_LONGER_AVAILABLE",
+    "listing_id": "2053843",
+    "source": "Think Properties"
+   },
+   {
+    "date": "2014-11-26",
+    "price": 7250,
+    "status": "ACTIVE",
+    "listing_id": "2053843",
+    "source": "Think Properties"
+   },
+   {
+    "date": "2014-11-26",
+    "price": 7300,
+    "status": "RENTED",
+    "listing_id": "1420899",
+    "source": "Think Properties"
+   },
+   {
+    "date": "2014-11-26",
+    "price": 7300,
+    "status": "NO_LONGER_AVAILABLE",
+    "listing_id": "1420899",
+    "source": "Think Properties"
+   },
+   {
+    "date": "2014-11-21",
+    "price": 7300,
+    "status": null,
+    "listing_id": "1420899",
+    "source": "Think Properties"
+   },
+   {
+    "date": "2014-11-19",
+    "price": 6700,
+    "status": "ACTIVE",
+    "listing_id": "1420899",
+    "source": "Think Properties"
+   }
+  ],
+  "area_median_rent_same_beds": 7722,
+  "building_name": "",
+  "neighborhood": "East Village",
+  "building_floors": 6,
+  "building_units": 10,
+  "year_built": 2008,
+  "building_slug": "528-east-6-street-new_york",
+  "unit_type_display": "Rental unit in East Village",
+  "unit_type": "Rental unit",
+  "broker_fee": null,
+  "borough": "Manhattan"
+ },
+ {
+  "listing_id": "5078224",
+  "url": "https://streeteasy.com/rental/5078224",
+  "page_title_name": "50 Avenue A #4A",
+  "ld_price": 9500,
+  "ld_valid_from": "2026-06-29",
+  "ld_availability": "OutOfStock",
+  "latitude": 40.72383,
+  "longitude": -73.98478,
+  "address_street": "50 Avenue A",
+  "unit": "#4A",
+  "city": "New York",
+  "state": "NY",
+  "zip": "10009",
+  "full_address": "50 Avenue A #4A",
+  "status": "RENTED",
+  "listed_date": "2026-06-29",
+  "days_on_market": 13,
+  "available_date": "2026-08-06",
+  "off_market_date": "2026-07-12",
+  "created_at": "2026-06-19T12:31:50.000-04:00",
+  "updated_at": "2026-07-12T19:43:39.000-04:00",
+  "description": "Renovated duplex home, offered furnished for August 6th lease start. A true 2bed/2bath with a wood-burning fireplace and a bonus sun room for guests, meditation, and morning coffee. The home also has two private patios with views of the neighborhood.\r\n\r\nThe apartment features an incredible custom-built wooden staircase leading to the upper floor, also built out with matching hardwood, curved ceiling, two skylights, glass railing, floor-to-ceiling windows, and an upper patio. The living and dining rooms make for a sprawling common area filled with sunlight and a fireplace area. There is a second patio off of the living space that is internal to the block and very quiet, with beautiful views of the church next door.\r\n\r\nThe kitchen is modern, featuring paneled appliances, dishwasher, washer & dryer, and backsplash. The home has ample closet storage, hardwood floors, high ceilings, and air conditioner wall-through units in each room.\r\n\r\nThe primary bedroom accommodates a queen size bed and has an en suite renovated bathroom with a soaking tub and exquisite stone and tile work. The entry way door blends with the woodwork of the staircase for a stylish entry.\r\n\r\n50 Ave A, known as \"The Hearth House,\" is a small cooperative building with 17 units, super, and elevator.\r\n\r\nNo pets or short-term rentals.\r\nPhotos show previous styling. Apartment comes fully furnished; current furnishings, textiles, and outdoor setup may vary.\r\n\r\nRental requirements\r\nSecurity deposit required. \r\nNO PETS\r\nUtilities not included.\r\n1-year lease, option to renew -- longer term considered.\r\nCo-op board approval required\r\nFinancially qualified tenants\r\nTenant responsible for Application Fees,",
+  "rooms": 6,
+  "bedrooms": 2,
+  "full_baths": 2,
+  "half_baths": 0,
+  "baths": 2.0,
+  "sqft": 1200,
+  "building_amenities": [
+   "Elevator",
+   "Fios Available"
+  ],
+  "doorman_types": [],
+  "parking_types": [],
+  "shared_outdoor_space": [],
+  "storage_types": [],
+  "unit_features": [
+   "Dishwasher",
+   "Fireplace",
+   "Furnished",
+   "Hardwood Floors",
+   "Private Outdoor Space",
+   "Washer Dryer"
+  ],
+  "private_outdoor_space": [
+   "Balcony",
+   "Terrace"
+  ],
+  "views": [],
+  "fireplace_types": [],
+  "rent": 9500,
+  "net_effective_rent": null,
+  "months_free": null,
+  "lease_term_months": null,
+  "security_deposit": null,
+  "total_monthly_price": null,
+  "price_changes": [
+   {
+    "price": 9500,
+    "date": "2026-06-19"
+   }
+  ],
+  "fees": [
+   "Application fee: $300",
+   "Background check: $50",
+   "Security deposit: $9,500",
+   "Early termination: $9,500"
+  ],
+  "brokerage": "Owner",
+  "broker_license_name": null,
+  "broker_license_type": null,
+  "photo_count": 12,
+  "photo_url": "https://photos.zillowstatic.com/fp/559fefd91b094622421e32ddc79caf3e-se_large_800_400.webp",
+  "video_count": 0,
+  "tour_3d_url": null,
+  "floorplan_count": 0,
+  "mls_number": null,
+  "listing_source_type": "OWNER",
+  "open_houses": [],
+  "canonical_url": "https://streeteasy.com/building/50-avenue-a-new_york/4a",
+  "unit_history": [
+   {
+    "date": "2026-07-12",
+    "price": 9500,
+    "status": "RENTED",
+    "listing_id": "5078224",
+    "source": "Owner"
+   },
+   {
+    "date": "2026-06-29",
+    "price": 9500,
+    "status": "ACTIVE",
+    "listing_id": "5078224",
+    "source": "Owner"
+   },
+   {
+    "date": "2024-09-20",
+    "price": 8250,
+    "status": "RENTED",
+    "listing_id": "4515560",
+    "source": "Douglas Elliman"
+   },
+   {
+    "date": "2024-08-23",
+    "price": 8250,
+    "status": "IN_CONTRACT",
+    "listing_id": "4515560",
+    "source": "Douglas Elliman"
+   },
+   {
+    "date": "2024-08-19",
+    "price": 8250,
+    "status": "ACTIVE",
+    "listing_id": "4515560",
+    "source": "Douglas Elliman"
+   }
+  ],
+  "area_median_rent_same_beds": 5495,
+  "building_name": "",
+  "neighborhood": "East Village",
+  "building_floors": 7,
+  "building_units": 17,
+  "year_built": 1920,
+  "building_slug": "50-avenue-a-new_york",
+  "unit_type_display": "Hybrid in East Village",
+  "unit_type": "Hybrid",
+  "broker_fee": null,
+  "borough": "Manhattan"
+ },
+ {
+  "listing_id": "5081661",
+  "url": "https://streeteasy.com/rental/5081661",
+  "page_title_name": "50 Murray Street #1839",
+  "ld_price": 6995,
+  "ld_valid_from": "2026-06-23",
+  "ld_availability": "InStock",
+  "latitude": 40.7136,
+  "longitude": -74.0095,
+  "address_street": "50 Murray Street",
+  "unit": "#1839",
+  "city": "New York",
+  "state": "NY",
+  "zip": "10007",
+  "full_address": "50 Murray Street #1839",
+  "status": "ACTIVE",
+  "listed_date": "2026-06-23",
+  "days_on_market": 20,
+  "available_date": "2026-07-04",
+  "off_market_date": null,
+  "created_at": "2026-06-23T16:09:44.000-04:00",
+  "updated_at": "2026-06-23T16:32:29.000-04:00",
+  "description": "Welcome to Tribeca House! 50 Murray Street and 53 Park Place! \u2013 Luxury Living in the Heart of\n*Private Terrace*\n\nExperience sophisticated urban living at this premier full-service building, conveniently located in one of Manhattan\u2019s most vibrant neighbourhoods.\n\nBuilding Amenities:\n\n\u2022 24-hour Doorman & Concierge Service\n\n\u2022 Beautifully Landscaped Roof Deck with lounge seating and BBQ grills\n\n\u2022 Exclusive Equinox Gym Access\n\n\u2022 Laundry Facilities conveniently located on every floor\n\n\u2022 Two Resident Lounges \u2013 ideal for relaxing or entertaining guests\n\n\u2022 Indoor Basketball Court\n\nApartment Highlights:\n\n\u2022 Premium Stainless Steel Appliances\n\n\u2022 Dishwasher Included\n\n\u2022 Oversized Windows for abundant natural light\n\nPhotos may depict a representative unit.\n\nList of fees and costs for the apartment:\n- $20 Online application fee (per person)\n- \u2060$500 move in fee\n- \u2060$500 pet fee (unless SA)\n\nContact us today to schedule your private viewing!",
+  "rooms": 5,
+  "bedrooms": 2,
+  "full_baths": 1,
+  "half_baths": 0,
+  "baths": 1.0,
+  "sqft": null,
+  "building_amenities": [
+   "Bike Room",
+   "Childrens Playroom",
+   "Concierge",
+   "Doorman",
+   "Elevator",
+   "Fios Available",
+   "Gym",
+   "Laundry",
+   "Live In Super",
+   "Media Room",
+   "Package Room",
+   "Parking",
+   "Shared Outdoor Space",
+   "Storage Space",
+   "Valet Service"
+  ],
+  "doorman_types": [
+   "Full Time"
+  ],
+  "parking_types": [
+   "Garage",
+   "Valet"
+  ],
+  "shared_outdoor_space": [
+   "Deck",
+   "Garden",
+   "Patio",
+   "Roof Deck"
+  ],
+  "storage_types": [
+   "Locker Cage"
+  ],
+  "unit_features": [
+   "Central Ac",
+   "Dishwasher",
+   "Hardwood Floors",
+   "Private Outdoor Space",
+   "View"
+  ],
+  "private_outdoor_space": [
+   "Balcony",
+   "Terrace"
+  ],
+  "views": [
+   "City"
+  ],
+  "fireplace_types": [],
+  "rent": 6995,
+  "net_effective_rent": null,
+  "months_free": null,
+  "lease_term_months": null,
+  "security_deposit": null,
+  "total_monthly_price": null,
+  "price_changes": [
+   {
+    "price": 6995,
+    "date": "2026-06-23"
+   }
+  ],
+  "fees": [
+   "Application fee: $20",
+   "Security deposit: $6,995"
+  ],
+  "brokerage": "REAL New York",
+  "broker_license_name": "Real New York",
+  "broker_license_type": "Limited Liability Broker",
+  "broker_address": "29 West 30th Street West 30th Street, 4th Fl, New York, NY, 10001",
+  "photo_count": 9,
+  "photo_url": "https://photos.zillowstatic.com/fp/fa39277c9ffa6c996a2d4e2f278ebcc7-se_large_800_400.webp",
+  "video_count": 0,
+  "tour_3d_url": null,
+  "floorplan_count": 0,
+  "mls_number": null,
+  "listing_source_type": "PARTNER",
+  "open_houses": [],
+  "canonical_url": "https://streeteasy.com/building/tribeca-house/1839",
+  "unit_history": [
+   {
+    "date": "2026-06-23",
+    "price": 6995,
+    "status": "ACTIVE",
+    "listing_id": "5081661",
+    "source": "REAL New York"
+   },
+   {
+    "date": "2026-05-19",
+    "price": 7695,
+    "status": "RENTED",
+    "listing_id": "5026236",
+    "source": "REAL New York"
+   },
+   {
+    "date": "2026-04-27",
+    "price": 7695,
+    "status": "ACTIVE",
+    "listing_id": "5026236",
+    "source": "REAL New York"
+   }
+  ],
+  "area_median_rent_same_beds": 10555,
+  "building_name": "Tribeca House",
+  "neighborhood": "Tribeca",
+  "building_floors": 21,
+  "building_units": 389,
+  "year_built": 1964,
+  "building_slug": "tribeca-house",
+  "unit_type_display": "Rental unit in Tribeca",
+  "unit_type": "Rental unit",
+  "broker_fee": null,
+  "borough": "Manhattan"
+ },
+ {
+  "listing_id": "5082561",
+  "url": "https://streeteasy.com/rental/5082561",
+  "page_title_name": "20 East 13th Street #4A",
+  "ld_price": 10500,
+  "ld_valid_from": "2026-06-24",
+  "ld_availability": "InStock",
+  "latitude": 40.73472,
+  "longitude": -73.99322,
+  "address_street": "20 East 13th Street",
+  "unit": "#4A",
+  "city": "New York",
+  "state": "NY",
+  "zip": "10003",
+  "full_address": "20 East 13th Street #4A",
+  "status": "ACTIVE",
+  "listed_date": "2026-06-24",
+  "days_on_market": 19,
+  "available_date": "2026-07-01",
+  "off_market_date": null,
+  "created_at": "2026-06-24T13:29:47.000-04:00",
+  "updated_at": "2026-07-08T14:05:54.000-04:00",
+  "description": "Brand-New Full-Floor Residence in the Heart of Union Square with Private Outdoor Space\n\nWelcome to an exceptional living experience at 20 East 13th Street \u2014 a brand-new full-floor 3-bedroom residence designed with luxury, comfort, and modern city living in mind. Featuring condo-quality finishes, expansive living spaces, and dramatic floor-to-ceiling windows, this one-of-a-kind home offers the perfect blend of sophistication and convenience in one of Manhattan\u2019s most vibrant neighborhoods.\n\nApartment Features\n\nPrivate Outdoor Space\nStep onto your enormous private balcony \u2014 the perfect place to unwind, entertain, or take in the energy of Union Square.\n\nFloor-to-Ceiling Windows\nOversized windows flood the apartment with natural light while showcasing sweeping city views and creating an open, airy atmosphere throughout.\n\nSpacious Queen-Sized Bedrooms\nAll three bedrooms comfortably accommodate queen-sized furniture and offer ample space for relaxation, storage, and privacy.\n\nExpansive Living & Dining Area\nThe thoughtfully designed open-concept layout provides a seamless flow between living and entertaining spaces, ideal for both everyday living and hosting guests.\n\nModern Chef\u2019s Kitchen\nThe sleek separate kitchen is outfitted with premium stainless steel appliances, including a dishwasher and microwave, combining style with functionality.\n\nSpa-Inspired Bathroom\nElegant marble finishes and high-end fixtures create a luxurious bathroom experience designed for comfort and relaxation.\n\nEveryday Convenience\nAdditional features include:\n\nIn-unit washer and dryer\nIndividual HVAC heating and cooling systems\nBeautiful hardwood flooring throughout\nPrime Union Square Location\n\nLocated in the center of Union Square, this residence offers immediate access to some of downtown Manhattan\u2019s best restaurants, caf\u00e9s, shopping, nightlife, and cultural destinations. Union Square Park is just moments away, providing a welcome green escape in the city. The location is also ideal for students and professionals, with NYU, The New School, and the School of Visual Arts all nearby.\n\nDon\u2019t miss the opportunity to live in this exclusive full-floor home at 20 East 13th Street. Contact us today to schedule a private tour and experience elevated Union Square living firsthand.\n\nMove in breakdown:\n\u2022 One month rent + one month security deposit due at lease signing.\n\nAdditional Fees:\n\u2022 $20 application fee per person (applicant and/or guarantor) - covers cost of background and credit check.",
+  "rooms": 5,
+  "bedrooms": 3,
+  "full_baths": 1,
+  "half_baths": 0,
+  "baths": 1.0,
+  "sqft": null,
+  "building_amenities": [
+   "Doorman",
+   "Fios Available",
+   "Shared Outdoor Space"
+  ],
+  "doorman_types": [
+   "Virtual"
+  ],
+  "parking_types": [],
+  "shared_outdoor_space": [
+   "Roof Deck"
+  ],
+  "storage_types": [],
+  "unit_features": [
+   "Central Ac",
+   "Dishwasher",
+   "Hardwood Floors",
+   "Private Outdoor Space",
+   "View",
+   "Washer Dryer"
+  ],
+  "private_outdoor_space": [
+   "Balcony",
+   "Private Roof Deck",
+   "Roof Rights"
+  ],
+  "views": [
+   "City",
+   "Garden"
+  ],
+  "fireplace_types": [],
+  "rent": 10500,
+  "net_effective_rent": 9625,
+  "months_free": 1,
+  "lease_term_months": 12,
+  "security_deposit": null,
+  "total_monthly_price": null,
+  "price_changes": [
+   {
+    "price": 10850,
+    "date": "2026-06-24"
+   },
+   {
+    "price": 10500,
+    "date": "2026-07-08"
+   }
+  ],
+  "fees": [
+   "Application fee: $20",
+   "Security deposit: $10,850"
+  ],
+  "brokerage": "REAL New York",
+  "broker_license_name": "Real New York",
+  "broker_license_type": "Limited Liability Broker",
+  "broker_address": "29 West 30th Street West 30th Street, 4th Fl, New York, NY, 10001",
+  "photo_count": 9,
+  "photo_url": "https://photos.zillowstatic.com/fp/3ce91cfa93fe44f3aab039da2b48511b-se_large_800_400.webp",
+  "video_count": 0,
+  "tour_3d_url": null,
+  "floorplan_count": 0,
+  "mls_number": null,
+  "listing_source_type": "PARTNER",
+  "open_houses": [],
+  "canonical_url": "https://streeteasy.com/building/20-east-13-street-new_york/4a",
+  "unit_history": [
+   {
+    "date": "2026-07-08",
+    "price": 10500,
+    "status": null,
+    "listing_id": "5082561",
+    "source": "REAL New York"
+   },
+   {
+    "date": "2026-06-24",
+    "price": 10850,
+    "status": "ACTIVE",
+    "listing_id": "5082561",
+    "source": "REAL New York"
+   },
+   {
+    "date": "2025-05-17",
+    "price": 10450,
+    "status": "NO_LONGER_AVAILABLE",
+    "listing_id": "4725625",
+    "source": "Owner"
+   },
+   {
+    "date": "2025-05-02",
+    "price": 10450,
+    "status": "ACTIVE",
+    "listing_id": "4725625",
+    "source": "Owner"
+   }
+  ],
+  "area_median_rent_same_beds": 9695,
+  "building_name": "",
+  "neighborhood": "Greenwich Village",
+  "building_floors": 5,
+  "building_units": 5,
+  "year_built": 1900,
+  "building_slug": "20-east-13-street-new_york",
+  "unit_type_display": "Rental unit in Greenwich Village",
+  "unit_type": "Rental unit",
+  "broker_fee": null,
+  "borough": "Manhattan"
+ },
+ {
+  "listing_id": "5083885",
+  "url": "https://streeteasy.com/rental/5083885",
+  "page_title_name": "112 4th Avenue #5A",
+  "ld_price": 14500,
+  "ld_valid_from": "2026-06-25",
+  "ld_availability": "InStock",
+  "latitude": 40.732613,
+  "longitude": -73.99046,
+  "address_street": "112 4th Avenue",
+  "unit": "#5A",
+  "city": "New York",
+  "state": "NY",
+  "zip": "10003",
+  "full_address": "112 4th Avenue #5A",
+  "status": "ACTIVE",
+  "listed_date": "2026-06-25",
+  "days_on_market": 18,
+  "available_date": "2026-08-06",
+  "off_market_date": null,
+  "created_at": "2026-06-25T14:18:24.000-04:00",
+  "updated_at": "2026-06-25T19:54:06.000-04:00",
+  "description": "Available at 112 4th Avenue!\n\nApartment Features:\n\n\u2010 2 Bedrooms - Flex 3 / 3 Bathrooms\n- Penthouse\n- Private Outdoor\n\u2010 Hardwood floors throughout\n\u2010 Central Air Control\n\u2010 Washer/dryer in unit\n\nFull kitchen with:\n\n\u2010 Stainless steel appliances\n\u2010 BOSCH microwave and oven\n\u2010 Dishwasher\n\u2010 Granite countertops\n\nBuilding Amenities:\n\n\u2010 Elevator\n\u2010 Pet-friendly\n\u2010 Virtual Doorman (Carson)\n\n24/7 remote doorman and Carson mobile app for package notifications, building communication, video intercom and access control.\n\nPerfectly situated in the heart of Greenwich Village, this building offers convenient access to multiple subway lines including the L, N, Q, R, W, and 4, 5, 6 trains. The vibrant neighborhood surrounds Union Square and Washington Square Park, offering an abundance of restaurants, coffee shops, and fitness facilities within walking distance.\n\nViewings by appointment only!\n\nAUGUST 6TH MOVE-IN DATE!",
+  "rooms": 6,
+  "bedrooms": 2,
+  "full_baths": 3,
+  "half_baths": 0,
+  "baths": 3.0,
+  "sqft": 1675,
+  "building_amenities": [
+   "Doorman",
+   "Elevator",
+   "Shared Outdoor Space",
+   "Storage Space"
+  ],
+  "doorman_types": [
+   "Virtual"
+  ],
+  "parking_types": [],
+  "shared_outdoor_space": [
+   "Roof Deck"
+  ],
+  "storage_types": [
+   "Locker Cage"
+  ],
+  "unit_features": [
+   "Central Ac",
+   "Dishwasher",
+   "Hardwood Floors",
+   "Loft",
+   "Private Outdoor Space",
+   "View",
+   "Washer Dryer"
+  ],
+  "private_outdoor_space": [
+   "Private Roof Deck"
+  ],
+  "views": [
+   "City"
+  ],
+  "fireplace_types": [],
+  "rent": 14500,
+  "net_effective_rent": null,
+  "months_free": null,
+  "lease_term_months": null,
+  "security_deposit": null,
+  "total_monthly_price": null,
+  "price_changes": [
+   {
+    "price": 14500,
+    "date": "2026-06-25"
+   }
+  ],
+  "fees": [
+   "Application fee: $20",
+   "Security deposit: $0"
+  ],
+  "brokerage": "Bridge Real Estate Advisory LLC ",
+  "broker_license_name": "Bridge Real Estate Advisory Llc",
+  "broker_license_type": "Real Estate Principal Office",
+  "broker_address": "600 Third Avenue, 10th Fl, New York, NY, 10016",
+  "photo_count": 14,
+  "photo_url": "https://photos.zillowstatic.com/fp/21052148ad26825984fdebf5485a8748-se_large_800_400.webp",
+  "video_count": 0,
+  "tour_3d_url": null,
+  "floorplan_count": 1,
+  "mls_number": null,
+  "listing_source_type": "PARTNER",
+  "open_houses": [],
+  "canonical_url": "https://streeteasy.com/building/the-roselyn/5a",
+  "unit_history": [
+   {
+    "date": "2026-06-25",
+    "price": 14500,
+    "status": "ACTIVE",
+    "listing_id": "5083885",
+    "source": "Bridge Real Estate Advisory LLC "
+   },
+   {
+    "date": "2025-08-22",
+    "price": 16000,
+    "status": "NO_LONGER_AVAILABLE",
+    "listing_id": "4699171",
+    "source": "Anderson Residential LLC"
+   },
+   {
+    "date": "2025-05-23",
+    "price": 16000,
+    "status": "TEMPORARILY_OFF_MARKET",
+    "listing_id": "4699171",
+    "source": "Anderson Residential LLC"
+   },
+   {
+    "date": "2025-04-01",
+    "price": 16000,
+    "status": "ACTIVE",
+    "listing_id": "4699171",
+    "source": "Anderson Residential LLC"
+   }
+  ],
+  "area_median_rent_same_beds": 6995,
+  "building_name": "The Roselyn",
+  "neighborhood": "Greenwich Village",
+  "building_floors": 5,
+  "building_units": 8,
+  "year_built": 1900,
+  "building_slug": "the-roselyn",
+  "unit_type_display": "Rental unit in Greenwich Village",
+  "unit_type": "Rental unit",
+  "broker_fee": null,
+  "borough": "Manhattan"
+ },
+ {
+  "listing_id": "5084015",
+  "url": "https://streeteasy.com/rental/5084015",
+  "page_title_name": "96 West Houston Street #1F",
+  "ld_price": 8300,
+  "ld_valid_from": "2026-06-25",
+  "ld_availability": "InStock",
+  "latitude": 40.727364,
+  "longitude": -74.00009,
+  "address_street": "96 West Houston Street",
+  "unit": "#1F",
+  "city": "New York",
+  "state": "NY",
+  "zip": "10012",
+  "full_address": "96 West Houston Street #1F",
+  "status": "ACTIVE",
+  "listed_date": "2026-06-25",
+  "days_on_market": 18,
+  "available_date": "2026-09-01",
+  "off_market_date": null,
+  "created_at": "2026-06-25T15:33:26.000-04:00",
+  "updated_at": "2026-07-10T14:33:25.000-04:00",
+  "description": "No fee.\n\nFully renovated full floor townhouse/loft on the border of West Village and Soho. You'll be amazed by the 15' ceilings with 8\" crown molding, dark almond oak floors throughout, gourmet chef's kitchen with slate floors, custom cabinetry, granite countertops, high end stainless appliances and a washer dryer.\n\nEnter the sundrenched south facing livingroom and find custom bookshelves and an 18' windowseat that makes this space perfect for entertaining.\n\nThe bedroom features an entire wall of double height closets and storage plus a ceiling fan. Available for both unfurnished and furnished.\nThe highlight of this property is the den/2nd bedroom with terra cotta floors, brass wall sconces and 5 large windows that opens to a garden/patio.\n\nCentrally located \u2013 close to NYU, Parsons, SOHO, Greenwich Village, East Village and West Village. Steps away from Soho shopping, some of Manhattan\u2019s best cafes like Leon's Bagels, restaurants like Carbone, bars, Angelika Film Center, Whole Foods, Trader Joe\u2019s, Washington Square Park and MAJOR subway lines.\n\nOther amenities include 3 zone air conditioning/heat and sound proofed windows.\n\nAvailable for a\u00a02-year lease. September 1st or 15th start date.\nAll of this can be yours.",
+  "rooms": 4,
+  "bedrooms": 2,
+  "full_baths": 1,
+  "half_baths": 0,
+  "baths": 1.0,
+  "sqft": 1000,
+  "building_amenities": [
+   "Laundry",
+   "Shared Outdoor Space"
+  ],
+  "doorman_types": [],
+  "parking_types": [],
+  "shared_outdoor_space": [
+   "Courtyard"
+  ],
+  "storage_types": [],
+  "unit_features": [
+   "Central Ac",
+   "Dishwasher",
+   "Furnished",
+   "Hardwood Floors",
+   "Loft",
+   "Private Outdoor Space",
+   "View",
+   "Washer Dryer"
+  ],
+  "private_outdoor_space": [
+   "Garden"
+  ],
+  "views": [
+   "City",
+   "Garden"
+  ],
+  "fireplace_types": [],
+  "rent": 8300,
+  "net_effective_rent": null,
+  "months_free": null,
+  "lease_term_months": null,
+  "security_deposit": null,
+  "total_monthly_price": null,
+  "price_changes": [
+   {
+    "price": 8300,
+    "date": "2026-06-25"
+   }
+  ],
+  "fees": [
+   "Application fee: $0",
+   "Security deposit: $8,300"
+  ],
+  "brokerage": "Benjamin James",
+  "broker_license_name": "Benjamin James Re Inc",
+  "broker_license_type": "Real Estate Principal Office",
+  "broker_address": "96 West Houston Street, 3rd Fl, New York, NY, 10012",
+  "photo_count": 12,
+  "photo_url": "https://photos.zillowstatic.com/fp/7a4f414b9c19784be396b3d12a3de140-se_large_800_400.webp",
+  "video_count": 0,
+  "tour_3d_url": null,
+  "floorplan_count": 0,
+  "mls_number": null,
+  "listing_source_type": "PARTNER",
+  "open_houses": [],
+  "canonical_url": "https://streeteasy.com/building/96-west-houston-street-new_york/1f",
+  "unit_history": [
+   {
+    "date": "2026-06-25",
+    "price": 8300,
+    "status": "ACTIVE",
+    "listing_id": "5084015",
+    "source": "Benjamin James"
+   },
+   {
+    "date": "2025-07-24",
+    "price": 8300,
+    "status": "RENTED",
+    "listing_id": "4397099",
+    "source": "Benjamin James"
+   },
+   {
+    "date": "2025-07-02",
+    "price": 8300,
+    "status": "ACTIVE",
+    "listing_id": "4397099",
+    "source": "Benjamin James"
+   },
+   {
+    "date": "2023-01-19",
+    "price": 6900,
+    "status": "NO_LONGER_AVAILABLE",
+    "listing_id": "4014967",
+    "source": "Owner"
+   },
+   {
+    "date": "2023-01-04",
+    "price": 6900,
+    "status": "ACTIVE",
+    "listing_id": "4014967",
+    "source": "Owner"
+   },
+   {
+    "date": "2023-01-04",
+    "price": 6900,
+    "status": null,
+    "listing_id": "4014967",
+    "source": "Owner"
+   },
+   {
+    "date": "2023-01-03",
+    "price": 7500,
+    "status": "NO_LONGER_AVAILABLE",
+    "listing_id": "4014967",
+    "source": "Owner"
+   },
+   {
+    "date": "2022-12-19",
+    "price": 7500,
+    "status": "ACTIVE",
+    "listing_id": "4014967",
+    "source": "Owner"
+   },
+   {
+    "date": "2015-10-30",
+    "price": 5700,
+    "status": "RENTED",
+    "listing_id": "1651231",
+    "source": "Owner"
+   },
+   {
+    "date": "2015-10-09",
+    "price": 5700,
+    "status": "ACTIVE",
+    "listing_id": "1651231",
+    "source": "Owner"
+   }
+  ],
+  "area_median_rent_same_beds": 6995,
+  "building_name": "",
+  "neighborhood": "Greenwich Village",
+  "building_floors": 3,
+  "building_units": 4,
+  "year_built": 1900,
+  "building_slug": "96-west-houston-street-new_york",
+  "unit_type_display": "Rental unit in Greenwich Village",
+  "unit_type": "Rental unit",
+  "broker_fee": null,
+  "borough": "Manhattan"
+ },
+ {
+  "listing_id": "5085327",
+  "url": "https://streeteasy.com/rental/5085327",
+  "page_title_name": "432 East 13th Street #6B",
+  "ld_price": 7995,
+  "ld_valid_from": "2026-06-26",
+  "ld_availability": "InStock",
+  "latitude": 40.7299,
+  "longitude": -73.9819,
+  "address_street": "432 East 13th Street",
+  "unit": "#6B",
+  "city": "New York",
+  "state": "NY",
+  "zip": "10009",
+  "full_address": "432 East 13th Street #6B",
+  "status": "ACTIVE",
+  "listed_date": "2026-06-26",
+  "days_on_market": 17,
+  "available_date": "2026-06-26",
+  "off_market_date": null,
+  "created_at": "2026-06-26T18:02:35.000-04:00",
+  "updated_at": "2026-06-26T18:54:53.000-04:00",
+  "description": "Beautifully Renovated 3 Bedroom in Prime East Village.\n\nThis stunning home is available for an immediate lease start, located in a well-maintained building and offers a thoughtfully updated interior with modern finishes throughout.\n\nApartment Features:\n\u2022 In-unit washer and dryer\n\u2022 Private roof deck \n\u2022 Modern kitchen with dishwasher\n\u2022 Hardwood flooring\n\u2022 High ceilings\n\nPlease submit a tour request directly through the listing to receive a video and additional details.\n\nOpen houses are by appointment only.\n\nMore photos coming soon! Photos are representative of quality and type of renovation, not an indication of size or layout.",
+  "rooms": 4,
+  "bedrooms": 3,
+  "full_baths": 1,
+  "half_baths": 0,
+  "baths": 1.0,
+  "sqft": null,
+  "building_amenities": [
+   "Doorman",
+   "Fios Available",
+   "Laundry",
+   "Live In Super",
+   "Package Room",
+   "Shared Outdoor Space"
+  ],
+  "doorman_types": [
+   "Virtual"
+  ],
+  "parking_types": [],
+  "shared_outdoor_space": [
+   "Roof Deck"
+  ],
+  "storage_types": [],
+  "unit_features": [
+   "Dishwasher",
+   "Hardwood Floors",
+   "Private Outdoor Space",
+   "View",
+   "Washer Dryer"
+  ],
+  "private_outdoor_space": [
+   "Private Roof Deck",
+   "Roof Rights"
+  ],
+  "views": [
+   "City",
+   "Skyline"
+  ],
+  "fireplace_types": [],
+  "rent": 7995,
+  "net_effective_rent": null,
+  "months_free": null,
+  "lease_term_months": null,
+  "security_deposit": null,
+  "total_monthly_price": null,
+  "price_changes": [
+   {
+    "price": 7995,
+    "date": "2026-06-26"
+   }
+  ],
+  "fees": [
+   "Application fee: $20",
+   "Security deposit: $7,995"
+  ],
+  "brokerage": "DALLAL",
+  "broker_license_name": "Dallal Group Llc",
+  "broker_license_type": "Real Estate Principal Office",
+  "broker_address": "260 Madison Avenue, 8th Floor, New York, NY, 10016",
+  "photo_count": 2,
+  "photo_url": "https://photos.zillowstatic.com/fp/e699a3a96d07951937e9fd9441411fe1-se_large_800_400.webp",
+  "video_count": 0,
+  "tour_3d_url": null,
+  "floorplan_count": 0,
+  "mls_number": null,
+  "listing_source_type": "PARTNER",
+  "open_houses": [],
+  "canonical_url": "https://streeteasy.com/building/432-east-13-street-new_york/6b",
+  "unit_history": [
+   {
+    "date": "2026-06-26",
+    "price": 7995,
+    "status": "ACTIVE",
+    "listing_id": "5085327",
+    "source": "DALLAL"
+   }
+  ],
+  "area_median_rent_same_beds": 7722,
+  "building_name": "",
+  "neighborhood": "East Village",
+  "building_floors": 6,
+  "building_units": 38,
+  "year_built": 1900,
+  "building_slug": "432-east-13-street-new_york",
+  "unit_type_display": "Rental unit in East Village",
+  "unit_type": "Rental unit",
+  "broker_fee": null,
+  "borough": "Manhattan"
+ },
+ {
+  "listing_id": "5085344",
+  "url": "https://streeteasy.com/rental/5085344",
+  "page_title_name": "432 East 13th Street #1C",
+  "ld_price": 7995,
+  "ld_valid_from": "2026-06-26",
+  "ld_availability": "InStock",
+  "latitude": 40.7299,
+  "longitude": -73.9819,
+  "address_street": "432 East 13th Street",
+  "unit": "#1C",
+  "city": "New York",
+  "state": "NY",
+  "zip": "10009",
+  "full_address": "432 East 13th Street #1C",
+  "status": "ACTIVE",
+  "listed_date": "2026-06-26",
+  "days_on_market": 17,
+  "available_date": "2026-06-26",
+  "off_market_date": null,
+  "created_at": "2026-06-26T18:13:36.000-04:00",
+  "updated_at": "2026-07-10T10:16:40.000-04:00",
+  "description": "Beautifully Renovated 3 Bedroom in Prime East Village.\n\nThis stunning home is available for an immediate lease start, located in a well-maintained building and offers a thoughtfully updated interior with modern finishes throughout.\n\nApartment Features:\n\u2022 In-unit washer and dryer\n\u2022 Private garden \n\u2022 1.5 baths\n\u2022 Modern kitchen with dishwasher\n\u2022 Hardwood flooring\n\u2022 High ceilings\n\nPlease submit a tour request directly through the listing to receive a video and additional details.\n\nOpen houses are by appointment only.\n\nMore photos coming soon! Photos are representative of quality and type of renovation, not an indication of size or layout.",
+  "rooms": 4,
+  "bedrooms": 3,
+  "full_baths": 1,
+  "half_baths": 1,
+  "baths": 1.5,
+  "sqft": null,
+  "building_amenities": [
+   "Doorman",
+   "Fios Available",
+   "Laundry",
+   "Live In Super",
+   "Package Room"
+  ],
+  "doorman_types": [
+   "Virtual"
+  ],
+  "parking_types": [],
+  "shared_outdoor_space": [],
+  "storage_types": [],
+  "unit_features": [
+   "Dishwasher",
+   "Hardwood Floors",
+   "Private Outdoor Space",
+   "View",
+   "Washer Dryer"
+  ],
+  "private_outdoor_space": [
+   "Garden"
+  ],
+  "views": [
+   "Garden"
+  ],
+  "fireplace_types": [],
+  "rent": 7995,
+  "net_effective_rent": null,
+  "months_free": null,
+  "lease_term_months": null,
+  "security_deposit": null,
+  "total_monthly_price": null,
+  "price_changes": [
+   {
+    "price": 7995,
+    "date": "2026-06-26"
+   }
+  ],
+  "fees": [
+   "Application fee: $20",
+   "Security deposit: $7,995"
+  ],
+  "brokerage": "DALLAL",
+  "broker_license_name": "Dallal Group Llc",
+  "broker_license_type": "Real Estate Principal Office",
+  "broker_address": "260 Madison Avenue, 8th Floor, New York, NY, 10016",
+  "photo_count": 2,
+  "photo_url": "https://photos.zillowstatic.com/fp/ccbee1968a7398839155ec94eb6b9873-se_large_800_400.webp",
+  "video_count": 0,
+  "tour_3d_url": null,
+  "floorplan_count": 0,
+  "mls_number": null,
+  "listing_source_type": "PARTNER",
+  "open_houses": [],
+  "canonical_url": "https://streeteasy.com/building/432-east-13-street-new_york/1c",
+  "unit_history": [
+   {
+    "date": "2026-06-26",
+    "price": 7995,
+    "status": "ACTIVE",
+    "listing_id": "5085344",
+    "source": "DALLAL"
+   }
+  ],
+  "area_median_rent_same_beds": 7722,
+  "building_name": "",
+  "neighborhood": "East Village",
+  "building_floors": 6,
+  "building_units": 38,
+  "year_built": 1900,
+  "building_slug": "432-east-13-street-new_york",
+  "unit_type_display": "Rental unit in East Village",
+  "unit_type": "Rental unit",
+  "broker_fee": null,
+  "borough": "Manhattan"
+ },
+ {
+  "listing_id": "5085382",
+  "url": "https://streeteasy.com/rental/5085382",
+  "page_title_name": "105 Duane Street #28B",
+  "ld_price": 10375,
+  "ld_valid_from": "2026-06-26",
+  "ld_availability": "InStock",
+  "latitude": 40.7158,
+  "longitude": -74.0062,
+  "address_street": "105 Duane Street",
+  "unit": "#28B",
+  "city": "New York",
+  "state": "NY",
+  "zip": "10007",
+  "full_address": "105 Duane Street #28B",
+  "status": "ACTIVE",
+  "listed_date": "2026-06-26",
+  "days_on_market": 6,
+  "available_date": "2026-09-01",
+  "off_market_date": null,
+  "created_at": "2026-06-26T19:07:54.000-04:00",
+  "updated_at": "2026-07-13T03:08:22.000-04:00",
+  "description": "Fully renovated Corner 2 Bedroom, 2 Bath with a gourmet windowed pass-through kitchen, floor-to-ceiling windows, solarium dining alcove, spacious closets, strip wood flooring, solar shades, and southwestern exposure.\n\nIf you are looking for pet-friendly Tribeca apartments where art and the art of living are taken seriously, look no further. Tribeca Tower's luxurious rentals are studies in spaciousness, luxury and amenities. Towering fifty-two stories above it all, these Tribeca apartments are situated in one of the city's oldest and most historic neighborhoods. There is an apartment to suit every lifestyle from perfectly appointed pied-a-terre studios to dramatic one and two-bedroom residences, many with spectacular dining solariums featuring stunning floor-to-ceiling windows. Gourmet kitchens with full-sized appliances and white cabinetry, baths with marble top vanities, oak parquet floors and custom closets are sought-after features of these Downtown apartments. Condo-quality amenities include an entertainment lounge, private rooftop sun terrace, indoor swimming pool, and state-of-the art fitness center. The soaring two-story lobby, designed by David Rockwell, is concierge-attended 24/7.",
+  "rooms": 5,
+  "bedrooms": 2,
+  "full_baths": 2,
+  "half_baths": 0,
+  "baths": 2.0,
+  "sqft": null,
+  "building_amenities": [
+   "Bike Room",
+   "Concierge",
+   "Doorman",
+   "Elevator",
+   "Fios Available",
+   "Gym",
+   "Parking",
+   "Pool",
+   "Shared Outdoor Space"
+  ],
+  "doorman_types": [],
+  "parking_types": [
+   "Garage"
+  ],
+  "shared_outdoor_space": [
+   "Garden",
+   "Roof Deck"
+  ],
+  "storage_types": [],
+  "unit_features": [
+   "Private Outdoor Space"
+  ],
+  "private_outdoor_space": [
+   "Patio"
+  ],
+  "views": [],
+  "fireplace_types": [],
+  "rent": 10375,
+  "net_effective_rent": null,
+  "months_free": null,
+  "lease_term_months": null,
+  "security_deposit": null,
+  "total_monthly_price": null,
+  "price_changes": [
+   {
+    "price": 10375,
+    "date": "2026-06-26"
+   }
+  ],
+  "fees": [],
+  "brokerage": "Related Rentals",
+  "broker_license_name": null,
+  "broker_license_type": null,
+  "photo_count": 18,
+  "photo_url": "https://photos.zillowstatic.com/fp/647e25bd7da2a21994c7c5ca116d7847-se_large_800_400.webp",
+  "video_count": 0,
+  "tour_3d_url": null,
+  "floorplan_count": 1,
+  "mls_number": null,
+  "listing_source_type": "FEED",
+  "open_houses": [],
+  "canonical_url": "https://streeteasy.com/building/tribeca-tower/028b",
+  "unit_history": [
+   {
+    "date": "2026-07-10",
+    "price": 10375,
+    "status": "ACTIVE",
+    "listing_id": "5085382",
+    "source": "Related Rentals"
+   },
+   {
+    "date": "2026-06-29",
+    "price": 10375,
+    "status": "RENTED",
+    "listing_id": "5085382",
+    "source": "Related Rentals"
+   },
+   {
+    "date": "2026-06-26",
+    "price": 10375,
+    "status": "ACTIVE",
+    "listing_id": "5085382",
+    "source": "Related Rentals"
+   },
+   {
+    "date": "2024-12-10",
+    "price": 9375,
+    "status": "RENTED",
+    "listing_id": "4606644",
+    "source": "Related Rentals"
+   },
+   {
+    "date": "2024-12-10",
+    "price": 9375,
+    "status": "ACTIVE",
+    "listing_id": "4606644",
+    "source": "Related Rentals"
+   },
+   {
+    "date": "2022-03-05",
+    "price": 8350,
+    "status": "RENTED",
+    "listing_id": "3790752",
+    "source": "Related Rentals"
+   },
+   {
+    "date": "2022-03-04",
+    "price": 8350,
+    "status": "ACTIVE",
+    "listing_id": "3790752",
+    "source": "Related Rentals"
+   },
+   {
+    "date": "2021-04-14",
+    "price": 7800,
+    "status": "RENTED",
+    "listing_id": "3431872",
+    "source": "Related Rentals"
+   },
+   {
+    "date": "2021-04-13",
+    "price": 7800,
+    "status": "NO_LONGER_AVAILABLE",
+    "listing_id": "3431872",
+    "source": "Related Rentals"
+   },
+   {
+    "date": "2021-04-02",
+    "price": 7800,
+    "status": "RENTED",
+    "listing_id": "3431872",
+    "source": "Related Rentals"
+   },
+   {
+    "date": "2021-03-02",
+    "price": 7800,
+    "status": "ACTIVE",
+    "listing_id": "3431872",
+    "source": "Related Rentals"
+   },
+   {
+    "date": "2020-08-22",
+    "price": 7895,
+    "status": "RENTED",
+    "listing_id": "3186012",
+    "source": "Related Rentals"
+   },
+   {
+    "date": "2020-08-21",
+    "price": 7895,
+    "status": "ACTIVE",
+    "listing_id": "3186012",
+    "source": "Related Rentals"
+   }
+  ],
+  "area_median_rent_same_beds": 10555,
+  "building_name": "Tribeca Tower",
+  "neighborhood": "Tribeca",
+  "building_floors": 52,
+  "building_units": 440,
+  "year_built": 1988,
+  "building_slug": "tribeca-tower",
+  "unit_type_display": "Rental unit in Tribeca",
+  "unit_type": "Rental unit",
+  "broker_fee": null,
+  "borough": "Manhattan"
+ },
+ {
+  "listing_id": "5086520",
+  "url": "https://streeteasy.com/rental/5086520",
+  "page_title_name": "450 West 17th Street #542",
+  "ld_price": 12595,
+  "ld_valid_from": "2026-06-29",
+  "ld_availability": "InStock",
+  "latitude": 40.7435,
+  "longitude": -74.0064,
+  "address_street": "450 West 17th Street",
+  "unit": "#542",
+  "city": "New York",
+  "state": "NY",
+  "zip": "10011",
+  "full_address": "450 West 17th Street #542",
+  "status": "ACTIVE",
+  "listed_date": "2026-06-29",
+  "days_on_market": 5,
+  "available_date": "2026-07-11",
+  "off_market_date": null,
+  "created_at": "2026-06-29T13:06:48.000-04:00",
+  "updated_at": "2026-07-13T03:08:23.000-04:00",
+  "description": "Beautiful Corner 2 Bedroom, 2 Bath with a gourmet open kitchen, walk-in closet, oversized windows, in-home washer/dryer, upgraded strip wood flooring, oversized private terrace and northern and western exposures with views of the Highline.This apartment is a lease break and is available to new residents only.\n\nThe hottest Chelsea apartment rentals are located adjacent to the High Line, New York's most unique and exciting urban park. This pet-friendly Manhattan apartment building features custom designed studio, one, two and three-bedroom flats. The Caledonia brings the perfect balance of energy and serenity to the middle of the hottest Manhattan neighborhoods: West Chelsea and the Meatpacking District. Situated at the nexus of West Chelsea, Gansevoort Street and the Meatpacking District, this luxurious New York City rental building represents a new and exciting style of living in a historic downtown location. Developed by industry leaders, Related Companies and Taconic Investment Partners, The Caledonia offers exquisite apartments giving renters the unique opportunity to experience unprecedented services and amenities including the first fully integrated Equinox Fitness Club within a residential tower. Chelsea apartments have never been so grand and luxurious as they are at The Caledonia, one of the finest apartment buildings in all of Manhattan.",
+  "rooms": 4,
+  "bedrooms": 2,
+  "full_baths": 2,
+  "half_baths": 0,
+  "baths": 2.0,
+  "sqft": null,
+  "building_amenities": [
+   "Bike Room",
+   "Childrens Playroom",
+   "Concierge",
+   "Doorman",
+   "Elevator",
+   "Fios Available",
+   "Gym",
+   "Laundry",
+   "Live In Super",
+   "Parking",
+   "Shared Outdoor Space",
+   "Storage Space"
+  ],
+  "doorman_types": [
+   "Full Time"
+  ],
+  "parking_types": [
+   "Garage"
+  ],
+  "shared_outdoor_space": [
+   "Garden",
+   "Roof Deck"
+  ],
+  "storage_types": [],
+  "unit_features": [
+   "Private Outdoor Space"
+  ],
+  "private_outdoor_space": [
+   "Patio"
+  ],
+  "views": [],
+  "fireplace_types": [],
+  "rent": 12595,
+  "net_effective_rent": null,
+  "months_free": null,
+  "lease_term_months": null,
+  "security_deposit": null,
+  "total_monthly_price": null,
+  "price_changes": [
+   {
+    "price": 12595,
+    "date": "2026-06-29"
+   }
+  ],
+  "fees": [],
+  "brokerage": "Related Rentals",
+  "broker_license_name": null,
+  "broker_license_type": null,
+  "photo_count": 21,
+  "photo_url": "https://photos.zillowstatic.com/fp/69cb457fa6dacf2066075026f0a420eb-se_large_800_400.webp",
+  "video_count": 0,
+  "tour_3d_url": null,
+  "floorplan_count": 1,
+  "mls_number": null,
+  "listing_source_type": "FEED",
+  "open_houses": [],
+  "canonical_url": "https://streeteasy.com/building/the-caledonia/542",
+  "unit_history": [
+   {
+    "date": "2026-07-11",
+    "price": 12595,
+    "status": "ACTIVE",
+    "listing_id": "5086520",
+    "source": "Related Rentals"
+   },
+   {
+    "date": "2026-07-02",
+    "price": 12595,
+    "status": "RENTED",
+    "listing_id": "5086520",
+    "source": "Related Rentals"
+   },
+   {
+    "date": "2026-06-29",
+    "price": 12595,
+    "status": "ACTIVE",
+    "listing_id": "5086520",
+    "source": "Related Rentals"
+   },
+   {
+    "date": "2022-12-16",
+    "price": 9963,
+    "status": "RENTED",
+    "listing_id": "3994473",
+    "source": "Corcoran"
+   },
+   {
+    "date": "2022-12-15",
+    "price": 9963,
+    "status": "IN_CONTRACT",
+    "listing_id": "3994473",
+    "source": "Corcoran"
+   },
+   {
+    "date": "2022-11-14",
+    "price": 9963,
+    "status": "ACTIVE",
+    "listing_id": "3994473",
+    "source": "Corcoran"
+   },
+   {
+    "date": "2021-07-16",
+    "price": 9895,
+    "status": "RENTED",
+    "listing_id": "3563159",
+    "source": "Related Rentals"
+   },
+   {
+    "date": "2021-07-15",
+    "price": 9895,
+    "status": "NO_LONGER_AVAILABLE",
+    "listing_id": "3563159",
+    "source": "Related Rentals"
+   },
+   {
+    "date": "2021-07-01",
+    "price": 9895,
+    "status": "ACTIVE",
+    "listing_id": "3563159",
+    "source": "Related Rentals"
+   },
+   {
+    "date": "2021-06-29",
+    "price": 9895,
+    "status": "RENTED",
+    "listing_id": "3563159",
+    "source": "Related Rentals"
+   },
+   {
+    "date": "2021-06-25",
+    "price": 9895,
+    "status": null,
+    "listing_id": "3563159",
+    "source": "Related Rentals"
+   },
+   {
+    "date": "2021-06-25",
+    "price": 9895,
+    "status": "ACTIVE",
+    "listing_id": "3563159",
+    "source": "Related Rentals"
+   },
+   {
+    "date": "2021-06-13",
+    "price": 9815,
+    "status": "RENTED",
+    "listing_id": "3563159",
+    "source": "Related Rentals"
+   },
+   {
+    "date": "2021-06-12",
+    "price": 9815,
+    "status": "ACTIVE",
+    "listing_id": "3563159",
+    "source": "Related Rentals"
+   }
+  ],
+  "area_median_rent_same_beds": 8802,
+  "building_name": "The Caledonia",
+  "neighborhood": "West Chelsea",
+  "building_floors": 24,
+  "building_units": 469,
+  "year_built": 2006,
+  "building_slug": "the-caledonia",
+  "unit_type_display": "Condo in West Chelsea",
+  "unit_type": "Condo",
+  "broker_fee": null,
+  "borough": "Manhattan"
+ },
+ {
+  "listing_id": "5087527",
+  "url": "https://streeteasy.com/rental/5087527",
+  "page_title_name": "432 East 13th Street #5B",
+  "ld_price": 8995,
+  "ld_valid_from": "2026-06-30",
+  "ld_availability": "InStock",
+  "latitude": 40.7299,
+  "longitude": -73.9819,
+  "address_street": "432 East 13th Street",
+  "unit": "#5B",
+  "city": "New York",
+  "state": "NY",
+  "zip": "10009",
+  "full_address": "432 East 13th Street #5B",
+  "status": "ACTIVE",
+  "listed_date": "2026-06-30",
+  "days_on_market": 13,
+  "available_date": "2026-08-01",
+  "off_market_date": null,
+  "created_at": "2026-06-30T11:20:32.000-04:00",
+  "updated_at": "2026-07-02T13:28:13.000-04:00",
+  "description": "This stunning 3 bedroom is located in a well-maintained building in prime East Village, and offers a thoughtfully updated interior with modern finishes throughout.\n\nPH Duplex, Featuring:\n\u2022 Private roof deck \n\u2022 In-unit washer and dryer (to be installed) \n\u2022 Newly renovated bathrooms\n\u2022 Modern kitchen with dishwasher (to be installed)\n\u2022 Hardwood flooring\n\u2022 High ceilings\n\nPlease submit a tour request directly through the listing to receive a video and additional details.\n\nOpen houses are by appointment only.\n\nMore photos coming soon. Pictures are representative of quality and type of renovation, not an indication of size or layout.",
+  "rooms": 4,
+  "bedrooms": 3,
+  "full_baths": 2,
+  "half_baths": 0,
+  "baths": 2.0,
+  "sqft": null,
+  "building_amenities": [
+   "Doorman",
+   "Fios Available",
+   "Laundry",
+   "Live In Super",
+   "Package Room",
+   "Shared Outdoor Space"
+  ],
+  "doorman_types": [
+   "Virtual"
+  ],
+  "parking_types": [],
+  "shared_outdoor_space": [
+   "Roof Deck"
+  ],
+  "storage_types": [],
+  "unit_features": [
+   "Dishwasher",
+   "Hardwood Floors",
+   "Private Outdoor Space",
+   "View",
+   "Washer Dryer"
+  ],
+  "private_outdoor_space": [
+   "Private Roof Deck",
+   "Roof Rights"
+  ],
+  "views": [
+   "City",
+   "Skyline"
+  ],
+  "fireplace_types": [],
+  "rent": 8995,
+  "net_effective_rent": null,
+  "months_free": null,
+  "lease_term_months": null,
+  "security_deposit": null,
+  "total_monthly_price": null,
+  "price_changes": [
+   {
+    "price": 8995,
+    "date": "2026-06-30"
+   }
+  ],
+  "fees": [
+   "Application fee: $20",
+   "Security deposit: $8,995"
+  ],
+  "brokerage": "DALLAL",
+  "broker_license_name": "Dallal Group Llc",
+  "broker_license_type": "Real Estate Principal Office",
+  "broker_address": "260 Madison Avenue, 8th Floor, New York, NY, 10016",
+  "photo_count": 2,
+  "photo_url": "https://photos.zillowstatic.com/fp/f3e3c6631901b560346ed46713c30460-se_large_800_400.webp",
+  "video_count": 0,
+  "tour_3d_url": null,
+  "floorplan_count": 0,
+  "mls_number": null,
+  "listing_source_type": "PARTNER",
+  "open_houses": [],
+  "canonical_url": "https://streeteasy.com/building/432-east-13-street-new_york/5b",
+  "unit_history": [
+   {
+    "date": "2026-06-30",
+    "price": 8995,
+    "status": "ACTIVE",
+    "listing_id": "5087527",
+    "source": "DALLAL"
+   }
+  ],
+  "area_median_rent_same_beds": 7722,
+  "building_name": "",
+  "neighborhood": "East Village",
+  "building_floors": 6,
+  "building_units": 38,
+  "year_built": 1900,
+  "building_slug": "432-east-13-street-new_york",
+  "unit_type_display": "Rental unit in East Village",
+  "unit_type": "Rental unit",
+  "broker_fee": null,
+  "borough": "Manhattan"
+ },
+ {
+  "listing_id": "5087645",
+  "url": "https://streeteasy.com/rental/5087645",
+  "page_title_name": "53 Leroy Street #D",
+  "ld_price": 11995,
+  "ld_valid_from": "2026-06-30",
+  "ld_availability": "InStock",
+  "latitude": 40.73021,
+  "longitude": -74.00513,
+  "address_street": "53 Leroy Street",
+  "unit": "#D",
+  "city": "New York",
+  "state": "NY",
+  "zip": "10014",
+  "full_address": "53 Leroy Street #D",
+  "status": "ACTIVE",
+  "listed_date": "2026-06-30",
+  "days_on_market": 13,
+  "available_date": "2026-08-01",
+  "off_market_date": null,
+  "created_at": "2026-06-30T12:34:01.000-04:00",
+  "updated_at": "2026-07-09T18:30:16.000-04:00",
+  "description": "This stunning 4 bedroom is located in a well-maintained building in prime West Village, and offers a thoughtfully updated interior with modern finishes throughout.\n\nApartment Features:\n\u2022 Private garden\n\u2022 In-unit washer and dryer\n\u2022 Newly renovated bathrooms\n\u2022 Modern kitchen with dishwasher\n\u2022 Hardwood flooring\n\u2022 High ceilings\n\nPlease submit a tour request directly through the listing to receive a video and additional details.\n\nOpen houses are by appointment only.\n\nMore photos coming soon.",
+  "rooms": 5,
+  "bedrooms": 4,
+  "full_baths": 2,
+  "half_baths": 0,
+  "baths": 2.0,
+  "sqft": null,
+  "building_amenities": [
+   "Fios Available",
+   "Laundry",
+   "Shared Outdoor Space"
+  ],
+  "doorman_types": [],
+  "parking_types": [],
+  "shared_outdoor_space": [
+   "Courtyard"
+  ],
+  "storage_types": [],
+  "unit_features": [
+   "Dishwasher",
+   "Hardwood Floors",
+   "Private Outdoor Space",
+   "View",
+   "Washer Dryer"
+  ],
+  "private_outdoor_space": [
+   "Garden"
+  ],
+  "views": [
+   "City",
+   "Garden"
+  ],
+  "fireplace_types": [],
+  "rent": 11995,
+  "net_effective_rent": null,
+  "months_free": null,
+  "lease_term_months": null,
+  "security_deposit": null,
+  "total_monthly_price": null,
+  "price_changes": [
+   {
+    "price": 11995,
+    "date": "2026-06-30"
+   }
+  ],
+  "fees": [
+   "Application fee: $20",
+   "Security deposit: $11,995"
+  ],
+  "brokerage": "DALLAL",
+  "broker_license_name": "Dallal Group Llc",
+  "broker_license_type": "Real Estate Principal Office",
+  "broker_address": "260 Madison Avenue, 8th Floor, New York, NY, 10016",
+  "photo_count": 2,
+  "photo_url": "https://photos.zillowstatic.com/fp/b88a7f8beadeb925e8846944a70086aa-se_large_800_400.webp",
+  "video_count": 0,
+  "tour_3d_url": null,
+  "floorplan_count": 0,
+  "mls_number": null,
+  "listing_source_type": "PARTNER",
+  "open_houses": [],
+  "canonical_url": "https://streeteasy.com/building/53-leroy-street-new_york/d",
+  "unit_history": [
+   {
+    "date": "2026-06-30",
+    "price": 11995,
+    "status": "ACTIVE",
+    "listing_id": "5087645",
+    "source": "DALLAL"
+   }
+  ],
+  "area_median_rent_same_beds": 13000,
+  "building_name": "",
+  "neighborhood": "West Village",
+  "building_floors": 5,
+  "building_units": 40,
+  "year_built": 1900,
+  "building_slug": "53-leroy-street-new_york",
+  "unit_type_display": "Rental unit in West Village",
+  "unit_type": "Rental unit",
+  "broker_fee": null,
+  "borough": "Manhattan"
+ },
+ {
+  "listing_id": "5087925",
+  "url": "https://streeteasy.com/rental/5087925",
+  "page_title_name": "21 Avenue B #401",
+  "ld_price": 13400,
+  "ld_valid_from": "2026-07-03",
+  "ld_availability": "InStock",
+  "latitude": 40.7221,
+  "longitude": -73.9831,
+  "address_street": "21 Avenue B",
+  "unit": "#401",
+  "city": "New York",
+  "state": "NY",
+  "zip": "10009",
+  "full_address": "21 Avenue B #401",
+  "status": "ACTIVE",
+  "listed_date": "2026-07-03",
+  "days_on_market": 10,
+  "available_date": "2026-06-30",
+  "off_market_date": null,
+  "created_at": "2026-06-30T15:19:20.000-04:00",
+  "updated_at": "2026-07-11T14:00:54.000-04:00",
+  "description": "HAPPY 250 , USA!!! ~ ENJOY YOUR WEEKEND AND STAY COOL OUT THERE!!!\nSHOWS BY OPEN HOUSE ONLY! - NEXT OPEN HOUSE IS TUESDAY ( 7/7/26 )  -5 - 6 pm.",
+  "rooms": 9,
+  "bedrooms": 5,
+  "full_baths": 3,
+  "half_baths": 0,
+  "baths": 3.0,
+  "sqft": null,
+  "building_amenities": [
+   "Bike Room",
+   "Doorman",
+   "Fios Available",
+   "Shared Outdoor Space",
+   "Storage Space"
+  ],
+  "doorman_types": [
+   "Virtual"
+  ],
+  "parking_types": [],
+  "shared_outdoor_space": [
+   "Roof Deck"
+  ],
+  "storage_types": [
+   "Locker Cage"
+  ],
+  "unit_features": [
+   "Central Ac",
+   "Dishwasher",
+   "Hardwood Floors",
+   "Private Outdoor Space",
+   "View",
+   "Washer Dryer"
+  ],
+  "private_outdoor_space": [
+   "Roof Rights"
+  ],
+  "views": [
+   "City",
+   "Skyline"
+  ],
+  "fireplace_types": [],
+  "rent": 13400,
+  "net_effective_rent": null,
+  "months_free": null,
+  "lease_term_months": null,
+  "security_deposit": null,
+  "total_monthly_price": null,
+  "price_changes": [
+   {
+    "price": 13400,
+    "date": "2026-07-03"
+   }
+  ],
+  "fees": [
+   "Administration: $17",
+   "Application fee: $20",
+   "Security deposit: $13,400"
+  ],
+  "brokerage": "Corcoran",
+  "broker_license_name": "Corcoran Group",
+  "broker_license_type": "Limited Liability Broker",
+  "broker_address": "590 Madison Avenue, New York, NY, 10022",
+  "photo_count": 15,
+  "photo_url": "https://photos.zillowstatic.com/fp/13b5e17633db20b85aedffc7eec3e4a9-se_large_800_400.webp",
+  "video_count": 1,
+  "tour_3d_url": null,
+  "floorplan_count": 0,
+  "mls_number": null,
+  "listing_source_type": "PARTNER",
+  "open_houses": [],
+  "canonical_url": "https://streeteasy.com/building/21-avenue-b-new_york/401",
+  "unit_history": [
+   {
+    "date": "2026-07-03",
+    "price": 13400,
+    "status": "ACTIVE",
+    "listing_id": "5087925",
+    "source": "Corcoran"
+   },
+   {
+    "date": "2025-09-30",
+    "price": 12300,
+    "status": "DELISTED",
+    "listing_id": "4850811",
+    "source": "Bond New York"
+   },
+   {
+    "date": "2025-09-30",
+    "price": 12300,
+    "status": null,
+    "listing_id": "4850811",
+    "source": "Bond New York"
+   },
+   {
+    "date": "2025-09-08",
+    "price": 11700,
+    "status": "ACTIVE",
+    "listing_id": "4850811",
+    "source": "Bond New York"
+   },
+   {
+    "date": "2023-07-26",
+    "price": 11300,
+    "status": "RENTED",
+    "listing_id": "4162298",
+    "source": "Bond New York"
+   },
+   {
+    "date": "2023-06-27",
+    "price": 11300,
+    "status": "ACTIVE",
+    "listing_id": "4162298",
+    "source": "Bond New York"
+   }
+  ],
+  "area_median_rent_same_beds": 13400,
+  "building_name": "",
+  "neighborhood": "East Village",
+  "building_floors": 4,
+  "building_units": 12,
+  "year_built": 1900,
+  "building_slug": "21-avenue-b-new_york",
+  "unit_type_display": "Rental unit in East Village",
+  "unit_type": "Rental unit",
+  "broker_fee": null,
+  "borough": "Manhattan"
+ },
+ {
+  "listing_id": "5088552",
+  "url": "https://streeteasy.com/rental/5088552",
+  "page_title_name": "72 Carmine Street #2C",
+  "ld_price": 9995,
+  "ld_valid_from": "2026-06-30",
+  "ld_availability": "InStock",
+  "latitude": 40.729496,
+  "longitude": -74.00452,
+  "address_street": "72 Carmine Street",
+  "unit": "#2C",
+  "city": "New York",
+  "state": "NY",
+  "zip": "10014",
+  "full_address": "72 Carmine Street #2C",
+  "status": "ACTIVE",
+  "listed_date": "2026-06-30",
+  "days_on_market": 13,
+  "available_date": "2026-09-01",
+  "off_market_date": null,
+  "created_at": "2026-06-30T21:49:20.000-04:00",
+  "updated_at": "2026-07-06T14:14:50.000-04:00",
+  "description": "72 Carmine Street, Apt 2C \u2013 West Village | 3 Bedroom | 2 Bathroom | PRIVATE OUTDOOR SPACE | Available 9/1\n1/2 Month Security Deposit\n\nWelcome to this charming three-bedroom residence on one of the most coveted blocks in the West Village. Situated on picturesque Carmine Street, this home blends classic downtown character with practical living space in the heart of one of Manhattan\u2019s most vibrant neighborhoods.\n\nApartment Features:\nPRIVATE OUTDOOR SPACE\nLaundry in Unit\nThree well-proportioned bedrooms with great layout flexibility\nSpacious living area ideal for relaxing and entertaining\nHardwood floors\nOpen kitchen with modern cabinetry and ample counter space\nStainless steel appliances including dishwasher\nTwo updated bathrooms with contemporary finishes\nGenerous closet and storage space\n\nBuilding Highlights:\nWell-maintained prewar walk-up building\nLocated on historic Carmine Street in the West Village\nTree-lined block surrounded by classic brownstones and boutique shops\nMoments from Washington Square Park, Hudson River Park, and the best of downtown dining and nightlife\nConvenient access to multiple subway lines including the A/C/E, B/D/F/M, and 1 trains\n\nSet in one of Manhattan\u2019s most iconic neighborhoods, this residence offers authentic West Village living with unbeatable access to parks, restaurants, cafes, and downtown culture.",
+  "rooms": 6,
+  "bedrooms": 3,
+  "full_baths": 2,
+  "half_baths": 0,
+  "baths": 2.0,
+  "sqft": null,
+  "building_amenities": [
+   "Doorman",
+   "Fios Available",
+   "Shared Outdoor Space"
+  ],
+  "doorman_types": [
+   "Virtual"
+  ],
+  "parking_types": [],
+  "shared_outdoor_space": [
+   "Courtyard"
+  ],
+  "storage_types": [],
+  "unit_features": [
+   "Central Ac",
+   "Dishwasher",
+   "Hardwood Floors",
+   "Private Outdoor Space",
+   "View",
+   "Washer Dryer"
+  ],
+  "private_outdoor_space": [
+   "Balcony"
+  ],
+  "views": [
+   "City"
+  ],
+  "fireplace_types": [],
+  "rent": 9995,
+  "net_effective_rent": null,
+  "months_free": null,
+  "lease_term_months": null,
+  "security_deposit": null,
+  "total_monthly_price": null,
+  "price_changes": [
+   {
+    "price": 9995,
+    "date": "2026-06-30"
+   }
+  ],
+  "fees": [
+   "Move-in fee: $80",
+   "Application fee: $20",
+   "Key replacement: $75",
+   "Security deposit: $4,998"
+  ],
+  "brokerage": "Living New York",
+  "broker_license_name": "Living New York",
+  "broker_license_type": "Limited Liability Broker",
+  "broker_address": "225 West 35th Street Ste, 1400, New York, NY, 10001",
+  "photo_count": 12,
+  "photo_url": "https://photos.zillowstatic.com/fp/28b08413eb512ef6c878b499391d9b03-se_large_800_400.webp",
+  "video_count": 0,
+  "tour_3d_url": null,
+  "floorplan_count": 0,
+  "mls_number": null,
+  "listing_source_type": "PARTNER",
+  "open_houses": [],
+  "canonical_url": "https://streeteasy.com/building/72-carmine-street-new_york/2c",
+  "unit_history": [
+   {
+    "date": "2026-06-30",
+    "price": 9995,
+    "status": "ACTIVE",
+    "listing_id": "5088552",
+    "source": "Living New York"
+   },
+   {
+    "date": "2025-07-09",
+    "price": 8995,
+    "status": "RENTED",
+    "listing_id": "4782226",
+    "source": "Compass"
+   },
+   {
+    "date": "2025-06-30",
+    "price": 8995,
+    "status": "ACTIVE",
+    "listing_id": "4782226",
+    "source": "Compass"
+   },
+   {
+    "date": "2021-04-12",
+    "price": 6995,
+    "status": "RENTED",
+    "listing_id": "3480069",
+    "source": "Douglas Elliman"
+   },
+   {
+    "date": "2021-04-10",
+    "price": 6995,
+    "status": "NO_LONGER_AVAILABLE",
+    "listing_id": "3480069",
+    "source": "Douglas Elliman"
+   },
+   {
+    "date": "2021-04-10",
+    "price": 6995,
+    "status": null,
+    "listing_id": "3480069",
+    "source": "Douglas Elliman"
+   },
+   {
+    "date": "2021-04-09",
+    "price": 6000,
+    "status": "ACTIVE",
+    "listing_id": "3480069",
+    "source": "Douglas Elliman"
+   }
+  ],
+  "area_median_rent_same_beds": 11000,
+  "building_name": "",
+  "neighborhood": "West Village",
+  "building_floors": 3,
+  "building_units": 16,
+  "year_built": 1910,
+  "building_slug": "72-carmine-street-new_york",
+  "unit_type_display": "Rental unit in West Village",
+  "unit_type": "Rental unit",
+  "broker_fee": null,
+  "borough": "Manhattan"
+ },
+ {
+  "listing_id": "5088998",
+  "url": "https://streeteasy.com/rental/5088998",
+  "page_title_name": "644 East 14th Street #2002",
+  "ld_price": 10200,
+  "ld_valid_from": "2026-07-02",
+  "ld_availability": "InStock",
+  "latitude": 40.7283,
+  "longitude": -73.97613,
+  "address_street": "644 East 14th Street",
+  "unit": "#2002",
+  "city": "New York",
+  "state": "NY",
+  "zip": "10009",
+  "full_address": "644 East 14th Street #2002",
+  "status": "ACTIVE",
+  "listed_date": "2026-07-02",
+  "days_on_market": 11,
+  "available_date": "2026-07-01",
+  "off_market_date": null,
+  "created_at": "2026-07-01T11:01:18.000-04:00",
+  "updated_at": "2026-07-08T14:15:13.000-04:00",
+  "description": "Welcome to Residence 2002 at The East.  \n\nNew, clean, and modern, this expansive two-bedroom, two-bathroom home offers a functional layout that maximizes space, light, and outdoor living. Oversized windows in the living room and both bedrooms fill the home with natural light and provide north and east-facing views of the East River, Manhattan, and Brooklyn skyline, creating a stunning backdrop for everyday living. A 376-square-foot private terrace spans the length of the living and dining areas, offering an exceptional setting for dining, entertaining, or relaxing outdoors. \n\nThis residence features a kitchen along the right wall with custom cabinetry, integrated lighting, elegant porcelain countertops and backsplashes, and a premium stainless-steel appliance package including a full-size range, refrigerator, deep stainless sink with sleek fixtures, and a pantry cabinet. A dedicated dining area sits adjacent to the kitchen and flows into the living room, which opens directly to the terrace for an indoor-outdoor experience. Two full bathrooms include floor-to-ceiling porcelain tiles, custom vanities, and refined fixtures, with the primary bathroom near the entry and the secondary bathroom next to the second bedroom. A laundry closet with an in-unit washer and dryer is conveniently located near the secondary bedroom. The primary bedroom is generously sized with oversized windows that provide natural light and space for a king-sized bed with additional furniture, while the secondary bedroom offers a flexible layout for a guest room, home office, or nursery, complete with its own large window. Wide-plank flooring runs throughout, complemented by integrated storage solutions for added functionality.\n\nResidents enjoy access to a curated collection of amenities, including a furnished rooftop deck with multiple BBQ stations and panoramic skyline views, a stylish lounge with co-working spaces, and a state-of-the-art fitness center for strength, cardio, and mindful movement. Everyday conveniences such as an attended lobby, bike storage, and secure package lockers make life at The East effortless. \n\nLocated in the heart of East Village at 644 East 14th Street, The East connects you to Tompkins Square Park, the East River Greenway, and the L train at 1st Avenue. Here, the neighborhood\u2019s eclectic charm comes alive with an array of dining spots, cultural destinations, and artistic energy\u2014making every day feel inspired.\n\nFor more information or to schedule a viewing, please contact The East Leasing Office.\n\nAssociated up-front costs include:\nApplication Fee: $20 per applicant\nMove-In Fees: One Month's Rent & One Month's Security Deposit\nAmenity Fee: $50 per month per tenant\n\nOther fees (as applicable):\nStorage Unit: $50 per month\nPet Deposit: $250 (one-time, non-refundable)\nBike Storage: $15 per month\nProviders: Television, Internet & Telephone service through Spectrum, RCN and Verizon.\nUtilities: Residents are responsible for electricity individually metered through QuadLogic. Submetering charges will be added to the monthly rent statement.\n\nPictures reflect typical apartment finishes and may not represent the actual apartment. Each apartment may vary. All property information presented is subject to errors, omissions, price and offer changes, changed property conditions and withdrawal of the property from the market, without notice. Any property information presented is for informational purposes only and shall not be binding upon the owner, leasing agent or any employee. Equal Housing Opportunity.",
+  "rooms": 5,
+  "bedrooms": 2,
+  "full_baths": 2,
+  "half_baths": 0,
+  "baths": 2.0,
+  "sqft": null,
+  "building_amenities": [
+   "Bike Room",
+   "Doorman",
+   "Elevator",
+   "Fios Available",
+   "Gym",
+   "Laundry",
+   "Live In Super",
+   "Media Room",
+   "Package Room",
+   "Shared Outdoor Space",
+   "Storage Space",
+   "Wheelchair Access"
+  ],
+  "doorman_types": [
+   "Part Time"
+  ],
+  "parking_types": [],
+  "shared_outdoor_space": [
+   "Patio",
+   "Roof Deck"
+  ],
+  "storage_types": [
+   "Locker Cage"
+  ],
+  "unit_features": [
+   "Central Ac",
+   "Private Outdoor Space",
+   "View",
+   "Washer Dryer"
+  ],
+  "private_outdoor_space": [
+   "Terrace"
+  ],
+  "views": [
+   "City",
+   "Skyline",
+   "Water"
+  ],
+  "fireplace_types": [],
+  "rent": 10200,
+  "net_effective_rent": 9415,
+  "months_free": 1,
+  "lease_term_months": 13,
+  "security_deposit": null,
+  "total_monthly_price": null,
+  "price_changes": [
+   {
+    "price": 10200,
+    "date": "2026-07-02"
+   }
+  ],
+  "fees": [
+   "Application fee: $20",
+   "Pet deposit: $250",
+   "Security deposit: $10,600",
+   "Bike storage: $15",
+   "Community amenity: $50",
+   "Storage: $50"
+  ],
+  "brokerage": "Corcoran",
+  "broker_license_name": "Corcoran Group",
+  "broker_license_type": "Limited Liability Broker",
+  "broker_address": "590 Madison Avenue, New York, NY, 10022",
+  "photo_count": 26,
+  "photo_url": "https://photos.zillowstatic.com/fp/a46b213ce2715fbc77ba78cea1f5a2e5-se_large_800_400.webp",
+  "video_count": 0,
+  "tour_3d_url": null,
+  "floorplan_count": 1,
+  "mls_number": null,
+  "listing_source_type": "PARTNER",
+  "open_houses": [],
+  "canonical_url": "https://streeteasy.com/building/the-east/2002",
+  "unit_history": [
+   {
+    "date": "2026-07-02",
+    "price": 10200,
+    "status": "ACTIVE",
+    "listing_id": "5088998",
+    "source": "Corcoran"
+   }
+  ],
+  "area_median_rent_same_beds": 6399,
+  "building_name": "The East",
+  "neighborhood": "East Village",
+  "building_floors": 24,
+  "building_units": 196,
+  "year_built": 2026,
+  "building_slug": "the-east",
+  "unit_type_display": "Rental unit in East Village",
+  "unit_type": "Rental unit",
+  "broker_fee": null,
+  "borough": "Manhattan"
+ },
+ {
+  "listing_id": "5089734",
+  "url": "https://streeteasy.com/rental/5089734",
+  "page_title_name": "50 Murray Street #1550",
+  "ld_price": 8250,
+  "ld_valid_from": "2026-07-01",
+  "ld_availability": "InStock",
+  "latitude": 40.7136,
+  "longitude": -74.0095,
+  "address_street": "50 Murray Street",
+  "unit": "#1550",
+  "city": "New York",
+  "state": "NY",
+  "zip": "10007",
+  "full_address": "50 Murray Street #1550",
+  "status": "ACTIVE",
+  "listed_date": "2026-07-01",
+  "days_on_market": 12,
+  "available_date": "2026-09-04",
+  "off_market_date": null,
+  "created_at": "2026-07-01T16:50:17.000-04:00",
+  "updated_at": "2026-07-01T17:01:27.000-04:00",
+  "description": "Welcome to Tribeca House! 50 Murray Street and 53 Park Place! \u2013 Luxury Living in the Heart of Tribeca\n*Private Balcony*\n\nExperience sophisticated urban living at this premier full-service building, conveniently located in one of Manhattan\u2019s most vibrant neighbourhoods.\n\nBuilding Amenities:\n\n\u2022 24-hour Doorman & Concierge Service\n\n\u2022 Beautifully Landscaped Roof Deck with lounge seating and BBQ grills\n\n\u2022 Exclusive Equinox Gym Access\n\n\u2022 Laundry Facilities conveniently located on every floor\n\n\u2022 Two Resident Lounges \u2013 ideal for relaxing or entertaining guests\n\n\u2022 Indoor Basketball Court\n\nApartment Highlights:\n\n\u2022 Premium Stainless Steel Appliances\n\n\u2022 Dishwasher Included\n\n\u2022 Oversized Windows for abundant natural light\n\nPhotos may depict a representative unit.\n\nList of fees and costs for the apartment:\n- $20 Online application fee (per person)\n- \u2060$500 move in fee\n- \u2060$500 pet fee (unless SA)\n\nContact us today to schedule your private viewing!",
+  "rooms": 5,
+  "bedrooms": 3,
+  "full_baths": 1,
+  "half_baths": 0,
+  "baths": 1.0,
+  "sqft": null,
+  "building_amenities": [
+   "Bike Room",
+   "Childrens Playroom",
+   "Concierge",
+   "Doorman",
+   "Elevator",
+   "Fios Available",
+   "Gym",
+   "Laundry",
+   "Live In Super",
+   "Media Room",
+   "Package Room",
+   "Parking",
+   "Shared Outdoor Space",
+   "Storage Space",
+   "Valet Service"
+  ],
+  "doorman_types": [
+   "Full Time"
+  ],
+  "parking_types": [
+   "Garage",
+   "Valet"
+  ],
+  "shared_outdoor_space": [
+   "Deck",
+   "Garden",
+   "Patio",
+   "Roof Deck"
+  ],
+  "storage_types": [
+   "Locker Cage"
+  ],
+  "unit_features": [
+   "Central Ac",
+   "Dishwasher",
+   "Hardwood Floors",
+   "Private Outdoor Space",
+   "View"
+  ],
+  "private_outdoor_space": [
+   "Balcony",
+   "Terrace"
+  ],
+  "views": [
+   "City"
+  ],
+  "fireplace_types": [],
+  "rent": 8250,
+  "net_effective_rent": null,
+  "months_free": null,
+  "lease_term_months": null,
+  "security_deposit": null,
+  "total_monthly_price": null,
+  "price_changes": [
+   {
+    "price": 8250,
+    "date": "2026-07-01"
+   }
+  ],
+  "fees": [
+   "Application fee: $20",
+   "Security deposit: $8,250"
+  ],
+  "brokerage": "REAL New York",
+  "broker_license_name": "Real New York",
+  "broker_license_type": "Limited Liability Broker",
+  "broker_address": "29 West 30th Street West 30th Street, 4th Fl, New York, NY, 10001",
+  "photo_count": 7,
+  "photo_url": "https://photos.zillowstatic.com/fp/c79c2b32f3e5ff561bd2638f3ff0b09b-se_large_800_400.webp",
+  "video_count": 0,
+  "tour_3d_url": null,
+  "floorplan_count": 0,
+  "mls_number": null,
+  "listing_source_type": "PARTNER",
+  "open_houses": [],
+  "canonical_url": "https://streeteasy.com/building/tribeca-house/1550",
+  "unit_history": [
+   {
+    "date": "2026-07-01",
+    "price": 8250,
+    "status": "ACTIVE",
+    "listing_id": "5089734",
+    "source": "REAL New York"
+   }
+  ],
+  "area_median_rent_same_beds": 16000,
+  "building_name": "Tribeca House",
+  "neighborhood": "Tribeca",
+  "building_floors": 21,
+  "building_units": 389,
+  "year_built": 1964,
+  "building_slug": "tribeca-house",
+  "unit_type_display": "Rental unit in Tribeca",
+  "unit_type": "Rental unit",
+  "broker_fee": null,
+  "borough": "Manhattan"
+ },
+ {
+  "listing_id": "5090360",
+  "url": "https://streeteasy.com/rental/5090360",
+  "page_title_name": "356 East 8th Street GARDEN-LEVEL",
+  "ld_price": 6995,
+  "ld_valid_from": "2026-07-02",
+  "ld_availability": "InStock",
+  "latitude": 40.72432,
+  "longitude": -73.97812,
+  "address_street": "356 East 8th Street",
+  "unit": "GARDEN-LEVEL",
+  "city": "New York",
+  "state": "NY",
+  "zip": "10009",
+  "full_address": "356 East 8th Street GARDEN-LEVEL",
+  "status": "ACTIVE",
+  "listed_date": "2026-07-02",
+  "days_on_market": 11,
+  "available_date": "2026-07-02",
+  "off_market_date": null,
+  "created_at": "2026-07-02T11:49:17.000-04:00",
+  "updated_at": "2026-07-07T19:00:28.000-04:00",
+  "description": "Private Luxury Garden Residence with Expansive Patio\n\nNow leasing \u2014 a rare garden residence at 356 East 8th Street featuring a massive private patio and beautifully finished interiors in a newly built boutique luxury building. This is a unique opportunity to enjoy indoor-outdoor living in the heart of the East Village, with the scale and privacy of a personal outdoor retreat rarely found in Manhattan.\n\nHighlights\n\n- Newly built boutique luxury residence\n\n- Condominium-caliber finishes\n\n- Prime East Village location\n\n- Adjacent to Firemen\u2019s Memorial Garden, offering rare greenery and openness\n\n- Finished roof deck with open sky and city views\n\n- Distinctive contemporary architecture\n\n- Oversized windows and exceptional natural light\n\n- Boutique scale with a more private residential feel\n\n- Rare Garden Apartment\n\n- Massive Private Patio\n\n- Moments from the best dining, nightlife, culture of the East Village living\n\nResidence Features\n\n- Wide-plank white oak flooring\n\n- Oversized black-framed windows\n\n- High ceilings\n\n- Recessed lighting throughout\n\n- Open-concept living and dining areas\n\n- Split-system heating and cooling\n\nKitchen Features\n\n- Designer open kitchens\n\n- Custom oak-tone cabinetry\n\n- Premium stainless steel appliance package\n\n- Built-in microwave\n\n- Electric range\n\n- Stone countertops\n\n- Mosaic tile backsplash\n\n- Matte black plumbing fixtures\n\n- Designer pendant lighting\n\nBath Features\n\n- Spa-inspired bathrooms\n\n- Frameless glass shower enclosures\n\n- Matte black plumbing fixtures\n\n- Rain and hand-shower fixture set\n\n- Sophisticated, hotel-caliber finish palette\n\nBuilding Features\n\n- Strong architectural presence and curb appeal\n\n- Modern fa\u00e7ade with warm accent panels\n\n- Large glazed openings maximizing light\n\n- Refined common areas with exposed brick character\n\n- Roof deck amenity enhancing the overall residential experience\n\nLifestyle\n\n- Set on a tree-lined East Village block\n\n- Beside Firemen\u2019s Memorial Garden for a rare park-adjacent feel\n\n- Near Tompkins Square Park, St. Mark\u2019s Place, and neighborhood favorites\n\n- Surrounded by acclaimed restaurants, caf\u00e9s, bars, and cultural destinations\n\n- Easy access to shopping, fitness, transportation, and daily conveniences\n\n- A rare blend of downtown energy, greenery, and boutique luxury living",
+  "rooms": 3,
+  "bedrooms": 2,
+  "full_baths": 1,
+  "half_baths": 0,
+  "baths": 1.0,
+  "sqft": 750,
+  "building_amenities": [
+   "Doorman",
+   "Fios Available",
+   "Shared Outdoor Space"
+  ],
+  "doorman_types": [
+   "Virtual"
+  ],
+  "parking_types": [],
+  "shared_outdoor_space": [
+   "Roof Deck"
+  ],
+  "storage_types": [],
+  "unit_features": [
+   "Central Ac",
+   "Hardwood Floors",
+   "Private Outdoor Space",
+   "View",
+   "Washer Dryer"
+  ],
+  "private_outdoor_space": [
+   "Garden",
+   "Roof Rights"
+  ],
+  "views": [
+   "Garden"
+  ],
+  "fireplace_types": [],
+  "rent": 6995,
+  "net_effective_rent": null,
+  "months_free": null,
+  "lease_term_months": null,
+  "security_deposit": null,
+  "total_monthly_price": null,
+  "price_changes": [
+   {
+    "price": 6995,
+    "date": "2026-07-02"
+   }
+  ],
+  "fees": [
+   "Application fee: $20",
+   "Security deposit: $6,995"
+  ],
+  "brokerage": "R New York",
+  "broker_license_name": "R New York",
+  "broker_license_type": "Limited Liability Broker",
+  "broker_address": "641 Lexington Avenue, 22nd Floor, New York, NY, 10022",
+  "photo_count": 18,
+  "photo_url": "https://photos.zillowstatic.com/fp/593422c74c4286ae84b0c6b44af6a4f2-se_large_800_400.webp",
+  "video_count": 0,
+  "tour_3d_url": null,
+  "floorplan_count": 0,
+  "mls_number": null,
+  "listing_source_type": "PARTNER",
+  "open_houses": [],
+  "canonical_url": "https://streeteasy.com/building/356-east-8-street-new_york/garden-level",
+  "unit_history": [
+   {
+    "date": "2026-07-02",
+    "price": 6995,
+    "status": "ACTIVE",
+    "listing_id": "5090360",
+    "source": "R New York"
+   }
+  ],
+  "area_median_rent_same_beds": 5495,
+  "building_name": "",
+  "neighborhood": "East Village",
+  "building_floors": 5,
+  "building_units": 8,
+  "year_built": 2026,
+  "building_slug": "356-east-8-street-new_york",
+  "unit_type_display": "Rental unit in East Village",
+  "unit_type": "Rental unit",
+  "broker_fee": null,
+  "borough": "Manhattan"
+ },
+ {
+  "listing_id": "5092445",
+  "url": "https://streeteasy.com/rental/5092445",
+  "page_title_name": "423 West Street #1G",
+  "ld_price": 9495,
+  "ld_valid_from": "2026-07-06",
+  "ld_availability": "InStock",
+  "latitude": 40.735077,
+  "longitude": -74.009674,
+  "address_street": "423 West Street",
+  "unit": "#1G",
+  "city": "New York",
+  "state": "NY",
+  "zip": "10014",
+  "full_address": "423 West Street #1G",
+  "status": "ACTIVE",
+  "listed_date": "2026-07-06",
+  "days_on_market": 7,
+  "available_date": "2026-08-01",
+  "off_market_date": null,
+  "created_at": "2026-07-05T21:28:55.000-04:00",
+  "updated_at": "2026-07-12T14:30:15.000-04:00",
+  "description": "MASSIVE TRUE 3 BEDROOM IN ULTRA-PRIME WEST VILLAGE!! *Available August 1*\n\nIN-UNIT WASHER/DRYER - DISHWASHER - PRIVATE OUTDOOR SPACE - SPACIOUS BEDROOMS & CLOSETS!\n\nBeautifully renovated 3-bedroom downtown home at 423 West Street, featuring a spacious open-concept layout, chic modern finishes, and stylish loft-inspired interiors throughout. The oversized living and dining area is perfect for entertaining, complemented by a sleek kitchen with stainless steel appliances, abundant cabinetry, and a clean contemporary design.\n\nAll three bedrooms comfortably accommodate queen-size beds and offer excellent closet space, including a large walk-in closet with custom organization. The apartment also features a spa-inspired bathroom, dark hardwood floors, recessed lighting, and an in-unit washer/dryer for ultimate convenience.\n\nThoughtfully designed with a bright, airy feel and sophisticated downtown aesthetic, this home blends comfort and functionality in one of Manhattan\u2019s most desirable waterfront locations. Surrounded by trendy restaurants, caf\u00e9s, nightlife, and nearby transportation, 423 West Street offers the perfect balance of style and convenience!\n\nMove-In Costs:\u20281st month's rent, 1/2 month security, $20 application fee, $80 move fee per person & $75 key fee per apartment. No pet fee.",
+  "rooms": 6,
+  "bedrooms": 3,
+  "full_baths": 1,
+  "half_baths": 0,
+  "baths": 1.0,
+  "sqft": null,
+  "building_amenities": [
+   "Doorman",
+   "Elevator",
+   "Laundry",
+   "Package Room",
+   "Storage Space"
+  ],
+  "doorman_types": [
+   "Virtual"
+  ],
+  "parking_types": [],
+  "shared_outdoor_space": [],
+  "storage_types": [
+   "Cold Storage"
+  ],
+  "unit_features": [
+   "Central Ac",
+   "Dishwasher",
+   "Hardwood Floors",
+   "Private Outdoor Space",
+   "View",
+   "Washer Dryer"
+  ],
+  "private_outdoor_space": [
+   "Terrace"
+  ],
+  "views": [
+   "City",
+   "Garden"
+  ],
+  "fireplace_types": [],
+  "rent": 9495,
+  "net_effective_rent": null,
+  "months_free": null,
+  "lease_term_months": null,
+  "security_deposit": null,
+  "total_monthly_price": null,
+  "price_changes": [
+   {
+    "price": 9495,
+    "date": "2026-07-05"
+   }
+  ],
+  "fees": [
+   "Application fee: $20",
+   "Security deposit: $4,750"
+  ],
+  "brokerage": "Next Step Realty New York LLC",
+  "broker_license_name": "Next Step Realty New York Llc",
+  "broker_license_type": "Limited Liability Broker",
+  "broker_address": "4 East 8th Street, New York, NY, 10003",
+  "photo_count": 18,
+  "photo_url": "https://photos.zillowstatic.com/fp/3e5ed9382f4faa4b35cba51fb00df61f-se_large_800_400.webp",
+  "video_count": 0,
+  "tour_3d_url": null,
+  "floorplan_count": 0,
+  "mls_number": null,
+  "listing_source_type": "PARTNER",
+  "open_houses": [],
+  "canonical_url": "https://streeteasy.com/building/four23-423-west-street-new_york/1g",
+  "unit_history": [
+   {
+    "date": "2026-07-06",
+    "price": 9495,
+    "status": "ACTIVE",
+    "listing_id": "5092445",
+    "source": "Next Step Realty New York LLC"
+   }
+  ],
+  "area_median_rent_same_beds": 11000,
+  "building_name": "FOUR23",
+  "neighborhood": "West Village",
+  "building_floors": 10,
+  "building_units": 6,
+  "year_built": 2005,
+  "building_slug": "four23-423-west-street-new_york",
+  "unit_type_display": "Rental unit in West Village",
+  "unit_type": "Rental unit",
+  "broker_fee": null,
+  "borough": "Manhattan"
+ },
+ {
+  "listing_id": "5092580",
+  "url": "https://streeteasy.com/rental/5092580",
+  "page_title_name": "21 Bleecker Street #1E",
+  "ld_price": 18000,
+  "ld_valid_from": "2026-07-06",
+  "ld_availability": "InStock",
+  "latitude": 40.72569,
+  "longitude": -73.99328,
+  "address_street": "21 Bleecker Street",
+  "unit": "#1E",
+  "city": "New York",
+  "state": "NY",
+  "zip": "10012",
+  "full_address": "21 Bleecker Street #1E",
+  "status": "ACTIVE",
+  "listed_date": "2026-07-06",
+  "days_on_market": 7,
+  "available_date": "2026-08-15",
+  "off_market_date": null,
+  "created_at": "2026-07-06T08:39:52.000-04:00",
+  "updated_at": "2026-07-09T18:13:42.000-04:00",
+  "description": "Welcome home to this 2300sf luxury duplex loft on a prime block in the heart of NoHo. Custom designed throughout with a separate entrance and 400sf private garden.\nThe upper level features open-plan living with 10 foot ceilings, a chef's kitchen and dining room. The downstairs has a pin-drop quiet primary bedroom suite, a home office, a second bedroom and additional studio for guests or rec space.\nThe custom-built staircase and white oak hardwood floors throughout have been treated with a natural oil finish. With Southern and Northern exposure on both levels and motorized Palladiom shades, the space is always bright yet private. An all new spacious chef's kitchen by Henrybuilt allows for easy entertaining, with an induction cooktop and all Bosch appliances. The home has central heating / cooling with zone control and bathrooms have radiant heated floors. A Bose Soundtouch surround sound system is wired for audio, projection and TV. The Lutron luxury built-in shading and lighting system allows for personalized scene control via remote, wall switches or app. Pets case by case. \n***Please note the owner prefers to keep the custom dining room table in the apartment.\nOriginally constructed in the 1830's as a merchant's house on what was then the northern edge of the city, it is now very centrally located between Nolita, SoHo, NYU campus and the East and West Village neighborhoods. This home is a short distance from boutique retail, many great restaurants plus the Broadway-Lafayette, Prince Street and Bleecker Street subway stations.\n\nEasy board package process.\n\nMOVE IN/MOVE OUT FEE\nA refundable fee of $500 will be on deposit toward Move/In/ Move Out damages should \nthey occur and which are the responsibility of the Sub lessee. \n$20 credit check per applicant",
+  "rooms": 5,
+  "bedrooms": 2,
+  "full_baths": 2,
+  "half_baths": 1,
+  "baths": 2.5,
+  "sqft": 2300,
+  "building_amenities": [],
+  "doorman_types": [],
+  "parking_types": [],
+  "shared_outdoor_space": [],
+  "storage_types": [],
+  "unit_features": [
+   "Central Ac",
+   "Dishwasher",
+   "Furnished",
+   "Hardwood Floors",
+   "Private Outdoor Space",
+   "View",
+   "Washer Dryer"
+  ],
+  "private_outdoor_space": [
+   "Garden"
+  ],
+  "views": [
+   "City",
+   "Garden"
+  ],
+  "fireplace_types": [],
+  "rent": 18000,
+  "net_effective_rent": null,
+  "months_free": null,
+  "lease_term_months": null,
+  "security_deposit": null,
+  "total_monthly_price": null,
+  "price_changes": [
+   {
+    "price": 18000,
+    "date": "2026-07-06"
+   }
+  ],
+  "fees": [
+   "Move-in deposit: $500",
+   "Application fee: $0",
+   "Security deposit: $18,000"
+  ],
+  "brokerage": "Corcoran",
+  "broker_license_name": "Corcoran Group",
+  "broker_license_type": "Limited Liability Broker",
+  "broker_address": "590 Madison Avenue, New York, NY, 10022",
+  "photo_count": 16,
+  "photo_url": "https://photos.zillowstatic.com/fp/748a19aaa8dee0db0a4793dfe1fbbf61-se_large_800_400.webp",
+  "video_count": 0,
+  "tour_3d_url": null,
+  "floorplan_count": 1,
+  "mls_number": null,
+  "listing_source_type": "PARTNER",
+  "open_houses": [],
+  "canonical_url": "https://streeteasy.com/building/21-bleecker-street-new_york/1e",
+  "unit_history": [
+   {
+    "date": "2026-07-06",
+    "price": 18000,
+    "status": "ACTIVE",
+    "listing_id": "5092580",
+    "source": "Corcoran"
+   },
+   {
+    "date": "2024-06-24",
+    "price": 15000,
+    "status": "RENTED",
+    "listing_id": "4418713",
+    "source": "Corcoran"
+   },
+   {
+    "date": "2024-06-03",
+    "price": 15000,
+    "status": "DELISTED",
+    "listing_id": "4418713",
+    "source": "Corcoran"
+   },
+   {
+    "date": "2024-05-29",
+    "price": 15000,
+    "status": "ACTIVE",
+    "listing_id": "4418713",
+    "source": "Corcoran"
+   },
+   {
+    "date": "2024-05-22",
+    "price": 15000,
+    "status": "DELISTED",
+    "listing_id": "4418713",
+    "source": "Corcoran"
+   },
+   {
+    "date": "2024-05-16",
+    "price": 15000,
+    "status": "ACTIVE",
+    "listing_id": "4418713",
+    "source": "Corcoran"
+   },
+   {
+    "date": "2020-09-28",
+    "price": 10000,
+    "status": "NO_LONGER_AVAILABLE",
+    "listing_id": "3042682",
+    "source": "Engel & V\u00f6lkers New York City"
+   },
+   {
+    "date": "2020-09-28",
+    "price": 10000,
+    "status": "IN_CONTRACT",
+    "listing_id": "3042682",
+    "source": "Engel & V\u00f6lkers New York City"
+   },
+   {
+    "date": "2020-08-28",
+    "price": 10000,
+    "status": null,
+    "listing_id": "3042682",
+    "source": "Engel & V\u00f6lkers New York City"
+   },
+   {
+    "date": "2020-05-18",
+    "price": 12000,
+    "status": "ACTIVE",
+    "listing_id": "3042682",
+    "source": "Engel & V\u00f6lkers New York City"
+   },
+   {
+    "date": "2020-05-12",
+    "price": 12000,
+    "status": "RENTED",
+    "listing_id": "2787889",
+    "source": "Engel & V\u00f6lkers New York City"
+   },
+   {
+    "date": "2019-08-26",
+    "price": 12000,
+    "status": "NO_LONGER_AVAILABLE",
+    "listing_id": "2787889",
+    "source": "Engel & V\u00f6lkers New York City"
+   },
+   {
+    "date": "2019-08-05",
+    "price": 12000,
+    "status": "ACTIVE",
+    "listing_id": "2787889",
+    "source": "Engel & V\u00f6lkers New York City"
+   },
+   {
+    "date": "2019-07-29",
+    "price": 12000,
+    "status": "NO_LONGER_AVAILABLE",
+    "listing_id": "2787889",
+    "source": "Engel & V\u00f6lkers New York City"
+   },
+   {
+    "date": "2019-07-22",
+    "price": 12000,
+    "status": "ACTIVE",
+    "listing_id": "2787889",
+    "source": "Engel & V\u00f6lkers New York City"
+   },
+   {
+    "date": "2019-07-18",
+    "price": 12000,
+    "status": "NO_LONGER_AVAILABLE",
+    "listing_id": "2787889",
+    "source": "Engel & V\u00f6lkers New York City"
+   },
+   {
+    "date": "2019-07-09",
+    "price": 12000,
+    "status": "ACTIVE",
+    "listing_id": "2787889",
+    "source": "Engel & V\u00f6lkers New York City"
+   }
+  ],
+  "area_median_rent_same_beds": 14750,
+  "building_name": "",
+  "neighborhood": "Noho",
+  "building_floors": 4,
+  "building_units": 8,
+  "year_built": 1830,
+  "building_slug": "21-bleecker-street-new_york",
+  "unit_type_display": "Co-op in Noho",
+  "unit_type": "Co-op",
+  "broker_fee": null,
+  "borough": "Manhattan"
+ },
+ {
+  "listing_id": "5093236",
+  "url": "https://streeteasy.com/rental/5093236",
+  "page_title_name": "1 7th Avenue South #2",
+  "ld_price": 14000,
+  "ld_valid_from": "2026-07-06",
+  "ld_availability": "InStock",
+  "latitude": 40.72976,
+  "longitude": -74.00477,
+  "address_street": "1 7th Avenue South",
+  "unit": "#2",
+  "city": "New York",
+  "state": "NY",
+  "zip": "10014",
+  "full_address": "1 7th Avenue South #2",
+  "status": "ACTIVE",
+  "listed_date": "2026-07-06",
+  "days_on_market": 115,
+  "available_date": "2026-07-06",
+  "off_market_date": null,
+  "created_at": "2026-07-06T13:58:32.000-04:00",
+  "updated_at": "2026-07-12T06:59:14.000-04:00",
+  "description": "Introducing Residence 2 at 1 Seventh Avenue South \u2014 a rare full-floor 2-bedroom, 2-bathroom residence spanning approximately 1,558 square feet, with direct keyed elevator entry, 10-foot ceilings, refined modern finishes, and a distinctive architectural presence in the heart of Greenwich Village.\n\nPerfectly positioned where Greenwich Village, the West Village, SoHo, and Hudson Square meet, this striking home offers a thoughtful blend of privacy, natural light, and downtown sophistication. The building\u2019s unique triangular form allows for oversized floor-to-ceiling windows, open exposures, and a layout that feels both architecturally distinct and highly livable.\n\nA direct Otis Gen2 keyed elevator with magnetic locking system opens into a gallery-style entry foyer with a closeted Bosch front-loading washer/dryer. Wide-strip dark-stained walnut flooring runs throughout the residence, complemented by solid-core wood doors, Valli & Valli hardware, built-in roller shades, and sophisticated Winco window frames and hardware.\n\nThe open living, dining, and kitchen area spans approximately 606 square feet, creating an impressive entertaining space wrapped in glass. A Juliet balcony with an integrated planter system and retractable stainless steel seating adds a charming outdoor accent while enhancing the home\u2019s connection to the surrounding streetscape.\n\nThe chef\u2019s kitchen is appointed with custom Italian Poliform Varenna Asia cabinetry in graphite, stainless steel countertops and backsplash, a center island with stool overhang, Sub-Zero refrigerator, Miele stainless steel gas range, Miele oven, Miele range hood, fully integrated Miele dishwasher, hidden Sharp microwave, Dornbracht fittings, recessed lighting, and under-cabinet luminaires.\n\nThe primary suite spans approximately 369 square feet and features a walk-in closet with pocket doors and an en-suite bath finished with Italian Axor Citterio fixtures, dark-stained walnut custom cabinetry, White Thassos marble, black slate and Walker Zanger tile, dual Kohler sinks, a Kohler soaking tub, Toto dual-flush toilet, recessed lighting, and wall-mounted LED lighting strips.\n\nThe second bedroom is well-proportioned and enjoys tree-top views, while the guest bath is finished with dark stone, walnut cabinetry, Axor Citterio fixtures, Kohler fittings, a custom mirror and medicine cabinet, Toto toilet, and a glass-enclosed oversized shower.\n\nAdditional features include a Unitone 3000 security/video intercom system, CAT5 wiring with built-in wireless modems, Mitsubishi City-Multi zoned central heating and air conditioning, and a private 45-square-foot basement storage unit.\n\nSet in the heart of Greenwich Village, 1 Seventh Avenue South places you moments from downtown Manhattan\u2019s best restaurants, caf\u00e9s, boutiques, cultural destinations, Washington Square Park, the Hudson River waterfront, SoHo, the West Village, and Hudson Square.\n\nTransportation is exceptionally convenient, with the 1 train at Houston Street nearby, along with access to the A, B, C, D, E, F, and M trains at West 4th Street\u2013Washington Square.\n\nResidence 2 at 1 Seventh Avenue South represents a rare opportunity to rent a full-floor downtown home with direct elevator entry, refined finishes, architectural character, and an irreplaceable Greenwich Village address.",
+  "rooms": 6,
+  "bedrooms": 2,
+  "full_baths": 2,
+  "half_baths": 0,
+  "baths": 2.0,
+  "sqft": 1558,
+  "building_amenities": [
+   "Elevator",
+   "Fios Available",
+   "Storage Space"
+  ],
+  "doorman_types": [],
+  "parking_types": [],
+  "shared_outdoor_space": [],
+  "storage_types": [
+   "Locker Cage"
+  ],
+  "unit_features": [
+   "Central Ac",
+   "Dishwasher",
+   "Hardwood Floors",
+   "Private Outdoor Space",
+   "View",
+   "Washer Dryer"
+  ],
+  "private_outdoor_space": [
+   "Balcony"
+  ],
+  "views": [
+   "City"
+  ],
+  "fireplace_types": [],
+  "rent": 14000,
+  "net_effective_rent": null,
+  "months_free": null,
+  "lease_term_months": null,
+  "security_deposit": null,
+  "total_monthly_price": null,
+  "price_changes": [
+   {
+    "price": 14000,
+    "date": "2026-07-06"
+   }
+  ],
+  "fees": [
+   "Application fee: $0",
+   "Security deposit: $14,000"
+  ],
+  "brokerage": "Douglas Elliman",
+  "broker_license_name": "Douglas Elliman Real Estate",
+  "broker_license_type": "Limited Liability Broker",
+  "broker_address": "575 Madison Avenue, 4th Floor, New York, NY, 10022",
+  "photo_count": 16,
+  "photo_url": "https://photos.zillowstatic.com/fp/8425a3d5fc71f9ca3a83b11c234a210b-se_large_800_400.webp",
+  "video_count": 1,
+  "tour_3d_url": null,
+  "floorplan_count": 1,
+  "mls_number": null,
+  "listing_source_type": "PARTNER",
+  "open_houses": [],
+  "canonical_url": "https://streeteasy.com/building/one-7th/2",
+  "unit_history": [
+   {
+    "date": "2026-07-06",
+    "price": 14000,
+    "status": "ACTIVE",
+    "listing_id": "5093236",
+    "source": "Douglas Elliman"
+   },
+   {
+    "date": "2026-07-04",
+    "price": 14000,
+    "status": "DELISTED",
+    "listing_id": "4992708",
+    "source": "Corcoran"
+   },
+   {
+    "date": "2026-05-12",
+    "price": 14000,
+    "status": null,
+    "listing_id": "4992708",
+    "source": "Corcoran"
+   },
+   {
+    "date": "2026-05-09",
+    "price": 14700,
+    "status": null,
+    "listing_id": "4992708",
+    "source": "Corcoran"
+   },
+   {
+    "date": "2026-03-18",
+    "price": 15000,
+    "status": "ACTIVE",
+    "listing_id": "4992708",
+    "source": "Corcoran"
+   },
+   {
+    "date": "2023-11-13",
+    "price": 10500,
+    "status": "NO_LONGER_AVAILABLE",
+    "listing_id": "4188485",
+    "source": "18 REALTY"
+   },
+   {
+    "date": "2023-08-14",
+    "price": 10500,
+    "status": "TEMPORARILY_OFF_MARKET",
+    "listing_id": "4188485",
+    "source": "18 REALTY"
+   },
+   {
+    "date": "2023-07-28",
+    "price": 10500,
+    "status": "ACTIVE",
+    "listing_id": "4188485",
+    "source": "18 REALTY"
+   },
+   {
+    "date": "2023-07-27",
+    "price": 10500,
+    "status": "TEMPORARILY_OFF_MARKET",
+    "listing_id": "4188485",
+    "source": "18 REALTY"
+   },
+   {
+    "date": "2023-07-26",
+    "price": 10500,
+    "status": "ACTIVE",
+    "listing_id": "4188485",
+    "source": "18 REALTY"
+   },
+   {
+    "date": "2021-08-19",
+    "price": 7295,
+    "status": "RENTED",
+    "listing_id": "3641726",
+    "source": "Compass"
+   },
+   {
+    "date": "2021-08-17",
+    "price": 7295,
+    "status": "ACTIVE",
+    "listing_id": "3641726",
+    "source": "Compass"
+   },
+   {
+    "date": "2021-08-16",
+    "price": 7295,
+    "status": "TEMPORARILY_OFF_MARKET",
+    "listing_id": "3641726",
+    "source": "Compass"
+   },
+   {
+    "date": "2021-08-16",
+    "price": 7295,
+    "status": "ACTIVE",
+    "listing_id": "3641726",
+    "source": "Compass"
+   },
+   {
+    "date": "2019-10-07",
+    "price": 7950,
+    "status": "RENTED",
+    "listing_id": "2882650",
+    "source": "Compass"
+   },
+   {
+    "date": "2019-10-04",
+    "price": 7950,
+    "status": "IN_CONTRACT",
+    "listing_id": "2882650",
+    "source": "Compass"
+   },
+   {
+    "date": "2019-09-24",
+    "price": 7950,
+    "status": "ACTIVE",
+    "listing_id": "2882650",
+    "source": "Compass"
+   },
+   {
+    "date": "2016-03-23",
+    "price": 8600,
+    "status": "RENTED",
+    "listing_id": "1716423",
+    "source": "Compass"
+   },
+   {
+    "date": "2016-03-05",
+    "price": 8600,
+    "status": "NO_LONGER_AVAILABLE",
+    "listing_id": "1716423",
+    "source": "Compass"
+   },
+   {
+    "date": "2016-02-03",
+    "price": 8600,
+    "status": null,
+    "listing_id": "1716423",
+    "source": "Compass"
+   },
+   {
+    "date": "2016-01-22",
+    "price": 9500,
+    "status": "ACTIVE",
+    "listing_id": "1716423",
+    "source": "Compass"
+   },
+   {
+    "date": "2013-09-08",
+    "price": 7750,
+    "status": "NO_LONGER_AVAILABLE",
+    "listing_id": "1115037",
+    "source": "Compass"
+   },
+   {
+    "date": "2013-09-03",
+    "price": 7750,
+    "status": null,
+    "listing_id": "1115037",
+    "source": "Compass"
+   },
+   {
+    "date": "2013-08-02",
+    "price": 7950,
+    "status": null,
+    "listing_id": "1115037",
+    "source": "Compass"
+   },
+   {
+    "date": "2013-07-12",
+    "price": 8500,
+    "status": "ACTIVE",
+    "listing_id": "1115037",
+    "source": "Compass"
+   },
+   {
+    "date": "2013-07-09",
+    "price": 8500,
+    "status": "TEMPORARILY_OFF_MARKET",
+    "listing_id": "1115037",
+    "source": "Compass"
+   },
+   {
+    "date": "2013-07-09",
+    "price": 8500,
+    "status": "ACTIVE",
+    "listing_id": "1115037",
+    "source": "Compass"
+   },
+   {
+    "date": "2011-09-09",
+    "price": 7500,
+    "status": "NO_LONGER_AVAILABLE",
+    "listing_id": "790421",
+    "source": "Citi Habitats"
+   },
+   {
+    "date": "2011-08-09",
+    "price": 7500,
+    "status": "ACTIVE",
+    "listing_id": "790421",
+    "source": "Citi Habitats"
+   },
+   {
+    "date": "2008-12-12",
+    "price": 7500,
+    "status": "NO_LONGER_AVAILABLE",
+    "listing_id": "417106",
+    "source": "Citi Habitats"
+   },
+   {
+    "date": "2008-10-17",
+    "price": 7500,
+    "status": null,
+    "listing_id": "417106",
+    "source": "Citi Habitats"
+   },
+   {
+    "date": "2008-09-26",
+    "price": 8000,
+    "status": "ACTIVE",
+    "listing_id": "417106",
+    "source": "Citi Habitats"
+   },
+   {
+    "date": "2008-09-09",
+    "price": 8000,
+    "status": "NO_LONGER_AVAILABLE",
+    "listing_id": "409208",
+    "source": "CORE"
+   },
+   {
+    "date": "2008-09-09",
+    "price": 8000,
+    "status": "NO_LONGER_AVAILABLE",
+    "listing_id": "409208",
+    "source": "CORE"
+   },
+   {
+    "date": "2008-09-09",
+    "price": 8000,
+    "status": "IN_CONTRACT",
+    "listing_id": "409208",
+    "source": "CORE"
+   },
+   {
+    "date": "2008-09-04",
+    "price": 8000,
+    "status": "ACTIVE",
+    "listing_id": "409208",
+    "source": "CORE"
+   }
+  ],
+  "area_median_rent_same_beds": 7400,
+  "building_name": "One 7th",
+  "neighborhood": "West Village",
+  "building_floors": 6,
+  "building_units": 4,
+  "year_built": 2006,
+  "building_slug": "one-7th",
+  "unit_type_display": "Rental unit in West Village",
+  "unit_type": "Rental unit",
+  "broker_fee": null,
+  "borough": "Manhattan"
+ },
+ {
+  "listing_id": "5093530",
+  "url": "https://streeteasy.com/rental/5093530",
+  "page_title_name": "139 Wooster Street #5B",
+  "ld_price": 18000,
+  "ld_valid_from": "2026-07-06",
+  "ld_availability": "InStock",
+  "latitude": 40.72592,
+  "longitude": -74.00011,
+  "address_street": "139 Wooster Street",
+  "unit": "#5B",
+  "city": "New York",
+  "state": "NY",
+  "zip": "10012",
+  "full_address": "139 Wooster Street #5B",
+  "status": "ACTIVE",
+  "listed_date": "2026-07-06",
+  "days_on_market": 7,
+  "available_date": "2026-07-06",
+  "off_market_date": null,
+  "created_at": "2026-07-06T16:16:38.000-04:00",
+  "updated_at": "2026-07-08T14:14:19.000-04:00",
+  "description": "Brand-New Designer Loft Rental in the Heart of SoHo\n\nIntroducing Residence 5B at 139 Wooster Street\u2014an extraordinary, never-lived-in designer residence that has been meticulously reimagined from top to bottom. Perfectly positioned on one of SoHo's most coveted cobblestone streets, this exceptional two-bedroom, two-bathroom condominium seamlessly blends authentic loft architecture with sophisticated contemporary design, creating a turnkey home of remarkable quality and style.\n\nA gracious entry gallery opens to an expansive, light-filled great room where soaring 11-foot ceilings, oversized floor-to-ceiling windows, and wide-plank hardwood floors leading to the apartments terrace, create an airy sense of scale. The living and dining spaces are enhanced by designer lighting, electronic solar and blackout shades, offering effortless luxury for both everyday living and entertaining.\n\nAt the heart of the home is a stunning chef's kitchen, thoughtfully designed with bespoke millwork, elegant custom cabinetry, and stone countertops. Outfitted with premium Sub-Zero refrigeration, a Liebherr wine refrigerator, and Miele appliances, the kitchen delivers exceptional performance while maintaining a refined, timeless aesthetic. Whether hosting intimate dinners or larger gatherings, this space is equally suited for everyday living and effortless entertaining.\n\nAdjacent to the living space, a beautifully crafted custom built-in office provides the ideal work-from-home environment without compromising the loft's open and sophisticated design.\n\nThe tranquil primary suite is a private sanctuary featuring custom-designed closets and a spa-inspired bath wrapped in wood-grey marble. A double vanity, deep soaking tub, radiant heated floors, and an oversized glass-enclosed shower create a luxurious retreat reminiscent of a five-star hotel.\n\nThe spacious second bedroom has been completely reimagined with generous custom storage, complemented by a beautifully appointed second full bath finished with the same exceptional level of craftsmanship.\n\nEvery inch of this residence reflects an uncompromising commitment to quality. This comprehensive, never-lived-in renovation showcases meticulously selected finishes, custom millwork, state-of-the-art technology, and timeless design, offering the rare opportunity to become the first owner to enjoy this extraordinary home.\n\nAdditional features include:\nBrand-new, never-lived-in designer renovation\nSoaring 11-foot ceilings\nWide-plank hardwood flooring throughout\nCustom built-in home office\nBespoke millwork and custom built-ins throughout\nDesigner lighting package\nElectronic solar and blackout shades\nCentral air conditioning\n\nDesigned by Beyer Blinder Belle, 139 Wooster Street is one of SoHo's premier boutique condominiums, offering white-glove service with a 24-hour doorman, beautifully renovated lobby, state-of-the-art fitness center, and tranquil residents' courtyard. Moments from SoHo's renowned galleries, designer boutiques, acclaimed restaurants, and vibrant cultural destinations, the location offers the very best of downtown Manhattan.\n\nResidence 5B presents a rare opportunity to rent a flawlessly executed, never-before-lived-in luxury loft on one of SoHo's most iconic streets\u2014where timeless architecture, impeccable craftsmanship, and modern luxury converge.\n\nSorry, no dogs. Cats OK.\n\nRequired Fees To Rent This Unit\n$20 Application Fee Per Applicant\n1st Month's Rent: $18,000\n1 Month's Security: $18,000\n\nCondo Application Processing Fee: $700\nBackground Check Fee: $100 per applicant/occupant\nCredit Check Fee: $75 per applicant/occupant\nBedbug Disclosure Form Fee: $25\nMove-In Deposit: $750",
+  "rooms": 5,
+  "bedrooms": 2,
+  "full_baths": 2,
+  "half_baths": 0,
+  "baths": 2.0,
+  "sqft": 1472,
+  "building_amenities": [
+   "Concierge",
+   "Doorman",
+   "Elevator",
+   "Fios Available",
+   "Gym",
+   "Shared Outdoor Space"
+  ],
+  "doorman_types": [
+   "Full Time"
+  ],
+  "parking_types": [],
+  "shared_outdoor_space": [
+   "Garden"
+  ],
+  "storage_types": [],
+  "unit_features": [
+   "Central Ac",
+   "Dishwasher",
+   "Hardwood Floors",
+   "Private Outdoor Space",
+   "Washer Dryer"
+  ],
+  "private_outdoor_space": [
+   "Balcony"
+  ],
+  "views": [],
+  "fireplace_types": [],
+  "rent": 18000,
+  "net_effective_rent": null,
+  "months_free": null,
+  "lease_term_months": null,
+  "security_deposit": null,
+  "total_monthly_price": null,
+  "price_changes": [
+   {
+    "price": 18000,
+    "date": "2026-07-06"
+   }
+  ],
+  "fees": [
+   "Application fee: $18,000",
+   "Security deposit: $18,000"
+  ],
+  "brokerage": "Corcoran",
+  "broker_license_name": "Corcoran Group",
+  "broker_license_type": "Limited Liability Broker",
+  "broker_address": "590 Madison Avenue, New York, NY, 10022",
+  "photo_count": 10,
+  "photo_url": "https://photos.zillowstatic.com/fp/3d14387fd7c0c5f61056b8e7ff56e5ad-se_large_800_400.webp",
+  "video_count": 0,
+  "tour_3d_url": null,
+  "floorplan_count": 1,
+  "mls_number": null,
+  "listing_source_type": "PARTNER",
+  "open_houses": [],
+  "canonical_url": "https://streeteasy.com/building/139-wooster-street-new_york/5b",
+  "unit_history": [
+   {
+    "date": "2026-07-06",
+    "price": 18000,
+    "status": "ACTIVE",
+    "listing_id": "5093530",
+    "source": "Corcoran"
+   },
+   {
+    "date": "2020-11-23",
+    "price": 9950,
+    "status": "DELISTED",
+    "listing_id": "3231667",
+    "source": "CORE"
+   },
+   {
+    "date": "2020-09-21",
+    "price": 9950,
+    "status": "ACTIVE",
+    "listing_id": "3231667",
+    "source": "CORE"
+   },
+   {
+    "date": "2011-08-19",
+    "price": 12500,
+    "status": "RENTED",
+    "listing_id": "766260",
+    "source": "Corcoran"
+   },
+   {
+    "date": "2011-06-24",
+    "price": 12500,
+    "status": "NO_LONGER_AVAILABLE",
+    "listing_id": "766260",
+    "source": "Corcoran"
+   },
+   {
+    "date": "2011-05-20",
+    "price": 12500,
+    "status": "ACTIVE",
+    "listing_id": "766260",
+    "source": "Corcoran"
+   }
+  ],
+  "area_median_rent_same_beds": 6250,
+  "building_name": "",
+  "neighborhood": "Soho",
+  "building_floors": 10,
+  "building_units": 16,
+  "year_built": 2006,
+  "building_slug": "139-wooster-street-new_york",
+  "unit_type_display": "Condo in Soho",
+  "unit_type": "Condo",
+  "broker_fee": null,
+  "borough": "Manhattan"
+ },
+ {
+  "listing_id": "5093671",
+  "url": "https://streeteasy.com/rental/5093671",
+  "page_title_name": "432 East 13th Street #A6",
+  "ld_price": 7995,
+  "ld_valid_from": "2026-07-06",
+  "ld_availability": "InStock",
+  "latitude": 40.7299,
+  "longitude": -73.9819,
+  "address_street": "432 East 13th Street",
+  "unit": "#A6",
+  "city": "New York",
+  "state": "NY",
+  "zip": "10009",
+  "full_address": "432 East 13th Street #A6",
+  "status": "ACTIVE",
+  "listed_date": "2026-07-06",
+  "days_on_market": 7,
+  "available_date": "2026-07-06",
+  "off_market_date": null,
+  "created_at": "2026-07-06T17:36:41.000-04:00",
+  "updated_at": "2026-07-06T17:41:36.000-04:00",
+  "description": "This stunning 3 bedroom is located in a well-maintained building in prime East Village, and offers a thoughtfully updated interior with modern finishes throughout.\n\nPH Duplex, Featuring:\n\n\u2022 Private roof deck\n\u2022 In-unit washer and dryer\n\u2022 Newly renovated bathroom\n\u2022 Modern kitchen with dishwasher\n\u2022 Hardwood flooring\n\u2022 High ceilings\n\nPlease submit a tour request directly through the listing to receive a video and additional details.\n\nOpen houses are by appointment only.\n\nMore photos coming soon. Pictures are representative of quality and type of renovation, not an indication of size or layout.",
+  "rooms": 4,
+  "bedrooms": 3,
+  "full_baths": 1,
+  "half_baths": 0,
+  "baths": 1.0,
+  "sqft": null,
+  "building_amenities": [
+   "Doorman",
+   "Fios Available",
+   "Laundry",
+   "Live In Super",
+   "Package Room",
+   "Shared Outdoor Space"
+  ],
+  "doorman_types": [
+   "Virtual"
+  ],
+  "parking_types": [],
+  "shared_outdoor_space": [
+   "Roof Deck"
+  ],
+  "storage_types": [],
+  "unit_features": [
+   "Dishwasher",
+   "Hardwood Floors",
+   "Private Outdoor Space",
+   "View",
+   "Washer Dryer"
+  ],
+  "private_outdoor_space": [
+   "Private Roof Deck",
+   "Roof Rights"
+  ],
+  "views": [
+   "City",
+   "Skyline"
+  ],
+  "fireplace_types": [],
+  "rent": 7995,
+  "net_effective_rent": null,
+  "months_free": null,
+  "lease_term_months": null,
+  "security_deposit": null,
+  "total_monthly_price": null,
+  "price_changes": [
+   {
+    "price": 7995,
+    "date": "2026-07-06"
+   }
+  ],
+  "fees": [
+   "Application fee: $20",
+   "Security deposit: $7,995"
+  ],
+  "brokerage": "DALLAL",
+  "broker_license_name": "Dallal Group Llc",
+  "broker_license_type": "Real Estate Principal Office",
+  "broker_address": "260 Madison Avenue, 8th Floor, New York, NY, 10016",
+  "photo_count": 2,
+  "photo_url": "https://photos.zillowstatic.com/fp/b16ce5b10eb3976f77d786afc4557ad2-se_large_800_400.webp",
+  "video_count": 0,
+  "tour_3d_url": null,
+  "floorplan_count": 0,
+  "mls_number": null,
+  "listing_source_type": "PARTNER",
+  "open_houses": [],
+  "canonical_url": "https://streeteasy.com/building/432-east-13-street-new_york/a6",
+  "unit_history": [
+   {
+    "date": "2026-07-06",
+    "price": 7995,
+    "status": "ACTIVE",
+    "listing_id": "5093671",
+    "source": "DALLAL"
+   }
+  ],
+  "area_median_rent_same_beds": 7722,
+  "building_name": "",
+  "neighborhood": "East Village",
+  "building_floors": 6,
+  "building_units": 38,
+  "year_built": 1900,
+  "building_slug": "432-east-13-street-new_york",
+  "unit_type_display": "Rental unit in East Village",
+  "unit_type": "Rental unit",
+  "broker_fee": null,
+  "borough": "Manhattan"
+ },
+ {
+  "listing_id": "5094279",
+  "url": "https://streeteasy.com/rental/5094279",
+  "page_title_name": "145 West 10th Street #6",
+  "ld_price": 11995,
+  "ld_valid_from": "2026-07-07",
+  "ld_availability": "InStock",
+  "latitude": 40.734726,
+  "longitude": -74.00106,
+  "address_street": "145 West 10th Street",
+  "unit": "#6",
+  "city": "New York",
+  "state": "NY",
+  "zip": "10014",
+  "full_address": "145 West 10th Street #6",
+  "status": "ACTIVE",
+  "listed_date": "2026-07-07",
+  "days_on_market": 6,
+  "available_date": "2026-09-01",
+  "off_market_date": null,
+  "created_at": "2026-07-07T10:53:10.000-04:00",
+  "updated_at": "2026-07-12T13:30:09.000-04:00",
+  "description": "145 West 10th Street \u2013 West Village | 4 Bedroom | 2 Bathroom | Available 9/1 |\n1/2 Month Security deposit|\n\nWelcome to this spacious four-bedroom, two-bathroom residence on a quintessential tree-lined block in the West Village. Located on West 10th Street, this home blends classic downtown character with a highly functional layout in the heart of one of Manhattan\u2019s most desirable neighborhoods.\n\nApartment Features:\nFour well-proportioned bedrooms with great layout flexibility\nLaundry in building and in unit\nTwo full bathrooms with clean, updated finishes\nBright living area ideal for relaxing or entertaining\nHardwood floors throughout\nExposed brick accents adding classic West Village charm\nOpen kitchen with modern cabinetry and ample counter space\nStainless steel appliances including dishwasher\nLarge windows providing good natural light\nGenerous closet and storage space\n\nBuilding Highlights:\nLaundry room\nWell-maintained prewar walk-up building\nLocated on West 10th Street in the West Village\nQuintessential tree-lined block surrounded by brownstones, caf\u00e9s, and boutique shops\nMoments from Hudson River Park, Washington Square Park, and some of downtown\u2019s best dining and nightlife\nConvenient access to multiple subway lines for an easy commute anywhere in the city\n\nSet in one of Manhattan\u2019s most iconic neighborhoods, this residence offers authentic West Village living with a flexible four-bedroom layout, ideal for anyone seeking comfort, character, and prime downtown convenience.",
+  "rooms": 7,
+  "bedrooms": 4,
+  "full_baths": 2,
+  "half_baths": 0,
+  "baths": 2.0,
+  "sqft": null,
+  "building_amenities": [
+   "Doorman",
+   "Laundry"
+  ],
+  "doorman_types": [
+   "Virtual"
+  ],
+  "parking_types": [],
+  "shared_outdoor_space": [],
+  "storage_types": [],
+  "unit_features": [
+   "Central Ac",
+   "Dishwasher",
+   "Hardwood Floors",
+   "Private Outdoor Space",
+   "Washer Dryer"
+  ],
+  "private_outdoor_space": [
+   "Roof Rights"
+  ],
+  "views": [],
+  "fireplace_types": [],
+  "rent": 11995,
+  "net_effective_rent": null,
+  "months_free": null,
+  "lease_term_months": null,
+  "security_deposit": null,
+  "total_monthly_price": null,
+  "price_changes": [
+   {
+    "price": 11995,
+    "date": "2026-07-07"
+   }
+  ],
+  "fees": [
+   "Move-in fee: $80",
+   "Application fee: $20",
+   "Key replacement: $75",
+   "Security deposit: $5,998"
+  ],
+  "brokerage": "Living New York",
+  "broker_license_name": "Living New York",
+  "broker_license_type": "Limited Liability Broker",
+  "broker_address": "225 West 35th Street Ste, 1400, New York, NY, 10001",
+  "photo_count": 13,
+  "photo_url": "https://photos.zillowstatic.com/fp/da6726fb5859f0051f64f2b7c9313de3-se_large_800_400.webp",
+  "video_count": 0,
+  "tour_3d_url": null,
+  "floorplan_count": 0,
+  "mls_number": null,
+  "listing_source_type": "PARTNER",
+  "open_houses": [],
+  "canonical_url": "https://streeteasy.com/building/145-west-10-street-new_york/6",
+  "unit_history": [
+   {
+    "date": "2026-07-07",
+    "price": 11995,
+    "status": "ACTIVE",
+    "listing_id": "5094279",
+    "source": "Living New York"
+   }
+  ],
+  "area_median_rent_same_beds": 13000,
+  "building_name": "",
+  "neighborhood": "West Village",
+  "building_floors": 6,
+  "building_units": 26,
+  "year_built": 1900,
+  "building_slug": "145-west-10-street-new_york",
+  "unit_type_display": "Rental unit in West Village",
+  "unit_type": "Rental unit",
+  "broker_fee": null,
+  "borough": "Manhattan"
+ },
+ {
+  "listing_id": "5096123",
+  "url": "https://streeteasy.com/rental/5096123",
+  "page_title_name": "277 Church Street #4",
+  "ld_price": 12000,
+  "ld_valid_from": "2026-07-08",
+  "ld_availability": "InStock",
+  "latitude": 40.718533,
+  "longitude": -74.00477,
+  "address_street": "277 Church Street",
+  "unit": "#4",
+  "city": "New York",
+  "state": "NY",
+  "zip": "10013",
+  "full_address": "277 Church Street #4",
+  "status": "ACTIVE",
+  "listed_date": "2026-07-08",
+  "days_on_market": 5,
+  "available_date": "2026-09-01",
+  "off_market_date": null,
+  "created_at": "2026-07-08T13:51:29.000-04:00",
+  "updated_at": "2026-07-12T13:30:08.000-04:00",
+  "description": "A sun-filled two-bedroom, two-bathroom loft with a private roof deck and two skylights, set on a classic cast-iron block at 277 Church Street in the heart of Tribeca, New York. This is a home defined by light, scale, and outdoor space, a rare full-floor rental where sky and city are part of the everyday.\n\nEnter into an expansive open living and dining great room, crowned by an overhead skylight and warmed by an original exposed-brick wall. Oversized windows frame downtown rooftop views, soaring ceilings lift the space, and pale maple hardwood floors run throughout. The living room flows directly into a generous kitchen, outfitted with natural maple cabinetry, stainless steel appliances, a gas range, dishwasher, and a central island with breakfast-bar seating, the natural gathering point of the home.\n\nThe split-bedroom layout places privacy at both ends of the floor. The primary suite is a quiet retreat beneath its own skylight, generously proportioned with room for a king bed and a sitting area, a deep walk-in closet, and an en-suite spa bath featuring a soaking tub, a separate glass-enclosed shower, and a double granite vanity. The second bedroom, at the opposite end, offers a bright exposure, city views, and its own walk-in closet. A second full bathroom, finished in white subway tile with a glass-mosaic accent and a tub-shower, serves guests and the second bedroom. A dedicated laundry room with a full-size washer and dryer, a coat closet, and a wide gallery hall complete the interior.\n\nThe showpiece is above. A sprawling private roof deck unfolds under open sky with sweeping Tribeca and downtown Manhattan views, room to lounge and dine al fresco, and the kind of outdoor space almost never found in a rental at this address.\n\nSet on Church Street between Franklin and White, the loft sits in the middle of Tribeca's cobblestone charm, moments from the Franklin Street 1 train and the Canal Street subway lines, and steps from the neighborhood's celebrated restaurants, galleries, and Hudson River Park. Renovated interiors, in-unit laundry, two walk-in closets, and private outdoor space make this one of Tribeca's most livable loft rentals, at 277 Church Street. The building offers modern conveniences like Spectrum internet, a voice intercom system, and pet allowances on a case-by-case basis. With only three residential units, privacy and exclusivity are guaranteed. Please note this is a walk-up building. All utilities are managed directly by the resident, allowing you to customize your usage to fit your lifestyle.\n\nThe landlord charges one fee in connection with this rental, which is a $20 credit check fee. This fee is paid directly to the credit reporting service only after your application has been reviewed. After credit is approved, the tenant will provide one month's rent and one month's security deposit to the landlord by cashier's checks at lease signing.",
+  "rooms": 5,
+  "bedrooms": 2,
+  "full_baths": 2,
+  "half_baths": 0,
+  "baths": 2.0,
+  "sqft": 1650,
+  "building_amenities": [
+   "Fios Available"
+  ],
+  "doorman_types": [],
+  "parking_types": [],
+  "shared_outdoor_space": [],
+  "storage_types": [],
+  "unit_features": [
+   "Central Ac",
+   "Dishwasher",
+   "Hardwood Floors",
+   "Private Outdoor Space",
+   "View",
+   "Washer Dryer"
+  ],
+  "private_outdoor_space": [
+   "Private Roof Deck"
+  ],
+  "views": [
+   "City"
+  ],
+  "fireplace_types": [],
+  "rent": 12000,
+  "net_effective_rent": null,
+  "months_free": null,
+  "lease_term_months": null,
+  "security_deposit": null,
+  "total_monthly_price": null,
+  "price_changes": [
+   {
+    "price": 12000,
+    "date": "2026-07-08"
+   }
+  ],
+  "fees": [
+   "Application fee: $0",
+   "Security deposit: $12,000",
+   "Credit check: $20"
+  ],
+  "brokerage": "Corcoran",
+  "broker_license_name": "Corcoran Group",
+  "broker_license_type": "Limited Liability Broker",
+  "broker_address": "590 Madison Avenue, New York, NY, 10022",
+  "photo_count": 9,
+  "photo_url": "https://photos.zillowstatic.com/fp/b033e7e67c447e46c61086a17ad9a460-se_large_800_400.webp",
+  "video_count": 0,
+  "tour_3d_url": null,
+  "floorplan_count": 1,
+  "mls_number": null,
+  "listing_source_type": "PARTNER",
+  "open_houses": [],
+  "canonical_url": "https://streeteasy.com/building/277-church-street-new_york/4",
+  "unit_history": [
+   {
+    "date": "2026-07-08",
+    "price": 12000,
+    "status": "ACTIVE",
+    "listing_id": "5096123",
+    "source": "Corcoran"
+   },
+   {
+    "date": "2019-07-31",
+    "price": 8000,
+    "status": "RENTED",
+    "listing_id": "2720111",
+    "source": "True Lofts New York LLC"
+   },
+   {
+    "date": "2019-07-02",
+    "price": 8000,
+    "status": null,
+    "listing_id": "2720111",
+    "source": "True Lofts New York LLC"
+   },
+   {
+    "date": "2019-05-20",
+    "price": 8200,
+    "status": null,
+    "listing_id": "2720111",
+    "source": "True Lofts New York LLC"
+   },
+   {
+    "date": "2019-05-01",
+    "price": 8500,
+    "status": "ACTIVE",
+    "listing_id": "2720111",
+    "source": "True Lofts New York LLC"
+   }
+  ],
+  "area_median_rent_same_beds": 10555,
+  "building_name": "",
+  "neighborhood": "Tribeca",
+  "building_floors": 4,
+  "building_units": 3,
+  "year_built": 1910,
+  "building_slug": "277-church-street-new_york",
+  "unit_type_display": "Mixed-use building in Tribeca",
+  "unit_type": "Mixed-use building",
+  "broker_fee": null,
+  "borough": "Manhattan"
+ },
+ {
+  "listing_id": "5099749",
+  "url": "https://streeteasy.com/rental/5099749",
+  "page_title_name": "535 West 23rd Street #S9C",
+  "ld_price": 9650,
+  "ld_valid_from": "2026-07-11",
+  "ld_availability": "OutOfStock",
+  "latitude": 40.7485,
+  "longitude": -74.0053,
+  "address_street": "535 West 23rd Street",
+  "unit": "#S9C",
+  "city": "New York",
+  "state": "NY",
+  "zip": "10011",
+  "full_address": "535 West 23rd Street #S9C",
+  "status": "RENTED",
+  "listed_date": "2026-07-11",
+  "days_on_market": 1,
+  "available_date": "2026-08-27",
+  "off_market_date": "2026-07-12",
+  "created_at": "2026-07-11T19:08:41.000-04:00",
+  "updated_at": "2026-07-12T14:09:06.000-04:00",
+  "description": "Beautiful 2 Bedroom, 2 Bath featuring walk-in closets, a pass-through kitchen, an in-home washer/dryer, upgraded strip wood floors, solar shades and northern exposure with courtyard views.\n\nThe Tate welcomes residents home to the ultimate Chelsea apartment building. These luxury NYC rental apartments, designed by Rockwell Group to have a powerful and immediate connection to nature, feature a lobby with sunlit bamboo trees, rich limestone floors, and windowed elevator lobbies overlooking a serene courtyard garden. The Tate offers beautifully proportioned studio, one and two-bedroom apartments featuring gourmet kitchens with granite countertops, stone tile baths, oak parquet floors, large windows, customized closet space and washer/dryer in each home. With its bold take on luxury and attention to detail, The Tate is located in the heart of the gallery district, one of Manhattan's most vibrant and exciting neighborhoods.",
+  "rooms": 4,
+  "bedrooms": 2,
+  "full_baths": 2,
+  "half_baths": 0,
+  "baths": 2.0,
+  "sqft": null,
+  "building_amenities": [
+   "Bike Room",
+   "Concierge",
+   "Doorman",
+   "Elevator",
+   "Fios Available",
+   "Gym",
+   "Laundry",
+   "Live In Super",
+   "Shared Outdoor Space"
+  ],
+  "doorman_types": [],
+  "parking_types": [],
+  "shared_outdoor_space": [
+   "Garden",
+   "Roof Deck"
+  ],
+  "storage_types": [],
+  "unit_features": [
+   "Private Outdoor Space"
+  ],
+  "private_outdoor_space": [
+   "Patio"
+  ],
+  "views": [],
+  "fireplace_types": [],
+  "rent": 9650,
+  "net_effective_rent": null,
+  "months_free": null,
+  "lease_term_months": null,
+  "security_deposit": null,
+  "total_monthly_price": null,
+  "price_changes": [
+   {
+    "price": 9650,
+    "date": "2026-07-11"
+   }
+  ],
+  "fees": [],
+  "brokerage": "Related Rentals",
+  "broker_license_name": null,
+  "broker_license_type": null,
+  "photo_count": 14,
+  "photo_url": "https://photos.zillowstatic.com/fp/1e69d063e7633d8b0c7cd98e52e41dd9-se_large_800_400.webp",
+  "video_count": 0,
+  "tour_3d_url": null,
+  "floorplan_count": 1,
+  "mls_number": null,
+  "listing_source_type": "FEED",
+  "open_houses": [],
+  "canonical_url": "https://streeteasy.com/building/the-tate/s09c",
+  "unit_history": [
+   {
+    "date": "2026-07-12",
+    "price": 9650,
+    "status": "RENTED",
+    "listing_id": "5099749",
+    "source": "Related Rentals"
+   },
+   {
+    "date": "2026-07-11",
+    "price": 9650,
+    "status": "ACTIVE",
+    "listing_id": "5099749",
+    "source": "Related Rentals"
+   },
+   {
+    "date": "2023-05-20",
+    "price": 8500,
+    "status": "RENTED",
+    "listing_id": "4128681",
+    "source": "Related Rentals"
+   },
+   {
+    "date": "2023-05-20",
+    "price": 8500,
+    "status": "ACTIVE",
+    "listing_id": "4128681",
+    "source": "Related Rentals"
+   },
+   {
+    "date": "2021-06-14",
+    "price": 6875,
+    "status": "RENTED",
+    "listing_id": "3553573",
+    "source": "Related Rentals"
+   },
+   {
+    "date": "2021-06-11",
+    "price": 6875,
+    "status": "ACTIVE",
+    "listing_id": "3553573",
+    "source": "Related Rentals"
+   },
+   {
+    "date": "2021-06-05",
+    "price": 6875,
+    "status": "RENTED",
+    "listing_id": "3553573",
+    "source": "Related Rentals"
+   },
+   {
+    "date": "2021-06-05",
+    "price": 6875,
+    "status": "ACTIVE",
+    "listing_id": "3553573",
+    "source": "Related Rentals"
+   },
+   {
+    "date": "2018-05-30",
+    "price": 6235,
+    "status": "NO_LONGER_AVAILABLE",
+    "listing_id": "2364878",
+    "source": "Corcoran"
+   },
+   {
+    "date": "2018-04-17",
+    "price": 6235,
+    "status": "ACTIVE",
+    "listing_id": "2364878",
+    "source": "Corcoran"
+   },
+   {
+    "date": "2013-10-03",
+    "price": 7000,
+    "status": "NO_LONGER_AVAILABLE",
+    "listing_id": "1151417",
+    "source": "Related Rentals"
+   },
+   {
+    "date": "2013-08-28",
+    "price": 7000,
+    "status": "ACTIVE",
+    "listing_id": "1151417",
+    "source": "Related Rentals"
+   }
+  ],
+  "area_median_rent_same_beds": 8802,
+  "building_name": "The Tate",
+  "neighborhood": "West Chelsea",
+  "building_floors": 14,
+  "building_units": 313,
+  "year_built": 2001,
+  "building_slug": "the-tate",
+  "unit_type_display": "Rental unit in West Chelsea",
+  "unit_type": "Rental unit",
+  "broker_fee": null,
+  "borough": "Manhattan"
+ }
+]
