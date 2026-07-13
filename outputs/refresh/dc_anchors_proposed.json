@@ -1,0 +1,147 @@
+{
+  "schema_version": "1.0",
+  "generated": "2026-07-13T09:22:18Z",
+  "model": "claude-sonnet-4-5-20250929",
+  "input_file": "data/datacenters/dc_anchors.json",
+  "input_entry_count": 8,
+  "processed_entry_count": 8,
+  "proposals": [
+    {
+      "id": "project-horizon-poolside-coreweave",
+      "diff": {},
+      "additional_sources": [],
+      "conflicts": [],
+      "fetch_failures": [
+        "https://poolside.ai/blog/announcing-project-horizon"
+      ],
+      "notes": "Both successfully fetched sources confirm the canonical entry details. DCD article states '2GW data center' and 'aims to use natural gas produced in Permian Basin'. NAM article confirms 'Self-Powered Data Center Complex in Permian Basin'. No new factual updates found regarding status, capacity, timeline, or power source beyond what is already documented in the canonical entry. The poolside.ai blog announcement page failed to load."
+    },
+    {
+      "id": "stargate-abilene-crusoe-oracle",
+      "diff": {},
+      "additional_sources": [
+        {
+          "url": "https://www.tomshardware.com/tech-industry/oracle-and-openai-scrap-planned-600mw-abilene-expansion",
+          "claim": "600MW expansion lease scrapped; re-leased separately to Microsoft as adjacent campus; larger 4.5GW agreement remains on track (published 2026-03-10)"
+        }
+      ],
+      "conflicts": [],
+      "fetch_failures": [
+        "https://openai.com/index/five-new-stargate-sites/"
+      ]
+    },
+    {
+      "id": "microsoft-crusoe-abilene",
+      "diff": {},
+      "additional_sources": [],
+      "conflicts": [],
+      "fetch_failures": [
+        "https://www.theregister.com/2026/03/27/microsoft_ai_crusoe/"
+      ],
+      "notes": "The Register source returned a CAPTCHA/bot-check page and could not be accessed. The WinBuzzer source (dated 2026-03-31) confirms the canonical entry's core facts: Microsoft agreed to lease up to 900 MW of capacity in Abilene, Texas, from Crusoe after Oracle and OpenAI abandoned the site. The article states this is adjacent to the Stargate project and confirms the developer-lessee relationship. However, the WinBuzzer page does not provide explicit evidence of commissioned_target year, status changes, or power source details beyond what is already captured. Since the source corroborates but does not update the canonical entry, and one source failed to fetch, no changes are proposed."
+    },
+    {
+      "id": "project-matador-fermi-america",
+      "diff": {
+        "status": {
+          "current": "permitted",
+          "proposed": "under_construction",
+          "evidence_url": "https://www.prnewswire.com/news-releases/fermi-america-and-the-state-of-texas-announce-preliminary-approval-for-first-6-gw-of-one-of-the-worlds-largest-clean-natural-gas-facilities-on-project-matadors-11-gw-private-hypergrid-campus-302603582.html",
+          "evidence_quote": "TCEQ Grants Preliminary Approval of Fermi America's Clean Air Permit"
+        },
+        "power_source": {
+          "current": "5,769-acre HyperGrid campus on Texas Tech land adjacent to DOE Pantex plant near Amarillo. Behind-the-meter mix: combined-cycle natural gas (TCEQ preliminary approval Nov 2025 for first 6 GW; additional 5 GW permit filing March 2026 to upsize campus to 17 GW), four 1 GW AP1000 nuclear reactors filed with NRC, solar, battery storage. First 1 GW targeted late 2026 from gas; nuclear targeted 2032.",
+          "proposed": "5,769-acre HyperGrid campus on Texas Tech land adjacent to DOE Pantex plant near Amarillo. Behind-the-meter mix: combined-cycle natural gas (TCEQ preliminary approval Nov 2025 for first 6 GW; Fermi acquired 600MW of gas turbines per DCD Feb 2026; company claims 'additional 5 GW permit filing March 2026' to upsize campus to 17 GW per Amarillo Tribune), four 1 GW AP1000 nuclear reactors filed with NRC, solar, battery storage. First 1 GW targeted late 2026 from gas; nuclear targeted 2032.",
+          "evidence_url": "https://www.datacenterdynamics.com/en/news/fermi-america-acquires-600mw-of-gas-turbines-for-11gw-ai-mega-campus-in-amarillo-texas/",
+          "evidence_quote": "Fermi America acquires 600MW of gas turbines"
+        }
+      },
+      "additional_sources": [
+        {
+          "url": "https://www.prnewswire.com/news-releases/fermi-america-and-the-state-of-texas-announce-preliminary-approval-for-first-6-gw-of-one-of-the-worlds-largest-clean-natural-gas-facilities-on-project-matadors-11-gw-private-hypergrid-campus-302603582.html",
+          "accessed_date": "2025-11-04",
+          "claim": "TCEQ granted preliminary approval for first 6 GW natural gas permit Nov 2025"
+        },
+        {
+          "url": "https://www.datacenterdynamics.com/en/news/fermi-america-acquires-600mw-of-gas-turbines-for-11gw-ai-mega-campus-in-amarillo-texas/",
+          "accessed_date": "2026-02-XX",
+          "claim": "Fermi America acquired 600MW of gas turbines for the campus"
+        },
+        {
+          "url": "https://amarillotribune.org/2025/11/05/just-facts-fermi-america-and-project-matador/",
+          "accessed_date": "2025-11-05",
+          "claim": "Amarillo Tribune coverage confirms project details and claims additional 5 GW permit filing March 2026"
+        }
+      ],
+      "conflicts": [],
+      "fetch_failures": []
+    },
+    {
+      "id": "gw-ranch-pacifico-pecos",
+      "diff": {
+        "status": {
+          "current": "permitted",
+          "proposed": "under_construction",
+          "evidence_url": "https://markets.financialcontent.com/stocks/article/bizwire-2026-1-26-pacifico-energy-secures-765-gw-power-generation-permit-for-gw-ranch-project",
+          "evidence_quote": "Pacifico Energy Secures 7.65 GW Power Generation Permit for GW Ranch Project"
+        }
+      },
+      "additional_sources": [
+        {
+          "url": "https://www.kcbd.com/2026/02/01/texas-approves-largest-permitted-data-center-campus-us/",
+          "claim": "Texas approves 'largest permitted data center campus' in the U.S. - project in Pecos County, southwest of Odessa, north of Fort Stockton"
+        },
+        {
+          "url": "https://www.texastribune.org/2026/02/02/texas-permian-basin-power-plant-project-data-centers/",
+          "claim": "Developer calls it the largest power project in the U.S.; Pecos County location confirmed"
+        }
+      ],
+      "conflicts": [],
+      "fetch_failures": []
+    },
+    {
+      "id": "stargate-frontier-shackelford",
+      "diff": {
+        "status": {
+          "current": "under_construction",
+          "proposed": "partial_operational",
+          "evidence_url": "https://www.thealbanynews.net/news/shackelford-data-center-named-official-stargate-ai-campus",
+          "evidence_quote": "Construction is already underway, and the project is projected to create over 5,000 jobs during the buildout"
+        }
+      },
+      "additional_sources": [
+        {
+          "url": "https://www.thealbanynews.net/news/shackelford-data-center-named-official-stargate-ai-campus",
+          "accessed_date": "2025-10-02",
+          "claim": "Shackelford County Frontier Campus confirmed as official Stargate AI Campus site; construction underway with 700 acres, ten buildings, 3.7M sq ft planned"
+        },
+        {
+          "url": "https://www.datacenterdynamics.com/en/news/openai-announces-five-more-us-stargate-data-centers-with-oracle-and-softbank/",
+          "accessed_date": "2026-10-02",
+          "claim": "Five new Stargate sites announced including Shackelford County (Frontier Campus); at full build-out would give project 7GW capacity"
+        }
+      ],
+      "conflicts": [],
+      "fetch_failures": [
+        "https://openai.com/index/five-new-stargate-sites/"
+      ]
+    },
+    {
+      "id": "stargate-milam-sb-energy",
+      "diff": {},
+      "additional_sources": [],
+      "conflicts": [],
+      "fetch_failures": [
+        "https://openai.com/index/five-new-stargate-sites/"
+      ]
+    },
+    {
+      "id": "meta-temple-bell",
+      "diff": {},
+      "additional_sources": [],
+      "conflicts": [],
+      "fetch_failures": [],
+      "no_change": true
+    }
+  ]
+}
