@@ -44,8 +44,8 @@
 
 ### The five verified facts
 
-- **The cycle has bifurcated.** Distribution lead times peaked above 100 weeks in 2023, normalized to **~30 weeks by Q2 2025**. Power transformers (**~128 weeks**), GSUs (**~144 weeks**), and transmission-scale units (**3–6 years**) have not improved.
-- **The bottleneck is inputs, not assembly.** Half to three-quarters of electrical cores in US-assembled distribution transformers are imported; domestic cores source **95% of their steel from one mill** — Cleveland-Cliffs' Butler Works, the only US GOES producer.
+- **The cycle has bifurcated.** Distribution transformers — the small pad-mounted units that step power down to homes, businesses, and data-center halls — peaked above 100-week lead times in 2023 and normalized to **~30 weeks by Q2 2025**. Large power transformers (substation-class units; **~128 weeks**), generator step-up transformers (GSUs — the units that connect power plants to the grid; **~144 weeks**), and transmission-scale units (**3–6 years**) have not improved.
+- **The bottleneck is inputs, not assembly.** Half to three-quarters of electrical cores in US-assembled distribution transformers are imported; domestic cores source **95% of their steel from one mill** — Cleveland-Cliffs' Butler Works, the only US producer of grain-oriented electrical steel (GOES), the specialty steel transformer cores are made of.
 - **Tariffs raised everyone's costs.** August 2025 Section 232: 50% on imported cores and laminations, 50% on copper winding content. Domestic assemblers import both — the tariff wall inflates domestic and imported unit costs alike.
 - **There is a demand floor under the AI story.** ~55% of the 60–80 million-unit US fleet is past design life; NREL projects distribution capacity need grows **160–260% by 2050** on electrification alone.
 - **Texas is the anchor tenant.** Oncor: **$47.5B** 2026–2030 base plan, **~255 GW** of data-center interconnection requests (38 GW RTP-qualified). ERCOT's large-load queue grew ~300% in 2025.
@@ -61,7 +61,7 @@
 
 ## 1. Market Fundamentals
 
-**Key finding:** GSU demand is up 274% and substation power transformer demand 116% since 2019; real prices are up ~40% and lead times at the transmission end run 3–6 years. Four demand layers — data centers, electrification, interconnection, and a decades-long replacement cycle — mean the floor holds even if AI capex slips.
+**Key finding:** GSU demand is up 274% and substation power transformer demand 116% since 2019; real prices are up ~40% and lead times at the transmission end run 3–6 years. Four demand layers — data centers, electrification, interconnection, and a decades-long replacement cycle — mean the floor holds even if AI capex slips. *(Acronyms and terms of art are defined in the Glossary at the end of the paper.)*
 
 ### 1.1 Demand: verified magnitudes
 
@@ -219,9 +219,9 @@ The read on timing:
 
 **Key finding:** The component layer is the least crowded floor of the value chain — mostly private, family-owned, un-securitized — and every OEM capacity expansion in §2.2 pulls its demand through. Monitoring, testing, and fluids also ride the *old* fleet while buyers wait years for new units.
 
-- **On-load tap changers — Maschinenfabrik Reinhausen** (private, Regensburg): ~38–42% global unit share (higher in UHV/HVDC), single-source portfolio spanning tap-changers, sensors, monitoring, bushings. ABB/Hitachi a distant #2 (~15–18%). Not investable directly — but it is the model: find the North American service, distribution, and retrofit businesses that touch this layer.
-- **Bushings** — Hitachi/ABB legacy, HSP, GE. Long-lead failure item; a disproportionate share of field failures originate here — makes bushing monitoring and spares inventory a utility-grade service business.
-- **Monitoring/DGA sensors** — Qualitrol (Fortive), Vaisala, Camlin, Reinhausen MSENSE. The fleet is old and replacements take years, so utilities instrument what they have. Highest-growth, lowest-capex niche in the chain. *(Not verified this pass.)*
+- **On-load tap changers** — the mechanical switch that adjusts a transformer's voltage ratio while it stays energized. **Maschinenfabrik Reinhausen** (private, Regensburg): ~38–42% global unit share (higher in ultra-high-voltage/HVDC), single-source portfolio spanning tap-changers, sensors, monitoring, bushings. ABB/Hitachi a distant #2 (~15–18%). Not investable directly — but it is the model: find the North American service, distribution, and retrofit businesses that touch this layer.
+- **Bushings** — the insulated terminals that carry current through the transformer's tank wall. Hitachi/ABB legacy, HSP, GE. Long-lead item and a leading cause of field failures — makes bushing monitoring and spares inventory a utility-grade service business.
+- **Monitoring/DGA sensors** — DGA (dissolved gas analysis) is oil testing that flags internal faults early. Qualitrol (Fortive), Vaisala, Camlin, Reinhausen MSENSE. The fleet is old and replacements take years, so utilities instrument what they have. Highest-growth, lowest-capex niche in the chain. *(Not verified this pass.)*
 - **Testing/commissioning** — Omicron, Doble (via ESCO Technologies, NYSE: ESE), Megger. Every new unit, refurb, and relocation needs testing. *(Not verified this pass.)*
 - **Fluids** — Cargill FR3 natural ester dominates the fire-safe spec for data-center and indoor installs; ester retrofill of aging fleets is a service niche. *(Not verified this pass.)*
 - **Core-cutting equipment** — Heinrich Georg GmbH, AEM. The capex layer behind every core-shop announcement; German-dominated, private. *(Not verified this pass.)*
@@ -279,6 +279,57 @@ The read on timing:
 | 6 | **Industrial land near OEM clusters and ERCOT load pockets** (Waco, Temple, I-35 corridor) | LRP-native: direct land/industrial RE | Nobody underwrites transformer-plant siting as a real-estate demand layer; proximity to OEM clusters now a stated supplier differentiator | Single-tenant concentration; timing on plant FIDs |
 | 7 | **Virginia Transformer process** | Watch; potential co-invest/adjacent positioning | A >$6B print for a family-owned LPT maker resets every private comp in the chain | Process may not clear; valuation set by strategic, not financial, buyers |
 | — | **Avoid: commodity distribution assembly** | — | Lead times already at 30 weeks; capacity lands into normalization 2026–27; tariff umbrella is the only prop | — |
+
+---
+
+## Glossary — Acronyms & Technical Terms
+
+**Key finding:** Plain English for the terms of art used in this paper.
+
+### The equipment
+
+| Term | Meaning |
+|---|---|
+| Distribution transformer | The small units (pole-top or pad-mounted) that step voltage down for homes, businesses, and data-center halls. 60–80 million in US service. |
+| Power transformer / LPT | Large power transformer — the substation-class unit that moves bulk power. 200+ tons, $6–10M each, and the segment with 2.5–6 year waits. |
+| GSU | Generator step-up transformer — connects a power plant (or solar/storage project) to the grid by stepping generator voltage up to transmission voltage. The hottest demand segment (+274%). |
+| Pad-mount | A ground-mounted distribution transformer in a locked steel cabinet — the standard unit for subdivisions and data centers. |
+| EHV | Extra-high voltage — transmission at 345 kV and above; 765-kV is the top US class. The higher the voltage, the fewer factories can build the unit. |
+| HVDC | High-voltage direct-current transmission — needs specialty converter transformers, the scarcest class of all. |
+| MVA | Megavolt-ampere — a transformer's capacity rating. A big substation unit runs 300–500 MVA. |
+| Mobile substation | A transformer + switchgear package on a trailer — bridge power while a permanent unit is on order. The asset under the rental thesis. |
+
+### The components and materials
+
+| Term | Meaning |
+|---|---|
+| Core / laminations | The magnetic heart of a transformer — thin steel sheets (laminations) stacked or wound into a core. |
+| GOES | Grain-oriented electrical steel — the specialty steel cores are made of, rolled so its crystal grains align and it magnetizes efficiently in one direction. One US mill (Cleveland-Cliffs Butler) makes it. |
+| Hi-B | The premium high-permeability grade of GOES required for the largest, most efficient units — not made in commercial volume in the US. |
+| Amorphous core | A non-crystalline metal-ribbon alternative to GOES with lower energy losses; US production only at Metglas, at small volumes. |
+| GOES widths | Mills roll GOES in limited sheet widths; the biggest transformers need wider sheet than Butler can roll — hence Hi-B imports. |
+| Magnet wire | Insulated copper (or aluminum) wire wound into transformer coils — now carrying a 50% copper-content tariff. |
+| Bushing | The insulated terminal that carries current through the transformer's tank wall. Long-lead, and a leading cause of field failures. |
+| OLTC | On-load tap changer — the mechanical switch that adjusts a transformer's voltage ratio while energized. Reinhausen's ~40% global monopoly layer. |
+| DGA | Dissolved gas analysis — testing of gases dissolved in transformer oil, the standard early warning of an internal fault. |
+| Ester fluid | Biodegradable, high-fire-point insulating fluid (e.g., Cargill FR3) replacing mineral oil where fire risk matters — data centers, indoor vaults. |
+
+### The market and policy shorthand
+
+| Term | Meaning |
+|---|---|
+| Section 232 | The national-security tariff authority — source of the 50% duties on steel/aluminum derivatives (including cores and laminations) and copper inputs. |
+| DPA Title III | Defense Production Act authority to fund and expand domestic production of critical goods — now aimed at transformers, GOES, and amorphous steel. |
+| PPI | Producer price index (Bureau of Labor Statistics) — the wholesale price series used to measure transformer inflation. |
+| Book-to-bill | New orders divided by billed revenue. Above 1.0 = backlog growing (Powell: 1.7x). |
+| RFQ | Request for quote — buyer inquiries to manufacturers; the demand signal that precedes orders and where the field runs ahead of the print. |
+| SKU | A distinct product type. The US installed base spans 80,000+ transformer types — the fragmentation that protects repair shops. |
+| Slot / slot premium | A reserved place in a factory's production schedule; buyers now pay extra to hold one before their project site is even final. |
+| RTP | ERCOT's Regional Transmission Plan — loads that meet its qualification criteria are planning-grade, not just queue paper. |
+| LC&I | Large commercial & industrial — Oncor's category for big customers (data centers, factories) seeking interconnection. |
+| POI | Point of interconnection — where a generator or load physically ties into the grid. |
+| TDU | Transmission and distribution utility — the wires companies (Oncor, CenterPoint, AEP Texas). |
+| NEMA / NREL / CRS / BIS / NIAC / IEA | The electrical manufacturers' trade association; DOE's National Renewable Energy Laboratory; Congressional Research Service; Commerce's Bureau of Industry and Security; the President's National Infrastructure Advisory Council; International Energy Agency. |
 
 ---
 

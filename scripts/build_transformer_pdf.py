@@ -72,6 +72,7 @@ KICKERS = {
     "6. The Texas/ERCOT Angle": "$47.5B at one utility. 255 GW of queue behind $3.5B of customer collateral.",
     "7. Risks": "Underwrite +40% real and 60-80% nominal. Do not underwrite the 4-9x tails.",
     "8. Investable Takeaways, Ranked by Asymmetry": "ERCOT repair roll-up first. Avoid commodity distribution assembly.",
+    "Glossary — Acronyms & Technical Terms": "Plain English for the terms of art.",
     "Methodology & Sources": "105-agent adversarial verification: 23 claims confirmed, 2 refuted, gaps flagged inline.",
 }
 
@@ -248,6 +249,13 @@ def page_one() -> str:
         f'<span class="chip"><b>{(d - TODAY).days}d</b> · {html_mod.escape(label)} · {d.strftime("%b %d %Y")}</span>'
         for d, label in CLOCKS
     )
+    defs_strip = (
+        '<div class="defs"><b>Terms used above:</b> '
+        "GSU — generator step-up transformer (connects a power plant to the grid) · "
+        "GOES — grain-oriented electrical steel (the specialty steel transformer cores are made of; one US mill) · "
+        "PPI — producer price index · RTP — ERCOT Regional Transmission Plan · "
+        "LPT — large power transformer. <b>Full glossary at the end of the paper.</b></div>"
+    )
     return f"""
 <div class="masthead">
   <div class="mast-kicker">LAND RESOURCE PARTNERS · MARKET INTELLIGENCE · JULY 2026</div>
@@ -260,6 +268,7 @@ def page_one() -> str:
 </div>
 <table class="statband"><tr>{stats}</tr></table>
 <div class="clocks">{chips}</div>
+{defs_strip}
 """
 
 
@@ -283,7 +292,7 @@ def build_css(fonts_dir: str) -> str:
   @bottom-right {{ content: counter(page) " / " counter(pages);
     font-family: Jost; font-size: 8.5pt; color: {NAVY}; opacity: .65; }}
 }}
-body {{ font-family: Jost; font-weight: 400; font-size: 12pt; line-height: 1.62;
+body {{ font-family: Jost; font-weight: 400; font-size: 12pt; line-height: 1.52;
   color: #22303d; }}
 a.co {{ color: {NAVY}; font-weight: 500; text-decoration: underline;
   text-decoration-color: {GOLD}; text-decoration-thickness: .8pt; }}
@@ -316,39 +325,42 @@ h1 {{ font-size: 28pt; font-weight: 700; color: {NAVY}; margin: 2pt 0 0 0; }}
 .stat-n {{ font-size: 18pt; font-weight: 700; color: {NAVY}; }}
 .stat-l {{ font-size: 8.8pt; font-weight: 600; color: {NAVY}; margin-top: 1pt; }}
 .stat-d {{ font-size: 8.4pt; color: {GOLD}; font-weight: 500; margin-top: 1pt; }}
-.clocks {{ margin: 0 0 10pt 0; }}
+.clocks {{ margin: 0 0 6pt 0; }}
+.defs {{ border-top: .8pt solid #d7dde3; padding-top: 5pt; font-size: 9.2pt;
+  color: #4a5865; line-height: 1.45; }}
+.defs b {{ color: {NAVY}; font-weight: 600; }}
 .chip {{ display: inline-block; border: .8pt solid {NAVY}; border-left: 3pt solid {GOLD};
   border-radius: 2pt; padding: 1.5pt 5pt; margin: 0 3pt 3pt 0; font-size: 9.2pt;
   color: {NAVY}; }}
 .chip b {{ color: {GOLD}; font-weight: 700; }}
 h2 {{ background: {NAVY}; color: #ffffff; font-size: 14.5pt; font-weight: 600;
-  padding: 5pt 8pt; border-left: 4pt solid {GOLD}; margin: 20pt 0 4pt 0;
+  padding: 5pt 8pt; border-left: 4pt solid {GOLD}; margin: 16pt 0 3pt 0;
   page-break-after: avoid; }}
-.kicker {{ color: {GOLD}; font-weight: 600; font-size: 11.5pt; margin: 3pt 0 9pt 2pt;
+.kicker {{ color: {GOLD}; font-weight: 600; font-size: 11.5pt; margin: 2pt 0 7pt 2pt;
   page-break-after: avoid; }}
-h3 {{ color: {NAVY}; font-size: 13pt; font-weight: 600; margin: 15pt 0 5pt 0;
+h3 {{ color: {NAVY}; font-size: 13pt; font-weight: 600; margin: 12pt 0 4pt 0;
   border-bottom: .8pt solid {GOLD}; padding-bottom: 1.5pt; page-break-after: avoid; }}
-p {{ margin: 6.5pt 0; }}
-ul, ol {{ margin: 5pt 0 8pt 0; padding-left: 15pt; }}
-li {{ margin: 4pt 0; }}
-table {{ border-collapse: collapse; width: 100%; margin: 9pt 0; font-size: 10.6pt; }}
+p {{ margin: 5pt 0; }}
+ul, ol {{ margin: 4pt 0 6pt 0; padding-left: 15pt; }}
+li {{ margin: 2.5pt 0; }}
+table {{ border-collapse: collapse; width: 100%; margin: 7pt 0; font-size: 10.6pt; }}
 th {{ background: {NAVY}; color: #fff; font-weight: 600; padding: 3pt 5pt;
   text-align: left; }}
-td {{ border: .5pt solid #d7dde3; padding: 3.5pt 5.5pt; vertical-align: top; }}
+td {{ border: .5pt solid #d7dde3; padding: 3pt 5.5pt; vertical-align: top; }}
 tr {{ page-break-inside: avoid; }}
 tr:nth-child(even) td {{ background: #f4f6f8; }}
 td a, td a.co {{ color: {NAVY}; font-weight: 600; text-decoration: underline;
   text-decoration-color: {GOLD}; text-decoration-thickness: .8pt; }}
 .sig-up {{ color: #1e7e45; font-weight: 600; }}
 .sig-dn {{ color: #c0392b; font-weight: 600; }}
-.box-angle {{ background: #eef1f4; border-left: 4pt solid {NAVY}; padding: 6pt 9pt;
-  margin: 9pt 0; font-size: 11.4pt; }}
+.box-angle {{ background: #eef1f4; border-left: 4pt solid {NAVY}; padding: 5pt 9pt;
+  margin: 7pt 0; font-size: 11.4pt; }}
 .box-angle p {{ margin: 0; }}
-.box-gold {{ background: #faf5e6; border-left: 4pt solid {GOLD}; padding: 6pt 9pt;
-  margin: 9pt 0 11pt 0; font-size: 11.6pt; }}
+.box-gold {{ background: #faf5e6; border-left: 4pt solid {GOLD}; padding: 5pt 9pt;
+  margin: 7pt 0 9pt 0; font-size: 11.6pt; }}
 .box-gold p {{ margin: 0; }}
-.box-fals {{ background: #faeceb; border-left: 4pt solid #c0392b; padding: 6pt 9pt;
-  margin: 10pt 0; font-size: 11.4pt; }}
+.box-fals {{ background: #faeceb; border-left: 4pt solid #c0392b; padding: 5pt 9pt;
+  margin: 8pt 0; font-size: 11.4pt; }}
 .box-fals p {{ margin: 0; }}
 strong {{ font-weight: 600; color: {NAVY}; }}
 hr {{ border: none; border-top: .8pt solid #d7dde3; margin: 10pt 0; }}
