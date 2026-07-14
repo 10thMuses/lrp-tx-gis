@@ -23,7 +23,25 @@ for r in rows:
     if f and f.get("year_built") and not r.get("year_built"):
         r["year_built"] = f["year_built"]
 
+dist = json.load(open(os.path.join(SCRATCH, "distances.json"))) if os.path.exists(os.path.join(SCRATCH, "distances.json")) else {}
+owners = json.load(open(os.path.join(SCRATCH, "owners.json"))) if os.path.exists(os.path.join(SCRATCH, "owners.json")) else {}
+for r in rows:
+    d = dist.get(r["listing_id"]) or {}
+    r["walk"] = d.get("walk"); r["drive"] = d.get("drive")
+    o = owners.get(r["listing_id"]) or {}
+    r["owner"] = o.get("owner"); r["owner_role"] = o.get("role")
+
+dropped = [r for r in rows if r.get("drive") and r["drive"]["min"] > 15]
+rows = [r for r in rows if not (r.get("drive") and r["drive"]["min"] > 15)]
+
 rows.sort(key=lambda r: (r.get("neighborhood") or "", r.get("rent") or 0))
+
+def walk_s(r): return f'{r["walk"]["min"]:.0f} min ({r["walk"]["miles"]} mi)' if r.get("walk") else "—"
+def drive_s(r): return f'{r["drive"]["min"]:.0f} min ({r["drive"]["miles"]} mi)' if r.get("drive") else "—"
+def owner_s(r):
+    if not r.get("owner"): return "—"
+    role = f' ({r["owner_role"]})' if r.get("owner_role") else ""
+    return r["owner"] + role
 
 NAVY = colors.HexColor("#1F3864")
 INK2 = colors.HexColor("#52514e")
@@ -43,7 +61,8 @@ CellLbl = ParagraphStyle("CellLbl", parent=Cell, textColor=INK2)
 IdxCell = ParagraphStyle("IdxCell", parent=ss["Normal"], fontSize=7.2, leading=9.2)
 IdxHdr = ParagraphStyle("IdxHdr", parent=IdxCell, textColor=colors.white, fontName="Helvetica-Bold")
 
-def P(t, style=Cell): return Paragraph(str(t), style)
+def esc(t): return str(t).replace("&", "&amp;").replace("<", "&lt;")
+def P(t, style=Cell): return Paragraph(esc(t), style)
 def mmdd(v):
     if not v: return "—"
     p = str(v).split("-")
@@ -56,7 +75,7 @@ story = []
 rents = sorted(r["rent"] for r in rows)
 med = rents[len(rents)//2]
 story.append(Paragraph("StreetEasy Rental Listings", H1))
-story.append(Paragraph("31 unique listings shared on 7/12/2026 · Downtown Manhattan · compiled 7/13/2026", Sub))
+story.append(Paragraph(f"{len(rows)} unique listings shared on 7/12/2026 · Downtown Manhattan · distances measured from 134 West 10th Street · compiled 7/14/2026", Sub))
 
 # Summary stats table
 hood_stats = []
@@ -79,7 +98,10 @@ story.append(Paragraph(
     f"All listings are active rentals; two offer net-effective concessions (1 month free). "
     f"No broker fees appear on any fee schedule (post-FARE Act). "
     f"Square footage is published for only {sum(1 for r in rows if r.get('sqft'))} of {len(rows)} units "
-    f"(one recovered by outside research); blanks reflect data no listing source publishes.", Body))
+    f"(one recovered by outside research); blanks reflect data no listing source publishes. "
+    f"Listings more than a 15-minute drive from 134 West 10th Street were excluded — "
+    f"{'none exceeded the cutoff (max ' + format(max(r['drive']['min'] for r in rows if r.get('drive')), '.0f') + ' min free-flow), so all ' + str(len(rows)) + ' remain' if not dropped else str(len(dropped)) + ' removed: ' + ', '.join(d['full_address'] for d in dropped)}. "
+    f"Drive times are free-flow (no traffic); walking times assume ~3 mph.", Body))
 story.append(Spacer(1, 8))
 story.append(t)
 story.append(PageBreak())
@@ -87,23 +109,26 @@ story.append(PageBreak())
 # Comprehensive index table (landscape, 17 columns)
 story.append(Paragraph("Listing Index — key data points (full detail per listing follows)", H2))
 IDX_COLS = [
-    ("Address", 1.32, lambda r: r["full_address"]),
-    ("Hood", 0.72, lambda r: r["neighborhood"]),
-    ("Rent", 0.52, lambda r: money(r["rent"])),
-    ("Net eff.", 0.52, lambda r: money(r["net_effective_rent"]) if r.get("net_effective_rent") else "—"),
+    ("Address", 1.1, lambda r: r["full_address"]),
+    ("Hood", 0.6, lambda r: r["neighborhood"]),
+    ("Rent", 0.5, lambda r: money(r["rent"])),
+    ("Net eff.", 0.45, lambda r: money(r["net_effective_rent"]) if r.get("net_effective_rent") else "—"),
     ("Bd", 0.24, lambda r: r["bedrooms"]),
     ("Ba", 0.28, lambda r: r["baths"]),
-    ("Rms", 0.32, lambda r: dash(r.get("rooms"))),
-    ("SqFt", 0.4, lambda r: f"{r['sqft']:,}" if r.get("sqft") else "—"),
-    ("$/sf/yr", 0.42, lambda r: f"${r['rent']*12/r['sqft']:,.0f}" if r.get("sqft") else "—"),
-    ("Listed", 0.5, lambda r: mmdd(r.get("listed_date"))),
-    ("DoM", 0.3, lambda r: dash(r.get("days_on_market"))),
-    ("Avail", 0.5, lambda r: mmdd(r.get("available_date"))),
-    ("Priv. outdoor", 0.62, lambda r: lst(r.get("private_outdoor_space"))),
-    ("Bldg yr", 0.4, lambda r: dash(r.get("year_built"))),
+    ("Rm", 0.3, lambda r: dash(r.get("rooms"))),
+    ("SqFt", 0.38, lambda r: f"{r['sqft']:,}" if r.get("sqft") else "—"),
+    ("$/sf/yr", 0.4, lambda r: f"${r['rent']*12/r['sqft']:,.0f}" if r.get("sqft") else "—"),
+    ("Type", 0.55, lambda r: dash(r.get("unit_type"))),
+    ("Listed", 0.45, lambda r: mmdd(r.get("listed_date"))),
+    ("Avail", 0.45, lambda r: mmdd(r.get("available_date"))),
+    ("Walk", 0.4, lambda r: f'{r["walk"]["min"]:.0f}m' if r.get("walk") else "—"),
+    ("Drive", 0.4, lambda r: f'{r["drive"]["min"]:.0f}m' if r.get("drive") else "—"),
+    ("Priv. outdoor", 0.48, lambda r: lst(r.get("private_outdoor_space"))),
+    ("Bldg yr", 0.36, lambda r: dash(r.get("year_built"))),
     ("Deposit", 0.5, lambda r: money(r.get("security_deposit")) if r.get("security_deposit") is not None else "—"),
-    ("Brokerage", 0.82, lambda r: dash(r.get("brokerage"))),
-    ("Hood median*", 0.6, lambda r: money(r.get("area_median_rent_same_beds"))),
+    ("Brokerage", 0.65, lambda r: dash(r.get("brokerage"))),
+    ("Owner / Landlord", 0.78, lambda r: dash(r.get("owner"))),
+    ("Hood median*", 0.5, lambda r: money(r.get("area_median_rent_same_beds"))),
 ]
 idx_data = [[Paragraph(h, IdxHdr) for h, _, _ in IDX_COLS]]
 for r in rows:
@@ -118,7 +143,7 @@ t.setStyle(TableStyle([
     ("LEFTPADDING", (0,0), (-1,-1), 3), ("RIGHTPADDING", (0,0), (-1,-1), 3),
 ]))
 story.append(t)
-story.append(Paragraph("*StreetEasy median asking rent for the same bedroom count in the listing's area.", Small))
+story.append(Paragraph("*StreetEasy median asking rent for the same bedroom count in the listing's area. Walk/Drive = minutes from 134 West 10th Street (OSRM routing; drive is free-flow).", Small))
 story.append(PageBreak())
 
 # Per-listing sections — every data point
@@ -137,8 +162,10 @@ for r in rows:
         ("Listing ID", r["listing_id"]),
         ("Status", r.get("status")),
         ("Listed", r.get("listed_date")),
-        ("Days on market", r.get("days_on_market")),
         ("Available", r.get("available_date")),
+        ("Walk from 134 W 10th", walk_s(r)),
+        ("Drive from 134 W 10th", drive_s(r)),
+        ("Owner/Landlord", owner_s(r)),
         ("Off market", dash(r.get("off_market_date"))),
         ("First activated", (r.get("created_at") or "")[:10] or "—"),
         ("Last updated", (r.get("updated_at") or "")[:10] or "—"),
@@ -170,7 +197,7 @@ for r in rows:
         chunk = pairs[a:a+3] + [("", "")] * (3 - len(pairs[a:a+3]))
         row_cells = []
         for k, v in chunk:
-            row_cells += [P(f"<b>{k}</b>" if k else "", CellLbl), P(dash(v))]
+            row_cells += [Paragraph(f"<b>{esc(k)}</b>" if k else "", CellLbl), P(dash(v))]
         grid.append(row_cells)
     t = Table(grid, colWidths=[1.05*inch, 2.1*inch, 1.05*inch, 2.15*inch, 1.05*inch, 2.6*inch], hAlign="LEFT")
     t.setStyle(TableStyle([
@@ -201,9 +228,9 @@ for r in rows:
     if r.get("sqft_source"):
         details.append(("SqFt source", r["sqft_source"] + " (researched, not from StreetEasy)"))
     for k, v in details:
-        el.append(Paragraph(f'<b>{k}:</b> {v}', Small))
+        el.append(Paragraph(f'<b>{k}:</b> {esc(v)}', Small))
     desc = (r.get("description") or "").replace("\n", " ").strip()
-    el.append(Paragraph(f'<b>Description:</b> {desc}', Small))
+    el.append(Paragraph(f'<b>Description:</b> {esc(desc)}', Small))
     el.append(Spacer(1, 6))
     el.append(HRFlowable(width="100%", thickness=0.6, color=LINE))
     el.append(Spacer(1, 8))
