@@ -272,74 +272,75 @@ def build_css(fonts_dir: str) -> str:
 @page {{
   size: letter; margin: 18mm 15mm 16mm 15mm;
   @bottom-left {{ content: "LRP · The Transformer Opportunity · July 2026";
-    font-family: Jost; font-size: 7.5pt; color: {NAVY}; opacity: .65; }}
+    font-family: Jost; font-size: 8.5pt; color: {NAVY}; opacity: .65; }}
   @bottom-right {{ content: counter(page) " / " counter(pages);
-    font-family: Jost; font-size: 7.5pt; color: {NAVY}; opacity: .65; }}
+    font-family: Jost; font-size: 8.5pt; color: {NAVY}; opacity: .65; }}
 }}
-body {{ font-family: Jost; font-weight: 400; font-size: 10.8pt; line-height: 1.46;
+body {{ font-family: Jost; font-weight: 400; font-size: 12pt; line-height: 1.5;
   color: #22303d; }}
 a.co {{ color: {NAVY}; font-weight: 500; text-decoration: underline;
   text-decoration-color: {GOLD}; text-decoration-thickness: .8pt; }}
 .toc {{ page-break-before: always; margin: 0 0 10pt 0; }}
-.toc-hdr {{ background: {NAVY}; color: {GOLD}; font-weight: 700; font-size: 11pt;
+.toc-hdr {{ background: {NAVY}; color: {GOLD}; font-weight: 700; font-size: 12.5pt;
   letter-spacing: 2pt; padding: 4pt 8pt; border-left: 4pt solid {GOLD}; }}
 .toc ul {{ list-style: none; padding: 6pt 2pt 0 2pt; margin: 0; }}
-.toc li {{ margin: 3.5pt 0; font-size: 10.8pt; font-weight: 500; }}
+.toc li {{ margin: 4.5pt 0; font-size: 12pt; font-weight: 500; }}
 .toc a {{ color: {NAVY}; text-decoration: none; display: block; }}
 .toc a::after {{ content: leader(". ") " " target-counter(attr(href), page);
   color: {GOLD}; font-weight: 600; }}
 .masthead {{ border-bottom: 2.5pt solid {GOLD}; padding-bottom: 6pt; margin-bottom: 10pt; }}
-.mast-kicker {{ font-size: 8.5pt; font-weight: 600; letter-spacing: 1.6pt; color: {GOLD}; }}
-h1 {{ font-size: 26pt; font-weight: 700; color: {NAVY}; margin: 2pt 0 0 0; }}
-.mast-sub {{ font-size: 12.5pt; font-weight: 500; color: {NAVY}; opacity: .8; }}
+.mast-kicker {{ font-size: 9.5pt; font-weight: 600; letter-spacing: 1.6pt; color: {GOLD}; }}
+h1 {{ font-size: 28pt; font-weight: 700; color: {NAVY}; margin: 2pt 0 0 0; }}
+.mast-sub {{ font-size: 14pt; font-weight: 500; color: {NAVY}; opacity: .8; }}
 .topline {{ background: {NAVY}; border-radius: 3pt; padding: 8pt 10pt; margin: 6pt 0 8pt 0; }}
-.topline-hdr {{ color: {GOLD}; font-weight: 700; font-size: 11pt; letter-spacing: 2pt;
+.topline-hdr {{ color: {GOLD}; font-weight: 700; font-size: 12.5pt; letter-spacing: 2pt;
   margin-bottom: 4pt; }}
 .topline-tbl {{ border-collapse: collapse; }}
 .topline-tbl td {{ border: none; padding: 1.6pt 0; vertical-align: top; }}
 .topline-tbl tr:nth-child(even) td {{ background: transparent; }}
 .statband tr:nth-child(even) td {{ background: #f7f8fa; }}
-.dot {{ width: 13pt; font-size: 8.5pt; }}
+.dot {{ width: 15pt; font-size: 9.5pt; }}
 .dot-green {{ color: #3fae6a; }} .dot-red {{ color: #e2574c; }}
-.tl-line {{ color: #eef2f6; font-size: 9.6pt; line-height: 1.32; }}
+.tl-line {{ color: #eef2f6; font-size: 10.8pt; line-height: 1.35; }}
 .statband {{ width: 100%; border-collapse: collapse; table-layout: fixed;
   margin: 0 0 6pt 0; }}
 .stat {{ border: .6pt solid #d7dde3; border-top: 2pt solid {GOLD}; background: #f7f8fa;
   padding: 5pt 4pt; text-align: center; vertical-align: top; }}
-.stat-n {{ font-size: 16pt; font-weight: 700; color: {NAVY}; }}
-.stat-l {{ font-size: 7.8pt; font-weight: 600; color: {NAVY}; margin-top: 1pt; }}
-.stat-d {{ font-size: 7.4pt; color: {GOLD}; font-weight: 500; margin-top: 1pt; }}
+.stat-n {{ font-size: 18pt; font-weight: 700; color: {NAVY}; }}
+.stat-l {{ font-size: 8.8pt; font-weight: 600; color: {NAVY}; margin-top: 1pt; }}
+.stat-d {{ font-size: 8.4pt; color: {GOLD}; font-weight: 500; margin-top: 1pt; }}
 .clocks {{ margin: 0 0 10pt 0; }}
 .chip {{ display: inline-block; border: .8pt solid {NAVY}; border-left: 3pt solid {GOLD};
-  border-radius: 2pt; padding: 1.5pt 5pt; margin: 0 3pt 3pt 0; font-size: 8.2pt;
+  border-radius: 2pt; padding: 1.5pt 5pt; margin: 0 3pt 3pt 0; font-size: 9.2pt;
   color: {NAVY}; }}
 .chip b {{ color: {GOLD}; font-weight: 700; }}
-h2 {{ background: {NAVY}; color: #ffffff; font-size: 12.8pt; font-weight: 600;
+h2 {{ background: {NAVY}; color: #ffffff; font-size: 14.5pt; font-weight: 600;
   padding: 4pt 8pt; border-left: 4pt solid {GOLD}; margin: 14pt 0 2pt 0;
   page-break-after: avoid; }}
-.kicker {{ color: {GOLD}; font-weight: 600; font-size: 10.2pt; margin: 2pt 0 6pt 2pt;
+.kicker {{ color: {GOLD}; font-weight: 600; font-size: 11.5pt; margin: 2pt 0 6pt 2pt;
   page-break-after: avoid; }}
-h3 {{ color: {NAVY}; font-size: 11.4pt; font-weight: 600; margin: 10pt 0 3pt 0;
+h3 {{ color: {NAVY}; font-size: 13pt; font-weight: 600; margin: 10pt 0 3pt 0;
   border-bottom: .8pt solid {GOLD}; padding-bottom: 1.5pt; page-break-after: avoid; }}
 p {{ margin: 4pt 0; }}
 ul, ol {{ margin: 3pt 0 5pt 0; padding-left: 14pt; }}
 li {{ margin: 2pt 0; }}
-table {{ border-collapse: collapse; width: 100%; margin: 6pt 0; font-size: 9.4pt; }}
+table {{ border-collapse: collapse; width: 100%; margin: 6pt 0; font-size: 10.6pt; }}
 th {{ background: {NAVY}; color: #fff; font-weight: 600; padding: 3pt 5pt;
   text-align: left; }}
 td {{ border: .5pt solid #d7dde3; padding: 2.5pt 5pt; vertical-align: top; }}
+tr {{ page-break-inside: avoid; }}
 tr:nth-child(even) td {{ background: #f4f6f8; }}
 td a, td a.co {{ color: {NAVY}; font-weight: 600; text-decoration: underline;
   text-decoration-color: {GOLD}; text-decoration-thickness: .8pt; }}
 .sig-up {{ color: #1e7e45; font-weight: 600; }}
 .sig-dn {{ color: #c0392b; font-weight: 600; }}
 .box-angle {{ background: #eef1f4; border-left: 4pt solid {NAVY}; padding: 5pt 8pt;
-  margin: 6pt 0; font-size: 10.2pt; }}
+  margin: 6pt 0; font-size: 11.4pt; }}
 .box-angle p {{ margin: 0; }}
 .box-gold {{ background: #faf5e6; border-left: 4pt solid {GOLD}; padding: 5pt 8pt;
   margin: 6pt 0; }}
 .box-fals {{ background: #faeceb; border-left: 4pt solid #c0392b; padding: 5pt 8pt;
-  margin: 8pt 0; font-size: 10.2pt; }}
+  margin: 8pt 0; font-size: 11.4pt; }}
 .box-fals p {{ margin: 0; }}
 strong {{ font-weight: 600; color: {NAVY}; }}
 hr {{ border: none; border-top: .8pt solid #d7dde3; margin: 10pt 0; }}
