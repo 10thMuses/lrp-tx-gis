@@ -32,31 +32,33 @@ OUT_PDF = os.path.join(PROJECT, "outputs", "reports", "Transformer-Opportunity-W
 
 NAVY = "#1c2b3a"
 GOLD = "#b8860b"
-TODAY = dt.date(2026, 7, 13)
+TODAY = dt.date(2026, 7, 14)
 
 # ---------------------------------------------------------------- page-1 furniture
 
 TOPLINE = [
-    ("green", "Cycle bifurcated: distribution lead times normalized to ~30 wks by Q2 2025; power 128 wks / GSU 144 wks / EHV 3-6 yrs unimproved."),
-    ("red", "“20x demand” is the field signal, not yet the print — published max is 3.7x (GSU +274%). Shipments are capacity-capped, so the print measures supply. Expect upward convergence."),
-    ("green", "GOES chokepoint confirmed: 95% of domestic core steel from one mill (CLF Butler); 50-75% of cores imported; Sec 232 50% on cores + copper (Aug 2025)."),
-    ("red", "CLF Weirton transformer plant cancelled per Q1 2025 8-K. Still circulating in industry decks as coming capacity. It is not."),
-    ("green", "PE playbook validated twice: Sunbelt Solomon (Temple, TX) and Central Moloney. Virginia Transformer exploring sale at >$6B."),
+    ("green", "Cycle bifurcated: distribution lead times normalized to ~30 wks by Q2 2025; power 128 wks / GSU 144→160+ wks (Q1 2026) / EHV 3-6 yrs unimproved."),
+    ("red", "“20x demand” is the field signal, not yet the print — published max is 3.7x (GSU +274%). Shipments are capacity-capped, so the print measures supply."),
+    ("green", "GOES chokepoint confirmed: 95% of domestic core steel from one mill (CLF Butler); 50-75% of cores imported; Sec 232 at 50% on cores, laminations, copper."),
+    ("red", "CLF Weirton plant cancelled (Q1 2025 8-K). Announced capacity, state incentives, and 600 jobs evaporated in ten months. Announced ≠ delivered."),
+    ("green", "PE playbook validated repeatedly: Sunbelt Solomon, Central Moloney, Emerald Lake/CORE, Mill Point/Voltaris, Investcorp/RESA. Virginia Transformer exploring sale at >$6B."),
+    ("gold", "New this edition: Heron Power’s $140M Series B (a16z/Breakthrough) attacks the GOES constraint with solid-state transformers; Q1 2026 Korean backlogs verified (Hyosung ₩15.1T); AI capex-revenue gap 46% vs 32% at the 2001 telecom peak."),
     ("red", "Distribution overshoot window 2027-2029: announced capacity lands 2026-27 into a segment already at 30-week lead times."),
 ]
 
 STATS = [
     ("+274%", "GSU demand 2019-2025", "Wood Mackenzie, verified 9-0"),
-    ("144 wks", "GSU lead time, Q2 2025", "vs ~52 wks pre-2022"),
-    ("+40%", "real PPI 2020-2024", "+70-86% nominal since 2019"),
-    ("$47.5B", "Oncor base plan 2026-2030", "+$11.4B vs prior plan"),
-    ("255 GW", "data-center queue at Oncor", "38 GW RTP-qualified"),
+    ("160+ wks", "GSU lead time, Q1 2026", "144 wks Q2 2025 — still worsening"),
+    ("+40%", "real PPI 2020-2024", "+69-86% nominal; +4-10% guided"),
+    ("$47.5B", "Oncor base plan 2026-2030", "255 GW data-center queue"),
     ("95%", "domestic core steel, one mill", "CLF Butler Works, sole US GOES"),
+    ("46%", "AI capex-to-revenue growth gap", "vs 32% at 2001 telecom peak"),
 ]
 
 CLOCKS = [
     (dt.date(2027, 1, 1), "Siemens Charlotte LPT production (early 2027)"),
     (dt.date(2027, 6, 30), "Distribution overshoot window opens"),
+    (dt.date(2027, 9, 30), "Heron Power SST production (H2 2027)"),
     (dt.date(2028, 1, 1), "Hitachi South Boston VA online (2028)"),
     (dt.date(2028, 12, 31), "Oncor 765-kV Longshore energization target"),
 ]
@@ -67,7 +69,7 @@ KICKERS = {
     "1. Market Fundamentals": "Four demand layers, only one of them AI. Scarcity binds at the top of the voltage stack.",
     "2. Supply Side: Capacity, Chokepoints, Tariffs": "One steel mill, one tariff wall, and a cancelled plant everyone still models.",
     "3. Public Equities": "The market prices one transformer cycle. There are two.",
-    "4. Private Companies and Deal Flow": "Three successive sponsor generations have already been paid in repair/reman.",
+    "4. Private Companies and Deal Flow": "The playbook is validated repeatedly. The benchmark print is pending.",
     "5. Picks and Shovels: The Component Layer": "The least crowded layer of the chain. Mostly private, family-owned, un-securitized.",
     "6. The Texas/ERCOT Angle": "$47.5B at one utility. 255 GW of queue behind $3.5B of customer collateral.",
     "7. Risks": "Underwrite +40% real and 60-80% nominal. Do not underwrite the 4-9x tails.",
@@ -138,6 +140,18 @@ COMPANY_LINKS = {
     "Trilantic": "https://trilanticnorthamerica.com",
     "Insight Equity": "https://www.insightequity.com",
     "Oncor": "https://www.oncor.com",
+    "Hammond Power Solutions": "https://www.hammondpowersolutions.com",
+    "Hammond Power": "https://www.hammondpowersolutions.com",
+    "Weidmann": "https://www.weidmann-electrical.com",
+    "Maddox": "https://www.maddoxtransformer.com",
+    "SGB-SMIT": "https://www.sgb-smit.com",
+    "Quanta Services": "https://www.quantaservices.com",
+    "RESA Power": "https://www.resapower.com",
+    "Investcorp": "https://www.investcorp.com",
+    "Intersect Power": "https://www.intersectpower.com",
+    "Crusoe": "https://www.crusoe.ai",
+    "Ergon": "https://www.ergon.com",
+    "Calumet": "https://www.calumet.com",
 }
 
 
@@ -277,27 +291,28 @@ def page_one() -> str:
 
 def build_css(fonts_dir: str) -> str:
     faces = []
-    for w in (400, 500, 600, 700):
+    for w in (400, 600, 700):
         for ital, style in (("", "normal"), ("Italic", "italic")):
-            p = os.path.abspath(os.path.join(fonts_dir, f"Jost-{w}{ital}.ttf"))
+            p = os.path.abspath(os.path.join(fonts_dir, f"SourceSans3-{w}{ital}.ttf"))
             faces.append(
-                f"@font-face {{ font-family: Jost; font-weight: {w}; font-style: {style}; "
+                f"@font-face {{ font-family: 'Source Sans 3'; font-weight: {w}; font-style: {style}; "
                 f"src: url('file://{p}'); }}"
             )
     return "\n".join(faces) + f"""
 @page {{
   size: letter; margin: 18mm 15mm 16mm 15mm;
   @bottom-left {{ content: "LRP · The Transformer Opportunity · July 2026";
-    font-family: Jost; font-size: 8.5pt; color: {NAVY}; opacity: .65; }}
+    font-family: 'Source Sans 3'; font-size: 8.5pt; color: {NAVY}; opacity: .65; }}
   @bottom-right {{ content: counter(page) " / " counter(pages);
-    font-family: Jost; font-size: 8.5pt; color: {NAVY}; opacity: .65; }}
+    font-family: 'Source Sans 3'; font-size: 8.5pt; color: {NAVY}; opacity: .65; }}
 }}
-body {{ font-family: Jost; font-weight: 400; font-size: 12pt; line-height: 1.52;
-  color: #22303d; }}
+html {{ background: #fdfaf3; }}
+body {{ font-family: 'Source Sans 3'; font-weight: 400; font-size: 12pt; line-height: 1.52;
+  color: #33404c; }}
 a.co {{ color: {NAVY}; font-weight: 500; text-decoration: underline;
   text-decoration-color: {GOLD}; text-decoration-thickness: .8pt; }}
 .toc {{ page-break-before: always; margin: 0 0 10pt 0; }}
-.toc-hdr {{ background: {NAVY}; color: {GOLD}; font-weight: 700; font-size: 12.5pt;
+.toc-hdr {{ background: #efe5cd; color: {NAVY}; font-weight: 700; font-size: 12.5pt;
   letter-spacing: 2pt; padding: 4pt 8pt; border-left: 4pt solid {GOLD}; }}
 .toc ul {{ list-style: none; padding: 6pt 2pt 0 2pt; margin: 0; }}
 .toc li {{ margin: 4.5pt 0; font-size: 12pt; font-weight: 500; }}
@@ -308,32 +323,32 @@ a.co {{ color: {NAVY}; font-weight: 500; text-decoration: underline;
 .mast-kicker {{ font-size: 9.5pt; font-weight: 600; letter-spacing: 1.6pt; color: {GOLD}; }}
 h1 {{ font-size: 28pt; font-weight: 700; color: {NAVY}; margin: 2pt 0 0 0; }}
 .mast-sub {{ font-size: 14pt; font-weight: 500; color: {NAVY}; opacity: .8; }}
-.topline {{ background: {NAVY}; border-radius: 3pt; padding: 8pt 10pt; margin: 6pt 0 8pt 0; }}
+.topline {{ background: #f4ecd9; border: .8pt solid #e2d5b8; border-radius: 3pt; padding: 8pt 10pt; margin: 6pt 0 8pt 0; }}
 .topline-hdr {{ color: {GOLD}; font-weight: 700; font-size: 12.5pt; letter-spacing: 2pt;
   margin-bottom: 4pt; }}
 .topline-tbl {{ border-collapse: collapse; }}
 .topline-tbl td {{ border: none; padding: 1.6pt 0; vertical-align: top; }}
 .topline-tbl tr:nth-child(even) td {{ background: transparent; }}
-.statband tr:nth-child(even) td {{ background: #f7f8fa; }}
+.statband tr:nth-child(even) td {{ background: #f8f3e6; }}
 .dot {{ width: 15pt; font-size: 9.5pt; }}
-.dot-green {{ color: #3fae6a; }} .dot-red {{ color: #e2574c; }}
-.tl-line {{ color: #eef2f6; font-size: 10.8pt; line-height: 1.35; }}
+.dot-green {{ color: #2e8f56; }} .dot-red {{ color: #c0392b; }} .dot-gold {{ color: {GOLD}; }}
+.tl-line {{ color: #33404c; font-size: 10.8pt; line-height: 1.35; }}
 .statband {{ width: 100%; border-collapse: collapse; table-layout: fixed;
   margin: 0 0 6pt 0; }}
-.stat {{ border: .6pt solid #d7dde3; border-top: 2pt solid {GOLD}; background: #f7f8fa;
+.stat {{ border: .6pt solid #e2d5b8; border-top: 2pt solid {GOLD}; background: #f8f3e6;
   padding: 5pt 4pt; text-align: center; vertical-align: top; }}
 .stat-n {{ font-size: 18pt; font-weight: 700; color: {NAVY}; }}
 .stat-l {{ font-size: 8.8pt; font-weight: 600; color: {NAVY}; margin-top: 1pt; }}
 .stat-d {{ font-size: 8.4pt; color: {GOLD}; font-weight: 500; margin-top: 1pt; }}
 .clocks {{ margin: 0 0 6pt 0; }}
-.defs {{ border-top: .8pt solid #d7dde3; padding-top: 5pt; font-size: 9.2pt;
+.defs {{ border-top: .8pt solid #e2d5b8; padding-top: 5pt; font-size: 9.2pt;
   color: #4a5865; line-height: 1.45; }}
 .defs b {{ color: {NAVY}; font-weight: 600; }}
-.chip {{ display: inline-block; border: .8pt solid {NAVY}; border-left: 3pt solid {GOLD};
+.chip {{ display: inline-block; border: .8pt solid #cbbd99; border-left: 3pt solid {GOLD}; background: #fbf7ec;
   border-radius: 2pt; padding: 1.5pt 5pt; margin: 0 3pt 3pt 0; font-size: 9.2pt;
   color: {NAVY}; }}
 .chip b {{ color: {GOLD}; font-weight: 700; }}
-h2 {{ background: {NAVY}; color: #ffffff; font-size: 14.5pt; font-weight: 600;
+h2 {{ background: #efe5cd; color: {NAVY}; font-size: 14.5pt; font-weight: 700;
   padding: 5pt 8pt; border-left: 4pt solid {GOLD}; margin: 16pt 0 3pt 0;
   page-break-after: avoid; }}
 .kicker {{ color: {GOLD}; font-weight: 600; font-size: 11.5pt; margin: 2pt 0 7pt 2pt;
@@ -344,22 +359,22 @@ p {{ margin: 5pt 0; }}
 ul, ol {{ margin: 4pt 0 6pt 0; padding-left: 15pt; }}
 li {{ margin: 2.5pt 0; }}
 table {{ border-collapse: collapse; width: 100%; margin: 7pt 0; font-size: 10.6pt; }}
-th {{ background: {NAVY}; color: #fff; font-weight: 600; padding: 3pt 5pt;
+th {{ background: #ebdfc2; color: {NAVY}; font-weight: 700; padding: 3pt 5pt;
   text-align: left; }}
-td {{ border: .5pt solid #d7dde3; padding: 3pt 5.5pt; vertical-align: top; }}
+td {{ border: .5pt solid #e4dac2; padding: 3pt 5.5pt; vertical-align: top; }}
 tr {{ page-break-inside: avoid; }}
-tr:nth-child(even) td {{ background: #f4f6f8; }}
+tr:nth-child(even) td {{ background: #f8f4e9; }}
 td a, td a.co {{ color: {NAVY}; font-weight: 600; text-decoration: underline;
   text-decoration-color: {GOLD}; text-decoration-thickness: .8pt; }}
 .sig-up {{ color: #1e7e45; font-weight: 600; }}
 .sig-dn {{ color: #c0392b; font-weight: 600; }}
-.box-angle {{ background: #eef1f4; border-left: 4pt solid {NAVY}; padding: 5pt 9pt;
+.box-angle {{ background: #f5f0e2; border-left: 4pt solid {NAVY}; padding: 5pt 9pt;
   margin: 7pt 0; font-size: 11.4pt; }}
 .box-angle p {{ margin: 0; }}
-.box-gold {{ background: #faf5e6; border-left: 4pt solid {GOLD}; padding: 5pt 9pt;
+.box-gold {{ background: #f8f1dc; border-left: 4pt solid {GOLD}; padding: 5pt 9pt;
   margin: 7pt 0 9pt 0; font-size: 11.6pt; }}
 .box-gold p {{ margin: 0; }}
-.box-fals {{ background: #faeceb; border-left: 4pt solid #c0392b; padding: 5pt 9pt;
+.box-fals {{ background: #f9efe4; border-left: 4pt solid #c0392b; padding: 5pt 9pt;
   margin: 8pt 0; font-size: 11.4pt; }}
 .box-fals p {{ margin: 0; }}
 strong {{ font-weight: 600; color: {NAVY}; }}
@@ -374,8 +389,8 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument(
         "--fonts-dir",
-        default=os.path.join(PROJECT, "vendor", "fonts", "jost"),
-        help="directory with Jost-{400,500,600,700}[Italic].ttf (default: vendor/fonts/jost)",
+        default=os.path.join(PROJECT, "vendor", "fonts", "sourcesans"),
+        help="directory with SourceSans3-{400,600,700}[Italic].ttf (default: vendor/fonts/sourcesans)",
     )
     args = ap.parse_args()
 
