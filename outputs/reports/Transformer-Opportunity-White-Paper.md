@@ -6,9 +6,41 @@
 
 ---
 
+## Company Map — Ranked by Asymmetry
+
+Every name in this paper, one line each, most asymmetrically priced/positioned first. Full theses in §3–§6. Rank reflects mispricing relative to what the asset touches, not quality.
+
+| # | Company | Type | Why well positioned |
+|---|---|---|---|
+| 1 | [Sunbelt Solomon](https://www.sunbeltsolomon.com) | Private (Finback) | The proven repair/reman/lifecycle platform, HQ'd in ERCOT (Temple, TX) — refurb is now a structural lead-time hedge, and the Texas long tail it hasn't bought is the next platform |
+| 2 | [Virginia Transformer](https://www.vatransformer.com) | Private (in sale process) | Largest US-owned large-power maker, Oncor supplier; a >$6B print re-rates every private comp in the chain |
+| 3 | [Powell Industries](https://www.powellind.com) | Public (NASDAQ: POWL) | Cleanest US mid-cap on the scarcity layer: $1.8B backlog +33%, record >$400M data-center order, book-to-bill 1.7x |
+| 4 | [Cleveland-Cliffs](https://www.clevelandcliffs.com) | Public (NYSE: CLF) | Sole US GOES mill (Butler Works) — the input chokepoint as a policy option (DPA money, 232, DOE standards), not an earnings story |
+| 5 | [Metglas](https://metglas.com) / [Proterial](https://www.proterial.com) | Private (Bain-led) | Only US amorphous-core ribbon producer; DPA legislation names amorphous steel explicitly |
+| 6 | [HD Hyundai Electric](https://www.hd-hyundaielectric.com) | Public (KRX: 267260) | Korean lead-time arbitrage — ~12-month APAC delivery into a 3–6 year US market — with ~$274M capacity expansion underway |
+| 7 | [Hyosung Heavy Industries](https://www.hyosungheavyindustries.com) | Public (KRX: 298040) | Doubling US onshore output to 250+ units/yr — the tariff hedge is already being built |
+| 8 | [LS Electric](https://www.ls-electric.com) | Public (KRX: 010120) | HVDC converter-transformer exposure (~$358M GE-KEPCO JV deal) — the 765-kV/HVDC class is the scarcest of all |
+| 9 | [Maschinenfabrik Reinhausen](https://www.reinhausen.com) | Private (family) | ~40% global tap-changer share, single-source component portfolio — the model for the least crowded layer of the chain |
+| 10 | [Central Moloney](https://centralmoloneyinc.com) | Private (Wind Point) | Platform → bolt-on → greenfield inside 24 months; the distribution consolidation template |
+| 11 | [Emerald Transformer](https://emeraldtransformer.com) | Private (Insight Equity) | National repair/recycling/oil-processing network — every replaced unit is feedstock |
+| 12 | [MGM Transformer](https://www.mgmtransformer.com) / [VanTran](https://vantran.com) | Private | 430,000 sq ft Waco plant — the Texas-sited new capacity, next to the Oncor demand pipeline |
+| 13 | [Delta Star](https://www.deltastar.com) | Private (ESOP) | Medium-power and **mobile substations** to 200 MVA — the manufacturing base under the rental/bridge-power thesis |
+| 14 | [Prolec GE](https://www.prolecge.com) | Private (Xignux/GE JV) | ~200 power units/yr of new NC capacity landing into the still-short large-power segment |
+| 15 | [Pennsylvania Transformer](https://patransformer.com) | Private | $103M power-transformer expansion — one of the few independent US large-power platforms left |
+| 16 | [ERMCO](https://www.ermco-eci.com) | Private (co-op owned) | $70M+ distribution expansion with a captive co-op customer base |
+| 17 | [Hitachi Energy](https://www.hitachienergy.com) | Public (TYO: 6501) | $57.9B backlog (6+ yrs visibility), $1.5B capacity program — diluted inside the conglomerate, hence less crowded than pure plays |
+| 18 | [Siemens Energy](https://www.siemens-energy.com) | Public (ETR: ENR) | €66B backlog, book-to-bill 2.55; first-mover domestic LPT plant (Charlotte, early 2027) behind the tariff wall |
+| 19 | [GE Vernova](https://www.gevernova.com) | Public (NYSE: GEV) | $64B equipment orders; grid backlog is real but the narrative is fully priced |
+| 20 | [Eaton](https://www.eaton.com) | Public (NYSE: ETN) | $340M pad-mount expansion — quality asset, but distribution-weighted where overshoot hits first |
+| 21 | [ESCO Technologies](https://escotechnologies.com) | Public (NYSE: ESE) | Quiet public route into [Doble](https://www.doble.com) — testing/diagnostics rides every new unit, refurb, and relocation |
+| 22 | [Qualitrol](https://www.qualitrolcorp.com) | Private ([Fortive](https://www.fortive.com), NYSE: FTV) | DGA/condition monitoring — utilities instrument the old fleet while they wait years for new units |
+| 23 | [Cargill](https://www.cargill.com) (FR3) | Private | Natural-ester fluid spec for fire-safe data-center and indoor installs; retrofill is a service annuity |
+| 24 | [Omicron](https://www.omicronenergy.com) / [Megger](https://megger.com) | Private | Test-equipment duopoly-adjacent; sells into every commissioning and every life-extension |
+| 25 | [Superior Essex](https://superioressex.com) / [Rea Magnet Wire](https://www.reawire.com) | Private | Domestic magnet-wire capacity turned strategic by the 50% copper-content tariff |
+
 ## Executive Summary
 
-The "demand is up 20x" figure circulating in the power community is directionally right and numerically wrong — and the gap between the two is where the money is. The strongest verified multiple is **3.7x**: US demand for generator step-up (GSU) transformers is up **274% since 2019** and substation power transformers up **116%** (Wood Mackenzie). The 20x anecdote likely reflects quote-request volume on specific SKUs, not shipped demand. That distinction matters because it tells you the market is already crowded at the headline layer (OEM equities are pricing the narrative) while remaining misunderstood at the segment and component layers.
+The "demand is up 20x" figure circulating in the power community runs ahead of the published record, not against it. The strongest multiple in print is **3.7x**: US demand for generator step-up (GSU) transformers is up **274% since 2019** and substation power transformers up **116%** (Wood Mackenzie). But printed shipment data measures what capacity could deliver, not what buyers want — with factories sold out for years, shipped demand *is* supply. The 20x shows up today where demand isn't capacity-capped: RFQ volume, slot premiums, interconnection queues. Working assumption: published and announced figures converge toward it as capacity comes online. The gap between the 3.7x in print and the 20x in the field is where the money is — the market prices the former.
 
 Five verified facts frame the trade:
 
@@ -42,7 +74,7 @@ Five verified facts frame the trade:
 
 The demand stack is four layers deep, and only one of them is AI: (a) data centers and reshored manufacturing (CHIPS-era semiconductor and EV plants — privately owned transformer demand, note, not just utility), (b) electrification of transport and buildings, (c) renewables and storage interconnection — NREL sees up to 2 TW of step-up transformer demand from interconnection alone by 2050; ERCOT took 432 GW of new generation interconnection requests in 2025 — and (d) the replacement cycle, with the majority of a 60–80 million-unit fleet at or past design life. Extreme weather is an accelerant: Duke replaced ~16,000 transformers after Helene/Milton alone.
 
-**On the "20x" anecdote:** treat it as channel color. Verified shipped-demand multiples top out near 4x in the hottest segment (GSU). What plausibly *is* up an order of magnitude is quote and RFQ volume — utilities and developers now multi-source every requirement and pay premiums to reserve factory slots before sites are final (Burns & McDonnell via pv magazine). Slot-hoarding inflates apparent demand the same way it did in semis in 2021 — which is both the bull case for pricing today and the mechanism for a bullwhip correction later. Don't underwrite the tails.
+**On the "20x":** published shipped-demand multiples top out near 4x in the hottest segment (GSU) — but shipments are capacity-capped, so the printed demand series is really a supply print. Where demand isn't capped it runs an order of magnitude hotter: utilities and developers multi-source every requirement, RFQ volume has exploded, slot premiums are standard practice (Burns & McDonnell via pv magazine), and ERCOT's large-load queue alone grew ~300% in a year. The working read: 20x is what the published record ultimately shows once capacity stops being the measuring stick — it is not yet in any announced or published figure, so underwrite the timing, not the existence. The slot-hoarding dynamic still cuts both ways (semis, 2021): it front-runs the print on the way up and can whipsaw on the way down.
 
 ### 1.2 Lead times: the bifurcation is the story
 
@@ -182,7 +214,7 @@ Texas-sited supply assets: **MGM/VanTran's 430k sq ft Waco plant** (open), **Sun
 ## 7. Risks
 
 1. **Distribution overshoot, 2027–2029.** Lead times already at ~30 weeks and falling; Eaton/Prolec/Central Moloney/ERMCO/MGM capacity lands 2026–27; tariffs prop the price umbrella but volume normalizes. Commodity distribution assembly is the short leg of this trade, not the long one.
-2. **The tails mean-revert.** 4–9x price prints and 20x demand anecdotes are spot-market extremes. Underwrite to +40% real / 60–80% nominal, with give-back.
+2. **The tails mean-revert.** 4–9x price prints are spot-market extremes; underwrite price to +40% real / 60–80% nominal, with give-back. The 20x demand read is a field signal running ahead of the published record — position for it, but don't pay for it at entry until it starts printing.
 3. **Procurement, not physics.** A credible contrarian case (Bolt Electrical's Patrick Tarver, POWER Mag) holds that standard substation units deliver in 12–14 months and utility qualification rules — not capacity — create apparent scarcity. If true, the shortage partially dissolves through procurement reform, not new factories. Watch utility spec-standardization initiatives; NIAC's 80,000-type fragmentation is the counterargument.
 4. **Tariff whiplash.** 232 inclusion rounds pending; a GOES/core carve-out flips domestic assembler economics overnight in either direction. Policy is now the largest single variable in unit cost.
 5. **Backlog quality.** OEM backlogs ($180B+ across Hitachi/Siemens Energy/GEV) include slot reservations placed before sites were final. Bullwhip risk if data-center capex plans slip — the 255 GW Oncor queue is requests, not committed load; 38 GW is the qualified subset. Ratio ~7:1.

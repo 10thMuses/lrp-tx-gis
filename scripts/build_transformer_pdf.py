@@ -38,7 +38,7 @@ TODAY = dt.date(2026, 7, 13)
 
 TOPLINE = [
     ("green", "Cycle bifurcated: distribution lead times normalized to ~30 wks by Q2 2025; power 128 wks / GSU 144 wks / EHV 3-6 yrs unimproved."),
-    ("red", "“20x demand” fails verification. Max verified multiple 3.7x (GSU +274% since 2019, Wood Mackenzie). 4-9x price prints are spot tails."),
+    ("red", "“20x demand” is the field signal, not yet the print — published max is 3.7x (GSU +274%). Shipments are capacity-capped, so the print measures supply. Expect upward convergence."),
     ("green", "GOES chokepoint confirmed: 95% of domestic core steel from one mill (CLF Butler); 50-75% of cores imported; Sec 232 50% on cores + copper (Aug 2025)."),
     ("red", "CLF Weirton transformer plant cancelled per Q1 2025 8-K. Still circulating in industry decks as coming capacity. It is not."),
     ("green", "PE playbook validated twice: Sunbelt Solomon (Temple, TX) and Central Moloney. Virginia Transformer exploring sale at >$6B."),
@@ -62,8 +62,9 @@ CLOCKS = [
 ]
 
 KICKERS = {
-    "Executive Summary": "Five verified facts frame the trade. The 20x anecdote is the entry signal, not the thesis.",
-    "1. Market Fundamentals": "Verified multiple is 3.7x, not 20x. The gap between the two is where the money is.",
+    "Company Map — Ranked by Asymmetry": "Most asymmetric first. On every line, the print lags the field.",
+    "Executive Summary": "Five verified facts frame the trade. The 20x is the field signal; the print hasn't caught up yet.",
+    "1. Market Fundamentals": "3.7x is what has printed. 20x is where the field says it lands. The gap is the trade.",
     "2. Supply Side: Capacity, Chokepoints, Tariffs": "One steel mill, one tariff wall, and a cancelled plant everyone still models.",
     "3. Public Equities": "The market prices one transformer cycle. There are two.",
     "4. Private Companies and Deal Flow": "Three successive sponsor generations have already been paid in repair/reman.",
@@ -83,6 +84,78 @@ FALSIFICATION = (
     "moat erodes); (5) the Virginia Transformer process fails to clear anywhere near $6B (private comp "
     "deck resets down)."
 )
+
+# company-name -> website; longest names matched first so overlaps resolve correctly
+COMPANY_LINKS = {
+    "Powell Industries": "https://www.powellind.com",
+    "GE Vernova": "https://www.gevernova.com",
+    "Siemens Energy": "https://www.siemens-energy.com",
+    "Hitachi Energy": "https://www.hitachienergy.com",
+    "HD Hyundai Electric": "https://www.hd-hyundaielectric.com",
+    "Hyosung Heavy": "https://www.hyosungheavyindustries.com",
+    "Hyosung": "https://www.hyosungheavyindustries.com",
+    "LS Electric": "https://www.ls-electric.com",
+    "Eaton": "https://www.eaton.com",
+    "Schneider": "https://www.se.com",
+    "Vertiv": "https://www.vertiv.com",
+    "WEG": "https://www.weg.net",
+    "Mitsubishi Electric": "https://www.mitsubishielectric.com",
+    "Cleveland-Cliffs": "https://www.clevelandcliffs.com",
+    "ESCO Technologies": "https://escotechnologies.com",
+    "Doble": "https://www.doble.com",
+    "Omicron": "https://www.omicronenergy.com",
+    "Megger": "https://megger.com",
+    "Virginia Transformer": "https://www.vatransformer.com",
+    "Sunbelt Solomon": "https://www.sunbeltsolomon.com",
+    "Sunbelt Transformer": "https://www.sunbeltsolomon.com",
+    "Central Moloney": "https://centralmoloneyinc.com",
+    "Emerald Transformer": "https://emeraldtransformer.com",
+    "ERMCO": "https://www.ermco-eci.com",
+    "Prolec GE": "https://www.prolecge.com",
+    "Prolec": "https://www.prolecge.com",
+    "Delta Star": "https://www.deltastar.com",
+    "Pennsylvania Transformer": "https://patransformer.com",
+    "MGM Transformer": "https://www.mgmtransformer.com",
+    "MGM/VanTran": "https://vantran.com",
+    "VanTran": "https://vantran.com",
+    "Maschinenfabrik Reinhausen": "https://www.reinhausen.com",
+    "Reinhausen": "https://www.reinhausen.com",
+    "Metglas": "https://metglas.com",
+    "Proterial": "https://www.proterial.com",
+    "Cargill": "https://www.cargill.com",
+    "Nynas": "https://www.nynas.com",
+    "Qualitrol": "https://www.qualitrolcorp.com",
+    "Fortive": "https://www.fortive.com",
+    "Vaisala": "https://www.vaisala.com",
+    "Camlin": "https://www.camlingroup.com",
+    "Heinrich Georg GmbH": "https://www.georg.com",
+    "Superior Essex": "https://superioressex.com",
+    "Rea Magnet Wire": "https://www.reawire.com",
+    "AEM": "https://aemcores.com",
+    "Wind Point Partners": "https://www.windpointpartners.com",
+    "Wind Point": "https://www.windpointpartners.com",
+    "Trilantic": "https://trilanticnorthamerica.com",
+    "Insight Equity": "https://www.insightequity.com",
+    "Oncor": "https://www.oncor.com",
+}
+
+
+def linkify(html_text: str) -> str:
+    """Wrap company-name mentions in links, skipping text already inside anchors."""
+    pattern = re.compile(
+        r"(?<![\w/-])("
+        + "|".join(re.escape(n) for n in sorted(COMPANY_LINKS, key=len, reverse=True))
+        + r")(?![\w-])"
+    )
+    parts = re.split(r"(<a\b.*?</a>)", html_text, flags=re.S)
+    for i, part in enumerate(parts):
+        if part.startswith("<a"):
+            continue
+        parts[i] = pattern.sub(
+            lambda m: f'<a class="co" href="{COMPANY_LINKS[m.group(1)]}">{m.group(1)}</a>', part
+        )
+    return "".join(parts)
+
 
 # ---------------------------------------------------------------- md -> body html
 
@@ -108,12 +181,16 @@ def colorize_tds(html_text: str) -> str:
     return re.sub(r"<td([^>]*)>(.*?)</td>", _cell, html_text, flags=re.S)
 
 
-def apply_grammar(html_text: str) -> str:
-    """Kickers under section headers; italic-aside paragraphs -> angle boxes."""
+def apply_grammar(html_text: str):
+    """Kickers under section headers, anchor ids + TOC entries, italic asides -> angle boxes."""
+    toc = []
+
     def _h2(m):
-        title = re.sub(r"<[^>]+>", "", m.group(1)).strip()
+        title = html_mod.unescape(re.sub(r"<[^>]+>", "", m.group(1))).strip()
+        sec_id = f"sec-{len(toc)}"
+        toc.append((sec_id, title))
+        band = f'<h2 id="{sec_id}">{m.group(1)}</h2>'
         kicker = KICKERS.get(title)
-        band = f'<h2>{m.group(1)}</h2>'
         if kicker:
             band += f'<p class="kicker">{kicker}</p>'
         return band
@@ -126,18 +203,24 @@ def apply_grammar(html_text: str) -> str:
         html_text,
         flags=re.S,
     )
-    # takeaways table gets the gold analytical-sub-block frame
-    html_text = html_text.replace(
-        '<h2>8. Investable Takeaways, Ranked by Asymmetry</h2>',
-        '<h2>8. Investable Takeaways, Ranked by Asymmetry</h2><a id="takeaways"></a>',
-    )
     # falsification box after the risks section (before takeaways header)
-    html_text = html_text.replace(
-        "<h2>8. Investable Takeaways",
-        f'<div class="box-fals"><p>{FALSIFICATION}</p></div>\n<h2>8. Investable Takeaways',
-        1,
+    html_text = re.sub(
+        r'(<h2 id="[^"]*">8\. Investable Takeaways)',
+        f'<div class="box-fals"><p>{FALSIFICATION}</p></div>\n\\1',
+        html_text,
+        count=1,
     )
-    return html_text
+    return html_text, toc
+
+
+def build_toc(toc) -> str:
+    items = "".join(
+        f'<li><a href="#{sec_id}">{html_mod.escape(title)}</a></li>' for sec_id, title in toc
+    )
+    return (
+        '<div class="toc"><div class="toc-hdr">CONTENTS</div>'
+        f"<ul>{items}</ul></div>"
+    )
 
 
 # ---------------------------------------------------------------- page-1 html
@@ -193,58 +276,70 @@ def build_css(fonts_dir: str) -> str:
   @bottom-right {{ content: counter(page) " / " counter(pages);
     font-family: Jost; font-size: 7.5pt; color: {NAVY}; opacity: .65; }}
 }}
-body {{ font-family: Jost; font-weight: 400; font-size: 9.6pt; line-height: 1.42;
+body {{ font-family: Jost; font-weight: 400; font-size: 10.8pt; line-height: 1.46;
   color: #22303d; }}
+a.co {{ color: {NAVY}; font-weight: 500; text-decoration: underline;
+  text-decoration-color: {GOLD}; text-decoration-thickness: .8pt; }}
+.toc {{ page-break-before: always; margin: 0 0 10pt 0; }}
+.toc-hdr {{ background: {NAVY}; color: {GOLD}; font-weight: 700; font-size: 11pt;
+  letter-spacing: 2pt; padding: 4pt 8pt; border-left: 4pt solid {GOLD}; }}
+.toc ul {{ list-style: none; padding: 6pt 2pt 0 2pt; margin: 0; }}
+.toc li {{ margin: 3.5pt 0; font-size: 10.8pt; font-weight: 500; }}
+.toc a {{ color: {NAVY}; text-decoration: none; display: block; }}
+.toc a::after {{ content: leader(". ") " " target-counter(attr(href), page);
+  color: {GOLD}; font-weight: 600; }}
 .masthead {{ border-bottom: 2.5pt solid {GOLD}; padding-bottom: 6pt; margin-bottom: 10pt; }}
-.mast-kicker {{ font-size: 8pt; font-weight: 600; letter-spacing: 1.6pt; color: {GOLD}; }}
-h1 {{ font-size: 25pt; font-weight: 700; color: {NAVY}; margin: 2pt 0 0 0; }}
-.mast-sub {{ font-size: 11.5pt; font-weight: 500; color: {NAVY}; opacity: .8; }}
+.mast-kicker {{ font-size: 8.5pt; font-weight: 600; letter-spacing: 1.6pt; color: {GOLD}; }}
+h1 {{ font-size: 26pt; font-weight: 700; color: {NAVY}; margin: 2pt 0 0 0; }}
+.mast-sub {{ font-size: 12.5pt; font-weight: 500; color: {NAVY}; opacity: .8; }}
 .topline {{ background: {NAVY}; border-radius: 3pt; padding: 8pt 10pt; margin: 6pt 0 8pt 0; }}
-.topline-hdr {{ color: {GOLD}; font-weight: 700; font-size: 10pt; letter-spacing: 2pt;
+.topline-hdr {{ color: {GOLD}; font-weight: 700; font-size: 11pt; letter-spacing: 2pt;
   margin-bottom: 4pt; }}
 .topline-tbl {{ border-collapse: collapse; }}
 .topline-tbl td {{ border: none; padding: 1.6pt 0; vertical-align: top; }}
 .topline-tbl tr:nth-child(even) td {{ background: transparent; }}
 .statband tr:nth-child(even) td {{ background: #f7f8fa; }}
-.dot {{ width: 12pt; font-size: 8pt; }}
+.dot {{ width: 13pt; font-size: 8.5pt; }}
 .dot-green {{ color: #3fae6a; }} .dot-red {{ color: #e2574c; }}
-.tl-line {{ color: #eef2f6; font-size: 8.8pt; line-height: 1.3; }}
+.tl-line {{ color: #eef2f6; font-size: 9.6pt; line-height: 1.32; }}
 .statband {{ width: 100%; border-collapse: collapse; table-layout: fixed;
   margin: 0 0 6pt 0; }}
 .stat {{ border: .6pt solid #d7dde3; border-top: 2pt solid {GOLD}; background: #f7f8fa;
   padding: 5pt 4pt; text-align: center; vertical-align: top; }}
-.stat-n {{ font-size: 15pt; font-weight: 700; color: {NAVY}; }}
-.stat-l {{ font-size: 7.2pt; font-weight: 600; color: {NAVY}; margin-top: 1pt; }}
-.stat-d {{ font-size: 6.8pt; color: {GOLD}; font-weight: 500; margin-top: 1pt; }}
+.stat-n {{ font-size: 16pt; font-weight: 700; color: {NAVY}; }}
+.stat-l {{ font-size: 7.8pt; font-weight: 600; color: {NAVY}; margin-top: 1pt; }}
+.stat-d {{ font-size: 7.4pt; color: {GOLD}; font-weight: 500; margin-top: 1pt; }}
 .clocks {{ margin: 0 0 10pt 0; }}
 .chip {{ display: inline-block; border: .8pt solid {NAVY}; border-left: 3pt solid {GOLD};
-  border-radius: 2pt; padding: 1.5pt 5pt; margin: 0 3pt 3pt 0; font-size: 7.4pt;
+  border-radius: 2pt; padding: 1.5pt 5pt; margin: 0 3pt 3pt 0; font-size: 8.2pt;
   color: {NAVY}; }}
 .chip b {{ color: {GOLD}; font-weight: 700; }}
-h2 {{ background: {NAVY}; color: #ffffff; font-size: 11.5pt; font-weight: 600;
+h2 {{ background: {NAVY}; color: #ffffff; font-size: 12.8pt; font-weight: 600;
   padding: 4pt 8pt; border-left: 4pt solid {GOLD}; margin: 14pt 0 2pt 0;
   page-break-after: avoid; }}
-.kicker {{ color: {GOLD}; font-weight: 600; font-size: 9.2pt; margin: 2pt 0 6pt 2pt;
+.kicker {{ color: {GOLD}; font-weight: 600; font-size: 10.2pt; margin: 2pt 0 6pt 2pt;
   page-break-after: avoid; }}
-h3 {{ color: {NAVY}; font-size: 10.3pt; font-weight: 600; margin: 10pt 0 3pt 0;
+h3 {{ color: {NAVY}; font-size: 11.4pt; font-weight: 600; margin: 10pt 0 3pt 0;
   border-bottom: .8pt solid {GOLD}; padding-bottom: 1.5pt; page-break-after: avoid; }}
 p {{ margin: 4pt 0; }}
 ul, ol {{ margin: 3pt 0 5pt 0; padding-left: 14pt; }}
 li {{ margin: 2pt 0; }}
-table {{ border-collapse: collapse; width: 100%; margin: 6pt 0; font-size: 8.4pt; }}
+table {{ border-collapse: collapse; width: 100%; margin: 6pt 0; font-size: 9.4pt; }}
 th {{ background: {NAVY}; color: #fff; font-weight: 600; padding: 3pt 5pt;
   text-align: left; }}
 td {{ border: .5pt solid #d7dde3; padding: 2.5pt 5pt; vertical-align: top; }}
 tr:nth-child(even) td {{ background: #f4f6f8; }}
+td a, td a.co {{ color: {NAVY}; font-weight: 600; text-decoration: underline;
+  text-decoration-color: {GOLD}; text-decoration-thickness: .8pt; }}
 .sig-up {{ color: #1e7e45; font-weight: 600; }}
 .sig-dn {{ color: #c0392b; font-weight: 600; }}
 .box-angle {{ background: #eef1f4; border-left: 4pt solid {NAVY}; padding: 5pt 8pt;
-  margin: 6pt 0; font-size: 9pt; }}
+  margin: 6pt 0; font-size: 10.2pt; }}
 .box-angle p {{ margin: 0; }}
 .box-gold {{ background: #faf5e6; border-left: 4pt solid {GOLD}; padding: 5pt 8pt;
   margin: 6pt 0; }}
 .box-fals {{ background: #faeceb; border-left: 4pt solid #c0392b; padding: 5pt 8pt;
-  margin: 8pt 0; font-size: 9pt; }}
+  margin: 8pt 0; font-size: 10.2pt; }}
 .box-fals p {{ margin: 0; }}
 strong {{ font-weight: 600; color: {NAVY}; }}
 hr {{ border: none; border-top: .8pt solid #d7dde3; margin: 10pt 0; }}
@@ -266,8 +361,8 @@ def main() -> int:
     with open(SRC_MD, encoding="utf-8") as f:
         md_text = f.read()
 
-    body = apply_grammar(colorize_tds(md_to_html(md_text)))
-    doc = f"<html><body>{page_one()}{body}</body></html>"
+    body, toc = apply_grammar(linkify(colorize_tds(md_to_html(md_text))))
+    doc = f"<html><body>{page_one()}{build_toc(toc)}{body}</body></html>"
 
     font_config = FontConfiguration()
     css = CSS(string=build_css(args.fonts_dir), font_config=font_config)
