@@ -135,7 +135,7 @@ def put(row, a, b, bold=False, fmt=None):
     ca = s.cell(row=row, column=1, value=a); cb = s.cell(row=row, column=2, value=b)
     if bold: ca.font = Font(bold=True); cb.font = Font(bold=True)
     if fmt: cb.number_format = fmt
-put(1, "StreetEasy Listings — shared 2026-07-12", "", bold=True)
+put(1, f"StreetEasy Listings — shared 7/12–7/14/2026 ({len(rows)} listings)", "", bold=True)
 put(3, "Listings", len(rows))
 put(4, "Median rent", sorted(rents)[len(rents)//2], fmt='$#,##0')
 put(5, "Min rent", min(rents), fmt='$#,##0')

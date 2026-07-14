@@ -122,5 +122,37 @@
  "5092580": {
   "owner": "21-23 Bleecker Street Owners Corp. (co-op)",
   "role": "owner"
+ },
+ "5101731": {
+  "owner": "423 West Development LLC (Peter Tran)",
+  "role": "owner"
+ },
+ "4833587": {
+  "owner": "The Chelsea 19 Condominium (mgr: Solstice Residential Group)",
+  "role": "manager"
+ },
+ "5070347": {
+  "owner": "Chelsea West Properties LLC (Jon Vigna, self-managed)",
+  "role": "owner"
+ },
+ "5070997": {
+  "owner": "ROKA LLC (Robert Chou / Chou Management Co.)",
+  "role": "owner"
+ },
+ "5088856": {
+  "owner": "Centurion 245 LLC / 245 Owner LLC (mgr: Choice New York Management)",
+  "role": "manager"
+ },
+ "5093619": {
+  "owner": "13515 Realty LLC (Nathaniel Rahav; mgr: Chelsmore Universal)",
+  "role": "owner"
+ },
+ "5096543": {
+  "owner": "Greenwich Park Properties LLC (Aaron Weber / Weber Realty)",
+  "role": "owner"
+ },
+ "5098192": {
+  "owner": "Sari Cioffi (individual owner; two-family home)",
+  "role": "owner"
  }
 }

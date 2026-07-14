@@ -1,5 +1,100 @@
 [
  {
+  "listing_id": "4833587",
+  "url": "https://streeteasy.com/rental/4833587",
+  "page_title_name": "251 West 19th Street #1G",
+  "ld_price": 16000,
+  "ld_valid_from": "2025-08-18",
+  "ld_availability": "InStock",
+  "latitude": 40.7426,
+  "longitude": -73.9992,
+  "address_street": "251 West 19th Street",
+  "unit": "#1G",
+  "city": "New York",
+  "state": "NY",
+  "zip": "10011",
+  "full_address": "251 West 19th Street #1G",
+  "status": "ACTIVE",
+  "listed_date": "2025-08-18",
+  "days_on_market": 330,
+  "available_date": "2025-09-14",
+  "off_market_date": null,
+  "created_at": "2025-08-17T20:52:59.000-04:00",
+  "updated_at": "2025-08-31T23:21:03.000-04:00",
+  "description": "Your Chelsea Triplex Oasis Awaits: Live, Create, and Thrive\n\nDiscover an exceptionally creative residential triplex loft in the heart of Chelsea's vibrant gallery district \u2013 a space as unique and inspiring as you are.Currently a thriving live/work (residential  zoning)art gallery, this stunning property offers endless possibilities to craft your dream lifestyle.\nImagine:\n\u2022 Transforming this open canvas into a private Pilates, Yoga, or Personal Training studio. The privacy-rich layout, primarily on one level, provides the perfect environment for focused practice and client sessions.\n\u2022 Entertaining in the combined living/dining/kitchen area, the heart of this spectacular triplex loft.\n\u2022 Waking up in a serene top-level bedroom, complete with its own private outdoor space \u2013 your personal sanctuary to start or end the day.\nNestled within a bespoke doorman condominium, you'll enjoy the security and convenience of a premier building in one of Manhattan's most sought-after neighborhoods. The irresistible appeal of Chelsea's industrial lofts, with their high ceilings and open floor plans, offers a sense of spaciousness and freedom rarely found elsewhere in the city.\nBeyond your doorstep, Central Chelsea offers a world-class experience:\n\u2022 Effortless access to transportation for easy navigation throughout the city.\n\u2022 A thriving art scene with world-renowned galleries at your fingertips.\n\u2022 An array of wonderful cafes and restaurants to satisfy every culinary craving.\nThis is more than just a home; it's an opportunity to invest in your passion and cultivate your ideal lifestyle. Unlock the potential of this unique Chelsea triplex \u2013 a space where creativity meets luxury and convenience.\n\nDon't miss out on this rare find! Contact us today to schedule a private viewing and step into a world of possibility.",
+  "rooms": 6,
+  "bedrooms": 2,
+  "full_baths": 3,
+  "half_baths": 0,
+  "baths": 3.0,
+  "sqft": 2024,
+  "building_amenities": [
+   "Doorman",
+   "Elevator",
+   "Fios Available"
+  ],
+  "doorman_types": [
+   "Full Time"
+  ],
+  "parking_types": [],
+  "shared_outdoor_space": [],
+  "storage_types": [],
+  "unit_features": [
+   "Private Outdoor Space"
+  ],
+  "private_outdoor_space": [
+   "Balcony"
+  ],
+  "views": [],
+  "fireplace_types": [],
+  "rent": 16000,
+  "net_effective_rent": null,
+  "months_free": null,
+  "lease_term_months": null,
+  "security_deposit": null,
+  "total_monthly_price": null,
+  "price_changes": [
+   {
+    "price": 16000,
+    "date": "2025-08-18"
+   }
+  ],
+  "fees": [],
+  "brokerage": "Compass",
+  "broker_license_name": "Compass",
+  "broker_license_type": "Corporate Broker",
+  "broker_address": "90 5th Avenue, 3rd Floor, New York, NY, 10011-7624",
+  "photo_count": 19,
+  "photo_url": "https://photos.zillowstatic.com/fp/20fd6b0fe24d5f7282ec6622e1f9123e-se_large_800_400.webp",
+  "video_count": 0,
+  "tour_3d_url": null,
+  "floorplan_count": 0,
+  "mls_number": null,
+  "listing_source_type": "PARTNER",
+  "open_houses": [],
+  "canonical_url": "https://streeteasy.com/building/251-west-19-street-new_york/rental/4833587",
+  "unit_history": [
+   {
+    "date": "2025-08-18",
+    "price": 16000,
+    "status": "ACTIVE",
+    "listing_id": "4833587",
+    "source": "Compass"
+   }
+  ],
+  "area_median_rent_same_beds": 8600,
+  "building_name": "",
+  "neighborhood": "Chelsea",
+  "building_floors": 11,
+  "building_units": 43,
+  "year_built": 1910,
+  "building_slug": "251-west-19-street-new_york",
+  "unit_type_display": "Condo in Chelsea",
+  "unit_type": "Condo",
+  "broker_fee": null,
+  "borough": "Manhattan"
+ },
+ {
   "listing_id": "5033049",
   "url": "https://streeteasy.com/rental/5033049",
   "page_title_name": "36 Bedford Street #2",
@@ -899,6 +994,476 @@
   "year_built": 1997,
   "building_slug": "194-east-2nd-street-new_york",
   "unit_type_display": "Rental unit in East Village",
+  "unit_type": "Rental unit",
+  "broker_fee": null,
+  "borough": "Manhattan"
+ },
+ {
+  "listing_id": "5070347",
+  "url": "https://streeteasy.com/rental/5070347",
+  "page_title_name": "152 9th Avenue #2",
+  "ld_price": 13900,
+  "ld_valid_from": "2026-06-11",
+  "ld_availability": "InStock",
+  "latitude": 40.74414,
+  "longitude": -74.00271,
+  "address_street": "152 9th Avenue",
+  "unit": "#2",
+  "city": "New York",
+  "state": "NY",
+  "zip": "10011",
+  "full_address": "152 9th Avenue #2",
+  "status": "ACTIVE",
+  "listed_date": "2026-06-11",
+  "days_on_market": 33,
+  "available_date": "2026-06-11",
+  "off_market_date": null,
+  "created_at": "2026-06-11T14:51:11.000-04:00",
+  "updated_at": "2026-07-10T11:33:14.000-04:00",
+  "description": "Elevate your lifestyle in this stunning three-bedroom duplex residence with an expansive 1000 square foot, private, outdoor space. Where modern sophistication blends seamlessly with effortless comfort while oversized windows flood the home with natural light, creating a bright, open ambiance throughout. \n\nThe open-concept living and dining area features a sleek, contemporary kitchen that anchors the space. Outfitted with top-of-the-line appliances, custom cabinetry, and refined finishes that cater to both everyday living and culinary pursuits.\n\nThe primary bedrooms and living room each feature a working fireplace, adding warmth and character to the home. The home is thoughtfully equipped with an in-unit washer/dryer, while abundant closet space, ensuring effortless storage.\n\nA spacious private rooftop terrace crowns the home, offering sweeping views and an exceptional setting for both relaxation and entertaining. Whether enjoying quiet mornings or hosting under the open sky, this extraordinary outdoor retreat provides a rare sense of openness and escape above the city.\n\nPets case by case",
+  "rooms": 5,
+  "bedrooms": 3,
+  "full_baths": 2,
+  "half_baths": 0,
+  "baths": 2.0,
+  "sqft": null,
+  "building_amenities": [
+   "Doorman",
+   "Fios Available"
+  ],
+  "doorman_types": [
+   "Virtual"
+  ],
+  "parking_types": [],
+  "shared_outdoor_space": [],
+  "storage_types": [],
+  "unit_features": [
+   "Dishwasher",
+   "Fireplace",
+   "Hardwood Floors",
+   "Private Outdoor Space",
+   "View",
+   "Washer Dryer"
+  ],
+  "private_outdoor_space": [
+   "Private Roof Deck"
+  ],
+  "views": [
+   "City"
+  ],
+  "fireplace_types": [
+   "Gas"
+  ],
+  "rent": 13900,
+  "net_effective_rent": null,
+  "months_free": null,
+  "lease_term_months": null,
+  "security_deposit": 13900,
+  "total_monthly_price": null,
+  "price_changes": [
+   {
+    "price": 13900,
+    "date": "2026-06-11"
+   }
+  ],
+  "fees": [
+   "Application fee: $20",
+   "Security deposit: $13,900"
+  ],
+  "brokerage": "Douglas Elliman",
+  "broker_license_name": "Douglas Elliman Real Estate",
+  "broker_license_type": "Limited Liability Broker",
+  "broker_address": "575 Madison Avenue, 4th Floor, New York, NY, 10022",
+  "photo_count": 11,
+  "photo_url": "https://photos.zillowstatic.com/fp/5284d36bdf20a5df0343f85bb2b19429-se_large_800_400.webp",
+  "video_count": 0,
+  "tour_3d_url": null,
+  "floorplan_count": 1,
+  "mls_number": null,
+  "listing_source_type": "PARTNER",
+  "open_houses": [],
+  "canonical_url": "https://streeteasy.com/building/152-9-avenue-new_york/2",
+  "unit_history": [
+   {
+    "date": "2026-06-11",
+    "price": 13900,
+    "status": "ACTIVE",
+    "listing_id": "5070347",
+    "source": "Douglas Elliman"
+   },
+   {
+    "date": "2024-06-18",
+    "price": 11950,
+    "status": "RENTED",
+    "listing_id": "4390780",
+    "source": "Corcoran"
+   },
+   {
+    "date": "2024-06-16",
+    "price": 11950,
+    "status": "IN_CONTRACT",
+    "listing_id": "4390780",
+    "source": "Corcoran"
+   },
+   {
+    "date": "2024-05-24",
+    "price": 11950,
+    "status": "ACTIVE",
+    "listing_id": "4390780",
+    "source": "Corcoran"
+   },
+   {
+    "date": "2024-05-21",
+    "price": 11950,
+    "status": "TEMPORARILY_OFF_MARKET",
+    "listing_id": "4390780",
+    "source": "Corcoran"
+   },
+   {
+    "date": "2024-04-23",
+    "price": 11950,
+    "status": "ACTIVE",
+    "listing_id": "4390780",
+    "source": "Corcoran"
+   },
+   {
+    "date": "2021-10-06",
+    "price": 10950,
+    "status": "RENTED",
+    "listing_id": "3661956",
+    "source": "Corcoran"
+   },
+   {
+    "date": "2021-10-02",
+    "price": 10950,
+    "status": "TEMPORARILY_OFF_MARKET",
+    "listing_id": "3661956",
+    "source": "Corcoran"
+   },
+   {
+    "date": "2021-09-26",
+    "price": 10950,
+    "status": "ACTIVE",
+    "listing_id": "3661956",
+    "source": "Corcoran"
+   },
+   {
+    "date": "2021-09-22",
+    "price": 10950,
+    "status": "TEMPORARILY_OFF_MARKET",
+    "listing_id": "3661956",
+    "source": "Corcoran"
+   },
+   {
+    "date": "2021-09-08",
+    "price": 10950,
+    "status": "ACTIVE",
+    "listing_id": "3661956",
+    "source": "Corcoran"
+   }
+  ],
+  "area_median_rent_same_beds": 9895,
+  "building_name": "",
+  "neighborhood": "Chelsea",
+  "building_floors": 4,
+  "building_units": 2,
+  "year_built": 1910,
+  "building_slug": "152-9-avenue-new_york",
+  "unit_type_display": "Mixed-use building in Chelsea",
+  "unit_type": "Mixed-use building",
+  "broker_fee": null,
+  "borough": "Manhattan"
+ },
+ {
+  "listing_id": "5070997",
+  "url": "https://streeteasy.com/rental/5070997",
+  "page_title_name": "29 7th Avenue South #2D",
+  "ld_price": 11000,
+  "ld_valid_from": "2026-06-12",
+  "ld_availability": "InStock",
+  "latitude": 40.730827,
+  "longitude": -74.00414,
+  "address_street": "29 7th Avenue South",
+  "unit": "#2D",
+  "city": "New York",
+  "state": "NY",
+  "zip": "10014",
+  "full_address": "29 7th Avenue South #2D",
+  "status": "ACTIVE",
+  "listed_date": "2026-06-12",
+  "days_on_market": 32,
+  "available_date": "2026-08-01",
+  "off_market_date": null,
+  "created_at": "2026-06-12T00:29:39.000-04:00",
+  "updated_at": "2026-07-13T19:00:18.000-04:00",
+  "description": "Rarely available 3-bedroom, 2-bath duplex in an elevator building with laundry in the heart of the West Village.\nThis bright and spacious home features an open-concept living/kitchen with beautiful hardwood floors that flows directly onto a massive private terrace \u2014 ideal for outdoor dining, relaxing, or entertaining. The primary bedroom includes a wall-mounted TV and great views, while the additional bedrooms offer flexibility (perfect for home office, guests, or family).\nUpdated with a dishwasher and modern bathroom. Excellent storage throughout.\nPrime location at 29 Seventh Ave South \u2014 steps to shops, restaurants, Hudson River Park, and major subway lines.",
+  "rooms": 5,
+  "bedrooms": 3,
+  "full_baths": 2,
+  "half_baths": 0,
+  "baths": 2.0,
+  "sqft": null,
+  "building_amenities": [
+   "Elevator",
+   "Fios Available",
+   "Laundry",
+   "Live In Super"
+  ],
+  "doorman_types": [],
+  "parking_types": [],
+  "shared_outdoor_space": [],
+  "storage_types": [],
+  "unit_features": [
+   "Central Ac",
+   "Dishwasher",
+   "Hardwood Floors",
+   "Private Outdoor Space",
+   "View"
+  ],
+  "private_outdoor_space": [
+   "Terrace"
+  ],
+  "views": [
+   "City"
+  ],
+  "fireplace_types": [],
+  "rent": 11000,
+  "net_effective_rent": null,
+  "months_free": null,
+  "lease_term_months": null,
+  "security_deposit": 11000,
+  "total_monthly_price": null,
+  "price_changes": [
+   {
+    "price": 12000,
+    "date": "2026-06-12"
+   },
+   {
+    "price": 11500,
+    "date": "2026-07-07"
+   },
+   {
+    "price": 11000,
+    "date": "2026-07-08"
+   }
+  ],
+  "fees": [
+   "Application fee: $20",
+   "Security deposit: $11,000"
+  ],
+  "brokerage": "Metropolitan Property Group",
+  "broker_license_name": "Metropolitan Property Group Ii Inc",
+  "broker_license_type": "Corporate Broker",
+  "broker_address": "369 Lexington Avenue Ste, 1202, New York, NY, 10017",
+  "photo_count": 8,
+  "photo_url": "https://photos.zillowstatic.com/fp/b701b4b443c33331ce519de00678e658-se_large_800_400.webp",
+  "video_count": 0,
+  "tour_3d_url": null,
+  "floorplan_count": 0,
+  "mls_number": null,
+  "listing_source_type": "PARTNER",
+  "open_houses": [
+   {
+    "id": "20990414",
+    "startTime": "2026-07-14T11:00:00.000-04:00",
+    "endTime": "2026-07-14T19:00:00.000-04:00",
+    "appointmentOnly": true,
+    "showingNotes": null
+   }
+  ],
+  "canonical_url": "https://streeteasy.com/building/29-7-avenue-south-new_york/2d",
+  "unit_history": [
+   {
+    "date": "2026-07-08",
+    "price": 11000,
+    "status": null,
+    "listing_id": "5070997",
+    "source": "Metropolitan Property Group"
+   },
+   {
+    "date": "2026-07-07",
+    "price": 11500,
+    "status": null,
+    "listing_id": "5070997",
+    "source": "Metropolitan Property Group"
+   },
+   {
+    "date": "2026-06-12",
+    "price": 12000,
+    "status": "ACTIVE",
+    "listing_id": "5070997",
+    "source": "Metropolitan Property Group"
+   },
+   {
+    "date": "2025-10-31",
+    "price": 10000,
+    "status": "NO_LONGER_AVAILABLE",
+    "listing_id": "4763612",
+    "source": "Metropolitan Property Group"
+   },
+   {
+    "date": "2025-08-01",
+    "price": 10000,
+    "status": "TEMPORARILY_OFF_MARKET",
+    "listing_id": "4763612",
+    "source": "Metropolitan Property Group"
+   },
+   {
+    "date": "2025-07-02",
+    "price": 10000,
+    "status": null,
+    "listing_id": "4763612",
+    "source": "Metropolitan Property Group"
+   },
+   {
+    "date": "2025-06-10",
+    "price": 10800,
+    "status": "ACTIVE",
+    "listing_id": "4763612",
+    "source": "Metropolitan Property Group"
+   },
+   {
+    "date": "2023-10-04",
+    "price": 9200,
+    "status": "NO_LONGER_AVAILABLE",
+    "listing_id": "4150800",
+    "source": "Metropolitan Property Group"
+   },
+   {
+    "date": "2023-07-05",
+    "price": 9200,
+    "status": "TEMPORARILY_OFF_MARKET",
+    "listing_id": "4150800",
+    "source": "Metropolitan Property Group"
+   },
+   {
+    "date": "2023-06-25",
+    "price": 9200,
+    "status": "ACTIVE",
+    "listing_id": "4150800",
+    "source": "Metropolitan Property Group"
+   },
+   {
+    "date": "2023-06-24",
+    "price": 9200,
+    "status": "IN_CONTRACT",
+    "listing_id": "4150800",
+    "source": "Metropolitan Property Group"
+   },
+   {
+    "date": "2023-06-14",
+    "price": 9200,
+    "status": "ACTIVE",
+    "listing_id": "4150800",
+    "source": "Metropolitan Property Group"
+   },
+   {
+    "date": "2020-11-05",
+    "price": 6495,
+    "status": "NO_LONGER_AVAILABLE",
+    "listing_id": "3046256",
+    "source": "Metropolitan Property Group"
+   },
+   {
+    "date": "2020-08-06",
+    "price": 6495,
+    "status": "TEMPORARILY_OFF_MARKET",
+    "listing_id": "3046256",
+    "source": "Metropolitan Property Group"
+   },
+   {
+    "date": "2020-07-28",
+    "price": 6495,
+    "status": null,
+    "listing_id": "3046256",
+    "source": "Metropolitan Property Group"
+   },
+   {
+    "date": "2020-07-20",
+    "price": 6612,
+    "status": null,
+    "listing_id": "3046256",
+    "source": "Metropolitan Property Group"
+   },
+   {
+    "date": "2020-07-01",
+    "price": 6900,
+    "status": null,
+    "listing_id": "3046256",
+    "source": "Metropolitan Property Group"
+   },
+   {
+    "date": "2020-06-22",
+    "price": 7100,
+    "status": null,
+    "listing_id": "3046256",
+    "source": "Metropolitan Property Group"
+   },
+   {
+    "date": "2020-05-17",
+    "price": 7295,
+    "status": "ACTIVE",
+    "listing_id": "3046256",
+    "source": "Metropolitan Property Group"
+   },
+   {
+    "date": "2019-06-25",
+    "price": 6995,
+    "status": "NO_LONGER_AVAILABLE",
+    "listing_id": "2764770",
+    "source": "Oxford Property Group"
+   },
+   {
+    "date": "2019-06-13",
+    "price": 6995,
+    "status": "ACTIVE",
+    "listing_id": "2764770",
+    "source": "Oxford Property Group"
+   },
+   {
+    "date": "2019-05-08",
+    "price": 7200,
+    "status": "DELISTED",
+    "listing_id": "2726339",
+    "source": "Genik Group Corp"
+   },
+   {
+    "date": "2019-05-08",
+    "price": 7200,
+    "status": "NO_LONGER_AVAILABLE",
+    "listing_id": "2725854",
+    "source": "Metropolitan Property Group"
+   },
+   {
+    "date": "2019-05-08",
+    "price": 7200,
+    "status": "ACTIVE",
+    "listing_id": "2725854",
+    "source": "Metropolitan Property Group"
+   },
+   {
+    "date": "2019-05-07",
+    "price": 7200,
+    "status": "ACTIVE",
+    "listing_id": "2726339",
+    "source": "Genik Group Corp"
+   },
+   {
+    "date": "2019-05-06",
+    "price": 7200,
+    "status": "ACTIVE",
+    "listing_id": "2725854",
+    "source": "Metropolitan Property Group"
+   }
+  ],
+  "area_median_rent_same_beds": 10997,
+  "building_name": "",
+  "neighborhood": "West Village",
+  "building_floors": 7,
+  "building_units": 12,
+  "year_built": 1998,
+  "building_slug": "29-7-avenue-south-new_york",
+  "unit_type_display": "Rental unit in West Village",
   "unit_type": "Rental unit",
   "broker_fee": null,
   "borough": "Manhattan"
@@ -3244,6 +3809,324 @@
   "borough": "Manhattan"
  },
  {
+  "listing_id": "5088856",
+  "url": "https://streeteasy.com/rental/5088856",
+  "page_title_name": "245 West 25th Street #PHD",
+  "ld_price": 12995,
+  "ld_valid_from": "2026-07-01",
+  "ld_availability": "InStock",
+  "latitude": 40.746346,
+  "longitude": -73.996414,
+  "address_street": "245 West 25th Street",
+  "unit": "#PHD",
+  "city": "New York",
+  "state": "NY",
+  "zip": "10001",
+  "full_address": "245 West 25th Street #PHD",
+  "status": "ACTIVE",
+  "listed_date": "2026-07-01",
+  "days_on_market": 13,
+  "available_date": "2026-08-01",
+  "off_market_date": null,
+  "created_at": "2026-07-01T08:36:48.000-04:00",
+  "updated_at": "2026-07-13T19:38:49.000-04:00",
+  "description": "*Chelsea Luxury - Spacious 3BD/2BA Duplex Penthouse Unit with Massive Private Terrace, Stainless Steel Appliances, D/W, M/W, Washer/Dryer In Unit, in a Pet-Friendly Elevator Building with Rooftop Terrace and Outdoor Shower, BBQ Area, On-Site Fitness Center, Lounge, Bike and Private Storage Available, and Live-In Super*\n\nWelcome to The Arthur, a building redefined with newly renovated interiors and modern amenities. The residences at 245 West 25th Street boast luxurious features including entrance foyer blending to a large, open step-down living space, unbelievable closet space, additional storage, in-unit Bosch washer and dryer, custom kitchens with stainless steel appliances, white lacquer cabinets, Caesarstone countertops and backsplashes, and porcelain tile-clad bathrooms with custom vanities and glass-enclosed showers. The apartment features classic hardwood floors throughout, solid core wood doors with chrome hardware.\n\nThe custom Chef's Kitchen features a coordinated stainless steel appliance package, complete with dishwasher and built-in microwave. The countertops and large-tiled backsplash enhance the lacquered soft closing cabinets.\n\nLocated in the heart of Chelsea, this is truly in the middle of one of Manhattan\u2019s most desirable neighborhoods \u2013 known for its famous art galleries, the High Line, shopping and dining. The Arthur is close to public transportation and everyday conveniences like Whole Foods, Trader Joe's, and Crunch Fitness.\n\nThis luxury residence puts you in the center of an all-encompassing lifestyle offering 24-hour doorman, elevator, gym, live in super, Verizon Fios, a fully landscaped roof garden with bbq, bike storage, and private storage also available. All housed on an amazing tree-lined street. The apartment is perfectly positioned to give you the best New York City experience and is pet-friendly to boot. Photos of similar unit.\n\n**Pursuant to the Fairness in Apartment Rental Expenses (FARE) Act and the Fair Housing Act, we are required to disclose all fees associated with the rental process.\n\nA comprehensive list of fees will be disclosed prior to lease signing in the form of a Tenant Fee Disclosure form and will include and is not limited to the following:\n\nApplication Fee: $20 per leaseholder/guarantor\n\nSecurity Deposit: Equal to 1 month\u2019s rent\n\nFirst Month\u2019s rent: Equal to First Month\u2019s rent **",
+  "rooms": 5,
+  "bedrooms": 3,
+  "full_baths": 2,
+  "half_baths": 0,
+  "baths": 2.0,
+  "sqft": 1356,
+  "building_amenities": [
+   "Bike Room",
+   "Doorman",
+   "Elevator",
+   "Fios Available",
+   "Gym",
+   "Laundry",
+   "Live In Super",
+   "Package Room",
+   "Shared Outdoor Space",
+   "Storage Space",
+   "Wheelchair Access"
+  ],
+  "doorman_types": [
+   "Full Time"
+  ],
+  "parking_types": [],
+  "shared_outdoor_space": [
+   "Roof Deck"
+  ],
+  "storage_types": [
+   "Locker Cage"
+  ],
+  "unit_features": [
+   "Central Ac",
+   "Dishwasher",
+   "Hardwood Floors",
+   "Private Outdoor Space",
+   "Washer Dryer"
+  ],
+  "private_outdoor_space": [
+   "Private Roof Deck"
+  ],
+  "views": [],
+  "fireplace_types": [],
+  "rent": 12995,
+  "net_effective_rent": 11912,
+  "months_free": 1,
+  "lease_term_months": 12,
+  "security_deposit": 12995,
+  "total_monthly_price": null,
+  "price_changes": [
+   {
+    "price": 12995,
+    "date": "2026-07-01"
+   }
+  ],
+  "fees": [
+   "Application fee: $20",
+   "Security deposit: $12,995"
+  ],
+  "brokerage": "Compass",
+  "broker_license_name": "Compass",
+  "broker_license_type": "Corporate Broker",
+  "broker_address": "90 5th Avenue, 3rd Floor, New York, NY, 10011-7624",
+  "photo_count": 14,
+  "photo_url": "https://photos.zillowstatic.com/fp/a52c25f0553a3a0135729861ec7e3382-se_large_800_400.webp",
+  "video_count": 0,
+  "tour_3d_url": null,
+  "floorplan_count": 2,
+  "mls_number": null,
+  "listing_source_type": "PARTNER",
+  "open_houses": [
+   {
+    "id": "20990578",
+    "startTime": "2026-07-16T16:00:00.000-04:00",
+    "endTime": "2026-07-16T17:00:00.000-04:00",
+    "appointmentOnly": true,
+    "showingNotes": null
+   }
+  ],
+  "canonical_url": "https://streeteasy.com/building/the-arthur/phd",
+  "unit_history": [
+   {
+    "date": "2026-07-01",
+    "price": 12995,
+    "status": "ACTIVE",
+    "listing_id": "5088856",
+    "source": "Compass"
+   },
+   {
+    "date": "2025-06-18",
+    "price": 10900,
+    "status": "RENTED",
+    "listing_id": "4764068",
+    "source": "Compass"
+   },
+   {
+    "date": "2025-06-14",
+    "price": 10900,
+    "status": "IN_CONTRACT",
+    "listing_id": "4764068",
+    "source": "Compass"
+   },
+   {
+    "date": "2025-06-11",
+    "price": 10900,
+    "status": "ACTIVE",
+    "listing_id": "4764068",
+    "source": "Compass"
+   },
+   {
+    "date": "2023-11-08",
+    "price": 9800,
+    "status": "RENTED",
+    "listing_id": "4237333",
+    "source": "Compass"
+   },
+   {
+    "date": "2023-10-12",
+    "price": 9800,
+    "status": null,
+    "listing_id": "4237333",
+    "source": "Compass"
+   },
+   {
+    "date": "2023-09-28",
+    "price": 10900,
+    "status": "ACTIVE",
+    "listing_id": "4237333",
+    "source": "Compass"
+   },
+   {
+    "date": "2023-09-18",
+    "price": 10900,
+    "status": "RENTED",
+    "listing_id": "4237333",
+    "source": "Compass"
+   },
+   {
+    "date": "2023-09-14",
+    "price": 10900,
+    "status": "ACTIVE",
+    "listing_id": "4237333",
+    "source": "Compass"
+   },
+   {
+    "date": "2021-09-24",
+    "price": 9500,
+    "status": "RENTED",
+    "listing_id": "3649398",
+    "source": "Compass"
+   },
+   {
+    "date": "2021-08-24",
+    "price": 9500,
+    "status": "ACTIVE",
+    "listing_id": "3649398",
+    "source": "Compass"
+   },
+   {
+    "date": "2019-07-01",
+    "price": 7998,
+    "status": "RENTED",
+    "listing_id": "2753877",
+    "source": "Compass"
+   },
+   {
+    "date": "2019-06-25",
+    "price": 7998,
+    "status": "IN_CONTRACT",
+    "listing_id": "2753877",
+    "source": "Compass"
+   },
+   {
+    "date": "2019-06-17",
+    "price": 7998,
+    "status": null,
+    "listing_id": "2753877",
+    "source": "Compass"
+   },
+   {
+    "date": "2019-06-04",
+    "price": 8755,
+    "status": "ACTIVE",
+    "listing_id": "2753877",
+    "source": "Compass"
+   },
+   {
+    "date": "2017-05-26",
+    "price": 7880,
+    "status": "NO_LONGER_AVAILABLE",
+    "listing_id": "2038476",
+    "source": "Compass"
+   },
+   {
+    "date": "2017-05-23",
+    "price": 7880,
+    "status": "IN_CONTRACT",
+    "listing_id": "2038476",
+    "source": "Compass"
+   },
+   {
+    "date": "2017-05-23",
+    "price": 7880,
+    "status": null,
+    "listing_id": "2038476",
+    "source": "Compass"
+   },
+   {
+    "date": "2017-05-11",
+    "price": 7335,
+    "status": null,
+    "listing_id": "2038476",
+    "source": "Compass"
+   },
+   {
+    "date": "2017-04-24",
+    "price": 8065,
+    "status": null,
+    "listing_id": "2038476",
+    "source": "Compass"
+   },
+   {
+    "date": "2017-03-20",
+    "price": 8425,
+    "status": "ACTIVE",
+    "listing_id": "2038476",
+    "source": "Compass"
+   },
+   {
+    "date": "2016-08-08",
+    "price": 8250,
+    "status": "RENTED",
+    "listing_id": "1830912",
+    "source": "Compass"
+   },
+   {
+    "date": "2016-08-03",
+    "price": 8250,
+    "status": "IN_CONTRACT",
+    "listing_id": "1830912",
+    "source": "Compass"
+   },
+   {
+    "date": "2016-07-12",
+    "price": 8250,
+    "status": null,
+    "listing_id": "1830912",
+    "source": "Compass"
+   },
+   {
+    "date": "2016-07-06",
+    "price": 8874,
+    "status": "ACTIVE",
+    "listing_id": "1830912",
+    "source": "Compass"
+   },
+   {
+    "date": "2016-02-17",
+    "price": 8075,
+    "status": "RENTED",
+    "listing_id": "1673021",
+    "source": "Compass"
+   },
+   {
+    "date": "2015-12-22",
+    "price": 8075,
+    "status": "NO_LONGER_AVAILABLE",
+    "listing_id": "1673021",
+    "source": "Compass"
+   },
+   {
+    "date": "2015-12-01",
+    "price": 8075,
+    "status": null,
+    "listing_id": "1673021",
+    "source": "Compass"
+   },
+   {
+    "date": "2015-11-08",
+    "price": 9500,
+    "status": "ACTIVE",
+    "listing_id": "1673021",
+    "source": "Compass"
+   }
+  ],
+  "area_median_rent_same_beds": 9895,
+  "building_name": "The Arthur",
+  "neighborhood": "Chelsea",
+  "building_floors": 6,
+  "building_units": 67,
+  "year_built": 1938,
+  "building_slug": "the-arthur",
+  "unit_type_display": "Rental unit in Chelsea",
+  "unit_type": "Rental unit",
+  "broker_fee": null,
+  "borough": "Manhattan"
+ },
+ {
   "listing_id": "5088998",
   "url": "https://streeteasy.com/rental/5088998",
   "page_title_name": "644 East 14th Street #2002",
@@ -4417,6 +5300,107 @@
   "borough": "Manhattan"
  },
  {
+  "listing_id": "5093619",
+  "url": "https://streeteasy.com/rental/5093619",
+  "page_title_name": "135 West 15th Street #1",
+  "ld_price": 10500,
+  "ld_valid_from": "2026-07-06",
+  "ld_availability": "InStock",
+  "latitude": 40.73884,
+  "longitude": -73.99762,
+  "address_street": "135 West 15th Street",
+  "unit": "#1",
+  "city": "New York",
+  "state": "NY",
+  "zip": "10011",
+  "full_address": "135 West 15th Street #1",
+  "status": "ACTIVE",
+  "listed_date": "2026-07-06",
+  "days_on_market": 8,
+  "available_date": "2026-08-01",
+  "off_market_date": null,
+  "created_at": "2026-07-06T17:08:00.000-04:00",
+  "updated_at": "2026-07-06T17:24:45.000-04:00",
+  "description": "135 West 15th Street \u2014 A Serene Chelsea Townhouse Garden Residence\n\nReside in a beautifully renovated Chelsea GARDEN townhouse residence with private backyard, central AC throughout, two striking full bathrooms, and flexible three-bedroom living in the heart of downtown Manhattan where Chelsea meets West Village vibes!\n\nSet within a classic townhouse on one of Chelsea\u2019s most convenient blocks, this home offers a rare blend of private outdoor space, townhouse character, and flexible interior use. The layout can function as a true three-bedroom, or as a two-bedroom with a separate den, media room, home office, or secondary living area.\n\nThe front room features exposed brick, oversized windows, warm wood trim, and excellent character, making it ideal as a lounge, den, or additional bedroom. The open kitchen/dining area in the center of the home offers plenty of room to dine or entertain in. Both the rear bedrooms open toward the garden and offers plenty of light coming from double corner exposure windows. Two pristine luxurious bathrooms are finished with clean modern tile, glass shower/tub enclosures, updated vanities, and a polished contemporary feel. There's also an enormous walk-in closet for all your storage needs and an entry foyer/mud room area with built-in shoe storage.\n\nThe private backyard is the true standout: a rare Chelsea outdoor retreat with room for lounging, dining, and entertaining. It becomes a true extension of the residence and a major lifestyle feature.\n\nLocated at 135 West 15th Street, the home sits at the crossroads of Chelsea, the West Village, Flatiron, and Union Square, with easy access to the 1/2/3, A/C/E, F/M, L, and PATH trains, plus neighborhood favorites along 7th Avenue, 8th Avenue, 14th Street, and the surrounding downtown corridor.\n\nFARE Act disclosure charges: $20 application fee to run credit when applying, and due at signing is 1 month rent and 1 month security deposit.",
+  "rooms": 5,
+  "bedrooms": 3,
+  "full_baths": 2,
+  "half_baths": 0,
+  "baths": 2.0,
+  "sqft": null,
+  "building_amenities": [
+   "Fios Available"
+  ],
+  "doorman_types": [],
+  "parking_types": [],
+  "shared_outdoor_space": [],
+  "storage_types": [],
+  "unit_features": [
+   "Central Ac",
+   "Hardwood Floors",
+   "Private Outdoor Space",
+   "View",
+   "Washer Dryer"
+  ],
+  "private_outdoor_space": [
+   "Garden"
+  ],
+  "views": [
+   "City",
+   "Garden"
+  ],
+  "fireplace_types": [],
+  "rent": 10500,
+  "net_effective_rent": null,
+  "months_free": null,
+  "lease_term_months": null,
+  "security_deposit": 10500,
+  "total_monthly_price": null,
+  "price_changes": [
+   {
+    "price": 10500,
+    "date": "2026-07-06"
+   }
+  ],
+  "fees": [
+   "Application fee: $20",
+   "Security deposit: $10,500"
+  ],
+  "brokerage": "Corcoran",
+  "broker_license_name": "Corcoran Group",
+  "broker_license_type": "Limited Liability Broker",
+  "broker_address": "590 Madison Avenue, New York, NY, 10022",
+  "photo_count": 11,
+  "photo_url": "https://photos.zillowstatic.com/fp/8f5a99a70e669754d6c1ec94eed5d242-se_large_800_400.webp",
+  "video_count": 0,
+  "tour_3d_url": null,
+  "floorplan_count": 0,
+  "mls_number": null,
+  "listing_source_type": "PARTNER",
+  "open_houses": [],
+  "canonical_url": "https://streeteasy.com/building/135-west-15-street-new_york/1",
+  "unit_history": [
+   {
+    "date": "2026-07-06",
+    "price": 10500,
+    "status": "ACTIVE",
+    "listing_id": "5093619",
+    "source": "Corcoran"
+   }
+  ],
+  "area_median_rent_same_beds": 9895,
+  "building_name": "",
+  "neighborhood": "Chelsea",
+  "building_floors": 4,
+  "building_units": 4,
+  "year_built": 1910,
+  "building_slug": "135-west-15-street-new_york",
+  "unit_type_display": "Four-family home in Chelsea",
+  "unit_type": "Four-family home",
+  "broker_fee": null,
+  "borough": "Manhattan"
+ },
+ {
   "listing_id": "5093671",
   "url": "https://streeteasy.com/rental/5093671",
   "page_title_name": "432 East 13th Street #A6",
@@ -4761,6 +5745,470 @@
   "borough": "Manhattan"
  },
  {
+  "listing_id": "5096543",
+  "url": "https://streeteasy.com/rental/5096543",
+  "page_title_name": "315 Greenwich Street #4",
+  "ld_price": 12000,
+  "ld_valid_from": "2026-07-09",
+  "ld_availability": "InStock",
+  "latitude": 40.716938,
+  "longitude": -74.01052,
+  "address_street": "315 Greenwich Street",
+  "unit": "#4",
+  "city": "New York",
+  "state": "NY",
+  "zip": "10013",
+  "full_address": "315 Greenwich Street #4",
+  "status": "ACTIVE",
+  "listed_date": "2026-07-09",
+  "days_on_market": 5,
+  "available_date": "2026-08-01",
+  "off_market_date": null,
+  "created_at": "2026-07-08T17:54:18.000-04:00",
+  "updated_at": "2026-07-09T15:33:08.000-04:00",
+  "description": "\u2728 LUXURY TRIBECA PENTHOUSE \u2014 IN-UNIT WASHER/DRYER, PRIVATE STORAGE & STUNNING CITY VIEWS! \u2728\n\nExperience luxury living in this exceptional penthouse residence in the heart of Tribeca. Offering an expansive 3-bedroom, 2-bathroom layout, premium finishes, breathtaking city views, and a dedicated private storage unit, this home is designed for those seeking the very best of Manhattan living.\n\nFlooded with natural light through floor-to-ceiling windows, the open-concept living and dining area is perfect for entertaining or relaxing in style. The chef's kitchen features stainless steel appliances, granite countertops, and abundant cabinet space, while the spacious primary suite offers a walk-in closet and a luxurious en-suite bathroom.\n\n\u2705 Apartment Features:\n\u2714\ufe0f Penthouse Residence\n\u2714\ufe0f True 3-Bedroom, 2-Bathroom Layout\n\u2714\ufe0f Floor-to-Ceiling Windows\n\u2714\ufe0f In-Unit Washer & Dryer\n\u2714\ufe0f Dedicated Private Storage Unit Included\n\u2714\ufe0f Open-Concept Living & Dining Area\n\u2714\ufe0f Chef's Kitchen with Stainless Steel Appliances\n\u2714\ufe0f Granite Countertops\n\u2714\ufe0f Spacious Primary Suite with Walk-In Closet\n\u2714\ufe0f Spa-Inspired En-Suite Bathroom\n\u2714\ufe0f Two Additional Generously Sized Bedrooms\n\u2714\ufe0f High Ceilings Throughout\n\n\u2705 Building Amenities:\n\u2714\ufe0f Rooftop Deck\n\u2714\ufe0f Pet-Friendly Building\n\u2714\ufe0f Well-Maintained Luxury Property\n\n\u2705 Prime Tribeca Location:\nPerfectly situated in one of Manhattan's most prestigious neighborhoods, just moments from Hudson River Park, world-renowned restaurants, boutique shopping, art galleries, and multiple subway lines. Experience the best of downtown living with everything you need just outside your door.\n\nPlease note: Tenant occupied unit, showings strictly by appointment.\n\u260e\ufe0f Call, email, or inquire today to schedule a viewing. Open house is by appointment only. \n\nDisclaimer: Some images may be digitally edited. Furniture and d\u00e9cor may appear for illustrative purposes only. Photos ARE of the actual apartment, NOT a similar unit. Prospective renters are responsible to independently verify all information.",
+  "rooms": 6,
+  "bedrooms": 3,
+  "full_baths": 2,
+  "half_baths": 0,
+  "baths": 2.0,
+  "sqft": null,
+  "building_amenities": [
+   "Elevator",
+   "Fios Available",
+   "Laundry"
+  ],
+  "doorman_types": [],
+  "parking_types": [],
+  "shared_outdoor_space": [],
+  "storage_types": [],
+  "unit_features": [
+   "Central Ac",
+   "Dishwasher",
+   "Hardwood Floors",
+   "Private Outdoor Space",
+   "View",
+   "Washer Dryer"
+  ],
+  "private_outdoor_space": [
+   "Roof Rights"
+  ],
+  "views": [
+   "City",
+   "Garden",
+   "Park",
+   "Skyline",
+   "Water"
+  ],
+  "fireplace_types": [],
+  "rent": 12000,
+  "net_effective_rent": null,
+  "months_free": null,
+  "lease_term_months": null,
+  "security_deposit": 12000,
+  "total_monthly_price": null,
+  "price_changes": [
+   {
+    "price": 12000,
+    "date": "2026-07-08"
+   }
+  ],
+  "fees": [
+   "Application fee: $20",
+   "Security deposit: $12,000"
+  ],
+  "brokerage": "The Leasing Office",
+  "broker_license_name": "The Leasing Office",
+  "broker_license_type": "Real Estate Principal Office",
+  "broker_address": "310 Riverside Dr, Suite 200b, New York, NY, 10025",
+  "photo_count": 8,
+  "photo_url": "https://photos.zillowstatic.com/fp/5a6cbe54af4b9fe283c9c2fcd9d92e63-se_large_800_400.webp",
+  "video_count": 0,
+  "tour_3d_url": null,
+  "floorplan_count": 0,
+  "mls_number": null,
+  "listing_source_type": "PARTNER",
+  "open_houses": [],
+  "canonical_url": "https://streeteasy.com/building/315-greenwich-street-new_york/4",
+  "unit_history": [
+   {
+    "date": "2026-07-09",
+    "price": 12000,
+    "status": "ACTIVE",
+    "listing_id": "5096543",
+    "source": "The Leasing Office"
+   },
+   {
+    "date": "2021-02-05",
+    "price": 4875,
+    "status": "RENTED",
+    "listing_id": "3311300",
+    "source": "Balen Real Estate, LLC"
+   },
+   {
+    "date": "2021-01-25",
+    "price": 4875,
+    "status": null,
+    "listing_id": "3311300",
+    "source": "Balen Real Estate, LLC"
+   },
+   {
+    "date": "2021-01-19",
+    "price": 5075,
+    "status": null,
+    "listing_id": "3311300",
+    "source": "Balen Real Estate, LLC"
+   },
+   {
+    "date": "2021-01-11",
+    "price": 5125,
+    "status": null,
+    "listing_id": "3311300",
+    "source": "Balen Real Estate, LLC"
+   },
+   {
+    "date": "2020-12-09",
+    "price": 4975,
+    "status": null,
+    "listing_id": "3311300",
+    "source": "Balen Real Estate, LLC"
+   },
+   {
+    "date": "2020-11-30",
+    "price": 4950,
+    "status": null,
+    "listing_id": "3311300",
+    "source": "Balen Real Estate, LLC"
+   },
+   {
+    "date": "2020-11-22",
+    "price": 4995,
+    "status": null,
+    "listing_id": "3311300",
+    "source": "Balen Real Estate, LLC"
+   },
+   {
+    "date": "2020-11-17",
+    "price": 5295,
+    "status": "ACTIVE",
+    "listing_id": "3311300",
+    "source": "Balen Real Estate, LLC"
+   },
+   {
+    "date": "2019-08-19",
+    "price": 5495,
+    "status": "RENTED",
+    "listing_id": "2768610",
+    "source": "Balen Real Estate, LLC"
+   },
+   {
+    "date": "2019-07-26",
+    "price": 5495,
+    "status": null,
+    "listing_id": "2768610",
+    "source": "Balen Real Estate, LLC"
+   },
+   {
+    "date": "2019-06-18",
+    "price": 5595,
+    "status": "ACTIVE",
+    "listing_id": "2768610",
+    "source": "Balen Real Estate, LLC"
+   },
+   {
+    "date": "2015-07-10",
+    "price": 5650,
+    "status": "RENTED",
+    "listing_id": "1518732",
+    "source": "Tabak Real Estate"
+   },
+   {
+    "date": "2015-07-09",
+    "price": 5650,
+    "status": "NO_LONGER_AVAILABLE",
+    "listing_id": "1518732",
+    "source": "Tabak Real Estate"
+   },
+   {
+    "date": "2015-06-15",
+    "price": 5650,
+    "status": "IN_CONTRACT",
+    "listing_id": "1518732",
+    "source": "Tabak Real Estate"
+   },
+   {
+    "date": "2015-04-27",
+    "price": 5650,
+    "status": "ACTIVE",
+    "listing_id": "1518732",
+    "source": "Tabak Real Estate"
+   },
+   {
+    "date": "2013-05-17",
+    "price": 5500,
+    "status": "RENTED",
+    "listing_id": "1006905",
+    "source": "Tabak Real Estate"
+   },
+   {
+    "date": "2013-05-15",
+    "price": 5500,
+    "status": "IN_CONTRACT",
+    "listing_id": "1006905",
+    "source": "Tabak Real Estate"
+   },
+   {
+    "date": "2013-05-15",
+    "price": 5500,
+    "status": "RENTED",
+    "listing_id": "1006905",
+    "source": "Tabak Real Estate"
+   },
+   {
+    "date": "2013-05-08",
+    "price": 5500,
+    "status": null,
+    "listing_id": "1006905",
+    "source": "Tabak Real Estate"
+   },
+   {
+    "date": "2013-04-10",
+    "price": 5700,
+    "status": null,
+    "listing_id": "1006905",
+    "source": "Tabak Real Estate"
+   },
+   {
+    "date": "2013-03-26",
+    "price": 5500,
+    "status": null,
+    "listing_id": "1006905",
+    "source": "Tabak Real Estate"
+   },
+   {
+    "date": "2013-03-21",
+    "price": 5900,
+    "status": null,
+    "listing_id": "1006905",
+    "source": "Tabak Real Estate"
+   },
+   {
+    "date": "2013-02-11",
+    "price": 6000,
+    "status": "ACTIVE",
+    "listing_id": "1006905",
+    "source": "Tabak Real Estate"
+   }
+  ],
+  "area_median_rent_same_beds": 16000,
+  "building_name": "",
+  "neighborhood": "Tribeca",
+  "building_floors": 5,
+  "building_units": 5,
+  "year_built": 1930,
+  "building_slug": "315-greenwich-street-new_york",
+  "unit_type_display": "Mixed-use building in Tribeca",
+  "unit_type": "Mixed-use building",
+  "broker_fee": null,
+  "borough": "Manhattan"
+ },
+ {
+  "listing_id": "5098192",
+  "url": "https://streeteasy.com/rental/5098192",
+  "page_title_name": "359 West 18th Street #2",
+  "ld_price": 8395,
+  "ld_valid_from": "2026-07-12",
+  "ld_availability": "InStock",
+  "latitude": 40.743416,
+  "longitude": -74.003075,
+  "address_street": "359 West 18th Street",
+  "unit": "#2",
+  "city": "New York",
+  "state": "NY",
+  "zip": "10011",
+  "full_address": "359 West 18th Street #2",
+  "status": "ACTIVE",
+  "listed_date": "2026-07-12",
+  "days_on_market": 2,
+  "available_date": "2026-08-01",
+  "off_market_date": null,
+  "created_at": "2026-07-09T23:08:11.000-04:00",
+  "updated_at": "2026-07-12T13:32:50.000-04:00",
+  "description": "Rare & Sun-Drenched Duplex Townhouse with Private Terrace in Prime Chelsea\nWelcome home to this unique and charming 900-square-foot duplex apartment, nestled inside a highly private, 3-story boutique townhouse with only two residences. Offering the perfect blend of classic New York character and modern outdoor luxury, this 2-bedroom, 1.5-bathroom sanctuary is a rare Chelsea find.\n\nThe First Level: \nLiving & Entertaining: Walk into a sprawling, full-floor living area anchored by stunning exposed brick walls, rich hardwood floors, and exceptional natural light pouring in from oversized windows facing both north and south. The open, windowed kitchen features a dishwasher and flows seamlessly into the main living space, making it perfect for entertaining. Step right outside onto your own private terrace\u2014an urban oasis ideal for morning coffee, evening grilling, or testing out your green thumb.\n\nThe Upper Level: \nThe Private Quarters: Head up the stairs to find two bright, sun-filled bedrooms that comfortably accommodate King and Queen-sized beds. This level boasts authentic post-and-beam ceilings, an additional full bathroom, and a classic wood-burning fireplace that adds unmatched warmth and character.\n\nNeighborhood & Lifestyle:\nLocated on a serene, picture-perfect, tree-lined Chelsea block, you are steps away from the very best of Downtown Manhattan. Grab fresh ingredients from the nearby Trader Joe\u2019s or Chelsea Market, take a sunset stroll along the High Line and Hudson River Park, or explore the world-class dining and galleries right outside your door.\n\nFeatures & Highlights:\n* Rare duplex layout in a private townhouse (only 2 units total)\n* Private terrace perfect for dining and BBQing\n* Hardwood floors & exposed brick throughout\n* Wood-burning fireplace & authentic post-and-beam ceilings\n* Pass-through, windowed kitchen with dishwasher\n* Generous closet space and oversized windows with north/south exposures\n* Excellent transit options: access to the A, C, E, L, 1, 2, 3, F, and M trains\n* Small pets welcome!\n\nPlease note that photos with furniture are virtually staged, and the red wall is currently painted white.\n\nMove-in costs include a $20 rental application fee, first month's rent, and one month's security deposit.",
+  "rooms": 6,
+  "bedrooms": 2,
+  "full_baths": 1,
+  "half_baths": 1,
+  "baths": 1.5,
+  "sqft": 900,
+  "building_amenities": [],
+  "doorman_types": [],
+  "parking_types": [],
+  "shared_outdoor_space": [],
+  "storage_types": [],
+  "unit_features": [
+   "Fireplace",
+   "Hardwood Floors",
+   "Private Outdoor Space",
+   "View"
+  ],
+  "private_outdoor_space": [
+   "Terrace"
+  ],
+  "views": [
+   "City",
+   "Garden"
+  ],
+  "fireplace_types": [],
+  "rent": 8395,
+  "net_effective_rent": null,
+  "months_free": null,
+  "lease_term_months": null,
+  "security_deposit": 8395,
+  "total_monthly_price": null,
+  "price_changes": [
+   {
+    "price": 8395,
+    "date": "2026-07-09"
+   }
+  ],
+  "fees": [
+   "Application fee: $20",
+   "Security deposit: $8,395"
+  ],
+  "brokerage": "Corcoran",
+  "broker_license_name": "Corcoran Group",
+  "broker_license_type": "Limited Liability Broker",
+  "broker_address": "590 Madison Avenue, New York, NY, 10022",
+  "photo_count": 9,
+  "photo_url": "https://photos.zillowstatic.com/fp/01d851477df8483713ed9823b3048263-se_large_800_400.webp",
+  "video_count": 0,
+  "tour_3d_url": null,
+  "floorplan_count": 0,
+  "mls_number": null,
+  "listing_source_type": "PARTNER",
+  "open_houses": [],
+  "canonical_url": "https://streeteasy.com/building/359-west-18-street-new_york/2",
+  "unit_history": [
+   {
+    "date": "2026-07-12",
+    "price": 8395,
+    "status": "ACTIVE",
+    "listing_id": "5098192",
+    "source": "Corcoran"
+   },
+   {
+    "date": "2025-07-15",
+    "price": 7900,
+    "status": "RENTED",
+    "listing_id": "4778707",
+    "source": "Corcoran"
+   },
+   {
+    "date": "2025-07-15",
+    "price": 7900,
+    "status": "IN_CONTRACT",
+    "listing_id": "4778707",
+    "source": "Corcoran"
+   },
+   {
+    "date": "2025-06-26",
+    "price": 7900,
+    "status": "ACTIVE",
+    "listing_id": "4778707",
+    "source": "Corcoran"
+   },
+   {
+    "date": "2022-09-15",
+    "price": 5750,
+    "status": "RENTED",
+    "listing_id": "3916273",
+    "source": "Corcoran"
+   },
+   {
+    "date": "2022-08-12",
+    "price": 5750,
+    "status": null,
+    "listing_id": "3916273",
+    "source": "Corcoran"
+   },
+   {
+    "date": "2022-08-12",
+    "price": 4500,
+    "status": "IN_CONTRACT",
+    "listing_id": "3916273",
+    "source": "Corcoran"
+   },
+   {
+    "date": "2022-08-08",
+    "price": 4500,
+    "status": "TEMPORARILY_OFF_MARKET",
+    "listing_id": "3916273",
+    "source": "Corcoran"
+   },
+   {
+    "date": "2022-08-04",
+    "price": 4500,
+    "status": "ACTIVE",
+    "listing_id": "3916273",
+    "source": "Corcoran"
+   },
+   {
+    "date": "2020-10-26",
+    "price": 4800,
+    "status": "DELISTED",
+    "listing_id": "3158589",
+    "source": "Corcoran"
+   },
+   {
+    "date": "2020-08-05",
+    "price": 4800,
+    "status": "ACTIVE",
+    "listing_id": "3158589",
+    "source": "Corcoran"
+   },
+   {
+    "date": "2017-07-26",
+    "price": 4800,
+    "status": "RENTED",
+    "listing_id": "1883440",
+    "source": "Citi Habitats"
+   },
+   {
+    "date": "2016-10-27",
+    "price": 4800,
+    "status": "NO_LONGER_AVAILABLE",
+    "listing_id": "1883440",
+    "source": "Citi Habitats"
+   },
+   {
+    "date": "2016-10-06",
+    "price": 4800,
+    "status": null,
+    "listing_id": "1883440",
+    "source": "Citi Habitats"
+   },
+   {
+    "date": "2016-09-08",
+    "price": 5500,
+    "status": "ACTIVE",
+    "listing_id": "1883440",
+    "source": "Citi Habitats"
+   }
+  ],
+  "area_median_rent_same_beds": 8600,
+  "building_name": "",
+  "neighborhood": "Chelsea",
+  "building_floors": 3,
+  "building_units": 2,
+  "year_built": 1910,
+  "building_slug": "359-west-18-street-new_york",
+  "unit_type_display": "Two-family home in Chelsea",
+  "unit_type": "Two-family home",
+  "broker_fee": null,
+  "borough": "Manhattan"
+ },
+ {
   "listing_id": "5099749",
   "url": "https://streeteasy.com/rental/5099749",
   "page_title_name": "535 West 23rd Street #S9C",
@@ -4934,6 +6382,116 @@
   "year_built": 2001,
   "building_slug": "the-tate",
   "unit_type_display": "Rental unit in West Chelsea",
+  "unit_type": "Rental unit",
+  "broker_fee": null,
+  "borough": "Manhattan"
+ },
+ {
+  "listing_id": "5101731",
+  "url": "https://streeteasy.com/rental/5101731",
+  "page_title_name": "423 West Street #1H",
+  "ld_price": 9495,
+  "ld_valid_from": "2026-07-14",
+  "ld_availability": "InStock",
+  "latitude": 40.735077,
+  "longitude": -74.009674,
+  "address_street": "423 West Street",
+  "unit": "#1H",
+  "city": "New York",
+  "state": "NY",
+  "zip": "10014",
+  "full_address": "423 West Street #1H",
+  "status": "ACTIVE",
+  "listed_date": "2026-07-14",
+  "days_on_market": 0,
+  "available_date": "2026-08-01",
+  "off_market_date": null,
+  "created_at": "2026-07-14T10:29:07.000-04:00",
+  "updated_at": "2026-07-14T10:35:50.000-04:00",
+  "description": "MASSIVE TRUE 3 BEDROOM IN ULTRA-PRIME WEST VILLAGE!! *Available August 1*\n\nIN-UNIT WASHER/DRYER - DISHWASHER - PRIVATE OUTDOOR SPACE - SPACIOUS BEDROOMS & CLOSETS!\n\nBeautifully renovated 3-bedroom downtown home at 423 West Street, featuring a spacious open-concept layout, chic modern finishes, and stylish loft-inspired interiors throughout. The oversized living and dining area is perfect for entertaining, complemented by a sleek kitchen with stainless steel appliances, abundant cabinetry, and a clean contemporary design.\n\nAll three bedrooms comfortably accommodate queen-size beds and offer excellent closet space, including a large walk-in closet with custom organization. The apartment also features a spa-inspired bathroom, dark hardwood floors, recessed lighting, and an in-unit washer/dryer for ultimate convenience.\n\nThoughtfully designed with a bright, airy feel and sophisticated downtown aesthetic, this home blends comfort and functionality in one of Manhattan\u2019s most desirable waterfront locations. Surrounded by trendy restaurants, caf\u00e9s, nightlife, and nearby transportation, 423 West Street offers the perfect balance of style and convenience!\n\nMove-In Costs:\u20281st month's rent, 1/2 month security, $20 application fee, $80 move fee per person & $75 key fee per apartment. No pet fee.",
+  "rooms": 5,
+  "bedrooms": 3,
+  "full_baths": 1,
+  "half_baths": 0,
+  "baths": 1.0,
+  "sqft": null,
+  "building_amenities": [
+   "Doorman",
+   "Elevator",
+   "Laundry",
+   "Package Room",
+   "Storage Space"
+  ],
+  "doorman_types": [
+   "Virtual"
+  ],
+  "parking_types": [],
+  "shared_outdoor_space": [],
+  "storage_types": [
+   "Cold Storage"
+  ],
+  "unit_features": [
+   "Central Ac",
+   "Dishwasher",
+   "Hardwood Floors",
+   "Private Outdoor Space",
+   "View",
+   "Washer Dryer"
+  ],
+  "private_outdoor_space": [
+   "Terrace"
+  ],
+  "views": [
+   "City",
+   "Garden"
+  ],
+  "fireplace_types": [],
+  "rent": 9495,
+  "net_effective_rent": null,
+  "months_free": null,
+  "lease_term_months": null,
+  "security_deposit": 4750,
+  "total_monthly_price": null,
+  "price_changes": [
+   {
+    "price": 9495,
+    "date": "2026-07-14"
+   }
+  ],
+  "fees": [
+   "Application fee: $20",
+   "Security deposit: $4,750"
+  ],
+  "brokerage": "Next Step Realty New York LLC",
+  "broker_license_name": "Next Step Realty New York Llc",
+  "broker_license_type": "Limited Liability Broker",
+  "broker_address": "4 East 8th Street, New York, NY, 10003",
+  "photo_count": 17,
+  "photo_url": "https://photos.zillowstatic.com/fp/1bda86d7105cf3e447018fcb28cc6891-se_large_800_400.webp",
+  "video_count": 0,
+  "tour_3d_url": null,
+  "floorplan_count": 0,
+  "mls_number": null,
+  "listing_source_type": "PARTNER",
+  "open_houses": [],
+  "canonical_url": "https://streeteasy.com/building/four23-423-west-street-new_york/1h",
+  "unit_history": [
+   {
+    "date": "2026-07-14",
+    "price": 9495,
+    "status": "ACTIVE",
+    "listing_id": "5101731",
+    "source": "Next Step Realty New York LLC"
+   }
+  ],
+  "area_median_rent_same_beds": 10997,
+  "building_name": "FOUR23",
+  "neighborhood": "West Village",
+  "building_floors": 10,
+  "building_units": 6,
+  "year_built": 2005,
+  "building_slug": "four23-423-west-street-new_york",
+  "unit_type_display": "Rental unit in West Village",
   "unit_type": "Rental unit",
   "broker_fee": null,
   "borough": "Manhattan"

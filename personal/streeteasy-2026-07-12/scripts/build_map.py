@@ -103,7 +103,7 @@ html = """<!DOCTYPE html>
 <div id="app">
   <div id="side">
     <h1>StreetEasy Listings</h1>
-    <div class="sub">31 rentals shared 7/12/26 &middot; downtown Manhattan</div>
+    <div class="sub">__COUNT__ rentals shared 7/12&ndash;7/14/26 &middot; downtown Manhattan</div>
     <div class="filters" id="hoodChips"></div>
     <div class="filters">
       <select id="bedsSel">
@@ -248,7 +248,8 @@ render();
 """
 leaflet_js = open(os.path.join(SCRATCH, "leaflet.js")).read()
 leaflet_css = open(os.path.join(SCRATCH, "leaflet.css")).read()
-html = (html.replace("__LEAFLET_CSS__", leaflet_css)
+html = (html.replace("__COUNT__", str(len(feats)))
+            .replace("__LEAFLET_CSS__", leaflet_css)
             .replace("__LEAFLET_JS__", leaflet_js)
             .replace("__DATA__", data_js).replace("__COLORS__", colors_js))
 open(OUT, "w").write(html)

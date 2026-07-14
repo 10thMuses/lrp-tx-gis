@@ -75,7 +75,7 @@ story = []
 rents = sorted(r["rent"] for r in rows)
 med = rents[len(rents)//2]
 story.append(Paragraph("StreetEasy Rental Listings", H1))
-story.append(Paragraph(f"{len(rows)} unique listings shared on 7/12/2026 · Downtown Manhattan · distances measured from 134 West 10th Street · compiled 7/14/2026", Sub))
+story.append(Paragraph(f"{len(rows)} unique listings shared 7/12–7/14/2026 · Downtown Manhattan · distances measured from 134 West 10th Street · compiled 7/14/2026", Sub))
 
 # Summary stats table
 hood_stats = []
@@ -243,7 +243,7 @@ def footer(canvas, doc):
     canvas.saveState()
     canvas.setFont("Helvetica", 7.5)
     canvas.setFillColor(INK2)
-    canvas.drawString(0.6*inch, 0.42*inch, "StreetEasy listings shared 7/12/2026 — personal compilation")
+    canvas.drawString(0.6*inch, 0.42*inch, "StreetEasy listings shared 7/12–7/14/2026 — personal compilation")
     canvas.drawRightString(PAGE[0]-0.6*inch, 0.42*inch, f"Page {doc.page}")
     canvas.restoreState()
 
