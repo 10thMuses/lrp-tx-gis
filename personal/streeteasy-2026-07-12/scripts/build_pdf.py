@@ -34,6 +34,17 @@ for r in rows:
 dropped = [r for r in rows if r.get("drive") and r["drive"]["min"] > 15]
 rows = [r for r in rows if not (r.get("drive") and r["drive"]["min"] > 15)]
 
+# walk split: SE_SPLIT=near10 keeps <=10-min walk, far10 keeps >10-min walk
+SPLIT = os.environ.get("SE_SPLIT", "")
+if SPLIT == "near10":
+    rows = [r for r in rows if r.get("walk") and r["walk"]["min"] <= 10]
+    SPLIT_LABEL = "within a 10-minute walk of 134 West 10th Street"
+elif SPLIT == "far10":
+    rows = [r for r in rows if not r.get("walk") or r["walk"]["min"] > 10]
+    SPLIT_LABEL = "more than a 10-minute walk from 134 West 10th Street"
+else:
+    SPLIT_LABEL = ""
+
 rows.sort(key=lambda r: (r.get("neighborhood") or "", r.get("rent") or 0))
 
 def walk_s(r): return f'{r["walk"]["min"]:.0f} min ({r["walk"]["miles"]} mi)' if r.get("walk") else "—"
@@ -75,7 +86,7 @@ story = []
 rents = sorted(r["rent"] for r in rows)
 med = rents[len(rents)//2]
 story.append(Paragraph("StreetEasy Rental Listings", H1))
-story.append(Paragraph(f"{len(rows)} unique listings shared 7/12–7/14/2026 · Downtown Manhattan · distances measured from 134 West 10th Street · compiled 7/14/2026", Sub))
+story.append(Paragraph(f"{len(rows)} listings{' ' + SPLIT_LABEL if SPLIT_LABEL else ''} · shared 7/12–7/14/2026 · Downtown Manhattan · distances measured from 134 West 10th Street · compiled 7/14/2026", Sub))
 
 # Summary stats table
 hood_stats = []
@@ -95,7 +106,7 @@ story.append(Paragraph("Overview", H2))
 story.append(Paragraph(
     f"Rents run {money(rents[0])}–{money(rents[-1])} (median {money(med)}). "
     f"Bedroom mix: " + ", ".join(f"{n}× {bd}BR" for bd, n in sorted(Counter(r['bedrooms'] for r in rows).items())) + ". "
-    f"All listings are active rentals; two offer net-effective concessions (1 month free). "
+    f"All listings are active rentals. "
     f"No broker fees appear on any fee schedule (post-FARE Act). "
     f"Square footage is published for only {sum(1 for r in rows if r.get('sqft'))} of {len(rows)} units "
     f"(one recovered by outside research); blanks reflect data no listing source publishes. "
