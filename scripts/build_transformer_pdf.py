@@ -63,8 +63,8 @@ CLOCKS = [
 
 KICKERS = {
     "Company Map — Ranked by Asymmetry": "Most asymmetric first. On every line, the print lags the field.",
-    "Executive Summary": "Five verified facts frame the trade. The 20x is the field signal; the print hasn't caught up yet.",
-    "1. Market Fundamentals": "3.7x is what has printed. 20x is where the field says it lands. The gap is the trade.",
+    "Executive Summary": "Five verified facts frame the trade.",
+    "1. Market Fundamentals": "Four demand layers, only one of them AI. Scarcity binds at the top of the voltage stack.",
     "2. Supply Side: Capacity, Chokepoints, Tariffs": "One steel mill, one tariff wall, and a cancelled plant everyone still models.",
     "3. Public Equities": "The market prices one transformer cycle. There are two.",
     "4. Private Companies and Deal Flow": "Three successive sponsor generations have already been paid in repair/reman.",
@@ -196,6 +196,13 @@ def apply_grammar(html_text: str):
         return band
 
     html_text = re.sub(r"<h2>(.*?)</h2>", _h2, html_text, flags=re.S)
+    # "Key finding:" lead paragraphs -> gold analytical sub-block
+    html_text = re.sub(
+        r"<p><strong>Key finding:</strong>(.*?)</p>",
+        r'<div class="box-gold"><p><b>Key finding.</b>\1</p></div>',
+        html_text,
+        flags=re.S,
+    )
     # full-italic paragraphs (inline notes/asides in the source md) -> angle boxes
     html_text = re.sub(
         r"<p><em>(.*?)</em></p>",
@@ -276,7 +283,7 @@ def build_css(fonts_dir: str) -> str:
   @bottom-right {{ content: counter(page) " / " counter(pages);
     font-family: Jost; font-size: 8.5pt; color: {NAVY}; opacity: .65; }}
 }}
-body {{ font-family: Jost; font-weight: 400; font-size: 12pt; line-height: 1.5;
+body {{ font-family: Jost; font-weight: 400; font-size: 12pt; line-height: 1.62;
   color: #22303d; }}
 a.co {{ color: {NAVY}; font-weight: 500; text-decoration: underline;
   text-decoration-color: {GOLD}; text-decoration-thickness: .8pt; }}
@@ -315,32 +322,33 @@ h1 {{ font-size: 28pt; font-weight: 700; color: {NAVY}; margin: 2pt 0 0 0; }}
   color: {NAVY}; }}
 .chip b {{ color: {GOLD}; font-weight: 700; }}
 h2 {{ background: {NAVY}; color: #ffffff; font-size: 14.5pt; font-weight: 600;
-  padding: 4pt 8pt; border-left: 4pt solid {GOLD}; margin: 14pt 0 2pt 0;
+  padding: 5pt 8pt; border-left: 4pt solid {GOLD}; margin: 20pt 0 4pt 0;
   page-break-after: avoid; }}
-.kicker {{ color: {GOLD}; font-weight: 600; font-size: 11.5pt; margin: 2pt 0 6pt 2pt;
+.kicker {{ color: {GOLD}; font-weight: 600; font-size: 11.5pt; margin: 3pt 0 9pt 2pt;
   page-break-after: avoid; }}
-h3 {{ color: {NAVY}; font-size: 13pt; font-weight: 600; margin: 10pt 0 3pt 0;
+h3 {{ color: {NAVY}; font-size: 13pt; font-weight: 600; margin: 15pt 0 5pt 0;
   border-bottom: .8pt solid {GOLD}; padding-bottom: 1.5pt; page-break-after: avoid; }}
-p {{ margin: 4pt 0; }}
-ul, ol {{ margin: 3pt 0 5pt 0; padding-left: 14pt; }}
-li {{ margin: 2pt 0; }}
-table {{ border-collapse: collapse; width: 100%; margin: 6pt 0; font-size: 10.6pt; }}
+p {{ margin: 6.5pt 0; }}
+ul, ol {{ margin: 5pt 0 8pt 0; padding-left: 15pt; }}
+li {{ margin: 4pt 0; }}
+table {{ border-collapse: collapse; width: 100%; margin: 9pt 0; font-size: 10.6pt; }}
 th {{ background: {NAVY}; color: #fff; font-weight: 600; padding: 3pt 5pt;
   text-align: left; }}
-td {{ border: .5pt solid #d7dde3; padding: 2.5pt 5pt; vertical-align: top; }}
+td {{ border: .5pt solid #d7dde3; padding: 3.5pt 5.5pt; vertical-align: top; }}
 tr {{ page-break-inside: avoid; }}
 tr:nth-child(even) td {{ background: #f4f6f8; }}
 td a, td a.co {{ color: {NAVY}; font-weight: 600; text-decoration: underline;
   text-decoration-color: {GOLD}; text-decoration-thickness: .8pt; }}
 .sig-up {{ color: #1e7e45; font-weight: 600; }}
 .sig-dn {{ color: #c0392b; font-weight: 600; }}
-.box-angle {{ background: #eef1f4; border-left: 4pt solid {NAVY}; padding: 5pt 8pt;
-  margin: 6pt 0; font-size: 11.4pt; }}
+.box-angle {{ background: #eef1f4; border-left: 4pt solid {NAVY}; padding: 6pt 9pt;
+  margin: 9pt 0; font-size: 11.4pt; }}
 .box-angle p {{ margin: 0; }}
-.box-gold {{ background: #faf5e6; border-left: 4pt solid {GOLD}; padding: 5pt 8pt;
-  margin: 6pt 0; }}
-.box-fals {{ background: #faeceb; border-left: 4pt solid #c0392b; padding: 5pt 8pt;
-  margin: 8pt 0; font-size: 11.4pt; }}
+.box-gold {{ background: #faf5e6; border-left: 4pt solid {GOLD}; padding: 6pt 9pt;
+  margin: 9pt 0 11pt 0; font-size: 11.6pt; }}
+.box-gold p {{ margin: 0; }}
+.box-fals {{ background: #faeceb; border-left: 4pt solid #c0392b; padding: 6pt 9pt;
+  margin: 10pt 0; font-size: 11.4pt; }}
 .box-fals p {{ margin: 0; }}
 strong {{ font-weight: 600; color: {NAVY}; }}
 hr {{ border: none; border-top: .8pt solid #d7dde3; margin: 10pt 0; }}
