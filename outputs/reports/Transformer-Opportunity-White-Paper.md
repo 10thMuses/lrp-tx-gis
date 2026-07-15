@@ -16,33 +16,38 @@
 | 2 | [Virginia Transformer](https://www.vatransformer.com) | Private (in sale process) | Largest US-owned large-power maker, Oncor supplier; a >$6B print re-rates every private comp in the chain |
 | 3 | Heron Power | Venture (a16z/Breakthrough) | $140M Series B (Feb 2026) for solid-state transformers that need **no GOES at all** — the direct hedge on the constraint every other position depends on; binary risk, strategic-acquirer floor |
 | 4 | [Powell Industries](https://www.powellind.com) | Public (NASDAQ: POWL) | Cleanest US mid-cap on the scarcity layer: $1.8B backlog +33%, record >$400M data-center order, book-to-bill 1.7x — but ~60x trailing after a +160% YTD run; the multiple is already full |
-| 5 | [Cleveland-Cliffs](https://www.clevelandcliffs.com) | Public (NYSE: CLF) | Sole US GOES mill (Butler Works) — the input chokepoint as a policy option (DPA money, 232, DOE standards), not an earnings story |
-| 6 | [Metglas](https://metglas.com) / [Proterial](https://www.proterial.com) | Private (Bain-led) | Only US amorphous-core ribbon producer (~190kt global amorphous capacity, distribution-class); DPA legislation names amorphous steel explicitly |
-| 7 | [Hyosung Heavy Industries](https://www.hyosungheavyindustries.com) | Public (KRX: 298040) | ₩15.1T backlog (Q1 2026, verified) incl. a ₩787.1B US 765-kV contract — largest in Korean power-equipment history; supplies ~half of US 765-kV units |
-| 8 | [HD Hyundai Electric](https://www.hd-hyundaielectric.com) | Public (KRX: 267260) | Record $1.80B Q1 2026 orders (42.6% of annual target in one quarter), $7.89B backlog; ~12-month APAC delivery into a 3–6 year US market |
-| 9 | [LS Electric](https://www.ls-electric.com) | Public (KRX: 010120) | ₩5.64T backlog; AWS (₩170B) and Bloom Energy (₩319B) contracts; ~$358M HVDC deal — the scarcest class of all. Management guides the supercycle through 2035 |
-| 10 | [Maschinenfabrik Reinhausen](https://www.reinhausen.com) | Private (family) | ~40% global tap-changer share, single-source component portfolio — the model for the least crowded layer of the chain |
-| 11 | [Central Moloney](https://centralmoloneyinc.com) | Private (Wind Point) | Platform → bolt-on → greenfield inside 24 months; the distribution consolidation template |
-| 12 | [Emerald Transformer](https://emeraldtransformer.com) | Private (Insight Equity) | National repair/recycling/oil-processing network — every replaced unit is feedstock |
-| 13 | [Maddox](https://www.maddoxtransformer.com) | Private | The inventory-led availability model — proof that holding transformer stock against 30–160 week lead times is itself a business |
-| 14 | [MGM Transformer](https://www.mgmtransformer.com) / [VanTran](https://vantran.com) | Private | 430,000 sq ft Waco plant — the Texas-sited new capacity, next to the Oncor demand pipeline |
-| 15 | [Delta Star](https://www.deltastar.com) | Private (ESOP) | Medium-power and **mobile substations** to 200 MVA — the manufacturing base under the rental/bridge-power thesis |
-| 16 | [Prolec GE](https://www.prolecge.com) | Private (Xignux/GE JV) | ~200 power units/yr of new NC capacity landing into the still-short large-power segment |
-| 17 | [SGB-SMIT](https://www.sgb-smit.com) | Private (One Equity) | Largest independent pure-play LPT maker; a sale or IPO would create the first large Western pure-play listing — a sector event |
-| 18 | [Pennsylvania Transformer](https://patransformer.com) | Private | $103M power-transformer expansion — one of the few independent US large-power platforms left |
-| 19 | [ERMCO](https://www.ermco-eci.com) | Private (co-op owned) | $70M+ distribution expansion (TN, WI) with a captive co-op customer base |
-| 20 | [Hitachi Energy](https://www.hitachienergy.com) | Public (TYO: 6501) | $57.9B backlog (6+ yrs visibility), $1.5B capacity program — diluted inside the conglomerate, hence less crowded than pure plays |
-| 21 | [Siemens Energy](https://www.siemens-energy.com) | Public (ETR: ENR) | €66B group backlog (book-to-bill 2.55), Grid Technologies €42B; first-mover domestic LPT plant (Charlotte, early 2027) behind the tariff wall |
-| 22 | [Hammond Power Solutions](https://www.hammondpowersolutions.com) | Public (TSX: HPS.A) | Dry-type niche leader: Q1 2026 sales +31.5%, backlog +94.6% on data centers, ~$2.6B cap — watch the dry-type/distribution overshoot exposure |
-| 23 | [Quanta Services](https://www.quantaservices.com) | Public (NYSE: PWR) | Bought Niagara Power Transformer (Sep 2024) — strategics now compete with sponsors for supply security |
-| 24 | [GE Vernova](https://www.gevernova.com) | Public (NYSE: GEV) | $163B total backlog; Electrification backlog $42B vs $9B end-2022; orders priced 10–20% above late-2025 — real, but ~63x forward prices flawless conversion |
-| 25 | [Eaton](https://www.eaton.com) | Public (NYSE: ETN) | $340M pad-mount expansion + bought Resilient Power (SSTs, ≤$150M) — hedging its own segment; distribution-weighted where overshoot hits first |
-| 26 | Forgent Power Solutions | Public (NYSE: FPS) | Feb 2026 IPO — data-center electrical distribution roll-up, TTM revenue $1.2B (+387% incl. M&A), ~46x forward; the IPO itself signals where this cycle sits |
-| 27 | [ESCO Technologies](https://escotechnologies.com) | Public (NYSE: ESE) | Owns [Doble](https://www.doble.com), the de facto standard in transformer diagnostics/testing — quiet public route into the services layer |
-| 28 | [Weidmann](https://www.weidmann-electrical.com) | Private (Swiss, family) | Dominates pressboard/kraft insulation — OEM capacity cannot double unless this layer doubles |
-| 29 | [Qualitrol](https://www.qualitrolcorp.com) | Private ([Fortive](https://www.fortive.com), NYSE: FTV) | DGA/condition monitoring — utilities instrument the old fleet while they wait years for new units |
-| 30 | [Cargill](https://www.cargill.com) (FR3) | Private | Natural-ester fluid spec for fire-safe data-center installs; naphthenic base-oil supply concentrated in few refiners (Ergon, Nynas, Calumet) |
-| 31 | [Superior Essex](https://superioressex.com) / [Rea Magnet Wire](https://www.reawire.com) | Private | Domestic magnet-wire capacity turned strategic by the 50% copper-content tariff |
+| 5 | [Cleveland-Cliffs](https://www.clevelandcliffs.com) | Public (NYSE: CLF) | Sole US GOES mill (Butler Works) + $400M sole-source DoD GOES contract (Jul 2026) — the input chokepoint as a policy option, not an earnings story; monopoly window closes ~2028 (see Nippon Steel) |
+| 6 | [Nippon Steel](https://www.nipponsteel.com) | Public (TYO: 5401) | 0.5x book, 10x forward — and building the **first new US GOES capacity** (Big River, 2028): the cheap claim on the monopoly's successor |
+| 7 | [Metglas](https://metglas.com) / [Proterial](https://www.proterial.com) | Private (Bain-led) | Only US amorphous-core ribbon producer (~190kt global amorphous capacity, distribution-class); DPA legislation names amorphous steel explicitly |
+| 8 | POSCO Holdings | Public (NYSE: PKX) | 0.38x book; electrical steel (Hyper NO/GOES) a named strategic product, 1Mt/2030 ambition — deepest asset discount in the chain, Korea-sited option |
+| 9 | [Hyosung Heavy Industries](https://www.hyosungheavyindustries.com) | Public (KRX: 298040) | ₩15.1T backlog (Q1 2026, verified) incl. a ₩787.1B US 765-kV contract — largest in Korean power-equipment history; supplies ~half of US 765-kV units |
+| 10 | [HD Hyundai Electric](https://www.hd-hyundaielectric.com) | Public (KRX: 267260) | Record $1.80B Q1 2026 orders (42.6% of annual target in one quarter), $7.89B backlog; ~12-month APAC delivery into a 3–6 year US market |
+| 11 | [LS Electric](https://www.ls-electric.com) | Public (KRX: 010120) | ₩5.64T backlog; AWS (₩170B) and Bloom Energy (₩319B) contracts; ~$358M HVDC deal — the scarcest class of all. Management guides the supercycle through 2035 |
+| 12 | [Maschinenfabrik Reinhausen](https://www.reinhausen.com) | Private (family) | ~40% global tap-changer share, single-source component portfolio — the model for the least crowded layer of the chain |
+| 13 | [Central Moloney](https://centralmoloneyinc.com) | Private (Wind Point) | Platform → bolt-on → greenfield inside 24 months; the distribution consolidation template |
+| 14 | [Emerald Transformer](https://emeraldtransformer.com) | Private (Insight Equity) | National repair/recycling/oil-processing network — every replaced unit is feedstock |
+| 15 | [Maddox](https://www.maddoxtransformer.com) | Private | The inventory-led availability model — proof that holding transformer stock against 30–160 week lead times is itself a business |
+| 16 | [Atkore](https://www.atkore.com) | Public (NYSE: ATKR) | 12.7x fwd, flat 52wk — conduit into data centers/grid with the PVC de-rating already behind it; the un-run US name |
+| 17 | [Mueller Industries](https://www.muellerindustries.com) | Public (NYSE: MLI) | 14x fwd with $1.4B net cash; Nehring wire/cable bolt-on puts grid growth on a copper-products base |
+| 18 | [MGM Transformer](https://www.mgmtransformer.com) / [VanTran](https://vantran.com) | Private | 430,000 sq ft Waco plant — the Texas-sited new capacity, next to the Oncor demand pipeline |
+| 19 | [Delta Star](https://www.deltastar.com) | Private (ESOP) | Medium-power and **mobile substations** to 200 MVA — the manufacturing base under the rental/bridge-power thesis |
+| 20 | [Prolec GE](https://www.prolecge.com) | Private (Xignux/GE JV) | ~200 power units/yr of new NC capacity landing into the still-short large-power segment |
+| 21 | [SGB-SMIT](https://www.sgb-smit.com) | Private (One Equity) | Largest independent pure-play LPT maker; a sale or IPO would create the first large Western pure-play listing — a sector event |
+| 22 | [Pennsylvania Transformer](https://patransformer.com) | Private | $103M power-transformer expansion — one of the few independent US large-power platforms left |
+| 23 | [ERMCO](https://www.ermco-eci.com) | Private (co-op owned) | $70M+ distribution expansion (TN, WI) with a captive co-op customer base |
+| 24 | Takaoka Toko | Public (TYO: 6617) | TEPCO's captive grid-equipment maker — 12.4x fwd, net cash; cheapest multiple in Japan grid, domestic-only |
+| 25 | [Hitachi Energy](https://www.hitachienergy.com) | Public (TYO: 6501) | $57.9B backlog (6+ yrs visibility), $1.5B capacity program — diluted inside the conglomerate, hence less crowded than pure plays |
+| 26 | [Siemens Energy](https://www.siemens-energy.com) | Public (ETR: ENR) | €66B group backlog (book-to-bill 2.55), Grid Technologies €42B; first-mover domestic LPT plant (Charlotte, early 2027) behind the tariff wall |
+| 27 | [Hammond Power Solutions](https://www.hammondpowersolutions.com) | Public (TSX: HPS.A) | Dry-type niche leader: Q1 2026 sales +31.5%, backlog +94.6% on data centers, ~$2.6B cap — watch the dry-type/distribution overshoot exposure |
+| 28 | [Quanta Services](https://www.quantaservices.com) | Public (NYSE: PWR) | Bought Niagara Power Transformer (Sep 2024) — strategics now compete with sponsors for supply security |
+| 29 | [GE Vernova](https://www.gevernova.com) | Public (NYSE: GEV) | $163B total backlog; Electrification backlog $42B vs $9B end-2022; orders priced 10–20% above late-2025 — real, but ~63x forward prices flawless conversion |
+| 30 | [Eaton](https://www.eaton.com) | Public (NYSE: ETN) | $340M pad-mount expansion + bought Resilient Power (SSTs, ≤$150M) — hedging its own segment; distribution-weighted where overshoot hits first |
+| 31 | Forgent Power Solutions | Public (NYSE: FPS) | Feb 2026 IPO — data-center electrical distribution roll-up, TTM revenue $1.2B (+387% incl. M&A), ~46x forward; the IPO itself signals where this cycle sits |
+| 32 | [ESCO Technologies](https://escotechnologies.com) | Public (NYSE: ESE) | Owns [Doble](https://www.doble.com), the de facto standard in transformer diagnostics/testing — quiet public route into the services layer |
+| 33 | [Weidmann](https://www.weidmann-electrical.com) | Private (Swiss, family) | Dominates pressboard/kraft insulation — OEM capacity cannot double unless this layer doubles |
+| 34 | [Qualitrol](https://www.qualitrolcorp.com) | Private ([Fortive](https://www.fortive.com), NYSE: FTV) | DGA/condition monitoring — utilities instrument the old fleet while they wait years for new units |
+| 35 | [Cargill](https://www.cargill.com) (FR3) | Private | Natural-ester fluid spec for fire-safe data-center installs; naphthenic base-oil supply concentrated in few refiners (Ergon, Nynas, Calumet) |
+| 36 | [Superior Essex](https://superioressex.com) / [Rea Magnet Wire](https://www.reawire.com) | Private | Domestic magnet-wire capacity turned strategic by the 50% copper-content tariff |
 
 ## Executive Summary
 
@@ -142,6 +147,8 @@ The demand stack is four layers deep — only one is AI:
 - Butler is **width-limited** — it cannot serve the largest power-transformer designs, which import Hi-B grade GOES regardless (BIS filings: Hi-B "not produced in sufficient commercial quantities in the U.S."). The EHV/765-kV class the AI buildout most needs is the class most dependent on imported premium steel.
 - Nuance: Butler reportedly ran with 30–40% headroom on standard grades, and Cliffs has signaled no GOES expansion given tariff-inflated input costs and global steel oversupply. **The $150M Weirton, WV transformer plant (announced July 2024) was abandoned by May 2025** (Q1 2025 8-K) — do not model it as capacity; its cancellation is evidence that even the best-positioned player won't integrate downstream at current economics.
 - **Metglas (Proterial-owned, Conway SC)** is the only US amorphous-metal producer — global amorphous capacity is ~190kt and distribution-class only. DOE efficiency standards are the swing factor for adoption.
+- **July 2026 hardening:** a **$400M sole-source, 5-year DoD contract** for GOES (military transformers) — non-competitive because there is no domestic alternative; DOE-funded Butler expansion tracking to 2028.
+- **The monopoly has an expiry date:** Nippon Steel's Big River (AR) buildout includes a **GOES line targeting mass production in 2028** — the first new US GOES capacity, arriving the same year as Butler's expansion. The domestic scarcity premium is a 2026–28 window, not a perpetuity.
 - Policy catalyst: the 2022 DPA Title III determination remains active; $1B appropriated, draft legislation adds $2.1B for transformers, GOES, and amorphous steel. Federal money is trying to build what the private market won't — whoever owns the assets it flows to gets subsidized capex.
 
 ### 2.2 Announced capacity (the overshoot clock)
@@ -213,7 +220,56 @@ The read on timing:
 
 - One "transformer trade" is priced; there are two cycles with opposite slopes.
 - Distribution-weighted names face estimate risk 2027–2029 as capacity lands into a normalized segment (128–160 week large-power lead times vs 30-week distribution).
-- LPT/GSU/switchgear/service-weighted names have backlog cover through the decade — but the crowded US names (GEV ~63x, POWL ~60x, FPS ~46x) already pay for it; the Korean books are the cheaper claim on the same cycle.
+- LPT/GSU/switchgear/service-weighted names have backlog cover through the decade — but the crowded US names (GEV ~63x, POWL ~60x, FPS ~46x) already pay for it. As of July 15, 2026 the Korean "discount" has largely closed too (Hyosung ~28x fwd, HD Hyundai ~26x, Sanil ~25x — in line with Eaton; LS Electric at ~53x fwd is now the expensive one), after a 26–48% correction off May/June highs.
+
+### 3.4 Valuation vs. own history — the mean-reversion test
+
+*Current multiples vs each name's own 10/20-year medians (Jul 15, 2026; medians via GuruFocus/aggregators, partly from indexed snippets — approximations labeled).*
+
+| Name | Metric | Current | 10-yr median | Longest window | vs own history |
+|---|---|---|---|---|---|
+| Hitachi (6501) | EV/EBITDA | ~11–11.6x | 6.6x | ~5.5–6.5x est. (20-yr, unpublished) | **~65–75% rich** — the conglomerate discount inverted into a premium |
+| Siemens Energy (ENR) | PEG | ~0.54 | none — listed 2020; PEG undefined 2021–23 (losses) | since-IPO EV/EBITDA median 17.8x vs ~26x now | **Unanchored** — cheapness rests entirely on consensus 2028 EPS doubling |
+| Fortive (FTV) | Fwd P/E | ~19.9x | 20.3x (trailing) | since 2016 spin | **At median** — fair, not cheap |
+| Cleveland-Cliffs (CLF) | P/B | ~1.0x | 1.73x | 1.83x (13-yr, longest published) | **~45% discount** — the only genuine one; pre-2020 medians price a different business (iron-ore miner) |
+
+- Read: on the mean-reversion lens, nothing in the sector is cheap on both axes except CLF on assets — and that discount exists because of real leverage and negative earnings. Hitachi is peer-cheap but self-rich; the market now pays a record multiple *for Hitachi* because of Hitachi Energy.
+
+### 3.5 The second-derivative screen: transformer growth not yet in the earnings base
+
+*Where the cheap asymmetry actually lives. Names for whom transformer/grid demand is a growth option on top of an unrelated (and cheaply priced) earnings base. Multiples Jul 15, 2026.*
+
+| Rank | Name | Multiples | The transformer option | Verdict |
+|---|---|---|---|---|
+| 1 | **[Nippon Steel](https://www.nipponsteel.com) (TYO: 5401)** | **0.50x book, 10.4x fwd P/E, 7.6x EV/EBITDA, 4.2% yield** | **Big River (AR) GOES line, mass production targeted 2028 — the first new US GOES capacity, inside the tariff wall.** Invented Hi-B grade. None of it in current earnings | **The screen's winner.** Caveats: post-U.S. Steel leverage (EV ~2.7x cap); Japan governance discount partly permanent |
+| 2 | **POSCO Holdings (NYSE: PKX)** | **0.38x book**, 12.8x fwd, ~6–8x EV/EBITDA | Electrical steel a named strategic product (Jun 2026 reorg); Gwangyang Hyper NO 150→300kt; 1Mt/2030 ambition | Deepest asset discount in the exercise — but the option is Korea-sited (Sec 232 headwind, not moat); battery-materials drag |
+| 3 | **[Atkore](https://www.atkore.com) (NYSE: ATKR)** | 12.7x fwd, 10.3x EV/EBITDA, flat 52wk | Conduit into data centers/grid; the PVC de-rating others still face is already behind it | The only US name that hasn't run. Fair vs own 7.1x median, cheap vs the theme |
+| 4 | **[Mueller Industries](https://www.muellerindustries.com) (NYSE: MLI)** | 14.1x fwd, 11x EV/EBITDA, **$1.4B net cash** | Nehring wire/cable/conductor bolt-on into grid supply chains — small vs the copper-products base, so "growth not in earnings" genuinely holds | Cheapest quality name; in line with own history. Earnings copper-price-assisted |
+| 5 | **Takaoka Toko (TYO: 6617)** | 12.4x fwd, 9.6x EV/EBITDA, net cash | TEPCO's captive grid-equipment maker (TEPCO PG 35%) — transformers, substations, smart meters | Cheapest multiple in Japan grid, but +247% in 12 months and domestic-only (no US-shortage torque) |
+| 6 | [AZZ](https://www.azz.com) (NYSE: AZZ) | 20.7x fwd, at own median | Galvanizing utility structures; new coil-coating plant accretive FY27; transformer linkage thematic (unverified) | Fair — quality mix, no discount |
+| 7 | [Calumet](https://www.calumet.com) (NASDAQ: CLMT) | ~10.5x fwd adj EBITDA (guidance), ~4.5x levered, Z-score 0.7 | CALTRAN naphthenic transformer oils — one of few US producers (with Ergon) | Speculative: levered SAF turnaround with a transformer-oil sliver. Option-sized only |
+
+- **Screen fails** (grid story already the earnings base and already priced): WESCO (~80% above own median; data center now 24% of sales), Preformed Line (+105%, ~3x historical multiple), Valmont, Arcosa, NGK Insulators and Daihen (semiconductor-driven rallies), Carpenter (51x fwd), thyssenkrupp (0.7x book + net cash, but its EU GOES unit is being idled under Chinese import pressure — transformer exposure is a liability there). Fuji Electric (19.5x, DC substation orders +24%) and Meidensha (17.4x, real US switchgear expansion) are reasonable growth-at-a-price, not value.
+- **The punchline:** at the first-derivative layer (OEMs, backlogs) everything is priced. The cheap asymmetry lives at the second derivative — half-book steelmakers building GOES capacity and un-run US industrials. **A Nippon Steel + CLF barbell is internally hedged on the GOES-scarcity question: one owns the monopoly's last two years, the other owns its successor.**
+
+### 3.6 Cleveland-Cliffs: the two-sided ledger
+
+**Long thesis** — a levered call on US steel policy with a government-subsidized GOES option:
+
+- GOES position hardened in July 2026: **$400M sole-source, 5-year DoD contract** (Jul 7) for grain-oriented electrical steel — non-competitive because there is no domestic alternative; DOE-funded Butler expansion tracking to **2028** (Butler piece up to ~$75M of up to $575M selected across two projects).
+- Tariff regime is the earnings engine: Section 232 at 50% full-value (restructured Apr 2026), imports at post-GFC lows, fixed-price multi-year auto contracts.
+- More runway than the bears assume: **no bond maturities until March 2029**, $3.1B liquidity, $300M+ idling savings landing, guided positive FCF from Q2 2026; Q1 2026 adj EBITDA $95M (incl. an $80M one-time weather hit); KeyBanc FY26 estimate $1.4B.
+- Valuation floor: ~1.0x book vs 1.73–1.83x own median; 13.5% short interest as squeeze fuel. 2023's EBITDA was $1.9B — a print anywhere near that re-rates a $5.6B cap violently.
+
+**Short thesis** — a levered zero wearing a strategic costume:
+
+- ~$7.8B debt vs $45M cash; **FY2025 adjusted EBITDA was $37M** on $18.6B revenue; interest coverage ~0.2x; each refinancing extends the wall at 7.5–7.6% coupons. Even on recovery EBITDA of $1.4B, net leverage ~5.5x.
+- GOES cannot carry the P&L: stainless + electrical is **~3% of shipped volume**. The real exposure is HRC prices and tariff durability — and the Apr 2026 restructuring already showed policy fluidity (transformer/grid derivatives cut to a 15% rate through 2027).
+- **The monopoly has an expiry date: Nippon Steel's Big River GOES line targets 2028** — arriving the same year as Butler's expansion.
+- Capital-allocation record: Stelco bought at 4.8x LTM EBITDA (Nov 2024) immediately before EBITDA collapsed; Weirton announced-then-cancelled in ten months; auto (28–30% of revenue) still below management's own restart thresholds.
+- Structural: high-cost integrated blast-furnace steelmaking vs EAF competitors; dilution risk if recovery slips past 2027.
+
+**Net:** a 2026–27 HRC-and-tariff trade with a subsidized GOES option and a hard catalyst calendar (quarterly EBITDA prints; Butler and Big River both 2028). Size as an option, as ranked in §8.
 
 ---
 
@@ -310,7 +366,7 @@ The read on timing:
 5. **Queue quality.** Only a fraction of proposed data centers will be built; Oncor's 255 GW of requests vs 38 GW RTP-qualified is a ~7:1 ratio. OEM backlogs ($180B+ across Hitachi/Siemens Energy/GEV) include slot reservations placed before sites were final — bullwhip risk if capex plans slip.
 6. **Tariff whiplash.** Section 232 inclusion rounds pending; a GOES/core carve-out flips domestic assembler economics overnight in either direction. Policy is now the largest single variable in unit cost.
 7. **Valuation at the crowded layer.** GEV ~63x forward, POWL ~60x trailing, FPS ~46x forward: a sentiment break in AI capex hits these multiples first, regardless of backlog length.
-8. **Substitution.** If solid-state transformers scale on Heron's H2 2027 timeline, they cap the long-run scarcity value of conventional GOES-core capacity — bullish for the venture layer, bearish for late-cycle conventional capex.
+8. **Substitution and monopoly expiry.** If solid-state transformers scale on Heron's H2 2027 timeline, they cap the long-run scarcity value of conventional GOES-core capacity; separately, Nippon Steel's Big River GOES line (2028) ends the single-supplier era for domestic core steel. Both bearish for late-cycle conventional/scarcity positioning.
 9. **Execution.** Cleveland-Cliffs' cancelled Weirton plant: announced capacity, state incentives, and 600 jobs evaporated in ten months. **Announced ≠ delivered.**
 10. **Verification gaps.** Monitoring/DGA, fluids, rental fleets, and several sub-niches rest on reported or single-source material (flagged inline). Everything marked "Verified" survived a 3-vote adversarial check.
 

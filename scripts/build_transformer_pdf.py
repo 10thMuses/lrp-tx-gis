@@ -85,7 +85,8 @@ FALSIFICATION = (
     "reset); (3) Oncor's RTP-qualified data-center load stalls below ~38 GW through 2027 (queue was "
     "paper); (4) utility spec-standardization collapses the 80,000-type SKU fragmentation (repair/reman "
     "moat erodes); (5) the Virginia Transformer process fails to clear anywhere near $6B (private comp "
-    "deck resets down)."
+    "deck resets down); (6) Nippon Steel's Big River GOES line reaches qualified production on the 2028 "
+    "schedule (domestic-GOES scarcity premium collapses; the CLF option expires)."
 )
 
 # company-name -> website; longest names matched first so overlaps resolve correctly
