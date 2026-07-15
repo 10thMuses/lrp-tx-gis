@@ -78,6 +78,28 @@ KICKERS = {
     "Methodology & Sources": "105-agent adversarial verification: 23 claims confirmed, 2 refuted, gaps flagged inline.",
 }
 
+# page-1 ranking: public names scored on cheapness x asymmetry (Jul 15, 2026 data; §3.6)
+RANKING = [
+    ("1", "Nippon Steel (TYO: 5401)", "A", "A", "0.5x book, 10x fwd — Big River GOES line 2028: the monopoly's successor, none of it in the price"),
+    ("2", "Cleveland-Cliffs (NYSE: CLF)", "A−/F", "A", "1.0x book vs 1.73x median; sole US GOES + $400M DoD + DOE Butler — binary, option-size (§3.7)"),
+    ("3", "POSCO Holdings (NYSE: PKX)", "A+", "B", "0.38x book, deepest asset discount; electrical-steel option Korea-sited and later-dated"),
+    ("4", "HD Hyundai Electric (KRX: 267260)", "C+", "A−", "Record verified backlog ($7.89B) and pricing power at 25.7x fwd — best price for verified asymmetry"),
+    ("5", "Hyosung Heavy (KRX: 298040)", "C", "A", "₩15.1T backlog, ~half of US 765-kV units — crown-jewel exposure at a fuller price (~28x)"),
+    ("6", "Siemens Energy (ETR: ENR)", "C", "B+", "PEG 0.54, first-mover US LPT plant — cheap only if the 2028 EPS doubling prints"),
+    ("7", "Hitachi (TYO: 6501)", "C", "B+", "12x EV/EBITDA — half the sector, 65-75% above its own history; quality pick, not value"),
+    ("8", "Atkore (NYSE: ATKR)", "B", "B−", "12.7x fwd, flat 52wk — the un-run US name; conduit adjacency, not transformer-specific"),
+    ("9", "Takaoka Toko (TYO: 6617)", "B+", "C+", "12.4x fwd, net cash, TEPCO captive — cheap multiple, wrong geography for this thesis"),
+    ("10", "Mueller Industries (NYSE: MLI)", "B", "C+", "14x fwd, $1.4B net cash — safest claim, least transformer torque"),
+    ("11", "Sanil Electric (KRX: 062040)", "C", "B", "Small-cap 765-kV/GSU beta, 35.6% margins, 24.6x fwd"),
+    ("12", "Fortive (NYSE: FTV)", "C+", "C", "20x fwd, at own median — fair value with a free monitoring kicker"),
+]
+RANKING_FOOT = (
+    "Priced out (exposure without cheapness): POWL 41x · GEV 58-70x · FPS 46x · LS Electric 53x · "
+    "Hammond 34x · ESCO 38.5x · WESCO · PLPC · Valmont · Arcosa · Fuji Electric · Meidensha · Carpenter. "
+    "Grades: cheapness = absolute + vs own 10/20-yr history; asymmetry = mispricing vs exposure. "
+    "Full methodology §3.4-3.6; data Jul 15, 2026."
+)
+
 FALSIFICATION = (
     "<b>Falsification conditions.</b> The thesis is wrong if: (1) power/GSU lead times fall below "
     "80 weeks before 2028 without a demand collapse (capacity arrived early; scarcity leg dead); "
@@ -271,12 +293,31 @@ def page_one() -> str:
         "PPI — producer price index · RTP — ERCOT Regional Transmission Plan · "
         "LPT — large power transformer. <b>Full glossary at the end of the paper.</b></div>"
     )
+    def grade(g):
+        cls = "gA" if g.startswith("A") else ""
+        return f'<span class="grade {cls}">{html_mod.escape(g)}</span>'
+
+    rank_rows = "".join(
+        f"<tr><td class='rk-n'>{n}</td><td class='rk-co'>{html_mod.escape(co)}</td>"
+        f"<td class='rk-g'>{grade(c)}</td><td class='rk-g'>{grade(a)}</td>"
+        f"<td class='rk-call'>{html_mod.escape(call)}</td></tr>"
+        for n, co, c, a, call in RANKING
+    )
+    ranking = f"""
+<div class="rank-hdr">PUBLIC NAMES, RANKED — CHEAPNESS × ASYMMETRY</div>
+<table class="ranktbl">
+<tr><th>#</th><th>Company</th><th>Cheap</th><th>Asym</th><th>The trade in one line</th></tr>
+{rank_rows}
+</table>
+<div class="rank-foot">{RANKING_FOOT}</div>
+"""
     return f"""
 <div class="masthead">
   <div class="mast-kicker">LAND RESOURCE PARTNERS · MARKET INTELLIGENCE · JULY 2026</div>
   <h1>The Transformer Opportunity</h1>
   <div class="mast-sub">Where the Asymmetry Actually Sits in the AI Power Buildout</div>
 </div>
+{ranking}
 <div class="topline">
   <div class="topline-hdr">TOP LINE</div>
   <table class="topline-tbl">{dots}</table>
@@ -324,7 +365,19 @@ a.co {{ color: {NAVY}; font-weight: 500; text-decoration: underline;
 .mast-kicker {{ font-size: 9.5pt; font-weight: 600; letter-spacing: 1.6pt; color: {GOLD}; }}
 h1 {{ font-size: 28pt; font-weight: 700; color: {NAVY}; margin: 2pt 0 0 0; }}
 .mast-sub {{ font-size: 14pt; font-weight: 500; color: {NAVY}; opacity: .8; }}
-.topline {{ background: #f4ecd9; border: .8pt solid #e2d5b8; border-radius: 3pt; padding: 8pt 10pt; margin: 6pt 0 8pt 0; }}
+.rank-hdr {{ background: #efe5cd; color: {NAVY}; font-weight: 700; font-size: 11.5pt;
+  letter-spacing: 1.2pt; padding: 4pt 8pt; border-left: 4pt solid {GOLD}; margin: 4pt 0 4pt 0; }}
+.ranktbl {{ font-size: 8.8pt; margin: 4pt 0 4pt 0; }}
+.ranktbl th {{ font-size: 8.2pt; padding: 2.5pt 4pt; }}
+.ranktbl td {{ padding: 2.2pt 4pt; line-height: 1.28; }}
+.rk-n {{ font-weight: 700; color: {NAVY}; width: 14pt; }}
+.rk-co {{ font-weight: 600; color: {NAVY}; width: 118pt; }}
+.rk-g {{ text-align: center; width: 30pt; }}
+.grade {{ font-weight: 700; color: {NAVY}; }}
+.grade.gA {{ color: {GOLD}; }}
+.rank-foot {{ font-size: 7.6pt; color: #4a5865; line-height: 1.35; border-top: .8pt solid #e2d5b8;
+  padding-top: 3pt; margin-bottom: 8pt; }}
+.topline {{ page-break-before: always; background: #f4ecd9; border: .8pt solid #e2d5b8; border-radius: 3pt; padding: 8pt 10pt; margin: 6pt 0 8pt 0; }}
 .topline-hdr {{ color: {GOLD}; font-weight: 700; font-size: 12.5pt; letter-spacing: 2pt;
   margin-bottom: 4pt; }}
 .topline-tbl {{ border-collapse: collapse; }}
