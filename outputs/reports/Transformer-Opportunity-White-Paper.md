@@ -252,7 +252,29 @@ The read on timing:
 - **Screen fails** (grid story already the earnings base and already priced): WESCO (~80% above own median; data center now 24% of sales), Preformed Line (+105%, ~3x historical multiple), Valmont, Arcosa, NGK Insulators and Daihen (semiconductor-driven rallies), Carpenter (51x fwd), thyssenkrupp (0.7x book + net cash, but its EU GOES unit is being idled under Chinese import pressure — transformer exposure is a liability there). Fuji Electric (19.5x, DC substation orders +24%) and Meidensha (17.4x, real US switchgear expansion) are reasonable growth-at-a-price, not value.
 - **The punchline:** at the first-derivative layer (OEMs, backlogs) everything is priced. The cheap asymmetry lives at the second derivative — half-book steelmakers building GOES capacity and un-run US industrials. **A Nippon Steel + CLF barbell is internally hedged on the GOES-scarcity question: one owns the monopoly's last two years, the other owns its successor.**
 
-### 3.6 Cleveland-Cliffs: the two-sided ledger
+### 3.6 The combined ranking: asymmetry × cheapness (public names)
+
+*Two scores per name — what you pay (absolute + vs own history) and how mispriced the exposure is. Jul 15, 2026 data.*
+
+| # | Name | Cheapness | Asymmetry | Net call |
+|---|---|---|---|---|
+| 1 | **Nippon Steel (5401)** | **A** — 0.5x book, 10.4x fwd, 7.6x EV/EBITDA | **A** — Big River GOES 2028; $0 of it in the price | The only name high on both axes |
+| 2 | **Cleveland-Cliffs (CLF)** | A− assets (1.0x vs 1.73x median) / F earnings | **A** — sole GOES + DoD/DOE + 13.5% SI; binary | Highest torque per dollar, most ways to lose it. Option-size |
+| 3 | **POSCO (PKX)** | **A+** — 0.38x book | B — real but Korea-sited, later-dated option | Cheapest assets; patience trade |
+| 4 | **HD Hyundai Electric (267260)** | C+ — 25.7x fwd, cheapest Korean major on EV/EBITDA | **A−** — record verified backlog, pricing power | Best verified asymmetry at a tolerable price |
+| 5 | **Hyosung Heavy (298040)** | C — ~28x fwd | **A** — ₩15.1T backlog, ~half of US 765-kV | Crown-jewel exposure at a fuller price |
+| 6 | **Siemens Energy (ENR)** | C — 30x fwd, PEG 0.54 | B+ — first-mover US LPT, €66B backlog | Cheap only if 2028 EPS doubling prints |
+| 7 | **Hitachi (6501)** | C — 12x EV/EBITDA (peer-cheap, 65–75% above own median) | B+ — largest backlog, conglomerate-diluted | Quality-and-visibility pick, not value |
+| 8 | **Atkore (ATKR)** | B — 12.7x fwd, flat 52wk | B− — conduit, not transformer-specific | The un-run name |
+| 9 | **Takaoka Toko (6617)** | B+ — 12.4x fwd, net cash | C+ — domestic Japan only | Cheap multiple, wrong geography |
+| 10 | **Mueller (MLI)** | B — 14x fwd, $1.4B net cash | C+ — small grid bolt-on on a copper base | Safest claim, least transformer torque |
+| 11 | Sanil Electric (062040) | C — 24.6x fwd | B — small-cap 765-kV/GSU beta | Higher-beta appendix to #4–5 |
+| 12 | Fortive (FTV) | C+ — 20x fwd, at own median | C — monitoring sliver | Fair value, free kicker |
+| — | *Priced out:* POWL (41x), GEV (58–70x), FPS (46x), LS Electric (53x), Hammond (34x), ESE (38.5x), WESCO, PLPC, Valmont, Arcosa, Fuji Electric, Meidensha, NGK, Daihen, Carpenter | | | High exposure, no cheapness left |
+
+- Read it as a frontier, not a ladder: #1–3 the value corner (asset-cheap GOES options — NSC dominates: US-sited, dated 2028), #4–7 the quality corner (verified backlogs at defensible prices), #8–10 safe adjacency. Portfolio expression: **NSC + CLF barbell for the GOES window, HD Hyundai for the backlog cycle, ATKR/MLI as ballast.**
+
+### 3.7 Cleveland-Cliffs: the two-sided ledger
 
 **Long thesis** — a levered call on US steel policy with a government-subsidized GOES option:
 
