@@ -82,22 +82,26 @@ KICKERS = {
 RANKING = [
     ("1", "Nippon Steel (TYO: 5401)", "A", "A", "0.5x book, 10x fwd — Big River GOES line 2028: the monopoly's successor, none of it in the price"),
     ("2", "Cleveland-Cliffs (NYSE: CLF)", "A−/F", "A", "1.0x book vs 1.73x median; sole US GOES + $400M DoD + DOE Butler — binary, option-size (§3.7)"),
-    ("3", "POSCO Holdings (NYSE: PKX)", "A+", "B", "0.38x book, deepest asset discount; electrical-steel option Korea-sited and later-dated"),
-    ("4", "HD Hyundai Electric (KRX: 267260)", "C+", "A−", "Record verified backlog ($7.89B) and pricing power at 25.7x fwd — best price for verified asymmetry"),
-    ("5", "Hyosung Heavy (KRX: 298040)", "C", "A", "₩15.1T backlog, ~half of US 765-kV units — crown-jewel exposure at a fuller price (~28x)"),
-    ("6", "Siemens Energy (ETR: ENR)", "C", "B+", "PEG 0.54, first-mover US LPT plant — cheap only if the 2028 EPS doubling prints"),
-    ("7", "Hitachi (TYO: 6501)", "C", "B+", "12x EV/EBITDA — half the sector, 65-75% above its own history; quality pick, not value"),
-    ("8", "Atkore (NYSE: ATKR)", "B", "B−", "12.7x fwd, flat 52wk — the un-run US name; conduit adjacency, not transformer-specific"),
-    ("9", "Takaoka Toko (TYO: 6617)", "B+", "C+", "12.4x fwd, net cash, TEPCO captive — cheap multiple, wrong geography for this thesis"),
-    ("10", "Mueller Industries (NYSE: MLI)", "B", "C+", "14x fwd, $1.4B net cash — safest claim, least transformer torque"),
-    ("11", "Sanil Electric (KRX: 062040)", "C", "B", "Small-cap 765-kV/GSU beta, 35.6% margins, 24.6x fwd"),
-    ("12", "Fortive (NYSE: FTV)", "C+", "C", "20x fwd, at own median — fair value with a free monitoring kicker"),
+    ("3", "NKT (CPH: NKT)", "A−", "A−", "8x EV/EBITDA, net cash, €13.5B sold-out HV cable backlog — the transformer bottleneck's twin at one-fifth the multiple (§3.8)"),
+    ("4", "POSCO Holdings (NYSE: PKX)", "A+", "B", "0.38x book, deepest asset discount; electrical-steel option Korea-sited and later-dated"),
+    ("5", "Landis+Gyr (SWX: LAND)", "B+", "B+", "10x EV/EBITDA, majority-Americas grid edge; activist anchor + US re-listing H2 2026 — cheapest with the clearest catalysts"),
+    ("6", "HD Hyundai Electric (KRX: 267260)", "C+", "A−", "Record verified backlog ($7.89B) and pricing power at 25.7x fwd — best price for verified asymmetry"),
+    ("7", "Hyosung Heavy (KRX: 298040)", "C", "A", "₩15.1T backlog, ~half of US 765-kV units — crown-jewel exposure at a fuller price (~28x)"),
+    ("8", "Stella-Jones (TSX: SJ)", "B+", "B", "13.3x fwd near 52wk lows while Oncor triples pole suppliers — the un-priced hardening bottleneck"),
+    ("9", "Siemens Energy (ETR: ENR)", "C", "B+", "PEG 0.54, first-mover US LPT plant — cheap only if the 2028 EPS doubling prints"),
+    ("10", "Hitachi (TYO: 6501)", "C", "B+", "12x EV/EBITDA — half the sector, 65-75% above its own history; quality pick, not value"),
+    ("11", "Nexans (EPA: NEX)", "B", "B−", "8.75x EV/EBITDA electrification pure-play; Republic Wire bolt-on closing Q3 2026"),
+    ("12", "Itron (NASDAQ: ITRI)", "B", "C+", "14.5x fwd, −37%, $4.4B backlog — conditional on the AMI bookings inflection"),
+    ("13", "Atkore (NYSE: ATKR)", "B", "B−", "12.7x fwd, flat 52wk — the un-run US name; conduit adjacency, not transformer-specific"),
+    ("14", "Mueller Industries (NYSE: MLI)", "B", "C+", "14x fwd, $1.4B net cash — safest claim, least transformer torque"),
 ]
 RANKING_FOOT = (
-    "Priced out (exposure without cheapness): POWL 41x · GEV 58-70x · FPS 46x · LS Electric 53x · "
-    "Hammond 34x · ESCO 38.5x · WESCO · PLPC · Valmont · Arcosa · Fuji Electric · Meidensha · Carpenter. "
+    "Also ranked (§3.6, §3.8): Takaoka Toko 12.4x · LS Corp 14.8x (Chesapeake cable plant) · Koppers 11.7x (at highs) · "
+    "Sanil · Fortive · Hubbell 23.8x (bushings) · Prysmian 24.5x. "
+    "Priced out: POWL 41x · GEV 58-70x · FPS 46x · LS Electric 53x · Hammond 34x · ESCO 37.6x · Argan 45x · "
+    "WESCO · PLPC · Valmont · Arcosa · Bel Fuse · Modine · IES. "
     "Grades: cheapness = absolute + vs own 10/20-yr history; asymmetry = mispricing vs exposure. "
-    "Full methodology §3.4-3.6; data Jul 15, 2026."
+    "Full methodology §3.4-3.8; data Jul 15-19, 2026."
 )
 
 FALSIFICATION = (
@@ -175,6 +179,17 @@ COMPANY_LINKS = {
     "Crusoe": "https://www.crusoe.ai",
     "Ergon": "https://www.ergon.com",
     "Calumet": "https://www.calumet.com",
+    "NKT": "https://www.nkt.com",
+    "Nexans": "https://www.nexans.com",
+    "Prysmian": "https://www.prysmian.com",
+    "Stella-Jones": "https://www.stella-jones.com",
+    "Landis+Gyr": "https://www.landisgyr.com",
+    "Itron": "https://www.itron.com",
+    "Hubbell": "https://www.hubbell.com",
+    "Koppers": "https://www.koppers.com",
+    "Quanta": "https://www.quantaservices.com",
+    "EMCOR": "https://www.emcorgroup.com",
+    "Howard Industries": "https://www.howardindustries.com",
 }
 
 
