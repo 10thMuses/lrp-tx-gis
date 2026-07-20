@@ -22,3 +22,17 @@
 ## Next chat
 
 Grid Wire Vol. 19 — next cut per cadence or operator trigger. Incremental baseline: Vol. 18 (this entry). Open items: FOMC minutes + EIA STEO land later today Jul 8 (fold into next cut), Batch Zero Jul 10, Iranian oil wind-down Jul 17, GEV Q2 Jul 23, Meta Q2 / June PCE late July, Nvidia guarantee line next 10-Q, Nebius Q2 Aug, Reeves GCD Sep 1. Hormuz telemetry continuous (UKMTO threat level, Kpler crossings, Sep hike odds print after open — n/d at this cut).
+
+## Vol. 19 — 2026-07-20 — 11:13 AM ET FULL edition (operator-directed weekly window Jul 13 → Jul 20)
+
+- Deliverables: `Grid_Wire_Vol19_20260720_1113am_ET.pdf` (19 pp, format spec v2, Jost, navy/gold) + ASCII drafts (Mel, Mark). Draft-only, not sent.
+- Lead: the tape ran the thesis both directions — Moonshot Kimi K3 (Jul 16-17, 2.8T open-weight, weights public late Jul) put SOX in a bear market (-20% from late-June record, worst wk since Apr 2025); TSMC record beat-and-raise ($40.2B, GM 67.7%, capex to $60-64B, +$100B AZ → $265B US) sold anyway — capex flipped to risk factor; Mag 7 only -0.6% wk.
+- Credit register add: Nebius $775M GPU-backed SPV loan, SOFR+250, 1.15x DSCR, unrated — 25 bps outside CRWV SOFR+225 template. CRWV -17.6% Fri / -44% YTD; NBIS -19%; IREN -18.3% (despite $3.4B/5yr NVDA contract + up to $2.1B vesting investment — ledger add).
+- WTX: Waha cash positive 32 consecutive days (Jul 17, +$1.63); Hugh Brinson flowing since Jun 13 (FERC PR26-71, Jul 10); production >25 Bcf/d; prompt basis -$1.26. Reeves GCD board met Jul 16; Sep 1 = 43 days. Batch Zero closed Jul 10; classification letters Aug 7; $100k/MW security + $100k/MW fee operative (flag: earlier coverage carried $50k/MW — verify against final protocol before external cite). Virginia $0.011/kWh DC tax in force Jul 1 (~$82k/MW-yr).
+- Crude (separate): 9th consecutive night of CENTCOM strikes through Jul 20 AM; GL X dead 12:01 AM Jul 17; Brent Fri close 88.10 (+4.6%), $90+ o/n, ~87.7 late AM on mediator proposals (IRNA/Baghaei); 3 US KIA; 4 vessels intercepted. Gas (separate): HH $2.85 two-month low; +41 Bcf; Freeport down to late Aug; L48 110.2 Bcf/d.
+- Macro: Jun CPI -0.4% m/m / 3.5% y/y (energy -5.7% the whole story), core 2.6%; PPI -0.3%; Jul hike odds 42%→17%, Sep →63%, >2/3 for hike by YE; Warsh testimony; 30-yr held >5% all week; FOMC Jul 28-29.
+- Corrections vs. prior log: GEV Q2 is Jul 22 (not Jul 23).
+
+## Next chat
+
+Grid Wire Vol. 20 — next cut per cadence or operator trigger. Incremental baseline: Vol. 19 (this entry). Open items: GEV Q2 + Alphabet Q2 Jul 22; Jun PCE Jul 25; FOMC Jul 28-29; MSFT/META/AMZN capex guidance late Jul; Kimi K3 public-weights replication window late Jul; ETN/PWR ~Jul 30-31; Batch Zero letters Aug 7; STEO Aug 11; NVDA FQ2 + 10-Q ($3.5B guarantee line) late Aug; Reeves GCD Sep 1 (day-count); Blackcomb + Hugh Brinson official in-service Q4; Kilby FID by YE. Continuous: Hormuz crossings vs ~108/day, UKMTO, Waha positive-day streak, SOX vs late-June high, CME hike odds.
