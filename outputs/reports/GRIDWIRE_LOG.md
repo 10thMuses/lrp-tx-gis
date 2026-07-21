@@ -36,3 +36,14 @@ Grid Wire Vol. 19 — next cut per cadence or operator trigger. Incremental base
 ## Next chat
 
 Grid Wire Vol. 20 — next cut per cadence or operator trigger. Incremental baseline: Vol. 19 (this entry). Open items: GEV Q2 + Alphabet Q2 Jul 22; Jun PCE Jul 25; FOMC Jul 28-29; MSFT/META/AMZN capex guidance late Jul; Kimi K3 public-weights replication window late Jul; ETN/PWR ~Jul 30-31; Batch Zero letters Aug 7; STEO Aug 11; NVDA FQ2 + 10-Q ($3.5B guarantee line) late Aug; Reeves GCD Sep 1 (day-count); Blackcomb + Hugh Brinson official in-service Q4; Kilby FID by YE. Continuous: Hormuz crossings vs ~108/day, UKMTO, Waha positive-day streak, SOX vs late-June high, CME hike odds.
+
+## Vol. 20 — 2026-07-21 — 8:00 AM ET FULL edition (operator-directed; window Jul 13 → Jul 21 8:00 AM, restated to stand alone)
+
+- Deliverables: `Grid_Wire_Vol20_20260721_800am_ET.pdf` (23 pp, format spec v2 at Vol-19 enlarged type: body 11pt) + ASCII drafts (Mel, Mark). Draft-only, not sent.
+- Delta vs Vol. 19: Mon close S&P -0.19% (7,443.28), Nasdaq -0.05%, Dow -307, Russell -0.39% — SOX +3.1% open faded flat on 4 PM ET CENTCOM strike-round announcement; MSFT +2.2% / GOOGL +1.4% / CVX +1.2% offsets, AAPL -2%. 10-yr backed up to 4.585-4.61 (5-yr 4.34); Sep hike odds >60%, one hike priced this yr. O/n: 10th consecutive strike night; Houthis declared naval blockade of Saudi Arabia (Mon eve); mediators proposed 10-day ceasefire (senior Iranian official to Reuters). Brent broke $91 Mon (first >$90 in a month); Tue premkt Brent 89.77 +0.6% / WTI 83.90 +0.8%; NQ fut +1.4%; 3M +7% and GM +2% beats.
+- Additions vs Vol. 19 body: IBM Jul 14 profit warning (-25%, soft software/infrastructure — Row 25 first crack; full print Jul 22 next to Alphabet); Zhongji Innolight up-to-$8B HK listing approved (Row 6 ECM add); SpaceX Starship Jul 16 launch abort (engine ignition failure) + continued sub-IPO trading; crude chronology extended through Tue premkt; macro Monday rates-giveback paragraph; calendar refreshed (Tue prints 3M/GM/HAL/EQT/NOC; Wed GEV+GOOGL+TSLA+TXN+NOW+IBM+T; Thu BX/DLR/INTC/FIX/FCX).
+- Day counts rolled: Reeves Sep 1 = 42; Batch Zero letters = 17; DDTL 3.0 cure expiry = 99.
+
+## Next chat
+
+Grid Wire Vol. 21 — next cut per cadence or operator trigger. Incremental baseline: Vol. 20 (this entry). Open items: GEV Q2 + Alphabet Q2 + TSLA/TXN/NOW/IBM Jul 22; BX/DLR/INTC/FIX Jul 23; Jun PCE Jul 25; FOMC Jul 28-29; MSFT/META/AMZN capex late Jul; Kimi K3 weights replication late Jul; ETN/PWR ~Jul 30-31; Batch Zero letters Aug 7; STEO Aug 11; NVDA FQ2 + 10-Q ($3.5B guarantee line) late Aug; Reeves GCD Sep 1; Blackcomb + Hugh Brinson official in-service Q4; Kilby FID by YE. Continuous: Hormuz crossings, Houthi Saudi-blockade enforcement, UKMTO, Waha positive-day streak, SOX vs late-June high, CME hike odds, 10-day-ceasefire mediation channel.
