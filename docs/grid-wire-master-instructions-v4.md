@@ -164,3 +164,9 @@ Adopted with Vol. 18 full edition on operator direction ("highlighting, shading,
 - **Signal coloring**: +x% / +bps green, -x% / -bps red inside all tables (regex post-process on td cells).
 - Build: markdown -> post-process (TOPLINE/STATS/CLOCKS markers, KICKER lines, box classes, td colorizer) -> WeasyPrint. Markers live in the cut's source md; the build script strips them. QA: pdftotext for marker leakage plus pdftoppm page render.
 - Reference implementation: the Vol. 18 build (`build_pdf18v2.py` pattern, recorded in WIP_LOG Vol. 18 entry).
+
+
+### Format directive — light theme only (operator, 2026-07-21)
+
+Never use dark background shading behind text anywhere in the PDF: no filled navy section-header bars, no dark TOP LINE panel, no dark table-header rows. All text is dark-on-light. Navy and gold are accent colors only (rules, borders, dots, headings text). Section headers: navy text with a gold underline rule. TOP LINE: cream panel (#faf6ec) with gold left border. Table headers: light gray fill, navy text, gold bottom rule. Optimize for iPhone readability: body >=11.5pt, line-height ~1.55+, left-aligned (not justified) prose, tables >=10pt, generous box padding. Applied from Vol. 20 r4.
+
