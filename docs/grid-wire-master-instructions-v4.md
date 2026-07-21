@@ -16,7 +16,7 @@ Hand this in at session open alongside the coverage taxonomy. **Precedence: repo
 
 Sweep and report in this order of emphasis:
 
-1. **West Texas first**: Permian and Trans-Pecos — Reeves, Pecos, Ward, Loving, Culberson, and the peer counties (Midland, Martin, Reagan). County records, GCD actions, local permits, land transactions, campus developments.
+1. **West Texas first**: Permian and Trans-Pecos — Reeves, Pecos, Ward, Upton, Crane, Crockett, Loving, Culberson, and the peer counties (Midland, Martin, Reagan). Coverage is all-activity in every named county — drilling and permits, land and lease transactions, power and generation, pipelines and midstream, data-center and campus development, tax abatements, county records, GCD actions — not water-weighted toward any single county pair. Operator directive 2026-07-21: Pecos/Reeves must not be the sole deep-dive; Upton, Ward, Crane, and Crockett receive the same activity sweep every cut.
 2. **Texas second**: ERCOT, PUCT, RRC, TCEQ, legislature, AG, statewide siting and fiscal policy, all-Texas deals and litigation.
 3. **US third**: federal policy, other ISOs/RTOs, national deals, national credit and capital markets.
 4. **International only when it transmits** to US energy/AI: OPEC+, Hormuz, chip export controls, foreign capital inflows, foreign listings of covered supply chains.
