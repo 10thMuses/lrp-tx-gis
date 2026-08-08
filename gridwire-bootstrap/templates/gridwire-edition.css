@@ -1,0 +1,163 @@
+/* Grid Wire — comprehensive EDITION stylesheet (Weekend / Close / Special /
+   multi-day sweep). Green branded identity, reverse-engineered from the
+   Vol 16 reference editions:
+   green #1f4d3f, body ink #1a2722, callout tint #eaf0ec, hairline #c8d3cc.
+   Letter 612x792pt. Jost throughout (locked house font; pdffonts-gated).
+   The daily cut uses gridwire.css (navy/crimson); this is the long-form
+   edition format the operator set as the comprehensiveness standard. */
+
+@font-face { font-family: "Jost"; src: url("../fonts/Jost-Regular.ttf");  font-weight: 400; font-style: normal; }
+@font-face { font-family: "Jost"; src: url("../fonts/Jost-Medium.ttf");   font-weight: 500; font-style: normal; }
+@font-face { font-family: "Jost"; src: url("../fonts/Jost-SemiBold.ttf"); font-weight: 600; font-style: normal; }
+@font-face { font-family: "Jost"; src: url("../fonts/Jost-Bold.ttf");     font-weight: 700; font-style: normal; }
+@font-face { font-family: "Jost"; src: url("../fonts/Jost-Italic.ttf");   font-weight: 400; font-style: italic; }
+
+@page {
+  size: letter;
+  margin: 64pt 64pt 56pt 64pt;
+
+  @top-left {
+    content: "THE GRID WIRE";
+    font-family: "Jost"; font-size: 8.5pt; font-weight: 700;
+    color: #1f4d3f; letter-spacing: 1.2pt;
+    vertical-align: top;
+  }
+  @top-right {
+    content: string(byline);
+    font-family: "Jost"; font-size: 7.6pt; font-weight: 400;
+    color: #5a6b63; vertical-align: top; text-align: right;
+  }
+  @bottom-center {
+    content: "The Grid Wire  •  Land Resource Partners  •  Andrea Himmel  •  "
+             string(footedition) "  •  Page " counter(page) " of " counter(pages);
+    font-family: "Jost"; font-size: 7.6pt; color: #8a948f;
+    vertical-align: top; padding-top: 12pt;
+  }
+}
+
+html { font-family: "Jost"; }
+body {
+  font-family: "Jost";
+  font-size: 9.6pt;
+  line-height: 1.55;
+  color: #1a2722;
+  margin: 0; padding: 0;
+}
+
+#runstrings { height: 0; overflow: hidden; line-height: 0; font-size: 0; }
+#byline      { string-set: byline content(); }
+#footedition { string-set: footedition content(); }
+
+/* ---------- masthead (page 1) ---------- */
+#masthead { margin-bottom: 18pt; }
+#masthead h1 {
+  font-size: 30pt; font-weight: 700; color: #1f4d3f;
+  letter-spacing: 0.6pt; margin: 6pt 0 6pt 0; line-height: 1.05;
+  border-bottom: 1pt solid #1f4d3f; padding-bottom: 10pt;
+}
+#masthead .byline {
+  font-size: 10pt; color: #1a2722; font-weight: 600;
+  margin: 0 0 14pt 0;
+}
+.timestamp {
+  background: #eaf0ec; border-left: 3pt solid #1f4d3f;
+  padding: 11pt 14pt; margin: 0 0 8pt 0;
+  font-size: 9pt; line-height: 1.55;
+}
+.timestamp b { font-weight: 700; color: #1f4d3f; }
+
+/* ---------- table of contents ---------- */
+.toc { margin: 16pt 0 6pt 0; }
+.toc .toc-h {
+  font-size: 14pt; font-weight: 700; color: #1f4d3f;
+  border-bottom: 1pt solid #c8d3cc; padding-bottom: 6pt; margin: 0 0 9pt 0;
+}
+.toc ol { margin: 0; padding-left: 22pt; }
+.toc li { font-size: 9.4pt; line-height: 1.7; padding-left: 4pt; }
+
+/* ---------- sections ---------- */
+h2 {
+  font-size: 14pt; font-weight: 700; color: #1f4d3f;
+  margin: 20pt 0 9pt 0; line-height: 1.25;
+  border-bottom: 1pt solid #c8d3cc; padding-bottom: 6pt;
+  page-break-after: avoid;
+}
+h3 {
+  font-size: 10pt; font-weight: 700; color: #1f4d3f;
+  margin: 13pt 0 4pt 0;
+  page-break-after: avoid;
+}
+h4 {
+  font-size: 9.6pt; font-weight: 600; color: #2c5a4b;
+  margin: 11pt 0 3pt 0;
+  page-break-after: avoid;
+}
+
+p { margin: 0 0 9pt 0; text-align: justify; }
+.lead p { font-size: 10.4pt; line-height: 1.55; }
+
+b, strong { font-weight: 600; color: #1a2722; }
+b.hot, strong.hot { color: #1f4d3f; font-weight: 700; }
+em, i { font-style: italic; }
+
+sup { font-size: 0.66em; vertical-align: super; line-height: 0; letter-spacing: 0.2pt; }
+
+/* ---------- tables ---------- */
+.tbl table {
+  width: 100%; border-collapse: collapse; table-layout: fixed;
+  margin: 7pt 0 11pt 0; font-size: 8.6pt; line-height: 1.45;
+}
+.tbl th, .tbl tr.th td {
+  background: #1f4d3f; color: #ffffff; font-size: 8.2pt; font-weight: 600;
+  text-align: left; padding: 5pt 8pt;
+}
+.tbl td { padding: 5pt 8pt; vertical-align: top; text-align: left; }
+.tbl tbody tr { border-bottom: 0.6pt solid #d8e0db; page-break-inside: avoid; }
+.tbl tbody tr.th { border-bottom: none; }
+/* header demoted into tbody as tr.th (child 1); data rows are odd children */
+.tbl tbody tr:nth-child(odd):not(.th) { background: #f1f5f3; }
+.tbl td b, .tbl td strong { font-weight: 600; color: #1f4d3f; }
+
+.t-2col  td:nth-child(1), .t-2col  th:nth-child(1) { width: 38%; }
+.t-tape  td:nth-child(1), .t-tape  th:nth-child(1) { width: 24%; }
+.t-tape  td:nth-child(2), .t-tape  th:nth-child(2) { width: 16%; }
+.t-tape  td:nth-child(3), .t-tape  th:nth-child(3) { width: 16%; }
+.t-src   td:nth-child(1), .t-src   th:nth-child(1) { width: 40%; }
+.t-src   td:nth-child(3), .t-src   th:nth-child(3) { width: 18%; }
+.t-deals td:nth-child(1), .t-deals th:nth-child(1) { width: 16%; }
+.t-deals td:nth-child(2), .t-deals th:nth-child(2) { width: 22%; }
+
+/* ---------- callout boxes (Practitioner read / Angle / Composite / Quote) ---------- */
+.box {
+  background: #eaf0ec; border-left: 3pt solid #1f4d3f;
+  padding: 10pt 14pt 9pt 14pt; margin: 12pt 0 13pt 0;
+  page-break-inside: avoid; font-size: 9pt; line-height: 1.55;
+}
+.box p { font-size: 9pt; margin: 0 0 6pt 0; }
+.box p:last-child { margin-bottom: 0; }
+.box b, .box strong { font-weight: 700; color: #1f4d3f; }
+.quote {
+  background: #f4f7f5; border-left: 3pt solid #9bb3a8;
+  padding: 9pt 14pt; margin: 9pt 0 11pt 0; font-style: italic;
+  font-size: 9pt; line-height: 1.5; page-break-inside: avoid;
+}
+
+/* ---------- charts ---------- */
+figure { margin: 12pt 0; page-break-inside: avoid; }
+figure.chartbox { border: 0.8pt solid #c8d3cc; border-radius: 3pt; padding: 12pt 14pt 10pt 14pt; }
+figure .chart-title { font-size: 10.4pt; font-weight: 700; color: #1f4d3f; margin: 0 0 8pt 0; }
+figcaption { font-size: 7.9pt; color: #5a6b63; line-height: 1.45; margin-top: 7pt; }
+svg text { font-family: "Jost"; }
+
+/* ---------- footnotes & colophon ---------- */
+.footnotes ol { font-size: 7.9pt; line-height: 1.5; margin: 4pt 0 0 0; padding-left: 16pt; }
+.footnotes li { margin-bottom: 2.5pt; text-align: left; }
+ul.flags { font-size: 8.6pt; line-height: 1.5; margin: 6pt 0; padding-left: 16pt; }
+ul.flags li { margin-bottom: 4pt; }
+
+.colophon {
+  margin-top: 16pt; padding-top: 10pt; border-top: 1pt solid #c8d3cc;
+  font-size: 7.9pt; line-height: 1.55; color: #5a6b63; font-style: italic;
+  text-align: justify;
+}
+.colophon b { color: #1a2722; font-style: normal; }

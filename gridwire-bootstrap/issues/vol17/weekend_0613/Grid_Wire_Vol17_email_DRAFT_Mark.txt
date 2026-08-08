@@ -1,0 +1,76 @@
+Subject: Grid Wire Vol 17 -- June 13, 2026 -- Weekend Edition (comprehensive, through the June 12 close)
+
+Mark,
+
+Comprehensive weekend issue. The week resolved two prints in opposite directions: a 60-day US-Iran ceasefire with a finalized text (the "Islamabad declaration") that reopens the Strait of Hormuz and took ~$8 off crude, and an AI claim layer that repriced wider into the relief -- Oracle -9.4% on a $95B capex guide, CoreWeave printing unsecured paper at 9.625%. SpaceX debuted Friday at a $2T-plus valuation. The energy leg of the inflation trade is giving; the funding leg of the AI buildout is not.
+
+THE GRID WIRE -- Vol 17 -- Saturday, June 13, 2026 -- Weekend Edition
+Land Resource Partners -- Capital Markets and Infrastructure Briefing
+All-sector coverage: AI infrastructure, oil and gas, midstream/LNG, solar, storage, geothermal, nuclear/uranium, utilities, compression, transmission, electrification.
+
+LEAD: THE ENERGY LEG STARTED TO GIVE. THE FUNDING LEG DID NOT.
+Macro and micro diverged, and the divergence is the story. Macro: US-Iran finalized a 60-day ceasefire text reopening Hormuz; crude gave back ~$8 in two sessions; Dow +930 (Jun 11) and +354 (Jun 12); long end eased. Micro, same 48 hours: Oracle guided FY27 capex to $95B against negative $23.7B FCF and lost 9.4% on Jun 11; CoreWeave printed unsecured dollar paper at 9.625%. The war premium is leaving the barrel; it was never what held up the AI credit stack. June 17 FOMC ~96.5% hold, no 2026 cuts, hike-within-a-year odds rising. De-escalation removes the supply shock that would have forced a hike; it does not restore the cut the structures were modeled against.
+
+I. THE CLOSE (Jun 12)
+S&P 7,431.46 (+0.5%); Nasdaq 25,888.84 (+0.31%); Dow 51,202.26 (+353.51, +0.7%). SpaceX (SPCX) closed $160.95 (+19% vs $135 IPO; opened $150; peak $176.52; ~$75B raised; >$2T value; largest IPO ever). Oracle $184.13 (~flat after -9.4%). CoreWeave $100.55 (recovered; -20%+ from Jun 1 peak). WTI ~$85-86 (off ~$8 in two sessions, ~25% below 2026 peak). 30Y ~4.9%. Henry Hub ~$3.0-3.3 (+108 Bcf injection, surplus 151 Bcf). Waha latest published -$3.00 cash (May 22), negative 84 of 97 trading days YTD.
+
+II. THE BOND MOVE AND THE AI FINANCING STACK
+~5% 30Y / ~4.4% 10Y is the benchmark every stack layer prices off; the ceasefire eased it without changing the regime. IG DDTLs reprice first; SPV bonds compound base + spread; neocloud HY refi math tightens against 4-5yr GPU collateral on 7yr contracts; powered-shell project finance is hit most. The ceasefire is the first potential circuit-breaker in the reflexive loop (energy shock -> inflation -> long end -> AI financing cost). Both rate branches are negative for the financed layer: higher-for-longer raises cost directly; financial repression debases the real return on long-dated levered cash flows. Physical inputs carry a higher cost of capital better than a levered claim does.
+
+III. THE AI-INFRASTRUCTURE FINANCING STACK -- NOW AN ASSET CLASS
+$107B+ non-IG debt raised cycle-to-date; $400B+ required over four years. Ladder: CRWV DDTL 1.0 ~15% (2023) -> DDTL 4.0 SOFR+225 ~5.9% IG (Mar) -> DDTL 5.0 $3.1B SOFR+450 Ba2/BB+ (first publicly syndicated HPC term loan, May 18) -> senior UNSECURED 9.625% USD / 8.500% EUR due 2032 (Jun 11). The 370 bps between CRWV's own secured and unsecured cost is the market's price for everything above the collateral. Proceeds repay debt: the ladder refinancing itself at the unsecured layer to keep secured covenants clean.
+
+IV. NEOCLOUD CAPITAL STRUCTURES
+CoreWeave: total debt $21.6B; DDTL 4.0 $8.5B; DDTL 5.0 $3.1B; off-B/S leases $34B; RPO $99.4B; Q1 rev $2.08B (+112%), net loss $740M, interest expense $536M; debt/equity 7.49x. The DSC covenant on $8.5B of GPU-collateralized debt (4-5yr collateral, 7yr contracts) just got harder to clear at ~5%. Nebius: Q1 rev $399M (+684%), GAAP NI $621M on a $780.6M equity revaluation, adj net loss $100.3M, ~$4.34B converts; Missouri gigawatt campus broke ground May 12; Nvidia $2B; >5 GW by 2030. IREN: Nvidia right to invest up to $2.1B; up to 5 GW DSX; Microsoft 57% of 2026 ARR. Relative-value separator is leverage, not growth: Nebius/IREN more survivable than CRWV at 7.49x.
+
+V. HYPERSCALER DEALS AND CAPEX
+Oracle Q4 FY26: rev $19.2B (+21%), cloud $9.9B (+47%), IaaS $5.8B (+93%); RPO $638B (+363% YoY, +$85B QoQ); $75B of RPO is prepaid/customer-supplied GPUs. Funding side: Q4 capex $15.9B, FY26 $55.7B vs $50B guided; FY27 up to $95B; FY26 FCF -$23.7B; ROIC 14.8% -> 10.7%. -9.4% on a +930 Dow day; capex-disclosure litigation probe opened. Customers are paying the cloud vendor in hardware. Hyperscaler Q1 capex: MSFT $31.9B (FY $190B, +$25B component prices per Hood), GOOGL $35.7B, AMZN $43.2B, META $19.8B; combined >$650B run-rate. Nvidia circular financing: 10-K $17.5B private/infra-fund + $3.5B land/power/shell guarantees; the next 10-Q's guarantee line is the highest-information forward disclosure in the complex.
+
+VI. THE IPO WAVE -- SPACEX PRICES THE PIPELINE
+SpaceX $135 IPO -> $160.95 close (+19%), ~$75B raised, >$2T. Follows Cerebras (priced $185, +68% debut then -10%; 2025 rev ~$510M 47% margin; $24.6B backlog; OpenAI $20B+ 750 MW inference; G42 concentration). OpenAI confidential S-1 Jun 8; Anthropic Jun 1 (ARR $1B Dec24 -> $9B Dec25 -> $44B May26). Pipeline ~$4T value, >$240B absorption by YE. The IPO window is open for the equity with no refi need and closing on the debt with the largest one, in the same week.
+
+VII. GE VERNOVA -- TURBINES AND ELECTRIFICATION
+Q1 orders $18.3B (+71%), backlog $163B; gas 44 GW firm + 56 GW slots = 100 GW (up from 83), YE target 110 GW; ~10 GW remaining 2029-2030; DC electrification orders $2.4B (> all 2025); FCF guide $6.5-7.5B. Strazik: ~3yr lead times. Two-thirds of US gas developers have not identified a turbine maker. Eaton Q1 rev $7.45B (+17%), DC orders +240%, backlog $22.8B, EPS only +2%; Vertiv backlog $15.0B (+109%). >half of 2026 DCs delayed on electrical gear, not money/land.
+
+VIII. POWER GEN DEALS AND THE SHADOW GRID
+Chevron/Engine No.1/Microsoft Permian 2.5 GW (exp 5), ~$7B, seven GEV turbines on order, first power late 2027. Stargate now an umbrella (8 sites; UAE 5 GW). Shadow grid: 1,000+ GW gas in development globally (+31%); Texas ~58 GW planning/construction (Pacifico GW Ranch 7.65 GW, Chevron Pecos 2.5-5 GW, Crusoe 4.5 GW). PJM monitor (Monitoring Analytics): data centers caused a 75.5% wholesale power increase ($77.78 -> $136.53/MWh), "very large and not reversible," recommends direct producer contracts -- the East Coast precedent for the off-grid Texas model. June PJM BRA on the same clock as Batch Zero and the FOMC.
+
+IX. UTILITIES AND THE PPA COMPARABLE SET
+NextEra/Dominion: DEFINITIVE all-stock $66.8B merger (May 18) -- corrects the prior exploratory read; ~130 GW combined large-load pipeline; VA hearings Jun 10; $10/mo rebate; close 12-18 mo. Vistra Q1 NI $1.029B, adj EBITDA $1.494B (+20%), IG at 2nd agency, 20yr 2,609 MW Meta nuclear PPA, Cogentrix 5.5 GW 2H26, $525M buybacks. Constellation adj EPS $2.74, Calpine closed Jan, Microsoft 20yr PPA $100-102/MWh. Talen adj EBITDA $473M (2x+), Susquehanna/AWS ~$68.90/MWh floor. PPA tape $68.90 -> $100-102/MWh = 45%+ in two years.
+
+X. NUCLEAR FUEL AND SMRs
+U3O8 ~$86 into late May, futures eased <$85, June spot n/d. Cameco 19.5-21.5 Mlb 2026 guide; TEPCO Cigar Lake 5% buy-in Jun 1; 72 reactors under construction. Oklo Q1 net loss $33.1M, cash $2.5B; NRC Aurora Principal Design Criteria approved May 6; Nvidia fuel validation at Los Alamos. NuScale/Oklo sold off Jun 5; neither grid-connected. Incumbent consolidating producing pounds while equity chases pre-revenue SMR paper.
+
+XI. TEXAS POWER -- PUCT 58481, BATCH ZERO, BIFURCATION
+SB6: $50,000/MW fee (cut from $100k); 100% CIAC; site control 5yr beyond peak; 80% withdrawal forfeit; final rule expected July. ERCOT Batch Zero PUCT vote June 18, effective target Aug 1; queue 438 GW (~5x ~85-90 GW peak), ~87% DC; forecast 85,508 -> 278,003 (2029) -> 367,790 MW (2032), flagged unreliable. Bifurcation: Hill/Hood/Hays/Hutto moratoria-and-fights vs Pecos/Reeves (no municipal opposition). The fee + CIAC + forfeit are a higher hurdle post-bond-move; projects already through the gate with land/water/turbines do not face the new math.
+
+XII. THE PERMIAN SURFACE LAYER (land, water, gas, transmission, turbines)
+Four of five physical inputs concentrate in Pecos/Reeves. Land: GW Ranch 7,650 MW, Chevron 2.5-5 GW, Core Scientific 1.5 GW, Microsoft Reeves 2.5 GW. Water: Cockrell v. Middle Pecos GCD (TX Supreme Court reversal Mar 13) reopened the 28,400 acre-foot export challenge; Reeves GCD HUP deadline Sept 1 stands to create the first tradeable senior water market in the US. Gas: negative Waha. Transmission: 765 kV west-to-east; Oncor first CCN (Longshore-Drill Hole) expected this month. Turbines: Chevron's seven GEV units pre-secured. Clearest public-market expression: LandBridge/PowerBridge "Alpha Digital" -- $2.6M one-year option on 3,400 Reeves acres, royalty, no operator capex, first power 2027. The financier-not-operator structure is how public capital expresses the physical layer, and it crystallizes as the financed layers reprice.
+
+XIII. WAHA AND PERMIAN GAS
+Prompt fixed -$5.69 / basis -$8.25 (May 1); Summer strip -$4.69, cash ~-$3.00 (May 22); record cash low <-$9.50 (Apr 16); negative 84 of 97 days YTD. Kinetik shut-in guide 220 MMcf/d; Targa 200-400; ~620 combined. Diamondback curtailing 2,000-3,000 bbl/d oil on gas constraints. Egress: GCX +570 MMcf/d (Q2), Hugh Brinson P1 1.5 Bcf/d (Q4 26) + P2 2.2 (Q1 27), Blackcomb 2.5 Bcf/d (Q4 26) -- ~4 Bcf/d Q2 26-Q1 27. STEO cut 2027 HH to $3.46. Negative Waha is the one fuel cost immune to the bond market. Contrarian risk: $85+ crude drives associated gas past egress and Waha stays negative through 2027.
+
+XIV. CRUDE -- THE OIL TIPPING POINT REVERSES (separate)
+May analyst convergence (JPMorgan/Rapidan/UBS/Capital Economics/IEA/EIA) pointed at a June-Q3 stress inflection; the ceasefire reverses it toward oversupply. Islamabad text (Jun 12): Hormuz reopens no-tolls, mines cleared 30 days, blockade lifted, sanctions waivers; signing in Geneva within days. Physical normalization lags the signature. Into it: OPEC+ +188 kb/d July, record US exports, China imports at 8-yr lows, shale ramp. Fitch end-July reopening -> Brent ~$87 FY26, Q4 oversupply risk.
+
+XV. US POLICY -- FED, OBBBA, BOND-VIGILANTE ENDGAME
+Warsh's first FOMC Jun 16-17, ~96.5% hold, no cuts, hike odds rising. OBBBA: vacatur Jun 6 restored the 5% safe harbor; no stay filed; counsel: appellate outlasts July 4, reversal could be retroactive, physical-work path still safest. July 4 = 21 days. Financial-repression endgame (Singh "bond-vigilante trade," Dimon "bond crisis"): 5%+ long yields seen unsustainable; Treasury response (shortened issuance, buybacks, jawboned long-end purchases) the likely terminal state. The ceasefire deflates the oil leg but does not restore the cut, and pushes policy toward repression, which debases the real return the powered-shell projects depend on.
+
+XVI. NOVEL ANGLES / SECOND-ORDER SIGNALS
+1. Energy leg giving, funding leg not: 9.625% unsecured + a 9% equity drop on the best macro tape of the quarter. 2. $75B of Oracle RPO is prepaid/customer-supplied GPUs -- hardware secured in kind. 3. 370 bps secured-to-unsecured printed inside one issuer. 4. DDTL 5.0 formalizes GPU paper as a tradable asset class. 5. GEV slot reservations are a tradable real option. 6. PJM "not reversible" validates the off-grid Texas model. 7. IPO window and credit window open in opposite directions.
+
+XVII. EARNINGS-TRANSCRIPT HIGHLIGHTS
+Welch (Kinetik): "a tale of two cities... Waha gas-centric sellers are literally crying poverty." Van't Hof (Diamondback): "Every molecule we've produced has moved. It's just moving at a negative price." Strazik (GEV): "at least 110 GW of combined backlog and slot reservation agreements by year-end 2026... $2.4 billion in [DC] equipment orders, more than all of last year." Yacob (EOG): "a call across the world right now for increased oil supply." Hood (Microsoft): "$190 billion CY 2026 capex... a $25 billion impact from higher component prices." DeWitte (Oklo): "Part 57 is a culmination of work spanning over a decade."
+
+XVIII. WHAT TO WATCH
+72h: Islamabad-declaration signing (Geneva); Hormuz transit/mine clearance; Asian crude open. 7d: June 17 FOMC (Warsh's first); APLD $1.59B notes close (~Jun 16); first AI-infra deal to price after the CoreWeave unsecured print. June 18 (four-event day): PUCT Batch Zero vote; Reeves GCD last pre-deadline board meeting; CoreWeave unsecured notes close; Oncor 765 kV CCN window. 30d: PUCT 58481 final rule (July); July 4 OBBBA cliff + any stay; June PJM BRA; CRWV Russell add (Jun 26); Nvidia 10-Q $3.5B guarantee line.
+
+XIX. CONFIDENCE FLAGS / DATA GAPS
+30Y/10Y Jun 12 closes approximate (~4.9%/~4.4%), not confirmed settle. WTI/Brent Jun 12 settle directional (lower), exact n/d. Baker Hughes rig count publication shifted around Juneteenth; Permian ~241 carried. Nvidia $3.5B guarantee tracked but unconfirmed. Waha June marks n/d (May carried). Ceasefire text finalized Jun 12, signature pending (Geneva).
+
+Sources: Oracle Q4 FY26 8-K, CoreWeave notes release + Reuters/Investing.com, CoreWeave/Nebius/Talen/Vistra/Constellation/Oklo Q1 transcripts, GE Vernova Q1 8-K, Monitoring Analytics PJM report, ERCOT/PUCT Batch Zero + 58481, SEC Form 425 (NEE/D), Cockrell v. Middle Pecos GCD, Reeves County GCD, EIA WNGSR + STEO, AEGIS (carried), CME FedWatch, NBC/WaPo/CNN ceasefire coverage, Holland & Knight/Foley Hoag/Gibson Dunn/McGuireWoods OBBBA alerts, CNBC/NPR SpaceX coverage. Primary where available. n/d discipline applied. Crude and gas sourced separately. Indicative fixed-equivalents on floaters. Not investment advice.
+
+Comprehensive 16-page PDF with the cost-of-capital chart, full sector tables, named transcript quotes, and 31 footnotes attached.
+
+Andrea Himmel
+Land Resource Partners

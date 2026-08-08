@@ -1,0 +1,6 @@
+CREDENTIALS.md
+__pycache__/
+*.pyc
+.DS_Store
+*.html.tmp
+dist/
