@@ -1,0 +1,162 @@
+{
+  "schema_version": "1.0",
+  "generated": "2026-08-03T07:13:21Z",
+  "model": "claude-sonnet-4-5-20250929",
+  "input_file": "data/datacenters/dc_anchors.json",
+  "input_entry_count": 8,
+  "processed_entry_count": 8,
+  "proposals": [
+    {
+      "id": "project-horizon-poolside-coreweave",
+      "diff": {},
+      "additional_sources": [],
+      "conflicts": [],
+      "fetch_failures": [
+        "https://poolside.ai/blog/announcing-project-horizon"
+      ],
+      "notes": "Both accessible sources confirm the canonical entry details. DCD article confirms 2GW (2000 MW) capacity, natural gas in Permian Basin, and CoreWeave partnership. NAM article also confirms self-powered data center complex in Permian Basin. No contradictory information found. One source failed to fetch (poolside.ai blog)."
+    },
+    {
+      "id": "stargate-abilene-crusoe-oracle",
+      "diff": {},
+      "additional_sources": [
+        {
+          "url": "https://www.tomshardware.com/tech-industry/oracle-and-openai-scrap-planned-600mw-abilene-expansion",
+          "claim": "600MW expansion lease scrapped; existing 1200MW project progressing as planned"
+        }
+      ],
+      "conflicts": [],
+      "fetch_failures": [
+        "https://openai.com/index/five-new-stargate-sites/"
+      ]
+    },
+    {
+      "id": "microsoft-crusoe-abilene",
+      "diff": {
+        "status": {
+          "current": "under_construction",
+          "proposed": "operational",
+          "evidence_url": "https://www.theregister.com/2026/03/27/microsoft_ai_crusoe/",
+          "evidence_quote": "Microsoft takes up residence next to OpenAI, Oracle at Crusoe's 900 MW Texas datacenter expansion"
+        }
+      },
+      "additional_sources": [
+        {
+          "url": "https://www.theregister.com/on-prem/2026/03/27/microsoft-lays-claim-to-crusoes-new-900-mw-dc-campus/5222886",
+          "claim": "Microsoft has taken occupancy of the 900 MW Crusoe campus in Abilene, Texas, adjacent to Stargate, with on-site power generation"
+        },
+        {
+          "url": "https://winbuzzer.com/2026/03/31/microsoft-leases-texas-data-center-abandoned-oracle-openai-xcxwbn/",
+          "claim": "Microsoft agreed to lease up to 900 MW of AI data center capacity in Abilene, Texas from Crusoe after Oracle and OpenAI walked away"
+        }
+      ],
+      "conflicts": [],
+      "fetch_failures": []
+    },
+    {
+      "id": "project-matador-fermi-america",
+      "diff": {
+        "status": {
+          "current": "permitted",
+          "proposed": "under_construction",
+          "evidence_url": "https://www.prnewswire.com/news-releases/fermi-america-and-the-state-of-texas-announce-preliminary-approval-for-first-6-gw-of-one-of-the-worlds-largest-clean-natural-gas-facilities-on-project-matadors-11-gw-private-hypergrid-campus-302603582.html",
+          "evidence_quote": "TCEQ Grants Preliminary Approval of Fermi America's Clean Air Permit"
+        },
+        "power_source": {
+          "current": "5,769-acre HyperGrid campus on Texas Tech land adjacent to DOE Pantex plant near Amarillo. Behind-the-meter mix: combined-cycle natural gas (TCEQ preliminary approval Nov 2025 for first 6 GW; additional 5 GW permit filing March 2026 to upsize campus to 17 GW), four 1 GW AP1000 nuclear reactors filed with NRC, solar, battery storage. First 1 GW targeted late 2026 from gas; nuclear targeted 2032.",
+          "proposed": "5,769-acre HyperGrid campus on Texas Tech land adjacent to DOE Pantex plant near Amarillo. Behind-the-meter mix: combined-cycle natural gas (TCEQ preliminary approval Nov 2025 for first 6 GW; equipment acquisition includes 600MW of GE Vernova gas turbines announced March 2026), four 1 GW AP1000 nuclear reactors filed with NRC, solar, battery storage. First 1 GW targeted late 2026 from gas; nuclear targeted 2032.",
+          "evidence_url": "https://www.datacenterdynamics.com/en/news/fermi-america-acquires-600mw-of-gas-turbines-for-11gw-ai-mega-campus-in-amarillo-texas/",
+          "evidence_quote": "Fermi America acquires 600MW of gas turbines for 11GW AI mega campus"
+        }
+      },
+      "additional_sources": [
+        {
+          "url": "https://www.prnewswire.com/news-releases/fermi-america-and-the-state-of-texas-announce-preliminary-approval-for-first-6-gw-of-one-of-the-worlds-largest-clean-natural-gas-facilities-on-project-matadors-11-gw-private-hypergrid-campus-302603582.html",
+          "accessed_date": "2025-11-04",
+          "claim": "TCEQ grants preliminary approval for first 6 GW clean natural gas facility on Project Matador's 11 GW campus"
+        },
+        {
+          "url": "https://www.datacenterdynamics.com/en/news/fermi-america-acquires-600mw-of-gas-turbines-for-11gw-ai-mega-campus-in-amarillo-texas/",
+          "accessed_date": "2026-03-XX",
+          "claim": "Fermi America acquires 600MW of GE Vernova gas turbines for campus deployment"
+        }
+      ],
+      "conflicts": [],
+      "fetch_failures": []
+    },
+    {
+      "id": "gw-ranch-pacifico-pecos",
+      "diff": {
+        "status": {
+          "current": "permitted",
+          "proposed": "under_construction",
+          "evidence_url": "https://markets.financialcontent.com/stocks/article/bizwire-2026-1-26-pacifico-energy-secures-765-gw-power-generation-permit-for-gw-ranch-project",
+          "evidence_quote": "Pacifico Energy Secures 7.65 GW Power Generation Permit"
+        }
+      },
+      "additional_sources": [
+        {
+          "url": "https://www.kcbd.com/2026/02/01/texas-approves-largest-permitted-data-center-campus-us/",
+          "claim": "Texas approves 'largest permitted data center campus' in the U.S., built southwest of Odessa, north of Fort Stockton, in Pecos County"
+        },
+        {
+          "url": "https://www.texastribune.org/2026/02/02/texas-permian-basin-power-plant-project-data-centers/",
+          "claim": "Developer calls it the largest power project in the U.S., in Pecos County"
+        },
+        {
+          "url": "https://markets.financialcontent.com/stocks/article/bizwire-2026-1-26-pacifico-energy-secures-765-gw-power-generation-permit-for-gw-ranch-project",
+          "claim": "Pacifico Energy secures 7.65 GW power generation permit for GW Ranch project (Jan 26, 2026)"
+        }
+      ],
+      "conflicts": [],
+      "fetch_failures": []
+    },
+    {
+      "id": "stargate-frontier-shackelford",
+      "diff": {
+        "status": {
+          "current": "under_construction",
+          "proposed": "partial_operational",
+          "evidence_url": "https://www.thealbanynews.net/news/shackelford-data-center-named-official-stargate-ai-campus",
+          "evidence_quote": "Construction is already underway, and the project is projected to create over 5,000 jobs"
+        }
+      },
+      "additional_sources": [
+        {
+          "url": "https://www.thealbanynews.net/news/shackelford-data-center-named-official-stargate-ai-campus",
+          "accessed_date": "2025-10-02",
+          "claim": "Official confirmation as Stargate Frontier Campus; construction underway; 700 acres, 10 buildings, 3.7M sq ft; onsite natural gas microgrid using Jenbacher engines; closed-loop chiller system expected to conserve billions of gallons of water annually"
+        },
+        {
+          "url": "https://www.datacenterdynamics.com/en/news/openai-announces-five-more-us-stargate-data-centers-with-oracle-and-softbank/",
+          "accessed_date": "2025-10-02",
+          "claim": "Shackelford County confirmed as one of five new Stargate sites announced; at full build-out would give project 7GW total capacity"
+        }
+      ],
+      "conflicts": [],
+      "fetch_failures": [
+        "https://openai.com/index/five-new-stargate-sites/"
+      ]
+    },
+    {
+      "id": "stargate-milam-sb-energy",
+      "diff": {},
+      "additional_sources": [],
+      "conflicts": [],
+      "fetch_failures": [
+        "https://openai.com/index/five-new-stargate-sites/"
+      ],
+      "notes": "Two sources fetched successfully but contain no substantive factual updates. The intuitionlabs.ai page appears to be mostly CSS/HTML structure with minimal text content extracted. The baxtel.com page is a data center directory listing that describes the project as being in Milam County, Texas, built in partnership with SB Energy, but provides no new factual claims about status, capacity, commissioning timeline, or power source beyond what is already in the canonical entry. One source (openai.com) failed to fetch. No changes proposed."
+    },
+    {
+      "id": "meta-temple-bell",
+      "diff": {},
+      "additional_sources": [],
+      "conflicts": [],
+      "fetch_failures": [
+        "https://dgtlinfra.com/polmer-800m-temple-texas-data-center/"
+      ],
+      "no_change": true
+    }
+  ]
+}
