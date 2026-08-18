@@ -820,6 +820,13 @@ function raiseOxy() {
 }
 
 function setLayerVisibility(L, visible) {
+  // Layers hidden from the sidebar have no checkbox, so nothing in the UI can
+  // undo a stray "on": a stale `layers=` hash or an old saved view would leave
+  // them stuck visible forever (permits_permian6 rendering as pale grey dots
+  // under no legend entry). syncHash writes activeLayerIds() verbatim, so once
+  // one was on it round-tripped through the hash on every reload. Pin these to
+  // their default_on state — hash and saved-view replay can never strand them.
+  if (L.sidebar_omit) visible = !!L.default_on;
   const v = visible ? 'visible' : 'none';
   try { map.setLayoutProperty(`lyr_${L.id}`, 'visibility', v); } catch (e) {}
   if (L.geom === 'fill') {
