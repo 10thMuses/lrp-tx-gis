@@ -10,6 +10,10 @@ CREDENTIALS.md
 dist/
 *.pmtiles
 
+# OM builder intermediate — regenerable by scripts/build_caramba_om.py, and
+# carries the exhibit rasters base64-inlined (duplicates the committed PDF).
+outputs/reports/Caramba-North-OM-PostNDA.html
+
 # Python
 __pycache__/
 *.pyc
