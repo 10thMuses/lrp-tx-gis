@@ -1,0 +1,18 @@
+rig_id,name,imo,owner,manager,rig_type,design,generation,shipyard,delivery_year,flag,class_society,class_notation,water_depth_ft,drilling_depth_ft,status,stack_location,stacked_since,never_worked,notes
+clear_leader,Discoverer Clear Leader,,Transocean,,drillship,Enhanced Enterprise,6th,HHI,2009,,,,,,held_for_sale,Greece,2019,0,Q3-2025 disposal group; ~$1.9B aggregate impairment
+americas,Discoverer Americas,,Transocean,,drillship,Enhanced Enterprise,6th,HHI,2009,,,,,,held_for_sale,Greece,2016,0,disposal group
+india,Discoverer India,,Transocean,,drillship,Enhanced Enterprise,6th,HHI,2010,,,,,,held_for_sale,Greece,2020,0,disposal group
+inspiration,Discoverer Inspiration,,Transocean,,drillship,Enhanced Enterprise,6th,HHI,2010,,,,,,held_for_sale,n/d,2024,0,held for sale; stacked ~294d as of early 2025
+champion,Deepwater Champion,,Transocean,,drillship,GustoMSC P10000,6th,HHI,2010,,,,,,held_for_sale,Greece,2016,0,disposal group
+mylos,Ocean Rig Mylos,,Transocean,,drillship,Samsung 12000,7th,Samsung HI,2013,,,,,,cold_stacked,Greece,~2018,0,plant verified from owner spec sheet
+athena,Ocean Rig Athena,,Transocean,,drillship,Samsung 12000,7th,Samsung HI,2014,,,,,,cold_stacked,Greece,~2018,0,sister to Mylos
+apollo,Ocean Rig Apollo,,Transocean,,drillship,Samsung 12000,7th,Samsung HI,2015,,,,,,cold_stacked,Greece,~2018,0,sister to Mylos
+dd3,Development Driller III,,Transocean,,semisub,GVA 7500,n/d,n/d,2009,,,,,,held_for_sale,n/d,n/d,0,held for sale
+goodrich,Henry Goodrich,,Transocean,,semisub,Sonat/Mitsui 5000 SES,n/d,n/d,1985,,,,,,held_for_sale,Norway (towed 2025-07),2020,0,scrap-grade; harsh-environment
+ds11,Valaris DS-11,,Valaris,,drillship,DSME 12000,7th,DSME,2013,,,,,,cold_stacked,Las Palmas,2022,0,recycling/conversion candidate per Esgian
+ds13,Valaris DS-13,,Valaris,,drillship,DSME 12000,7th,DSME (Hanwha Ocean),2023,,,,,,cold_stacked,Las Palmas,2023,1,zero-hour plant; $337M aggregate pair price; actively marketed
+ds14,Valaris DS-14,,Valaris,,drillship,DSME 12000,7th,DSME (Hanwha Ocean),2023,,,,,,cold_stacked,Las Palmas,2023,1,zero-hour plant
+gt2,Noble Globetrotter II,,Noble,,drillship,HuisDrill 12000,6th,n/d,2013,,,,,,held_for_sale,US Gulf,2025,0,Noble exits cold-stack segment on sale; best US logistics
+dps3,Valaris DPS-3,,Valaris,,semisub,Samsung A1E,n/d,Samsung HI,2012,,,,,,retired,n/d,n/d,0,retired Feb 2025; alternative use or scrap
+dps5,Valaris DPS-5,,Valaris,,semisub,Samsung A1E,n/d,Samsung HI,2012,,,,,,retired,n/d,2024,0,retired Feb 2025
+dps6,Valaris DPS-6,,Valaris,,semisub,Samsung A1E,n/d,Samsung HI,2012,,,,,,retired,n/d,n/d,0,retired Feb 2025
