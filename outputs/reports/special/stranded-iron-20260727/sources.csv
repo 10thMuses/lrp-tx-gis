@@ -1,0 +1,18 @@
+source_id,name,tier,url,covers,cost,notes
+transocean_fsr,Transocean Fleet Status Reports + rig spec sheets (deepwater.com),primary_free,https://www.deepwater.com,"fleet status, full rig specs incl. main power",free,spec sheets list engine make/model/kW; canonical for TO fleet
+valaris_fsr,Valaris Fleet Status Reports + fleet matrix,primary_free,https://www.valaris.com,"fleet, designs, contracts",free,power detail thinner than TO; pair with class records
+noble_fsr,Noble Corp fleet status + rig pages,primary_free,https://www.noblecorp.com,"fleet, specs",free,
+sec_edgar,"SEC EDGAR (8-K/10-K/10-Q of TO, VAL, NE, RIG peers)",primary_free,https://www.sec.gov/edgar,"impairments, disposals, backlog, financing",free,distress markers and sale prices
+equasis,Equasis,primary_free,https://www.equasis.org,"IMO number, flag, class, ownership chain, PSC history",free (registration),IMO resolution layer; keys every other DB
+class_abs,ABS Record,primary_free,https://www.eagle.org/portal,"class notation, machinery survey data",free search,machinery records confirm engine make/model
+class_dnv,DNV Vessel Register,primary_free,https://vesselregister.dnv.com,class + machinery,free search,covers DSME/Korean-built units
+gisis,IMO GISIS,primary_free,https://gisis.imo.org,ship particulars,free (public account),
+ais,AIS (MarineTraffic / VesselFinder),secondary_paid_lite,https://www.marinetraffic.com,live position -> stack location verification,freemium,verifies stack anchorage claims independently
+nov_census,NOV Rig Census (annual),secondary_free,https://drillingcontractor.org,"global MODU counts, attrition",free,macro sizing
+bakerhughes,Baker Hughes Rig Count,secondary_free,https://rigcount.bakerhughes.com,active counts,free,macro
+riglogix,Westwood RigLogix,subscription,https://www.westwoodenergy.com,"canonical rig DB: specs, contracts, dayrates, stack durations, utilization",$$ (quote),RECOMMENDED core subscription; idle/stack fields are the distress screen
+esgian,Esgian Rig Analytics + Rig Values,subscription,https://esgian.com,"valuations, utilization forecasts, cold-stack analysis",$$ (quote),RECOMMENDED; the valuation marks quoted in trade press originate here
+seaweb,S&P Global Sea-web Ships (ex-IHS),subscription,https://maritime.ihs.com,"engine builder, model, cylinder count, kW, year per IMO hull",$$$,RECOMMENDED for engine-level (make/series/SKU/age) at global scale; the machinery table is the census backbone
+clarksons_wfr,Clarksons World Fleet Register,subscription,https://www.clarksons.net,"hull + machinery detail, sale/purchase comps",$$$,alternative/complement to Sea-web; strong S&P comps
+petrodata,S&P Global Petrodata RigPoint/RigBase,subscription,https://www.spglobal.com,"rig contracts, specs, dayrates",$$$,overlaps RigLogix; choose one
+bassoe,Bassoe Rig Valuation / Analytics,subscription,https://www.bassoe.no,"rig values, fleet lists",$ (lighter),cheaper second valuation mark vs Esgian
