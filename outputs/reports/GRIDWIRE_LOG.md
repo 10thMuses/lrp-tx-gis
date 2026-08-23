@@ -65,3 +65,38 @@ Grid Wire Vol. 21 — next cut per cadence or operator trigger. Incremental base
 ## Next chat
 
 Grid Wire Vol. 22 — next cut per cadence or operator trigger. Incremental baseline: Vol. 21 (this entry). Immediate: July jobs print (landed 8:30 AM Aug 7 — fold actuals). Open: STEO Aug 11; CPI Aug 12; CRWV Q2 mid-Aug; Baidu Aug 18; PUCT Aug 20 (Batch Zero exception — binary); NVDA FQ2+10-Q late Aug (guarantee footnotes); Jackson Hole Aug 27-29; BLS benchmark Aug 28; ERCOT model-cure Aug 31; Reeves GCD Sep 1; Sep 2 study start; FOMC Sep 15-16; LB Q2 (imminent); ETN/PWR prints (missed this sweep); Blackstone transcript sweep re AI-credit commentary; Waha/HH August restatement; Hormuz crossings rebuild watch; Houthi Red Sea enforcement; Kilby TCEQ docket behavior (BTM-immunity falsification channel); Q4 distressed queue-position marks.
+
+*(Series A closed here. Vol. 22 was never produced. Numbering restarted at Vol. 1 during the Teams-account migration; see master instructions Part A2.)*
+
+---
+
+# SERIES B
+
+## Vol. 13 — 2026-08-19 — Morning Edition (12 pp, 17 sections) — reconstructed into the log 2026-08-23
+
+- Deliverable of record: `The_Grid_Wire_Vol_13_-_August_19_2026.pdf`. Coverage window: Aug 18 PM through Aug 19 pre-open, plus items surfaced since the Vol 12 baseline (Aug 15). Produced in the Teams account; edition markdown source not in `outputs/reports/source/` — **gap flagged, recover or rebuild before Vol 14.**
+- Format observed: light theme, stat band (WTI 85.21 / Brent 91.28 / HH 2.79 / Waha 1.87 / UST30Y 5.31% / IG-HY 81-270 / Cu 14,802 / CRWV -12.1%), clock chips, THE WINDOW IN TEN LINES box, CLOCKS table, per-section Angle + FALSIFICATION, Deals Roundup (D2 running count 36), Capital-Stack Spine, dated calendar, sources block.
+- Lead: One Tape, Two Layers. Aug 18 selloff on a +0.2% July industrial production print into a 30Y at 5.31% (highest since 2001). Financed layer repriced in order of leverage (CRWV -12.1% to 93.17, WULF -11.3%, APLD -8.6%, POWL -8.4%, NBIS -7.6%, VST -6.9%, VRT -6.6%, STRL -7.0%); no physical mark moved.
+- Credit: Nvidia OpenAI Ports-Pike Ohio guarantee finalized Aug 17 at a $105B aggregate cap, down 58% from ~$250B discussed in July; +$1.5B Nvidia equity into SB Energy; derived ladder placement ~$13.1M/MW-20yr facility-only vs Riot ~$47.6M/MW-20yr, WULF ~$47.4M/MW-20yr, HUT ~$28M/MW-15yr. CoreWeave DDTL 5.5 $2.6B, JPM/MUFG, SOFR+550, ~5yr, Ba2/BB+, oversubscribed. Nvidia MOUs with Apollo/BlackRock/Blackstone/Brookfield/GS/KKR, >$500B third-party target, not ledgered until definitive. SEC guidance: DC securitizations outside Exchange Act ABS definition.
+- Texas regulatory: ERCOT withholding energization approvals for all unenergized DC/crypto loads pending the Abbott audit; PUCT Item 22 Proj. 59142 Aug 20; 765kV Dockets 59029 and 59315 to votes Aug 21; 258 medium loads / 13,473 MW seeking interconnection by 2032; Batch Zero study deadline Apr 9 2027 retained.
+- Water: Middle Pecos GCD met Aug 17 on CRMWD/La Escalera Capitan Reef export permits; **outcome not public** — carried as the open item. Reeves GCD historic-use deadline Sep 1.
+- WTX: GW Ranch three 189,000 sq ft buildings at ~$300M each (TDLR), Gensler architect, Pacifico EPC, Dec completion targets; 35 turbines + 750 MW solar + 1.8 GW BESS; 1-2 Bcf/d at full load. TPL 10,000+ acres Shackelford/Jones at ~$10k/ac; LB 560 acres at ~$35.7k/ac entitled industrial; 66 Young County acres ~$1.16M/ac prior marker. Three stages, not averaged. ERCOT West zone growth decelerating, Far West stalled.
+- Corrections carried: Jackson Hole is Aug 27-29 with Chair Warsh, not the Aug 21 Powell slot in prior calendars.
+
+## Next chat
+
+**Grid Wire Vol. 14** — next cut per cadence (5:00 AM ET / 3:00 PM ET) or operator trigger. Incremental baseline: Vol. 13 (2026-08-19).
+
+Immediate resolution items carried from Vol. 13:
+- Middle Pecos GCD Aug 17 Capitan Reef export outcome — minutes check, still the highest-information undisclosed datapoint in the district.
+- PUCT Aug 20 outcomes: Item 22 Proj. 59142 good-cause exception (binary), Item 21 large-load rule 58481, Oncor El Capitan-Dry Lake final order, co-location dockets 59115 / 59399 / 59943.
+- 765kV votes Aug 21, Dockets 59029 and 59315; abatement motion disposition across all five dockets.
+- NVDA Q2 FY27 Aug 26 and the 10-Q guarantee footnotes ($3.5B land/power/shell line).
+- IREN FY26 Aug 27; Jackson Hole Aug 27-29 (Warsh debut); BLS benchmark revision Aug 28.
+- ERCOT model-cure Aug 31; Reeves County GCD historic-use deadline Sep 1; Sep 2 study start.
+- FERC EL26-67 to -72 extension disposition (unconfirmed, flagged).
+- RRC Aug 18 conference outcomes (Exxon Rose CCS Class VI, Republic EES Odessa renewal).
+
+Continuous: Waha positive-day streak and basis, Hormuz transit count vs ~108/day baseline, CRWV CDS print, six-county all-activity sweep (Pecos, Reeves, Ward, Upton, Crane, Crockett), CME hike odds, IG/HY OAS.
+
+Housekeeping owed at Vol. 14: commit the Vol. 13 edition markdown source and build script to `outputs/reports/source/` (or rebuild from the PDF) so the Series B baseline is reproducible.
