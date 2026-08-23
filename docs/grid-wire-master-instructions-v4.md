@@ -7,10 +7,19 @@ Hand this in at session open alongside the coverage taxonomy. **Precedence: repo
 ## PART A — SESSION OPEN
 
 1. Clone repo (PAT from `CREDENTIALS.md`).
-2. Read `Readme.md`, then `WIP_OPEN.md` `## Next chat`. Take Vol number and cut slot (9 AM / 12 PM / 3 PM / 6 PM / 9 PM ET) from there. Never from memory.
+2. Read `Readme.md`, then `outputs/reports/GRIDWIRE_LOG.md` `## Next chat`. Take Vol number and cut slot from there. Never from memory. **Cadence (operator, 2026-08-23): two cuts per day, 5:00 AM ET and 3:00 PM ET.** Supersedes the prior five-cut 9/12/3/6/9 schedule. 5:00 AM cut is the Morning Edition; 3:00 PM cut is incremental against it.
 3. Read the prior cut to establish the incremental baseline.
 4. Intra-day cuts are incremental — only what is new since the prior cut. Full restart only on operator override.
 5. No confirmation asks. Acceptable asks only: irreversible action, missing credential, operator-only factual input.
+
+## PART A2 — VOLUME NUMBERING (operator resolution, 2026-08-23)
+
+The series was restarted during the Teams-account migration. Two numbering runs exist:
+
+- **Series A (retired):** Vols 1-21, through `Vol. 21 — 2026-08-07`, logged in `GRIDWIRE_LOG.md`.
+- **Series B (current):** restarted at Vol 1; most recent edition of record is **Vol 13 — 2026-08-19, Morning Edition**, 12 pp, 17 sections.
+
+Series B governs. Next cut is **Vol 14**. Series A entries remain in the log as history and are cited by date, never by bare volume number. Filenames carry the date stamp (`Grid_Wire_Vol14_YYYYMMDD_Ham_ET.pdf`), which disambiguates any collision with a Series A number.
 
 ## PART B — GEOGRAPHIC PRIORITY (governs every domain)
 
@@ -27,7 +36,7 @@ A national story is reported through its West Texas implication first when one e
 
 The coverage unit is the **category**, not the previously studied company or deal. Named entities are entry points, never boundaries. Every cut sweeps for **new entrants, new deals, new litigants, and new instruments** in each category with the same priority as established names. Over-emphasis on previously covered items (any single credit complex, any single conversion deal, any single lawsuit) is a defect.
 
-1. Sweep all 23 taxonomy domains per `grid-wire-coverage-taxonomy.md`. Sub-sector granularity is the floor.
+1. Sweep all 23 taxonomy domains per `docs/grid-wire-coverage-taxonomy.md`. Sub-sector granularity is the floor.
 2. Incremental rule: a domain with nothing new gets nothing. No padding, no restatement.
 3. Search order: primary sources first (EDGAR + credit-agreement exhibits, EIA, RRC, TCEQ, PUCT/ERCOT dockets, FERC, NRC, GCD agendas, courts/PACER/re:SearchTX, county records, company IR, transcripts), then trade press for data points only, flagged.
 4. Per-cut filing sweep: EDGAR full-text on the company universe + counterparty names + category keywords (powered land, site control, behind-the-meter, water rights, turbine slot), date-bounded to the incremental window; PUCT open projects touching large loads; ERCOT market notices; GCD agendas (Reeves, Middle Pecos, and adjacent districts); new docket filings across all trackers (Part D).
@@ -142,7 +151,7 @@ All agency actions across the full company universe, not AI-linked paper only. M
 
 ## PART K — SESSION CLOSE
 
-1. Record cut outcomes per repo protocol (`WIP_LOG.md`); update `WIP_OPEN.md` `## Next chat`.
+1. Record cut outcomes in `outputs/reports/GRIDWIRE_LOG.md`; update its `## Next chat` block with the next Vol number, cut slot, incremental baseline, and open items. Commit the edition markdown source and build script to `outputs/reports/source/` in the same push.
 2. Nothing chat-specific cached in memory. State lives in the repo.
 
 ## PART L — PROHIBITED
