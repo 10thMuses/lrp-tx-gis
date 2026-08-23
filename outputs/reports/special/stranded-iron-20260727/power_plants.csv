@@ -1,14 +1,1 @@
 rig_id,role,engine_make,engine_model,engine_count,kw_each_mech,kw_total_mech,gen_make,gen_model,kw_each_elec,kw_total_elec,voltage_kv,fuel,engine_age_basis,confidence,source
-mylos,main,Wartsila,16V32 LowNOx,6,7290.0,43740.0,ABB,AMG 900 LSE,7000.0,42000.0,11.0,MDO/HFO,,verified_primary,Transocean rig spec sheet (deepwater.com)
-mylos,emergency,STX Cummins,QSK60DMGE,1,2547.0,2547.0,Newage,PM734E1,1350.0,1350.0,,MDO,,verified_primary,Transocean rig spec sheet
-athena,main,Wartsila,16V32 LowNOx,6,7290.0,43740.0,ABB,AMG 900 LSE,7000.0,42000.0,11.0,MDO/HFO,,class_typical,sister ship to Mylos; confirm via class records
-apollo,main,Wartsila,16V32 LowNOx,6,7290.0,43740.0,ABB,AMG 900 LSE,7000.0,42000.0,11.0,MDO/HFO,,class_typical,sister ship to Mylos; confirm via class records
-clear_leader,main,Wartsila,32-series (model n/d),6,,,,,,,,MDO/HFO,,nd,Enhanced Enterprise class; pull ABS Record / Sea-web
-americas,main,Wartsila,32-series (model n/d),6,,,,,,,,MDO/HFO,,nd,as above
-india,main,Wartsila,32-series (model n/d),6,,,,,,,,MDO/HFO,,nd,as above
-inspiration,main,n/d,n/d,6,,,GE,GEB-22A2 (drilling motors ref),,,,MDO/HFO,,nd,owner spec sheet lists drawworks motors; genset detail n/d
-champion,main,MAN,32/40-series (model n/d),6,,,,,,,,MDO/HFO,,nd,GustoMSC P10000; confirm via class records
-ds11,main,n/d,n/d (DSME 12000 class),6,,,,,,,,MDO/HFO,,nd,pull DNV/ABS machinery record
-ds13,main,n/d,n/d (DSME 12000 class),6,,,,,,,,MDO/HFO,,nd,zero-hour; pull machinery record
-ds14,main,n/d,n/d (DSME 12000 class),6,,,,,,,,MDO/HFO,,nd,zero-hour; pull machinery record
-gt2,main,n/d,n/d,,,,,,,,,,,nd,HuisDrill 12000; pull machinery record
