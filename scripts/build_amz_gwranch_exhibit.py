@@ -41,9 +41,18 @@ CROP_BOX = (330, 330, 1740, 870)
 GW_LABEL_BOX = (895, 553, 1405, 600)     # "GW Ranch — Pacifico Energy · 7.65 GW permitted"
 CARAMBA_MARKER = (1202, 772)              # Caramba North site-boundary marker
 
+# This crop also catches the base map's Longfellow label lower in frame,
+# which names a tenant (CoreWeave) that has since exited — mask + relabel
+# it the same way build_longfellow_exhibit.py does, so every deck/doc that
+# uses this shared exhibit stays compliant without a per-build workaround.
+LF_LABEL_MASK_BOX = (963, 793, 1736, 838)
+LF_LABEL_TEXT = "Longfellow — Project Horizon · Gas Generation Site · 2 GW"
+
 NAVY = (15, 27, 45, 255)
 RED = (185, 28, 28, 255)
 WHITE = (255, 255, 255, 255)
+LABEL_BORDER = (150, 152, 156, 255)
+BLACK = (20, 20, 22, 255)
 
 FONT_PATHS_BOLD = ["/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"]
 
@@ -73,9 +82,9 @@ def dashed_line(draw, p1, p2, color, width=5, dash=13, gap=9):
 
 
 def main():
-    model = D.build()
-    anchor = next(a for a in model["section7"]["anchors"] if a["id"] == "gw-ranch-pacifico-pecos")
-    miles = anchor["miles"]
+    import build_insight_pack as IP
+    ins = IP.build()
+    miles = ins["distances_edge_to_edge"]["gw_ranch_mi"]  # edge-to-edge: tract boundary -> site
 
     im = Image.open(SRC).convert("RGB")
     crop = im.crop(CROP_BOX).convert("RGBA")
@@ -87,6 +96,19 @@ def main():
     overlay = Image.new("RGBA", crop.size, (0, 0, 0, 0))
     draw = ImageDraw.Draw(overlay)
     f_tag, f_dist = font(27), font(23)
+
+    # --- mask the baked-in Longfellow label (names an exited tenant) that --
+    # --- falls inside this crop, and redraw it tenant-neutral --------------
+    lf_x0, lf_y0 = to_crop(LF_LABEL_MASK_BOX[0], LF_LABEL_MASK_BOX[1])
+    lf_x1, lf_y1 = to_crop(LF_LABEL_MASK_BOX[2], LF_LABEL_MASK_BOX[3])
+    if lf_x1 > 0 and lf_y1 > 0 and lf_x0 < crop.width and lf_y0 < crop.height:
+        draw.rounded_rectangle([lf_x0, lf_y0, lf_x1, lf_y1], radius=9, fill=WHITE,
+                                outline=LABEL_BORDER, width=2)
+        f_label = font(20)
+        lbbox = draw.textbbox((0, 0), LF_LABEL_TEXT, font=f_label)
+        lw, lh = lbbox[2] - lbbox[0], lbbox[3] - lbbox[1]
+        lcx, lcy = (lf_x0 + lf_x1) / 2, (lf_y0 + lf_y1) / 2
+        draw.text((lcx - lw / 2 - lbbox[0], lcy - lh / 2 - lbbox[1]), LF_LABEL_TEXT, font=f_label, fill=BLACK)
 
     gx0, gy0 = to_crop(GW_LABEL_BOX[0], GW_LABEL_BOX[1])
     gx1, gy1 = to_crop(GW_LABEL_BOX[2], GW_LABEL_BOX[3])

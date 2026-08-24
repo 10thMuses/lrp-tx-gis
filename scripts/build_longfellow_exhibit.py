@@ -1,16 +1,20 @@
 #!/usr/bin/env python3
 """Annotate the Section 7 exhibit to spotlight the Longfellow / Project Horizon news.
 
-Project Horizon (Poolside + CoreWeave, announced Oct 2025) is tracked in
+Project Horizon (announced Oct 2025) is tracked in
 data/datacenters/dc_anchors.json as project-horizon-poolside-coreweave.
-CoreWeave terminated its anchor-tenant lease in Apr 2026; the site is now
-being developed by the spun-off Poolside Infrastructure Company, which is
-seeking a new anchor tenant. This script crops the existing exhibit_7_1
-raster (no live map capture in this sandbox — see
-scripts/capture_om_exhibits.py notes) to the Longfellow / Caramba North
-area and draws:
-  - a highlight ring around the "Longfellow — Project Horizon" map label
-  - a "COREWEAVE EXITED — APR 2026" callout badge
+Per instruction, OM/marketing materials do not surface tenant identity or
+tenant-change history for this site — the narrative is framed entirely
+around existing and planned power infrastructure (on-site gas generation,
+ERCOT/TCEQ filings). This script crops the existing exhibit_7_1 raster (no
+live map capture in this sandbox — see scripts/capture_om_exhibits.py
+notes) to the Longfellow / Caramba North area and draws:
+  - a solid mask over the base map's baked-in "Longfellow — Project
+    Horizon · Poolside / CoreWeave · 2 GW U/C" label (which names a
+    tenant that has since exited) and a redrawn, tenant-neutral label in
+    the same visual style
+  - a highlight ring around that redrawn label
+  - an "ON-SITE GAS GENERATION PLANNED" callout badge
   - a dashed line from the Caramba North site marker down to the actual
     Project Horizon anchor point (the mapped dot, not the label — the
     label is offset for legibility), labeled with the straight-line
@@ -42,7 +46,9 @@ OUT = REPO / "outputs" / "reports" / "om_exhibits" / "exhibit_longfellow.jpg"
 
 # Pixel positions in the SOURCE raster (2400x1374), located by inspection.
 CROP_BOX = (930, 695, 1810, 1010)
-LF_LABEL_BOX = (966, 796, 1733, 835)      # "Longfellow — Project Horizon · Poolside / CoreWeave · 2 GW U/C"
+LF_LABEL_BOX = (966, 796, 1733, 835)      # visible white label pill (interior)
+LF_LABEL_MASK_BOX = (963, 793, 1736, 838)  # full label pill incl. border — masked + relabeled
+LF_LABEL_TEXT = "Longfellow — Project Horizon · Gas Generation Site · 2 GW"
 CARAMBA_MARKER = (1202, 771)               # Caramba North site-boundary marker
 ANCHOR_DOT = (1193, 946)                   # actual Project Horizon anchor point (mapped dot)
 BADGE_CENTER_X = 1540                      # clear desert area right of the CARAMBA NORTH label box
@@ -50,6 +56,8 @@ BADGE_CENTER_X = 1540                      # clear desert area right of the CARA
 NAVY = (15, 27, 45, 255)
 RED = (185, 28, 28, 255)
 WHITE = (255, 255, 255, 255)
+LABEL_BORDER = (150, 152, 156, 255)
+BLACK = (20, 20, 22, 255)
 
 FONT_PATHS_BOLD = ["/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"]
 
@@ -79,9 +87,9 @@ def dashed_line(draw, p1, p2, color, width=5, dash=13, gap=9):
 
 
 def main():
-    model = D.build()
-    anchor = next(a for a in model["section7"]["anchors"] if a["id"] == "project-horizon-poolside-coreweave")
-    miles = anchor["miles"]
+    import build_insight_pack as IP
+    ins = IP.build()
+    miles = ins["distances_edge_to_edge"]["longfellow_mi"]  # edge-to-edge: tract boundary -> site
 
     im = Image.open(SRC).convert("RGB")
     crop = im.crop(CROP_BOX).convert("RGBA")
@@ -93,6 +101,17 @@ def main():
     overlay = Image.new("RGBA", crop.size, (0, 0, 0, 0))
     draw = ImageDraw.Draw(overlay)
     f_tag, f_dist = font(23), font(21)
+
+    # --- mask the baked-in base-map label (names an exited tenant) and ------
+    # --- redraw it tenant-neutral, matching the original pill style ---------
+    mx0, my0 = to_crop(LF_LABEL_MASK_BOX[0], LF_LABEL_MASK_BOX[1])
+    mx1, my1 = to_crop(LF_LABEL_MASK_BOX[2], LF_LABEL_MASK_BOX[3])
+    draw.rounded_rectangle([mx0, my0, mx1, my1], radius=9, fill=WHITE, outline=LABEL_BORDER, width=2)
+    f_label = font(20)
+    lbbox = draw.textbbox((0, 0), LF_LABEL_TEXT, font=f_label)
+    lw, lh = lbbox[2] - lbbox[0], lbbox[3] - lbbox[1]
+    lcx, lcy = (mx0 + mx1) / 2, (my0 + my1) / 2
+    draw.text((lcx - lw / 2 - lbbox[0], lcy - lh / 2 - lbbox[1]), LF_LABEL_TEXT, font=f_label, fill=BLACK)
 
     # --- highlight ring around the Longfellow map label ---------------------
     gx0, gy0 = to_crop(LF_LABEL_BOX[0], LF_LABEL_BOX[1])
@@ -106,8 +125,8 @@ def main():
             radius=14, outline=(RED[0], RED[1], RED[2], alpha), width=3)
     draw.rounded_rectangle([gx0 - pad, gy0 - pad, gx1 + pad, gy1 + pad], radius=12, outline=RED, width=4)
 
-    # --- "COREWEAVE EXITED" badge, offset right of the ring's top edge ------
-    text = "COREWEAVE EXITED — APR 2026"
+    # --- "ON-SITE GAS GENERATION" badge, offset right of the ring's top edge --
+    text = "ON-SITE GAS GENERATION PLANNED"
     bbox = draw.textbbox((0, 0), text, font=f_tag)
     tw, th = bbox[2] - bbox[0], bbox[3] - bbox[1]
     pad_x, pad_y = 16, 11
@@ -116,10 +135,10 @@ def main():
     badge_bottom = (gy0 - pad) - 12
     bx0 = badge_cx - badge_w / 2
     by0 = badge_bottom - badge_h
-    draw.rounded_rectangle([bx0, by0, bx0 + badge_w, by0 + badge_h], radius=10, fill=RED)
+    draw.rounded_rectangle([bx0, by0, bx0 + badge_w, by0 + badge_h], radius=10, fill=NAVY)
     draw.text((bx0 + pad_x - bbox[0], by0 + pad_y - bbox[1]), text, font=f_tag, fill=WHITE)
-    draw.line([(badge_cx, by0 + badge_h), (badge_cx, gy0 - pad)], fill=RED, width=3)
-    draw.polygon([(badge_cx - 6, gy0 - pad - 10), (badge_cx + 6, gy0 - pad - 10), (badge_cx, gy0 - pad)], fill=RED)
+    draw.line([(badge_cx, by0 + badge_h), (badge_cx, gy0 - pad)], fill=NAVY, width=3)
+    draw.polygon([(badge_cx - 6, gy0 - pad - 10), (badge_cx + 6, gy0 - pad - 10), (badge_cx, gy0 - pad)], fill=NAVY)
 
     # --- distance line: Caramba marker -> actual Project Horizon anchor -----
     p1 = to_crop(*CARAMBA_MARKER)
