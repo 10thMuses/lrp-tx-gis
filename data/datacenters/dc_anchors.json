@@ -6,16 +6,36 @@
     {
       "id": "project-horizon-poolside-coreweave",
       "name": "Project Horizon",
-      "developer": "Poolside (anchor tenant: CoreWeave)",
+      "developer": "Poolside Infrastructure Company (spun-off infra entity; original AI-lab anchor tenant CoreWeave exited Apr 2026)",
       "county": "Pecos",
       "lat": 30.62,
       "lon": -103.02,
       "coord_accuracy": "approximate",
-      "status": "under_construction",
+      "status": "seeking anchor tenant / phase 1 construction",
       "capacity_mw_announced": 2000,
       "commissioned_target": 2027,
-      "power_source": "Behind-the-meter natural gas (aero-derivative turbines with SCR); air-cooled; dual long-haul fiber; 568 acres on Longfellow Ranch (Mitchell family); 8 phases of 250 MW; CoreWeave anchor lease 250 MW expandable to 500 MW.",
+      "power_source": "Behind-the-meter natural gas (aero-derivative turbines with SCR + carbon-capture capability); closed-loop cooling on permitted non-potable groundwater; 568-acre Longfellow Ranch site (Mitchell family), ~25 miles from Fort Stockton. Announced Oct 2025 as a 2 GW, 8-phase (250 MW each) campus anchored by CoreWeave (250 MW / 15-yr lease, expandable to 500 MW, plus 40,000+ Nvidia GB300 NVL72 GPUs). CoreWeave terminated the deal in Apr 2026 — Poolside missed the GPU cluster stand-up timeline and its Series C fundraise fell through; CoreWeave cited a shift toward multi-tenant flexibility after securing an $8.5B Meta-backed loan facility. Poolside's infrastructure arm (renamed Poolside Infrastructure Company, new CFO named Jul 2026) is now developing the site independent of the AI lab and courting new anchor tenants (Google talks reported, then lapsed) at a revised ~1.2 GW initial phase scaling toward ~7 GW long-run. No confirmed ERCOT interconnection queue position or TCEQ air-permit record found for this site as of Aug 2026 — consistent with the original behind-the-meter design, but also consistent with a project still short an anchor tenant.",
       "sources": [
+        {
+          "url": "https://www.datacenterdynamics.com/en/news/poolside-seeks-partners-for-data-center-in-texas-after-coreweave-deal-falls-apart/",
+          "accessed": "2026-08-23",
+          "claim": "CoreWeave's deal with Poolside for Project Horizon fell apart; Poolside now seeking new partners for the Texas site."
+        },
+        {
+          "url": "https://mlq.ai/news/coreweave-ends-2-gw-texas-data-center-deal-with-poolside/",
+          "accessed": "2026-08-23",
+          "claim": "CoreWeave ended the 2 GW Project Horizon deal in Apr 2026, ~6 months after announcement; cited differing strategic direction after its $8.5B Meta-backed loan facility enabled a shift to multi-tenant deals; Poolside actively seeking a new anchor tenant."
+        },
+        {
+          "url": "https://www.forbes.com/sites/davidblackmon/2026/06/02/west-texas-data-center-project-addresses-activist-concerns-head-on/",
+          "accessed": "2026-08-23",
+          "claim": "As of Jun 2026, project targets 1.2 GW initial capacity scaling toward ~7 GW across 8 phases; on-site aero-derivative gas turbines with SCR and carbon-capture capability; closed-loop cooling on permitted non-potable groundwater; site ~25 miles from Fort Stockton; CEO Robert Bonar quoted on turbine delivery timeline and community/water commitments."
+        },
+        {
+          "url": "https://www.citybiz.co/article/890150/poolside-infrastructure-company-names-justin-lagasse-chief-financial-officer/",
+          "accessed": "2026-08-23",
+          "claim": "Poolside Infrastructure Company (the spun-off infrastructure entity continuing to develop the Texas site) named Justin Lagasse as CFO, Jul 2026 — confirms the project continues under a distinct infra entity after the CoreWeave exit."
+        },
         {
           "url": "https://poolside.ai/blog/announcing-project-horizon",
           "accessed": "2026-04-25",
@@ -126,16 +146,31 @@
     {
       "id": "gw-ranch-pacifico-pecos",
       "name": "GW Ranch",
-      "developer": "Pacifico Energy Group (San Juan Capistrano, CA)",
+      "developer": "Amazon (site owner, disclosed Aug 2026); Pacifico Energy Group (power-plant developer/operator, San Juan Capistrano, CA)",
       "county": "Pecos",
       "lat": 31.14,
       "lon": -102.88,
       "coord_accuracy": "approximate",
-      "status": "permitted",
+      "status": "under_construction",
       "capacity_mw_announced": 7650,
       "commissioned_target": 2027,
-      "power_source": "Off-grid private-grid campus on 8,000+ acres approximately 17 miles north of Fort Stockton (one source cites 33 mi south — direction conflict noted). TCEQ air permit for 7.65 GW gas-fired generation (largest US air permit, issued Jan/Feb 2026) plus 1.8 GW battery storage and 750 MWac solar. First power H1 2027; 1 GW online 2028; 5+ GW by 2031. Independent of ERCOT.",
+      "power_source": "8,000-acre campus ~17 miles north of Fort Stockton. Amazon acquired the site from Pacifico Energy Group and disclosed ownership in Aug 2026; Pacifico remains the power-plant developer/operator, selling generation to Amazon. Off-grid initially — 35 natural gas turbines, TCEQ air permit for 7.65 GW (largest in the US, issued Jan/Feb 2026, up to 33M tons GHG/yr and 12,000+ tons regulated pollutants/yr) plus 1.8 GW battery storage and up to 750 MWac solar. Three 189,000 sq ft data-center buildings (Gensler design, ~$300M each, targeted Dec 2026); total project investment estimated ~$12B. First power H1 2027; 1 GW online 2028; 5+ GW by 2031. Amazon has not disclosed an ERCOT large-load interconnection filing or queue position — exploring transition from off-grid to grid-connected service. Subject to Texas Gov. Abbott's Aug 3, 2026 data-center permitting pause pending state audits.",
       "sources": [
+        {
+          "url": "https://www.enr.com/articles/63464-amazon-discloses-ownership-of-gw-ranch-giant-texas-data-center-power-complex",
+          "accessed": "2026-08-23",
+          "claim": "Amazon discloses ownership of the 8,000-acre GW Ranch site; three 189,000 sq ft data-center buildings, ~$300M each, Gensler design, targeted completion Dec 2026; ~$12B estimated total project investment; TCEQ permits up to 33M tons GHG/yr and 12,000+ tons regulated pollutants/yr; subject to Texas data-center permitting pause pending audits (Aug 3, 2026)."
+        },
+        {
+          "url": "https://www.datacenterdynamics.com/en/news/amazon-acquires-8000-acre-site-in-pecos-texas-for-natural-gas-powered-behind-the-meter-data-center-report/",
+          "accessed": "2026-08-23",
+          "claim": "Amazon acquired the 8,000+ acre GW Ranch site from Pacifico Energy; 35-turbine, 7.65 GW natural-gas plant plus 1.8 GW battery and 750 MW solar; three construction permits filed with Texas authorities in Aug 2026."
+        },
+        {
+          "url": "https://www.datacenterknowledge.com/energy-power-supply/amazon-explores-grid-connection-for-8-000-acre-ai-campus",
+          "accessed": "2026-08-23",
+          "claim": "Amazon has not disclosed an ERCOT large-load interconnection request or queue position; exploring transition from behind-the-meter to grid-connected service. Site ~17 miles north of Fort Stockton; first power Q1 2027, 1 GW by 2028, 5+ GW by 2031."
+        },
         {
           "url": "https://www.pacificoenergy.com/gw-ranch",
           "accessed": "2026-04-25",
