@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 400" width="560" height="400">
+<rect width="560" height="400" fill="#0E141A"/>
+<text x="38.0" y="26.0" font-family="IBM Plex Sans, Helvetica Neue, Arial, sans-serif" font-size="15.5" font-weight="600" fill="#E8EDF2" text-anchor="start" letter-spacing="-0.1">ERCOT large-load interconnection queue</text>
+<text x="38.0" y="45.0" font-family="IBM Plex Mono, SFMono-Regular, Consolas, monospace" font-size="11.5" font-weight="400" fill="#6B7885" text-anchor="start" letter-spacing="0">Gigawatts of pending requests · public reporting</text>
+<path d="M58,326.0 H526" stroke="#1C252E" stroke-width="1"/>
+<text x="48.0" y="326.0" font-family="IBM Plex Mono, SFMono-Regular, Consolas, monospace" font-size="10.5" font-weight="400" fill="#6B7885" text-anchor="end" letter-spacing="0" dominant-baseline="central">0</text>
+<path d="M58,263.0 H526" stroke="#1C252E" stroke-width="1"/>
+<text x="48.0" y="263.0" font-family="IBM Plex Mono, SFMono-Regular, Consolas, monospace" font-size="10.5" font-weight="400" fill="#6B7885" text-anchor="end" letter-spacing="0" dominant-baseline="central">125</text>
+<path d="M58,200.0 H526" stroke="#1C252E" stroke-width="1"/>
+<text x="48.0" y="200.0" font-family="IBM Plex Mono, SFMono-Regular, Consolas, monospace" font-size="10.5" font-weight="400" fill="#6B7885" text-anchor="end" letter-spacing="0" dominant-baseline="central">250</text>
+<path d="M58,137.0 H526" stroke="#1C252E" stroke-width="1"/>
+<text x="48.0" y="137.0" font-family="IBM Plex Mono, SFMono-Regular, Consolas, monospace" font-size="10.5" font-weight="400" fill="#6B7885" text-anchor="end" letter-spacing="0" dominant-baseline="central">375</text>
+<path d="M58,74.0 H526" stroke="#1C252E" stroke-width="1"/>
+<text x="48.0" y="74.0" font-family="IBM Plex Mono, SFMono-Regular, Consolas, monospace" font-size="10.5" font-weight="400" fill="#6B7885" text-anchor="end" letter-spacing="0" dominant-baseline="central">500</text>
+<path d="M99.0,326.0 V298.2 Q99.0,294.2 103.0,294.2 H169.0 Q173.0,294.2 173.0,298.2 V326.0 Z" fill="#333F4B"/>
+<text x="136.0" y="283.2" font-family="IBM Plex Sans, Helvetica Neue, Arial, sans-serif" font-size="21" font-weight="600" fill="#9BA8B6" text-anchor="middle" letter-spacing="-0.3">63</text>
+<text x="136.0" y="346.0" font-family="IBM Plex Mono, SFMono-Regular, Consolas, monospace" font-size="11.5" font-weight="400" fill="#9BA8B6" text-anchor="middle" letter-spacing="0">End 2024</text>
+<path d="M255.0,326.0 V216.1 Q255.0,212.1 259.0,212.1 H325.0 Q329.0,212.1 329.0,216.1 V326.0 Z" fill="#333F4B"/>
+<text x="292.0" y="201.1" font-family="IBM Plex Sans, Helvetica Neue, Arial, sans-serif" font-size="21" font-weight="600" fill="#9BA8B6" text-anchor="middle" letter-spacing="-0.3">226</text>
+<text x="292.0" y="346.0" font-family="IBM Plex Mono, SFMono-Regular, Consolas, monospace" font-size="11.5" font-weight="400" fill="#9BA8B6" text-anchor="middle" letter-spacing="0">Nov 2025</text>
+<path d="M411.0,326.0 V91.1 Q411.0,87.1 415.0,87.1 H481.0 Q485.0,87.1 485.0,91.1 V326.0 Z" fill="#B03A2E"/>
+<text x="448.0" y="76.1" font-family="IBM Plex Sans, Helvetica Neue, Arial, sans-serif" font-size="21" font-weight="600" fill="#E8EDF2" text-anchor="middle" letter-spacing="-0.3">474</text>
+<text x="448.0" y="346.0" font-family="IBM Plex Mono, SFMono-Regular, Consolas, monospace" font-size="11.5" font-weight="400" fill="#9BA8B6" text-anchor="middle" letter-spacing="0">Aug 2026</text>
+<path d="M58,326 H526" stroke="#6B7885" stroke-width="1.2"/>
+<text x="38.0" y="374.0" font-family="IBM Plex Sans, Helvetica Neue, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#9BA8B6" text-anchor="start" letter-spacing="0">~90% of the Aug 2026 backlog is data-center-driven —</text>
+<text x="38.0" y="389.0" font-family="IBM Plex Sans, Helvetica Neue, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#9BA8B6" text-anchor="start" letter-spacing="0">large enough to trigger a state audit and a queue pause.</text>
+</svg>

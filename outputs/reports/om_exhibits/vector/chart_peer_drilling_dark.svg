@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 420" width="880" height="420">
+<rect width="880" height="420" fill="#0E141A"/>
+<text x="108.0" y="26.0" font-family="IBM Plex Sans, Helvetica Neue, Arial, sans-serif" font-size="15.5" font-weight="600" fill="#E8EDF2" text-anchor="start" letter-spacing="-0.1">New-drill wellbore events since 2020</text>
+<text x="108.0" y="45.0" font-family="IBM Plex Mono, SFMono-Regular, Consolas, monospace" font-size="11.5" font-weight="400" fill="#6B7885" text-anchor="start" letter-spacing="0">Pecos County vs. six comparable Permian counties · RRC dbf900</text>
+<path d="M595.8,54.0 V372.0" stroke="#6B7885" stroke-width="1.2" stroke-dasharray="4 4"/>
+<text x="595.8" y="48.0" font-family="IBM Plex Mono, SFMono-Regular, Consolas, monospace" font-size="10.5" font-weight="400" fill="#6B7885" text-anchor="middle" letter-spacing="0">peer avg 1,181</text>
+<path d="M108.0,62.0 H800.0 Q804.0,62.0 804.0,66.0 V93.7 Q804.0,97.7 800.0,97.7 H108.0 Z" fill="#333F4B"/>
+<text x="96.0" y="79.9" font-family="IBM Plex Sans, Helvetica Neue, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#9BA8B6" text-anchor="end" letter-spacing="0" dominant-baseline="central">Martin</text>
+<text x="814.0" y="79.9" font-family="IBM Plex Mono, SFMono-Regular, Consolas, monospace" font-size="12.5" font-weight="400" fill="#9BA8B6" text-anchor="start" letter-spacing="0" dominant-baseline="central">1,685</text>
+<path d="M108.0,106.7 H752.1 Q756.1,106.7 756.1,110.7 V138.4 Q756.1,142.4 752.1,142.4 H108.0 Z" fill="#333F4B"/>
+<text x="96.0" y="124.6" font-family="IBM Plex Sans, Helvetica Neue, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#9BA8B6" text-anchor="end" letter-spacing="0" dominant-baseline="central">Midland</text>
+<text x="766.1" y="124.6" font-family="IBM Plex Mono, SFMono-Regular, Consolas, monospace" font-size="12.5" font-weight="400" fill="#9BA8B6" text-anchor="start" letter-spacing="0" dominant-baseline="central">1,569</text>
+<path d="M108.0,151.4 H567.0 Q571.0,151.4 571.0,155.4 V183.1 Q571.0,187.1 567.0,187.1 H108.0 Z" fill="#333F4B"/>
+<text x="96.0" y="169.3" font-family="IBM Plex Sans, Helvetica Neue, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#9BA8B6" text-anchor="end" letter-spacing="0" dominant-baseline="central">Loving</text>
+<text x="607.8" y="169.3" font-family="IBM Plex Mono, SFMono-Regular, Consolas, monospace" font-size="12.5" font-weight="400" fill="#9BA8B6" text-anchor="start" letter-spacing="0" dominant-baseline="central">1,121</text>
+<path d="M108.0,196.1 H538.9 Q542.9,196.1 542.9,200.1 V227.9 Q542.9,231.9 538.9,231.9 H108.0 Z" fill="#333F4B"/>
+<text x="96.0" y="214.0" font-family="IBM Plex Sans, Helvetica Neue, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#9BA8B6" text-anchor="end" letter-spacing="0" dominant-baseline="central">Reeves</text>
+<text x="607.8" y="214.0" font-family="IBM Plex Mono, SFMono-Regular, Consolas, monospace" font-size="12.5" font-weight="400" fill="#9BA8B6" text-anchor="start" letter-spacing="0" dominant-baseline="central">1,053</text>
+<path d="M108.0,240.9 H512.9 Q516.9,240.9 516.9,244.9 V272.6 Q516.9,276.6 512.9,276.6 H108.0 Z" fill="#333F4B"/>
+<text x="96.0" y="258.7" font-family="IBM Plex Sans, Helvetica Neue, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#9BA8B6" text-anchor="end" letter-spacing="0" dominant-baseline="central">Howard</text>
+<text x="526.9" y="258.7" font-family="IBM Plex Mono, SFMono-Regular, Consolas, monospace" font-size="12.5" font-weight="400" fill="#9BA8B6" text-anchor="start" letter-spacing="0" dominant-baseline="central">990</text>
+<path d="M108.0,285.6 H379.9 Q383.9,285.6 383.9,289.6 V317.3 Q383.9,321.3 379.9,321.3 H108.0 Z" fill="#333F4B"/>
+<text x="96.0" y="303.4" font-family="IBM Plex Sans, Helvetica Neue, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#9BA8B6" text-anchor="end" letter-spacing="0" dominant-baseline="central">Reagan</text>
+<text x="393.9" y="303.4" font-family="IBM Plex Mono, SFMono-Regular, Consolas, monospace" font-size="12.5" font-weight="400" fill="#9BA8B6" text-anchor="start" letter-spacing="0" dominant-baseline="central">668</text>
+<path d="M108.0,330.3 H151.5 Q155.5,330.3 155.5,334.3 V362.0 Q155.5,366.0 151.5,366.0 H108.0 Z" fill="#B03A2E"/>
+<text x="96.0" y="348.1" font-family="IBM Plex Sans, Helvetica Neue, Arial, sans-serif" font-size="12.5" font-weight="600" fill="#E8EDF2" text-anchor="end" letter-spacing="0" dominant-baseline="central">Pecos</text>
+<text x="165.5" y="348.1" font-family="IBM Plex Mono, SFMono-Regular, Consolas, monospace" font-size="12.5" font-weight="600" fill="#E8EDF2" text-anchor="start" letter-spacing="0" dominant-baseline="central">115</text>
+<text x="108.0" y="398.0" font-family="IBM Plex Sans, Helvetica Neue, Arial, sans-serif" font-size="12" font-weight="500" fill="#9BA8B6" text-anchor="start" letter-spacing="0">Pecos is the lowest of the seven — roughly 90% below the peer average.</text>
+</svg>

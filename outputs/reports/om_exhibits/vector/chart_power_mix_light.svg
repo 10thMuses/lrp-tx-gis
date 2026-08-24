@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 310" width="620" height="310">
+<rect width="620" height="310" fill="#FBFAF7"/>
+<text x="30.0" y="26.0" font-family="IBM Plex Sans, Helvetica Neue, Arial, sans-serif" font-size="15.5" font-weight="600" fill="#12181F" text-anchor="start" letter-spacing="-0.1">Pecos County operating capacity</text>
+<text x="30.0" y="45.0" font-family="IBM Plex Mono, SFMono-Regular, Consolas, monospace" font-size="11.5" font-weight="400" fill="#8A939D" text-anchor="start" letter-spacing="0">Megawatts in service · EIA-860</text>
+<path d="M92.0,74.0 H406.0 Q410.0,74.0 410.0,78.0 V109.2 Q410.0,113.2 406.0,113.2 H92.0 Z" fill="#0E6E9C"/>
+<text x="80.0" y="93.6" font-family="IBM Plex Sans, Helvetica Neue, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#4A545F" text-anchor="end" letter-spacing="0" dominant-baseline="central">Solar</text>
+<text x="420.0" y="93.6" font-family="IBM Plex Mono, SFMono-Regular, Consolas, monospace" font-size="12" font-weight="500" fill="#12181F" text-anchor="start" letter-spacing="0" dominant-baseline="central">2,178 MW</text>
+<text x="596.0" y="93.6" font-family="IBM Plex Mono, SFMono-Regular, Consolas, monospace" font-size="11" font-weight="400" fill="#8A939D" text-anchor="end" letter-spacing="0" dominant-baseline="central">13 proj.</text>
+<path d="M92.0,124.2 H167.1 Q171.1,124.2 171.1,128.2 V159.5 Q171.1,163.5 167.1,163.5 H92.0 Z" fill="#0E6E9C"/>
+<text x="80.0" y="143.9" font-family="IBM Plex Sans, Helvetica Neue, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#4A545F" text-anchor="end" letter-spacing="0" dominant-baseline="central">Wind</text>
+<text x="181.1" y="143.9" font-family="IBM Plex Mono, SFMono-Regular, Consolas, monospace" font-size="12" font-weight="500" fill="#12181F" text-anchor="start" letter-spacing="0" dominant-baseline="central">542 MW</text>
+<text x="596.0" y="143.9" font-family="IBM Plex Mono, SFMono-Regular, Consolas, monospace" font-size="11" font-weight="400" fill="#8A939D" text-anchor="end" letter-spacing="0" dominant-baseline="central">5 proj.</text>
+<path d="M92.0,174.5 H161.7 Q165.7,174.5 165.7,178.5 V209.8 Q165.7,213.8 161.7,213.8 H92.0 Z" fill="#0E6E9C"/>
+<text x="80.0" y="194.1" font-family="IBM Plex Sans, Helvetica Neue, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#4A545F" text-anchor="end" letter-spacing="0" dominant-baseline="central">Storage</text>
+<text x="175.7" y="194.1" font-family="IBM Plex Mono, SFMono-Regular, Consolas, monospace" font-size="12" font-weight="500" fill="#12181F" text-anchor="start" letter-spacing="0" dominant-baseline="central">505 MW</text>
+<text x="596.0" y="194.1" font-family="IBM Plex Mono, SFMono-Regular, Consolas, monospace" font-size="11" font-weight="400" fill="#8A939D" text-anchor="end" letter-spacing="0" dominant-baseline="central">6 proj.</text>
+<path d="M92.0,224.8 H92.0 Q94.0,224.8 94.0,226.8 V262.0 Q94.0,264.0 92.0,264.0 H92.0 Z" fill="#0E6E9C"/>
+<text x="80.0" y="244.4" font-family="IBM Plex Sans, Helvetica Neue, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#4A545F" text-anchor="end" letter-spacing="0" dominant-baseline="central">Gas</text>
+<text x="104.0" y="244.4" font-family="IBM Plex Mono, SFMono-Regular, Consolas, monospace" font-size="12" font-weight="500" fill="#12181F" text-anchor="start" letter-spacing="0" dominant-baseline="central">1 MW</text>
+<text x="596.0" y="244.4" font-family="IBM Plex Mono, SFMono-Regular, Consolas, monospace" font-size="11" font-weight="400" fill="#8A939D" text-anchor="end" letter-spacing="0" dominant-baseline="central">1 proj.</text>
+<text x="30.0" y="294.0" font-family="IBM Plex Sans, Helvetica Neue, Arial, sans-serif" font-size="11.5" font-weight="500" fill="#4A545F" text-anchor="start" letter-spacing="0">3,226 MW operating today; 12,039 MW queued in this county alone.</text>
+</svg>

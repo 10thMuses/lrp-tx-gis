@@ -381,3 +381,118 @@ stays the anchor neutral and reds are reserved for the two feature
 call-outs), different information density, different map/exhibit sizing.
 Reuse the exhibit image files as-is; do not reuse slide layouts verbatim
 across styles.
+
+---
+
+# PART II — v2 BUILD SYSTEM (supersedes §5–§7a for the 2026-08 rebuild)
+
+The first pass was rejected on design: fonts, map quality, and layout. Part II
+replaces the toolchain. **§0–§4 (the facts, the rules, the subheading
+requirement, the distance methodology) are unchanged and still binding.**
+
+## 9. What changed and why
+
+- **Output is HTML → Chromium → PDF, not pptx/docx.** The complaint was
+  typographic; Office substitutes fonts silently and cannot be trusted to
+  render a type system. The faces are embedded as base64 `@font-face`, so the
+  PDF is identical wherever it opens. The HTML source ships alongside as the
+  editable artifact.
+- **Maps are vector, built from the GIS layers** — no more screenshot crops.
+  `scripts/extract_map_geometry.py` pulls real geometry (tract, GW Ranch,
+  Longfellow and La Escalera ranch polygons, HIFLD transmission, ERCOT queue,
+  TIGER highways, Solstice substation) into a JSON bundle;
+  `scripts/build_vector_maps.py` draws it as SVG with full control of type,
+  weight, label placement and color.
+- **No Cambria / Calibri / Arial / Inter anywhere.** Each system has its own
+  pairing (§11).
+
+## 10. Shared modules — use these, do not re-derive
+
+`scripts/om2/om_theme.py`:
+
+| Name | What it gives you |
+|---|---|
+| `SYSTEMS[key]` | palette + type stacks for your assigned system (§11) |
+| `document(system, pages_html, orientation, title)` | full print-ready HTML doc |
+| `svg(name)` | inlines a vector exhibit, scaled to its parent box |
+| `render_pdf(html_path, pdf_path)` | Chromium print-to-PDF |
+| `SLIDE_W, SLIDE_H` | 1280 × 720 (13.333 × 7.5 in landscape) |
+| `PAGE_W, PAGE_H` | 816 × 1056 (8.5 × 11 in portrait) |
+
+Each page is a `<div class="page">` sized exactly `SLIDE_W×SLIDE_H` (or
+`PAGE_W×PAGE_H`); `document()` handles `@page`, fonts and page breaks.
+Helper classes: `.d` display face, `.m` mono face (tabular numerals).
+
+`scripts/om2/om_charts.py` — the chart exhibits, already built.
+
+**Available vector exhibits** (pass the bare name to `svg()`):
+
+| Name | Size | Use |
+|---|---|---|
+| `corridor_light` / `_dark` | 1360×860 | regional map WITH its own callout rail — use where it can run large and the page supplies no copy |
+| `corridor_wide_light` / `_dark` | 1180×600 | regional map, no rail — wide slots |
+| `corridor_bare_light` / `_dark` | 900×640 | regional map, no rail — squarer slots |
+| `chart_rings_light` / `_dark` | 620×620 | cumulative GW by radius — the flagship visual |
+| `chart_peer_drilling_light` / `_dark` | 880×420 | Pecos vs. 6 peer counties — the strongest subsurface stat |
+| `chart_queue_growth_light` / `_dark` | 560×400 | ERCOT queue 63 → 226 → 474 GW |
+| `chart_maturity_light` / `_dark` | 560×190 | 79.3% under construction / 20.7% planned |
+| `chart_power_mix_light` / `_dark` | 560×310 | Pecos operating capacity by technology |
+
+Match the light/dark variant to your page ground. Aspect ratios matter: an
+SVG in a box of a different aspect letterboxes. Size the container to the
+exhibit's ratio, or pick the variant whose ratio fits.
+
+Need a visual that does not exist? Build simple ones (timelines, distance
+bars, comparison strips, process diagrams) in **HTML/CSS inside the page** —
+that is usually better than a new SVG. Only add to `om_charts.py` for a real
+chart, and follow its existing spec (thin marks, rounded data-ends, 2px gaps,
+recessive axes, selective direct labels, no dual axis, no color-only
+identity). The palette `#B03A2E` / `#C08A10` / `#0E6E9C` is validated for
+colorblind separation on both grounds — do not substitute unvalidated hues.
+
+## 11. System assignments
+
+| Key | Display | Body | Mono | Ground |
+|---|---|---|---|---|
+| `institutional` | Newsreader | Public Sans | IBM Plex Mono | warm paper `#FBFAF7` |
+| `editorial` | Instrument Serif | IBM Plex Sans | IBM Plex Mono | dark `#0E141A` |
+| `technical` | IBM Plex Sans | IBM Plex Sans | IBM Plex Mono | cool `#F4F6F7` |
+| `minimal` | Archivo | Archivo | IBM Plex Mono | white `#FFFFFF` |
+| `brief_exec` | = institutional | | | portrait |
+| `brief_tech` | = technical | | | portrait |
+
+Red `#B03A2E` stays reserved for the subject site and the two feature
+anchors. Each system may lead with a different one of the three palette
+colors, but must not introduce new accent hues.
+
+## 12. Deliverables
+
+| Builder | Output stem (in `outputs/reports/`) | Pages | Character |
+|---|---|---|---|
+| `build_deck_institutional.py` | `Caramba-North-Deck-Institutional` | 16–18 | the "everything" version; dense stat tiles, tables, hairline rules |
+| `build_deck_editorial.py` | `Caramba-North-Deck-Editorial` | 12–14 | dark magazine; oversized display serif, the insight subheading IS the visual |
+| `build_deck_technical.py` | `Caramba-North-Deck-Technical` | 12–14 | drafting sheet; numbered sheets, tables, map/diagram-first, visible grid |
+| `build_deck_minimal.py` | `Caramba-North-Deck-Minimal` | 10–12 | one idea per page, oversized type, huge negative space |
+| `build_brief_exec.py` | `Caramba-North-Brief-Executive` | 5–6 | portrait prose memo, one topic per page, no tables |
+| `build_brief_technical.py` | `Caramba-North-Brief-Technical` | 5–6 | portrait, table/stat-grid driven, two-column where it fits |
+
+Each writes BOTH `<stem>.html` and `<stem>.pdf`.
+
+## 13. Mandatory QA before reporting done
+
+1. `python3 scripts/om2/<your_builder>.py` runs clean.
+2. `pdfinfo` — page count in range, page size 960×540 pt (landscape) or
+   612×792 pt (portrait).
+3. `pdftoppm -jpeg -r 100 <pdf> /tmp/<you>` then **look at every page** with
+   the Read tool. You are checking for: text overflowing its box, letterboxed
+   or squashed exhibits, collisions, orphaned headings, empty regions, and
+   any page where the display face did not load (it will look like Times).
+4. `grep` your own source for placeholder text (`TODO`, `Lorem`, `XXX`).
+5. Confirm against §0: no hyperbole; every heading has an insight subheading;
+   no CoreWeave or tenant mention anywhere; distances are 15.5 / 19.3 only —
+   17.3 and 19.7 appear ONLY inside the §4 methodology note.
+
+Fix what you find and re-render before reporting. Report what you built, what
+you fixed, and anything you could not resolve.
+
+**Do not touch git.** The orchestrating session handles version control.
