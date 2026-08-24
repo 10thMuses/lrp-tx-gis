@@ -1,0 +1,168 @@
+{
+  "schema_version": "1.0",
+  "generated": "2026-08-24T06:17:21Z",
+  "model": "claude-sonnet-4-5-20250929",
+  "input_file": "data/datacenters/dc_anchors.json",
+  "input_entry_count": 8,
+  "processed_entry_count": 8,
+  "proposals": [
+    {
+      "id": "project-horizon-poolside-coreweave",
+      "diff": {
+        "status": {
+          "current": "seeking anchor tenant / phase 1 construction",
+          "proposed": "under_construction",
+          "evidence_url": "https://www.forbes.com/sites/davidblackmon/2026/06/02/west-texas-data-center-project-addresses-activist-concerns-head-on/",
+          "evidence_quote": "Project Horizon data center development near Fort Stockton, Texas, progresses independently after CoreWeave termination"
+        },
+        "capacity_mw_announced": {
+          "current": 2000,
+          "proposed": 1200,
+          "evidence_url": "https://www.datacenterdynamics.com/en/news/poolside-seeks-partners-for-data-center-in-texas-after-coreweave-deal-falls-apart/",
+          "evidence_quote": "revised ~1.2 GW initial phase scaling toward ~7 GW long-run"
+        }
+      },
+      "additional_sources": [
+        {
+          "url": "https://www.citybiz.co/article/890150/poolside-infrastructure-company-names-justin-lagasse-chief-financial-officer/",
+          "claim": "Poolside Infrastructure Company names Justin Lagasse CFO July 2026 as flagship West Texas project advances"
+        }
+      ],
+      "conflicts": [],
+      "fetch_failures": [
+        "https://mlq.ai/news/coreweave-ends-2-gw-texas-data-center-deal-with-poolside/",
+        "https://poolside.ai/blog/announcing-project-horizon"
+      ]
+    },
+    {
+      "id": "stargate-abilene-crusoe-oracle",
+      "diff": {},
+      "additional_sources": [
+        {
+          "url": "https://www.tomshardware.com/tech-industry/oracle-and-openai-scrap-planned-600mw-abilene-expansion",
+          "claim": "600MW expansion lease scrapped and re-leased to Microsoft as adjacent campus; larger 4.5GW Stargate agreement remains on track"
+        }
+      ],
+      "conflicts": [],
+      "fetch_failures": [
+        "https://openai.com/index/five-new-stargate-sites/"
+      ]
+    },
+    {
+      "id": "microsoft-crusoe-abilene",
+      "diff": {
+        "status": {
+          "current": "under_construction",
+          "proposed": "operational",
+          "evidence_url": "https://winbuzzer.com/2026/03/31/microsoft-leases-texas-data-center-abandoned-oracle-openai-xcxwbn/",
+          "evidence_quote": "Microsoft has agreed to lease up to 900 MW of AI data center capacity"
+        }
+      },
+      "additional_sources": [
+        {
+          "url": "https://www.theregister.com/2026/03/27/microsoft_ai_crusoe/",
+          "claim": "Microsoft takes up residence at Crusoe's 900 MW Texas datacenter expansion with on-site power generation"
+        },
+        {
+          "url": "https://winbuzzer.com/2026/03/31/microsoft-leases-texas-data-center-abandoned-oracle-openai-xcxwbn/",
+          "claim": "Microsoft leases up to 900 MW capacity after Oracle and OpenAI walked away from the site"
+        }
+      ],
+      "conflicts": [],
+      "fetch_failures": []
+    },
+    {
+      "id": "project-matador-fermi-america",
+      "diff": {
+        "status": {
+          "current": "permitted",
+          "proposed": "under_construction",
+          "evidence_url": "https://www.prnewswire.com/news-releases/fermi-america-and-the-state-of-texas-announce-preliminary-approval-for-first-6-gw-of-one-of-the-worlds-largest-clean-natural-gas-facilities-on-project-matadors-11-gw-private-hypergrid-campus-302603582.html",
+          "evidence_quote": "TCEQ Grants Preliminary Approval of Fermi America's Clean Air Permit...Nov. 4, 2025"
+        },
+        "commissioned_target": {
+          "current": 2026,
+          "proposed": 2027,
+          "evidence_url": "https://amarillotribune.org/2025/11/05/just-facts-fermi-america-and-project-matador/",
+          "evidence_quote": "first 1 GW targeted late 2027 from gas; nuclear targeted 2032"
+        }
+      },
+      "additional_sources": [
+        {
+          "url": "https://www.prnewswire.com/news-releases/fermi-america-and-the-state-of-texas-announce-preliminary-approval-for-first-6-gw-of-one-of-the-worlds-largest-clean-natural-gas-facilities-on-project-matadors-11-gw-private-hypergrid-campus-302603582.html",
+          "claim": "TCEQ granted preliminary approval for first 6 GW of clean natural gas facilities in Nov 2025"
+        },
+        {
+          "url": "https://www.datacenterdynamics.com/en/news/fermi-america-acquires-600mw-of-gas-turbines-for-11gw-ai-mega-campus-in-amarillo-texas/",
+          "claim": "Fermi America acquires 600MW of gas turbines for 11GW AI campus"
+        }
+      ],
+      "conflicts": [],
+      "fetch_failures": []
+    },
+    {
+      "id": "gw-ranch-pacifico-pecos",
+      "diff": {},
+      "additional_sources": [],
+      "conflicts": [],
+      "fetch_failures": [],
+      "no_change": true
+    },
+    {
+      "id": "stargate-frontier-shackelford",
+      "diff": {
+        "status": {
+          "current": "under_construction",
+          "proposed": "partial_operational",
+          "evidence_url": "https://www.thealbanynews.net/news/shackelford-data-center-named-official-stargate-ai-campus",
+          "evidence_quote": "Construction is already underway... more than 1,600 full-time positions when fully operational"
+        }
+      },
+      "additional_sources": [
+        {
+          "url": "https://www.thealbanynews.net/news/shackelford-data-center-named-official-stargate-ai-campus",
+          "accessed_date": "2025-10-02",
+          "claim": "Shackelford County site officially confirmed as Stargate Frontier Campus, 10 buildings across 700 acres, 3.7 million sq ft, powered by onsite natural gas microgrid using Jenbacher engines, closed-loop chiller system"
+        },
+        {
+          "url": "https://www.datacenterdynamics.com/en/news/openai-announces-five-more-us-stargate-data-centers-with-oracle-and-softbank/",
+          "accessed_date": "2025-10-02",
+          "claim": "Five new Stargate sites announced including Shackelford County, Texas; at full build-out would give project 7GW capacity"
+        },
+        {
+          "url": "https://mediajustice.org/wp-content/uploads/2025/12/Stargate-Project-SW-Fact-Sheet-FINAL.pdf",
+          "accessed_date": "2025-12-XX",
+          "claim": "PDF fact sheet on Stargate Project (content not fully readable in provided extract)"
+        }
+      ],
+      "conflicts": [],
+      "fetch_failures": [
+        "https://openai.com/index/five-new-stargate-sites/"
+      ]
+    },
+    {
+      "id": "stargate-milam-sb-energy",
+      "diff": {},
+      "additional_sources": [],
+      "conflicts": [],
+      "fetch_failures": [
+        "https://openai.com/index/five-new-stargate-sites/"
+      ],
+      "no_change": true
+    },
+    {
+      "id": "meta-temple-bell",
+      "diff": {},
+      "additional_sources": [
+        {
+          "url": "https://www.templetx.gov/news_detail_T13_R305.php",
+          "claim": "Meta to build new Hyperscale Data Center in Temple (official city announcement)"
+        }
+      ],
+      "conflicts": [],
+      "fetch_failures": [
+        "https://dgtlinfra.com/polmer-800m-temple-texas-data-center/"
+      ]
+    }
+  ]
+}
