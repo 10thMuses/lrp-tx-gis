@@ -29,7 +29,39 @@ This repo (`lrp-tx-gis`) was identified as the correct home.
 
 ## What "move" means here
 
-**Only the schema definition moved. The data did not.**
+**UPDATE (2026-08-24): both schema and data have now moved.** The founder's
+explicit go-ahead — *"create a new su[per]base project for this if that is
+the most efficient way, without any content or data or process loss"* — was
+carried out in a follow-up session:
+
+- A new, dedicated Supabase project was created: **`rhglbwoxuzgwoptycspc`**
+  (project name `lrp-tx-gis-rig`), unrelated to and unconnected from the
+  10th-muses-app project.
+- This repo's baseline migration (below) was applied to that new project
+  and verified structurally identical to the source: 37/37 tables, 11/11
+  views, 4/4 functions, 4 triggers, 20/20 enums, and the same zero-policy
+  RLS posture on every table (including the 3 tables —
+  `power_cost_benchmark`, `indicator_normalisation`,
+  `indicator_applicability` — that have RLS OFF in the source, matched
+  exactly rather than "corrected").
+- All data — **7,031 rows across 36 populated tables** — was copied from
+  the original shared project into the new one and independently
+  verified: a table-by-table row-count match (source vs. target, all 36
+  non-empty tables exact), a matching aggregate total (7031 = 7031), and
+  content-level spot checks (server-side `jsonb` equality, not eyeballed)
+  across `rig`, `corporate_entity`, and the text-heavy `rig_valuation`
+  table. Source was re-verified unchanged (still 7031 rows) after the
+  copy — nothing was moved *out* of the original project, only copied.
+- Per the founder's explicit "do not delete" instruction, **the original
+  data in the shared 10th-muses-app Supabase project (`xvlpperttnedsduscgnq`)
+  was left fully in place** — this was a copy, not a cutover. The `rig`
+  schema now exists live, with identical data, in both projects.
+- The original discovery/decision context below (schema-only, no project
+  yet) describes the state as of 2026-08-23, one day before the data copy;
+  kept for the historical record rather than rewritten.
+
+Original schema-only note (2026-08-23, superseded by the above for the
+data question, still accurate for how the baseline migration was built):
 
 - The baseline migration in this repo captures structure only: tables,
   columns, types, constraints, indexes, views, functions, and triggers —
@@ -37,14 +69,6 @@ This repo (`lrp-tx-gis`) was identified as the correct home.
   stood on 2026-08-23 (`information_schema` / `pg_catalog`, plus
   `pg_get_viewdef` / `pg_get_functiondef` / `pg_get_triggerdef` for view,
   function, and trigger bodies).
-- The underlying rows — roughly 380 rig records and 51 corporate-entity
-  records, plus the contents of every other table — were **not** copied or
-  exported anywhere. As of this writing they still live only in the
-  original shared Supabase project, per the explicit "do not delete"
-  instruction above.
-- This repo has no Supabase project of its own yet. The migration file
-  documents the schema for whenever one is provisioned, and serves as an
-  audit-quality record in the meantime.
 - The 100 historical migrations that were applied live were never
   committed anywhere, so replaying them here under fabricated dates would
   misrepresent this repo's history. A single clean baseline capturing the
@@ -70,7 +94,9 @@ here.
 
 ## Status going forward
 
-This repo is now the source of truth for the `rig` **schema**. If/when this
-project gets its own Supabase (or other Postgres) instance, or if the
-underlying data is ever formally migrated over, that's a separate, explicit
-follow-up — not implied by this commit.
+This repo is the source of truth for the `rig` schema's **definition**. The
+live, running instance of both schema and data now lives in the dedicated
+Supabase project `rhglbwoxuzgwoptycspc` (see above) — this repo's migration
+file is what defines that project's structure going forward; any future
+schema change to the rig data model should land here first, the same way
+any other Supabase-backed repo's migrations work.
