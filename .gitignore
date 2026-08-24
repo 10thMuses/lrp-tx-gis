@@ -54,3 +54,6 @@ data/abatements/abatement_hits_*.csv
 # accidental `git add` cannot commit them.
 outputs/refresh/rrc_w1_*
 data/fracfocus/FracFocusCSV.zip
+
+# om2 build scratch — node_modules is symlinked in for the PDF renderer
+scripts/om2/node_modules
