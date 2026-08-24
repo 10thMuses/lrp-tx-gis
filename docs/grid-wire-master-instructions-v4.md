@@ -36,7 +36,7 @@ A national story is reported through its West Texas implication first when one e
 
 The coverage unit is the **category**, not the previously studied company or deal. Named entities are entry points, never boundaries. Every cut sweeps for **new entrants, new deals, new litigants, and new instruments** in each category with the same priority as established names. Over-emphasis on previously covered items (any single credit complex, any single conversion deal, any single lawsuit) is a defect.
 
-1. Sweep all 23 taxonomy domains per `docs/grid-wire-coverage-taxonomy.md`. Sub-sector granularity is the floor.
+1. Sweep all 23 taxonomy domains per `docs/grid-wire-coverage-taxonomy.md` (v2, 2026-08-24). **Sub-domain granularity is the floor** — the taxonomy carries 147 numbered sub-domains with per-row watch items, Part E entity floors, and E/T cadence marks. Sweep every E-marked sub-domain each cut; T-marked on reporting, deal, docket, or category-relevant news.
 2. Incremental rule: a domain with nothing new gets nothing. No padding, no restatement.
 3. Search order: primary sources first (EDGAR + credit-agreement exhibits, EIA, RRC, TCEQ, PUCT/ERCOT dockets, FERC, NRC, GCD agendas, courts/PACER/re:SearchTX, county records, company IR, transcripts), then trade press for data points only, flagged.
 4. Per-cut filing sweep: EDGAR full-text on the company universe + counterparty names + category keywords (powered land, site control, behind-the-meter, water rights, turbine slot), date-bounded to the incremental window; PUCT open projects touching large loads; ERCOT market notices; GCD agendas (Reeves, Middle Pecos, and adjacent districts); new docket filings across all trackers (Part D).
