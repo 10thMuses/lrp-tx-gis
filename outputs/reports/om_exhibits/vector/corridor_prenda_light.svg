@@ -213,19 +213,19 @@
 <path d="M1071.00,149.00 L1072.88,154.41 L1078.61,154.53 L1074.04,157.99 L1075.70,163.47 L1071.00,160.20 L1066.30,163.47 L1067.96,157.99 L1063.39,154.53 L1069.12,154.41 Z" fill="#B03A2E"/>
 <circle cx="1071" cy="179" r="11" fill="#B03A2E"/>
 <text x="1071" y="179" font-family="IBM Plex Mono, SFMono-Regular, Consolas, monospace" font-size="12" font-weight="600" fill="#FBFAF7" text-anchor="middle" dominant-baseline="central">1</text>
-<text x="1092" y="183" font-family="IBM Plex Sans, Helvetica Neue, Arial, sans-serif" font-size="16" font-weight="600" fill="#12181F" letter-spacing="-0.15">GW Ranch</text>
+<text x="1092" y="183" font-family="IBM Plex Sans, Helvetica Neue, Arial, sans-serif" font-size="16" font-weight="600" fill="#12181F" letter-spacing="-0.15">Amazon — 7.65 GW</text>
 <text x="1092" y="204" font-family="IBM Plex Mono, SFMono-Regular, Consolas, monospace" font-size="11.5" fill="#4A545F" letter-spacing="0.01">15.5 mi · under construction</text>
-<text x="1092" y="220" font-family="IBM Plex Mono, SFMono-Regular, Consolas, monospace" font-size="11.5" fill="#4A545F" letter-spacing="0.01">7.65 GW TCEQ air permit · Amazon</text>
+<text x="1092" y="220" font-family="IBM Plex Mono, SFMono-Regular, Consolas, monospace" font-size="11.5" fill="#4A545F" letter-spacing="0.01">TCEQ air permit · 35 gas turbines</text>
 <circle cx="1071" cy="260" r="11" fill="#C08A10"/>
 <text x="1071" y="260" font-family="IBM Plex Mono, SFMono-Regular, Consolas, monospace" font-size="12" font-weight="600" fill="#FBFAF7" text-anchor="middle" dominant-baseline="central">2</text>
-<text x="1092" y="264" font-family="IBM Plex Sans, Helvetica Neue, Arial, sans-serif" font-size="16" font-weight="600" fill="#12181F" letter-spacing="-0.15">Longfellow</text>
+<text x="1092" y="264" font-family="IBM Plex Sans, Helvetica Neue, Arial, sans-serif" font-size="16" font-weight="600" fill="#12181F" letter-spacing="-0.15">Second announced campus</text>
 <text x="1092" y="285" font-family="IBM Plex Mono, SFMono-Regular, Consolas, monospace" font-size="11.5" fill="#4A545F" letter-spacing="0.01">19.3 mi · phase-1 site work</text>
 <text x="1092" y="301" font-family="IBM Plex Mono, SFMono-Regular, Consolas, monospace" font-size="11.5" fill="#4A545F" letter-spacing="0.01">2 GW planned on-site gas generation</text>
 <circle cx="1071" cy="341" r="11" fill="#C08A10"/>
 <text x="1071" y="341" font-family="IBM Plex Mono, SFMono-Regular, Consolas, monospace" font-size="12" font-weight="600" fill="#FBFAF7" text-anchor="middle" dominant-baseline="central">3</text>
-<text x="1092" y="345" font-family="IBM Plex Sans, Helvetica Neue, Arial, sans-serif" font-size="16" font-weight="600" fill="#12181F" letter-spacing="-0.15">La Escalera Ranch</text>
-<text x="1092" y="366" font-family="IBM Plex Mono, SFMono-Regular, Consolas, monospace" font-size="11.5" fill="#4A545F" letter-spacing="0.01">Apex Clean Energy — Pecos Flat</text>
-<text x="1092" y="382" font-family="IBM Plex Mono, SFMono-Regular, Consolas, monospace" font-size="11.5" fill="#4A545F" letter-spacing="0.01">3.3 GW wind + solar + hydrogen</text>
+<text x="1092" y="345" font-family="IBM Plex Sans, Helvetica Neue, Arial, sans-serif" font-size="16" font-weight="600" fill="#12181F" letter-spacing="-0.15">Wind + solar + hydrogen</text>
+<text x="1092" y="366" font-family="IBM Plex Mono, SFMono-Regular, Consolas, monospace" font-size="11.5" fill="#4A545F" letter-spacing="0.01">3.3 GW announced position</text>
+<text x="1092" y="382" font-family="IBM Plex Mono, SFMono-Regular, Consolas, monospace" font-size="11.5" fill="#4A545F" letter-spacing="0.01">same catchment</text>
 <line x1="1060" y1="460" x2="1330" y2="460" stroke="#C5CBD1" stroke-width="1"/>
 <text x="1060" y="482" font-family="IBM Plex Mono, SFMono-Regular, Consolas, monospace" font-size="10.5" font-weight="600" fill="#8A939D" letter-spacing="0.14">OPERATING + ERCOT QUEUE</text>
 <text x="1060" y="516" font-family="IBM Plex Mono, SFMono-Regular, Consolas, monospace" font-size="12" fill="#8A939D">15 mi</text>

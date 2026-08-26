@@ -189,7 +189,8 @@
 <text x="604.9" y="463.4" font-family="IBM Plex Sans, Helvetica Neue, Arial, sans-serif" font-size="13" font-weight="500" fill="#9BA8B6" text-anchor="middle">Fort Stockton</text>
 <rect x="144.5" y="374.9" width="11" height="11" fill="#0E141A" stroke="#0E6E9C" stroke-width="2.4"/>
 <text x="150.0" y="366.4" font-family="IBM Plex Mono, SFMono-Regular, Consolas, monospace" font-size="11" font-weight="500" fill="#0E6E9C" text-anchor="middle" letter-spacing="0.06">SOLSTICE 765 kV</text>
-<circle cx="604.2" cy="169.7" r="13" fill="#C08A10" stroke="#0E141A" stroke-width="2.5"/>
+<path d="M604.24,135.24 L606.48,141.66 L613.28,141.80 L607.86,145.91 L609.83,152.42 L604.24,148.54 L598.66,152.42 L600.63,145.91 L595.21,141.80 L602.01,141.66 Z" fill="#B03A2E" stroke="#0E141A" stroke-width="1.6" stroke-linejoin="round"/>
+<circle cx="604.2" cy="169.7" r="13" fill="#B03A2E" stroke="#0E141A" stroke-width="2.5"/>
 <text x="604.2" y="169.7" font-family="IBM Plex Mono, SFMono-Regular, Consolas, monospace" font-size="13" font-weight="600" fill="#0E141A" text-anchor="middle" dominant-baseline="central">1</text>
 <circle cx="472.2" cy="741.2" r="13" fill="#C08A10" stroke="#0E141A" stroke-width="2.5"/>
 <text x="472.2" y="741.2" font-family="IBM Plex Mono, SFMono-Regular, Consolas, monospace" font-size="13" font-weight="600" fill="#0E141A" text-anchor="middle" dominant-baseline="central">2</text>
@@ -209,7 +210,8 @@
 <text x="1092" y="102" font-family="IBM Plex Sans, Helvetica Neue, Arial, sans-serif" font-size="16" font-weight="600" fill="#E8EDF2" letter-spacing="-0.15">CARAMBA NORTH</text>
 <text x="1092" y="123" font-family="IBM Plex Mono, SFMono-Regular, Consolas, monospace" font-size="11.5" fill="#9BA8B6" letter-spacing="0.01">1,300 contiguous acres · as-of-right</text>
 <text x="1092" y="139" font-family="IBM Plex Mono, SFMono-Regular, Consolas, monospace" font-size="11.5" fill="#9BA8B6" letter-spacing="0.01">I-10 frontage · 5 mi to Fort Stockton</text>
-<circle cx="1071" cy="179" r="11" fill="#C08A10"/>
+<path d="M1071.00,149.00 L1072.88,154.41 L1078.61,154.53 L1074.04,157.99 L1075.70,163.47 L1071.00,160.20 L1066.30,163.47 L1067.96,157.99 L1063.39,154.53 L1069.12,154.41 Z" fill="#B03A2E"/>
+<circle cx="1071" cy="179" r="11" fill="#B03A2E"/>
 <text x="1071" y="179" font-family="IBM Plex Mono, SFMono-Regular, Consolas, monospace" font-size="12" font-weight="600" fill="#0E141A" text-anchor="middle" dominant-baseline="central">1</text>
 <text x="1092" y="183" font-family="IBM Plex Sans, Helvetica Neue, Arial, sans-serif" font-size="16" font-weight="600" fill="#E8EDF2" letter-spacing="-0.15">GW Ranch</text>
 <text x="1092" y="204" font-family="IBM Plex Mono, SFMono-Regular, Consolas, monospace" font-size="11.5" fill="#9BA8B6" letter-spacing="0.01">15.5 mi · under construction</text>
