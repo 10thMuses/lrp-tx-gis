@@ -68,6 +68,22 @@ class Projection:
         return mi / 69.0 * self.scale
 
 
+def star_path(cx, cy, r_out, points=5, ratio=0.4):
+    """A five-point star as an SVG path.
+
+    Used to mark the one anchor that carries the most weight in the story.
+    Kept small and thin-stroked deliberately: it should read as a different
+    KIND of marker at a glance, not as a louder one.
+    """
+    import math
+    pts = []
+    for i in range(points * 2):
+        r = r_out if i % 2 == 0 else r_out * ratio
+        th = math.radians(-90 + i * 180.0 / points)
+        pts.append(f"{cx + r * math.cos(th):.2f},{cy + r * math.sin(th):.2f}")
+    return "M" + " L".join(pts) + " Z"
+
+
 def path_d(proj, coords, close=False):
     if not coords:
         return ""
@@ -190,7 +206,7 @@ def rings(o, proj, P, radii, center_px, label_angle_deg=48):
 # MAP 1 — Corridor: the tract, the two anchors, the grid, I-10
 # ---------------------------------------------------------------------------
 def map_corridor(data, width=1360, height=860, dark=False, span_mi=54, rail_w=330,
-                 show_rail=True, show_rings=True, anchors=3):
+                 show_rail=True, show_rings=True, anchors=3, pre_nda=False):
     """Map on the left, a numbered callout RAIL on the right.
 
     The rail is what makes this readable: numbered markers sit on the map,
@@ -329,16 +345,34 @@ def map_corridor(data, width=1360, height=860, dark=False, span_mi=54, rail_w=33
 
     # --- numbered markers on the map ---------------------------------------
     dist = data.get("distances", {})
-    entries = [
-        ("tract", "CARAMBA NORTH", ["1,300 contiguous acres · as-of-right",
-                                    "I-10 frontage · 5 mi to Fort Stockton"], P["accent"], None),
-        ("gw_ranch", "GW Ranch", [f'{dist.get("gw_ranch_mi", 15.5)} mi · under construction',
-                                  "7.65 GW TCEQ air permit · Amazon"], P["gold"], "1"),
-        ("longfellow_ranch", "Longfellow", [f'{dist.get("longfellow_mi", 19.3)} mi · phase-1 site work',
-                                            "2 GW planned on-site gas generation"], P["gold"], "2"),
-        ("la_escalera", "La Escalera Ranch", ["Apex Clean Energy — Pecos Flat",
-                                              "3.3 GW wind + solar + hydrogen"], P["gold"], "3"),
-    ][:anchors + 1]
+    if pre_nda:
+        # Pre-NDA variant: counterparty site names are withheld. Amazon's
+        # ownership is public reporting, so the operator is named while its
+        # site is not; the other positions are described by what they are.
+        entries = [
+            ("tract", "CARAMBA NORTH", ["1,300 contiguous acres · as-of-right",
+                                        "I-10 frontage · 5 mi to Fort Stockton"], P["accent"], None),
+            ("gw_ranch", "Amazon — 7.65 GW", [
+                f'{dist.get("gw_ranch_mi", 15.5)} mi · under construction',
+                "TCEQ air permit · 35 gas turbines"], P["accent"], "1"),
+            ("longfellow_ranch", "Second announced campus", [
+                f'{dist.get("longfellow_mi", 19.3)} mi · phase-1 site work',
+                "2 GW planned on-site gas generation"], P["gold"], "2"),
+            ("la_escalera", "Wind + solar + hydrogen", [
+                "3.3 GW announced position",
+                "same catchment"], P["gold"], "3"),
+        ][:anchors + 1]
+    else:
+        entries = [
+            ("tract", "CARAMBA NORTH", ["1,300 contiguous acres · as-of-right",
+                                        "I-10 frontage · 5 mi to Fort Stockton"], P["accent"], None),
+            ("gw_ranch", "GW Ranch", [f'{dist.get("gw_ranch_mi", 15.5)} mi · under construction',
+                                      "7.65 GW TCEQ air permit · Amazon"], P["accent"], "1"),
+            ("longfellow_ranch", "Longfellow", [f'{dist.get("longfellow_mi", 19.3)} mi · phase-1 site work',
+                                                "2 GW planned on-site gas generation"], P["gold"], "2"),
+            ("la_escalera", "La Escalera Ranch", ["Apex Clean Energy — Pecos Flat",
+                                                  "3.3 GW wind + solar + hydrogen"], P["gold"], "3"),
+        ][:anchors + 1]
 
     # Disclosed site coordinates, keyed to the ranch-polygon layer they sit in.
     # These are the same points every distance figure in the OM is measured to.
@@ -361,8 +395,15 @@ def map_corridor(data, width=1360, height=860, dark=False, span_mi=54, rail_w=33
                 continue
             lon, lat = poly_centroid(polys[0]["coords"])
             x, y = proj(lon, lat)
-        marks.append(dict(x=x, y=y, title=title, sub=sub, color=color, num=num))
+        marks.append(dict(x=x, y=y, title=title, sub=sub, color=color, num=num,
+                          star=(key == "gw_ranch")))
         if num is not None:
+            # The Amazon site is the single most consequential fact on this
+            # map, so it gets a star as well as its number -- a different
+            # mark, not a bigger one.
+            if key == "gw_ranch":
+                a(f'<path d="{star_path(x, y - 25, 9.5)}" fill="{color}" '
+                  f'stroke="{P["paper"]}" stroke-width="1.6" stroke-linejoin="round"/>')
             a(f'<circle cx="{x:.1f}" cy="{y:.1f}" r="13" fill="{color}" '
               f'stroke="{P["paper"]}" stroke-width="2.5"/>')
             a(f'<text x="{x:.1f}" y="{y:.1f}" font-family="{MONO}" font-size="13" '
@@ -394,6 +435,8 @@ def map_corridor(data, width=1360, height=860, dark=False, span_mi=54, rail_w=33
     for m in marks:
         y += 16
         if m["num"] is not None:
+            if m.get("star"):
+                a(f'<path d="{star_path(px + 11, y - 26, 8)}" fill="{m["color"]}"/>')
             a(f'<circle cx="{px+11}" cy="{y-4}" r="11" fill="{m["color"]}"/>')
             a(f'<text x="{px+11}" y="{y-4}" font-family="{MONO}" font-size="12" font-weight="600" '
               f'fill="{P["paper"]}" text-anchor="middle" dominant-baseline="central">{m["num"]}</text>')
@@ -473,6 +516,16 @@ def main():
     for dark, name in ((False, "corridor_bare_light"), (True, "corridor_bare_dark")):
         svg = map_corridor(data, width=900, height=640, dark=dark,
                            span_mi=52, show_rail=False, anchors=2)
+        (OUT_DIR / f"{name}.svg").write_text(svg, encoding="utf-8")
+        print(f"  {name}.svg  ({len(svg)//1024} KB)")
+    for dark, name in ((False, "corridor_prenda_light"),):
+        svg = map_corridor(data, width=1360, height=860, dark=dark, span_mi=54,
+                           anchors=3, pre_nda=True)
+        (OUT_DIR / f"{name}.svg").write_text(svg, encoding="utf-8")
+        print(f"  {name}.svg  ({len(svg)//1024} KB)")
+    for dark, name in ((False, "corridor_prenda_wide_light"),):
+        svg = map_corridor(data, width=1180, height=600, dark=dark, span_mi=46,
+                           show_rail=False, anchors=2, pre_nda=True)
         (OUT_DIR / f"{name}.svg").write_text(svg, encoding="utf-8")
         print(f"  {name}.svg  ({len(svg)//1024} KB)")
     for dark, name in ((False, "corridor_wide_light"), (True, "corridor_wide_dark")):
