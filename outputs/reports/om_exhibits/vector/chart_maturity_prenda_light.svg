@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 190" width="560" height="190">
+<rect width="560" height="190" fill="#FBFAF7"/>
+<text x="30.0" y="26.0" font-family="IBM Plex Sans, Helvetica Neue, Arial, sans-serif" font-size="15" font-weight="600" fill="#12181F" text-anchor="start" letter-spacing="-0.1">Announced capacity within 20 miles, by build status</text>
+<text x="30.0" y="45.0" font-family="IBM Plex Mono, SFMono-Regular, Consolas, monospace" font-size="11.5" font-weight="400" fill="#8A939D" text-anchor="start" letter-spacing="0">Share of 9,650 MW combined announced</text>
+<rect x="30.0" y="74" width="396.5" height="46" fill="#B03A2E"/>
+<text x="42.0" y="97.0" font-family="IBM Plex Sans, Helvetica Neue, Arial, sans-serif" font-size="18" font-weight="600" fill="#FFFFFF" text-anchor="start" letter-spacing="-0.2" dominant-baseline="central">79.3%</text>
+<path d="M428.5,74.0 H526.0 Q530.0,74.0 530.0,78.0 V116.0 Q530.0,120.0 526.0,120.0 H428.5 Z" fill="#C08A10"/>
+<text x="440.5" y="97.0" font-family="IBM Plex Sans, Helvetica Neue, Arial, sans-serif" font-size="18" font-weight="600" fill="#FFFFFF" text-anchor="start" letter-spacing="-0.2" dominant-baseline="central">20.7%</text>
+<rect x="30" y="141" width="10" height="10" rx="2" fill="#B03A2E"/>
+<text x="47.0" y="150.0" font-family="IBM Plex Sans, Helvetica Neue, Arial, sans-serif" font-size="12" font-weight="500" fill="#12181F" text-anchor="start" letter-spacing="0" dominant-baseline="central">Under construction</text>
+<text x="47.0" y="166.0" font-family="IBM Plex Mono, SFMono-Regular, Consolas, monospace" font-size="10.5" font-weight="400" fill="#8A939D" text-anchor="start" letter-spacing="0" dominant-baseline="central">Amazon site · 7,650 MW</text>
+<rect x="280" y="141" width="10" height="10" rx="2" fill="#C08A10"/>
+<text x="297.0" y="150.0" font-family="IBM Plex Sans, Helvetica Neue, Arial, sans-serif" font-size="12" font-weight="500" fill="#12181F" text-anchor="start" letter-spacing="0" dominant-baseline="central">Planned / phase 1</text>
+<text x="297.0" y="166.0" font-family="IBM Plex Mono, SFMono-Regular, Consolas, monospace" font-size="10.5" font-weight="400" fill="#8A939D" text-anchor="start" letter-spacing="0" dominant-baseline="central">Second campus · 2,000 MW</text>
+</svg>
