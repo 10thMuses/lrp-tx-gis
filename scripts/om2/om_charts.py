@@ -170,9 +170,13 @@ def chart_queue_growth(dark=False, w=560, h=400, transparent=False):
 RINGS = [(15, 0.48), (30, 8.9), (60, 32.72), (100, 53.5)]
 # true bearings from the tract centroid (deg) — the north/south symmetry
 SITES = [("GW RANCH", 19, 17.3, "15.5 mi"), ("LONGFELLOW", 188, 19.7, "19.3 mi")]
+# Pre-NDA: counterparty site names withheld. Amazon is named because its
+# ownership was public reporting; its site is not.
+SITES_PRENDA = [("AMAZON  7.65 GW", 19, 17.3, "15.5 mi"),
+                ("SECOND CAMPUS", 188, 19.7, "19.3 mi")]
 
 
-def chart_rings(dark=False, size=620, transparent=False):
+def chart_rings(dark=False, size=620, transparent=False, pre_nda=False):
     """Radial, because the data is radial: distance bands from one point.
 
     Radius uses a SQRT scale, not linear. On a linear scale the 15- and
@@ -221,7 +225,7 @@ def chart_rings(dark=False, size=620, transparent=False):
     txt(o, cx + 14, cy + 4, "CARAMBA NORTH", 11.5, P["ink"], SANS, "600",
         ls="0.06")
 
-    for name, bearing, dist, label in SITES:
+    for name, bearing, dist, label in (SITES_PRENDA if pre_nda else SITES):
         th = math.radians(bearing)
         rr = rad(dist)
         x, y = cx + rr * math.sin(th), cy - rr * math.cos(th)
@@ -239,9 +243,11 @@ def chart_rings(dark=False, size=620, transparent=False):
     txt(o, 22, 28, "Operating + ERCOT-queued capacity by radius", 14.5, P["ink"],
         SANS, "600", ls="-0.1")
     txt(o, 22, 46, "Cumulative, region-wide · EIA-860 + ERCOT queue", 11, P["ink45"], MONO)
-    txt(o, 22, size - 16,
-        "GW Ranch sits due north, Longfellow due south — the site is on the line between them.",
-        11, P["ink70"], SANS)
+    caption = ("The Amazon site sits due north, the second campus due south — "
+               "the property is on the line between them.") if pre_nda else (
+               "GW Ranch sits due north, Longfellow due south — "
+               "the site is on the line between them.")
+    txt(o, 22, size - 16, caption, 11, P["ink70"], SANS)
     o.append("</svg>")
     return "\n".join(o)
 
@@ -249,13 +255,17 @@ def chart_rings(dark=False, size=620, transparent=False):
 # ===========================================================================
 # 4. Project maturity — one stacked bar, 2 segments, 2px surface gap.
 # ===========================================================================
-def chart_maturity(dark=False, w=560, h=190, transparent=False):
+def chart_maturity(dark=False, w=560, h=190, transparent=False, pre_nda=False):
     P = DARK if dark else LIGHT
     o = head(w, h, P, transparent)
     L, R, T, bh = 30, 30, 74, 46
     plot_w = w - L - R
-    segs = [("Under construction", 79.3, RED, "GW Ranch · 7,650 MW"),
-            ("Planned / phase 1", 20.7, GOLD, "Longfellow · 2,000 MW")]
+    if pre_nda:
+        segs = [("Under construction", 79.3, RED, "Amazon site · 7,650 MW"),
+                ("Planned / phase 1", 20.7, GOLD, "Second campus · 2,000 MW")]
+    else:
+        segs = [("Under construction", 79.3, RED, "GW Ranch · 7,650 MW"),
+                ("Planned / phase 1", 20.7, GOLD, "Longfellow · 2,000 MW")]
 
     txt(o, L, 26, "Announced capacity within 20 miles, by build status", 15, P["ink"], SANS, "600", ls="-0.1")
     txt(o, L, 45, "Share of 9,650 MW combined announced", 11.5, P["ink45"], MONO)
@@ -333,8 +343,16 @@ CHARTS = {
 }
 
 
+PRENDA_CHARTS = {"chart_rings": chart_rings, "chart_maturity": chart_maturity}
+
+
 def main():
     OUT_DIR.mkdir(parents=True, exist_ok=True)
+    for name, fn in PRENDA_CHARTS.items():
+        for dark, suffix in ((False, "light"), (True, "dark")):
+            (OUT_DIR / f"{name}_prenda_{suffix}.svg").write_text(
+                fn(dark=dark, pre_nda=True), encoding="utf-8")
+        print(f"  {name}_prenda_{{light,dark}}.svg")
     for name, fn in CHARTS.items():
         for dark, suffix in ((False, "light"), (True, "dark")):
             svg = fn(dark=dark)

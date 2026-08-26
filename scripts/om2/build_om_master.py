@@ -237,17 +237,19 @@ def p22_divider():
     <div class="d" style="font-size:78px;font-weight:500;letter-spacing:-0.03em;
          line-height:1;color:{INK};margin-top:36px">Appendix A</div>
     <div class="d" style="font-size:34px;font-weight:400;letter-spacing:-0.02em;
-         line-height:1.2;color:{INK70};margin-top:16px">Technical Drawing Set</div>
-    <div class="d sub" style="font-size:19px;margin-top:26px;max-width:860px">
-      The same facts as the body, re-set at drawing-set density:
-      fifteen numbered sheets, each with its own title block, numbered tables
-      and framed figure plates.</div>
+         line-height:1.2;color:{INK70};margin-top:16px">
+      Technical Drawing Set &mdash; issued as a separate document</div>
+    <div class="d sub" style="font-size:19px;margin-top:26px;max-width:900px">
+      The same facts as the body, re-set at drawing-set density: fifteen numbered
+      sheets, each with its own title block, numbered tables and framed figure
+      plates. It travels as its own file so it can be circulated to technical
+      reviewers without the narrative sections.</div>
     <div class="rule" style="margin-top:34px;width:860px"></div>
     <div class="m" style="font-size:10px;letter-spacing:.2em;text-transform:uppercase;
          color:{INK45};margin-top:14px">
-      Sheets A-01 &nbsp;&ndash;&nbsp; A-15 &nbsp;·&nbsp;
-      Distance basis on sheet A-13 &nbsp;·&nbsp;
-      Platform access on A-14, companion source register on A-15</div>
+      Caramba-North-OM-Appendix-A &nbsp;·&nbsp; Sheets A-01 &nbsp;&ndash;&nbsp; A-15
+      &nbsp;·&nbsp; Distance basis A-13 &nbsp;·&nbsp; Platform access A-14
+      &nbsp;·&nbsp; Source register A-15</div>
   </div>
 {footer(22, "Appendix A")}
 </div>"""
@@ -791,25 +793,30 @@ def build_body():
 
 
 # ===========================================================================
-def main():
-    body = build_body()
-    appendix = build_appendix()
-    pages = body + "\n" + appendix
-
+def _emit(stem_name, pages, title):
+    """Write one document (html + pdf) from a set of page divs."""
     html = T.document("institutional",
                       INST.EXHIBIT_FONT_CSS + INST.CSS + APPENDIX_CSS + pages,
-                      "landscape", "Caramba North — Offering Memorandum")
-
+                      "landscape", title)
     out = T.REPO / "outputs" / "reports"
     out.mkdir(parents=True, exist_ok=True)
-    stem = out / STEM
+    stem = out / stem_name
     hp = stem.with_suffix(".html")
     hp.write_text(html, encoding="utf-8")
     n = html.count('<div class="page">')
-    print(f"html -> {hp.relative_to(T.REPO)}  ({hp.stat().st_size // 1024} KB, "
-          f"{n} pages: {BODY_PAGES} body + {APPENDIX_SHEETS} appendix)")
+    print(f"html -> {hp.relative_to(T.REPO)}  ({hp.stat().st_size // 1024} KB, {n} pages)")
     T.render_pdf(str(hp), str(stem.with_suffix(".pdf")))
-    print(f"pdf  -> {stem.with_suffix('.pdf').relative_to(T.REPO)}")
+    return n
+
+
+def main():
+    # The memorandum and its drawing set ship as two files: technical
+    # reviewers get the appendix without the narrative, and the body stays a
+    # readable length. Sheet numbering (A-01 - A-15) is unchanged, so a
+    # cross-reference from the body still resolves.
+    _emit(STEM, build_body(), "Caramba North — Offering Memorandum")
+    _emit(f"{STEM}-Appendix-A", build_appendix(),
+          "Caramba North — Appendix A · Technical Drawing Set")
 
 
 if __name__ == "__main__":

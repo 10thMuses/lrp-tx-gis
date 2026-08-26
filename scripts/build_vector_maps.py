@@ -518,12 +518,17 @@ def main():
                            span_mi=52, show_rail=False, anchors=2)
         (OUT_DIR / f"{name}.svg").write_text(svg, encoding="utf-8")
         print(f"  {name}.svg  ({len(svg)//1024} KB)")
-    for dark, name in ((False, "corridor_prenda_light"),):
+    for dark, name in ((False, "corridor_prenda_light"), (True, "corridor_prenda_dark")):
         svg = map_corridor(data, width=1360, height=860, dark=dark, span_mi=54,
                            anchors=3, pre_nda=True)
         (OUT_DIR / f"{name}.svg").write_text(svg, encoding="utf-8")
         print(f"  {name}.svg  ({len(svg)//1024} KB)")
-    for dark, name in ((False, "corridor_prenda_wide_light"),):
+    for dark, name in ((False, "corridor_prenda_bare_light"), (True, "corridor_prenda_bare_dark")):
+        svg = map_corridor(data, width=900, height=640, dark=dark, span_mi=52,
+                           show_rail=False, anchors=2, pre_nda=True)
+        (OUT_DIR / f"{name}.svg").write_text(svg, encoding="utf-8")
+        print(f"  {name}.svg  ({len(svg)//1024} KB)")
+    for dark, name in ((False, "corridor_prenda_wide_light"), (True, "corridor_prenda_wide_dark")):
         svg = map_corridor(data, width=1180, height=600, dark=dark, span_mi=46,
                            show_rail=False, anchors=2, pre_nda=True)
         (OUT_DIR / f"{name}.svg").write_text(svg, encoding="utf-8")
