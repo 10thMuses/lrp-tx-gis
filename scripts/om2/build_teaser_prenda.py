@@ -121,28 +121,28 @@ def p1():
   <div class="m" style="font-size:10.5px;letter-spacing:.12em;color:{INK45}">
     PRE-NDA SUMMARY</div>
 </div>
-<div style="height:1px;background:{INK};margin:16px 0 34px"></div>
+<div style="height:1px;background:{INK};margin:16px 0 30px"></div>
 
 <div style="display:flex;gap:46px;flex:1;min-height:0">
 
   <div style="width:566px;flex:none;display:flex;flex-direction:column">
-    {hero("9.65", "GW", 128)}
-    <div class="d" style="font-size:29px;font-weight:500;line-height:1.24;
-                          letter-spacing:-0.02em;margin-top:22px;max-width:580px">
-      of announced hyperscale capacity sits within
+    {hero("9.65", "GW", 122)}
+    <div class="d" style="font-size:27px;font-weight:500;line-height:1.26;
+                          letter-spacing:-0.02em;margin-top:20px;max-width:556px">
+      of hyperscale capacity is going in within
       <span style="color:{RED}">19.3 miles</span> of the property &mdash;
       7.65&nbsp;GW of it already under construction.
     </div>
-    <div style="font-size:15px;line-height:1.62;color:{INK70};margin-top:20px;max-width:566px">
+    <div style="font-size:14.5px;line-height:1.6;color:{INK70};margin-top:17px;max-width:552px">
       Two campuses sit on the same north&ndash;south line through the tract. The larger is
-      Amazon-owned and building now under the largest generation air permit issued in
-      the United States this year. The site is 1,300 contiguous acres on Interstate&nbsp;10
-      with no zoning ordinance to clear.
+      Amazon-owned and building now, on the largest power permit issued anywhere in the
+      United States this year. Both chose this corridor for the same reasons the property
+      offers: land, water, gas and a place on the grid.
     </div>
 
-    {statrow([("15.5 mi", "to the Amazon site &mdash; under construction"),
+    {statrow([("15.5 mi", "to the Amazon site &mdash; building now"),
               ("19.3 mi", "to a second announced campus"),
-              ("32.7 GW", "operating + queued within 60 mi")])}
+              ("25+ GW", "announced across this county and the next")])}
   </div>
 
   <div style="flex:1;min-width:0;display:flex;flex-direction:column">
@@ -150,14 +150,14 @@ def p1():
                 aspect-ratio:1180/600">
       {T.svg("corridor_prenda_wide_light")}
     </div>
-    <div style="display:flex;flex-direction:column;gap:11px;margin-top:16px">
+    <div style="display:flex;flex-direction:column;gap:10px;margin-top:15px">
       {keyrow(None, "Caramba North", "1,300 contiguous acres · I-10 frontage · no zoning", RED)}
-      {keyrow("1", "Amazon — 7.65 GW", "15.5 mi · under construction · TCEQ air permit", RED, star=True)}
-      {keyrow("2", "Second announced campus", "19.3 mi · phase-1 site work · 2 GW planned on-site gas", GOLD)}
+      {keyrow("1", "Amazon — 7.65 GW", "15.5 mi · under construction · 35 gas turbines", RED, star=True)}
+      {keyrow("2", "Second announced campus", "19.3 mi · site work underway · 2 GW planned on-site gas", GOLD)}
     </div>
-    <div class="m" style="font-size:9.5px;color:{INK45};margin-top:14px;line-height:1.55">
-      Counterparty site names withheld pre-NDA. Distances measured edge-to-edge
-      from the tract boundary to each site&rsquo;s disclosed location.
+    <div class="m" style="font-size:9.5px;color:{INK45};margin-top:13px;line-height:1.55">
+      Counterparty site names withheld pre-NDA. Distances measured from the tract
+      boundary to each site&rsquo;s disclosed location.
     </div>
   </div>
 </div>
@@ -168,7 +168,15 @@ def p1():
 # ---------------------------------------------------------------------------
 # Page 2 — why this parcel and not the next one
 # ---------------------------------------------------------------------------
-def block(title, sub, rows):
+def row(k, v):
+    return (f'<div style="display:flex;justify-content:space-between;gap:14px;'
+            f'padding:5.5px 0;border-bottom:1px solid {S["ink12"]}">'
+            f'<span style="font-size:11.5px;color:{INK70};line-height:1.3">{k}</span>'
+            f'<span class="m" style="font-size:11.5px;font-weight:500;color:{INK};'
+            f'text-align:right;white-space:nowrap">{v}</span></div>')
+
+
+def _unused_block(title, sub, rows):
     r = "".join(
         f'<div style="display:flex;justify-content:space-between;gap:16px;'
         f'padding:9px 0;border-bottom:1px solid {S["ink12"]}">'
@@ -191,63 +199,116 @@ def p2():
     body = f"""
 <div style="display:flex;justify-content:space-between;align-items:baseline">
   <div class="m" style="font-size:11.5px;letter-spacing:.19em;color:{BLUE};font-weight:600">
-    WHY THIS PARCEL</div>
+    WHAT THE SITE BRINGS</div>
   <div class="m" style="font-size:10.5px;letter-spacing:.12em;color:{INK45}">
     CARAMBA NORTH &nbsp;·&nbsp; PRE-NDA SUMMARY</div>
 </div>
-<div style="height:1px;background:{INK};margin:16px 0 26px"></div>
+<div style="height:1px;background:{INK};margin:16px 0 24px"></div>
 
-<div class="d" style="font-size:30px;font-weight:500;letter-spacing:-0.02em;
-                      line-height:1.2;max-width:1090px">
-  The power, water and gas positions are permitted, not proposed.
+<div class="d" style="font-size:26px;font-weight:500;letter-spacing:-0.02em;
+                      line-height:1.2;max-width:1080px">
+  Power, water and fuel are already permitted here &mdash; not applied for.
 </div>
-<div class="d" style="font-size:18px;font-style:italic;color:{RED};margin-top:11px;
-                      max-width:1010px;line-height:1.45">
-  The constraint that stops most large-load sites &mdash; interconnection, water, or
-  fuel &mdash; is already resolved here, and the corridor around it is being built by
-  someone else&rsquo;s capital.
-</div>
-
-<div style="display:flex;gap:44px;margin-top:30px;flex:1;min-height:0">
-  {block("TRANSMISSION", "Fifteen miles from the delivery point of all three approved 765 kV Permian import lines.", [
-      ("Distance to 765 kV import terminus", "15 mi"),
-      ("PUCT approval", "Docket 55718"),
-      ("Substations within 10 miles", "6"),
-      ("ERCOT weather zone", "Far West"),
-  ])}
-  {block("WATER &amp; NATURAL GAS", "Two-thirds of the district&rsquo;s industrial water rights are already permitted to this position.", [
-      ("Permitted water, adjacent lands", "47,418 AF/yr"),
-      ("Equivalent", "42.3 MGD"),
-      ("Distance to Waha gas hub", "20 mi"),
-      ("Indicative supply quote in hand", "200,000 MMBtu/d"),
-  ])}
-  {block("SITE &amp; SUBSURFACE", "Pecos County has the lowest new-drilling count of seven comparable Permian counties since 2020.", [
-      ("Max contiguous acreage", "1,300 ac"),
-      ("Zoning", "None &mdash; as-of-right"),
-      ("New-drill events since 2020", "115"),
-      ("Peer-county average", "1,181"),
-  ])}
+<div class="d" style="font-size:15.5px;font-style:italic;color:{RED};margin-top:9px;
+                      max-width:1010px;line-height:1.4">
+  The three things that stop most large projects &mdash; a place on the grid, water, and
+  fuel to make power on site &mdash; are settled on this property.
 </div>
 
-<div style="display:flex;gap:44px;align-items:flex-end;margin-top:22px">
-  <div style="flex:1;background:{PANEL};border-left:3px solid {RED};padding:15px 18px">
-    <div class="m" style="font-size:9.5px;letter-spacing:.14em;color:{RED};
-                          font-weight:600;margin-bottom:7px">STATE CONTEXT</div>
-    <div style="font-size:13px;line-height:1.55;color:#2A323B">
-      ERCOT&rsquo;s large-load queue grew from 63&nbsp;GW at the end of 2024 to roughly
-      474&nbsp;GW of pending requests by August 2026, about 90% data-center-driven &mdash;
-      enough to trigger a state audit and a pause on new large-load review. The capacity
-      already permitted and under construction around this site sits outside that queue.
+<div style="display:flex;gap:38px;margin-top:22px;flex:1;min-height:0">
+
+  <div style="flex:1.12;min-width:0;display:flex;flex-direction:column">
+    <div class="m" style="font-size:9.5px;letter-spacing:.15em;color:{BLUE};font-weight:600;
+                          padding-bottom:8px;border-bottom:1px solid {INK}">WATER</div>
+    <div style="display:flex;align-items:baseline;gap:12px;margin-top:14px">
+      <div class="d" style="font-size:34px;font-weight:600;letter-spacing:-0.03em;
+                            line-height:1;color:{INK}">47,418</div>
+      <div class="m" style="font-size:11px;letter-spacing:.1em;color:{INK45};line-height:1.5">
+        ACRE-FEET<br>PER YEAR</div>
+    </div>
+    <div style="font-size:12.8px;line-height:1.52;color:{INK70};margin-top:12px">
+      About <strong style="color:{INK};font-weight:600">42 million gallons a day</strong>,
+      permitted on adjacent affiliated land &mdash; roughly
+      <strong style="color:{INK};font-weight:600">two-thirds of every industrial water
+      right</strong> the local groundwater district has issued. It is permitted for
+      industrial use, at a volume that supports large-scale cooling.
+    </div>
+    <div style="background:{PANEL};border-left:3px solid {BLUE};padding:11px 13px;margin-top:12px">
+      <div class="m" style="font-size:9px;letter-spacing:.14em;color:{BLUE};font-weight:600;
+                            margin-bottom:6px">WHY THIS AQUIFER</div>
+      <div style="font-size:11.8px;line-height:1.48;color:#2A323B">
+        The Edwards&ndash;Trinity aquifer here is refilled each year by runoff from the
+        mountains to the south, rather than drawn from a reservoir that only depletes.
+        Its recharge record held through the 1950s drought of record &mdash; the driest
+        stretch in modern Texas history.
+      </div>
     </div>
   </div>
-  <div style="width:352px;flex:none">
-    <div class="m" style="font-size:9.5px;letter-spacing:.14em;color:{INK45};
-                          font-weight:600;padding-bottom:8px;border-bottom:1px solid {INK}">
-      AVAILABLE UNDER NDA</div>
-    <div style="font-size:12.5px;line-height:1.62;color:{INK70};margin-top:11px">
-      Counterparty names and site boundaries, the full transmission and water
-      documentation, indicative gas terms, and the underlying GIS platform &mdash; every
-      figure above is re-derivable from cited public data.
+
+  <div style="flex:1;min-width:0;display:flex;flex-direction:column">
+    <div class="m" style="font-size:9.5px;letter-spacing:.15em;color:{BLUE};font-weight:600;
+                          padding-bottom:8px;border-bottom:1px solid {INK}">
+      NATURAL GAS FOR ON-SITE POWER</div>
+    <div style="display:flex;align-items:baseline;gap:12px;margin-top:14px">
+      <div class="d" style="font-size:34px;font-weight:600;letter-spacing:-0.03em;
+                            line-height:1;color:{INK}">20</div>
+      <div class="m" style="font-size:11px;letter-spacing:.1em;color:{INK45};line-height:1.5">
+        MILES TO THE<br>WAHA HUB</div>
+    </div>
+    <div style="font-size:12.8px;line-height:1.52;color:{INK70};margin-top:12px">
+      West Texas gas trades below the national benchmark &mdash; at times below zero as
+      new pipelines rebalanced the basin. That is why both neighbouring campuses are
+      building their own gas generation rather than waiting in line for grid power.
+    </div>
+    <div style="margin-top:11px">
+      {row("Indicative supply quote in hand", "200,000 MMBtu/day")}
+      {row("Term", "15 years, at the hub price")}
+      {row("Utility build contribution", "$15–25 million")}
+      {row("Build lead time", "9–15 months")}
+    </div>
+  </div>
+
+  <div style="flex:1;min-width:0;display:flex;flex-direction:column">
+    <div class="m" style="font-size:9.5px;letter-spacing:.15em;color:{BLUE};font-weight:600;
+                          padding-bottom:8px;border-bottom:1px solid {INK}">
+      GRID, FIBER AND ACCESS</div>
+    <div style="display:flex;align-items:baseline;gap:12px;margin-top:14px">
+      <div class="d" style="font-size:34px;font-weight:600;letter-spacing:-0.03em;
+                            line-height:1;color:{INK}">15</div>
+      <div class="m" style="font-size:11px;letter-spacing:.1em;color:{INK45};line-height:1.5">
+        MILES TO THE 765 kV<br>IMPORT TERMINUS</div>
+    </div>
+    <div style="font-size:12.8px;line-height:1.52;color:{INK70};margin-top:12px">
+      The property sits fifteen miles from where all three approved 765&nbsp;kV import
+      lines land &mdash; the largest transmission program in the grid operator&rsquo;s
+      history, already approved and being built. Three substations sit within seven miles, and Fort Stockton &mdash; town services and a regional airport &mdash; is about five miles east.
+    </div>
+    <div style="margin-top:11px">
+      {row("Long-haul fiber", "Along the I-10 corridor")}
+      {row("Rail", "Union Pacific Sunset Route")}
+      {row("Zoning", "None — industrial as of right")}
+    </div>
+  </div>
+</div>
+
+<div style="display:flex;gap:40px;align-items:stretch;margin-top:26px">
+  <div style="flex:1;background:{PANEL};border-left:3px solid {RED};padding:12px 15px">
+    <div class="m" style="font-size:9px;letter-spacing:.14em;color:{RED};font-weight:600;
+                          margin-bottom:6px">WHY IT IS HAPPENING HERE, NOW</div>
+    <div style="font-size:11.8px;line-height:1.48;color:#2A323B">
+      Requests to connect large new loads to the Texas grid grew from 63&nbsp;GW at the end
+      of 2024 to roughly 474&nbsp;GW by August 2026, about 90% of it data centres &mdash;
+      enough that the state paused new reviews pending an audit. The capacity already
+      permitted and building around this property is outside that queue.
+    </div>
+  </div>
+  <div style="width:326px;flex:none">
+    <div class="m" style="font-size:9px;letter-spacing:.14em;color:{INK45};font-weight:600;
+                          padding-bottom:7px;border-bottom:1px solid {INK}">AVAILABLE UNDER NDA</div>
+    <div style="font-size:11.5px;line-height:1.52;color:{INK70};margin-top:9px">
+      Counterparty names, water and transmission documentation, indicative gas terms, and
+      logged access to the diligence platform behind this summary &mdash; where every figure
+      above can be checked against its public source.
     </div>
   </div>
 </div>

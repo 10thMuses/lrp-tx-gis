@@ -7,7 +7,9 @@ One book, two parts, one type system.
             four full-bleed statement pages borrowed from the Minimal deck's
             idiom dropped in as section openers, and an appendix divider.
   PART II — the Technical drawing set, re-set as Appendix A (sheets A-01 to
-            A-13) on the book's own warm paper, with the drafting grid removed.
+            A-13) on the book's own warm paper, with the drafting grid removed,
+            plus two sheets authored here (A-14 platform access, A-15 the
+            companion source register) that close the set at A-15.
 
 Nothing here rewrites content. The two source builders are imported and their
 page functions called; this module only renumbers, re-grounds and composes.
@@ -54,6 +56,7 @@ RULE = S["rule"]            # #D9D4CB
 PANEL = S["panel"]
 RED = S["accent"]           # reserved: subject site + the two feature anchors
 BLUE = S["third"]           # institutional lead accent, and technical's accent
+GOLD = S["second"]          # caution / qualifier notes only
 SUBINK = "#39434E"
 
 PAD = INST.PAD              # 68
@@ -66,8 +69,9 @@ STEM = "Caramba-North-OM"
 # The four statement pages are section openers: each sits immediately before
 # the page that develops its number.
 # ---------------------------------------------------------------------------
-BODY_PAGES = 22             # 01-22; Appendix A then runs A-01 - A-13
-APPENDIX_SHEETS = 13
+BODY_PAGES = 22             # 01-22; Appendix A then runs A-01 - A-15
+TECH_SHEETS = 13            # imported from build_deck_technical, unchanged
+APPENDIX_SHEETS = 15        # + A-14 and A-15, authored below
 
 PAGE_MAP = {
     1: 1,    # cover
@@ -236,13 +240,14 @@ def p22_divider():
          line-height:1.2;color:{INK70};margin-top:16px">Technical Drawing Set</div>
     <div class="d sub" style="font-size:19px;margin-top:26px;max-width:860px">
       The same facts as the body, re-set at drawing-set density:
-      thirteen numbered sheets, each with its own title block, numbered tables
+      fifteen numbered sheets, each with its own title block, numbered tables
       and framed figure plates.</div>
     <div class="rule" style="margin-top:34px;width:860px"></div>
     <div class="m" style="font-size:10px;letter-spacing:.2em;text-transform:uppercase;
          color:{INK45};margin-top:14px">
-      Sheets A-01 &nbsp;&ndash;&nbsp; A-13 &nbsp;·&nbsp;
-      Source register and distance basis on sheet A-13</div>
+      Sheets A-01 &nbsp;&ndash;&nbsp; A-15 &nbsp;·&nbsp;
+      Distance basis on sheet A-13 &nbsp;·&nbsp;
+      Platform access on A-14, companion source register on A-15</div>
   </div>
 {footer(22, "Appendix A")}
 </div>"""
@@ -267,7 +272,7 @@ PART_I = [
     ("19", "The Diligence Platform", "Every figure traces to a cited public dataset."),
     ("20", "Methodology &amp; Sources", "Distances are edge-to-edge; here is the arithmetic."),
     ("21", "Notices", "Preliminary and indicative; circulated under NDA."),
-    ("22", "Appendix A", "Technical drawing set — sheets A-01 through A-13."),
+    ("22", "Appendix A", "Technical drawing set — sheets A-01 through A-15."),
 ]
 
 PART_II = [
@@ -284,6 +289,8 @@ PART_II = [
     ("A-11", "Subsurface activity — drilling record"),
     ("A-12", "Diligence platform — source register"),
     ("A-13", "Methodology and notices"),
+    ("A-14", "Diligence platform — access and navigation"),
+    ("A-15", "Method and source register"),
 ]
 
 
@@ -300,7 +307,7 @@ def contents_page():
 
     def srow(n, t):
         return f"""
-<div style="display:flex;gap:12px;padding:5.5px 0;border-bottom:1px solid {RULE}">
+<div style="display:flex;gap:12px;padding:4px 0;border-bottom:1px solid {RULE}">
   <div class="m" style="width:36px;font-size:9.6px;color:{BLUE};font-weight:500">{n}</div>
   <div class="m" style="flex:1;min-width:0;font-size:9.6px;color:{INK70};
        line-height:1.25">{t}</div>
@@ -330,13 +337,12 @@ def contents_page():
     {colB}
   </div>
   <div style="width:314px">
-    {parthead("Part II &nbsp;·&nbsp; sheets A-01&ndash;A-13", "Appendix A &nbsp;—&nbsp; Technical Drawing Set")}
+    {parthead("Part II &nbsp;·&nbsp; sheets A-01&ndash;A-15", "Appendix A &nbsp;—&nbsp; Technical Drawing Set")}
     {colC}
-    <div class="fnote" style="margin-top:12px;line-height:1.55">
+    <div class="fnote" style="margin-top:11px;line-height:1.5">
       Four pages in Part I carry a single figure and one sentence; each opens the
       section that develops it. Figures set in mono come from the GIS data model
-      described on page 19. Distances to the two anchors are edge-to-edge from the
-      tract boundary — see page 20.</div>
+      described on page 19; distances are edge-to-edge — see page 20.</div>
   </div>
 </div>"""
     return INST.page(
@@ -393,6 +399,310 @@ def _fix_sheet_refs(html):
     return _SHEETREF.sub(sub, html)
 
 
+# ===========================================================================
+# A-14 — DILIGENCE PLATFORM: ACCESS AND NAVIGATION
+# ===========================================================================
+# Layer ids, sidebar group names and control labels below are read off the
+# repo's own `layers.yaml` and `build_template.html` (GROUP_ORDER, the top-bar
+# buttons, and the hash parameters lat/lon/zoom/layers/base), so a reader who
+# types one of these strings gets exactly the view this sheet describes.
+PLATFORM_URL = "lrp-tx-gis.netlify.app"
+
+SIDEBAR_GROUPS = (
+    "Reference &middot; Land &amp; Deal &middot; OXY — Occidental Footprint "
+    "&middot; Local Focal Points &middot; Local Hyperscale DC &amp; Power "
+    "Campuses &middot; Power Generation &middot; Transmission &amp; Grid "
+    "&middot; Pipelines &middot; Energy Infrastructure &middot; Permits "
+    "&middot; Oil &amp; Gas Spud Wells &middot; Projects"
+)
+
+# (key, name, mode, what it shows + what to look at, parameter string)
+VIEWS = [
+    ("V1", "Site overview", "default",
+     "The 1,300-acre tract on Esri World Imagery with the reference layers. "
+     "<span style='color:#5A6B78'>Look at:</span> the I-10 frontage along the "
+     "south boundary, and Fort Stockton five miles west.",
+     None),
+    ("V2", "Regional power &amp; grid", "carto light &middot; zoom 8",
+     "The EIA-860 operating fleet, transmission at 100 kV and above, "
+     "substations, the ERCOT queue and the named datacenter anchors. "
+     "<span style='color:#5A6B78'>Look at:</span> Solstice substation west of "
+     "the tract, and how much of the queue sits inside the 60-mile ring on "
+     "sheet A-07.",
+     "lat=31.15&amp;lon=-102.90&amp;zoom=8&amp;layers=counties,county_labels,"
+     "cities,tiger_highways,caramba_north,eia860_plants,eia860_battery,solar,"
+     "transmission,substations,ercot_queue,dc_anchors&amp;base=carto_light"),
+    ("V3", "Midstream &amp; pipelines", "carto light &middot; zoom 9",
+     "HIFLD/EIA gas, crude and hydrocarbon-gas-liquids pipelines, the gas "
+     "processing plants and the RRC large-diameter lines. "
+     "<span style='color:#5A6B78'>Look at:</span> the gas corridors running "
+     "west toward the Waha hub, twenty miles out — the supply basis on "
+     "sheet A-06.",
+     "lat=31.00&amp;lon=-103.00&amp;zoom=9&amp;layers=counties,county_labels,"
+     "cities,caramba_north,hifld_ng_pipelines,hifld_crude_pipelines,"
+     "hifld_hgl_pipelines,hifld_ng_processing,rrc_pipelines&amp;base=carto_light"),
+    ("V4", "Permitting &amp; drilling", "carto light &middot; zoom 9",
+     "RRC drilling permits, the new-drill wellbore record from 1964 forward, "
+     "and approved county tax abatements. "
+     "<span style='color:#5A6B78'>Look at:</span> the empty ring around the "
+     "tract — no new-drill wellbore within five miles since 2020, the record "
+     "set out on sheet A-11.",
+     "lat=31.00&amp;lon=-103.00&amp;zoom=9&amp;layers=counties,county_labels,"
+     "caramba_north,permits_permian6,tax_abatements,wells_permian6"
+     "&amp;base=carto_light"),
+]
+
+
+def view_row(key, name, mode, desc, params):
+    """One named starting view: what it shows, what to look at, how to open it.
+
+    The parameter string is the load-bearing part and the part that cannot be
+    read as link text, so it is set small, in mono, on the panel ground, and
+    allowed to break anywhere rather than run off the edge of the sheet.
+    """
+    if params:
+        strip = (f'<div class="m" style="font-size:8.2px;line-height:1.45;'
+                 f'color:{TECH.INK70};background:{PANEL};border-left:2px solid '
+                 f'{BLUE};padding:4px 7px;margin-top:5px;overflow-wrap:anywhere;'
+                 f'word-break:break-all">#{params}</div>')
+    else:
+        strip = (f'<div class="m" style="font-size:8.2px;line-height:1.45;'
+                 f'color:{TECH.INK45};padding:4px 0 0 2px">No parameters '
+                 f'&mdash; the bare address opens here.</div>')
+    return f"""
+<div style="display:flex;gap:9px;padding:7px 0;border-top:1px solid {S['ink12']}">
+  <div class="m" style="width:21px;height:17px;flex:none;border:1px solid {BLUE};
+       color:{BLUE};font-size:8.4px;font-weight:600;display:flex;align-items:center;
+       justify-content:center;line-height:1">{key}</div>
+  <div style="min-width:0;flex:1">
+    <div style="display:flex;justify-content:space-between;align-items:baseline;gap:10px">
+      <div class="m" style="font-size:11px;font-weight:600;color:{TECH.INK};
+           letter-spacing:.02em;text-transform:uppercase">{name}</div>
+      <div class="m" style="font-size:7.8px;letter-spacing:.14em;text-transform:uppercase;
+           color:{TECH.INK45};white-space:nowrap">{mode}</div>
+    </div>
+    <div style="font-size:9.9px;line-height:1.36;color:{TECH.INK70};margin-top:3px">
+      {desc}</div>
+    {strip}
+  </div>
+</div>"""
+
+
+def ctrl_grid(num, title, items):
+    """A two-up label/value grid — the table idiom at half the height.
+
+    Eleven control descriptions will not fit this sheet as `tbl()` rows once
+    the access block and the four starting views have taken their space, and
+    the views are the part of this sheet that has to be legible. Same mono
+    micro-label, same hairline, no table chrome.
+    """
+    def cell(lbl, val):
+        return f"""
+<div style="width:50%;padding-right:14px;margin-bottom:7px">
+  <div class="m" style="font-size:7.8px;letter-spacing:.15em;text-transform:uppercase;
+       color:{TECH.INK45};line-height:1">{lbl}</div>
+  <div style="font-size:9.8px;line-height:1.3;color:{TECH.INK};margin-top:4px">{val}</div>
+</div>"""
+    return f"""
+<div>
+  <div class="m" style="font-size:9px;letter-spacing:.14em;text-transform:uppercase;
+       margin-bottom:9px;color:{TECH.INK45};border-bottom:1px solid {TECH.INK70};
+       padding-bottom:6px">
+    <span style="color:{BLUE};font-weight:600">TBL {num}</span>&nbsp;&nbsp;{title}</div>
+  <div style="display:flex;flex-wrap:wrap">{"".join(cell(*i) for i in items)}</div>
+</div>"""
+
+
+def sheetA14():
+    tbl, head, note_block = TECH.tbl, TECH.head, TECH.note_block
+    mono = lambda t, w="600": (f'<span class="m" style="font-size:11px;'
+                               f'font-weight:{w};color:{TECH.INK}">{t}</span>')
+
+    access = tbl(
+        "14.1", "Access",
+        [("Item", "left", 84), ("Detail", "left", None)],
+        [["Address", mono(PLATFORM_URL)],
+         ["Login", "Business email address, plus the access password below"],
+         ["Password", mono("LRP-Permian-2026")],
+         ["Client", "Desktop Chrome, Edge or Safari; nothing to install"],
+         ["Session", "Persists per browser; every sign-in is logged"]],
+        compact=True)
+
+    controls = ctrl_grid("14.2", "Reading the map", [
+        ("Sidebar", "Layer groups, toggles, live feature counts"),
+        ("Zoom", "Wells and permits load as you zoom in"),
+        ("Popups", "Attributes, with source and as-of date"),
+        ("Basemaps", "Esri Imagery (default), Carto Light, NAIP"),
+        ("Measure / Reset", "Distance and area; back to defaults"),
+        ("Share / Print", "Copies the exact view; landscape PDF"),
+        ("Filters", "County, depth, spud year, fuel, status"),
+        ("Views / Time", "Pre-built views; 1964-present scrubber"),
+    ])
+
+    views = "".join(view_row(*v) for v in VIEWS)
+
+    body = head(
+        "Diligence platform &mdash; access and navigation",
+        "Four named starting views open the platform directly onto the "
+        "exhibits behind this set — every figure here is re-derivable in the "
+        "map, not taken on trust.",
+        "2.7 Platform access") + f"""
+<div style="display:flex;gap:30px">
+  <div style="width:534px;flex:none">
+    {access}
+    <div style="margin-top:12px">
+      {note_block("Credential handling",
+                  "The password above is issued to this deal team only. It, "
+                  "this memorandum and any saved view link stay inside the "
+                  "recipient organisation; access is logged by email address "
+                  "and session.", GOLD)}
+    </div>
+    <div style="margin-top:12px">{controls}</div>
+  </div>
+  <div style="flex:1;min-width:0">
+    <div class="m" style="font-size:9px;letter-spacing:.14em;text-transform:uppercase;
+         color:{TECH.INK45};margin-bottom:5px">
+      <span style="color:{BLUE};font-weight:600">VIEWS</span>&nbsp;&nbsp;Suggested
+      starting views</div>
+    <div style="font-size:9.9px;line-height:1.4;color:{TECH.INK70}">
+      Sign in, then append the string below to
+      <span class="m" style="font-size:9.2px">{PLATFORM_URL}/</span> &mdash;
+      view, layers and basemap restore exactly.</div>
+    {views}
+  </div>
+</div>
+<div style="margin-top:12px;border-top:1px solid {S['ink12']};padding-top:8px">
+  <div class="m" style="font-size:7.8px;letter-spacing:.15em;text-transform:uppercase;
+       color:{TECH.INK45}">Layer groups, in sidebar order</div>
+  <div class="m" style="font-size:8.4px;line-height:1.5;color:{TECH.INK70};margin-top:4px">
+    {SIDEBAR_GROUPS}</div>
+</div>"""
+    return TECH.sheet(14, "2.7 PLATFORM ACCESS",
+                      f"LRP-TX-GIS &nbsp;·&nbsp; {PLATFORM_URL.upper()}",
+                      "PLATFORM CONFIGURATION &nbsp;·&nbsp; layers.yaml", body)
+
+
+# ===========================================================================
+# A-15 — METHOD AND SOURCE REGISTER
+# ===========================================================================
+# The §4 distance methodology lives on sheet A-13 and is cross-referenced here,
+# not restated. The cadences below are the platform's real refresh intervals as
+# configured in `layers.yaml` / ARCHITECTURE.md §5 — not the publishers' own
+# release schedules — and the three that need qualifying are footnoted.
+REFERENCES = [
+    "PUCT order approving three 765 kV Permian import paths, 24 Apr 2025 "
+    "&mdash; PBRP Project No. 55718.",
+    "AEP Texas / CPS Energy, Howard&ndash;Solstice Transmission Line Project "
+    "&mdash; PUCT Docket No. 59366.",
+    "ERCOT, Permian Basin Reliability Plan study, Jul 2024; plan approved "
+    "Sep 2024.",
+    "ERCOT, Long-Term Load Forecast, Apr 2024.",
+    "Apex Clean Energy public disclosures, Pecos Flats project area.",
+    "EIA Form EIA-860, 2024 annual release, with Apr 2026 monthly detail.",
+    "ERCOT GIS Report &mdash; generator interconnection queue, Mar 2026 "
+    "snapshot; Apr 2026 status report.",
+    "TCEQ air-permit filings, 2025&ndash;2026.",
+    "ERCOT queue entries INR 24INR0452&ndash;0455, 26INR0537, 30INR0018.",
+    "Middle Pecos Groundwater Conservation District &mdash; permit registry "
+    "and district rules.",
+    "Railroad Commission of Texas, dbf900 Full Wellbore ASCII master file.",
+    "Railroad Commission of Texas, PDQ production records through May 2026.",
+    "FracFocus Chemical Disclosure Registry &mdash; Texas, 2011 to present.",
+]
+
+# (domain, publisher / dataset, refresh)
+REGISTER = [
+    ("County &amp; highway reference", "Census TIGER/Line 2023", "Static"),
+    ("Rail", "BTS North American Rail Network", "Static"),
+    ("Plants, batteries, solar", "EIA Form EIA-860", "Annual"),
+    ("Wind", "USGS / LBNL US Wind Turbine Database", "Annual"),
+    ("Transmission &amp; pipelines", "EIA US Energy Atlas / HIFLD", "Annual"),
+    ("Substations", "OpenStreetMap", "Annual"),
+    ("Interconnection queue", "ERCOT GIS Report", "Monthly"),
+    ("Planned grid upgrades", "ERCOT TPIT", "Monthly"),
+    ("Wellbore &amp; permit record", "RRC public datasets <sup>a</sup>", "Weekly"),
+    ("Large-diameter pipelines", "RRC digital pipeline data", "Annual"),
+    ("Air permits", "TCEQ", "Annual"),
+    ("Tax abatements", "County commissioners-court records", "As filed <sup>b</sup>"),
+    ("Groundwater district", "Middle Pecos GCD <sup>c</sup>", "On publication"),
+]
+
+SNAPSHOT = [
+    ("ERCOT queue", "21 Apr 2026", "Mar 2026 GIS Report; Apr status"),
+    ("Drilling &amp; production", "Through May 2026", "RRC wellbore and PDQ records"),
+    ("GIS layer counts", "Latest weekly refresh", "39 layers in the published build"),
+]
+
+
+def sheetA15():
+    tbl, head = TECH.tbl, TECH.head
+
+    def sm(t):
+        return f'<div style="font-size:10px;line-height:1.32">{t}</div>'
+
+    refs = tbl(
+        "15.1", "Numbered references &mdash; primary filings and datasets",
+        [("Ref", "left", 30), ("Citation", "left", None)],
+        [[f'<div class="m" style="color:{BLUE};font-weight:600;font-size:9.6px;'
+          f'line-height:1.32">{i:02d}</div>', sm(c)]
+         for i, c in enumerate(REFERENCES, 1)],
+        note="Third-party press reporting is registered separately as "
+             "R1&ndash;R4 on sheet A-13, alongside the §4 edge-to-edge distance "
+             "basis; neither is repeated here.",
+        compact=True)
+
+    reg = tbl(
+        "15.2", "Source register by domain",
+        [("Domain", "left", 152), ("Publisher / dataset", "left", None),
+         ("Refresh", "left", 92)],
+        [[sm(a), sm(b), f'<div class="m" style="font-size:9.4px;line-height:1.32;'
+                        f'white-space:nowrap">{c}</div>']
+         for a, b, c in REGISTER],
+        note="<b>a</b>&nbsp; Wellbores from the RRC dbf900 wellbore master; "
+             "drilling permits from the RRC end-of-month permit snapshots, 2018 "
+             "to present. &nbsp;<b>b</b>&nbsp; Re-scraped from commissioners-court "
+             "agendas as filed; the weekly refresh is configured, not yet in "
+             "production. &nbsp;<b>c</b>&nbsp; The district management-zone "
+             "boundary is digitised from the district's published map and is "
+             "approximate.",
+        compact=True)
+
+    def snap(label, value, note):
+        return f"""
+<div style="flex:1;min-width:0;border-top:1px solid {TECH.INK25};padding-top:7px">
+  <div class="m" style="font-size:7.8px;letter-spacing:.14em;text-transform:uppercase;
+       color:{TECH.INK45}">{label}</div>
+  <div class="m" style="font-size:12px;font-weight:600;color:{TECH.INK};
+       margin-top:4px;letter-spacing:-0.1px">{value}</div>
+  <div style="font-size:9.2px;line-height:1.34;color:{TECH.INK70};margin-top:3px">{note}</div>
+</div>"""
+
+    body = head(
+        "Method and source register",
+        "Every figure in this memorandum resolves to a numbered public "
+        "filing or to a dated dataset refresh &mdash; the register below is "
+        "the whole of what the document rests on.",
+        "2.9 Companion source register") + f"""
+<div style="display:flex;gap:30px">
+  <div style="width:592px;flex:none">
+    {refs}
+    <div style="margin-top:13px">
+      <div class="m" style="font-size:9px;letter-spacing:.14em;text-transform:uppercase;
+           color:{TECH.INK45};margin-bottom:7px">
+        <span style="color:{BLUE};font-weight:600">SNAPSHOT</span>&nbsp;&nbsp;Data
+        as of this issue</div>
+      <div style="display:flex;gap:18px">{"".join(snap(*r) for r in SNAPSHOT)}</div>
+    </div>
+  </div>
+  <div style="flex:1;min-width:0">
+    {reg}
+  </div>
+</div>"""
+    return TECH.sheet(15, "2.9 SOURCE REGISTER",
+                      "CARAMBA NORTH &nbsp;·&nbsp; 1,300 AC &nbsp;·&nbsp; PECOS CO., TX",
+                      "PUBLIC FILINGS &nbsp;·&nbsp; DATASET REFRESH LOG", body)
+
+
 def build_appendix():
     # Re-ground: warm hairlines instead of technical's cool ones, so the frame
     # and the plate borders sit correctly on the book's paper. Read at call
@@ -403,7 +713,13 @@ def build_appendix():
     TECH.sheet = _sheet_appendix
     TECH.INDEX = [(f"A-{n}", t) for n, t in TECH.INDEX]
 
-    sheets = [getattr(TECH, f"sheet{i:02d}")() for i in range(1, 14)]
+    TECH.INDEX = TECH.INDEX + [
+        ("A-14", "Diligence platform — access and navigation"),
+        ("A-15", "Method and source register"),
+    ]
+
+    sheets = [getattr(TECH, f"sheet{i:02d}")() for i in range(1, TECH_SHEETS + 1)]
+    sheets += [sheetA14(), sheetA15()]
     html = "\n".join(sheets)
     # technical emits a literal grid div per sheet; the appendix runs clean
     html = html.replace('<div class="grid"></div>', "")
