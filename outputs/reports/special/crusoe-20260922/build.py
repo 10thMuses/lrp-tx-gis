@@ -4,7 +4,7 @@ from weasyprint import HTML, CSS
 from weasyprint.text.fonts import FontConfiguration
 
 SRC = "/home/claude/crusoe/report.md"
-OUT = "/mnt/user-data/outputs/Grid_Wire_Special_Report_Crusoe_20260922.pdf"
+OUT = "/mnt/user-data/outputs/Grid_Wire_Special_Report_Crusoe_Spark_20260922.pdf"
 FONTDIR = "/home/claude/crusoe/fonts"
 NAVY = "#1c2b3a"; GOLD = "#b8860b"; RED = "#b0322b"; GREEN = "#1f7a3f"
 
@@ -49,7 +49,7 @@ def color_td(mm):
 
 css = f"""
 @page {{ size: letter; margin: 15mm;
-  @bottom-left {{ content: "THE GRID WIRE · Special Report · Crusoe · 2026-09-22"; font-family: Jost; font-size: 8pt; color: #5a6675; }}
+  @bottom-left {{ content: "THE GRID WIRE · Special Report · Crusoe Spark · 2026-09-22"; font-family: Jost; font-size: 8pt; color: #5a6675; }}
   @bottom-right {{ content: "Page " counter(page) " of " counter(pages); font-family: Jost; font-size: 8pt; color: #5a6675; }} }}
 @font-face {{ font-family: Jost; font-weight: 400; src: url("file://{FONTDIR}/Jost-Regular.ttf"); }}
 @font-face {{ font-family: Jost; font-weight: 500; src: url("file://{FONTDIR}/Jost-Medium.ttf"); }}
