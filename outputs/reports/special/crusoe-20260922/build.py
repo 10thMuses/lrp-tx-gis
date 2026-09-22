@@ -45,7 +45,7 @@ def color_td(mm):
     if re.search(r"(^|[\s(>])-\s?[\$\d]", inner) or re.search(r"-\d+(\.\d+)?\s?(%|bps|pts?)", inner):
         return cell.replace(inner, f'<span class="neg">{inner}</span>')
     return cell
-body = re.sub(r"<td>(.*?)</td>", color_td, body)
+# delta coloring disabled for this report (no market deltas in tables)
 
 css = f"""
 @page {{ size: letter; margin: 15mm;
