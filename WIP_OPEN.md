@@ -9,7 +9,12 @@ item is added. Round/decision-log history is archived in
 
 ## Last deploy
 
-`6a3adddefa163a0a17902c54` — 2026-06-23. 39 layers. Build clean
+`6ad77b77a79fe4d03c8ce377` — 2026-10-20. Access gate removed (operator decision:
+map is public). Same tiles/data as `6a3add…` — page-only change, deployed from a
+mirror of the live file set because this container lacks tippecanoe. Supabase
+`oxy-gate`/`oxy-track` no longer called; no access logging.
+
+Previous: `6a3adddefa163a0a17902c54` — 2026-06-23. 39 layers. Build clean
 `built=39 missing=0 errored=0 tiles_total=29594 KB`. Added `oxy_drilling_permits`
 (294 OXY/Occidental RRC W-1 permits 2020-2026); upgraded 4 OXY carbon/midstream
 points to precise sourced coords; `raiseOxy()` draw-order fix.
