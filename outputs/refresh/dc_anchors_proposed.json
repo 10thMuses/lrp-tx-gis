@@ -1,0 +1,158 @@
+{
+  "schema_version": "1.0",
+  "generated": "2026-09-21T06:24:36Z",
+  "model": "claude-sonnet-4-5-20250929",
+  "input_file": "data/datacenters/dc_anchors.json",
+  "input_entry_count": 8,
+  "processed_entry_count": 8,
+  "proposals": [
+    {
+      "id": "project-horizon-poolside-coreweave",
+      "diff": {
+        "status": {
+          "current": "seeking anchor tenant / phase 1 construction",
+          "proposed": "paused",
+          "evidence_url": "https://www.datacenterdynamics.com/en/news/poolside-seeks-partners-for-data-center-in-texas-after-coreweave-deal-falls-apart/",
+          "evidence_quote": "Funding round from Nvidia also collapses"
+        }
+      },
+      "additional_sources": [
+        {
+          "url": "https://www.citybiz.co/article/890150/poolside-infrastructure-company-names-justin-lagasse-chief-financial-officer/",
+          "accessed_date": "2026-08-17",
+          "claim": "Justin Lagasse appointed CFO of Poolside Infrastructure Company as AI infrastructure developer advances flagship site"
+        }
+      ],
+      "conflicts": [],
+      "fetch_failures": [
+        "https://mlq.ai/news/coreweave-ends-2-gw-texas-data-center-deal-with-poolside/",
+        "https://www.forbes.com/sites/davidblackmon/2026/06/02/west-texas-data-center-project-addresses-activist-concerns-head-on/",
+        "https://poolside.ai/blog/announcing-project-horizon"
+      ]
+    },
+    {
+      "id": "stargate-abilene-crusoe-oracle",
+      "diff": {},
+      "additional_sources": [
+        {
+          "url": "https://www.tomshardware.com/tech-industry/oracle-and-openai-scrap-planned-600mw-abilene-expansion",
+          "claim": "600MW expansion lease scrapped; larger 4.5GW agreement remains on track"
+        }
+      ],
+      "conflicts": [],
+      "fetch_failures": [
+        "https://openai.com/index/five-new-stargate-sites/"
+      ]
+    },
+    {
+      "id": "microsoft-crusoe-abilene",
+      "diff": {
+        "status": {
+          "current": "under_construction",
+          "proposed": "operational",
+          "evidence_url": "https://www.theregister.com/2026/03/27/microsoft_ai_crusoe/",
+          "evidence_quote": "Microsoft takes up residence next to OpenAI, Oracle at Crusoe's 900 MW Texas datacenter expansion"
+        }
+      },
+      "additional_sources": [
+        {
+          "url": "https://www.theregister.com/2026/03/27/microsoft_ai_crusoe/",
+          "claim": "Microsoft has taken up residence at Crusoe's 900 MW Texas datacenter campus in Abilene (March 2026)"
+        },
+        {
+          "url": "https://winbuzzer.com/2026/03/31/microsoft-leases-texas-data-center-abandoned-oracle-openai-xcxwbn/",
+          "claim": "Microsoft agreed to lease up to 900 MW of AI datacenter capacity in Abilene, Texas from Crusoe after Oracle and OpenAI walked away"
+        }
+      ],
+      "conflicts": [],
+      "fetch_failures": []
+    },
+    {
+      "id": "project-matador-fermi-america",
+      "diff": {
+        "status": {
+          "current": "permitted",
+          "proposed": "under_construction",
+          "evidence_url": "https://www.prnewswire.com/news-releases/fermi-america-and-the-state-of-texas-announce-preliminary-approval-for-first-6-gw-of-one-of-the-worlds-largest-clean-natural-gas-facilities-on-project-matadors-11-gw-private-hypergrid-campus-302603582.html",
+          "evidence_quote": "preliminary approval of Fermi America's Clean Air Permit"
+        }
+      },
+      "additional_sources": [
+        {
+          "url": "https://www.prnewswire.com/news-releases/fermi-america-and-the-state-of-texas-announce-preliminary-approval-for-first-6-gw-of-one-of-the-worlds-largest-clean-natural-gas-facilities-on-project-matadors-11-gw-private-hypergrid-campus-302603582.html",
+          "accessed_date": "2025-11-04",
+          "claim": "TCEQ grants preliminary approval for first 6 GW clean air permit for combined-cycle natural gas facility, November 2025"
+        },
+        {
+          "url": "https://amarillotribune.org/2025/11/05/just-facts-fermi-america-and-project-matador/",
+          "accessed_date": "2025-11-05",
+          "claim": "Amarillo Tribune comprehensive fact-check article covering Project Matador announced June 2025, tracking through November 2025"
+        },
+        {
+          "url": "https://www.datacenterdynamics.com/en/news/fermi-america-acquires-600mw-of-gas-turbines-for-11gw-ai-mega-campus-in-amarillo-texas/",
+          "accessed_date": "2026-09-10",
+          "claim": "Fermi America acquires 600MW gas turbines for 11GW AI campus in Amarillo, Texas"
+        }
+      ],
+      "conflicts": [],
+      "fetch_failures": []
+    },
+    {
+      "id": "gw-ranch-pacifico-pecos",
+      "diff": {},
+      "additional_sources": [],
+      "conflicts": [],
+      "fetch_failures": []
+    },
+    {
+      "id": "stargate-frontier-shackelford",
+      "diff": {
+        "status": {
+          "current": "under_construction",
+          "proposed": "partial_operational",
+          "evidence_url": "https://www.thealbanynews.net/news/shackelford-data-center-named-official-stargate-ai-campus",
+          "evidence_quote": "The Abilene campus...is already operational and houses active OpenAI workloads. The Shackelford County campus...Construction is already underway"
+        }
+      },
+      "additional_sources": [
+        {
+          "url": "https://www.thealbanynews.net/news/shackelford-data-center-named-official-stargate-ai-campus",
+          "accessed_date": "2025-10-02",
+          "claim": "Shackelford County Frontier Campus officially confirmed as Stargate site with 10 buildings across 700 acres, 3.7M sqft, construction underway, 5000+ construction jobs, 1600+ permanent positions when operational"
+        },
+        {
+          "url": "https://www.datacenterdynamics.com/en/news/openai-announces-five-more-us-stargate-data-centers-with-oracle-and-softbank/",
+          "accessed_date": "2026-10-02",
+          "claim": "Five new Stargate sites announced including Shackelford County Texas as 'Frontier Campus', distinct from Abilene flagship, powered by onsite natural gas microgrid using Jenbacher engines"
+        },
+        {
+          "url": "https://mediajustice.org/wp-content/uploads/2025/12/Stargate-Project-SW-Fact-Sheet-FINAL.pdf",
+          "accessed_date": "2025-12-xx",
+          "claim": "Stargate Project fact sheet referencing Shackelford facility details"
+        }
+      ],
+      "conflicts": [],
+      "fetch_failures": [
+        "https://openai.com/index/five-new-stargate-sites/"
+      ]
+    },
+    {
+      "id": "stargate-milam-sb-energy",
+      "diff": {},
+      "additional_sources": [],
+      "conflicts": [],
+      "fetch_failures": [
+        "https://openai.com/index/five-new-stargate-sites/"
+      ],
+      "no_change": true
+    },
+    {
+      "id": "meta-temple-bell",
+      "diff": {},
+      "additional_sources": [],
+      "conflicts": [],
+      "fetch_failures": [],
+      "no_change": true
+    }
+  ]
+}
