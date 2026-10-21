@@ -1,4 +1,4 @@
-# Project-Operations Primer: LRP Texas Energy GIS + Caramba North Deliverables
+# Part 3 — Operations, Methods, Deliverables & History
 
 Repo: `/home/user/lrp-tx-gis` (`github.com/10thMuses/lrp-tx-gis`, `main` canonical). Primer written 2026-10-21 from the repo at origin/main tip `a596741` (merge of `claude/nice-ritchie-tgzt8b`, deploy 6ad77b77) plus operator-verified facts of 2026-10-20.
 
