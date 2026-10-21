@@ -9,8 +9,8 @@ so labels track the features they name at any zoom.
     python3 scripts/capture_om_exhibits.py --out outputs/reports/om_exhibits
     python3 scripts/capture_om_exhibits.py --only 3.1 --headed
 
-Credentials come from LRP_GIS_EMAIL / LRP_GIS_PASSWORD, falling back to the
-deal-team access password documented in Appendix A.1 of the Memorandum.
+The map is public (access gate removed, deploy 6ad77b77); no credentials are needed.
+Override the target with LRP_GIS_URL.
 """
 from __future__ import annotations
 
@@ -23,8 +23,6 @@ from pathlib import Path
 
 REPO = Path(__file__).resolve().parent.parent
 SITE = os.environ.get("LRP_GIS_URL", "https://lrp-tx-gis.netlify.app")
-EMAIL = os.environ.get("LRP_GIS_EMAIL", "andrea@abhcm.com")
-PASSWORD = os.environ.get("LRP_GIS_PASSWORD", "LRP-Permian-2026")
 
 # Tract centroid, read from the canonical geometry rather than hard-coded.
 sys.path.insert(0, str(REPO / "scripts"))
@@ -246,16 +244,6 @@ def capture(pw, ex, outdir, width, height, stamp, headed):
                               device_scale_factor=2, ignore_https_errors=True)
     page = ctx.new_page()
     page.goto(SITE, wait_until="domcontentloaded", timeout=60000)
-
-    # access gate
-    try:
-        page.wait_for_selector("#oxy-gate-form", timeout=8000)
-        page.fill("#oxy-gate-email", EMAIL)
-        page.fill("#oxy-gate-pass", PASSWORD)
-        page.click("#oxy-gate-btn")
-        page.wait_for_selector("#oxy-gate", state="detached", timeout=30000)
-    except PWTimeout:
-        pass  # already authenticated in this context
 
     page.evaluate("h => { location.hash = h; }", hash_for(ex))
     page.wait_for_timeout(1200)

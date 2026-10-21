@@ -1177,6 +1177,8 @@ def render_html(layers_config, layer_stats, filter_stats=None):
             'popup': L.get('popup', []),
             'popup_labels': L.get('popup_labels', {}),
             'description': L.get('description', ''),
+            'source': L.get('source', ''),
+            'as_of': str(L.get('as_of', '')) if L.get('as_of') is not None else '',
             'min_zoom': L.get('min_zoom', 0),
             'radius': L.get('radius', 3),
             'fill_opacity': L.get('fill_opacity', 0.25),
