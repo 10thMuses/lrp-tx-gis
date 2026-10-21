@@ -1,0 +1,97 @@
+{
+  "schema_version": "1.0",
+  "generated": "2026-05-25T10:03:13Z",
+  "model": "claude-sonnet-4-5-20250929",
+  "input_file": "data/datacenters/dc_anchors.json",
+  "input_entry_count": 8,
+  "processed_entry_count": 8,
+  "proposals": [
+    {
+      "id": "project-horizon-poolside-coreweave",
+      "diff": {},
+      "additional_sources": [],
+      "conflicts": [],
+      "fetch_failures": [],
+      "no_change": true
+    },
+    {
+      "id": "stargate-abilene-crusoe-oracle",
+      "diff": {},
+      "additional_sources": [
+        {
+          "url": "https://www.tomshardware.com/tech-industry/oracle-and-openai-scrap-planned-600mw-abilene-expansion",
+          "claim": "600MW Abilene expansion scrapped (March 2026); main 1.2GW campus continues on schedule; larger 4.5GW agreement elsewhere remains on track"
+        }
+      ],
+      "conflicts": [],
+      "fetch_failures": [
+        "https://openai.com/index/five-new-stargate-sites/"
+      ]
+    },
+    {
+      "id": "microsoft-crusoe-abilene",
+      "error": "Claude API exhausted retries"
+    },
+    {
+      "id": "project-matador-fermi-america",
+      "diff": {
+        "status": {
+          "current": "permitted",
+          "proposed": "under_construction",
+          "evidence_url": "https://www.prnewswire.com/news-releases/fermi-america-and-the-state-of-texas-announce-preliminary-approval-for-first-6-gw-of-one-of-the-worlds-largest-clean-natural-gas-facilities-on-project-matadors-11-gw-private-hypergrid-campus-302603582.html",
+          "evidence_quote": "TCEQ Grants Preliminary Approval of Fermi America's Clean Air Permit"
+        },
+        "commissioned_target": {
+          "current": 2026,
+          "proposed": 2027,
+          "evidence_url": "https://www.datacenterdynamics.com/en/news/fermi-america-acquires-600mw-of-gas-turbines-for-11gw-ai-mega-campus-in-amarillo-texas/",
+          "evidence_quote": "first 1 GW targeted late 2026 from gas"
+        }
+      },
+      "additional_sources": [
+        {
+          "url": "https://www.prnewswire.com/news-releases/fermi-america-and-the-state-of-texas-announce-preliminary-approval-for-first-6-gw-of-one-of-the-worlds-largest-clean-natural-gas-facilities-on-project-matadors-11-gw-private-hypergrid-campus-302603582.html",
+          "accessed_date": "2025-11-04",
+          "claim": "TCEQ preliminary approval granted November 2025 for first 6 GW natural gas facility"
+        },
+        {
+          "url": "https://www.datacenterdynamics.com/en/news/fermi-america-acquires-600mw-of-gas-turbines-for-11gw-ai-mega-campus-in-amarillo-texas/",
+          "accessed_date": "2026-05-21",
+          "claim": "Fermi America acquires 600MW gas turbines for deployment at Project Matador campus"
+        }
+      ],
+      "conflicts": [],
+      "fetch_failures": []
+    },
+    {
+      "id": "gw-ranch-pacifico-pecos",
+      "error": "Claude API exhausted retries"
+    },
+    {
+      "id": "stargate-frontier-shackelford",
+      "error": "Claude API exhausted retries"
+    },
+    {
+      "id": "stargate-milam-sb-energy",
+      "diff": {},
+      "additional_sources": [
+        {
+          "url": "https://intuitionlabs.ai/articles/openai-stargate-datacenter-details",
+          "claim": "Comprehensive overview of Stargate Project including Milam County site details and February 2026 status update"
+        },
+        {
+          "url": "https://baxtel.com/data-center/openai-stargate-milam-county-tx",
+          "claim": "Datacenter directory listing for OpenAI Stargate Milam County facility"
+        }
+      ],
+      "conflicts": [],
+      "fetch_failures": [
+        "https://openai.com/index/five-new-stargate-sites/"
+      ]
+    },
+    {
+      "id": "meta-temple-bell",
+      "error": "Claude API exhausted retries"
+    }
+  ]
+}
