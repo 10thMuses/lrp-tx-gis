@@ -44,3 +44,21 @@ Append-only. One entry per refresh run.
 - `tceq_nsr_pending` — deferred to next chat for EPA FRS / data.texas.gov recon pass
 
 **Aggregate signal (23-county 2020+ gas-turbine permit wave):** 3,536 MW across 6 permits, of which one (Poolside LF Phase 2 DC Ops, Fort Stockton) is explicitly data-center branded. CPV Basic Ranch 1,320 MW combined-cycle+cogen at Barstow and Featherwood Capital 931 MW at Pecos/Reeves are the two largest; both non-utility developers.
+
+---
+
+## 2026-10-21 — multi-source refresh (wells, permits, OXY permits, EIA-860, TCEQ, USWTDB, LDAD, FCC BDC)
+
+| Layer | Old | New | as_of | Merge |
+|---|---|---|---|---|
+| wells_permian6 (RRC dbf900) | 99,808 parsed / 35,198 mapped (2026-08-19 run) | 100,220 parsed / 35,355 mapped | 2026-10-21 (spud max 2026-09-24) | standalone `data/wells_permian6.csv` (gitignored), no merge |
+| permits_permian6 (RRC daf420 EOM, 110 snapshots) | 28,842 | 33,179 | snapshots through 2026-09-30; rows with coords through 2026-03-31 | standalone CSV, no merge |
+| oxy_drilling_permits | 294 (2020-2026, partial snapshot set) | 2,548 (2015-2026, all 110 snapshots) | 2026-09-30 | standalone geojson |
+| eia860_plants | 1,367 | 1,532 | EIA-860 2025 data (`eia8602025.zip`) | merged |
+| eia860_battery | 133 | 203 | EIA-860 2025 data | merged |
+| wind (USWTDB V9.1, file release) | 19,464 | 19,943 | 2026-09-28 | merged |
+| tceq_gas_turbines | 13 | 18 | turbine-lst v2026.10.7 | merged |
+| tax_abatements (LDAD) | 1,495 | 1,425 (1,416 LDAD + 9 seed) | LDAD API lastUpdated 2026-10-10 | transform_ldad.py |
+| fcc_fiber_coverage | 9,160 hexes (Jun 2025) | 8,211 hexes (Dec 2025) | 2025-12-31 | archive only (no layer in layers.yaml) |
+
+Script changes: `parse_rrc.py` (permits) now reads `0109`/`0209` master/detail records and 27/28-byte location records (2024+ format; previously dropped), and `approved_date` offset corrected 120 -> 119 (previously garbage); `refresh_uswtdb.py` gains `--from-file` / `--from-url` (eersc.usgs.gov TLS cert expired; file release at energy.usgs.gov has valid cert); `refresh_tceq_gas_turbines.py` accepts an xlsx path arg; `refresh_fcc_fiber_coverage.py` AS_OF_DATE -> 2025-12-31; `build_oxy_drilling_permits.py` FIPS fallback += 6 counties.

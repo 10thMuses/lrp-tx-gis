@@ -1,0 +1,28 @@
+{
+  "layer_id": "ercot_queue",
+  "rows": 1754,
+  "source_report": "GIS_Report_September2026",
+  "source_doc_id": "1281327706",
+  "source_publish_date": "2026-10-01",
+  "source_list_url": "https://www.ercot.com/misapp/servlets/IceDocListJsonWS?reportTypeId=15933",
+  "source_download_url": "https://www.ercot.com/misdownload/servlets/mirDownload?doclookupId=1281327706",
+  "sheet": "Project Details - Large Gen",
+  "run_date": "2026-10-21",
+  "fuels": [
+    "GAS",
+    "NUC",
+    "OTH",
+    "SOL",
+    "WIN"
+  ],
+  "coords_source_counts": {
+    "eia860": 290,
+    "county_centroid": 1301,
+    "substation_poi": 69,
+    "uswtdb": 9,
+    "tpit_poi": 85
+  },
+  "carried_forward": 1567,
+  "newly_geocoded": 187,
+  "dropped_no_county_inrs": []
+}

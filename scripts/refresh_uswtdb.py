@@ -11,8 +11,15 @@ and is filled from the project layer when available downstream.
 
 `capacity_mw` is computed from `t_cap` (kW) per Chat 75 coalesce convention.
 
+Alternate source (file release, valid TLS cert) -- use when eersc.usgs.gov's
+cert is expired. Do NOT disable TLS verification; use one of:
+    python scripts/refresh_uswtdb.py --from-file path/to/uswtdb_V9_1_YYYYMMDD.csv   (or the .zip)
+    python scripts/refresh_uswtdb.py --from-url https://energy.usgs.gov/uswtdb/assets/data/uswtdbCSV.zip
+The file release carries the same column names as the API (t_state, t_county,
+p_year, t_cap, xlong, ylat, ...); only t_state == TX rows are kept.
+
 Usage:
-    python scripts/refresh_uswtdb.py [--out outputs/refresh]
+    python scripts/refresh_uswtdb.py [--out outputs/refresh] [--from-file F | --from-url U]
 
 Exit codes:
     0  CSV written non-empty
@@ -21,6 +28,7 @@ Exit codes:
 import argparse
 import csv
 import json
+import os
 import sys
 import time
 import urllib.request
@@ -80,6 +88,41 @@ def fetch_all_tx():
     return all_rows
 
 
+def load_tx_from_file(path):
+    """Read TX turbines from a USWTDB file release (.csv or .zip containing one)."""
+    import io
+    import zipfile
+    p = Path(path)
+    if p.suffix.lower() == ".zip":
+        with zipfile.ZipFile(p) as z:
+            names = [n for n in z.namelist() if n.lower().endswith(".csv")]
+            if not names:
+                raise RuntimeError(f"no .csv inside {p}")
+            raw = z.read(names[0])
+            src = names[0]
+    else:
+        raw = p.read_bytes()
+        src = p.name
+    sys.stderr.write(f"[uswtdb] reading file release {src}\n")
+    rd = csv.DictReader(io.StringIO(raw.decode("utf-8-sig"), newline=""))
+    rows = [r for r in rd if (r.get("t_state") or "").strip().upper() == "TX"]
+    # Match API ordering (case_id asc)
+    rows.sort(key=lambda r: int(r["case_id"]) if (r.get("case_id") or "").isdigit() else 0)
+    return rows
+
+
+def download_to_tmp(url):
+    """Download a file release over normal (verified) TLS to a temp file."""
+    import tempfile
+    blob = fetch_with_retry(url)
+    suffix = ".zip" if url.lower().endswith(".zip") else ".csv"
+    fd, tmp = tempfile.mkstemp(suffix=suffix)
+    with os.fdopen(fd, "wb") as f:
+        f.write(blob)
+    sys.stderr.write(f"[uswtdb] downloaded {len(blob)} bytes from {url}\n")
+    return tmp
+
+
 def empty_row():
     return {col: "" for col in SCHEMA}
 
@@ -87,12 +130,19 @@ def empty_row():
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--out", default="outputs/refresh")
+    ap.add_argument("--from-file", help="USWTDB file release (.csv or .zip); skips the API")
+    ap.add_argument("--from-url", help="URL of a USWTDB file release (.csv/.zip) with a valid TLS cert; skips the API")
     args = ap.parse_args()
 
     today = date.today().isoformat()
 
     try:
-        turbines = fetch_all_tx()
+        if args.from_file:
+            turbines = load_tx_from_file(args.from_file)
+        elif args.from_url:
+            turbines = load_tx_from_file(download_to_tmp(args.from_url))
+        else:
+            turbines = fetch_all_tx()
     except Exception as e:
         sys.stderr.write(f"FETCH_FAILED: {e}\n")
         return 1
@@ -147,7 +197,8 @@ def main():
     if not out_rows:
         sys.stderr.write("ERROR: wind_*.csv empty after filtering\n")
         return 1
-    print(f"OK wind={len(out_rows)} src={BASE}?t_state=eq.TX")
+    src = args.from_file or args.from_url or f"{BASE}?t_state=eq.TX"
+    print(f"OK wind={len(out_rows)} src={src}")
     return 0
 
 
