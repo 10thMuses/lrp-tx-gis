@@ -1,0 +1,131 @@
+Subject: Grid Wire Vol 16 -- June 10, 2026 -- 6:00 PM ET (expanded full edition, updated through the close)
+
+Updated full cut through the June 10 close. CPI actuals are in (4.2% headline, soft 0.2% monthly core), APLD priced its notes at 7.000%, and the Iran tape broke the de-escalation trade intraday. All sectors covered.
+
+THE GRID WIRE -- Vol 16 -- Wednesday, June 10, 2026 -- 6:00 PM ET cut, EXPANDED FULL EDITION, UPDATED THROUGH THE CLOSE
+Land Resource Partners -- Capital Markets and Infrastructure Briefing
+All-sector coverage: AI infrastructure, oil and gas, midstream/LNG, solar, storage, geothermal, nuclear/uranium, utilities, compression, transmission, electrification.
+
+I. THE TAPE (through the June 10 close)
+- May CPI ACTUAL: headline +0.5% M/M, 4.2% Y/Y (highest since Apr 2023, in line). Core +0.2% M/M, BELOW the 0.3% estimate; 2.9% Y/Y (highest since Sep 2025, in line). Energy +3.9% M/M, +23.5% Y/Y, >60% of the monthly increase. Core commodities -0.1%.
+- Rates: 30Y ~5.0%; Treasuries took the print flat. CME >70% odds of a 2026 hike going into the June 17 FOMC (hold expected).
+- Crude: WTI +2% to ~$90 after Trump said Iran "will have to pay the price" and strikes on plants and bridges are close. EIA: -7.23M bbl, seventh straight weekly draw.
+- Equities close: Dow -800+ pts (-1.65%); VIX +12%; third straight down day. Oracle Q4 FY26 after the bell. APLD -5.7%.
+- Gas: Waha Summer strip -$4.69, cash ~-$3.00; HH <$3.50 most of 2026. Uranium ~$86/lb. Permian rigs ~240. ERCOT queue 438 GW; Batch Zero to PUCT June 18.
+
+II. LEAD: THE FIRST HIKING CYCLE THE AI CREDIT STACK HAS EVER SEEN
+The print is a split screen. Headline leg confirmed: two consecutive hot months, 4-handle into the June 17 FOMC, energy doing the damage. Hiking leg tested but intact: the soft 0.2% monthly core is the best dove data point since the war began, and the market read it as relief that the shock has not yet spilled into broad prices. Structure unchanged: every DDTL floats over SOFR, struck assuming cuts. The long end made its 2007 high on the inflation leg alone; the hiking leg is optionality against the same positions, not the requirement.
+Falsification status: stated condition was core <=2.7% AND hike odds <40%. Core printed 2.9% -- not triggered, thesis stands. Remaining test: hike odds through June 17. The 0.2% monthly core is the named risk and is acknowledged as such.
+
+III. DEALS AND FINANCINGS -- ALL SECTORS, TERM SHEETS
+- Jun 9 PRICED: APLD ComputeCo 3 $1.59B 7.000% senior secured notes due 2031, AT PAR; closes ~June 16. Proceeds: 150 MW ELN-04, Goldman bridge repayment, DSRA; first-priority liens + APLD completion guarantee. Coupon ladder: 9.250% (Nov 25) -> 6.750% at 98 (Mar) -> 7.000% at par (Jun). Equity -5.7% on the day.
+- Jun 8 (closed 5/29): APLD revolver $350M + $200M accordion, Goldman, SOFR+225/ABR+125, matures 5/29/29, secured by non-DC-project assets.
+- Jun 8: APLD 210 MW Delta Forge 2 lease, fifth campus; tenant/rent/tenor n/d.
+- Jun 5: APLD/CoreWeave MOU -- Building 3 lease assigned to a CoreWeave subsidiary IF it achieves an IG rating.
+- Jun 1: Anthropic confidential IPO filing ($125B equity raised; $65B Series H at $965B post May 28).
+- Jun 1: Cameco/Orano to acquire TEPCO's 5% of Cigar Lake JV; price n/d.
+- OpenAI confidential IPO filing; 2026 round reported $110B/$840B vs $122B/$852B across outlets -- n/d pending S-1. SpaceX IPO ~$75B at $1.75-2T.
+- May (Reuters): NextEra and Dominion exploring potential merger; terms n/d.
+- Apr 30: Meta $25B IG bonds (second jumbo in 6 months); 2026 capex $125-145B.
+- Apr: Fervo Energy IPO filing (3.6 GW pipeline) after $421M non-recourse project financing (Mar) and $462M round (Google, CalSTRS, Feb).
+- Mar 17: Tesla/LG $4.3B LFP supply, Lansing MI plant; Aug 2027-Jul 2030 + 7-yr extension; feeds Megapack 3 Houston (50 GWh/yr from late 2026); Tesla Korean cell commitments >$6.4B.
+- Mar 13: Venture Global CP2 Phase 2 FID; $8.6B project financing (BBVA/MUFG lead arrangers), $20.7B total; first US LNG plant sanctioned in 2026.
+- Feb 26: Archrock redeemed all $800M 6.25% notes due 2028 at par (Apr 1).
+- Stock: big-four hyperscaler 2026 capex ~$700B+, +77%; MS sees $250-300B issuance; Alphabet 100-yr bond Feb.
+
+IV. APLD FORENSICS: THE RATING IS NOW A TRANSFERABLE ASSET
+The June 5 MOU conditions the lease assignment on a SUBSIDIARY achieving an IG rating. Tenant credit is being engineered SPV-by-SPV so landlord project debt can re-rate. Efficient while ratings hold; pro-cyclical when they break. Recovery floor remains the unrated land, power, water.
+Falsification status: half the test resolved today. ELN-04 priced at 7.000% at par, INSIDE the 7.5% threshold -- the market is still paying for the structure, not charging for the asset. The 25 bps vs March's 6.750% matches the rate backdrop. Remaining test: Building 3 assignment closing without the subsidiary IG rating. Same-day equity read: APLD -5.7%. Credit pays for the structure; equity pays for the leverage. That is the CoreWeave pattern one tier down.
+
+V. COREWEAVE: EQUITY SELLING WHAT CREDIT IS BUYING
+$2.3B founder sales since IPO (Bloomberg 6/9); Intrator $37.7M on June 2; Magnetar 9.7%. Same window: A3/A(low) $8.5B DDTL at SOFR+225. Q1 revenue $2.1B (+112%), backlog $99.4B, >1 GW active; GAAP loss $740M. Russell 3000 add June 26.
+Falsification: sustained founder buying, or clean 2027 DSCR with spreads through SOFR+200.
+
+VI. GRID: BATCH ZERO IS SB6'S ENFORCEMENT MECHANISM
+ERCOT board approved June 1-2; PUCT June 18. Queue 438 GW vs ~85 GW peak; ~200 DCs seeking 2026 connection. Batch study allocates transmission to committed, site-controlled loads; with $50k/MW and security forfeiture, phantom load dies, controlled land survives. Cipher Colchis (1,000 MW, AEP direct-connect) is the survivor profile.
+Turbines (GEV Q1): 21 GW signed; combined backlog+slots 83->100 GW, >=110 GW YE guide; pricing +10-20 pts vs Q4'25; WoodMac $600/kW by end-2027; ~10 GW left across 2029 AND 2030 combined.
+Falsification: PUCT rejects/waters Batch Zero June 18, or GEV Q2 slots expand.
+
+VII. ELECTRIFICATION: THE BOTTLENECK MOVED INSIDE THE FENCE LINE
+- Eaton Q1: revenue $7.45B +17%, DC orders +240%, DC revenue +50%, backlog $22.8B -- but earnings only +2%; capacity spend eating margin. CEO: backlog = "eleven years of what was built in 2025." Boyd Thermal $9.5B; Fibrebond $1.45B.
+- Vertiv: backlog $15.0B +109%; Q4 book-to-bill ~2.9x; TTM organic orders +81%; Q1 revenue $2.65B +30%, adj EPS +83%.
+- GEV Electrification: $7.1B Q1 orders, ~2.5x b2b; $2.4B DC orders in one quarter > all 2025.
+- Capacity adds: Hitachi Energy $1B+ NA incl. largest US LPT plant (Virginia, 2028); Siemens Energy $1B+ (Charlotte, 2027).
+- Constraint: Bloomberg (Apr 1) -- more than half of 2026-planned US data centers expected delayed/canceled on transformers/switchgear; only ~1/3 of planned 12-16 GW under construction; 3-5 yr deliveries.
+Angle: when the bottleneck vendor cannot convert record orders into earnings, the scarcity rent accrues to whoever already holds energized capacity. The queue is the asset.
+Falsification: Eaton/Vertiv Q2 backlogs flat-to-down, or transformer lead times <24 months.
+
+VIII. TRANSMISSION: TEXAS DECIDES ITS FIRST 765 KV LINE THIS MONTH
+PUCT decision on Oncor's first 765 kV expected June 2026; energized Dec 2028 if approved. Permian import paths (approved Apr 2025): Howard-Solstice (AEP/CPS, ~370 mi, Fort Stockton to San Antonio; CCN amendment Mar 2026), Bell East-Big Hill-Sand Lake, Dinosaur-Longshore-Drill Hole; Drill Hole-Sand Lake-Solstice western link runs through Culberson, Ward, Reeves, Pecos. Oncor/LCRA filed Mar 26 for up to 244 mi more at $1.6-1.9B + ~$400M stations; route selection Sept; energized 2030; 50/50.
+Angle: Texas's first EHV network is being built INTO the Permian. Rate-based capital is making Pecos/Reeves/Ward the best-interconnected rural load pocket in ERCOT before a single DC signs.
+Falsification: PUCT denies/delays the first 765 kV CCN this month.
+
+IX. UTILITIES AND IPPS: CONSOLIDATION REACHES THE TOP
+- NextEra/Dominion exploring merger (Reuters); terms n/d. A bid for the Loudoun load pocket, not generation.
+- Vistra Q1: NI $1,029M (incl $723M unrealized hedge gain); 2026 EBITDA guide $6.8-7.6B reaffirmed; IG at second agency (Fitch BBB- Mar); $500M notes due 2028 priced; Meta nuclear up to 6.6 GW; Comanche Peak 20-yr PPA, hyperscaler unnamed; Cogentrix 5.5 GW gas.
+- Constellation: Crane FERC waiver decision expected June/July; PJM market monitor opposed; Microsoft 20-yr PPA est $100-102/MWh; PJM deliverability slip 2030-31. The single most important near-term catalyst.
+- Talen/AWS 17-yr Susquehanna ~$68.90/MWh remains the floor print.
+Angle: nuclear PPA tape $68.90 -> $100-102/MWh in two years = the clearest printed price series for firm-capacity scarcity.
+Falsification: a GW-scale nuclear PPA below ~$70/MWh, or FERC denies Crane and Microsoft renegotiates.
+
+X. NUCLEAR FUEL AND SMRS
+U3O8 ~$86. Cameco: 19.5-21.5 Mlb 2026 production guide; ~28 Mlb/yr commitments 2026-2030; Key Lake/McArthur back at full production May 27 post-flood; TEPCO Cigar Lake 5% buy-in June 1; Westinghouse C$122M EBITDA share Q1. 72 reactors under construction globally; 2030s deficit per Cameco. SMRs pre-revenue; NuScale/Oklo sold off hard June 5; neither grid-connected.
+Angle: the incumbent is consolidating producing, licensed pounds while equity chases pre-revenue SMR paper -- the fuel-cycle version of buying adjudicated physical position.
+Falsification: U3O8 <$70 for a month, or a binding SMR offtake with pre-2030 delivery.
+
+XI. SOLAR, STORAGE, GEOTHERMAL: THE OBBBA SORT
+- First Solar Q1: sales $1.04B +24%, EPS $3.22 +65%, backlog 47.9 GW, cash $2.4B; Jinko TOPCon case stayed pending USITC. Structural FEOC + safe-harbor beneficiary.
+- Storage: EIA sees US storage 51.2 GW (Apr 26) -> ~88.4 GW (Dec 27). Tesla/LG deal de-risks Megapack 3 tariff exposure. Fluence Smartstack + 1 GWh Cordelio. Today: EDP Renewables/SRP completed Arizona's largest battery project.
+- Geothermal: Fervo Cape Station first 100 MW on grid 2026, 500 MW by 2028, fully contracted (Google 115 MW; Shell 31 MW/15 yr); IPO filed April. Sage $97M round co-led by Ormat; Meta 150 MW (Sage, TX) + 150 MW (XGS, NM).
+Angle: OBBBA is a sort, not a kill. Storage/geothermal/nuclear keep full credits into the 2030s; capital is migrating exactly as the statute directs. Post-deadline wind/solar pipelines transfer value to grandfathered position. Seniority again.
+Falsification: deadline extension, or Cape Station misses 2026 first power.
+
+XII. POLICY: COURT RESTORES THE 5% SAFE HARBOR, 24 DAYS LEFT
+June 6: DDC (Oregon Environmental Council v. IRS, 25-4400 CKK) vacated Notice 2025-42 in full. 5% safe harbor restored for wind/large solar BOC ahead of the July 4 OBBBA deadline. Pre-July 4 starts keep the 4-yr runway (ISD by end-2030); misses must be in service by 12/31/27.
+Angle: a 24-day procurement sprint (panels, trackers, transformers, inverters) landing on the Section VII supply chain that has already delayed half of 2026's data centers.
+Falsification: emergency stay or reversal before July 4.
+
+XIII. OIL AND GAS UPSTREAM, SERVICES, COMPRESSION
+Crude side: Diamondback retired the stoplight May 4, declared green. Q1 521 kb/d oil (above guidance top); FY raised to 520+ kb/d; +2-3 rigs, 5 frac crews; capex $3.75B -> $3.9B. First major to break post-2022 discipline; COP/Continental signaling similar. Permian rigs 245 May / ~240 now; 761 Q1 permits vs 514 Q4; FANG holds 73 DUCs. EnergyWire: ramp adds only ~250 kb/d.
+Gas side (separate): HH <$3.50 most of 2026; EQT curtailing; FANG "consciously moving away from Waha"; EIA 2026 dry gas raised to 110.61 Bcf/d.
+Compression: Archrock Q1 contract ops revenue $330.9M +10%; $800M 6.25% notes redeemed at par; 2026 growth capex $250-275M in large-HP/e-drive; 325k HP sold for $192M and redeployed.
+Angle: Diamondback's green light is a GAS SUPPLY announcement wearing an oil headline -- crude-priced rigs extend the negative-Waha regime that underwrites every BTM Permian power project. And compression is de-levering at par while AI infrastructure levers up at SOFR+225.
+Falsification: stoplight re-imposed, or Waha cash sustained above -$1.00 through summer without new in-basin demand.
+
+XIV. MIDSTREAM AND LNG: TWENTY-YEAR PAPER, MID-TEENS RETURNS
+- ET: 2026 growth capex $5.0-5.5B, mid-teens returns, sub-6.0x build multiples. Mustang Draw I (275 MMcf/d) full service THIS MONTH. Springerville Lateral approved: 120 mi, 625 MMcf/d, ~$600M, 20-yr contracts, Q4 2029, coal replacement. Nederland ethane extended to 2041. FGT Phase IX ~525 MMcf/d on 15-25 yr anchors. Separately today, Sempra brought a key Gulf Coast pipeline online for Port Arthur LNG.
+- Venture Global: CP2 Phase 2 FID (terms in III); Phase 1 first LNG 2027.
+- KMI: KinderHawk $500M to 2 Bcf/d (Haynesville, life-of-lease, late 2026); internal +28 Bcf/d US demand by 2030; Trident 2.8 Bcf/d anchored by Golden Pass.
+Angle: midstream is writing the longest, hardest paper in the complex -- 2041 contracts at sub-6x build multiples -- while the AI claim layer leases at n/d tenors to engineered-credit SPVs. The market pays 30x for the claim and single digits for the contract layer.
+Falsification: ET build multiples >7x, or a major LNG take-or-pay default.
+
+XV. NATURAL GAS: WAHA
+Prompt fixed -$5.69 / basis -$8.25 (May 1); Summer strip -$4.69, cash ~-$3.00 (May 22); HH June $2.78. Record 27.6 Bcf/d Permian 2025; rising GORs now reinforced by the XIII rig adds. Egress: GCX +570 MMcf/d 2Q; Hugh Brinson some gas early Q3, P1 1.5 Bcf/d Q4 26, P2 0.7 Bcf/d Q1 27; Blackcomb Q4. Demand: CloudBurst/ET 450,000 MMBtu/d (~1.2 GW BTM, Q3 26); New Era Helium/Sharon AI 250 MW; Fermi 300,000 MMBtu/d contracted.
+
+XVI. CRUDE (separate)
+The de-escalation tape broke today. WTI +2% to ~$90 on Trump's "pay the price" warning and threatened strikes on Iranian plants and bridges, after Iranian attacks on Bahrain, Jordan, and Kuwait. EIA: -7.23M bbl, seventh consecutive draw, ~2x expectations. Wright: strait traffic rising despite restrictions. Ceasefire plan facing Israel-hawk resistance. Fitch still models ~end-July reopening, Brent $87 FY26, Q4 oversupply risk compounded by the shale ramp. The structure of the day is the thesis in miniature: an in-line CPI bought two hours of relief and one Iran sentence took it back. The crude tape can normalize; the inflation already in the CPI base cannot.
+
+XVII. WEST TEXAS FOCAL POINTS: JUNE 18
+- PUCT Batch Zero vote June 18.
+- Reeves GCD: HUP deadline 9/1/26 (83 days); board meets June 18, same day. First tradeable senior groundwater market in the US.
+- 765 kV: first CCN decision due this month; western paths terminate at Solstice (Fort Stockton) and run through Pecos/Reeves/Ward/Culberson.
+- Chevron/Microsoft/Engine No. 1 exclusivity stands; terms n/d. Pacifico GW Ranch holds the largest air permit in the country. OBBBA cliff: 24 days.
+Angle: three administrative acts, one direction -- pre-held physical position in Pecos and Reeves is being converted into exclusive, transferable, rate-base-backed rights. Capital arriving June 19 buys from whoever filed by June 18.
+Falsification: PUCT delay/rejection or a Reeves deadline extension (defers, not destroys).
+
+XVIII. CONCLUSIONS, ANGLED
+1. First hiking cycle for the AI credit stack; CPI is the catalyst, not the cause.
+2. The rating is a transferable asset (APLD/CoreWeave MOU). Peak claim-layer financialization; concentrates risk.
+3. Founders sold $2.3B of equity the credit market re-rated to A3; value migrated down to contracts and sites.
+4. Four seniority systems closing at once: ERCOT transmission, turbine slots, electrical equipment, nuclear offtake ($68.90 -> $102/MWh tape). Money no longer buys position; prior position does.
+5. The vacatur turns the OBBBA cliff into a 24-day procurement sprint on a supply chain that already delayed half of 2026's data centers. The OBBBA is a sort: storage/geothermal/nuclear keep credits, capital migrates.
+6. Diamondback's green light is a gas-supply announcement: crude rigs extend negative Waha, underwriting BTM Permian power.
+7. Midstream writes 2041 paper at sub-6x build multiples while AI leases at n/d tenors to engineered SPVs. That valuation gap is the standing mispricing.
+8. June 18: transmission and senior water rights crystallize into property on the same day; the first 765 kV order, due the same month, terminates at Solstice. Pre-held position in Pecos/Reeves is the only asset all three processes reward.
+
+Sources: SEC EDGAR (APLD, GEV, ET, AROC, FSLR, VST, CRWV filings and Form 4s), BLS, FRED/H.15, CME FedWatch, ERCOT/PUCT (Batch Zero, Docket 58481, 765 kV CCNs/RPG), DDC opinion 25-4400, Reeves County GCD, AEGIS/NGI, EIA, Cameco/Business Wire, Bloomberg, Reuters, S&P Global MI. n/d discipline applied. Crude and gas sourced separately. Indicative fixed-equivalents on floaters. Not investment advice.
+
+Full 15-page PDF with charts and 78 footnotes attached, updated through the close. Next cut: 9:00 PM ET.
+
+Andrea Himmel
+Land Resource Partners

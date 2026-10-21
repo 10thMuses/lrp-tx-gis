@@ -1,0 +1,69 @@
+Subject: Grid Wire Vol 17 -- June 12, 2026 -- 9:30 AM ET (expanded full edition, by request)
+
+Full cut covering the June 10 close through this morning's open. A 60-day Iran ceasefire reopening Hormuz took $8 off crude and put 930 points on the Dow; the same 24 hours, Oracle fell 9.4% on a $95B capex guide and CoreWeave paid 9.625% for unsecured paper. The war premium is leaving the barrel, not the AI credit stack.
+
+THE GRID WIRE -- Vol 17 -- Friday, June 12, 2026 -- 9:30 AM ET cut, EXPANDED FULL EDITION (operator request), June 10 close -> June 12 open
+Land Resource Partners -- Capital Markets and Infrastructure Briefing
+All-sector coverage: AI infrastructure, oil and gas, midstream/LNG, solar, storage, geothermal, nuclear/uranium, utilities, compression, transmission, electrification.
+
+I. THE TAPE (through the June 12 open)
+- Iran: 60-day ceasefire announced June 11. Hormuz reopens, no tolls; Iran clears its mines within 30 days; US lifts the port blockade + issues oil sanctions waivers; HEU stockpile is the first agenda item. Signing possible this weekend in Europe.
+- Crude: WTI $87.71 close / $86.51 extended (-3.9%), lower again premarket. ~$8 off in two sessions.
+- Equities (June 11): Dow +929.97 (+1.86%) to 50,848.75; Nasdaq +2.5%; S&P +1.7%. Energy, staples, real estate declined. ORCL -9.4% AGAINST the +930 tape. S&P futures +0.6% premarket.
+- Rates: 30Y eased to ~4.95-5.01%. June 17 FOMC ~96.5% hold at 3.50-3.75%; hike-within-a-year probability still RISING June 11; no 2026 cuts priced.
+- SpaceX: priced $135 fixed, 555.6M shares, ~$75B at ~$1.77T. SPCX debuts on Nasdaq TODAY; ~30% retail; offshore perps marked ~$176 pre-open. Largest IPO in history.
+- Gas: +108 Bcf injection (vs 99 est); surplus to 5-yr avg widens to 151 Bcf. Waha latest published unchanged (May 22: strip -$4.69, cash ~-$3.00). Uranium futures <$85; June spot n/d. ERCOT queue 438 GW; Batch Zero to PUCT June 18. Baker Hughes rigs print 1 PM ET today.
+
+II. LEAD: DE-ESCALATION REPRICED THE MACRO. THE CLAIM LAYER REPRICED ITSELF.
+Two prints, opposite directions. Macro: ceasefire, crude -4%, Dow +930. Micro, same 24 hours, no relief: Oracle guided FY27 capex to $95B against negative $23.7B FCF and lost 9.4% on a +1.86% index day; CoreWeave paid 9.625% unsecured while its own secured facility sits at SOFR+225. The war premium is leaving the barrel. It was never what held up the AI credit stack.
+Angle: on the best risk day since the war began, the marginal cost of unsecured AI infrastructure debt printed 9.625% and the largest cloud backlog ever recorded traded down 9%. When the claim layer cannot rally on a +930 Dow, the discount is not geopolitical. It is the funding gap.
+Falsification status: Vol 16 condition was core <=2.7% AND hike odds <40% -- core printed 2.9%, not triggered; ~96.5% hold base case stands. NEW named risk: an executed Hormuz reopening deflates the energy leg; if July CPI energy goes negative M/M and 2026 hike odds drop below 40%, the lead reverts to the long-end leg alone (~5% 30Y, which does not depend on the war).
+
+III. ORACLE FORENSICS: THE LARGEST CLAIM EVER PRINTED CAME WITH A FUNDING TEST
+Q4 FY26 (June 10 after bell): revenue $19.2B +21%; cloud $9.9B +47%; IaaS $5.8B +93%; RPO $638B, +363% Y/Y, +$85B sequential. Funding side of the same filing: Q4 capex $15.9B, FY26 $55.7B vs $50B guided; FY27 capex guided UP TO $95B; FY26 FCF NEGATIVE $23.7B; ROIC 14.8% -> 10.7%. Stock opened -11.1%, closed -9.4% on a +930 Dow day. Shareholder litigation probe on capex disclosure opened within 24 hours.
+The physical-layer tell: most Q3/Q4 RPO additions were large AI contracts where the customer PREPAID Oracle for GPUs or SUPPLIED the GPUs -- those hardware portions total $75B. Customers are paying the cloud vendor in hardware.
+Falsification: Oracle funds FY27 without material net new issuance, or ROIC inflects up while backlog converts.
+
+IV. COREWEAVE: THE UNSECURED PRINT MARKS THE STACK
+Announced and priced June 11: $3.5B senior UNSECURED -- $1.25B at 9.625% and EUR 2B at 8.500%, both due 7/15/32; subsidiary guarantees; proceeds GCP incl. repaying debt; closes June 18. Equity flat (+0.14%, $95.74) on the quarter's best index day; -20%+ from June 1 peak.
+The read: CRWV's own secured DDTL 4.0 sits at SOFR+225 (~5.9% indicative); its unsecured just printed 9.625%. The 370 bps inside one capital structure is the market's stated price for everything above the collateral. Updated cost-of-capital tape in the PDF (8 prints: DDTL 1.0 15.00% -> CRWV unsecured 9.625%/8.50%).
+Falsification status: founder-buying trigger unchanged (no new Form 4s in window). New test: unsecured 2032s trading through 8.5% yield into DSCR season would mean the corporate claim, not just the collateral, is re-rating.
+
+V. DEALS AND FINANCINGS -- THE WINDOW'S TERM SHEETS
+- Jun 11 PRICED: CoreWeave $3.5B senior unsecured: $1.25B 9.625% + EUR 2B 8.500%, due 7/15/32, sub guarantees, GCP incl. debt repayment, closes June 18. First unsecured benchmark for the complex this cycle.
+- Jun 11-12: SpaceX IPO priced $135 fixed, 555.6M shares, ~$75B at ~$1.77T, SPCX, trades today, ~30% retail (~$22B). Perps ~$176 pre-open.
+- Jun 10: Oracle FY27 capex guide up to $95B (FY26 closed $55.7B vs $50B guided; FCF -$23.7B). Funding mix n/d at the print.
+- Jun 8: OpenAI confidential S-1 submitted (Anthropic filed June 1). Three-listing pipeline ~$4T value, >$240B absorption by YE (estimates). OpenAI terms n/d pending public S-1.
+- CORRECTION (May 18; hearings Jun 10): NextEra/Dominion is a DEFINITIVE all-stock merger, $66.8B equity value -- Vol 16 carried it as exploratory/n.d. Largest power-sector tie-up on record; ~130 GW combined large-load pipeline; VA legislators grilled Dominion June 10; $10/mo ratepayer rebate offered; close 12-18 months.
+
+VI. CRUDE (separate)
+Ceasefire mechanics: Hormuz opens no-tolls, mines cleared within 30 days, port blockade lifted, sanctions waivers restore Iranian exports, HEU first agenda item. WTI $87.71 -> $86.51 ext, lower premarket. Physical normalization lags the signature (mine clearance, field restarts, repairs); June reopening already seen unlikely. Into it: OPEC+ +188 kb/d July, record US exports, China imports at 8-yr lows, plus the crude-side shale ramp. A signed deal makes Fitch's end-July reopening a schedule, with Q4 oversupply the printed risk.
+
+VII. NATURAL GAS (separate)
++108 Bcf injection (week ending June 5) vs 99 est and 110 yr-ago; surplus to 5-yr avg 151 Bcf (from 138); futures sold it. June 9 STEO: May HH avg $2.94; H2-26 ~$3.34; 2027 cut $1.13 to $3.46 on the storage overhang. Waha unchanged -- latest published still May 22 (-$4.69 strip, ~-$3.00 cash). Crude-priced rigs keep adding associated gas into a hub already in surplus. Baker Hughes 1 PM ET.
+
+VIII. POWER, UTILITIES, AND THE TEXAS CALENDAR
+- PUCT Batch Zero vote June 18 (Thursday). Batch forecast mid-August; reliability-standard report December; market-design decisions H1 2027.
+- Oncor 765 kV CCN: decision still expected this month; no order in window. Pending: Longshore-Drill Hole, ~180 mi, filed 12/11/25, energize Dec 2028 if approved.
+- NextEra/Dominion: definitive (see V). The ~130 GW large-load pipeline is the asset being priced -- the load-pocket read stands.
+- Reeves County GCD: HUP deadline Sept 1 (81 days); board meets June 18, same day as the PUCT vote.
+- OBBBA cliff July 4: 22 days. No stay motion filed yet; counsel alerts: appellate review outlasts July 4 and reversal could be retroactive, so physical-work qualification remains the only safe path. The procurement-sprint logic stands on both legal paths.
+Angle: June 18 is now a four-event day -- Batch Zero at the PUCT, the Reeves GCD's last pre-deadline meeting, CoreWeave's unsecured close, and the 765 kV window open through month-end. Texas converts position into property the same week the claim layer's unsecured cost gets marked.
+
+IX. REGISTER SWEEP (unchanged threads)
+Electrification: no in-window prints; Q2 season is the test. Nuclear fuel: U futures <$85 late May, June spot n/d; no new GW-scale nuclear PPA, the $68.90->$102/MWh tape stands. APLD: $1.59B notes close ~June 16; Building 3 IG-rating condition still the open half of the rating-as-asset test. Midstream/LNG: no new term sheets; 2041-paper-at-sub-6x unchallenged.
+
+X. CONCLUSIONS, ANGLED
+1. The war premium is leaving crude and was never what held up AI credit pricing: on the quarter's best risk day, unsecured AI infra debt printed 9.625% and the largest backlog ever lost 9% of its equity value.
+2. Oracle disclosed $75B of its $638B RPO as prepaid or customer-supplied GPUs. Counterparties are securing hardware in kind inside other companies' funding structures -- the physical-layer thesis in an issuer disclosure.
+3. CoreWeave's 370 bps secured-to-unsecured gap is the printed price of the claim above the collateral. The unsecured market just agreed with the Vol 16 read.
+4. The hiking-cycle lead survives but acquires a named decay path: an executed Hormuz reopening deflates the energy leg while the ~96.5% hold plays out. The ~5% long bond does not depend on it.
+5. Correction: NextEra/Dominion was definitive May 18 ($66.8B all-stock), not exploratory as Vol 16 carried it. The correction strengthens the read -- it is a purchase of load-pocket position and a ~130 GW pipeline.
+6. June 18 concentrates Texas rights-formation and AI funding into one day. Pre-held physical position in Pecos and Reeves costs the same; the paper claims against it got more expensive this week.
+
+Sources: Oracle Q4 FY26 8-K/press release, CoreWeave notes release + pricing coverage (Reuters/Investing.com), CNBC/TheStreet/Yahoo June 11-12 sessions, CME FedWatch previews, The Hill/House of Commons Library ceasefire terms, EIA WNGSR June 11 + STEO June 9, AEGIS (carried), Axios/Cardinal News/Utility Dive/SEC Form 425 (NEE-D), WVTF June 10, Oncor project pages, ERCOT/PUCT Batch Zero coverage, Holland & Knight/Foley Hoag/Gibson Dunn/McGuireWoods alerts. n/d discipline applied. Crude and gas sourced separately. Indicative fixed-equivalents on floaters. Not investment advice.
+
+PDF with the updated cost-of-capital chart and 23 footnotes attached. Next cut: 12:00 PM ET.
+
+Andrea Himmel
+Land Resource Partners
