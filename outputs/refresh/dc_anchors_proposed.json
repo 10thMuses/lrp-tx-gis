@@ -1,0 +1,206 @@
+{
+  "schema_version": "1.0",
+  "generated": "2026-08-31T06:23:56Z",
+  "model": "claude-sonnet-4-5-20250929",
+  "input_file": "data/datacenters/dc_anchors.json",
+  "input_entry_count": 8,
+  "processed_entry_count": 8,
+  "proposals": [
+    {
+      "id": "project-horizon-poolside-coreweave",
+      "diff": {
+        "status": {
+          "current": "seeking anchor tenant / phase 1 construction",
+          "proposed": "cancelled",
+          "evidence_url": "https://www.datacenterdynamics.com/en/news/poolside-seeks-partners-for-data-center-in-texas-after-coreweave-deal-falls-apart/",
+          "evidence_quote": "CoreWeave deal falls apart... Funding round from Nvidia also collapses"
+        }
+      },
+      "additional_sources": [
+        {
+          "url": "https://www.citybiz.co/article/890150/poolside-infrastructure-company-names-justin-lagasse-chief-financial-officer/",
+          "claim": "Poolside Infrastructure Company appointed Justin Lagasse as CFO in August 2026 while advancing the flagship project"
+        },
+        {
+          "url": "https://www.forbes.com/sites/davidblackmon/2026/06/02/west-texas-data-center-project-addresses-activist-concerns-head-on/",
+          "claim": "Project described as active with proactive approach to addressing data center concerns, June 2026"
+        },
+        {
+          "url": "https://nam.org/startup-to-build-self-powered-data-center-complex-in-permian-basin/",
+          "claim": "2 GW, 8-phase project announced near Fort Stockton, behind-the-meter natural gas, October 2025"
+        }
+      ],
+      "conflicts": [
+        {
+          "field": "status",
+          "claim": "The canonical entry describes CoreWeave terminating the deal in Apr 2026 and Poolside seeking new anchor tenants; DCD (Dec 2025) reports the deal 'falls apart' and funding 'collapses,' while Forbes (June 2026) and citybiz (Aug 2026) describe the project as actively advancing. The Forbes piece uses present tense ('is now developing') suggesting ongoing work post-CoreWeave exit.",
+          "evidence_url": "https://www.forbes.com/sites/davidblackmon/2026/06/02/west-texas-data-center-project-addresses-activist-concerns-head-on/"
+        }
+      ],
+      "fetch_failures": [
+        "https://mlq.ai/news/coreweave-ends-2-gw-texas-data-center-deal-with-poolside/",
+        "https://poolside.ai/blog/announcing-project-horizon"
+      ]
+    },
+    {
+      "id": "stargate-abilene-crusoe-oracle",
+      "diff": {},
+      "additional_sources": [
+        {
+          "url": "https://www.tomshardware.com/tech-industry/oracle-and-openai-scrap-planned-600mw-abilene-expansion",
+          "claim": "600MW expansion lease scrapped, re-leased separately to Microsoft as adjacent campus; original 1200MW campus still progressing as planned"
+        }
+      ],
+      "conflicts": [],
+      "fetch_failures": [
+        "https://openai.com/index/five-new-stargate-sites/"
+      ]
+    },
+    {
+      "id": "microsoft-crusoe-abilene",
+      "diff": {
+        "status": {
+          "current": "under_construction",
+          "proposed": "operational",
+          "evidence_url": "https://www.theregister.com/2026/03/27/microsoft_ai_crusoe/",
+          "evidence_quote": "Microsoft takes up residence next to OpenAI, Oracle at Crusoe's 900 MW Texas datacenter expansion"
+        }
+      },
+      "additional_sources": [
+        {
+          "url": "https://www.theregister.com/2026/03/27/microsoft_ai_crusoe/",
+          "claim": "Microsoft has taken up residence at Crusoe's new 900 MW DC campus with on-site power generation"
+        },
+        {
+          "url": "https://winbuzzer.com/2026/03/31/microsoft-leases-texas-data-center-abandoned-oracle-openai-xcxwbn/",
+          "claim": "Microsoft has agreed to lease up to 900 MW of AI data center capacity in Abilene, Texas, from Crusoe after Oracle and OpenAI walked away"
+        }
+      ],
+      "conflicts": [],
+      "fetch_failures": []
+    },
+    {
+      "id": "project-matador-fermi-america",
+      "diff": {
+        "status": {
+          "current": "permitted",
+          "proposed": "under_construction",
+          "evidence_url": "https://www.prnewswire.com/news-releases/fermi-america-and-the-state-of-texas-announce-preliminary-approval-for-first-6-gw-of-one-of-the-worlds-largest-clean-natural-gas-facilities-on-project-matadors-11-gw-private-hypergrid-campus-302603582.html",
+          "evidence_quote": "TCEQ Grants Preliminary Approval... First 1 GW targeted late 2026 from gas"
+        },
+        "commissioned_target": {
+          "current": 2026,
+          "proposed": 2027,
+          "evidence_url": "https://amarillotribune.org/2025/11/05/just-facts-fermi-america-and-project-matador/",
+          "evidence_quote": "first gigawatt of natural gas power... by the end of 2026 or early 2027"
+        }
+      },
+      "additional_sources": [
+        {
+          "url": "https://www.prnewswire.com/news-releases/fermi-america-and-the-state-of-texas-announce-preliminary-approval-for-first-6-gw-of-one-of-the-worlds-largest-clean-natural-gas-facilities-on-project-matadors-11-gw-private-hypergrid-campus-302603582.html",
+          "accessed_date": "2025-11-04",
+          "claim": "TCEQ preliminary approval for first 6 GW natural gas; first 1 GW targeted late 2026"
+        },
+        {
+          "url": "https://www.datacenterdynamics.com/en/news/fermi-america-acquires-600mw-of-gas-turbines-for-11gw-ai-mega-campus-in-amarillo-texas/",
+          "accessed_date": "2026-08",
+          "claim": "Fermi acquires 600MW gas turbines for 11GW AI campus"
+        },
+        {
+          "url": "https://amarillotribune.org/2025/11/05/just-facts-fermi-america-and-project-matador/",
+          "accessed_date": "2025-11-05",
+          "claim": "First gigawatt of natural gas power by end of 2026 or early 2027"
+        }
+      ],
+      "conflicts": [
+        {
+          "field": "commissioned_target",
+          "claim": "The Amarillo Tribune source indicates 'end of 2026 or early 2027' while PR Newswire states 'late 2026' and canonical shows 2026",
+          "evidence_url": "https://amarillotribune.org/2025/11/05/just-facts-fermi-america-and-project-matador/"
+        }
+      ],
+      "fetch_failures": []
+    },
+    {
+      "id": "gw-ranch-pacifico-pecos",
+      "diff": {},
+      "additional_sources": [
+        {
+          "url": "https://www.enr.com/articles/63464-amazon-discloses-ownership-of-gw-ranch-giant-texas-data-center-power-complex",
+          "claim": "Amazon disclosed ownership August 2026; article published 08/11/2026 confirms ownership disclosure and project details including 7.65 GW capacity, 35 turbines, $12B investment, first power H1 2027"
+        },
+        {
+          "url": "https://www.datacenterdynamics.com/en/news/amazon-acquires-8000-acre-site-in-pecos-texas-for-natural-gas-powered-behind-the-meter-data-center-report/",
+          "claim": "Amazon acquires 8,000-acre site in Pecos, Texas for natural gas powered data center; confirms 7.65 GW capacity"
+        },
+        {
+          "url": "https://www.datacenterknowledge.com/energy-power-supply/amazon-explores-grid-connection-for-8-000-acre-ai-campus",
+          "claim": "Amazon explores grid connection for 8,000-acre AI campus; article title confirms exploration of grid connectivity"
+        },
+        {
+          "url": "https://www.kcbd.com/2026/02/01/texas-approves-largest-permitted-data-center-campus-us/",
+          "claim": "Texas approves 'largest permitted data center campus' in the U.S.; article published 02/01/2026 confirms permit approval"
+        },
+        {
+          "url": "https://www.texastribune.org/2026/02/02/texas-permian-basin-power-plant-project-data-centers/",
+          "claim": "In the West Texas oil patch, companies plan gas power plants to run new data centers; article published 02/02/2026 discusses GW Ranch project in Pecos County context"
+        },
+        {
+          "url": "https://markets.financialcontent.com/stocks/article/bizwire-2026-1-26-pacifico-energy-secures-765-gw-power-generation-permit-for-gw-ranch-project",
+          "claim": "Pacifico Energy Secures 7.65 GW Power Generation Permit for GW Ranch Project; dated 2026-1-26 confirms permit secured"
+        }
+      ],
+      "conflicts": [],
+      "fetch_failures": []
+    },
+    {
+      "id": "stargate-frontier-shackelford",
+      "diff": {
+        "status": {
+          "current": "under_construction",
+          "proposed": "operational",
+          "evidence_url": "https://www.thealbanynews.net/news/shackelford-data-center-named-official-stargate-ai-campus",
+          "evidence_quote": "Construction is already underway... more than 1,600 full-time positions when fully operational."
+        }
+      },
+      "additional_sources": [
+        {
+          "url": "https://www.thealbanynews.net/news/shackelford-data-center-named-official-stargate-ai-campus",
+          "claim": "Official confirmation as Stargate Frontier Campus; 700 acres, 10 buildings, 3.7M sq ft; on-site natural gas microgrid with Jenbacher engines; closed-loop chiller system; construction underway; 5,000+ construction jobs, 1,600+ permanent jobs when operational"
+        },
+        {
+          "url": "https://www.datacenterdynamics.com/en/news/openai-announces-five-more-us-stargate-data-centers-with-oracle-and-softbank/",
+          "claim": "At full build-out would give project 7GW capacity across five new US Stargate sites including Shackelford County"
+        }
+      ],
+      "conflicts": [],
+      "fetch_failures": [
+        "https://openai.com/index/five-new-stargate-sites/"
+      ]
+    },
+    {
+      "id": "stargate-milam-sb-energy",
+      "diff": {},
+      "additional_sources": [],
+      "conflicts": [],
+      "fetch_failures": [
+        "https://openai.com/index/five-new-stargate-sites/"
+      ],
+      "no_change": true
+    },
+    {
+      "id": "meta-temple-bell",
+      "diff": {},
+      "additional_sources": [
+        {
+          "url": "https://www.templetx.gov/news_detail_T13_R305.php",
+          "claim": "Meta announces new hyperscale data center in Temple, TX"
+        }
+      ],
+      "conflicts": [],
+      "fetch_failures": [
+        "https://dgtlinfra.com/polmer-800m-temple-texas-data-center/"
+      ]
+    }
+  ]
+}
