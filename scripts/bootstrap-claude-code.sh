@@ -38,7 +38,7 @@ fi
 log "tippecanoe: $(tippecanoe --version 2>&1 | head -1)"
 
 # 2. python deps -----------------------------------------------------------
-PYDEPS="pyyaml pmtiles requests"
+PYDEPS="pyyaml pmtiles requests cairosvg Pillow"
 log "python deps: $PYDEPS"
 python3 -m pip install --quiet --upgrade $PYDEPS 2>&1 | tail -3 || {
   log "pip install failed — try with --break-system-packages or a venv"

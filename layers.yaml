@@ -4,6 +4,8 @@ layers:
   geom: line
   group: Reference
   label: Counties (Outline)
+  source: "U.S. Census Bureau, TIGER/Line county boundaries"
+  as_of: "2024"
   color: '#64748b'
   line_width: 1.25
   default_on: true
@@ -22,6 +24,8 @@ layers:
   geom: point
   group: Reference
   label: Cities
+  source: "LRP hand-entered city toponyms"
+  as_of: "2026-06-23"
   color: '#1e293b'
   default_on: true
   popup:
@@ -36,6 +40,8 @@ layers:
   geom: fill
   group: Land & Deal
   label: Caramba North (1,300 ac)
+  source: "LRP / AgriWebb project boundary"
+  as_of: "2023-02"
   color: '#2E7D32'
   fill_opacity: 0.25
   default_on: true
@@ -54,6 +60,8 @@ layers:
   geom: point
   group: 'OXY — Occidental Footprint'
   label: OXY power & NET Power
+  source: "EIA-860 generators and OSM/HIFLD substations; LRP-curated OXY footprint"
+  as_of: "2026-06-23"
   description: "OXY power generation + NET Power assets and OXY-named grid substations. Generation from EIA-860 (Goldsmith solar, Wasson CO2-removal captive turbine, NET Power La Porte demo, and the divested OxyChem cogen at Battleground/Deer Park); substations from OSM/HIFLD. Coordinates trace to public datasets."
   color: '#ca8a04'
   default_on: true
@@ -85,6 +93,8 @@ layers:
   geom: point
   group: 'OXY — Occidental Footprint'
   label: OXY midstream / pipeline / processing
+  source: "HIFLD/EIA-757 processing, EIA-860 and OSM; LRP-curated OXY footprint"
+  as_of: "2026-06-23"
   description: "OXY midstream, pipeline and gas/CO2-processing facilities: Century gas/CO2 plant (Pecos), Block 31 (Crane), Wasson/Denver Unit CO2-EOR (Yoakum), and the Denver City CO2 hub where the Cortez, Bravo and Sheep Mountain trunklines converge (Yoakum, precise from EPA FRS). All coordinates trace to public datasets."
   color: '#b45309'
   default_on: true
@@ -111,6 +121,8 @@ layers:
   geom: point
   group: 'OXY — Occidental Footprint'
   label: OXY in the ERCOT queue
+  source: "ERCOT interconnection queue; LRP-curated OXY footprint"
+  as_of: "2026-04-21"
   description: "OXY & affiliated generation in the ERCOT interconnection queue: Santa Garcias Solar (Oxy Renewable Energy, IA signed Feb 2026), NET Power Demonstration plant (active), and TRIFECTA Gas (NET Power Canaveral, withdrawn Apr 2026). Coordinates from the ERCOT GIS queue."
   color: '#7c3aed'
   default_on: true
@@ -139,6 +151,8 @@ layers:
   geom: point
   group: 'OXY — Occidental Footprint'
   label: OXY air & emission permits (TCEQ)
+  source: "TCEQ air authorizations (NSR / Title V) via LRP-curated OXY footprint"
+  as_of: "2026-06-23"
   description: "OXY facilities with TCEQ air / emission authorizations: Century (NSR), Block 31 (Title V renewed Jul 2025), Wasson CO2-removal (Title V O553, Nov 2025), Denver Unit CO2-recovery (Title V O3051, Oct 2025). Coordinates from sourced facility points; Denver Unit co-located near Wasson."
   color: '#475569'
   default_on: true
@@ -163,6 +177,8 @@ layers:
   geom: point
   group: 'OXY — Occidental Footprint'
   label: OXY water infrastructure
+  source: "OSM, NM OCD facilities and public company releases; LRP-curated OXY footprint"
+  as_of: "2026-06-23"
   description: "OXY / Western Midstream produced-water recycling, desalination and water pipelines: South Curtis Ranch recycling (co-located with the OXY substation, precise), Pathfinder PW pipeline (Loving) and the WES desalination pilot (Reeves). Produced-water sites lacking a precise public coordinate are placed at county centroid and flagged approximate."
   color: '#0891b2'
   default_on: true
@@ -189,6 +205,8 @@ layers:
   geom: point
   group: 'OXY — Occidental Footprint'
   label: OXY carbon infrastructure
+  source: "EIA-860, EPA Class VI permit record and public company filings; LRP-curated OXY footprint"
+  as_of: "2026-06-23"
   description: "OXY carbon-management assets: Century CO2 capture (Pecos), Wasson/Denver Unit CO2 storage (Yoakum, first U.S. Subpart RR MRV plan), STRATOS direct-air-capture (Ector, under construction, located at its EPA Class VI injection wells), and the King Ranch / South Texas DAC + storage hub (Kleberg, located at its RRC stratigraphic test wells). All coordinates trace to public datasets."
   color: '#15803d'
   default_on: true
@@ -214,6 +232,8 @@ layers:
   geom: point
   group: 'OXY — Occidental Footprint'
   label: OXY drilling permits (RRC W-1)
+  source: "Railroad Commission of Texas, Drilling Permit Master + Lat/Lon (daf420 EOM monthly)"
+  as_of: "2026-09-30"
   description: "OXY / Occidental approved RRC drilling permits, 2020-2026, plotted at the operator-reported surface coordinate from the RRC Drilling Permit Master+Lat/Lon (daf420 EOM) file. Filers: OXY USA Inc. (#630591), Occidental Permian Ltd. (#617544), OXY USA WTP LP. Concentrated in the Midland Basin core (Gaines, Howard, Martin, Midland, Glasscock, Andrews). De-duplicated by permit number; every coordinate is public RRC data. Off by default — toggle on to see OXY's drilling footprint."
   color: '#e11d48'
   default_on: false
@@ -242,6 +262,8 @@ layers:
   geom: point
   group: Local Focal Points
   label: AEP Solstice Substation
+  source: "OpenStreetMap way 500535889"
+  as_of: "2026-04-27"
   color: '#FFD400'
   default_on: true
   circle_radius: 22
@@ -272,6 +294,8 @@ layers:
   geom: point
   group: Local Focal Points
   label: WAHA Natural Gas Hub
+  source: "Natural gas hub (Waha), LRP hand-placed"
+  as_of: "2026-04-21"
   companions:
   - labels_hubs
   color: '#FFD400'
@@ -292,6 +316,8 @@ layers:
   geom: label
   group: Local Focal Points
   label: WAHA Hub Label
+  source: "Natural gas hub (Waha), LRP hand-placed"
+  as_of: "2026-04-21"
   sidebar_omit: true
   color: '#fef3c7'
   default_on: true
@@ -309,6 +335,8 @@ layers:
   geom: fill
   group: Local Hyperscale DC & Power Campuses
   label: La Escalera Ranch (Apex Clean Energy)
+  source: "Public reporting (kjas.com 2024-09; Pecos County School Fund lease; ranch literature); approximate boundary"
+  as_of: "2026-04-27"
   description: "La Escalera Ranch \u2014 Lyda Family. Approximate ~223,000-acre ranch outline; site of Apex Clean Energy's Pecos Flat 3.3 GW wind/solar/green-hydrogen complex. Boundary APPROXIMATE."
   color: '#ef4444'
   fill_opacity: 0
@@ -339,6 +367,8 @@ layers:
   geom: fill
   group: Local Hyperscale DC & Power Campuses
   label: Longfellow Ranch
+  source: "Poolside Project Horizon announcement (2025-10); Longfellow Ranches public materials; approximate boundary"
+  as_of: "2026-04-27"
   description: Mitchell family ranch (Pecos/Terrell/Brewster). Site of Poolside's 2 GW Project Horizon AI campus, anchor tenant CoreWeave. Boundary APPROXIMATE.
   color: '#ef4444'
   fill_opacity: 0
@@ -369,6 +399,8 @@ layers:
   geom: fill
   group: Local Hyperscale DC & Power Campuses
   label: GW Ranch (Pacifico Energy)
+  source: "Pacifico Energy GW Ranch press materials; TCEQ permit; Texas Tribune / DCD / Big Bend Sentinel reporting"
+  as_of: "2026-04-27"
   description: Pacifico Energy 7.65 GW off-grid gas + battery + solar campus on Hwy 18, ~17 mi N of Fort Stockton, Pecos Co. Largest TCEQ-permitted DC campus in U.S. Footprint APPROXIMATE.
   color: '#ef4444'
   fill_opacity: 0
@@ -401,6 +433,8 @@ layers:
   geom: fill
   group: Local Focal Points
   label: Groundwater District Management Zone 1
+  source: "Middle Pecos Groundwater Conservation District management-zone PDF; approximate boundary"
+  as_of: "2026-06-23"
   color: '#8b5cf6'
   fill_opacity: 0
   stroke_color: '#a78bfa'
@@ -423,6 +457,8 @@ layers:
   geom: point
   group: Power Generation
   label: Power Plants (EIA-860)
+  source: "U.S. EIA, Form EIA-860 annual generator survey (2025 data, released 2026-09-10)"
+  as_of: "2026-10-21"
   color: '#22d3ee'
   default_on: false
   radius: 6
@@ -472,6 +508,8 @@ layers:
   geom: point
   group: Power Generation
   label: Battery Storage (EIA-860)
+  source: "U.S. EIA, Form EIA-860 annual generator survey (2025 data, released 2026-09-10)"
+  as_of: "2026-10-21"
   color: '#f472b6'
   default_on: false
   radius: 4
@@ -514,6 +552,8 @@ layers:
   geom: point
   group: Power Generation
   label: Wind Turbines (USWTDB)
+  source: "USGS / LBNL / ACP, U.S. Wind Turbine Database (USWTDB) V9.1"
+  as_of: "2026-09-28"
   color: '#84cc16'
   default_on: false
   min_zoom: 7
@@ -558,6 +598,8 @@ layers:
   geom: point
   group: Power Generation
   label: Solar Farms (EIA-860)
+  source: "U.S. EIA, Form EIA-860 (2024 release), solar generators"
+  as_of: "2026-04-28"
   color: '#facc15'
   default_on: false
   radius: 4
@@ -588,6 +630,8 @@ layers:
   geom: point
   group: Transmission & Grid
   label: Substations (OSM)
+  source: "OpenStreetMap via Overpass API"
+  as_of: "2026-04-28"
   color: '#a78bfa'
   default_on: false
   min_zoom: 7
@@ -620,6 +664,8 @@ layers:
   geom: point
   group: Transmission & Grid
   label: Planned Substation Upgrades (TPIT)
+  source: "ERCOT Transmission Project and Information Tracking (TPIT) report"
+  as_of: "2026-04"
   color: '#a78bfa'
   default_on: false
   min_zoom: 6
@@ -649,6 +695,8 @@ layers:
   geom: line
   group: Transmission & Grid
   label: "Transmission \u2265100 kV"
+  source: "HIFLD electric power transmission lines (ArcGIS Online), >=100 kV"
+  as_of: "2026-04"
   color: '#38bdf8'
   default_on: false
   popup:
@@ -673,6 +721,8 @@ layers:
   geom: line
   group: Transmission & Grid
   label: Planned Transmission Upgrades (TPIT)
+  source: "ERCOT Transmission Project and Information Tracking (TPIT) report, July 2026 update (attributes); geometry from April 2026 match"
+  as_of: "2026-07-17"
   color: '#06b6d4'
   line_width: 0.75
   default_on: false
@@ -723,6 +773,8 @@ layers:
   geom: line
   group: Energy Infrastructure
   label: Natural Gas Pipelines (HIFLD/EIA)
+  source: "HIFLD / U.S. EIA natural gas pipelines (FEMA Region 6 ArcGIS mirror)"
+  as_of: "2026-05"
   description: 'Interstate + intrastate natural-gas transmission pipelines from HIFLD/EIA (FEMA Region 6 mirror) clipped to the 6-county Permian bbox. Operator + pipe-type (Interstate/Intrastate) + status are attribute-level filters. Source: services2.arcgis.com/FiaPA4ga0iQKduv3/.../Natural_Gas_Interstate_and_Intrastate_Pipelines_1/FeatureServer/0. 907 features in scope.'
   color: '#fb923c'
   line_width: 0.75
@@ -755,6 +807,8 @@ layers:
   geom: line
   group: Energy Infrastructure
   label: Crude Oil Trunk Pipelines (HIFLD/EIA)
+  source: "HIFLD / U.S. EIA crude oil trunk pipelines (FEMA Region 6 ArcGIS mirror)"
+  as_of: "2026-05"
   description: 'Crude-oil trunk pipelines from HIFLD/EIA (FEMA Region 6 mirror) clipped to the 6-county Permian bbox. Source: services2.arcgis.com/FiaPA4ga0iQKduv3/.../Crude_Oil_Trunk_Pipelines_1/FeatureServer/0. 21 features in scope.'
   color: '#7f1d1d'
   line_width: 1
@@ -781,6 +835,8 @@ layers:
   geom: line
   group: Energy Infrastructure
   label: Hydrocarbon Gas Liquids Pipelines (HIFLD/EIA)
+  source: "HIFLD / U.S. EIA hydrocarbon gas liquids pipelines (FEMA Region 6 ArcGIS mirror)"
+  as_of: "2026-05"
   description: 'HGL (NGL / propane / butane / ethane) pipelines from HIFLD/EIA (FEMA Region 6 mirror) clipped to the 6-county Permian bbox. Source: services2.arcgis.com/FiaPA4ga0iQKduv3/.../Hydrocarbon_Gas_Liquids_Pipelines_1/FeatureServer/0. 15 features in scope.'
   color: '#a16207'
   line_width: 1
@@ -807,6 +863,8 @@ layers:
   geom: point
   group: Energy Infrastructure
   label: Natural Gas Processing Plants (HIFLD/EIA)
+  source: "HIFLD / U.S. EIA natural gas processing plants (ArcGIS Online)"
+  as_of: "2026-05"
   description: 'Natural-gas processing plants from EIA via ArcGIS Online (HIFLD-equivalent) clipped to the 6-county Permian bbox. Capacity in MMcfd, operator, owner, county. 53 plants in scope. Source: services2.arcgis.com/ZOdjAzAQ2B0f85zi/.../NaturalGas_ProcessingPlants_US_EIA/FeatureServer/0.'
   color: '#15803d'
   default_on: false
@@ -855,7 +913,9 @@ layers:
   file: combined_points.csv
   geom: point
   group: Projects
-  label: ERCOT Interconnect Queue (as of 2026-04-21)
+  label: ERCOT Interconnect Queue (GIS Report, Sep 2026)
+  source: "ERCOT GIS Report (Generation Interconnection Status), September 2026, published 2026-10-01; LRP geocoding"
+  as_of: "2026-10-01"
   color: '#ec4899'
   default_on: false
   radius: 5
@@ -911,6 +971,8 @@ layers:
   geom: label
   group: Reference
   label: County Labels
+  source: "U.S. Census Bureau, TIGER/Line county boundaries (label points)"
+  as_of: "2024"
   color: '#ffffff'
   default_on: true
   min_zoom: 4
@@ -924,6 +986,8 @@ layers:
   geom: line
   group: Pipelines
   label: Oil & Gas Pipelines (>20", RRC)
+  source: "Railroad Commission of Texas, pipeline layer (>20 in; prebuilt 2019 extract)"
+  as_of: "2019"
   color: '#fb7185'
   line_width: 0.75
   default_on: false
@@ -938,6 +1002,8 @@ layers:
   geom: point
   group: Permits
   label: Gas Turbine Air Permits (TCEQ, recent filings)
+  source: "TCEQ, Issued Turbine Air Permits list (turbine-lst.xlsx)"
+  as_of: "2026-10-12"
   color: '#f0abfc'
   default_on: false
   radius: 7
@@ -1006,6 +1072,8 @@ layers:
   geom: line
   group: Reference
   label: Highways (Interstate + US)
+  source: "U.S. Census Bureau, TIGER/Line primary roads (Interstate + US)"
+  as_of: "2026-06-23"
   color: '#fbbf24'
   line_width: 0.75
   default_on: true
@@ -1017,6 +1085,8 @@ layers:
   geom: line
   group: Reference
   label: Rail (Main Lines)
+  source: "U.S. DOT Bureau of Transportation Statistics, rail network (main lines)"
+  as_of: "2026-06-23"
   color: '#94a3b8'
   line_width: 0.75
   default_on: true
@@ -1029,6 +1099,8 @@ layers:
   geom: point
   group: Permits
   label: Permits (RRC W-1, 6-county Permian)
+  source: "Railroad Commission of Texas, Drilling Permit Master + Lat/Lon (daf420 EOM monthly snapshots)"
+  as_of: "2026-09-30"
   description: "RRC drilling permits with WGS84 coordinates and approved depth. Source dbf-EOM monthly snapshots (`daf420.dat.MM-DD-YYYY`), 2018-01 through current. Subject (sale area) \u2014 Pecos, Reeves, Ward. Active Permian peer (boom area) \u2014 Midland, Martin, Reagan. Each permit row carries `county_role` \u2208 {subject, peer}. Records without a parseable total_depth are excluded at the parser stage per R2-2."
   color: '#dc2626'
   default_on: false
@@ -1158,6 +1230,8 @@ layers:
   geom: point
   group: Oil & Gas Spud Wells
   label: Wells — new drilling (1964-present)
+  source: "Railroad Commission of Texas, Full Wellbore ASCII (dbf900)"
+  as_of: "2026-10-21"
   description: "RRC oil & gas wellbores, new drilling 1964-present (active + plugged/abandoned). Recompletion / re-entry re-stamps (completion_year before spud_year) are excluded so counts reflect genuine new wellbores, not workovers of existing wells. Filter by spud year (multi-select), county, oil/gas, plug status. Source: RRC dbf900 Full Wellbore ASCII (weekly)."
   color: '#6b21a8'
   default_on: false
@@ -1255,7 +1329,9 @@ layers:
   geom: point
   group: Permits
   label: Approved Tax Abatements (Local / Ch.381 + Ch.312)
-  description: "Property tax abatements granted to new or expanded energy and infrastructure projects. Sourced from county commissioner-court agendas (LDAD scrape, 1,495 statewide records). Programs covered: Chapter 381 (county economic development agreements), Chapter 312 (city/county reinvestment zone abatements), and successors to the sunsetted Chapter 313 school value limitation. 6-county Permian scope: 5 records, all Ch.381 (county-court). The Texas Comptroller's Ch.312 state API returned 0 records in 6-county scope as of 2026-05-13 (probed via api.comptroller.texas.gov/open-data/v1/tables/ch312-abatement; Ch.312 is a city tool and West Texas Permian counties have few populated cities filing Ch.312 abatements)."
+  source: "Texas Comptroller LDAD (Ch. 312 abatement open-data) and county commissioners-court agendas"
+  as_of: "2026-10-10"
+  description: "Property tax abatements granted to new or expanded energy and infrastructure projects. Sourced from county commissioner-court agendas (LDAD scrape, 1,416 statewide LDAD records). Programs covered: Chapter 381 (county economic development agreements), Chapter 312 (city/county reinvestment zone abatements), and successors to the sunsetted Chapter 313 school value limitation. 6-county Permian scope: 5 records, all Ch.381 (county-court). The Texas Comptroller's Ch.312 state API returned 0 records in 6-county scope as of 2026-05-13 (probed via api.comptroller.texas.gov/open-data/v1/tables/ch312-abatement; Ch.312 is a city tool and West Texas Permian counties have few populated cities filing Ch.312 abatements)."
   color: '#ef4444'
   default_on: false
   radius: 7
@@ -1312,6 +1388,8 @@ layers:
   geom: point
   group: Projects
   label: "Datacenter Anchors (\u2265100 MW)"
+  source: "LRP-curated datacenter anchor index from public announcements and filings"
+  as_of: "2026-04-25"
   color: '#fbbf24'
   default_on: false
   radius: 7

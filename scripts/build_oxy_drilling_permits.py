@@ -44,7 +44,10 @@ LON_RE = re.compile(rb"-?(9[3-9]|10[0-6])\.\d{6,7}")
 # Permian-region county FIPS outside the 46-county map AOI (US Census FIPS,
 # public reference — used only when the TIGER derivation has no polygon).
 FIPS_FALLBACK = {"501": "Yoakum", "263": "Kent", "305": "Lynn", "079": "Cochran",
-                 "445": "Terry", "169": "Garza", "033": "Borden", "003": "Andrews"}
+                 "445": "Terry", "169": "Garza", "033": "Borden", "003": "Andrews",
+                 # Added 2026-10-21 (full 2017+ snapshot set surfaced these; Census FIPS)
+                 "219": "Hockley", "189": "Hale", "279": "Lamb", "071": "Chambers",
+                 "273": "Kleberg", "127": "Dimmit"}
 
 
 def texas_fips_names():
@@ -128,6 +131,10 @@ def iter_oxy(path):
             yield got
 
 
+MIN_YEAR = "2020"
+EXCLUDE_OPS = re.compile(r"LOW CARBON", re.I)   # non-upstream OXY entities
+
+
 def main():
     fips = texas_fips_names()
     snaps = sorted(glob.glob(os.path.join(RAW, "daf420.dat.*")))
@@ -161,7 +168,10 @@ def main():
             seen[pno or f"_{tag}_{n}"] = feat        # latest snapshot wins on dup
         print(f"  {os.path.basename(snap):24s} OXY permits: {n}")
 
-    feats = list(seen.values())
+    # Layer scope (layers.yaml): approved 2020+ and upstream filers only.
+    feats = [f for f in seen.values()
+             if (f["properties"]["permit_year"] or "0") >= MIN_YEAR
+             and not EXCLUDE_OPS.search(f["properties"]["operator"] or "")]
     years = sorted(y for y in (f["properties"]["permit_year"] for f in feats) if y)
     fc = {"type": "FeatureCollection",
           "metadata": {"layer": "oxy_drilling_permits", "feature_count": len(feats),

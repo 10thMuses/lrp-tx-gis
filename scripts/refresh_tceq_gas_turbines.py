@@ -154,9 +154,13 @@ def process_sheet(ws, sheet_name):
 
 
 def main():
-    src = Path("outputs/refresh/turbine-lst_2026-04-23.xlsx")
-    if not src.exists():
-        src = Path("/tmp/turbine-lst.xlsx")
+    # Optional: python scripts/refresh_tceq_gas_turbines.py <path-to-turbine-lst.xlsx>
+    if len(sys.argv) > 1:
+        src = Path(sys.argv[1])
+    else:
+        src = Path("outputs/refresh/turbine-lst_2026-04-23.xlsx")
+        if not src.exists():
+            src = Path("/tmp/turbine-lst.xlsx")
     wb = openpyxl.load_workbook(src, data_only=True)
 
     issued = process_sheet(wb["Issued Turbine Air Permits"], "Issued Turbine Air Permits")

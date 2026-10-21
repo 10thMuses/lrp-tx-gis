@@ -1,0 +1,20 @@
+{
+  "layer_id": "tpit_lines",
+  "features": 133,
+  "source_url": "https://www.ercot.com/files/docs/2022/03/02/ERCOT-July-Ad-Hoc-TPIT-No-Cost-071326-UPDATE.xlsx",
+  "source_last_modified": "Fri, 17 Jul 2026 18:45:59 GMT",
+  "run_date": "2026-10-21",
+  "attribute_changes": {
+    "in_service": 30,
+    "name": 7,
+    "status": 7,
+    "tier": 3,
+    "owner": 5,
+    "from_raw": 6,
+    "to_raw": 5,
+    "sheet": 10
+  },
+  "dropped_cancelled_pids": [],
+  "pids_missing_from_report": [],
+  "geometry": "carried forward from combined_geoms.geojson by pid"
+}

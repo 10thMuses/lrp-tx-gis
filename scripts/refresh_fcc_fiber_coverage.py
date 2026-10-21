@@ -1,5 +1,5 @@
 """
-FCC Fiber Coverage refresh — ArcGIS Living Atlas BDC, June 2025 vintage.
+FCC Fiber Coverage refresh — ArcGIS Living Atlas BDC, December 2025 vintage (URL slug still says December_2024).
 
 Source: ArcGIS Living Atlas FCC BDC FeatureServer, layer 5 (H3 res-8 hexes).
   https://services8.arcgis.com/peDZJliSvYims39Q/arcgis/rest/services/FCC_Broadband_Data_Collection_December_2024_View/FeatureServer/5
@@ -15,7 +15,7 @@ Outputs:
 
 Renamed properties:
 - bsl_count, fiber_served_bsls, fiber_underserved_bsls, fiber_unserved_bsls,
-  fiber_provider_count, as_of_date="2025-06-30"
+  fiber_provider_count, as_of_date="2025-12-31"
 
 Usage: python scripts/refresh_fcc_fiber_coverage.py
 """
@@ -43,7 +43,7 @@ BBOX = '-105.998,28.972,-100.115,32.525'
 PAGE_SIZE = 2000
 MAX_TRIES = 3
 TIMEOUT = 30
-AS_OF_DATE = '2025-06-30'
+AS_OF_DATE = '2025-12-31'  # service now serves December 2025 BDC (item e1343efc..., modified 2026-06-29)
 
 COUNTIES_23 = {
     'Andrews', 'Brewster', 'Crane', 'Crockett', 'Culberson', 'Ector',

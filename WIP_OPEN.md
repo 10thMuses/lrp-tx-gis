@@ -9,8 +9,10 @@ item is added. Round/decision-log history is archived in
 
 ## Last deploy
 
-`6ad77b77a79fe4d03c8ce377` — 2026-10-20. Access gate removed (map public; no
-access logging). Page-only change on the `6a3add…` tiles/data.
+`6ad88eb494745d960cbb78bd` — 2026-10-21. Full rebuild: data refresh (ERCOT Sep-2026
+GIS Report, TPIT Jul-2026, EIA-860 2025, USWTDB V9.1, TCEQ, LDAD, RRC), basemap
++ popup provenance fixes. `built=39 errored=0`; 39/39 live, 163,430 features.
+Gate removed 2026-10-20 (`6ad77b77…`); map is public.
 
 Previous: `6a3adddefa163a0a17902c54` — 2026-06-23. 39 layers. Build clean
 `built=39 missing=0 errored=0 tiles_total=29594 KB`. Added `oxy_drilling_permits`

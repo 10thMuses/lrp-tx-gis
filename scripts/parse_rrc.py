@@ -345,7 +345,7 @@ M_SUBMIT_DATE = slice(58, 66)      # YYYYMMDD
 M_OPERATOR = slice(66, 98)         # 32 chars, space-padded
 M_STATUS_FLAG = slice(100, 101)    # A=Approved etc. (uniform 'A' in EOM file — all approved)
 M_DISTRICT = slice(112, 114)       # 2-digit RRC district
-M_APPROVE_DATE = slice(120, 128)   # YYYYMMDD
+M_APPROVE_DATE = slice(119, 127)   # YYYYMMDD (0-indexed; verified 2026-10-21 on 0108 + 0109 snapshots — was 120, which read garbage)
 # Wellbore profile: in 9/1474 records the literal "HL" appears at position 160.
 # The position-160 byte alone is a poor signal — many records carry "H " or
 # other 2-char codes there. We search a small window for the exact "HL"
@@ -425,8 +425,24 @@ def parse_master(line: bytes) -> dict:
     }
 
 
+_LAT_RE = re.compile(rb"(?<!\d)(2[5-9]|3[0-6])\.\d{6,7}")
+_LON_RE = re.compile(rb"-?(9[3-9]|10[0-6])\.\d{6,7}")
+
+
 def parse_loc(line: bytes) -> tuple[float | None, float | None]:
     """Decode WGS84 lon (signed) + lat from a 26-byte 14/15-prefixed line."""
+    if len(line) in (27, 28):
+        # 0109-era (2024+) location records grew to 27/28 bytes; use
+        # range-anchored extraction (same approach as build_oxy_drilling_permits.py).
+        la_m = _LAT_RE.search(line)
+        lo_m = _LON_RE.search(line)
+        lat = float(la_m.group(0)) if la_m else None
+        lon = -abs(float(lo_m.group(0))) if lo_m else None
+        if lat is not None and not (25.8 <= lat <= 36.6):
+            lat = None
+        if lon is not None and not (-106.7 <= lon <= -93.4):
+            lon = None
+        return lat, lon
     if len(line) != 26:
         return None, None
     lon_s = line[LOC_LON].decode("ascii", errors="replace").strip()
@@ -524,16 +540,16 @@ def parse_permits(src: Path, dst: Path) -> dict:
             if len(line) < 4:
                 continue
             key4 = line[:4]
-            if key4 == b"0108":
+            if key4 in (b"0108", b"0109"):
                 # New permit boundary — flush prior block first
                 flush_block()
                 cur_master = parse_master(line)
                 cur_detail = None
                 cur_lat = None
                 cur_lon = None
-            elif key4 == b"0208":
+            elif key4 in (b"0208", b"0209"):
                 cur_detail = line
-            elif len(line) == 26 and line[:2] in (b"14", b"15"):
+            elif 26 <= len(line) <= 28 and line[:2] in (b"14", b"15"):
                 lat, lon = parse_loc(line)
                 # Prefer first non-null lat/lon (14 vs 15 are usually same coords)
                 if cur_lat is None and lat is not None:

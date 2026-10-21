@@ -24,6 +24,7 @@
     --amber: #f59e0b;
   }
   * { box-sizing: border-box; }
+  .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
   html, body { margin: 0; padding: 0; height: 100%; font-family: 'Inter', system-ui, -apple-system, sans-serif; font-size: 14px; color: var(--text); background: var(--bg); }
   body { display: grid; grid-template-rows: 48px 1fr; grid-template-columns: 300px 1fr; grid-template-areas: "topbar topbar" "sidebar map"; height: 100vh; overflow: hidden; transition: grid-template-columns 220ms ease; }
   body.sb-collapsed { grid-template-columns: 0 1fr; }
@@ -39,10 +40,10 @@
   body.sb-collapsed .sidebar { border-right: none; }
   .group { padding: 0 16px 12px; }
   .group .group-header { display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none; margin: 16px 0 8px; }
-  .group .group-header input[type=checkbox] { accent-color: #0f172a; cursor: pointer; margin: 0; }
+  .group .group-header input[type=checkbox] { accent-color: #0f172a; cursor: pointer; margin: 0; width: 24px; height: 24px; flex: none; }
   .group h3 { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin: 0; }
   .layer { display: flex; align-items: center; gap: 10px; padding: 5px 0; cursor: pointer; user-select: none; }
-  .layer input[type=checkbox] { accent-color: #0f172a; cursor: pointer; }
+  .layer input[type=checkbox] { accent-color: #0f172a; cursor: pointer; width: 24px; height: 24px; margin: 0; flex: none; }
   .layer .swatch { display: inline-block; width: 10px; height: 10px; border-radius: 2px; border: 1px solid rgba(0,0,0,0.1); flex-shrink: 0; box-sizing: border-box; }
   .layer .swatch.line { height: 3px; border-radius: 1px; width: 14px; }
   .layer .swatch.fill { opacity: 0.85; }
@@ -63,7 +64,9 @@
   .measure-readout .mv { font-weight: 600; font-variant-numeric: tabular-nums; }
   .measure-readout .hint { color: var(--muted); font-size: 10px; margin-top: 4px; }
   .measure-readout .mr-close { display: none; position: absolute; top: 4px; right: 6px; background: transparent; border: 0; width: 32px; height: 32px; font-size: 22px; line-height: 1; color: var(--muted); cursor: pointer; padding: 0; }
-  .watermark { position: absolute; bottom: 42px; right: 8px; z-index: 3; pointer-events: none; font-size: 11px; font-weight: 700; letter-spacing: 0.18em; color: rgba(220, 38, 38, 0.78); background: rgba(255, 255, 255, 0.85); padding: 4px 10px; border: 1px solid rgba(220, 38, 38, 0.32); border-radius: 3px; text-transform: uppercase; font-variant-numeric: tabular-nums; }
+  /* Bottom-centre, below the scrubber (bottom:28px); coord readout is bottom-left, scale/attribution bottom-right. */
+  .watermark { position: absolute; bottom: 6px; left: 50%; transform: translateX(-50%); z-index: 3; pointer-events: none; font-size: 10px; font-weight: 600; letter-spacing: 0.06em; color: rgba(15, 23, 42, 0.6); background: rgba(255, 255, 255, 0.82); padding: 2px 8px; border: 1px solid rgba(15, 23, 42, 0.15); border-radius: 3px; font-variant-numeric: tabular-nums; white-space: nowrap; max-width: calc(100% - 340px); overflow: hidden; text-overflow: ellipsis; }
+  @media (max-width: 900px) { .watermark { display: none; } }
   .maplibregl-popup-content { font-family: inherit; font-size: 12px; padding: 10px 12px; border-radius: 6px; max-width: min(90vw, 360px); max-height: 60vh; overflow-y: auto; overscroll-behavior: contain; overflow-wrap: anywhere; }
   .maplibregl-popup-content table { border-collapse: collapse; }
   .maplibregl-popup-content td { padding: 2px 6px 2px 0; vertical-align: top; }
@@ -222,7 +225,7 @@
     /* Touch targets: WCAG 2.5.5 — ≥44px primary controls. */
     .topbar button { min-height: 44px; padding: 8px 10px; font-size: 13px; }
     .layer { min-height: 44px; padding: 8px 0; gap: 12px; }
-    .layer input[type=checkbox] { width: 20px; height: 20px; }
+    .layer input[type=checkbox] { width: 24px; height: 24px; }
     .layer .label { font-size: 14px; }
     .filter-multi > summary { min-height: 44px; padding: 10px 10px; font-size: 13px; display: flex; align-items: center; }
     .filter-multi label { min-height: 36px; display: flex; align-items: center; padding: 6px 0; font-size: 13px; }
@@ -262,7 +265,7 @@
     .print-footer { display: block; margin-top: 8px; padding-top: 6px; border-top: 1px solid #94a3b8; font-size: 9px; color: #64748b; }
     .maplibregl-ctrl-attrib, .maplibregl-ctrl-fullscreen, .maplibregl-ctrl-zoom-in, .maplibregl-ctrl-zoom-out { display: none !important; }
     .maplibregl-ctrl-scale { border: 1px solid #000 !important; background: rgba(255,255,255,0.9) !important; }
-    .watermark { bottom: 12px !important; right: 12px !important; background: rgba(255,255,255,0.92) !important; color: rgba(220, 38, 38, 0.85) !important; }
+    .watermark { display: block !important; bottom: 12px !important; background: rgba(255,255,255,0.92) !important; color: rgba(15, 23, 42, 0.7) !important; }
     #print-legend { display: block; page-break-before: always; padding: 14px 4px; column-count: 4; column-gap: 18px; column-fill: balance; font-size: 10px; color: #0f172a; }
     #print-legend .pl-title { font-size: 13px; font-weight: 700; margin: 0 0 8px 0; padding-bottom: 4px; border-bottom: 2px solid #0f172a; column-span: all; -webkit-column-span: all; }
     #print-legend .pl-row { display: flex; align-items: center; gap: 8px; padding: 2px 0; break-inside: avoid; -webkit-column-break-inside: avoid; page-break-inside: avoid; }
@@ -274,6 +277,7 @@
 </style>
 </head>
 <body>
+<h1 class="sr-only">LRP Texas Energy GIS</h1>
 
 <div class="print-header">
   <div class="pbrand">LRP<span class="pdot">.</span> &nbsp;Texas Energy GIS</div>
@@ -304,7 +308,7 @@
   <div class="basemap-picker">
     <h3>Basemap</h3>
     <select id="basemap-select">
-      <option value="carto_light">Carto Light</option>
+      <option value="carto_light">Light Gray (Esri)</option>
       <option value="esri_streets">Esri Streets</option>
       <option value="esri_imagery">Esri World Imagery</option>
       <option value="openfreemap">OpenFreeMap</option>
@@ -318,7 +322,7 @@
   </div>
 </aside>
 
-<div class="map-wrap">
+<main class="map-wrap" id="main">
   <div id="map">
     <div id="filter-banner" role="status" aria-live="polite"></div>
     <div id="wells-summary" hidden aria-label="Oil & Gas Spud Wells summary"></div>
@@ -346,8 +350,8 @@
     <div><span class="mk">Area</span> &nbsp;<span class="mv" id="m-area">— ac</span></div>
     <div class="hint">Click to add points · double-click to close polygon · Measure again to clear</div>
   </div>
-  <div class="watermark" id="watermark">CONFIDENTIAL — <span id="wm-date"></span></div>
-</div>
+  <div class="watermark" id="watermark">LRP · Texas Energy GIS — <span id="wm-date"></span></div>
+</main>
 
 <div id="print-legend"></div>
 
@@ -387,8 +391,11 @@ const FIELD_LABELS = {
 const BASEMAPS = {
   carto_light: {
     kind: 'raster',
-    tiles: ['https://a.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png', 'https://b.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png', 'https://c.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png'],
-    attribution: '© OpenStreetMap contributors © CARTO',
+    // Keyless light-gray canvas (Esri). CARTO raster tiles now return an "API KEY REQUIRED" placeholder.
+    // Key name stays `carto_light` so existing #base=carto_light share links keep working.
+    tiles: ['https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}'],
+    maxzoom: 16,
+    attribution: 'Tiles © Esri — Esri, HERE, Garmin, © OpenStreetMap contributors',
   },
   esri_streets: {
     kind: 'raster',
@@ -406,8 +413,11 @@ const BASEMAPS = {
   },
   naip: {
     kind: 'raster',
-    tiles: ['https://imagery.nationalmap.gov/arcgis/rest/services/USGSNAIPPlus/ImageServer/tile/{z}/{y}/{x}'],
-    attribution: 'USDA NAIP · USGS',
+    // USGS National Map NAIP ImageServer (keyless). The old USGSNAIPPlus /tile endpoint 404s; exportImage
+    // with MapLibre's {bbox-epsg-3857} token returns real imagery.
+    tiles: ['https://imagery.nationalmap.gov/arcgis/rest/services/USGSNAIPImagery/ImageServer/exportImage?bbox={bbox-epsg-3857}&bboxSR=3857&imageSR=3857&size=256,256&format=jpgpng&f=image'],
+    maxzoom: 18,
+    attribution: 'USDA NAIP · USGS National Map',
   },
 };
 
@@ -416,7 +426,7 @@ function rasterStyle(b) {
     version: 8,
     glyphs: 'https://tiles.openfreemap.org/fonts/{fontstack}/{range}.pbf',
     sprite: '/sprite/sprite',
-    sources: { basemap: { type: 'raster', tiles: b.tiles, tileSize: 256, attribution: b.attribution } },
+    sources: { basemap: Object.assign({ type: 'raster', tiles: b.tiles, tileSize: 256, attribution: b.attribution }, b.maxzoom ? { maxzoom: b.maxzoom } : {}) },
     layers: [{ id: 'basemap', type: 'raster', source: 'basemap' }],
   };
 }
@@ -438,7 +448,8 @@ function writeHash(state) {
   if (state.layers) parts.push(`layers=${encodeURIComponent(state.layers)}`);
   if (state.base) parts.push(`base=${state.base}`);
   if (state.filters) parts.push(`filters=${encodeURIComponent(state.filters)}`);
-  if (state.sb) parts.push(`sb=${state.sb}`);
+  if (state.sb !== undefined) parts.push(`sb=${state.sb}`);
+  if (state.yr !== undefined) parts.push(`yr=${state.yr}`);
   history.replaceState(null, '', '#' + parts.join('&'));
 }
 
@@ -452,7 +463,10 @@ if (initHash.filters) {
   try { filterState = JSON.parse(initHash.filters) || {}; } catch (e) { filterState = {}; }
 }
 
-let sidebarCollapsed = initHash.sb === '1';
+// Narrow viewports (<=640px): drawer starts collapsed so the map is visible on first load,
+// unless the share URL explicitly says sb=0 (user opened it).
+const _mqNarrow = window.matchMedia('(max-width: 640px)');
+let sidebarCollapsed = initHash.sb === '1' || (initHash.sb === undefined && _mqNarrow.matches);
 if (sidebarCollapsed) document.body.classList.add('sb-collapsed');
 
 const protocol = new pmtiles.Protocol();
@@ -935,8 +949,8 @@ function filterFieldControlHtml(lid, f) {
     return `<div class="filter-field" data-field="${f.field}" data-type="numeric">
       <span class="filter-field-label">${escapeHtml(f.label)} ${rng}</span>
       <div class="filter-range">
-        <input type="number" placeholder="min" value="${curMin}" data-bound="min" step="any">
-        <input type="number" placeholder="max" value="${curMax}" data-bound="max" step="any">
+        <input type="number" placeholder="min" value="${curMin}" data-bound="min" step="any" aria-label="${escapeHtml(f.label)} minimum">
+        <input type="number" placeholder="max" value="${curMax}" data-bound="max" step="any" aria-label="${escapeHtml(f.label)} maximum">
       </div>
       ${chips}
     </div>`;
@@ -1871,7 +1885,7 @@ const StatsPanel = (() => {
 // each layer's filter expression via SCRUBBER_TIME_FIELD + scrubberYear.
 const Scrubber = (() => {
   const root = document.getElementById('scrubber');
-  if (!root) return { onLayerVisibilityChange: () => {} };
+  if (!root) return { onLayerVisibilityChange: () => {}, restoreYear: () => {} };
   const input = root.querySelector('.scrub-input');
   const playBtn = root.querySelector('[data-action="play"]');
   const resetBtn = root.querySelector('[data-action="reset"]');
@@ -1913,7 +1927,17 @@ const Scrubber = (() => {
       });
       refreshFilterBanner();
       StatsPanel.refresh();
+      syncHash();
     }
+  }
+
+  // Restore a year cutoff from the share URL (`yr=`); only meaningful while the scrubber is visible.
+  function restoreYear(y) {
+    y = Number(y);
+    if (!Number.isFinite(y) || root.hidden) return;
+    y = Math.max(Number(input.min), Math.min(y, Number(input.max)));
+    input.value = String(y);
+    setYear(y);
   }
 
   function tick(ts) {
@@ -1988,7 +2012,7 @@ const Scrubber = (() => {
       }
     }
   }
-  return { onLayerVisibilityChange, setYear, getYear: () => scrubberYear };
+  return { onLayerVisibilityChange, setYear, restoreYear, getYear: () => scrubberYear };
 })();
 
 function clearLayerFilters(L) {
@@ -2176,7 +2200,16 @@ function plannedUpgradePopupHtml(L, props) {
     .join('');
   return `<div class="title"><span class="planned-badge">PLANNED UPGRADE</span>${escapeHtml(baseTitle)}</div>
     <table>${rows}</table>
-    <div class="src">${escapeHtml(props.source || 'ERCOT TPIT')}${props.source_date ? ' · ' + escapeHtml(props.source_date) : ''}</div>`;
+    ${popupSrcHtml(L, props, 'ERCOT TPIT')}`;
+}
+
+// Footer: feature-level source/source_date win; fall back to layer-level source/as_of from layers.yaml.
+function popupSrcHtml(L, props, fallbackSrc) {
+  const src = (props && props.source) || (L && L.source) || fallbackSrc || '';
+  const dt = (props && props.source_date) || (L && L.as_of) || '';
+  if (!src && !dt) return '';
+  const asOf = (!(props && props.source_date) && dt) ? ' · as of ' + escapeHtml(dt) : (dt ? ' · ' + escapeHtml(dt) : '');
+  return `<div class="src">${escapeHtml(src)}${asOf}</div>`;
 }
 
 function escapeHtml(s) { return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]); }
@@ -2191,8 +2224,6 @@ const POPUP_HIDE_BY_LAYER = { wells_permian6: new Set(['completion_year']) };
 const POPUP_DISABLED = new Set(['caramba_north']);
 function featurePopupHtml(L, props) {
   props = props || {};
-  const src = props.source || '';
-  const srcDate = props.source_date || '';
   const title = props.name || props.Name || props.NAME || L.label || 'Feature';
   const perLayerHide = POPUP_HIDE_BY_LAYER[L.id];
   const rows = Object.keys(props).map(k => {
@@ -2209,7 +2240,7 @@ function featurePopupHtml(L, props) {
   }).join('');
   return `<div class="title">${escapeHtml(title)}</div>
     <table>${rows}</table>
-    <div class="src">${escapeHtml(src)}${srcDate ? ' · ' + escapeHtml(srcDate) : ''}</div>`;
+    ${popupSrcHtml(L, props, '')}`;
 }
 
 // ---- Live Oil & Gas Spud Wells summary (top-center) ----
@@ -2607,7 +2638,7 @@ function syncHash() {
   const defaultIds = LAYERS.filter(L => L.default_on).map(L => L.id).sort();
   const isDefaultLayerSet = activeIds.length === defaultIds.length && activeIds.every((id, i) => id === defaultIds[i]);
   const layersStr = isDefaultLayerSet ? undefined : activeIds.join(',');
-  writeHash({ lat: c.lat, lon: c.lng, zoom: map.getZoom(), layers: layersStr, base: currentBase, filters: filtersStr, sb: sidebarCollapsed ? '1' : undefined });
+  writeHash({ lat: c.lat, lon: c.lng, zoom: map.getZoom(), layers: layersStr, base: currentBase, filters: filtersStr, sb: sidebarCollapsed ? '1' : (_mqNarrow.matches ? '0' : undefined), yr: (scrubberYear !== null && scrubberYear !== undefined) ? scrubberYear : undefined });
 }
 
 let currentBase = initBase;
@@ -2833,6 +2864,7 @@ map.on('load', () => {
   LAYERS.forEach(L => { if (filterState[L.id]) applyLayerFilter(L); });
   refreshFilterBanner();
   Scrubber.onLayerVisibilityChange(activeLayerIds());
+  if (initHash.yr !== undefined) Scrubber.restoreYear(initHash.yr);
   StatsPanel.refresh();
   // R2-9: wire saved-views dropdown.
   const savedSel = document.getElementById('saved-views-select');
