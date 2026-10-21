@@ -1,0 +1,494 @@
+#!/usr/bin/env python3
+"""Build Transformer-Opportunity-White-Paper.pdf in Grid Wire PDF format spec v2.
+
+Spec: docs/grid-wire-master-instructions-v4.md, Part J.3 + 2026-07-08 addendum.
+Layout grammar: TOP LINE banner (navy fill, gold header, red/green signal dots),
+page-1 stat band + clock chips, gold section kickers, navy section header bands
+with gold left accent, three-tier box grammar (navy-left/gray = Angle reads,
+gold-left/cream = analytical sub-blocks, red-left/blush = falsification),
++/- signal coloring in tables. Jost instanced static weights 400/500/600/700,
+navy #1c2b3a / gold #b8860b, WeasyPrint with FontConfiguration threaded to both
+CSS() and write_pdf(), absolute file:// font paths, pdftotext/pdftoppm QA.
+
+Usage: python3 scripts/build_transformer_pdf.py [--fonts-dir DIR]
+"""
+
+import argparse
+import datetime as dt
+import html as html_mod
+import os
+import re
+import subprocess
+import sys
+import tempfile
+
+import markdown
+from weasyprint import CSS, HTML
+from weasyprint.text.fonts import FontConfiguration
+
+PROJECT = os.environ.get("LRP_PROJECT_DIR", os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+SRC_MD = os.path.join(PROJECT, "outputs", "reports", "Transformer-Opportunity-White-Paper.md")
+OUT_PDF = os.path.join(PROJECT, "outputs", "reports", "Transformer-Opportunity-White-Paper.pdf")
+
+NAVY = "#1c2b3a"
+GOLD = "#b8860b"
+TODAY = dt.date(2026, 7, 14)
+
+# ---------------------------------------------------------------- page-1 furniture
+
+TOPLINE = [
+    ("green", "Cycle bifurcated: distribution lead times normalized to ~30 wks by Q2 2025; power 128 wks / GSU 144→160+ wks (Q1 2026) / EHV 3-6 yrs unimproved."),
+    ("red", "“20x demand” is the field signal, not yet the print — published max is 3.7x (GSU +274%). Shipments are capacity-capped, so the print measures supply."),
+    ("green", "GOES chokepoint confirmed: 95% of domestic core steel from one mill (CLF Butler); 50-75% of cores imported; Sec 232 at 50% on cores, laminations, copper."),
+    ("red", "CLF Weirton plant cancelled (Q1 2025 8-K). Announced capacity, state incentives, and 600 jobs evaporated in ten months. Announced ≠ delivered."),
+    ("green", "PE playbook validated repeatedly: Sunbelt Solomon, Central Moloney, Emerald Lake/CORE, Mill Point/Voltaris, Investcorp/RESA. Virginia Transformer exploring sale at >$6B."),
+    ("gold", "New this edition: Heron Power’s $140M Series B (a16z/Breakthrough) attacks the GOES constraint with solid-state transformers; Q1 2026 Korean backlogs verified (Hyosung ₩15.1T); AI capex-revenue gap 46% vs 32% at the 2001 telecom peak."),
+    ("red", "Distribution overshoot window 2027-2029: announced capacity lands 2026-27 into a segment already at 30-week lead times."),
+]
+
+STATS = [
+    ("+274%", "GSU demand 2019-2025", "Wood Mackenzie, verified 9-0"),
+    ("160+ wks", "GSU lead time, Q1 2026", "144 wks Q2 2025 — still worsening"),
+    ("+40%", "real PPI 2020-2024", "+69-86% nominal; +4-10% guided"),
+    ("$47.5B", "Oncor base plan 2026-2030", "255 GW data-center queue"),
+    ("95%", "domestic core steel, one mill", "CLF Butler Works, sole US GOES"),
+    ("46%", "AI capex-to-revenue growth gap", "vs 32% at 2001 telecom peak"),
+]
+
+CLOCKS = [
+    (dt.date(2027, 1, 1), "Siemens Charlotte LPT production (early 2027)"),
+    (dt.date(2027, 6, 30), "Distribution overshoot window opens"),
+    (dt.date(2027, 9, 30), "Heron Power SST production (H2 2027)"),
+    (dt.date(2028, 1, 1), "Hitachi South Boston VA online (2028)"),
+    (dt.date(2028, 12, 31), "Oncor 765-kV Longshore energization target"),
+]
+
+KICKERS = {
+    "Company Map — Ranked by Asymmetry": "Most asymmetric first. On every line, the print lags the field.",
+    "Executive Summary": "Five verified facts frame the trade.",
+    "1. Market Fundamentals": "Four demand layers, only one of them AI. Scarcity binds at the top of the voltage stack.",
+    "2. Supply Side: Capacity, Chokepoints, Tariffs": "One steel mill, one tariff wall, and a cancelled plant everyone still models.",
+    "3. Public Equities": "The market prices one transformer cycle. There are two.",
+    "4. Private Companies and Deal Flow": "The playbook is validated repeatedly. The benchmark print is pending.",
+    "5. Picks and Shovels: The Component Layer": "The least crowded layer of the chain. Mostly private, family-owned, un-securitized.",
+    "6. The Texas/ERCOT Angle": "$47.5B at one utility. 255 GW of queue behind $3.5B of customer collateral.",
+    "7. Risks": "Underwrite +40% real and 60-80% nominal. Do not underwrite the 4-9x tails.",
+    "8. Investable Takeaways, Ranked by Asymmetry": "ERCOT repair roll-up first. Avoid commodity distribution assembly.",
+    "Glossary — Acronyms & Technical Terms": "Plain English for the terms of art.",
+    "Methodology & Sources": "105-agent adversarial verification: 23 claims confirmed, 2 refuted, gaps flagged inline.",
+}
+
+# page-1 ranking: public names scored on cheapness x asymmetry (Jul 15, 2026 data; §3.6)
+RANKING = [
+    ("1", "Nippon Steel (TYO: 5401)", "A", "A", "0.5x book, 10x fwd — Big River GOES line 2028: the monopoly's successor, none of it in the price"),
+    ("2", "Cleveland-Cliffs (NYSE: CLF)", "A−/F", "A", "1.0x book vs 1.73x median; sole US GOES + $400M DoD + DOE Butler — binary, option-size (§3.7)"),
+    ("3", "NKT (CPH: NKT)", "A−", "A−", "8x EV/EBITDA, net cash, €13.5B sold-out HV cable backlog — the transformer bottleneck's twin at one-fifth the multiple (§3.8)"),
+    ("4", "POSCO Holdings (NYSE: PKX)", "A+", "B", "0.38x book, deepest asset discount; electrical-steel option Korea-sited and later-dated"),
+    ("5", "Landis+Gyr (SWX: LAND)", "B+", "B+", "10x EV/EBITDA, majority-Americas grid edge; activist anchor + US re-listing H2 2026 — cheapest with the clearest catalysts"),
+    ("6", "HD Hyundai Electric (KRX: 267260)", "C+", "A−", "Record verified backlog ($7.89B) and pricing power at 25.7x fwd — best price for verified asymmetry"),
+    ("7", "Hyosung Heavy (KRX: 298040)", "C", "A", "₩15.1T backlog, ~half of US 765-kV units — crown-jewel exposure at a fuller price (~28x)"),
+    ("8", "Stella-Jones (TSX: SJ)", "B+", "B", "13.3x fwd near 52wk lows while Oncor triples pole suppliers — the un-priced hardening bottleneck"),
+    ("9", "Siemens Energy (ETR: ENR)", "C", "B+", "PEG 0.54, first-mover US LPT plant — cheap only if the 2028 EPS doubling prints"),
+    ("10", "Hitachi (TYO: 6501)", "C", "B+", "12x EV/EBITDA — half the sector, 65-75% above its own history; quality pick, not value"),
+    ("11", "Nexans (EPA: NEX)", "B", "B−", "8.75x EV/EBITDA electrification pure-play; Republic Wire bolt-on closing Q3 2026"),
+    ("12", "Itron (NASDAQ: ITRI)", "B", "C+", "14.5x fwd, −37%, $4.4B backlog — conditional on the AMI bookings inflection"),
+    ("13", "Atkore (NYSE: ATKR)", "B", "B−", "12.7x fwd, flat 52wk — the un-run US name; conduit adjacency, not transformer-specific"),
+    ("14", "Mueller Industries (NYSE: MLI)", "B", "C+", "14x fwd, $1.4B net cash — safest claim, least transformer torque"),
+]
+RANKING_FOOT = (
+    "Also ranked (§3.6, §3.8): Takaoka Toko 12.4x · LS Corp 14.8x (Chesapeake cable plant) · Koppers 11.7x (at highs) · "
+    "Sanil · Fortive · Hubbell 23.8x (bushings) · Prysmian 24.5x. "
+    "Priced out: POWL 41x · GEV 58-70x · FPS 46x · LS Electric 53x · Hammond 34x · ESCO 37.6x · Argan 45x · "
+    "WESCO · PLPC · Valmont · Arcosa · Bel Fuse · Modine · IES. "
+    "Grades: cheapness = absolute + vs own 10/20-yr history; asymmetry = mispricing vs exposure. "
+    "Full methodology §3.4-3.8; data Jul 15-19, 2026."
+)
+
+FALSIFICATION = (
+    "<b>Falsification conditions.</b> The thesis is wrong if: (1) power/GSU lead times fall below "
+    "80 weeks before 2028 without a demand collapse (capacity arrived early; scarcity leg dead); "
+    "(2) a Section 232 carve-out for cores/GOES lands (input-cost moat dissolves; importer economics "
+    "reset); (3) Oncor's RTP-qualified data-center load stalls below ~38 GW through 2027 (queue was "
+    "paper); (4) utility spec-standardization collapses the 80,000-type SKU fragmentation (repair/reman "
+    "moat erodes); (5) the Virginia Transformer process fails to clear anywhere near $6B (private comp "
+    "deck resets down); (6) Nippon Steel's Big River GOES line reaches qualified production on the 2028 "
+    "schedule (domestic-GOES scarcity premium collapses; the CLF option expires)."
+)
+
+# company-name -> website; longest names matched first so overlaps resolve correctly
+COMPANY_LINKS = {
+    "Powell Industries": "https://www.powellind.com",
+    "GE Vernova": "https://www.gevernova.com",
+    "Siemens Energy": "https://www.siemens-energy.com",
+    "Hitachi Energy": "https://www.hitachienergy.com",
+    "HD Hyundai Electric": "https://www.hd-hyundaielectric.com",
+    "Hyosung Heavy": "https://www.hyosungheavyindustries.com",
+    "Hyosung": "https://www.hyosungheavyindustries.com",
+    "LS Electric": "https://www.ls-electric.com",
+    "Eaton": "https://www.eaton.com",
+    "Schneider": "https://www.se.com",
+    "Vertiv": "https://www.vertiv.com",
+    "WEG": "https://www.weg.net",
+    "Mitsubishi Electric": "https://www.mitsubishielectric.com",
+    "Cleveland-Cliffs": "https://www.clevelandcliffs.com",
+    "ESCO Technologies": "https://escotechnologies.com",
+    "Doble": "https://www.doble.com",
+    "Omicron": "https://www.omicronenergy.com",
+    "Megger": "https://megger.com",
+    "Virginia Transformer": "https://www.vatransformer.com",
+    "Sunbelt Solomon": "https://www.sunbeltsolomon.com",
+    "Sunbelt Transformer": "https://www.sunbeltsolomon.com",
+    "Central Moloney": "https://centralmoloneyinc.com",
+    "Emerald Transformer": "https://emeraldtransformer.com",
+    "ERMCO": "https://www.ermco-eci.com",
+    "Prolec GE": "https://www.prolecge.com",
+    "Prolec": "https://www.prolecge.com",
+    "Delta Star": "https://www.deltastar.com",
+    "Pennsylvania Transformer": "https://patransformer.com",
+    "MGM Transformer": "https://www.mgmtransformer.com",
+    "MGM/VanTran": "https://vantran.com",
+    "VanTran": "https://vantran.com",
+    "Maschinenfabrik Reinhausen": "https://www.reinhausen.com",
+    "Reinhausen": "https://www.reinhausen.com",
+    "Metglas": "https://metglas.com",
+    "Proterial": "https://www.proterial.com",
+    "Cargill": "https://www.cargill.com",
+    "Nynas": "https://www.nynas.com",
+    "Qualitrol": "https://www.qualitrolcorp.com",
+    "Fortive": "https://www.fortive.com",
+    "Vaisala": "https://www.vaisala.com",
+    "Camlin": "https://www.camlingroup.com",
+    "Heinrich Georg GmbH": "https://www.georg.com",
+    "Superior Essex": "https://superioressex.com",
+    "Rea Magnet Wire": "https://www.reawire.com",
+    "AEM": "https://aemcores.com",
+    "Wind Point Partners": "https://www.windpointpartners.com",
+    "Wind Point": "https://www.windpointpartners.com",
+    "Trilantic": "https://trilanticnorthamerica.com",
+    "Insight Equity": "https://www.insightequity.com",
+    "Oncor": "https://www.oncor.com",
+    "Hammond Power Solutions": "https://www.hammondpowersolutions.com",
+    "Hammond Power": "https://www.hammondpowersolutions.com",
+    "Weidmann": "https://www.weidmann-electrical.com",
+    "Maddox": "https://www.maddoxtransformer.com",
+    "SGB-SMIT": "https://www.sgb-smit.com",
+    "Quanta Services": "https://www.quantaservices.com",
+    "RESA Power": "https://www.resapower.com",
+    "Investcorp": "https://www.investcorp.com",
+    "Intersect Power": "https://www.intersectpower.com",
+    "Crusoe": "https://www.crusoe.ai",
+    "Ergon": "https://www.ergon.com",
+    "Calumet": "https://www.calumet.com",
+    "NKT": "https://www.nkt.com",
+    "Nexans": "https://www.nexans.com",
+    "Prysmian": "https://www.prysmian.com",
+    "Stella-Jones": "https://www.stella-jones.com",
+    "Landis+Gyr": "https://www.landisgyr.com",
+    "Itron": "https://www.itron.com",
+    "Hubbell": "https://www.hubbell.com",
+    "Koppers": "https://www.koppers.com",
+    "Quanta": "https://www.quantaservices.com",
+    "EMCOR": "https://www.emcorgroup.com",
+    "Howard Industries": "https://www.howardindustries.com",
+}
+
+
+def linkify(html_text: str) -> str:
+    """Wrap company-name mentions in links, skipping text already inside anchors."""
+    pattern = re.compile(
+        r"(?<![\w/-])("
+        + "|".join(re.escape(n) for n in sorted(COMPANY_LINKS, key=len, reverse=True))
+        + r")(?![\w-])"
+    )
+    parts = re.split(r"(<a\b.*?</a>)", html_text, flags=re.S)
+    for i, part in enumerate(parts):
+        if part.startswith("<a"):
+            continue
+        parts[i] = pattern.sub(
+            lambda m: f'<a class="co" href="{COMPANY_LINKS[m.group(1)]}">{m.group(1)}</a>', part
+        )
+    return "".join(parts)
+
+
+# ---------------------------------------------------------------- md -> body html
+
+
+def md_to_html(md_text: str) -> str:
+    body = md_text.split("---", 1)[1] if "---" in md_text else md_text
+    return markdown.markdown(body, extensions=["tables"])
+
+
+def colorize_tds(html_text: str) -> str:
+    """Signal coloring: +x%/+bps green, -x%/-bps red inside table cells."""
+
+    def _cell(m):
+        content = m.group(2)
+        if re.search(r"(?<![\w.])[+↑]\s?\d[\d,.]*\s?(%|bps|x\b)", content):
+            cls = ' class="sig-up"'
+        elif re.search(r"(?<![\w.])[-−↓]\s?\d[\d,.]*\s?(%|bps|x\b)", content):
+            cls = ' class="sig-dn"'
+        else:
+            return m.group(0)
+        return f"<td{cls}{m.group(1)}>{content}</td>"
+
+    return re.sub(r"<td([^>]*)>(.*?)</td>", _cell, html_text, flags=re.S)
+
+
+def apply_grammar(html_text: str):
+    """Kickers under section headers, anchor ids + TOC entries, italic asides -> angle boxes."""
+    toc = []
+
+    def _h2(m):
+        title = html_mod.unescape(re.sub(r"<[^>]+>", "", m.group(1))).strip()
+        sec_id = f"sec-{len(toc)}"
+        toc.append((sec_id, title))
+        band = f'<h2 id="{sec_id}">{m.group(1)}</h2>'
+        kicker = KICKERS.get(title)
+        if kicker:
+            band += f'<p class="kicker">{kicker}</p>'
+        return band
+
+    html_text = re.sub(r"<h2>(.*?)</h2>", _h2, html_text, flags=re.S)
+    # "Key finding:" lead paragraphs -> gold analytical sub-block
+    html_text = re.sub(
+        r"<p><strong>Key finding:</strong>(.*?)</p>",
+        r'<div class="box-gold"><p><b>Key finding.</b>\1</p></div>',
+        html_text,
+        flags=re.S,
+    )
+    # full-italic paragraphs (inline notes/asides in the source md) -> angle boxes
+    html_text = re.sub(
+        r"<p><em>(.*?)</em></p>",
+        r'<div class="box-angle"><p>\1</p></div>',
+        html_text,
+        flags=re.S,
+    )
+    # falsification box after the risks section (before takeaways header)
+    html_text = re.sub(
+        r'(<h2 id="[^"]*">8\. Investable Takeaways)',
+        f'<div class="box-fals"><p>{FALSIFICATION}</p></div>\n\\1',
+        html_text,
+        count=1,
+    )
+    return html_text, toc
+
+
+def build_toc(toc) -> str:
+    items = "".join(
+        f'<li><a href="#{sec_id}">{html_mod.escape(title)}</a></li>' for sec_id, title in toc
+    )
+    return (
+        '<div class="toc"><div class="toc-hdr">CONTENTS</div>'
+        f"<ul>{items}</ul></div>"
+    )
+
+
+# ---------------------------------------------------------------- page-1 html
+
+
+def page_one() -> str:
+    dots = "".join(
+        f'<tr><td class="dot dot-{c}">●</td><td class="tl-line">{html_mod.escape(t)}</td></tr>'
+        for c, t in TOPLINE
+    )
+    stats = "".join(
+        f'<td class="stat"><div class="stat-n">{html_mod.escape(n)}</div>'
+        f'<div class="stat-l">{html_mod.escape(l)}</div>'
+        f'<div class="stat-d">{html_mod.escape(d)}</div></td>'
+        for n, l, d in STATS
+    )
+    chips = "".join(
+        f'<span class="chip"><b>{(d - TODAY).days}d</b> · {html_mod.escape(label)} · {d.strftime("%b %d %Y")}</span>'
+        for d, label in CLOCKS
+    )
+    defs_strip = (
+        '<div class="defs"><b>Terms used above:</b> '
+        "GSU — generator step-up transformer (connects a power plant to the grid) · "
+        "GOES — grain-oriented electrical steel (the specialty steel transformer cores are made of; one US mill) · "
+        "PPI — producer price index · RTP — ERCOT Regional Transmission Plan · "
+        "LPT — large power transformer. <b>Full glossary at the end of the paper.</b></div>"
+    )
+    def grade(g):
+        cls = "gA" if g.startswith("A") else ""
+        return f'<span class="grade {cls}">{html_mod.escape(g)}</span>'
+
+    rank_rows = "".join(
+        f"<tr><td class='rk-n'>{n}</td><td class='rk-co'>{html_mod.escape(co)}</td>"
+        f"<td class='rk-g'>{grade(c)}</td><td class='rk-g'>{grade(a)}</td>"
+        f"<td class='rk-call'>{html_mod.escape(call)}</td></tr>"
+        for n, co, c, a, call in RANKING
+    )
+    ranking = f"""
+<div class="rank-hdr">PUBLIC NAMES, RANKED — CHEAPNESS × ASYMMETRY</div>
+<table class="ranktbl">
+<tr><th>#</th><th>Company</th><th>Cheap</th><th>Asym</th><th>The trade in one line</th></tr>
+{rank_rows}
+</table>
+<div class="rank-foot">{RANKING_FOOT}</div>
+"""
+    return f"""
+<div class="masthead">
+  <div class="mast-kicker">LAND RESOURCE PARTNERS · MARKET INTELLIGENCE · JULY 2026</div>
+  <h1>The Transformer Opportunity</h1>
+  <div class="mast-sub">Where the Asymmetry Actually Sits in the AI Power Buildout</div>
+</div>
+{ranking}
+<div class="topline">
+  <div class="topline-hdr">TOP LINE</div>
+  <table class="topline-tbl">{dots}</table>
+</div>
+<table class="statband"><tr>{stats}</tr></table>
+<div class="clocks">{chips}</div>
+{defs_strip}
+"""
+
+
+# ---------------------------------------------------------------- css
+
+
+def build_css(fonts_dir: str) -> str:
+    faces = []
+    for w in (400, 600, 700):
+        for ital, style in (("", "normal"), ("Italic", "italic")):
+            p = os.path.abspath(os.path.join(fonts_dir, f"SourceSans3-{w}{ital}.ttf"))
+            faces.append(
+                f"@font-face {{ font-family: 'Source Sans 3'; font-weight: {w}; font-style: {style}; "
+                f"src: url('file://{p}'); }}"
+            )
+    return "\n".join(faces) + f"""
+@page {{
+  size: letter; margin: 18mm 15mm 16mm 15mm;
+  @bottom-left {{ content: "LRP · The Transformer Opportunity · July 2026";
+    font-family: 'Source Sans 3'; font-size: 8.5pt; color: {NAVY}; opacity: .65; }}
+  @bottom-right {{ content: counter(page) " / " counter(pages);
+    font-family: 'Source Sans 3'; font-size: 8.5pt; color: {NAVY}; opacity: .65; }}
+}}
+html {{ background: #fdfaf3; }}
+body {{ font-family: 'Source Sans 3'; font-weight: 400; font-size: 12pt; line-height: 1.52;
+  color: #33404c; }}
+a.co {{ color: {NAVY}; font-weight: 500; text-decoration: underline;
+  text-decoration-color: {GOLD}; text-decoration-thickness: .8pt; }}
+.toc {{ page-break-before: always; margin: 0 0 10pt 0; }}
+.toc-hdr {{ background: #efe5cd; color: {NAVY}; font-weight: 700; font-size: 12.5pt;
+  letter-spacing: 2pt; padding: 4pt 8pt; border-left: 4pt solid {GOLD}; }}
+.toc ul {{ list-style: none; padding: 6pt 2pt 0 2pt; margin: 0; }}
+.toc li {{ margin: 4.5pt 0; font-size: 12pt; font-weight: 500; }}
+.toc a {{ color: {NAVY}; text-decoration: none; display: block; }}
+.toc a::after {{ content: leader(". ") " " target-counter(attr(href), page);
+  color: {GOLD}; font-weight: 600; }}
+.masthead {{ border-bottom: 2.5pt solid {GOLD}; padding-bottom: 6pt; margin-bottom: 10pt; }}
+.mast-kicker {{ font-size: 9.5pt; font-weight: 600; letter-spacing: 1.6pt; color: {GOLD}; }}
+h1 {{ font-size: 28pt; font-weight: 700; color: {NAVY}; margin: 2pt 0 0 0; }}
+.mast-sub {{ font-size: 14pt; font-weight: 500; color: {NAVY}; opacity: .8; }}
+.rank-hdr {{ background: #efe5cd; color: {NAVY}; font-weight: 700; font-size: 11.5pt;
+  letter-spacing: 1.2pt; padding: 4pt 8pt; border-left: 4pt solid {GOLD}; margin: 4pt 0 4pt 0; }}
+.ranktbl {{ font-size: 8.8pt; margin: 4pt 0 4pt 0; }}
+.ranktbl th {{ font-size: 8.2pt; padding: 2.5pt 4pt; }}
+.ranktbl td {{ padding: 2.2pt 4pt; line-height: 1.28; }}
+.rk-n {{ font-weight: 700; color: {NAVY}; width: 14pt; }}
+.rk-co {{ font-weight: 600; color: {NAVY}; width: 118pt; }}
+.rk-g {{ text-align: center; width: 30pt; }}
+.grade {{ font-weight: 700; color: {NAVY}; }}
+.grade.gA {{ color: {GOLD}; }}
+.rank-foot {{ font-size: 7.6pt; color: #4a5865; line-height: 1.35; border-top: .8pt solid #e2d5b8;
+  padding-top: 3pt; margin-bottom: 8pt; }}
+.topline {{ page-break-before: always; background: #f4ecd9; border: .8pt solid #e2d5b8; border-radius: 3pt; padding: 8pt 10pt; margin: 6pt 0 8pt 0; }}
+.topline-hdr {{ color: {GOLD}; font-weight: 700; font-size: 12.5pt; letter-spacing: 2pt;
+  margin-bottom: 4pt; }}
+.topline-tbl {{ border-collapse: collapse; }}
+.topline-tbl td {{ border: none; padding: 1.6pt 0; vertical-align: top; }}
+.topline-tbl tr:nth-child(even) td {{ background: transparent; }}
+.statband tr:nth-child(even) td {{ background: #f8f3e6; }}
+.dot {{ width: 15pt; font-size: 9.5pt; }}
+.dot-green {{ color: #2e8f56; }} .dot-red {{ color: #c0392b; }} .dot-gold {{ color: {GOLD}; }}
+.tl-line {{ color: #33404c; font-size: 10.8pt; line-height: 1.35; }}
+.statband {{ width: 100%; border-collapse: collapse; table-layout: fixed;
+  margin: 0 0 6pt 0; }}
+.stat {{ border: .6pt solid #e2d5b8; border-top: 2pt solid {GOLD}; background: #f8f3e6;
+  padding: 5pt 4pt; text-align: center; vertical-align: top; }}
+.stat-n {{ font-size: 18pt; font-weight: 700; color: {NAVY}; }}
+.stat-l {{ font-size: 8.8pt; font-weight: 600; color: {NAVY}; margin-top: 1pt; }}
+.stat-d {{ font-size: 8.4pt; color: {GOLD}; font-weight: 500; margin-top: 1pt; }}
+.clocks {{ margin: 0 0 6pt 0; }}
+.defs {{ border-top: .8pt solid #e2d5b8; padding-top: 5pt; font-size: 9.2pt;
+  color: #4a5865; line-height: 1.45; }}
+.defs b {{ color: {NAVY}; font-weight: 600; }}
+.chip {{ display: inline-block; border: .8pt solid #cbbd99; border-left: 3pt solid {GOLD}; background: #fbf7ec;
+  border-radius: 2pt; padding: 1.5pt 5pt; margin: 0 3pt 3pt 0; font-size: 9.2pt;
+  color: {NAVY}; }}
+.chip b {{ color: {GOLD}; font-weight: 700; }}
+h2 {{ background: #efe5cd; color: {NAVY}; font-size: 14.5pt; font-weight: 700;
+  padding: 5pt 8pt; border-left: 4pt solid {GOLD}; margin: 16pt 0 3pt 0;
+  page-break-after: avoid; }}
+.kicker {{ color: {GOLD}; font-weight: 600; font-size: 11.5pt; margin: 2pt 0 7pt 2pt;
+  page-break-after: avoid; }}
+h3 {{ color: {NAVY}; font-size: 13pt; font-weight: 600; margin: 12pt 0 4pt 0;
+  border-bottom: .8pt solid {GOLD}; padding-bottom: 1.5pt; page-break-after: avoid; }}
+p {{ margin: 5pt 0; }}
+ul, ol {{ margin: 4pt 0 6pt 0; padding-left: 15pt; }}
+li {{ margin: 2.5pt 0; }}
+table {{ border-collapse: collapse; width: 100%; margin: 7pt 0; font-size: 10.6pt; }}
+th {{ background: #ebdfc2; color: {NAVY}; font-weight: 700; padding: 3pt 5pt;
+  text-align: left; }}
+td {{ border: .5pt solid #e4dac2; padding: 3pt 5.5pt; vertical-align: top; }}
+tr {{ page-break-inside: avoid; }}
+tr:nth-child(even) td {{ background: #f8f4e9; }}
+td a, td a.co {{ color: {NAVY}; font-weight: 600; text-decoration: underline;
+  text-decoration-color: {GOLD}; text-decoration-thickness: .8pt; }}
+.sig-up {{ color: #1e7e45; font-weight: 600; }}
+.sig-dn {{ color: #c0392b; font-weight: 600; }}
+.box-angle {{ background: #f5f0e2; border-left: 4pt solid {NAVY}; padding: 5pt 9pt;
+  margin: 7pt 0; font-size: 11.4pt; }}
+.box-angle p {{ margin: 0; }}
+.box-gold {{ background: #f8f1dc; border-left: 4pt solid {GOLD}; padding: 5pt 9pt;
+  margin: 7pt 0 9pt 0; font-size: 11.6pt; }}
+.box-gold p {{ margin: 0; }}
+.box-fals {{ background: #f9efe4; border-left: 4pt solid #c0392b; padding: 5pt 9pt;
+  margin: 8pt 0; font-size: 11.4pt; }}
+.box-fals p {{ margin: 0; }}
+strong {{ font-weight: 600; color: {NAVY}; }}
+hr {{ border: none; border-top: .8pt solid #d7dde3; margin: 10pt 0; }}
+"""
+
+
+# ---------------------------------------------------------------- build + QA
+
+
+def main() -> int:
+    ap = argparse.ArgumentParser()
+    ap.add_argument(
+        "--fonts-dir",
+        default=os.path.join(PROJECT, "vendor", "fonts", "sourcesans"),
+        help="directory with SourceSans3-{400,600,700}[Italic].ttf (default: vendor/fonts/sourcesans)",
+    )
+    args = ap.parse_args()
+
+    with open(SRC_MD, encoding="utf-8") as f:
+        md_text = f.read()
+
+    body, toc = apply_grammar(linkify(colorize_tds(md_to_html(md_text))))
+    doc = f"<html><body>{page_one()}{build_toc(toc)}{body}</body></html>"
+
+    font_config = FontConfiguration()
+    css = CSS(string=build_css(args.fonts_dir), font_config=font_config)
+    HTML(string=doc, base_url=PROJECT).write_pdf(OUT_PDF, stylesheets=[css], font_config=font_config)
+
+    # QA: no marker leakage, text extractable, first page renders
+    txt = subprocess.run(["pdftotext", OUT_PDF, "-"], capture_output=True, text=True).stdout
+    for marker in ("box-angle", "box-fals", "sig-up", "sig-dn", "class="):
+        assert marker not in txt, f"marker leakage: {marker}"
+    squeezed = re.sub(r"\s+", "", txt)
+    assert "TOPLINE" in squeezed and "TransformerOpportunity" in squeezed, "page-1 furniture missing"
+    qa_dir = tempfile.mkdtemp(prefix="transformer_pdf_qa_")
+    subprocess.run(
+        ["pdftoppm", "-f", "1", "-l", "1", "-png", "-r", "80", OUT_PDF,
+         os.path.join(qa_dir, "p1")],
+        check=True,
+    )
+    pages = txt.count("\f")
+    print(f"OK {OUT_PDF} ({pages} pp, {os.path.getsize(OUT_PDF)//1024} KB)")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
